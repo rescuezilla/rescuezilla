@@ -96,6 +96,11 @@ if ($numthreads <= "1") {
 $numthreads = 1;
 }
 
+sub default_share_name {
+    my $share = `cat /etc/redo_share`;
+    chomp $share;
+    return $share;
+}
 
 ##### Test code ########################################################
 #$ARGV[0] = 'restore';
@@ -264,7 +269,7 @@ sub backup_dest_network_changed {
         $server =~ s/\d+$//g;
       } else {
         # It's a manually-entered SMB share
-        $server = "//ADDRESS/FOLDER";
+        $server = default_share_name;
       }
     } else {
       # It's an automatically-found share
@@ -645,7 +650,7 @@ sub restore_source_network_changed {
         $server =~ s/\d+$//g;
       } else {
         # It's a manually-entered SMB share
-        $server = "//HOST/FOLDER";
+        $server = default_share_name;
       }
     } else {
       # It's an automatically-found share
