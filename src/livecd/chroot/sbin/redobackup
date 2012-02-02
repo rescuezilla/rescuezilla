@@ -56,7 +56,6 @@ use constant MOUNT_POINT   => "/mnt/backup";
 use constant DATA_DIR      => "/usr/share/redo/";
 use constant APP_ICON      => DATA_DIR."redobackup-icon.png";
 use constant GLADE_UI      => "redobackup.glade";
-use constant MAX_WIDTH     => 96;
 use constant FS_SUPPORT    => ( "ext2",
                                 "ext3",
                                 "ext4",
@@ -1198,7 +1197,6 @@ sub set_drive_dropdown {
   for my $drive (sort keys %drives) {
     $dev = $drives{$drive}{'device'};
     $desc = $drives{$drive}{'desc'};
-    if (length($desc)>MAX_WIDTH+3) { $desc = substr($desc,0,MAX_WIDTH).'...'; }
     if ((defined($_[1])) && ($_[1] eq 'usb')) {
       if ($drives{$drive}{'type'} eq 'usb') {
         $mdl->set($mdl->append, 0, $dev, 1, $desc);
@@ -1249,7 +1247,6 @@ sub set_partition_dropdown {
       if (grep $_ eq $part, @blacklist) {
         print "*** ".loc("Omitting backup source [_1] from destination list",$part)."\n";
       } else {
-        if (length($part_desc)>MAX_WIDTH+3) { $part_desc = substr($part_desc,0,MAX_WIDTH).'...'; }
         $mdl->set($mdl->append, 0, "DEV|$part", 1, $part_desc);
       }
     }
@@ -1277,7 +1274,6 @@ sub set_share_dropdown {
       $share_desc = loc("Shared folder [_1] on [_2]",$folder,$host);
     }
     if ((defined($desc))&&($desc ne '')) { $share_desc .= " ($desc)"; }
-    if (length($share_desc)>MAX_WIDTH+3) { $share_desc = substr($share_desc,0,MAX_WIDTH).'...'; }
     $mdl->set($mdl->append, 0, "$type|$share", 1, $share_desc);
   }
   $mdl->set($mdl->append, 0, "SMB|", 1, loc("Shared folder specified below"));
