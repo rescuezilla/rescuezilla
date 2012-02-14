@@ -1161,13 +1161,24 @@ sub mount_data {
       print "* ".loc("Executing: ")."mount /dev/$status{'mount_source'} ".MOUNT_POINT."\n";
     } elsif (/SMB/) {
       # Mount a network share
+      my $args;
+      my $tmpfile = '';
       my @smbargs = ();
       if ($status{'mount_user'} ne '') { push(@smbargs, "username=".$status{'mount_user'}); }
       if ($status{'mount_pass'} ne '') { push(@smbargs, "password=".$status{'mount_pass'}); }
-      if ($status{'mount_domain'} ne '') { push(@smbargs, "dom=".$status{'mount_domain'}); }
-      my $args = join(',', @smbargs);
-      if ($args eq '') { $args = "guest"; }
+      if ($status{'mount_domain'} ne '') { push(@smbargs, "domain=".$status{'mount_domain'}); }
+      my $cred = join("\n", @smbargs);
+      if ($cred eq '') { $args = "guest"; }
+      else {
+        $tmpfile = `mktemp`;
+        chomp($tmpfile);
+        open(my $tmpfd, '>', $tmpfile);
+        print $tmpfd "$cred\n";
+        close($tmpfd);
+        $args="credentials='$tmpfile'"
+      }
       system("mount.cifs '$status{'mount_source'}' ".MOUNT_POINT." -o $args");
+      if ($tmpfile ne '') { system(("shred", "-u",  $tmpfile));}
       print "* ".loc("Executing: ")."mount.cifs '$status{'mount_source'}' ".MOUNT_POINT." -o $args\n";
     } elsif (/FTP/) {
       # Mount an FTP server
