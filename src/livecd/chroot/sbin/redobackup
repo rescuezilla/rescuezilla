@@ -1175,7 +1175,10 @@ sub mount_data {
         open(my $tmpfd, '>', $tmpfile);
         print $tmpfd "$cred\n";
         close($tmpfd);
-        $args="credentials='$tmpfile'"
+        $args = "credentials='$tmpfile'";
+        # If the user does not supply password moutnt would try to prompt for
+        # one locking up the application unless guest is specified.
+        if ($status{'mount_pass'} eq '') { $args = "$args,guest"; }
       }
       system("mount.cifs '$status{'mount_source'}' ".MOUNT_POINT." -o $args");
       if ($tmpfile ne '') { system(("shred", "-u",  $tmpfile));}
