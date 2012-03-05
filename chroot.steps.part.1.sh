@@ -94,6 +94,7 @@ apt-get install --yes --no-install-recommends discover \
                                               libxml-simple-perl \
                                               libsys-cpu-perl \
                                               liblocale-maketext-lexicon-perl \
+                                              libmethod-signatures-simple-perl \
                                               pigz \
                                               gtk2-engines-pixbuf \
                                               beep \

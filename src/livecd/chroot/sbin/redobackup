@@ -31,6 +31,7 @@ use Sys::CPU;
 use POSIX qw(locale_h);
 use locale;
 use utf8;
+use Method::Signatures::Simple;
 
 # Load translation
 use constant TRANSLATION_DIR => "/usr/share/redo/translations-redobackup/";
@@ -100,6 +101,57 @@ sub default_share_name {
     my $share = `cat /etc/redo_share`;
     chomp $share;
     return $share;
+}
+
+func max(@values) {
+  if (!@values) { return -INF; }
+  my $max = $values[0];
+  foreach my $val (@values) {
+    if ($val > $max) { $max = $val ; }
+  }
+  return $max;
+}
+
+func fdisk_units($text) {
+  my @matches = ( $text =~ /unit: ([^[:space:]]+)/g );
+  my $count = @matches;
+  if (@matches  < 1) { return undef; }
+  if (@matches == 1) { return $matches[0]; }
+  my $same = 'TRUE'; foreach my $unit (@matches) { $same = ($same and ($unit eq $matches[0])); }
+  if ($same) { return $matches[0]; }
+  else { return undef; }
+}
+
+func parttab($text) {
+  my @text = split("\n", $text);
+  my %parts;
+  foreach my $line (@text) {
+    my @match = ($line =~ /^[[:blank:]]*(\/dev\/[[:alnum:]]+|-)[[:blank:]]+:[[:blank:]]*start=[[:blank:]]*([[:digit:]]+), size=[[:blank:]]*([[:digit:]]+), Id=[[:blank:]]*([[:xdigit:]]+)/);
+    if (@match && $match[3]) {
+      if (((length $match[0]) < 3) || !$match[2]) {
+        print "Error on line: " . $line;
+        print "\n";
+      }
+      my %res = (start => $match[1], length => $match[2], id => hex($match[3]), end => ($match[1]+$match[2]));
+      $parts{$match[0]}= \%res;
+    }
+  }
+  foreach my $part (keys %parts) {
+    print $part . " ";
+    foreach my $val (keys %{$parts{$part}}) {
+      print $val . ": " . ${$parts{$part}}{$val} ."\t";
+    }
+    print  "\n";
+  }
+  return \%parts;
+}
+
+func partends($text) {
+  my %parts = %{parttab($text)};
+  foreach my $part (keys %parts) {
+    $parts{$part} = ${$parts{$part}}{'end'} * 512;
+  }
+  return \%parts;
 }
 
 ##### Test code ########################################################
@@ -302,13 +354,19 @@ sub do_backup {
   # Save MBR
   system("dd if=$src_drive of=$dest/$file.mbr bs=32768 count=1");
   system("sfdisk -d $src_drive > $dest/$file.sfdisk");
+  my $ptab = `sfdisk -d $src_drive`;
+  die "fdisk units must be sectors.\n" unless (fdisk_units($ptab) eq 'sectors');
   print "\t* ".loc("MBR and partition table of [_1] saved to [_2]",$src_drive,$dest)."\n";
   # Save size of source drive in blocks
   my $bd = `fdisk -l $src_drive | grep '$src_drive:'`;
   my (undef, $bytes) = split(", ", $bd);
   $bytes =~ s/\D//g;
   my $file_size_path = "$dest/$file.size";
-  system("echo $bytes > $file_size_path");  
+  system("echo $bytes > $file_size_path");
+  my $ptab_bytes = max(values partends($ptab));
+  die "fdisk reports smaller drive size $bytes than determined from partition table $ptab_bytes\n" unless $bytes >= $ptab_bytes;
+  $bytes = $ptab_bytes;
+  system("echo $bytes > $dest/$file.size");
   print "\t* ".loc("Size of [_1] ([_2] bytes) saved to [_3]",$src_drive,$bytes,$file_size_path)."\n";
   # Save list of partitions we will be backing up
   my @partlist = get_selected_partitions('backup_partitions');
@@ -710,6 +768,17 @@ sub do_restore {
   my $src_bytes = `cat $src_size`;
   $src_bytes =~ s/\D//g;
   print "*** Size of original drive: $src_bytes bytes\n";
+  my $src_fdisk_text = `cat $src_sfdisk`;
+  if ('sectors' eq fdisk_units($src_fdisk_text)) {
+    print "*** Reading original drive partition table.\n";
+    my $src_bytes_fdisk = max(values partends($src_fdisk_text));
+    if ($src_bytes_fdisk > $src_bytes) {
+      print "Warning: stored size of original drive $src_bytes is smaller than size calculated from original partition table $src_bytes_fdisk !\n";
+    }
+    $src_bytes = $src_bytes_fdisk;
+    print "*** Size of original drive (from partition table): $src_bytes bytes\n";
+  }
+
   my $bd = `fdisk -l /dev/$dest_drive | grep '/dev/$dest_drive:'`;
   my (undef, $dest_bytes) = split(", ", $bd);
   $dest_bytes =~ s/\D//g;
