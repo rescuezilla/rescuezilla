@@ -863,7 +863,8 @@ sub update_restore_progress {
     my $tool = "partclone.restore";
     system("umount /mnt/$dest_drive$pn 2>&1; dd if=/dev/zero of=/dev/$dest_drive$pn bs=1K count=1000; sync");
     set_status(loc("Preparing to restore backup for Drive [_1], Part [_2]...",$dn,$pn));
-    print "*** ".loc("Processing [_1] using [_2]...",$part,$tool)."\n";
+    print "*** ".loc("Processing [_1] using [_2]...","$dest_drive$pn",$tool)."\n";
+    system("umount /dev/$dest_drive$pn 2>&1");
     system("umount /dev/$part 2>&1");
     print "*** ".loc("Executing: ")."( cat /$src"."_part$pn.* | pigz -d -c | $tool -F -L /partclone.log -O /dev/$dest_drive$pn ) 2>&1 |\n";
     open $PROGRESS, "( cat /$src"."_part$pn.* | pigz -d -c | $tool -F -L /partclone.log -O /dev/$dest_drive$pn ) 2>&1 |";
