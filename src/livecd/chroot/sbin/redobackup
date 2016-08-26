@@ -1233,9 +1233,21 @@ sub mount_data {
   for ($status{'mount_type'}) {
     if (/DEV/) {
       # Mount a regular drive
+      my $retcode;
       $status{'mount_source'} =~ s/\|//g;
-      system("mount /dev/$status{'mount_source'} ".MOUNT_POINT);
       print "* ".loc("Executing: ")."mount /dev/$status{'mount_source'} ".MOUNT_POINT."\n";
+      $retcode = system( "mount \Q/dev/$status{'mount_source'}\E ".MOUNT_POINT);
+      if ($retcode != 0) {
+       my $mount;
+       my $mp = MOUNT_POINT;
+       $mount = `grep ^\Q/dev/$status{'mount_source'}\E /proc/mounts`;
+       chomp $mount;
+       $mount = (split( / /, $mount))[1];
+       if ($mount) {
+          print "* Executing: mount --bind \Q${mount}\E ".MOUNT_POINT."\n";
+         system             "mount --bind \Q${mount}\E ".MOUNT_POINT;
+       }
+      }
     } elsif (/SMB/) {
       # Mount a network share
       my $args;
