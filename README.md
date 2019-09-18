@@ -30,3 +30,7 @@ Redo can be booted on any PC or Mac from a USB stick, or CD, and uses the exact 
 Old, out-of-date releases (from 2012) are available at the old Sourceforge page: https://sourceforge.net/projects/redobackup/files/
 
 Check back here soon for a more modern release!
+
+## Building 
+
+- See [Building ISO image](docs/build_instructions/BUILD.ISO.IMAGE.md)
