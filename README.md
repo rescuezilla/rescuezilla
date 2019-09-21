@@ -1,3 +1,5 @@
+![Redo Backup and Recovery Logo](docs/images/redo.logo.png)
+
 # Redo Backup and Recovery [![Build Status](https://travis-ci.org/redobackup/redobackup.svg?branch=master)](https://travis-ci.org/redobackup/redobackup) 
 
 Redo Backup and Recovery is an extremely easy-to-use graphical environment for system rescue, including full system backup, bare metal recovery, partition editing, undeleting files, web browsing, and more.
