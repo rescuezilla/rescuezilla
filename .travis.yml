@@ -1,0 +1,19 @@
+language: minimal
+
+# The build bot OS environment does not really matter, as the docker image
+# provides the primary host environment for the build. However, a more recent
+# OS provides a more recent Docker release, which means additional Docker
+# functionality.
+dist: bionic
+
+services:
+  - docker
+
+# Launches Docker container to act as 'host system'. See BUILD.ISO.IMAGE.md for more information.
+before_install:
+- docker ps -a
+- docker build --tag builder.image .
+- docker run --rm --detach --privileged --name builder.container -v `pwd`:/home/redobackup -t builder.image cat
+
+script:
+- docker exec -it builder.container make -C /home/redobackup install
