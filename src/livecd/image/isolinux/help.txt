@@ -14,12 +14,12 @@
                                                may take up to five minutes to
                                                load and show the interface
 
- * If you have trouble getting your display to work properly,  press <TAB> at
-   boot and set the "vga=XXX" option to your desired mode -- see all modes at
-   http://en.wikipedia.org/wiki/VESA_BIOS_Extensions
+ * If you have trouble getting your display to work properly, select the safe
+   mode option and manually set a screen mode that is known to work with your
+   video card and/or monitor
 
  * Remember that hardware support is limited to that of Ubuntu, and that your
    hardware must be compatible with Ubuntu in order to work with Redo Backup
 
  * There are a multitude of boot options available for Ubuntu, which may help
-   you to get your specific hardware to run. Search for "Ubuntu Boot Options"
+   your specific hardware run -- search online for "ubuntu boot options"

@@ -103,7 +103,8 @@ apt-get install --yes --no-install-recommends time \
                                               hfsutils \
                                               reiser4progs \
                                               jfsutils \
-                                              smbclient
+                                              smbclient \
+                                              system-config-lvm
 
 ln -s /usr/bin/pcmanfm /usr/bin/nautilus
 rm /usr/bin/{rpcclient,rpcinfo,smbcacls,smbclient,smbcquotas,smbget,smbspool,smbtar}

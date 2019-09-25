@@ -1,5 +1,15 @@
 -------------------------------------------------------------------------------
+  Version 1.0.1 (2011-08-09)
+-------------------------------------------------------------------------------
+  * LVM2 support added
+  * Fixed HFS+ bug that prevented the proper partclone tool from being called
+  * Minor changes to boot menu
+  * Safe mode boot option now prompts user to select a valid video mode
+
+-------------------------------------------------------------------------------
   Version 1.0.0 (2011-07-01)
+-------------------------------------------------------------------------------
+  * Added the wodim package for command-line CD burning
   * Password boxes now display hidden characters when typed in
   * Increased boot delay for machines that are slow to display it
   * Changed default boot option to load the system into RAM with "toram"
@@ -11,10 +21,14 @@
   Version 0.9.9 (2011-06-10)
 -------------------------------------------------------------------------------
   * Added missing ntfs-3g package to allow saving backups to NTFS drives
+  * Version number can be found in bottom left after booting into GUI
 
 -------------------------------------------------------------------------------
   Version 0.9.8 (2011-03-10)
 -------------------------------------------------------------------------------
+  * Major platform shift; building from Ubuntu rather than xPUD in the future
+  * Many base features not directly related to backup/restore have changed
+  * Added boot menu option to check CD media for defects
   * Added performance enhancement section to /etc/smb.conf
   * Updated fsarchiver and partclone binaries to latest stable versions
   * Boot splash screen now displays version number for easy identification

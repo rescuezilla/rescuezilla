@@ -1110,7 +1110,7 @@ sub which_backup_tool {
   } elsif ($fs =~ m/ntfs/) {
     $tool .= "ntfs";
   } elsif ($fs =~ m/hfs/) {
-    $tool .= "hfs";
+    $tool .= "hfsp";
   } elsif ($fs =~ m/jfs/) {
     $tool .= "jfs";
   } elsif ($fs =~ m/reiser4/) {
