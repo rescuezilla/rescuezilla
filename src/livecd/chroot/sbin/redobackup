@@ -718,6 +718,7 @@ sub update_restore_progress {
   my $dest_drive = $builder->get_object('restore_dest')->get_active_text();
   $src =~ s/\.backup$//g;
   $src =~ s/ /\\ /g;
+  my $src_mbr = $src.'.mbr';
   # See if the filehandle is open
   if (!defined($PROGRESS)) {
     # No command is being executed
@@ -828,6 +829,10 @@ sub update_restore_progress {
         refresh_window();
         # Unmount stuff
         system("sync");
+        sleep(0.5);
+        print "*** Writing MBR to $dest_drive\n";
+        set_status("Rewriting master boot record to destination drive...");
+        system("dd of=/dev/$dest_drive if=$src_mbr bs=32768 count=1; sync;");
         sleep(0.5);
         system("umount ".MOUNT_POINT);
         my $elapsed = sprintf("%.1f", (time()-$status{'start'})/60);
