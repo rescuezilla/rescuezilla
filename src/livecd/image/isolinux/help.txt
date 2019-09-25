@@ -5,21 +5,21 @@
 
                                              * At the  boot  screen,  use the
                                                UP/DOWN arrows and  ENTER  key
-                                               to select  a boot mode.   Some
-                                               systems  may  only  run in one
-                                               particular mode.
+                                               to select your boot mode; some
+                                               systems  may  only run  in one
+                                               particular mode
 
                                              * Some machines boot much slower
                                                than others, and older systems
                                                may take up to five minutes to
-                                               load and display the program.
+                                               load and show the interface
 
- * Although the screen may not change during boot, it is loading.   Check the
-   CD-ROM or USB drive lights for activity; they are likely busy working.
+ * If you have trouble getting your display to work properly,  press <TAB> at
+   boot and set the "vga=XXX" option to your desired mode -- see all modes at
+   http://en.wikipedia.org/wiki/VESA_BIOS_Extensions
 
- * Try Enhanced video mode for maximum performance and screen  resolution  on
-   your system.   This attempts to load a driver for your specific video card
-   while Standard mode loads a generic driver that works with most hardware.
+ * Remember that hardware support is limited to that of Ubuntu, and that your
+   hardware must be compatible with Ubuntu in order to work with Redo Backup
 
- * To change the keymap, select the mode you wish to load, and then press the
-   <TAB> key to edit the keymap and language codes as needed.
+ * There are a multitude of boot options available for Ubuntu, which may help
+   you to get your specific hardware to run. Search for "Ubuntu Boot Options"

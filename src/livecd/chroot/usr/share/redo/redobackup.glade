@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <requires lib="gtk+" version="2.16"/>
   <!-- interface-naming-policy project-wide -->
@@ -522,7 +522,7 @@
                                                             <object class="GtkEntry" id="backup_dest_server">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">True</property>
-                                                            <property name="invisible_char">&#x25CF;</property>
+                                                            <property name="invisible_char">●</property>
                                                             </object>
                                                             <packing>
                                                             <property name="left_attach">1</property>
@@ -545,7 +545,7 @@
                                                             <object class="GtkEntry" id="backup_dest_user">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">True</property>
-                                                            <property name="invisible_char">&#x25CF;</property>
+                                                            <property name="invisible_char">●</property>
                                                             </object>
                                                             <packing>
                                                             <property name="left_attach">1</property>
@@ -570,7 +570,8 @@
                                                             <object class="GtkEntry" id="backup_dest_pass">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">True</property>
-                                                            <property name="invisible_char">&#x25CF;</property>
+                                                            <property name="visibility">False</property>
+                                                            <property name="invisible_char">●</property>
                                                             </object>
                                                             <packing>
                                                             <property name="left_attach">1</property>
@@ -595,7 +596,7 @@
                                                             <object class="GtkEntry" id="backup_dest_domain">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">True</property>
-                                                            <property name="invisible_char">&#x25CF;</property>
+                                                            <property name="invisible_char">●</property>
                                                             </object>
                                                             <packing>
                                                             <property name="left_attach">1</property>
@@ -689,7 +690,7 @@ The folder a backup is saved in is usually a description of the computer, e.g. &
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">True</property>
                                                     <property name="editable">False</property>
-                                                    <property name="invisible_char">&#x25CF;</property>
+                                                    <property name="invisible_char">●</property>
                                                   </object>
                                                   <packing>
                                                     <property name="padding">2</property>
@@ -760,7 +761,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                               <object class="GtkEntry" id="backup_name">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">True</property>
-                                                <property name="invisible_char">&#x25CF;</property>
+                                                <property name="invisible_char">●</property>
                                                 <signal name="changed" handler="backup_name_changed"/>
                                               </object>
                                             </child>
@@ -1152,7 +1153,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <object class="GtkEntry" id="restore_source_server">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">True</property>
-                                                            <property name="invisible_char">&#x25CF;</property>
+                                                            <property name="invisible_char">●</property>
                                                             </object>
                                                             <packing>
                                                             <property name="left_attach">1</property>
@@ -1175,7 +1176,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <object class="GtkEntry" id="restore_source_user">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">True</property>
-                                                            <property name="invisible_char">&#x25CF;</property>
+                                                            <property name="invisible_char">●</property>
                                                             </object>
                                                             <packing>
                                                             <property name="left_attach">1</property>
@@ -1200,7 +1201,8 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <object class="GtkEntry" id="restore_source_pass">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">True</property>
-                                                            <property name="invisible_char">&#x25CF;</property>
+                                                            <property name="visibility">False</property>
+                                                            <property name="invisible_char">●</property>
                                                             </object>
                                                             <packing>
                                                             <property name="left_attach">1</property>
@@ -1225,7 +1227,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <object class="GtkEntry" id="restore_source_domain">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">True</property>
-                                                            <property name="invisible_char">&#x25CF;</property>
+                                                            <property name="invisible_char">●</property>
                                                             </object>
                                                             <packing>
                                                             <property name="left_attach">1</property>
@@ -1307,8 +1309,8 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                             <child>
                                               <object class="GtkFileChooserButton" id="restore_file">
                                                 <property name="visible">True</property>
-                                                <property name="filter">restore_filefilter</property>
                                                 <property name="create_folders">False</property>
+                                                <property name="filter">restore_filefilter</property>
                                                 <property name="title" translatable="yes">Select Backup Image</property>
                                                 <signal name="selection_changed" handler="restore_file_changed"/>
                                               </object>

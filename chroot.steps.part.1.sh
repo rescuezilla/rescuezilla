@@ -90,6 +90,7 @@ apt-get install --yes --no-install-recommends time \
                                               lshw-gtk \
                                               testdisk \
                                               usb-creator-gtk \
+                                              wodim \
                                               curlftpfs \
                                               nmap \
                                               cifs-utils \

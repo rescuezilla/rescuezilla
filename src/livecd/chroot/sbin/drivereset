@@ -5,7 +5,7 @@
 #     * http://ata.wiki.kernel.org/index.php/ATA_Secure_Erase
 #     * http://cmrr.ucsd.edu/people/Hughes/SecureErase.shtml
 # ----------------------------------------------------------------------
-#   Copyright (C) 2010, RedoBackup.org.
+#   Copyright (C) 2011, RedoBackup.org.
 # ----------------------------------------------------------------------
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -145,13 +145,16 @@ sub reset_drive {
   if (!$security{'enabled'}) {
     fatal_crash("Unable to set security password on the drive. Power cycle your computer and try again.");
   }
-  # Run in enhanced mode if supported
-  if ($security{'enhanced'}) {
-    open $PROGRESS, "time ".HDPARM_BIN." --user-master u --security-erase-enhanced RESET $target 2>&1 |";
-  } else {
-    print "Executing: time ".HDPARM_BIN." --user-master u --security-erase RESET $target |\n";
-    open $PROGRESS, "time ".HDPARM_BIN." --user-master u --security-erase RESET $target |";
-  }
+  ## Run in enhanced mode if supported
+  #if ($security{'enhanced'}) {
+  #  open $PROGRESS, "time ".HDPARM_BIN." --user-master u --security-erase-enhanced RESET $target 2>&1 |";
+  #} else {
+  #  print "Executing: time ".HDPARM_BIN." --user-master u --security-erase RESET $target |\n";
+  #  open $PROGRESS, "time ".HDPARM_BIN." --user-master u --security-erase RESET $target |";
+  #}
+  # Don't run in enhanced mode because some drives say they support it when they don't
+  print "Executing: time ".HDPARM_BIN." --user-master u --security-erase RESET $target |\n";
+  open $PROGRESS, "time ".HDPARM_BIN." --user-master u --security-erase RESET $target |";
   my $flags = fcntl($PROGRESS, F_GETFL, 0) or die "\nCouldn't get flags: $!\n";
   $flags |= O_NONBLOCK;
   fcntl($PROGRESS, F_SETFL, $flags) or die "\nCouldn't set flags: $!\n";

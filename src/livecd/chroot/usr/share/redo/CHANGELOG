@@ -1,4 +1,13 @@
 -------------------------------------------------------------------------------
+  Version 1.0.0 (2011-07-01)
+  * Password boxes now display hidden characters when typed in
+  * Increased boot delay for machines that are slow to display it
+  * Changed default boot option to load the system into RAM with "toram"
+  * Changed safe video mode to use "xforcevesa nomodeset"
+  * Updated the boot help text to provide info about Ubuntu boot options
+  * Removed enhanced security erase option in drive reset tool for reliability
+
+-------------------------------------------------------------------------------
   Version 0.9.9 (2011-06-10)
 -------------------------------------------------------------------------------
   * Added missing ntfs-3g package to allow saving backups to NTFS drives
