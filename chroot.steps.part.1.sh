@@ -98,6 +98,7 @@ apt-get install --yes --no-install-recommends time \
                                               reiserfsprogs \
                                               dosfstools \
                                               ntfsprogs \
+                                              ntfs-3g \
                                               hfsutils \
                                               reiser4progs \
                                               jfsutils \
