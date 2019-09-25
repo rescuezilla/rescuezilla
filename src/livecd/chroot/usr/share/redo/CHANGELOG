@@ -1,4 +1,19 @@
 -------------------------------------------------------------------------------
+  Version 1.0.2 (2012-01-03)
+-------------------------------------------------------------------------------
+  * Updated to latest partclone stable binaries
+  * Shorten dropdown menus with an ellipsis after certain character limit
+  * Ubuntu Maverick repos for updates and backports added; base upgraded
+  * Chromium browser launched with user data dir specified (to run as root)
+  * Show time elapsed when backup/restore operations are completed
+  * Added boot-repair tool for correcting any boot issues after restore
+  * Added wget utility for easily downloading files from the command line
+  * Show free space on destination drive while saving a backup
+  * Warn if less than 1GB free on backup destination drive
+  * Show an error if any of the partitions to restore do not exist
+  * Allow spaces in network shared folders
+
+-------------------------------------------------------------------------------
   Version 1.0.1 (2011-08-09)
 -------------------------------------------------------------------------------
   * LVM2 support added

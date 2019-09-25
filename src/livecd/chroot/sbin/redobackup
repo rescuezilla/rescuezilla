@@ -35,7 +35,8 @@ use constant MOUNT_POINT   => "/mnt/backup";
 use constant DATA_DIR      => "/usr/share/redo/";
 use constant APP_ICON      => DATA_DIR."redobackup-icon.png";
 use constant GLADE_UI      => "redobackup.glade";
-use constant FS_SUPPORT  => ( "ext2",
+use constant MAX_WIDTH     => 96;
+use constant FS_SUPPORT    => ( "ext2",
                                 "ext3",
                                 "ext4",
                                 "fat",
@@ -167,6 +168,8 @@ sub backup_step {
     } else  {
       $builder->get_object('backup_folder')->set_text('/');
       $builder->get_object('backup_folder_browse')->grab_focus();
+      my $free_mb = get_free_space(1);
+      if ($free_mb < 1000) { message_box("Warning! This drive has only ".$free_mb."MB of free space. Make sure your backup will fit."); }
     }
     $builder->get_object('backup_button_next')->set_sensitive(TRUE);
   } elsif ($step == 5) {
@@ -267,10 +270,13 @@ sub do_backup {
   my @partlist = get_selected_partitions('backup_partitions');
   my $partlist_str = join("\n", @partlist);
   save_file($partlist_str, "$dest/$file.backup");
+  $status{'start'} = time();
   $status{'part_list'} = \@partlist;
   $status{'last_part'} = $partlist[-1];
   $status{'total_parts'} = scalar(@partlist);
   $status{'current_part'} = 0;
+  $status{'frame'} = 0;
+  $status{'free'} = get_free_space();
   print "\t* Partition list saved to $dest/$file.backup\n";
   # Create backup by calling progress sub
   print "\t* Total partitions to save: ".$status{'total_parts'}."\n";
@@ -368,6 +374,11 @@ sub update_backup_progress {
       set_status("Calculating bitmap for Drive $dn, Part $pn...");
     } elsif ($data =~ m/Elapsed.+Rate.+/) {
       # Backup progress line
+      $status{'frame'}++;
+      if ($status{'frame'} >= 10) {
+        $status{'frame'} = 0;
+        $status{'free'} = get_free_space();
+      }
       my $elapsed = substr($data,9,8);
       my $remaining = substr($data,30,8);
       my $pct = substr($data,50,6);
@@ -376,7 +387,8 @@ sub update_backup_progress {
       $rate =~ s/\s+//g;
       print "Elapsed time: *$elapsed* Remaining: *$remaining* Percent: *$pct* Rate: *$rate*\n";
       $builder->get_object('backup_progress_status')->set_text("Part ".($status{'current_part'}+1)." of ".$status{'total_parts'}." (".$pct."%)\n$elapsed Elapsed\n$remaining Remaining");
-      set_status("Saving part ".($status{'current_part'}+1)." of ".$status{'total_parts'}." ($rate)");
+      #set_status("Saving part ".($status{'current_part'}+1)." of ".$status{'total_parts'}." ($rate)");
+      set_status("Saving at $rate (".$status{'free'}." free space)");
       my $overall_pct = ($status{'current_part'} / $status{'total_parts'}) + (($pct / 100) / $status{'total_parts'});
       $progress_bar->set_fraction($overall_pct);
       $progress_bar->set_text(sprintf("%.2f", $overall_pct * 100)."% Complete");
@@ -406,7 +418,8 @@ sub update_backup_progress {
         system("sync");
         sleep(0.5);
         system("umount ".MOUNT_POINT);
-        message_box("Operation complete.");
+        my $elapsed = sprintf("%.1f", (time()-$status{'start'})/60);
+        message_box("Backup image saved in $elapsed minutes.");
         system("notify-send -i ".APP_ICON." 'Backup saved successfully.'");
         print ">>> Operation complete.\n";
         return 0;
@@ -653,20 +666,38 @@ sub do_restore {
   }
   system("umount /mnt/$dest_drive?* 2>&1");
   sleep(0.5);
+  print "*** Writing MBR to $dest_drive\n";
   set_status("Writing master boot record to destination drive...");
   system("dd of=/dev/$dest_drive if=$src_mbr bs=32768 count=1; sync;");
   sleep(0.5);  
+  print "*** Restoring partition table to $dest_drive\n";
   set_status("Writing extended partition table to destination drive...");
   system("sfdisk -fx /dev/$dest_drive < $src_sfdisk; sync");
   sleep(0.5);
+  print "*** Reloading partition table from $dest_drive\n";
   set_status("Reloading new partition table from destination drive...");
   system("umount /mnt/$dest_drive?* 2>&1");
   system("sfdisk -R /dev/$dest_drive");
   sleep(1);
+  $status{'start'} = time();
   $status{'part_list'} = \@partlist;
   $status{'last_part'} = $partlist[-1];
   $status{'total_parts'} = scalar(@partlist);
   $status{'current_part'} = 0;
+  # Verify all partitions now exist; crash otherwise
+  foreach my $part (@{$status{'part_list'}}) {
+    chomp($part);
+    my ($dn, $pn) = get_drivenum_partnum($part);
+    my $pid = $dest_drive.$pn;
+    print "*** Verifying that /dev/$pid exists and can be restored to: ";
+    my $part_check = `file /dev/$pid | grep 'block special' | wc -l`;
+    if ($part_check==1) {
+      print "OK\n";
+    } else {
+      print "FAIL\n";
+      fatal_crash("The partition table did not restore properly. The backup image may contain all your data, but without a valid partition table, no data can be restored.");
+    }
+  }
   Glib::Timeout->add(50, \&update_restore_progress);
   refresh_window();
 }
@@ -799,7 +830,8 @@ sub update_restore_progress {
         system("sync");
         sleep(0.5);
         system("umount ".MOUNT_POINT);
-        message_box("Operation complete.");
+        my $elapsed = sprintf("%.1f", (time()-$status{'start'})/60);
+        message_box("Backup restored in $elapsed minutes.");
         system("notify-send -i ".APP_ICON." 'Backup restored successfully.'");
         print ">>> Operation complete.\n";
         return 0;
@@ -1150,8 +1182,8 @@ sub mount_data {
       if ($status{'mount_domain'} ne '') { push(@smbargs, "dom=".$status{'mount_domain'}); }
       my $args = join(',', @smbargs);
       if ($args eq '') { $args = "guest"; }
-      system("mount.cifs $status{'mount_source'} ".MOUNT_POINT." -o $args");
-      print "* Executing: mount.cifs $status{'mount_source'} ".MOUNT_POINT." -o $args\n";
+      system("mount.cifs '$status{'mount_source'}' ".MOUNT_POINT." -o $args");
+      print "* Executing: mount.cifs '$status{'mount_source'}' ".MOUNT_POINT." -o $args\n";
     } elsif (/FTP/) {
       # Mount an FTP server
       my $ftpargs = '';
@@ -1185,6 +1217,7 @@ sub set_drive_dropdown {
   for my $drive (sort keys %drives) {
     $dev = $drives{$drive}{'device'};
     $desc = $drives{$drive}{'desc'};
+    if (length($desc)>MAX_WIDTH+3) { $desc = substr($desc,0,MAX_WIDTH).'...'; }
     if ((defined($_[1])) && ($_[1] eq 'usb')) {
       if ($drives{$drive}{'type'} eq 'usb') {
         $mdl->set($mdl->append, 0, $dev, 1, $desc);
@@ -1235,6 +1268,7 @@ sub set_partition_dropdown {
       if (grep $_ eq $part, @blacklist) {
         print "*** Omitting backup source $part from destination list\n";
       } else {
+        if (length($part_desc)>MAX_WIDTH+3) { $part_desc = substr($part_desc,0,MAX_WIDTH).'...'; }
         $mdl->set($mdl->append, 0, "DEV|$part", 1, $part_desc);
       }
     }
@@ -1262,6 +1296,7 @@ sub set_share_dropdown {
       $share_desc = "Shared folder $folder on $host";
     }
     if ((defined($desc))&&($desc ne '')) { $share_desc .= " ($desc)"; }
+    if (length($share_desc)>MAX_WIDTH+3) { $share_desc = substr($share_desc,0,MAX_WIDTH).'...'; }
     $mdl->set($mdl->append, 0, "$type|$share", 1, $share_desc);
   }
   $mdl->set($mdl->append, 0, "SMB|", 1, "Shared folder specified below");
@@ -1600,4 +1635,19 @@ sub trim {
   $string =~ s/^\s+//;
   $string =~ s/\s+$//;
   return $string;
+}
+
+sub get_free_space {
+  # Return free space left on destination drive
+  my $mb = shift;
+  my $mount_point = MOUNT_POINT;
+  my $cmd = '';
+  if ((defined($mb))&&($mb==1)) {
+    $cmd = "--block-size=1M";
+  } else {
+    $cmd = "-h";
+  }
+  my ($null1, $null2, $null3, $free) = split(/\s+/, `df $cmd $mount_point | tail -n 1`);
+  print "Free space: $free\n";
+  return $free;
 }

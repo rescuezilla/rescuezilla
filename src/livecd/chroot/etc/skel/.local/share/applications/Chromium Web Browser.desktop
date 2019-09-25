@@ -55,7 +55,7 @@ Comment[vi]=Truy cập Internet
 Comment[zh_CN]=访问互联网
 Comment[zh_HK]=連線到網際網路
 Comment[zh_TW]=連線到網際網路
-Exec=/usr/bin/chromium-browser %U
+Exec=/usr/bin/chromium-browser --user-data-dir=/root/.config/chromium %U
 GenericName=Web Browser
 GenericName[ar]=متصفح الشبكة
 GenericName[ast]=Restolador web

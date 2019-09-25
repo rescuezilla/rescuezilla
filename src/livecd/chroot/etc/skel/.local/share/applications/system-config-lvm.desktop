@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Logical Volumes
+GenericName=system-config-lvm
+Comment=Configure LVM in a graphical setting
+StartupNotify=true
+Icon=/usr/share/system-config-lvm/pixmaps/lv_icon.png
+Exec=/usr/bin/system-config-lvm
+Type=Application
+Terminal=false
+Categories=System

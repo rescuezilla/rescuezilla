@@ -31,10 +31,12 @@ ln -s /bin/true /sbin/initctl
 # Install the basic packages
 apt-get install --yes --no-install-recommends discover laptop-detect os-prober linux-generic casper lupin-casper
 
-# Optional: Add update and backport repos. Not added here as the official ISO image did not.
+# Optional: Add update and backport repos. The official v1.0.2 and v1.0.3 ISO
+# images did not have the update and backport repos in sources.list, but used
+# the repos to upgrade packages (maybe was used only in debootstrap phase?).
 echo "deb $APT_REPOSITORY_URL $CODENAME main universe multiverse" > /etc/apt/sources.list
-#echo "deb $APT_REPOSITORY_URL $CODENAME-updates main universe multiverse" >> /etc/apt/sources.list
-#echo "deb $APT_REPOSITORY_URL $CODENAME-backports main universe multiverse" >> /etc/apt/sources.list
+echo "deb $APT_REPOSITORY_URL $CODENAME-updates main universe multiverse" >> /etc/apt/sources.list
+echo "deb $APT_REPOSITORY_URL $CODENAME-backports main universe multiverse" >> /etc/apt/sources.list
 apt-get update
 apt-get upgrade --yes
 
@@ -104,6 +106,7 @@ apt-get install --yes --no-install-recommends time \
                                               reiser4progs \
                                               jfsutils \
                                               smbclient \
+                                              wget \
                                               system-config-lvm
 
 ln -s /usr/bin/pcmanfm /usr/bin/nautilus
