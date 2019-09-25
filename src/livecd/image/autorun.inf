@@ -1,0 +1,4 @@
+[autorun] 
+open=autorun.exe 
+icon=autorun.exe,0
+label=Redo Backup and Recovery

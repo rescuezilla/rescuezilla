@@ -1,0 +1,20 @@
+[Desktop Entry]
+Categories=GNOME;GTK;Utility;Core;
+Comment=Launch other applications and provide various utilities to manage windows, show the time, etc.
+Exec=gnome-panel
+Hidden=true
+Icon=gnome-panel
+Name=Panel
+NoDisplay=true
+OnlyShowIn=GNOME;
+StartupNotify=true
+Terminal=false
+Type=Application
+X-GNOME-AutoRestart=true
+X-GNOME-Autostart-Notify=true
+X-GNOME-Bugzilla-Bugzilla=GNOME
+X-GNOME-Bugzilla-Component=general
+X-GNOME-Bugzilla-Product=gnome-panel
+X-GNOME-Bugzilla-Version=2.30.2
+X-GNOME-Provides=panel
+X-Ubuntu-Gettext-Domain=gnome-panel-2.0

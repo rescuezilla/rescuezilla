@@ -1,0 +1,11 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Comment=Personal preferences
+Icon=preferences-desktop
+Type=Directory
+X-Ubuntu-Gettext-Domain=gnome-menus
+Comment[en_US]=Settings and preferences
+Icon[en_US]=/usr/share/icons/gnome-colors-common/scalable/categories/preferences-system.svg
+Name[en_US]=Preferences
+Name=Preferences

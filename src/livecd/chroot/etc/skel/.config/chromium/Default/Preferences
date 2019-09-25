@@ -1,0 +1,45 @@
+{
+   "browser": {
+      "check_default_browser": false,
+      "custom_chrome_frame": false
+   },
+   "countryid_at_install": 21843,
+   "default_search_provider": {
+      "id": "2",
+      "name": "Google",
+      "prepopulate_id": "1",
+      "search_url": "{google:baseURL}search?{google:RLZ}{google:acceptedSuggestion}{google:originalQueryForSuggestion}sourceid=chrome&client=ubuntu&channel=cs&ie={inputEncoding}&q={searchTerms}",
+      "suggest_url": "{google:baseSuggestURL}search?client=chrome&hl={language}&q={searchTerms}"
+   },
+   "download": {
+      "directory_upgrade": true,
+      "extensions_to_open": ""
+   },
+   "extensions": {
+      "autoupdate": {
+         "next_check": "12921075970719668"
+      },
+      "chrome_url_overrides": {
+         "bookmarks": [ "chrome-extension://eemcgdkfndhakfknompkggombfjjjeno/main.html" ]
+      }
+   },
+   "homepage": "http://www.google.com/",
+   "homepage_is_newtabpage": false,
+   "ntp": {
+      "pref_version": 1,
+      "shown_sections": 29,
+      "tips_cache": {
+         "current_tip": 0,
+         "tips": [ "Did you know that there are over 5,000 extensions in the \u003Ca href=\"http://chrome.google.com/extensions/\"\u003EChrome extensions gallery\u003C/a\u003E? They are organized in categories, such as extensions for blogging, shopping, and web development, for your convenience.", "Parlez-vous fran\u00E7ais ? Google Chrome's built-in translation bar helps you read more of the Web. \u003Ca href=\"http://www.google.com/support/chrome/bin/answer.py?answer=173424&ctx=tip\"\u003ELearn more\u003C/a\u003E", "Add extra features and functionality to your browser with extensions. Visit the \u003Ca href=\"https://chrome.google.com/extensions\" target=\"_blank\"\u003EChrome extensions gallery\u003C/a\u003E or learn more about \u003Ca href=\"http://www.google.com/support/chrome/bin/answer.py?hl=en&answer=154007&ctx=tip\" target=\"_blank\"\u003Eextensions\u003C/a\u003E.\n", "Control Google Chrome from the command line: run \u003Cspan class=\"code\"\u003Eman google-chrome\u003C/span\u003E in a terminal.", "Middle-click the new tab button to open a URL from the clipboard.", "Click and hold down the back button to see your browsing history.", "Customize Google Chrome with themes! Check out designs at the \u003Ca href=\"https://tools.google.com/chrome/intl/en/themes/index.html\" target=\"_blank\"\u003EThemes Gallery\u003C/a\u003E.", "When you use the find bar, yellow markers on the scrollbar help you quickly locate matches on the page. Learn more about using the \u003Ca href=\"http://www.google.com/support/chrome/bin/answer.py?answer=95635&ctx=tip\"\u003Efind bar\u003C/a\u003E.", "Search your bookmarks and browsing history from the address bar. \u003Ca href=\"http://www.google.com/support/chrome/bin/answer.py?answer=95440&ctx=tip\"\u003ELearn more\u003C/a\u003E", "Have your tabs arranged your way. Click a tab and drag it to a new position along the top of the browser window. Learn more about \u003Ca href=\"http://www.google.com/support/chrome/bin/answer.py?answer=95622&ctx=tips\"\u003Earranging tabs\u003C/a\u003E.", "Press \u003Cstrong\u003ECtrl+T\u003C/strong\u003E to open a new tab. Learn more \u003Ca href=\"http://www.google.com/support/chrome/bin/answer.py?answer=95743&ctx=tip\"\u003Ekeyboard shortcuts\u003C/a\u003E.", "Press \u003Cstrong\u003ECtrl+N\u003C/strong\u003E to open a new browser window. Learn more \u003Ca href=\"http://www.google.com/support/chrome/bin/answer.py?answer=95743&ctx=tip\"\u003Ekeyboard shortcuts\u003C/a\u003E.", "To search a specific site, start typing the site's web address in the address bar and press \u003Cstrong\u003ETab\u003C/strong\u003E when prompted. Learn more \u003Ca href=\"http://www.google.com/support/chrome/bin/answer.py?answer=95655&ctx=tip\"\u003Esearch tips\u003C/a\u003E.", "Create address bar keywords for search engines you frequently use. \u003Ca href=\"http://www.google.com/support/chrome/bin/answer.py?hl=en&answer=95653&ctx=tips\"\u003ELearn how\u003C/a\u003E", "Press \u003Cstrong\u003ECtrl\u003C/strong\u003E and + to enlarge a page; \u003Cstrong\u003ECtrl\u003C/strong\u003E and - to make the page smaller; and \u003Cstrong\u003ECtrl\u003C/strong\u003E and \u003Cstrong\u003E0\u003C/strong\u003E to return the page to its normal size. Learn more \u003Ca href=\"http://www.google.com/support/chrome/bin/answer.py?answer=95743&ctx=tip\"\u003Ekeyboard shortcuts\u003C/a\u003E.", "Want to quickly search the page you're viewing? Press \u003Cstrong\u003ECtrl+F\u003C/strong\u003E to open the find bar. Learn more about \u003Ca href=\"http://www.google.com/support/chrome/bin/answer.py?answer=95635&ctx=tip\"\u003Eusing the find bar\u003C/a\u003E.\n", "Press \u003Cstrong\u003ECtrl+S\u003C/strong\u003E to save your current webpage. Learn more \u003Ca href=\"http://www.google.com/support/chrome/bin/answer.py?answer=95743&ctx=tip\"\u003Ekeyboard shortcuts\u003C/a\u003E.", "Press \u003Cstrong\u003ECtrl+P\u003C/strong\u003E to print your current webpage. Learn more \u003Ca href=\"http://www.google.com/support/chrome/bin/answer.py?answer=95743&ctx=tip\"\u003Ekeyboard shortcuts\u003C/a\u003E.", "Press \u003Cstrong\u003ECtrl+J\u003C/strong\u003E to see a list of files you've downloaded. Learn more \u003Ca href=\"http://www.google.com/support/chrome/bin/answer.py?answer=95743&ctx=tip\"\u003Ekeyboard shortcuts\u003C/a\u003E.", "Press \u003Cstrong\u003ECtrl+H\u003C/strong\u003E to see your browsing history. Learn more \u003Ca href=\"http://www.google.com/support/chrome/bin/answer.py?answer=95743&ctx=tip\"\u003Ekeyboard shortcuts\u003C/a\u003E.", "Click a tab and drag it out of the tab strip to open it in a new window. Learn more about \u003Ca href=\"http://www.google.com/support/chrome/bin/answer.py?answer=95622&ctx=tips\"\u003Eusing tabs\u003C/a\u003E. \n", "Press \u003Cstrong\u003ECtrl+Shift+N\u003C/strong\u003E to open a new window in incognito mode. Pages you visit while in incognito mode aren't stored in your browsing history. \u003Ca href=\"http://www.google.com/support/chrome/bin/answer.py?answer=95464&ctx=tip\"\u003ELearn more\u003C/a\u003E", "Press \u003Cstrong\u003ECtrl+O\u003C/strong\u003E to open a file in the browser. Learn more \u003Ca href=\"http://www.google.com/support/chrome/bin/answer.py?answer=95743&ctx=tip\"\u003Ekeyboard shortcuts\u003C/a\u003E.", "Press \u003Cstrong\u003EF11\u003C/strong\u003E to go full screen. Learn more \u003Ca href=\"http://www.google.com/support/chrome/bin/answer.py?answer=95743&ctx=tip\"\u003Ekeyboard shortcuts\u003C/a\u003E.", "Click the star next to the address bar to bookmark the page you're viewing. Learn more \u003Ca href=\"http://www.google.com/support/chrome/bin/answer.py?answer=95739&ctx=tip\"\u003Ebookmarking tricks\u003C/a\u003E.\n", "Want to hide thumbnails on the New Tab page? Click the thumbnails icon at the top of the page. Learn more about \u003Ca href=\"http://www.google.com/support/chrome/bin/answer.py?answer=95451&ctx=tip\"\u003Ecustomizing the New Tab page\u003C/a\u003E.", "Press \u003Cstrong\u003ECtrl+Shift+T\u003C/strong\u003E repeatedly to reopen the last 10 tabs you closed. Learn more \u003Ca href=\"http://www.google.com/support/chrome/bin/answer.py?answer=95743&ctx=tip\"\u003Ekeyboard shortcuts\u003C/a\u003E.", "Don't want to leave traces of your browsing history? Browse in incognito mode. \u003Ca href=\"http://www.google.com/support/chrome/bin/answer.py?answer=95464&ctx=tip\"\u003ELearn more\u003C/a\u003E", "Accidentally closed a window full of tabs? Find it again in the \u003Cstrong\u003ERecently closed\u003C/strong\u003E section of the New Tab page.", "Don't see a home button next to the address bar? Learn how to \u003Ca href=\"http://www.google.com/support/chrome/bin/answer.py?answer=95314&ctx=tip\"\u003Eadd one\u003C/a\u003E to get easy access to your home page.", "Search directly from the address bar. Learn more \u003Ca href=\"http://www.google.com/support/chrome/bin/answer.py?answer=95655&ctx=tip\"\u003Esearch tips\u003C/a\u003E.\n", "Press \u003Cstrong\u003ECtrl+B\u003C/strong\u003E to dock (or undock) your bookmarks bar under the address bar. Learn more \u003Ca href=\"http://www.google.com/support/chrome/bin/answer.py?answer=95743&ctx=tip\"\u003Ekeyboard shortcuts\u003C/a\u003E.", "Press \u003Cstrong\u003EF6\u003C/strong\u003E to quickly place your cursor in the address bar. Learn more \u003Ca href=\"http://www.google.com/support/chrome/bin/answer.py?answer=95743&ctx=tip\"\u003Ekeyboard shortcuts\u003C/a\u003E.", "Switching between computers? Keep your Google Chrome settings, bookmarks, and themes in sync across computers. \u003Ca href=\"http://www.google.com/support/chrome/bin/answer.py?answer=165138&ctx=tip\"\u003ELearn how\u003C/a\u003E" ],
+         "topic_id": "25688"
+      },
+      "tips_cache_update": "1276502118.154023",
+      "tips_server": "https://clients2.google.com/tools/service/npredir?r=chrometips_linux&hl=en-US"
+   },
+   "profile": {
+      "content_settings": {
+         "pref_version": 1
+      },
+      "exited_cleanly": true
+   }
+}

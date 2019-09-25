@@ -1,0 +1,12 @@
+[Desktop Entry]
+Categories=GNOME;GTK;System;Settings;HardwareSettings;
+Comment=Manage Drives and Media
+Exec=palimpsest
+Hidden=true
+Icon=palimpsest
+Name=Disk Utility
+StartupNotify=true
+Terminal=false
+Type=Application
+X-GNOME-DocPath=palimpsest/palimpsest.xml
+X-Ubuntu-Gettext-Domain=gnome-disk-utility

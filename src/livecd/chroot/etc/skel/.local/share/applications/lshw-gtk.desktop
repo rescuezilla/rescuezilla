@@ -1,0 +1,12 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Type=Application
+Name=Hardware Lister
+Comment=Provides information on hardware
+Comment[ca]=Proveeix informació sobre el maquinari
+Icon=lshw-gtk
+Exec=lshw-gtk
+Terminal=false
+Categories=Settings;HardwareSettings;
+Icon[en_US]=/usr/share/icons/gnome-colors-common/scalable/apps/hardinfo.svg

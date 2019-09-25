@@ -1,0 +1,92 @@
+-------------------------------------------------------------------------------
+  Version 0.9.8 (2011-03-10)
+-------------------------------------------------------------------------------
+  * Added performance enhancement section to /etc/smb.conf
+  * Updated fsarchiver and partclone binaries to latest stable versions
+  * Boot splash screen now displays version number for easy identification
+
+-------------------------------------------------------------------------------
+  Version 0.9.7 (2010-09-22)
+-------------------------------------------------------------------------------
+  * Added autorun.exe to help Windows users realize that a reboot is needed
+  * Changed color of UI background from orange to soft blue
+  * Copied VERSION and LICENSE files to root of CD-ROM for easier access
+
+-------------------------------------------------------------------------------
+  Version 0.9.6 (2010-08-28)
+-------------------------------------------------------------------------------
+  * Fixed: Backup required scanning net before specifying a share manually
+  * Fixed: Verification for drive reset can detect success or failure
+  * Fixed: Missing rsync CLI dependencies have been added to the live CD image
+  * Modified the bookmarks, labels and links in the UI
+  * Marked wireless features as unsupported in the UI (experimental only)
+  * Default boot option uses the fbdev driver in 1024x768 (16-bit) mode
+  * Removed unused boot modes (e.g. command line mode)
+  * Boot screen wait time reduced to 5 seconds
+  * All packages moved to the "core" image file for simplicity
+  * Added the grsync graphical utility for incremental file transfers
+  * Added the scp tool for secure transfer of files via SSH
+  * Added the very powerful gnome-disk-utility (palimpsest)
+  * Added support for encrypted volumes with cryptsetup
+  * Added GUI lshw-gtk tool to easily identify computer hardware components
+  * Added the baobab graphical disk usage tool
+
+-------------------------------------------------------------------------------
+  Version 0.9.5 (2010-08-08)
+-------------------------------------------------------------------------------
+  * Major speed improvements; backups and restores now 4x faster
+  * Standalone gzip binary allows the compression level to be specified
+  * Updated partclone to version 0.2.13
+  * Added the smartmontools "smartctl" CLI for monitoring drive health
+  * Back to using syslinux from the standard Ubuntu 9.10 repo version
+  * Only one isolinux.cfg/syslinux.cfg file to maintain
+
+-------------------------------------------------------------------------------
+  Version 0.9.4 (2010-08-02)
+-------------------------------------------------------------------------------
+  * New option to manually specify a shared folder or FTP server
+  * Allow retry if network mount fails or bad password is provided
+  * Warning: New backup naming convention allows dashes, not underscores
+  * Created /opt/backup to hold backup components (instead of using /opt/core)
+  * ISO CD-ROM label changed to "Redo Backup"
+  * Suppress umount error messages when they aren't really errors
+  * Added testdisk_static for recovering partition tables and MBRs
+  * Added rsync for copying files with a progress indicator
+  * Default boot option now works with any VESA-compatible video card
+  * Simplified boot menu focused on hardware support instead of languages
+  * Added F1 option to boot menu to display helpful options and information
+  * Cancel button kills any running backup/restore processes before exiting
+  * Hotplug scripts removed at boot time to stop automounting (for gparted)
+  * USB installer upgraded to syslinux-3.86, forcibly writes mbr.bin to device
+  * USB installer now creates FAT32 partition and filesystem instead of FAT16
+  * Optionally search for network shares on demand, rather than automatically
+  * Compatibility fixes and UI improvements to factory drive reset tool
+  * Added reiserfsprogs, reiser4progs and mcheck for more filesystem support
+
+-------------------------------------------------------------------------------
+  Version 0.9.3 (2010-07-04)
+-------------------------------------------------------------------------------
+  * Warning: Not interoperable with images from previous versions
+  * Updated partclone to version 0.2.12
+  * Save partclone error log to /partclone.log during each operation
+  * Split backup images into 2GB files rather than saving one giant file
+  * Added GZIP compression to reduce size of backup image
+  * Backup saves first 32768 bytes rather than 512 when imaging MBR
+  * Partition list saved to *.backup instead of *.redo
+  * Fixed missing nmap dependencies so that local FTP servers are found
+  * USB installation now detects if CD is in /dev/scd0 or /dev/sdc1
+  * Stronger warning before overwriting all data to destination drive
+  * Decision to abort restoration now aborts (continued either way before)
+  * Abort restore if destination drive is smaller than the original
+  * Do not allow partition being saved to be selected as the destination
+  * Warn when restoring to the same drive the backup image is being read from
+  * Minor graphic adjustment to title image
+  * Removed kernel boot option "quiet" so users can see it is booting
+  * Removed kernel boot option "noisapnp" (added by default in xPUD project)
+  * Splash screen implemented on USB stick installations
+  * Modified boot menu appearance and help text
+
+-------------------------------------------------------------------------------
+  Version 0.9.2 (2010-06-24)
+-------------------------------------------------------------------------------
+  * Initial release

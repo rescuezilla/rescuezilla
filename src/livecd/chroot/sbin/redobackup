@@ -1,0 +1,1603 @@
+#!/usr/bin/perl -w
+# ----------------------------------------------------------------------
+#   Redo Backup
+#   A simple GUI interface that allows bare-metal backup and restore.
+# ----------------------------------------------------------------------
+#   Copyright (C) 2010, RedoBackup.org.
+# ----------------------------------------------------------------------
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# ----------------------------------------------------------------------
+
+use strict;
+use warnings;
+use Glib qw{ TRUE FALSE };
+use Gtk2 '-init';
+use XML::Simple;
+use Gtk2::SimpleList;
+use IO::Handle;
+
+
+##### Constants found in our program ###################################
+use constant VERSION       => `cat /usr/share/redo/VERSION`;
+use constant CD_LABEL      => `cat /usr/share/redo/TITLE`;
+use constant MOUNT_POINT   => "/mnt/backup";
+use constant DATA_DIR      => "/usr/share/redo/";
+use constant APP_ICON      => DATA_DIR."redobackup-icon.png";
+use constant GLADE_UI      => "redobackup.glade";
+use constant FS_SUPPORT  => ( "ext2",
+                                "ext3",
+                                "ext4",
+                                "fat",
+                                "fat12",
+                                "fat16",
+                                "fat32",
+                                "jfs",
+                                "vfat",
+                                "ntfs",
+                                "hfsp",
+                                "reiser4",
+                                "reiserfs",
+                                "ufs",
+                                "vmfs",
+                                "xfs" );
+use constant BACKUP_STEPS  => ( "Step 1: Select Source Drive",
+                                "Step 2: Select Partitions to Save",
+                                "Step 3: Select Destination Drive",
+                                "Step 4: Select Destination Folder",
+                                "Step 5: Name Your Backup",
+                                "Creating Backup Image" );
+use constant RESTORE_STEPS => ( "Step 1: Select Source Drive",
+                                "Step 2: Select Backup Image",
+                                "Step 3: Select Destination Drive",
+                                "Restoring From Backup" );
+use constant USB_STEPS     => ( "Step 1: Select Destination Drive",
+                                "Step 2: Install to USB Drive" );
+
+
+##### Test code ########################################################
+#$ARGV[0] = 'restore';
+
+
+##### Main code ########################################################
+$| = 1;
+main();
+exit(0);
+
+
+##### Subroutines and callbacks ########################################
+sub main {
+  # Start the main application
+  our $builder;
+  my $window;
+  $builder = Gtk2::Builder->new();
+  $builder->add_from_file(DATA_DIR.GLADE_UI);
+  $window = $builder->get_object('main_app');
+  $builder->connect_signals(undef);
+  # Change the background of the header to white
+  my $eventbox = $builder->get_object('main_image_eventbox');
+  $eventbox->modify_bg('GTK_STATE_NORMAL', Gtk2::Gdk::Color->new(0xffff,0xffff,0xffff));
+  $builder->get_object('main_tabs')->set_show_tabs(FALSE);
+  $builder->get_object('backup_tabs')->set_show_tabs(FALSE);
+  $builder->get_object('backup_tabs')->set_show_border(FALSE);
+  $builder->get_object('restore_tabs')->set_show_tabs(FALSE);
+  $builder->get_object('restore_tabs')->set_show_border(FALSE);
+  $builder->get_object('usb_tabs')->set_show_tabs(FALSE);
+  $builder->get_object('usb_tabs')->set_show_border(FALSE);
+  my $ver = VERSION;
+  chomp($ver);
+  set_status("Version $ver");
+  $window->maximize();
+  $window->set_decorated(FALSE);
+  $window->show();
+  my $mode = '';
+  if (defined($ARGV[0])) { $mode = $ARGV[0]; }
+  if ($mode eq 'backup') { backup_mode(); }
+  if ($mode eq 'restore') { restore_mode(); }
+  if ($mode eq 'install') { usb_mode(); }
+  Gtk2->main;
+}
+
+
+##### Backup Logic #####################################################
+sub backup_mode {
+  # Enter Backup mode
+  our %status;
+  $status{'action'} = 'backup';
+  backup_step(1);
+}
+
+sub backup_step {
+  # Advance to the next Backup Step
+  my $step = $_[0];
+  if (!defined($step)) { $step = 1; }
+  our $builder;
+  our %status;
+  set_main_title("Backup");
+  $builder->get_object('main_tabs')->set_current_page(1);
+  $step = $builder->get_object('backup_tabs')->get_current_page()+1;
+  set_subtitle((BACKUP_STEPS)[$step-1]);
+  if ($step == 1) {
+    # Backup Step 1
+    find_local_drives();
+    print_drive_list();
+    set_drive_dropdown('backup_source');
+    $builder->get_object('backup_button_next')->set_sensitive(TRUE);
+  } elsif ($step == 2) {
+    # Backup Step 2
+    $status{'backup_drive'} = $builder->get_object('backup_source')->get_active_text();
+    set_partition_list('backup_partitions', $status{'backup_drive'});
+    $builder->get_object('backup_button_next')->set_sensitive(TRUE);
+  } elsif ($step == 3) {
+    # Backup Step 3
+    backup_dest_changed();
+    set_partition_dropdown('backup_dest_local');
+    set_share_dropdown('backup_dest_network');
+    $builder->get_object('backup_button_next')->set_sensitive(TRUE);
+  } elsif ($step == 4) {
+    # Backup Step 4
+    $builder->get_object('backup_button_next')->set_sensitive(FALSE);
+    if ($builder->get_object('backup_dest_use_local')->get_active()) {
+      my ($type, $source) = split(/\|/, $builder->get_object('backup_dest_local')->get_active_text());
+      $status{'mount_type'} = $type;
+      $status{'mount_source'} = $source;
+    } else {
+      my ($type, undef) = split(/\|/, $builder->get_object('backup_dest_network')->get_active_text());
+      $status{'mount_type'} = $type;
+      $status{'mount_source'} = $builder->get_object('backup_dest_server')->get_text();
+      $status{'mount_user'} = $builder->get_object('backup_dest_user')->get_text();
+      $status{'mount_pass'} = $builder->get_object('backup_dest_pass')->get_text();
+      $status{'mount_domain'} = $builder->get_object('backup_dest_domain')->get_text();
+    }
+    my $mount_ok = mount_data();
+    if ($mount_ok==0) {
+      message_box("Could not access the destination drive. If the device is shared on a network, ensure that the username and password you provided are correct and try again.");
+      $step = $builder->get_object('backup_tabs')->set_current_page(2);
+      set_subtitle((BACKUP_STEPS)[2]);
+    } else  {
+      $builder->get_object('backup_folder')->set_text('/');
+      $builder->get_object('backup_folder_browse')->grab_focus();
+    }
+    $builder->get_object('backup_button_next')->set_sensitive(TRUE);
+  } elsif ($step == 5) {
+    # Backup Step 5
+    my (undef,undef,undef,$d,$m,$y,undef,undef,undef) = localtime(time);
+    $y = sprintf("%04d", $y+1900);
+    $m = sprintf("%02d", $m+1);
+    $d = sprintf("%02d", $d);
+    $builder->get_object('backup_name')->set_text("$y$m$d");
+    $builder->get_object('backup_name')->grab_focus();
+    $builder->get_object('backup_button_next')->set_sensitive(TRUE);
+  } elsif ($step == 6) {
+    # Backup Step 6
+    $builder->get_object('backup_button_next')->hide();
+    # Start the process
+    refresh_window();
+    sleep(0.25);
+    do_backup();
+  }
+  refresh_window();
+}
+
+
+sub backup_scan_network {
+  # Scan the network and add shares to list
+  scan_network('backup_dest_network');
+}
+
+sub backup_dest_changed {
+  # The destination was changed (local/network)
+  our $builder;
+  my $local = $builder->get_object('backup_dest_use_local')->get_active();
+  if ($local!=1) {
+    $builder->get_object('backup_frame_local')->hide();
+    $builder->get_object('backup_frame_network')->show();
+  } else {
+    $builder->get_object('backup_frame_network')->hide();
+    $builder->get_object('backup_frame_local')->show();
+  }
+  refresh_window();
+}
+
+sub backup_dest_network_changed {
+  # The network dest was changed
+  our $builder;
+  my $share = $builder->get_object('backup_dest_network')->get_active_text();
+  if (defined($share)) {
+    my ($type, $server) = split(/\|/, $share);
+    my $server_editable = TRUE;
+    my $domain_editable = TRUE;
+    if ($server eq '') {
+      if ($type eq 'FTP') {
+        # It's a manually-entered FTP share
+        $server = get_subnet();
+        $server =~ s/\d+$//g;
+      } else {
+        # It's a manually-entered SMB share
+        $server = "//HOST/FOLDER";
+      }
+    } else {
+      # It's an automatically-found share
+      $server =~ s/^smb:|^ftp:\/\///g;
+      $server_editable = FALSE;
+    }
+    if ($type ne 'SMB') { $domain_editable = FALSE; }
+    $builder->get_object('backup_dest_server')->set_text($server);
+    $builder->get_object('backup_dest_server')->set_sensitive($server_editable);
+    $builder->get_object('backup_dest_domain')->set_sensitive($domain_editable);
+  }
+}
+
+sub do_backup {
+  # Begin the backup process
+  our $builder;
+  our %status;
+  $builder->get_object('backup_progress')->set_sensitive(TRUE);
+  # Get partition selections and output folder
+  my $src = $status{'backup_drive'};
+  my $dest = MOUNT_POINT.$builder->get_object('backup_folder')->get_text();
+  print "*** Backup $src to $dest ***\n\n";
+  $dest =~ s/\/$//;
+  $dest =~ s/ /\\ /g;
+  my $file = $builder->get_object('backup_name')->get_text();
+  my $src_drive = $src;
+  $src_drive =~ s/\d//g;
+  $src_drive = "/dev/".$src_drive;
+  # Save MBR
+  system("dd if=$src_drive of=$dest/$file.mbr bs=32768 count=1");
+  system("sfdisk -dx $src_drive > $dest/$file.sfdisk");
+  print "\t* MBR and partition table of $src_drive saved to $dest\n";
+  # Save size of source drive in blocks
+  my $bd = `fdisk -l $src_drive | grep '$src_drive:'`;
+  my (undef, $bytes) = split(", ", $bd);
+  $bytes =~ s/\D//g;
+  system("echo $bytes > $dest/$file.size");  
+  print "\t* Size of $src_drive ($bytes bytes) saved to $dest/$file.size\n";
+  # Save list of partitions we will be backing up
+  my @partlist = get_selected_partitions('backup_partitions');
+  my $partlist_str = join("\n", @partlist);
+  save_file($partlist_str, "$dest/$file.backup");
+  $status{'part_list'} = \@partlist;
+  $status{'last_part'} = $partlist[-1];
+  $status{'total_parts'} = scalar(@partlist);
+  $status{'current_part'} = 0;
+  print "\t* Partition list saved to $dest/$file.backup\n";
+  # Create backup by calling progress sub
+  print "\t* Total partitions to save: ".$status{'total_parts'}."\n";
+  Glib::Timeout->add(50, \&update_backup_progress);
+  refresh_window();
+}
+
+sub update_backup_progress {
+  # Update the backup progress bar
+  our $PROGRESS;
+  our %drives;
+  our %status;
+  our $builder;
+  my $progress_bar = $builder->get_object('backup_progress');
+  my $data = undef;
+  our $i;
+  my $part = $status{'part_list'}[$status{'current_part'}];
+  my ($dn, $pn) = get_drivenum_partnum($part);
+  my $src = $status{'backup_drive'};
+  my $dest = MOUNT_POINT.$builder->get_object('backup_folder')->get_text();
+  $dest =~ s/\/$//;
+  $dest =~ s/ /\\ /g;
+  my $file = $builder->get_object('backup_name')->get_text();
+  my $fs = lc($drives{$src}{'parts'}{$pn}{'fstype'});
+  # See if the filehandle is open
+  if (!defined($PROGRESS)) {
+    # No command is being executed
+    my $tool = which_backup_tool($fs);
+    set_status("Preparing to create backup of Drive $dn, Part $pn...");
+    print "*** Processing $part ($fs) using $tool...\n";
+    system("umount /dev/$part 2>&1");
+    print "*** Executing: ( $tool -c -F -L /partclone.log -s /dev/$part | gzip -c --fast | split -d -a 3 -b 2048m - /$dest/$file"."_part$pn. ) 2>&1 |\n";
+    open $PROGRESS, "( $tool -c -F -L /partclone.log -s /dev/$part | gzip -c --fast | split -d -a 3 -b 2048m - /$dest/$file"."_part$pn. ) 2>&1 |";
+    sleep(0.5);
+    return TRUE;
+  } else {
+    # Read available data and append it to $status{'command_output'} until a newline is reached
+    my $char = '';
+    do {
+      $char = getc($PROGRESS);
+      if (!defined($char)) {
+        return 1;
+      } else {
+        if (($char eq "\n") || ($char eq "\r")) {
+          undef($char);
+        } else {
+          $status{'command_output'} .= $char;
+        }
+      }
+    } while (defined($char));
+  }
+  # Try to read command progress and append it to the data
+  $data = $status{'command_output'};
+  undef($status{'command_output'});
+  if (defined($data)) {
+    # Remove newlines and lines that are all spaces
+    $data =~ s/\n|^\s+$//g;
+    refresh_window();
+    $i++;
+    # Split it up and show the results    
+    if ($data =~ m/Starting to clone device/) {
+      # Starting a filesystem
+      my (undef, $current_part) = split(/\(\/dev\//, $data);
+      $current_part =~ s/\).*$//g;
+      $status{'current_part_device'} = $current_part;
+      print ">>> Starting to clone $status{'current_part_device'}\n";
+      print ">>> List of partitions:\n";
+      foreach my $item (@{$status{'part_list'}}) {
+        my $msg = '';
+        if ($item eq $current_part) { $msg = "(Processing)"; }
+        print "\t* $item $msg\n";
+      }
+    } elsif ($data =~ m/Device size: /) {
+      # Device size reported
+      my (undef, $dev_size) = split(/: /, $data);
+      $dev_size =~ s/^\s+|\s+$//g;
+      print(">>> Device size: $dev_size\n");
+    } elsif ($data =~ m/Space in use: /) {
+      # Device used space reported
+      my (undef, $dev_used) = split(/: /, $data);
+      $dev_used =~ s/^\s+|\s+$//g;
+      print(">>> Space in use: $dev_used\n");
+    } elsif ($data =~ m/^.*\.c.*: /) {
+      # A warning was encountered
+      my (undef, $warning) = split(/: /, $data);
+      print(">>> Warning: $warning\n");
+      set_status("Warning: $warning");
+    } elsif ($data =~ m/Reading Super Block/) {
+      # Reading super block
+      print(">>> Reading super block\n");
+      set_status("Reading super block for Drive $dn, Part $pn...");
+    } elsif ($data =~ m/Calculating bitmap/) {
+      # Reading super block
+      print(">>> Calculating bitmap\n");
+      set_status("Calculating bitmap for Drive $dn, Part $pn...");
+    } elsif ($data =~ m/Elapsed.+Rate.+/) {
+      # Backup progress line
+      my $elapsed = substr($data,9,8);
+      my $remaining = substr($data,30,8);
+      my $pct = substr($data,50,6);
+      my $rate = substr($data,64,13);
+      $pct =~ s/\s+//g;
+      $rate =~ s/\s+//g;
+      print "Elapsed time: *$elapsed* Remaining: *$remaining* Percent: *$pct* Rate: *$rate*\n";
+      $builder->get_object('backup_progress_status')->set_text("Part ".($status{'current_part'}+1)." of ".$status{'total_parts'}." (".$pct."%)\n$elapsed Elapsed\n$remaining Remaining");
+      set_status("Saving part ".($status{'current_part'}+1)." of ".$status{'total_parts'}." ($rate)");
+      my $overall_pct = ($status{'current_part'} / $status{'total_parts'}) + (($pct / 100) / $status{'total_parts'});
+      $progress_bar->set_fraction($overall_pct);
+      $progress_bar->set_text(sprintf("%.2f", $overall_pct * 100)."% Complete");
+    } elsif ($data =~ m/Elapsed.+/) {
+      # Bitmap reading progress line
+      my $elapsed = substr($data,9,8);
+      my $remaining = substr($data,30,8);
+      my $pct = substr($data,50,6);
+      $pct =~ s/\s+//g;
+      #print "Elapsed time: *$elapsed* Remaining: *$remaining* Percent: *$pct*\n";
+      $builder->get_object('backup_progress_status')->set_text('Reading bitmap for part '.($status{'current_part'}+1)." of ".$status{'total_parts'});
+      set_status("Reading bitmap for Drive $dn, Part $pn ($pct% done, $remaining remaining)");
+    } elsif ($data =~ m/successfully cloned/) {
+      set_status("Partition completed.");
+      print ">>> Partition $status{'current_part_device'} completed.\n";
+      print "\tCurrent part: ".($status{'current_part'}+1)."\n";
+      print "\tTotal parts: $status{'total_parts'}\n";
+      if ($status{'current_part'}==$status{'total_parts'}-1 ) {
+        $builder->get_object('backup_progress_status')->set_text('');
+        $progress_bar->set_fraction(1);
+        set_status("Operation completed successfully.");
+        my @lines = split(/\n/, $data);
+        my $start = FALSE;
+        $builder->get_object('backup_button_cancel')->set_label('Exit');
+        refresh_window();
+        # Unmount stuff
+        system("sync");
+        sleep(0.5);
+        system("umount ".MOUNT_POINT);
+        message_box("Operation complete.");
+        system("notify-send -i ".APP_ICON." 'Backup saved successfully.'");
+        print ">>> Operation complete.\n";
+        return 0;
+      } else {
+        close $PROGRESS;
+        undef($PROGRESS);
+        $status{'current_part'}++;
+        print "Advancing to next partition.\n";
+        return TRUE;
+      }
+    } else {
+      if (length($data)>0) {
+        print "$data\n";
+        if ($data =~ m/error|warning/i) {
+          error_message($data);
+        }
+      }
+    }
+  }
+  return TRUE;   
+}
+
+sub backup_name_changed {
+  # Make sure the backup name is valid
+  our $builder;
+  my $val = FALSE;
+  my $backup_name = $builder->get_object('backup_name')->get_text();
+  $backup_name =~ s/[^\w|-]|_+//g;
+  $builder->get_object('backup_name')->set_text($backup_name);
+  if ($backup_name ne '') {
+    $val = TRUE;  
+  } else {
+    $val = FALSE;
+  }
+  $builder->get_object('backup_button_next')->set_sensitive($val);
+}
+
+sub select_backup_folder {
+  # Open the folder selection dialog
+  our $builder;
+  my $folder_chooser = Gtk2::FileChooserDialog->new("Select a Folder", $builder->get_object('main_app'), "select-folder", "Cancel" => "cancel", "Save Here" => "ok");
+  # The "Places" panel might be confusing for some, so let's remove it
+  my @children = $folder_chooser->get_children();
+  @children = $children[0]->get_children();
+  @children = $children[0]->get_children();
+  @children = $children[0]->get_children();
+  @children = $children[0]->get_children();
+  @children = $children[2]->get_children();  
+  $children[0]->hide();
+  $folder_chooser->set_modal(TRUE);
+  $folder_chooser->set_current_folder(MOUNT_POINT."/".$builder->get_object('backup_folder')->get_text());
+  $folder_chooser->maximize();
+  my $response = $folder_chooser->run();
+  if ($response eq 'ok') {
+    my $current_folder = $folder_chooser->get_current_folder();
+    if (substr($current_folder,0,length(MOUNT_POINT)) eq MOUNT_POINT) {
+      $current_folder = substr($current_folder,length(MOUNT_POINT));
+      if ($current_folder eq '') { $current_folder = '/'; }
+    } else {
+      error_message("You must select a folder inside '".MOUNT_POINT."'.".chr(13).chr(13)."Please select a different folder.");
+      $current_folder = '/';
+    }
+    $builder->get_object('backup_folder')->set_text($current_folder);
+  }
+  $folder_chooser->destroy();
+}
+
+
+##### Restore Logic ####################################################
+sub restore_mode {
+  # Enter Restore mode
+  our %status;
+  $status{'action'} = 'restore';
+  restore_step(1);
+}
+
+sub restore_step {
+  # Advance to the next Restore Step
+  my $step = $_[0];
+  if (!defined($step)) { $step = 1; }
+  our $builder;
+  our %status;
+  set_main_title("Restore");
+  $builder->get_object('main_tabs')->set_current_page(2);
+  $step = $builder->get_object('restore_tabs')->get_current_page()+1;
+  set_subtitle((RESTORE_STEPS)[$step-1]);
+  if ($step == 1) {
+    # Restore Step 1
+    restore_source_changed();
+    find_local_drives();
+    set_partition_dropdown('restore_source_local');
+    set_share_dropdown('restore_source_network');
+    $builder->get_object('restore_button_next')->set_sensitive(TRUE);
+  } elsif ($step == 2) {
+    # Restore Step 2
+    $builder->get_object('restore_button_next')->set_sensitive(FALSE);
+    if ($builder->get_object('restore_source_use_local')->get_active()) {
+      my ($type, $source) = split(/\|/, $builder->get_object('restore_source_local')->get_active_text());
+      $status{'mount_type'} = $type;
+      $status{'mount_source'} = $source;
+    } else {
+      my ($type, undef) = split(/\|/, $builder->get_object('restore_source_network')->get_active_text());
+      $status{'mount_type'} = $type;
+      $status{'mount_source'} = $builder->get_object('restore_source_server')->get_text();
+      $status{'mount_user'} = $builder->get_object('restore_source_user')->get_text();
+      $status{'mount_pass'} = $builder->get_object('restore_source_pass')->get_text();
+      $status{'mount_domain'} = $builder->get_object('restore_source_domain')->get_text();
+    }
+    my $mount_ok = mount_data();
+    if ($mount_ok==0) {
+      message_box("Could not access the source drive. If the device is shared on a network, ensure that the username and password you provided are correct and try again.");
+      $step = $builder->get_object('restore_tabs')->set_current_page(0);
+      set_subtitle((RESTORE_STEPS)[0]);
+    } else  {
+      $builder->get_object('restore_file')->set_current_folder(MOUNT_POINT);
+      $builder->get_object('restore_filefilter')->set_name('Backup Images');
+      $builder->get_object('restore_filefilter')->add_pattern('*.backup');
+    }
+    $builder->get_object('restore_button_next')->set_sensitive(TRUE);
+  } elsif ($step == 3) {
+    # Restore Step 4
+    set_drive_dropdown('restore_dest');
+    $builder->get_object('restore_button_next')->set_sensitive(TRUE);
+  } elsif ($step == 4) {
+    # Restore Step 5
+    $builder->get_object('restore_button_next')->hide();
+    $builder->get_object('restore_progress')->set_sensitive(FALSE);
+    refresh_window();
+    do_restore();
+    refresh_window();
+    $builder->get_object('restore_button_cancel')->set_label('Exit');
+  }
+  refresh_window();
+}
+
+sub restore_scan_network {
+  # Scan the network and add shares to list
+  scan_network('restore_source_network');
+}
+
+sub restore_source_changed {
+  # The source was changed (local/network)
+  our $builder;
+  my $local = $builder->get_object('restore_source_use_local')->get_active();
+  if ($local!=1) {
+    $builder->get_object('restore_frame_local')->hide();
+    $builder->get_object('restore_frame_network')->show();
+  } else {
+    $builder->get_object('restore_frame_network')->hide();
+    $builder->get_object('restore_frame_local')->show();
+  }
+  refresh_window();
+}
+
+sub restore_source_network_changed {
+  # The network source was changed
+  our $builder;
+  my $share = $builder->get_object('restore_source_network')->get_active_text();
+  if (defined($share)) {
+    my ($type, $server) = split(/\|/, $share);
+    my $server_editable = TRUE;
+    my $domain_editable = TRUE;
+    if ($server eq '') {
+      if ($type eq 'FTP') {
+        # It's a manually-entered FTP share
+        $server = get_subnet();
+        $server =~ s/\d+$//g;
+      } else {
+        # It's a manually-entered SMB share
+        $server = "//HOST/FOLDER";
+      }
+    } else {
+      # It's an automatically-found share
+      $server =~ s/^smb:|^ftp:\/\///g;
+      $server_editable = FALSE;
+    }
+    if ($type ne 'SMB') { $domain_editable = FALSE; }
+    $builder->get_object('restore_source_server')->set_text($server);
+    $builder->get_object('restore_source_server')->set_sensitive($server_editable);
+    $builder->get_object('restore_source_domain')->set_sensitive($domain_editable);
+  }
+}
+
+sub restore_file_changed {
+  # Make sure the restore file is valid
+  our $builder;
+  my $val = FALSE;
+  my $restore_file = $builder->get_object('restore_file')->get_filename();
+  if (!defined($restore_file)) { $restore_file = ''; }
+  if ($restore_file ne '') {
+    $val = TRUE;  
+  } else {
+    $val = FALSE;
+  }
+  $builder->get_object('restore_button_next')->set_sensitive($val);
+}
+
+sub do_restore {
+  # Restore from the backup
+  our $builder;
+  our %status;
+  our $PROGRESS;
+  set_status("Preparing destination drive...");
+  $builder->get_object('restore_progress')->set_sensitive(TRUE);
+  my $src = $builder->get_object('restore_file')->get_filename();
+  my $dest_drive = $builder->get_object('restore_dest')->get_active_text();
+  $src =~ s/\.backup$//g;
+  $src =~ s/ /\\ /g;
+  my $src_mbr = $src.'.mbr';
+  my $src_parts = $src.'.backup';
+  $src_parts =~ s/\\//g;
+  my $src_size = $src.'.size';
+  my $src_sfdisk = $src.'.sfdisk';
+  # Warn if we are restoring to the source drive
+  my $src_drive = $status{'mount_source'};
+  $src_drive =~ s/\d//g;
+  print "Comparing $src_drive to $dest_drive...\n";
+  if ($src_drive eq $dest_drive) {
+    my $response = get_confirmation("Are you sure you want to restore the backup to the same drive the source image is located on?\n\nUnless you know what you are doing, this will result in loss of all data on the drive, including the backup image!");
+    if ($response ne 'yes') {
+      on_main_app_destroy();
+      die("Aborting.\n");
+    }
+  }
+  # Get sizes of original and destination drives in bytes
+  my $src_bytes = `cat $src_size`;
+  $src_bytes =~ s/\D//g;
+  print "*** Size of original drive: $src_bytes bytes\n";
+  my $bd = `fdisk -l /dev/$dest_drive | grep '/dev/$dest_drive:'`;
+  my (undef, $dest_bytes) = split(", ", $bd);
+  $dest_bytes =~ s/\D//g;
+  print "*** Size of destination drive: $dest_bytes bytes\n";
+  if ($src_bytes > $dest_bytes) {
+    my $diff_mb = int((($src_bytes - $dest_bytes) / 1024) / 1024);
+    fatal_crash("The drive you are attempting to restore to is $diff_mb MB smaller than the original. You must restore to a drive that is the same size or larger than the original.");
+  }
+  open INFILE, $src_parts or fatal_crash("Could not read from $src_parts! Aborting.");
+  my @partlist = <INFILE>;
+  close INFILE;
+  my $response = get_confirmation("Are you sure you want to restore the backup to /dev/$dest_drive? Doing so will permanently overwrite the data on this drive!");
+  if ($response ne 'yes') {
+    on_main_app_destroy();
+    die("Aborting.\n");
+  }
+  system("umount /mnt/$dest_drive?* 2>&1");
+  sleep(0.5);
+  set_status("Writing master boot record to destination drive...");
+  system("dd of=/dev/$dest_drive if=$src_mbr bs=32768 count=1; sync;");
+  sleep(0.5);  
+  set_status("Writing extended partition table to destination drive...");
+  system("sfdisk -fx /dev/$dest_drive < $src_sfdisk; sync");
+  sleep(0.5);
+  set_status("Reloading new partition table from destination drive...");
+  system("umount /mnt/$dest_drive?* 2>&1");
+  system("sfdisk -R /dev/$dest_drive");
+  sleep(1);
+  $status{'part_list'} = \@partlist;
+  $status{'last_part'} = $partlist[-1];
+  $status{'total_parts'} = scalar(@partlist);
+  $status{'current_part'} = 0;
+  Glib::Timeout->add(50, \&update_restore_progress);
+  refresh_window();
+}
+
+sub update_restore_progress {
+  # Update the restore progress bar
+  our $PROGRESS;
+  our %drives;
+  our %status;
+  our $builder;
+  my $progress_bar = $builder->get_object('restore_progress');
+  my $data = undef;
+  our $i;
+  my $part = $status{'part_list'}[$status{'current_part'}];
+  chomp($part);
+  my ($dn, $pn) = get_drivenum_partnum($part); 
+  my $src = $builder->get_object('restore_file')->get_filename();
+  my $dest_drive = $builder->get_object('restore_dest')->get_active_text();
+  $src =~ s/\.backup$//g;
+  $src =~ s/ /\\ /g;
+  # See if the filehandle is open
+  if (!defined($PROGRESS)) {
+    # No command is being executed
+    my $tool = "partclone.restore";
+    system("umount /mnt/$dest_drive$pn 2>&1; dd if=/dev/zero of=/dev/$dest_drive$pn bs=1K count=1000; sync");
+    set_status("Preparing to restore backup for Drive $dn, Part $pn...");
+    print "*** Processing $part using $tool...\n";
+    system("umount /dev/$part 2>&1");
+    print "*** Executing: ( cat /$src"."_part$pn.* | gzip -d -c | $tool -F -L /partclone.log -O /dev/$dest_drive$pn ) 2>&1 |\n";
+    open $PROGRESS, "( cat /$src"."_part$pn.* | gzip -d -c | $tool -F -L /partclone.log -O /dev/$dest_drive$pn ) 2>&1 |";
+    sleep(0.5);
+    return TRUE;
+  } else {
+    # Read available data and append it to $status{'command_output'} until a newline is reached
+    my $char = '';
+    do {
+      $char = getc($PROGRESS);
+      if (!defined($char)) {
+        return 1;
+      } else {
+        if (($char eq "\n") || ($char eq "\r")) {
+          undef($char);
+        } else {
+          $status{'command_output'} .= $char;
+        }
+      }
+    } while (defined($char));
+  }
+  # Try to read command progress and append it to the data
+  $data = $status{'command_output'};
+  undef($status{'command_output'});
+  if (defined($data)) {
+    # Remove newlines and lines that are all spaces
+    $data =~ s/\n|^\s+$//g;
+    refresh_window();
+    $i++;
+    # Split it up and show the results    
+    if ($data =~ m/Starting to/) {
+      # Starting a filesystem
+      my (undef, $current_part) = split(/\(\/dev\//, $data);
+      $current_part =~ s/\).*$//g;
+      $status{'current_part_device'} = $current_part;
+      print ">>> Starting to restore $status{'current_part_device'}\n";
+      print ">>> List of partitions:\n";
+      foreach my $item (@{$status{'part_list'}}) {
+        my $msg = '';
+        if ($item eq $current_part) { $msg = "(Processing)"; }
+        print "\t* $item $msg\n";
+      }
+    } elsif ($data =~ m/Device size: /) {
+      # Device size reported
+      my (undef, $dev_size) = split(/: /, $data);
+      $dev_size =~ s/^\s+|\s+$//g;
+      print(">>> Device size: $dev_size\n");
+    } elsif ($data =~ m/Space in use: /) {
+      # Device used space reported
+      my (undef, $dev_used) = split(/: /, $data);
+      $dev_used =~ s/^\s+|\s+$//g;
+      print(">>> Space in use: $dev_used\n");
+    } elsif ($data =~ m/^.*\.c.*: /) {
+      # A warning was encountered
+      my (undef, $warning) = split(/: /, $data);
+      print(">>> Warning: $warning\n");
+      set_status("Warning: $warning");
+    } elsif ($data =~ m/Reading Super Block/) {
+      # Reading super block
+      print(">>> Reading super block\n");
+      set_status("Reading super block for Drive $dn, Part $pn...");
+    } elsif ($data =~ m/Calculating bitmap/) {
+      # Reading super block
+      print(">>> Calculating bitmap\n");
+      set_status("Calculating bitmap for Drive $dn, Part $pn...");
+    } elsif ($data =~ m/Elapsed.+Rate.+/) {
+      # Restore progress line
+      my $elapsed = substr($data,9,8);
+      my $remaining = substr($data,30,8);
+      my $pct = substr($data,50,6);
+      my $rate = substr($data,64,13);
+      $pct =~ s/\s+//g;
+      $rate =~ s/\s+//g;
+      print "Elapsed time: *$elapsed* Remaining: *$remaining* Percent: *$pct* Rate: *$rate*\n";
+      $builder->get_object('restore_progress_status')->set_text("Part ".($status{'current_part'}+1)." of ".$status{'total_parts'}." (".$pct."%)\n$elapsed Elapsed\n$remaining Remaining");
+      set_status("Restoring part ".($status{'current_part'}+1)." of ".$status{'total_parts'}." ($rate)");
+      my $overall_pct = ($status{'current_part'} / $status{'total_parts'}) + (($pct / 100) / $status{'total_parts'});
+      $progress_bar->set_fraction($overall_pct);
+      $progress_bar->set_text(sprintf("%.2f", $overall_pct * 100)."% Complete");
+    } elsif ($data =~ m/Elapsed.+/) {
+      # Bitmap reading progress line
+      my $elapsed = substr($data,9,8);
+      my $remaining = substr($data,30,8);
+      my $pct = substr($data,50,6);
+      $pct =~ s/\s+//g;
+      #print "Elapsed time: *$elapsed* Remaining: *$remaining* Percent: *$pct*\n";
+      $builder->get_object('restore_progress_status')->set_text('Reading bitmap for part '.($status{'current_part'}+1)." of ".$status{'total_parts'});
+      set_status("Reading bitmap for Drive $dn, Part $pn ($pct% done, $remaining remaining)");
+    } elsif ($data =~ m/Cloned successfully/) {
+      set_status("Partition completed.");
+      print ">>> Partition $status{'current_part_device'} completed.\n";
+      print "\tCurrent part: ".($status{'current_part'}+1)."\n";
+      print "\tTotal parts: $status{'total_parts'}\n";
+      if ($status{'current_part'}==$status{'total_parts'}-1 ) {
+        $builder->get_object('restore_progress_status')->set_text('');
+        $progress_bar->set_fraction(1);
+        set_status("Operation completed successfully.");
+        my @lines = split(/\n/, $data);
+        my $start = FALSE;
+        $builder->get_object('restore_button_cancel')->set_label('Exit');
+        refresh_window();
+        # Unmount stuff
+        system("sync");
+        sleep(0.5);
+        system("umount ".MOUNT_POINT);
+        message_box("Operation complete.");
+        system("notify-send -i ".APP_ICON." 'Backup restored successfully.'");
+        print ">>> Operation complete.\n";
+        return 0;
+      } else {
+        close $PROGRESS;
+        undef($PROGRESS);
+        $status{'current_part'}++;
+        print "Advancing to next partition.\n";
+        return TRUE;
+      }
+    } else {
+      if (length($data)>0) {
+        print "$data\n";
+        if ($data =~ m/error|warning/i) {
+          error_message($data);
+        }
+      }
+    }
+  }
+  return TRUE;   
+}
+
+
+##### USB Installer Logic #####################################################
+sub usb_mode {
+  # Enter USB Installer mode
+  usb_step(1);
+}
+
+sub usb_step {
+  # Advance to the next USB Installer Step
+  my $step = $_[0];
+  if (!defined($step)) { $step = 1; }
+  our $builder;
+  set_main_title("Install");
+  $builder->get_object('main_tabs')->set_current_page(3);
+  $step = $builder->get_object('usb_tabs')->get_current_page()+1;
+  set_subtitle((USB_STEPS)[$step-1]);
+  my $cdrom = usb_find_cdrom();
+  if ($step == 1) {
+    # USB Step 1
+    find_local_drives();
+    set_usb_dropdown('usb_dest');
+    $builder->get_object('usb_button_next')->set_sensitive(TRUE);
+  } elsif ($step == 2) {
+    # USB Step 2
+    $builder->get_object('usb_button_next')->hide();
+    my $target = $builder->get_object('usb_dest')->get_active_text();
+    my $response = get_confirmation("Are you sure you want to overwrite all data on $target?");
+    if ($response eq 'yes') {
+      do_install($cdrom);
+      message_box("Your USB drive is ready!\n\nPlease remember that you may need to press a key while the computer is starting in order to boot from the USB device."); 
+      system("notify-send -i ".APP_ICON." 'USB installation complete.'");
+      $builder->get_object('usb_button_cancel')->set_label('Exit');
+    } else {
+      on_main_app_destroy();
+    }
+  }
+  refresh_window();
+}
+
+sub do_install {
+  our $builder;
+  my $cdrom = $_[0];
+  my $dev = "/dev/".$builder->get_object('usb_dest')->get_active_text();
+  my $mnt = "/mnt";
+  my $isomnt = "$mnt/isomount";
+  my $usbmnt = "$mnt/usbmount";
+  my $pgb = $builder->get_object('usb_progress');
+  $pgb->set_fraction(0.1);
+  set_status("Erasing existing partition table...");
+  system("dd if=/dev/zero of=$dev bs=1K count=1024; sync");
+  $pgb->set_fraction(0.2);
+  set_status("Writing new partition table...");
+  system("parted -s $dev mklabel msdos");
+  system("parted -s $dev mkpart primary fat32 0 100%");
+  system("parted -s $dev set 1 boot on");
+  $pgb->set_fraction(0.3);
+  set_status("Refreshing partition table...");
+  system("sfdisk -R $dev");
+  $pgb->set_fraction(0.4);
+  set_status("Formatting USB drive...");
+  system("umount $dev?* 2>&1");
+  my $label = CD_LABEL;
+  chomp($label);
+  system("mkfs.vfat -n '$label' -F 32 ".$dev."1");
+  system("sync");
+  $pgb->set_fraction(0.5);
+  set_status("Mounting source CD-ROM...");
+  print "*** Trying to mount CD-ROM device $cdrom at $isomnt...\n";
+  system("mkdir $isomnt; mkdir $usbmnt");
+  system("mount $cdrom $isomnt");
+  $pgb->set_fraction(0.6);
+  set_status("Mounting destination USB drive...");
+  system("umount ".$dev."1 2>&1");
+  system("mount ".$dev."1 $usbmnt");
+  $pgb->set_fraction(0.7);
+  set_status("Copying filesystem to USB drive...");
+  system("cp -Rv $isomnt/* $usbmnt/");
+  system("cp -v /usr/lib/syslinux/vesamenu.c32 $usbmnt/boot/");
+  system("mv $usbmnt/isolinux.cfg $usbmnt/syslinux.cfg");
+  system("sync");
+  $pgb->set_fraction(0.8);
+  set_status("Unmounting devices and cleaning up...");
+  system("umount $isomnt; umount $usbmnt");
+  system("rmdir $isomnt; rmdir $usbmnt");
+  $pgb->set_fraction(0.9);
+  set_status("Making drive bootable...");
+  system("syslinux ".$dev."1; sync");
+  system("dd if=/usr/lib/syslinux/mbr.bin of=$dev bs=440 count=1; sync");
+  $pgb->set_fraction(1.0);
+  set_status("Done.");
+}
+
+sub usb_find_cdrom {
+  my $cd_check_1 = `dd if=/dev/sr0 bs=1 count=64 skip=32768`;
+  my $cd_check_2 = `dd if=/dev/sr1 bs=1 count=64 skip=32768`;
+  my $cdrom = '';
+  my $label = CD_LABEL;
+  chomp($label);
+  if ($cd_check_1 =~ /$label/) { $cdrom = '/dev/sr0'; }
+  if ($cd_check_2 =~ /$label/) { $cdrom = '/dev/sr1'; }
+  if ($cdrom eq '') {
+    fatal_crash("Source CD-ROM not found. Please insert the original disc in your primary CD-ROM drive and try again.");
+  }
+  return $cdrom;
+}
+
+
+##### Form Logic #######################################################
+sub get_confirmation {
+  # Get confirmation from a yes/no dialog
+  our $builder;
+  my $question = "Are you sure?";
+	if (defined($_[0])) { $question = $_[0]; }
+  my $dialog = Gtk2::MessageDialog->new($builder->get_object('main_app'),
+    'destroy-with-parent',
+    'warning', # message type
+    'yes-no', # which set of buttons?
+    $question);
+  my $response = $dialog->run;
+  $dialog->destroy;
+  return $response;
+}
+
+sub next_tab {
+  # Show the next tab of a Backup or Restore procedure
+  our $builder;
+  my $current_tab = $builder->get_object('main_tabs')->get_current_page();
+  if ($current_tab==1) {
+    # Backup mode
+    $builder->get_object('backup_tabs')->next_page();
+    my $backup_tab = $builder->get_object('backup_tabs')->get_current_page();
+    backup_step($backup_tab+1);
+  } elsif ($current_tab==2) {
+    # Restore mode
+    $builder->get_object('restore_tabs')->next_page();
+    my $restore_tab = $builder->get_object('restore_tabs')->get_current_page();
+    restore_step($restore_tab+1);
+  } elsif ($current_tab==3) {
+    # USB Installer mode
+    $builder->get_object('usb_tabs')->next_page();
+    my $usb_tab = $builder->get_object('usb_tabs')->get_current_page();
+    usb_step($usb_tab+1);
+  }
+}
+
+sub set_main_title {
+  # Set the main title
+  my $title = $_[0];
+  our $builder->get_object('main_title')->set_text($title);
+}
+
+sub set_subtitle {
+  # Set the subtitle, which is a description of the current step
+  my $subtitle = $_[0];
+  our $builder->get_object('main_subtitle')->set_text($subtitle);
+}
+
+sub set_cursor {
+  # Set the mouse pointer cursor
+  my $cursor = $_[0];
+  our $builder->get_object('main_app')->window()->set_cursor(Gtk2::Gdk::Cursor->new($cursor));
+}
+
+sub set_status {
+  # Set the status message at the bottom of the window
+  my $status = $_[0];
+  if (!defined($status)) { $status = "Ready."; }
+  our $builder->get_object('main_statusbar')->push(0, $status);
+  refresh_window();
+}
+
+sub set_busy {
+  # Disable the application to indicate that we are busy working
+  if ($_[0] ne '') {
+    set_cursor("watch");
+    set_status($_[0]);
+    our $builder->get_object('main_app')->set_sensitive(FALSE);
+    show_busy_bar($_[0]);
+  } else {
+    set_cursor("arrow");
+    set_status('Done.');
+    our $builder->get_object('main_app')->set_sensitive(TRUE);
+    our $busy_bar->destroy();
+  }
+  refresh_window();
+}
+
+sub show_busy_bar {
+  # Show a pulsing progress bar
+  my $message = $_[0];
+  if (!defined($message)) { $message = "Please wait..."; }
+  my $parent = our $builder->get_object('main_app');
+  our $busy_bar = Gtk2::Dialog->new('Please wait...', $parent,
+    'destroy-with-parent',
+    'gtk-cancel' => 'none'
+  );
+  my $pgb = Gtk2::ProgressBar->new();
+  $pgb->set_text($message);
+  my $abox = Gtk2::Alignment->new(.50, .50, 1, 1);
+  $abox->set_padding(30, 30, 30, 30);
+  $busy_bar->vbox->add($abox);
+  # After upgrade, this is no longer working (nor required)
+  #my @children = $busy_bar->vbox->get_children();
+  #$busy_bar->vbox->remove($children[2]);
+  #$busy_bar->vbox->remove($children[1]);
+  $abox->add($pgb);
+  $busy_bar->signal_connect(response => sub { $_[0]->destroy });
+  $busy_bar->show_all;
+  $busy_bar->window()->set_cursor(Gtk2::Gdk::Cursor->new('watch'));
+  Glib::Timeout->add(100, \&update_busy_bar, $pgb);
+}
+
+sub update_busy_bar {
+  # Update the pulsing progress bar
+  my ($progress_bar) = @_;
+  $progress_bar->pulse;
+  return TRUE;
+}
+
+sub refresh_window {
+  # Refresh the application window
+  while (Gtk2->events_pending()) { Gtk2->main_iteration(); }
+}
+
+sub fatal_crash {
+  # Crash out with a fatal error message
+  my $parent = our $builder->get_object('main_app');
+  my $message = $_[0].chr(13).chr(13)."Unable to continue. The program will now exit.";
+  my $dialog = Gtk2::MessageDialog->new($parent, 'modal', 'error', 'cancel', $message);
+  $dialog->run;
+  $dialog->destroy;
+  on_main_app_destroy();
+  die("Fatal Error: $message\n");
+}
+
+sub error_message {
+  # Show a non-fatal error message
+  my $parent = our $builder->get_object('main_app');
+  my $message = $_[0];
+  my $dialog = Gtk2::MessageDialog->new($parent, 'modal', 'warning', 'ok', $message);
+  $dialog->run;
+  $dialog->destroy;
+}
+
+sub message_box {
+  # Show an informational message
+  my $parent = our $builder->get_object('main_app');
+  my $message = $_[0];
+  my $dialog = Gtk2::MessageDialog->new($parent, 'modal', 'info', 'ok', $message);
+  $dialog->run;
+  $dialog->destroy;
+}
+
+sub on_main_app_destroy {
+  # Close the application and all backup binaries
+  my $bins = `find /usr/sbin/ -type f -name 'partclone.*' -printf '%f\n'`;
+  my @bins = split(/\n/, $bins);
+  foreach (@bins) {
+    system('( killall -9 $_ 2>&1 ) > /dev/null');
+  }
+  our $PROGRESS;
+  if (defined($PROGRESS)) { close($PROGRESS); }
+  Gtk2->main_quit();
+}
+
+
+##### Core program functions ###########################################
+sub save_file {
+  # Save a string to the specified file
+  my $data = $_[0];
+  my $outfile = $_[1];
+  $outfile =~ s/\\//g;
+  open(OUT, ">$outfile") or die("Could not open $outfile for writing!\n");
+  print OUT $data;
+  close OUT;
+}
+
+sub which_backup_tool {
+  # Determine which backup tool to call based on the FS type
+  my $fs = $_[0];
+  my $tool = "partclone.";
+  if ($fs =~ m/ext/) {
+    $tool .= "extfs";
+  } elsif ($fs =~ m/fat/) {
+    $tool .= "fat";
+  } elsif ($fs =~ m/ntfs/) {
+    $tool .= "ntfs";
+  } elsif ($fs =~ m/hfs/) {
+    $tool .= "hfs";
+  } elsif ($fs =~ m/jfs/) {
+    $tool .= "jfs";
+  } elsif ($fs =~ m/reiser4/) {
+    $tool .= "reiser4";
+  } elsif ($fs =~ m/reiserfs/) {
+    $tool .= "reiserfs";
+  } elsif ($fs =~ m/ufs/) {
+    $tool .= "ufs";
+  } elsif ($fs =~ m/vmfs/) {
+    $tool .= "vmfs";
+  } elsif ($fs =~ m/xfs/) {
+    $tool .= "xfs";
+  } else {
+    $tool .= "dd";
+  }
+  return $tool;
+}
+
+sub mount_data {
+  # Mount the data device that backup images are stored on
+  our %shares;
+  our %status;
+  system("mkdir -p ".MOUNT_POINT);
+  system("umount ".MOUNT_POINT." 2>&1");
+  our $builder;
+  for ($status{'mount_type'}) {
+    if (/DEV/) {
+      # Mount a regular drive
+      $status{'mount_source'} =~ s/\|//g;
+      system("mount /dev/$status{'mount_source'} ".MOUNT_POINT);
+      print "* Executing: mount /dev/$status{'mount_source'} ".MOUNT_POINT."\n";
+    } elsif (/SMB/) {
+      # Mount a network share
+      my @smbargs = ();
+      if ($status{'mount_user'} ne '') { push(@smbargs, "username=".$status{'mount_user'}); }
+      if ($status{'mount_pass'} ne '') { push(@smbargs, "password=".$status{'mount_pass'}); }
+      if ($status{'mount_domain'} ne '') { push(@smbargs, "dom=".$status{'mount_domain'}); }
+      my $args = join(',', @smbargs);
+      if ($args eq '') { $args = "guest"; }
+      system("mount.cifs $status{'mount_source'} ".MOUNT_POINT." -o $args");
+      print "* Executing: mount.cifs $status{'mount_source'} ".MOUNT_POINT." -o $args\n";
+    } elsif (/FTP/) {
+      # Mount an FTP server
+      my $ftpargs = '';
+      if ($status{'mount_user'} ne '') { $ftpargs = "-o user=".$status{'mount_user'}; }
+      if ($status{'mount_pass'} ne '') { $ftpargs .= ":".$status{'mount_pass'}; }
+      system("curlftpfs $status{'mount_source'} ".MOUNT_POINT." $ftpargs");
+      print "* Executing: curlftpfs $status{'mount_source'} ".MOUNT_POINT." $ftpargs\n";
+    } else {
+      fatal_crash("The device type '$status{'mount_type'}' is not valid.  Did you forget to select a backup location?");
+    }
+  }
+  my $mp = MOUNT_POINT;
+  my $mounted = `mount | grep '$mp' | wc -l`;
+  return $mounted;
+}
+
+sub set_usb_dropdown {
+  # Get all physical drives that are USB drives
+  set_drive_dropdown('usb_dest', 'usb');
+}
+
+sub set_drive_dropdown {
+  # Get all physical drives
+  set_busy("Getting list of drives...");
+  our %drives;
+  if (keys(%drives)==0) { fatal_crash('Could not locate any drives attached to your computer.'); }
+  my $cbo = our $builder->get_object($_[0]);
+  my $mdl = $cbo->get_model();
+  $mdl->clear();
+  my ($dev, $desc) = '';
+  for my $drive (sort keys %drives) {
+    $dev = $drives{$drive}{'device'};
+    $desc = $drives{$drive}{'desc'};
+    if ((defined($_[1])) && ($_[1] eq 'usb')) {
+      if ($drives{$drive}{'type'} eq 'usb') {
+        $mdl->set($mdl->append, 0, $dev, 1, $desc);
+      }
+    } else {
+      $mdl->set($mdl->append, 0, $dev, 1, $desc);
+    }
+  }
+  my $num_drives = $mdl->iter_n_children();
+  if ($num_drives==0) { fatal_crash('No drives available.'); }
+  $cbo->set_active(0);
+  set_busy(FALSE);
+}
+
+sub set_partition_dropdown {
+  # Populate the partition list for the given combobox
+  our %drives;
+  if (keys(%drives)==0) { fatal_crash('Could not locate any partitions on your computer.'); }
+  my $stage = '';
+  my @blacklist = ();
+  if ($_[0] =~ m/backup/) {
+    # We're backing up
+    $stage = 'backup';
+    @blacklist = get_selected_partitions('backup_partitions');
+  } elsif ($_[0] =~ m/restore/) {
+    # We're restoring
+    $stage = 'restore';
+  }
+  my $cbo = our $builder->get_object($_[0]);
+  my $mdl = $cbo->get_model();
+  $mdl->clear();
+  for my $drive (sort keys %drives) {
+    for my $data (sort keys %{ $drives{$drive}{'parts'} }) {
+      my $num_parts = keys(%{ $drives{$drive}{'parts'} });
+      my $dn = $drives{$drive}{'drivenum'};
+      my $pn = $data;
+      my $part = $drives{$drive}{'parts'}{$data}{'partition'};
+      my $fs = $drives{$drive}{'parts'}{$data}{'fstype'};
+      my $label = $drives{$drive}{'parts'}{$data}{'label'};
+      my $size = $drives{$drive}{'parts'}{$data}{'size'};
+      if (!defined($size)) { $size = "Unknown size"; }
+      my $os = $drives{$drive}{'parts'}{$data}{'os'};
+      my $part_desc =  "Drive $dn";
+      if ($num_parts > 1) { $part_desc .= ", Part $pn"; }
+      $part_desc .= ": ($size $fs)";
+      if ($os ne '') { $part_desc .= " $os"; }
+      if ($label ne '') { $part_desc .= " $label"; }
+      if (grep $_ eq $part, @blacklist) {
+        print "*** Omitting backup source $part from destination list\n";
+      } else {
+        $mdl->set($mdl->append, 0, "DEV|$part", 1, $part_desc);
+      }
+    }
+  }
+  $cbo->set_active(0);
+}
+
+sub set_share_dropdown {  
+  # Add the share list to the given combobox
+  our %shares;
+  my $cbo = our $builder->get_object($_[0]);
+  my $mdl = $cbo->get_model();
+  $mdl->clear();
+  for my $share (sort keys %shares) {
+    my $ip = $shares{$share}{'ip'};
+    my $host = $shares{$share}{'host'};
+    my $folder = $shares{$share}{'folder'};
+    my $desc = $shares{$share}{'desc'};
+    my $type = $shares{$share}{'type'};
+    if (!defined($host)) { $host = $ip; }
+    my $share_desc = '';
+    if ($type eq 'FTP') {
+      $share_desc = "FTP server \U$host";
+    } elsif ($type eq 'SMB') {
+      $share_desc = "Shared folder $folder on $host";
+    }
+    if ((defined($desc))&&($desc ne '')) { $share_desc .= " ($desc)"; }
+    $mdl->set($mdl->append, 0, "$type|$share", 1, $share_desc);
+  }
+  $mdl->set($mdl->append, 0, "SMB|", 1, "Shared folder specified below");
+  $mdl->set($mdl->append, 0, "FTP|", 1, "FTP server specified below");  
+  $cbo->set_active(0);
+}
+
+sub get_selected_partitions {
+  # Return the partitions that have been selected from a list
+  my @selected = ();
+  my $tv = our $builder->get_object($_[0]);
+  my $mdl = $tv->get_model();
+  my $total = $mdl->iter_n_children();
+  for (my $i=0; $i<$total; $i++) {
+    my $iter = $mdl->get_iter_from_string("$i");
+    my ($part, $on) = $mdl->get($iter, 0, 1);
+    if ($on) { push(@selected, $part); }
+  }
+  return @selected;
+}
+
+sub set_partition_list {
+  # Set the list of partitions with checkboxes
+  our %drives;
+  if (keys(%drives)==0) { fatal_crash('Could not locate any partitions on your computer.'); }
+  my $tv = our $builder->get_object($_[0]);
+  my $slist = Gtk2::SimpleList->new_from_treeview(
+    $tv,
+    'Part'           => 'text',
+    'Save'           => 'bool',
+    'Description'    => 'text',
+  );
+  my $tv_col = $tv->get_column(0);
+  $tv_col->set_visible(FALSE);
+  @{$slist->{data}} = (
+    #[ TRUE, "sda2", "Drive 1, Part 1: (80GB) Windows XP Pro" ],
+  );
+  print "Obtaining partitions for drive $_[1]...\n";
+  for my $drive (sort keys %drives) {
+    for my $data (sort keys %{ $drives{$drive}{'parts'} }) {
+      my $num_parts = keys(%{ $drives{$drive}{'parts'} });
+      my $dn = $drives{$drive}{'drivenum'};
+      my $pn = $data;
+      my $part = $drives{$drive}{'parts'}{$data}{'partition'};
+      my $fs = $drives{$drive}{'parts'}{$data}{'fstype'};
+      my $label = $drives{$drive}{'parts'}{$data}{'label'};
+      my $size = $drives{$drive}{'parts'}{$data}{'size'};
+      if (!defined($size)) { $size = "Unknown size"; }
+      my $os = $drives{$drive}{'parts'}{$data}{'os'};
+      my $part_desc = "Drive $dn, Part $pn";
+      $part_desc .= ": ($size $fs)";
+      if ($os ne '') { $part_desc .= " $os"; }
+      if ($label ne '') { $part_desc .= ", $label"; }
+      if ($drive eq $_[1]) {
+        push @{$slist->{data}}, [ $part, TRUE, $part_desc ];
+      }
+    }
+  }
+  #$slist->get_selection->set_mode('multiple');
+  $slist->get_selection->unselect_all();
+}
+
+sub print_drive_list {
+  # Print the drive list to the console
+  our %drives;
+  for my $dev (sort keys %drives) {
+    print "*** $dev ***\n";
+    for my $drive_key (sort keys %{ $drives{$dev} }) {
+      print "\t$drive_key = $drives{$dev}{$drive_key}\n";
+      if(ref($drives{$dev}{$drive_key}) eq 'HASH') {
+        for my $pn (sort keys %{ $drives{$dev}{$drive_key} }) {
+          print "\tPart $pn:\n";
+          for my $pk (sort keys %{ $drives{$dev}{$drive_key}{$pn} }) {
+            print "\t\t$pk = $drives{$dev}{$drive_key}{$pn}{$pk}\n"; 
+          }
+        }
+      }
+    }
+    print "\n";
+  }
+}
+
+sub print_share_list {
+  # Print the share list to the console
+  our %shares;
+  for my $share (sort keys %shares) {
+    print "*** $share ***\n";
+    for my $share_key (sort keys %{ $shares{$share} }) {
+      print "\t$share_key = $shares{$share}{$share_key}\n";
+    }
+    print "\n";
+  }
+}
+
+sub find_local_drives {
+  # Set the list of local drives, (only SCSI and USB drives)
+  our %drives;
+  my $drivelist = `fsarchiver probe 2>&1`;
+  chomp($drivelist);
+  if ($drivelist eq "") {
+    return FALSE;
+  } else {
+    # Create an array of drives
+    $drivelist =~ s/\n\[\=+DEVICE.*//s;
+    $drivelist =~ s/\[\=+DISK.*\n//g;
+    $drivelist =~ s/^\[|\]$//mg;
+    my @list = split(/\n/, $drivelist);
+    foreach my $line (@list) {
+      # Get each drive's details
+      next if $line =~ m/^\n/;
+      refresh_window();
+      my @drivedata = split(/\]\s\[/, $line);
+      my $dev = $drivedata[0];
+      $dev =~ s/\s*$//g;
+      my $dev_name = $drivedata[1];
+      $dev_name =~ s/\s*$//g;
+      my $size = $drivedata[2];
+      $size =~ s/^\s*//g;
+      if (!defined($size)) { $size = 'Unknown'; }
+      my ($drivenum) = get_drivenum_partnum($dev);
+      my $type = get_drivetype($dev);
+      my $desc = "Drive $drivenum ($size): $dev_name";
+      if ($type eq 'usb') { $desc = "Drive $drivenum ($size): USB $dev_name"; }
+      $drives{$dev} = {
+        'device'        => $dev,
+        'drivenum'      => $drivenum,
+        'size'          => $size,
+        'model'         => $dev_name,
+        'type'          => $type,
+        'desc'          => $desc,
+        'parts'         => {},
+      };
+    }
+  }
+  if (scalar(keys(%drives))==0) { return FALSE; }
+  find_local_partitions();
+  return TRUE;
+}
+
+sub find_local_partitions {
+  # Set the list of local partitions for SCSI and USB drives
+  our %drives;
+  set_busy("Identifying disk drives...");
+  my $partlist = `fsarchiver probe 2>&1`;
+  chomp($partlist);
+  if ($partlist =~ m/Failed to detect disks and filesystems/) {
+    return FALSE;
+  } else {
+    # Create an array of partitions
+    $partlist =~ s/^.*\[\=+DEVICE/\[\=DEVICE/s;
+    $partlist =~ s/\[\=+DEVICE.*\n//g;
+    $partlist =~ s/^\[|\]$//mg;
+    my @list = split(/\n/, $partlist);
+    foreach my $line (@list) {
+      # Get each partition's details
+      next if $line =~ m/^\n/;
+      next if $line =~ m/^loop/;
+      next if $line =~ m/^ramzswap/;
+      next if $line =~ m/^dm-/;
+      refresh_window();
+      my ($partition, $fstype, $label, $size) = split(/\]\s\[/, $line);
+      $partition = trim($partition);
+      $fstype = trim("\U$fstype");
+      $label = trim($label);
+      $label = '' if $label eq '<unknown>';
+      $size = trim($size);
+      my $dev = $partition;
+      $dev =~ s/\d//g;
+      my ($dn, $pn) = get_drivenum_partnum($partition);
+      my $part = {
+        'partition' => $partition,
+        'fstype'    => $fstype,
+        'label'     => $label,
+        'size'      => $size,
+        'os'        => '',
+      };
+      # Save the details in a final list
+      $drives{$dev}{'parts'}{$pn} = $part;
+    }
+    # Identify any operating systems
+    refresh_window();
+    my $oslist = `os-prober`;
+    chomp($oslist);
+    if ($oslist ne "") {
+      my @list = split(/\n/, $oslist);
+      foreach my $line (@list) {
+        my ($os_part, $os_name, $os_type, $os_loader) = split(/:/, $line);
+        my $dev = $os_part;
+        my ($dn, $pn) = get_drivenum_partnum($os_part);
+        $dev =~ s/\d|\/dev\///g;
+        if ($os_name ne '') {
+          $drives{$dev}{'parts'}{$pn}{'os'} = $os_name;
+        }
+      }
+    }
+  }
+  # Update the drive description to include labels and OS types
+  for my $dev (sort keys %drives) {
+    if(ref($drives{$dev}{'parts'}) eq 'HASH') {
+      for my $pn (sort keys %{ $drives{$dev}{'parts'} }) {
+        my $desc = ' ';
+        my $label = $drives{$dev}{'parts'}{$pn}{'label'};
+        my $os = $drives{$dev}{'parts'}{$pn}{'os'};
+        my $size = $drives{$dev}{'parts'}{$pn}{'size'};
+        my $fstype = $drives{$dev}{'parts'}{$pn}{'fstype'};
+        if ($os ne '') {
+          $desc .= "($os, $size $fstype)";
+        } else {
+          if ($label ne '') {
+            $desc .= "($label, $size $fstype)";
+          } else {
+            $desc .= "($size $fstype)";
+          }
+        }
+        $drives{$dev}{'desc'} .= "$desc";
+      }
+    }
+  }
+  set_busy(FALSE);
+  return TRUE;
+}
+
+sub find_shared_drives {
+  # Search for local network shares (FTP/SMB)
+  our %shares;
+  set_busy("Searching network for shared drives...");
+  refresh_window();
+  my $smbdata = `smbtree -N | grep '\\\\\\\\\\w*\\\\\\w*[^\\\$] '`;
+  refresh_window();
+  chomp($smbdata);
+  my @list = split(/\n/, $smbdata);
+  foreach my $line (@list) {
+    # Get list of SMB shared folders
+    my ($share, $desc) = split(/  +/, $line);
+    $share = trim($share);
+    $desc = trim($desc);
+    my ($a, $b, $host, $folder) = split(/\\/, $share);
+    $host = trim("\U$host");
+    $folder = trim("\U$folder");
+    #my $ip = `nmblookup $host | grep '^[^q]'`;
+    #$ip = trim($ip);
+    #$ip =~ s/ .*$//g;
+    my $ip = '';
+    $shares{"smb://$host/$folder"} = {
+      'ip'            => $ip,
+      'host'          => $host,
+      'folder'        => $folder,
+      'desc'          => $desc,
+      'type'          => 'SMB',
+    };
+  }
+  my $subnet = get_subnet();
+  refresh_window();
+  system("nmap -p 21 $subnet/24 --open -T5 -oX /tmp/out.xml");
+  refresh_window();
+  my $xml = new XML::Simple;
+  my $ftpdata = $xml->XMLin("/tmp/out.xml");
+  foreach my $key (@{$ftpdata->{host}}) {
+    my $state = $key->{ports}->{port}->{state}->{state};
+    if (!defined($state)) { $state = ''; }
+    if ($state eq 'open') {
+      my $ip = '';
+      my $vendor = '';
+      my $hostname = '';
+      if (ref($key->{address}) eq 'ARRAY') {
+        foreach my $address_key (@{$key->{address}}) {
+          if ($address_key->{addrtype} eq 'ipv4') { $ip = $address_key->{addr}; }
+          if ($address_key->{addrtype} eq 'mac') { $vendor = $address_key->{vendor}; }
+        }
+      } else {
+        $ip = $key->{address}->{ip};
+        $vendor = '';
+      }
+      if (ref($key->{hostnames}->{hostname}) eq 'ARRAY') {
+        foreach my $hostname_key (@{$key->{hostnames}}) {
+          if ($hostname_key->{type} eq 'PTR') { $hostname = $hostname_key->{name}; }
+        }
+      } else {
+        $hostname = $key->{hostnames}->{hostname}->{name};
+      }
+      $shares{"ftp://$ip"} = {
+        'ip'            => $ip,
+        'host'          => $hostname,
+        'folder'        => '',
+        'desc'          => $vendor,
+        'type'          => 'FTP',
+      };
+    }
+  }
+  set_busy(FALSE);
+  return TRUE;
+}
+
+sub scan_network {
+  # Scan the network and add shares to given dropdown
+  my $cbo = our $builder->get_object($_[0]);
+  my $mdl = $cbo->get_model();
+  $mdl->clear();
+  find_shared_drives();
+  print_share_list();
+  set_share_dropdown($_[0]);
+}
+
+sub get_drivenum_partnum {
+  # Given a /dev/XXX partition, return the drive and partition numbers
+  my $dpd = $_[0];
+  $dpd =~ s/\/dev\/sd|sd//g;
+  my $dn = substr($dpd,0,1);
+  $dn = ord("\L$dn")-96;
+  my $pn = substr($dpd,1);
+  return ($dn, $pn);
+}
+
+sub get_drivetype {
+  # Given an "sdX" device, return the string that indicates its type
+  my $dev = $_[0];
+  my $usb = `ls -asl /dev/disk/by-id/ | grep '$dev\$' | grep 'usb' | wc -l`;
+  if ($usb==1) {
+    return 'usb';
+  } else {
+    return 'scsi';
+  }
+}
+
+sub get_subnet {
+  # Return current subnet for my IP address
+  my $ip = `ifconfig -a | perl -ne 'if ( m/^\\s*inet (?:addr:)?([\\d.]+).*?cast/ ) { print qq(\$1\\n); exit 0; }'`;
+  chomp($ip);
+  my ($a,$b,$c) = split(/\./, $ip);
+  return "$a.$b.$c.0";
+}
+
+sub trim {
+  # Trim whitespace from both ends of a string
+  my $string = shift;
+  $string =~ s/^\s+//;
+  $string =~ s/\s+$//;
+  return $string;
+}

@@ -1,0 +1,15 @@
+#
+# /etc/default/rcS
+#
+# Default settings for the scripts in /etc/rcS.d/
+#
+# For information about these variables see the rcS(5) manual page.
+#
+# This file belongs to the "initscripts" package.
+
+TMPTIME=0
+SULOGIN=no
+DELAYLOGIN=no
+UTC=no
+VERBOSE=no
+FSCKFIX=no

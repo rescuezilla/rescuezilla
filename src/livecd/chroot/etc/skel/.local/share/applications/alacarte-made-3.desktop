@@ -1,0 +1,13 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Icon[en_US]=gpicview
+Name[en_US]=Image Viewer
+Exec=gpicview
+Comment[en_US]=Simple photo and image viewer
+Name=Image Viewer
+Comment=Simple photo and image viewer
+Icon=gpicview

@@ -1,0 +1,1764 @@
+<?xml version="1.0"?>
+<interface>
+  <requires lib="gtk+" version="2.16"/>
+  <!-- interface-naming-policy project-wide -->
+  <object class="GtkListStore" id="share_list">
+    <columns>
+      <!-- column-name device -->
+      <column type="gchararray"/>
+      <!-- column-name device_description -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
+  <object class="GtkListStore" id="partition_list">
+    <columns>
+      <!-- column-name partition -->
+      <column type="gchararray"/>
+      <!-- column-name partition_description -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
+  <object class="GtkListStore" id="drive_list">
+    <columns>
+      <!-- column-name drive -->
+      <column type="gchararray"/>
+      <!-- column-name drive_description -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
+  <object class="GtkListStore" id="backup_list">
+    <columns>
+      <!-- column-name part_selected -->
+      <column type="gboolean"/>
+      <!-- column-name part_id -->
+      <column type="gchararray"/>
+      <!-- column-name part_desc -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
+  <object class="GtkWindow" id="main_app">
+    <property name="title" translatable="yes">Backup and Restore Utility</property>
+    <property name="window_position">center</property>
+    <property name="icon">redobackup-icon.png</property>
+    <signal name="destroy" handler="on_main_app_destroy"/>
+    <child>
+      <object class="GtkVBox" id="main_vbox">
+        <property name="visible">True</property>
+        <child>
+          <object class="GtkEventBox" id="main_image_eventbox">
+            <property name="visible">True</property>
+            <child>
+              <object class="GtkImage" id="main_image">
+                <property name="visible">True</property>
+                <property name="xalign">1</property>
+                <property name="yalign">0</property>
+                <property name="pixbuf">redobackup-title.png</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="main_title">
+            <property name="visible">True</property>
+            <property name="xalign">0</property>
+            <property name="xpad">10</property>
+            <property name="ypad">5</property>
+            <property name="label" translatable="yes">Welcome</property>
+            <attributes>
+              <attribute name="weight" value="bold"/>
+              <attribute name="stretch" value="ultra-condensed"/>
+              <attribute name="foreground" value="#999999999999"/>
+              <attribute name="scale" value="2.500000"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkAlignment" id="main_content">
+            <property name="visible">True</property>
+            <property name="xscale">0.80000001192092896</property>
+            <property name="bottom_padding">10</property>
+            <property name="left_padding">20</property>
+            <property name="right_padding">20</property>
+            <child>
+              <object class="GtkFrame" id="main_frame">
+                <property name="visible">True</property>
+                <property name="label_xalign">0.0099999997764825821</property>
+                <child>
+                  <object class="GtkAlignment" id="main_frame_pad">
+                    <property name="visible">True</property>
+                    <property name="top_padding">10</property>
+                    <property name="bottom_padding">10</property>
+                    <property name="left_padding">10</property>
+                    <property name="right_padding">10</property>
+                    <child>
+                      <object class="GtkNotebook" id="main_tabs">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <child>
+                          <object class="GtkVBox" id="welcome_vbox">
+                            <property name="visible">True</property>
+                            <child>
+                              <object class="GtkLabel" id="welcome_text">
+                                <property name="visible">True</property>
+                                <property name="yalign">1</property>
+                                <property name="ypad">20</property>
+                                <property name="label" translatable="yes">Easily create a backup image of your computer, or completely restore from one.  Click an option to begin:</property>
+                                <property name="wrap">True</property>
+                              </object>
+                              <packing>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkAlignment" id="alignment6">
+                                <property name="visible">True</property>
+                                <property name="yalign">0</property>
+                                <property name="yscale">0</property>
+                                <child>
+                                  <object class="GtkHButtonBox" id="welcome_buttonbox">
+                                    <property name="visible">True</property>
+                                    <property name="spacing">20</property>
+                                    <property name="homogeneous">True</property>
+                                    <property name="layout_style">center</property>
+                                    <child>
+                                      <object class="GtkButton" id="welcome_button_backup">
+                                        <property name="label" translatable="yes">Backup</property>
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">True</property>
+                                        <property name="receives_default">True</property>
+                                        <property name="image">button_image_backup</property>
+                                        <property name="image_position">top</property>
+                                        <signal name="clicked" handler="backup_mode"/>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">False</property>
+                                        <property name="position">0</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkButton" id="welcome_button_restore">
+                                        <property name="label" translatable="yes">Restore</property>
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">True</property>
+                                        <property name="receives_default">True</property>
+                                        <property name="image">button_image_restore</property>
+                                        <property name="image_position">top</property>
+                                        <signal name="clicked" handler="restore_mode"/>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">False</property>
+                                        <property name="position">1</property>
+                                      </packing>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                          </object>
+                        </child>
+                        <child type="tab">
+                          <object class="GtkLabel" id="main_tab1_label">
+                            <property name="visible">True</property>
+                            <property name="label" translatable="yes">Welcome</property>
+                          </object>
+                          <packing>
+                            <property name="tab_fill">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkVBox" id="backup_vbox">
+                            <property name="visible">True</property>
+                            <child>
+                              <object class="GtkAlignment" id="backup_alignment">
+                                <property name="visible">True</property>
+                                <property name="top_padding">10</property>
+                                <property name="bottom_padding">10</property>
+                                <property name="left_padding">10</property>
+                                <property name="right_padding">10</property>
+                                <child>
+                                  <object class="GtkNotebook" id="backup_tabs">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="show_border">False</property>
+                                    <child>
+                                      <object class="GtkVBox" id="backup_step1_vbox">
+                                        <property name="visible">True</property>
+                                        <child>
+                                          <object class="GtkLabel" id="backup_step1_text">
+                                            <property name="visible">True</property>
+                                            <property name="yalign">1</property>
+                                            <property name="ypad">20</property>
+                                            <property name="label" translatable="yes">Click on the box below to select the source drive that you would like to create a backup image from.</property>
+                                            <property name="wrap">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkAlignment" id="backup_step1_alignment">
+                                            <property name="visible">True</property>
+                                            <property name="yalign">0</property>
+                                            <property name="xscale">0.85000002384185791</property>
+                                            <property name="yscale">0</property>
+                                            <child>
+                                              <object class="GtkComboBox" id="backup_source">
+                                                <property name="visible">True</property>
+                                                <property name="model">partition_list</property>
+                                                <child>
+                                                  <object class="GtkCellRendererText" id="backup_source_cellrenderertext"/>
+                                                  <attributes>
+                                                    <attribute name="text">1</attribute>
+                                                  </attributes>
+                                                </child>
+                                              </object>
+                                            </child>
+                                          </object>
+                                          <packing>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                      </object>
+                                    </child>
+                                    <child type="tab">
+                                      <object class="GtkLabel" id="backup_tab1_label">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">Step 1</property>
+                                      </object>
+                                      <packing>
+                                        <property name="tab_fill">False</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkVBox" id="backup_step2_vbox">
+                                        <property name="visible">True</property>
+                                        <child>
+                                          <object class="GtkLabel" id="backup_step2_text">
+                                            <property name="visible">True</property>
+                                            <property name="yalign">1</property>
+                                            <property name="ypad">20</property>
+                                            <property name="label" translatable="yes">Select which parts of the drive to create a backup of.  Leave all parts selected if you are unsure.</property>
+                                            <property name="wrap">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">False</property>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkAlignment" id="backup_step2_alignment">
+                                            <property name="visible">True</property>
+                                            <property name="yalign">0</property>
+                                            <property name="xscale">0.85000002384185791</property>
+                                            <property name="bottom_padding">10</property>
+                                            <child>
+                                              <object class="GtkScrolledWindow" id="scrolledwindow2">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">True</property>
+                                                <property name="hscrollbar_policy">never</property>
+                                                <property name="vscrollbar_policy">automatic</property>
+                                                <property name="shadow_type">in</property>
+                                                <child>
+                                                  <object class="GtkTreeView" id="backup_partitions">
+                                                    <property name="visible">True</property>
+                                                    <property name="can_focus">True</property>
+                                                    <property name="model">backup_list</property>
+                                                    <property name="enable_search">False</property>
+                                                    <property name="search_column">0</property>
+                                                    <property name="show_expanders">False</property>
+                                                    <property name="enable_grid_lines">both</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                          </object>
+                                          <packing>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                      </object>
+                                      <packing>
+                                        <property name="position">1</property>
+                                      </packing>
+                                    </child>
+                                    <child type="tab">
+                                      <object class="GtkLabel" id="backup_tab2_label">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">Step 2</property>
+                                      </object>
+                                      <packing>
+                                        <property name="position">4</property>
+                                        <property name="tab_fill">False</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkAlignment" id="backup_step3_alignment1">
+                                        <property name="visible">True</property>
+                                        <property name="xscale">0.85000002384185791</property>
+                                        <property name="top_padding">10</property>
+                                        <property name="bottom_padding">10</property>
+                                        <property name="left_padding">10</property>
+                                        <property name="right_padding">10</property>
+                                        <child>
+                                          <object class="GtkVBox" id="backup_step3_vbox2">
+                                            <property name="visible">True</property>
+                                            <property name="spacing">10</property>
+                                            <child>
+                                              <object class="GtkFrame" id="backup_frame2">
+                                                <property name="visible">True</property>
+                                                <property name="label_xalign">0</property>
+                                                <property name="shadow_type">none</property>
+                                                <child>
+                                                  <object class="GtkAlignment" id="alignment2">
+                                                    <property name="visible">True</property>
+                                                    <property name="top_padding">5</property>
+                                                    <property name="bottom_padding">10</property>
+                                                    <property name="left_padding">10</property>
+                                                    <property name="right_padding">10</property>
+                                                    <child>
+                                                      <object class="GtkVBox" id="vbox2">
+                                                        <property name="visible">True</property>
+                                                        <child>
+                                                          <object class="GtkRadioButton" id="backup_dest_use_local">
+                                                            <property name="label" translatable="yes">Connected directly to my computer</property>
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="receives_default">False</property>
+                                                            <property name="active">True</property>
+                                                            <property name="draw_indicator">True</property>
+                                                            <signal name="toggled" handler="backup_dest_changed"/>
+                                                          </object>
+                                                          <packing>
+                                                            <property name="position">0</property>
+                                                          </packing>
+                                                        </child>
+                                                        <child>
+                                                          <object class="GtkRadioButton" id="backup_dest_use_network">
+                                                            <property name="label" translatable="yes">Shared over a network</property>
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="receives_default">False</property>
+                                                            <property name="draw_indicator">True</property>
+                                                            <property name="group">backup_dest_use_local</property>
+                                                          </object>
+                                                          <packing>
+                                                            <property name="position">1</property>
+                                                          </packing>
+                                                        </child>
+                                                      </object>
+                                                    </child>
+                                                  </object>
+                                                </child>
+                                                <child type="label">
+                                                  <object class="GtkLabel" id="frame_top_label1">
+                                                    <property name="visible">True</property>
+                                                    <property name="label" translatable="yes">Where is the destination drive?</property>
+                                                    <property name="use_markup">True</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="position">0</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkScrolledWindow" id="scrolledwindow3">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">True</property>
+                                                <property name="hscrollbar_policy">never</property>
+                                                <property name="vscrollbar_policy">automatic</property>
+                                                <child>
+                                                  <object class="GtkViewport" id="viewport2">
+                                                    <property name="visible">True</property>
+                                                    <property name="resize_mode">queue</property>
+                                                    <child>
+                                                      <object class="GtkAlignment" id="alignment13">
+                                                        <property name="visible">True</property>
+                                                        <property name="top_padding">10</property>
+                                                        <child>
+                                                          <object class="GtkVBox" id="vbox9">
+                                                            <property name="visible">True</property>
+                                                            <property name="spacing">10</property>
+                                                            <child>
+                                                            <object class="GtkFrame" id="backup_frame_local">
+                                                            <property name="visible">True</property>
+                                                            <property name="label_xalign">0</property>
+                                                            <property name="shadow_type">none</property>
+                                                            <child>
+                                                            <object class="GtkAlignment" id="alignment3">
+                                                            <property name="visible">True</property>
+                                                            <property name="yscale">0</property>
+                                                            <property name="top_padding">5</property>
+                                                            <property name="bottom_padding">10</property>
+                                                            <property name="left_padding">10</property>
+                                                            <property name="right_padding">10</property>
+                                                            <child>
+                                                            <object class="GtkComboBox" id="backup_dest_local">
+                                                            <property name="visible">True</property>
+                                                            <property name="model">partition_list</property>
+                                                            <child>
+                                                            <object class="GtkCellRendererText" id="backup_dest_cellrenderertext1"/>
+                                                            <attributes>
+                                                            <attribute name="text">1</attribute>
+                                                            </attributes>
+                                                            </child>
+                                                            </object>
+                                                            </child>
+                                                            </object>
+                                                            </child>
+                                                            <child type="label">
+                                                            <object class="GtkLabel" id="frame_top_label4">
+                                                            <property name="visible">True</property>
+                                                            <property name="xpad">7</property>
+                                                            <property name="label" translatable="yes">Select destination drive:</property>
+                                                            <property name="use_markup">True</property>
+                                                            </object>
+                                                            </child>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="expand">False</property>
+                                                            <property name="fill">False</property>
+                                                            <property name="position">0</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkFrame" id="backup_frame_network">
+                                                            <property name="label_xalign">0</property>
+                                                            <property name="shadow_type">none</property>
+                                                            <child>
+                                                            <object class="GtkAlignment" id="alignment9">
+                                                            <property name="visible">True</property>
+                                                            <property name="bottom_padding">5</property>
+                                                            <property name="left_padding">10</property>
+                                                            <property name="right_padding">10</property>
+                                                            <child>
+                                                            <object class="GtkVBox" id="vbox6">
+                                                            <property name="visible">True</property>
+                                                            <child>
+                                                            <object class="GtkAlignment" id="alignment10">
+                                                            <property name="visible">True</property>
+                                                            <property name="yscale">0</property>
+                                                            <property name="top_padding">5</property>
+                                                            <property name="bottom_padding">10</property>
+                                                            <child>
+                                                            <object class="GtkHBox" id="hbox2">
+                                                            <property name="visible">True</property>
+                                                            <property name="spacing">5</property>
+                                                            <child>
+                                                            <object class="GtkComboBox" id="backup_dest_network">
+                                                            <property name="visible">True</property>
+                                                            <property name="model">share_list</property>
+                                                            <signal name="changed" handler="backup_dest_network_changed"/>
+                                                            <child>
+                                                            <object class="GtkCellRendererText" id="backup_dest_cellrenderertext3"/>
+                                                            <attributes>
+                                                            <attribute name="text">1</attribute>
+                                                            </attributes>
+                                                            </child>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="position">0</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkButton" id="backup_dest_search">
+                                                            <property name="label" translatable="yes">Search network</property>
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="receives_default">True</property>
+                                                            <signal name="clicked" handler="backup_scan_network"/>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="expand">False</property>
+                                                            <property name="position">1</property>
+                                                            </packing>
+                                                            </child>
+                                                            </object>
+                                                            </child>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="position">0</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkAlignment" id="alignment11">
+                                                            <property name="visible">True</property>
+                                                            <property name="xscale">0.5</property>
+                                                            <property name="yscale">0</property>
+                                                            <property name="bottom_padding">5</property>
+                                                            <child>
+                                                            <object class="GtkTable" id="backup_dest_entries1">
+                                                            <property name="visible">True</property>
+                                                            <property name="n_rows">4</property>
+                                                            <property name="n_columns">2</property>
+                                                            <property name="column_spacing">5</property>
+                                                            <property name="row_spacing">5</property>
+                                                            <child>
+                                                            <object class="GtkLabel" id="backup_dest_user_label2">
+                                                            <property name="visible">True</property>
+                                                            <property name="xalign">1</property>
+                                                            <property name="label" translatable="yes">Server or share location:</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="x_options">GTK_FILL</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkEntry" id="backup_dest_server">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="invisible_char">&#x25CF;</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="left_attach">1</property>
+                                                            <property name="right_attach">2</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkLabel" id="backup_dest_user_label3">
+                                                            <property name="visible">True</property>
+                                                            <property name="xalign">1</property>
+                                                            <property name="label" translatable="yes">Username (Optional):</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="top_attach">1</property>
+                                                            <property name="bottom_attach">2</property>
+                                                            <property name="x_options">GTK_FILL</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkEntry" id="backup_dest_user">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="invisible_char">&#x25CF;</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="left_attach">1</property>
+                                                            <property name="right_attach">2</property>
+                                                            <property name="top_attach">1</property>
+                                                            <property name="bottom_attach">2</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkLabel" id="backup_dest_pass_label1">
+                                                            <property name="visible">True</property>
+                                                            <property name="xalign">1</property>
+                                                            <property name="label" translatable="yes">Password (Optional):</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="top_attach">2</property>
+                                                            <property name="bottom_attach">3</property>
+                                                            <property name="x_options">GTK_FILL</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkEntry" id="backup_dest_pass">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="invisible_char">&#x25CF;</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="left_attach">1</property>
+                                                            <property name="right_attach">2</property>
+                                                            <property name="top_attach">2</property>
+                                                            <property name="bottom_attach">3</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkLabel" id="backup_dest_domain_label1">
+                                                            <property name="visible">True</property>
+                                                            <property name="xalign">1</property>
+                                                            <property name="label" translatable="yes">Domain (Optional):</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="top_attach">3</property>
+                                                            <property name="bottom_attach">4</property>
+                                                            <property name="x_options">GTK_FILL</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkEntry" id="backup_dest_domain">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="invisible_char">&#x25CF;</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="left_attach">1</property>
+                                                            <property name="right_attach">2</property>
+                                                            <property name="top_attach">3</property>
+                                                            <property name="bottom_attach">4</property>
+                                                            </packing>
+                                                            </child>
+                                                            </object>
+                                                            </child>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="position">1</property>
+                                                            </packing>
+                                                            </child>
+                                                            </object>
+                                                            </child>
+                                                            </object>
+                                                            </child>
+                                                            <child type="label">
+                                                            <object class="GtkLabel" id="backup_dest_frame_label1">
+                                                            <property name="visible">True</property>
+                                                            <property name="xpad">7</property>
+                                                            <property name="label" translatable="yes">Select network-shared storage destination:</property>
+                                                            <property name="use_markup">True</property>
+                                                            </object>
+                                                            </child>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="expand">False</property>
+                                                            <property name="position">1</property>
+                                                            </packing>
+                                                            </child>
+                                                          </object>
+                                                        </child>
+                                                      </object>
+                                                    </child>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                              <packing>
+                                                <property name="position">1</property>
+                                              </packing>
+                                            </child>
+                                          </object>
+                                        </child>
+                                      </object>
+                                      <packing>
+                                        <property name="position">2</property>
+                                      </packing>
+                                    </child>
+                                    <child type="tab">
+                                      <object class="GtkLabel" id="backup_tab3_label">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">Step 3</property>
+                                      </object>
+                                      <packing>
+                                        <property name="position">2</property>
+                                        <property name="tab_fill">False</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkVBox" id="backup_step4_vbox">
+                                        <property name="visible">True</property>
+                                        <child>
+                                          <object class="GtkLabel" id="backup_step4_text">
+                                            <property name="visible">True</property>
+                                            <property name="yalign">1</property>
+                                            <property name="ypad">20</property>
+                                            <property name="label" translatable="yes">Click &lt;b&gt;Browse&lt;/b&gt; to select or create a folder on the destination drive where your new backup image will be saved.
+
+The folder a backup is saved in is usually a description of the computer, e.g. &lt;b&gt;office1&lt;/b&gt; or &lt;b&gt;zack-laptop&lt;/b&gt;.</property>
+                                            <property name="use_markup">True</property>
+                                            <property name="wrap">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkAlignment" id="backup_step4_alignment">
+                                            <property name="visible">True</property>
+                                            <property name="yalign">0</property>
+                                            <property name="xscale">0.85000002384185791</property>
+                                            <property name="yscale">0</property>
+                                            <child>
+                                              <object class="GtkHBox" id="backup_folder_hbox">
+                                                <property name="visible">True</property>
+                                                <child>
+                                                  <object class="GtkEntry" id="backup_folder">
+                                                    <property name="visible">True</property>
+                                                    <property name="can_focus">True</property>
+                                                    <property name="editable">False</property>
+                                                    <property name="invisible_char">&#x25CF;</property>
+                                                  </object>
+                                                  <packing>
+                                                    <property name="padding">2</property>
+                                                    <property name="position">0</property>
+                                                  </packing>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkButton" id="backup_folder_browse">
+                                                    <property name="label" translatable="yes">Browse...</property>
+                                                    <property name="visible">True</property>
+                                                    <property name="can_focus">True</property>
+                                                    <property name="receives_default">True</property>
+                                                    <signal name="pressed" handler="select_backup_folder"/>
+                                                    <signal name="clicked" handler="select_backup_folder"/>
+                                                  </object>
+                                                  <packing>
+                                                    <property name="expand">False</property>
+                                                    <property name="padding">2</property>
+                                                    <property name="position">1</property>
+                                                  </packing>
+                                                </child>
+                                              </object>
+                                            </child>
+                                          </object>
+                                          <packing>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                      </object>
+                                      <packing>
+                                        <property name="position">3</property>
+                                      </packing>
+                                    </child>
+                                    <child type="tab">
+                                      <object class="GtkLabel" id="backup_tab4_label">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">Step 4</property>
+                                      </object>
+                                      <packing>
+                                        <property name="position">3</property>
+                                        <property name="tab_fill">False</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkVBox" id="backup_step5_vbox">
+                                        <property name="visible">True</property>
+                                        <child>
+                                          <object class="GtkLabel" id="backup_step5_text">
+                                            <property name="visible">True</property>
+                                            <property name="yalign">1</property>
+                                            <property name="ypad">20</property>
+                                            <property name="label" translatable="yes">Provide a unique name for this backup image, such as the date.  Today's date is automatically entered for you below.
+
+You may only use letters, numbers, and dashes in your backup name.</property>
+                                            <property name="wrap">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkAlignment" id="backup_step5_alignment">
+                                            <property name="visible">True</property>
+                                            <property name="yalign">0</property>
+                                            <property name="xscale">0.85000002384185791</property>
+                                            <property name="yscale">0</property>
+                                            <child>
+                                              <object class="GtkEntry" id="backup_name">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">True</property>
+                                                <property name="invisible_char">&#x25CF;</property>
+                                                <signal name="changed" handler="backup_name_changed"/>
+                                              </object>
+                                            </child>
+                                          </object>
+                                          <packing>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                      </object>
+                                      <packing>
+                                        <property name="position">4</property>
+                                      </packing>
+                                    </child>
+                                    <child type="tab">
+                                      <object class="GtkLabel" id="backup_tab_label">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">Step 5</property>
+                                      </object>
+                                      <packing>
+                                        <property name="position">4</property>
+                                        <property name="tab_fill">False</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkVBox" id="backup_step6_vbox">
+                                        <property name="visible">True</property>
+                                        <child>
+                                          <object class="GtkLabel" id="backup_step6_text">
+                                            <property name="visible">True</property>
+                                            <property name="yalign">1</property>
+                                            <property name="ypad">20</property>
+                                            <property name="label" translatable="yes">Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data.</property>
+                                            <property name="wrap">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkAlignment" id="backup_step6_alignment">
+                                            <property name="visible">True</property>
+                                            <property name="yalign">0</property>
+                                            <property name="xscale">0.85000002384185791</property>
+                                            <property name="yscale">0</property>
+                                            <child>
+                                              <object class="GtkVBox" id="vbox1">
+                                                <property name="visible">True</property>
+                                                <child>
+                                                  <object class="GtkProgressBar" id="backup_progress">
+                                                    <property name="visible">True</property>
+                                                    <property name="show_text">True</property>
+                                                  </object>
+                                                  <packing>
+                                                    <property name="position">0</property>
+                                                  </packing>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkLabel" id="backup_progress_status">
+                                                    <property name="visible">True</property>
+                                                    <property name="ypad">10</property>
+                                                    <property name="label" translatable="yes">Time Elapsed / Remaining: </property>
+                                                  </object>
+                                                  <packing>
+                                                    <property name="position">1</property>
+                                                  </packing>
+                                                </child>
+                                              </object>
+                                            </child>
+                                          </object>
+                                          <packing>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                      </object>
+                                      <packing>
+                                        <property name="position">5</property>
+                                      </packing>
+                                    </child>
+                                    <child type="tab">
+                                      <object class="GtkLabel" id="backup_tab6_label">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">Step 6</property>
+                                      </object>
+                                      <packing>
+                                        <property name="position">5</property>
+                                        <property name="tab_fill">False</property>
+                                      </packing>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkAlignment" id="backup_buttonbox_alignment">
+                                <property name="visible">True</property>
+                                <property name="yscale">0</property>
+                                <property name="bottom_padding">10</property>
+                                <property name="left_padding">10</property>
+                                <property name="right_padding">10</property>
+                                <child>
+                                  <object class="GtkHButtonBox" id="backup_buttonbox">
+                                    <property name="visible">True</property>
+                                    <property name="spacing">10</property>
+                                    <property name="layout_style">end</property>
+                                    <child>
+                                      <object class="GtkButton" id="backup_button_cancel">
+                                        <property name="label" translatable="yes">Cancel</property>
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">True</property>
+                                        <property name="receives_default">True</property>
+                                        <signal name="clicked" handler="on_main_app_destroy"/>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">False</property>
+                                        <property name="position">0</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkButton" id="backup_button_next">
+                                        <property name="label" translatable="yes">Next &gt;</property>
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">True</property>
+                                        <property name="receives_default">True</property>
+                                        <signal name="clicked" handler="next_tab"/>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">False</property>
+                                        <property name="position">1</property>
+                                      </packing>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                        <child type="tab">
+                          <object class="GtkLabel" id="main_tab2_label">
+                            <property name="visible">True</property>
+                            <property name="label" translatable="yes">Backup</property>
+                          </object>
+                          <packing>
+                            <property name="position">1</property>
+                            <property name="tab_fill">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkVBox" id="restore_vbox">
+                            <property name="visible">True</property>
+                            <child>
+                              <object class="GtkAlignment" id="restore_alignment">
+                                <property name="visible">True</property>
+                                <property name="top_padding">10</property>
+                                <property name="bottom_padding">10</property>
+                                <property name="left_padding">10</property>
+                                <property name="right_padding">10</property>
+                                <child>
+                                  <object class="GtkNotebook" id="restore_tabs">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="show_border">False</property>
+                                    <child>
+                                      <object class="GtkAlignment" id="restore_step2_alignment">
+                                        <property name="visible">True</property>
+                                        <property name="xscale">0.85000002384185791</property>
+                                        <property name="top_padding">10</property>
+                                        <property name="bottom_padding">10</property>
+                                        <property name="left_padding">10</property>
+                                        <property name="right_padding">10</property>
+                                        <child>
+                                          <object class="GtkVBox" id="restore_step2_vbox5">
+                                            <property name="visible">True</property>
+                                            <property name="spacing">10</property>
+                                            <child>
+                                              <object class="GtkFrame" id="restore_frame1">
+                                                <property name="visible">True</property>
+                                                <property name="label_xalign">0</property>
+                                                <property name="shadow_type">none</property>
+                                                <child>
+                                                  <object class="GtkAlignment" id="alignment5">
+                                                    <property name="visible">True</property>
+                                                    <property name="yscale">0</property>
+                                                    <property name="top_padding">5</property>
+                                                    <property name="bottom_padding">10</property>
+                                                    <property name="left_padding">10</property>
+                                                    <property name="right_padding">10</property>
+                                                    <child>
+                                                      <object class="GtkVBox" id="vbox4">
+                                                        <property name="visible">True</property>
+                                                        <child>
+                                                          <object class="GtkRadioButton" id="restore_source_use_local">
+                                                            <property name="label" translatable="yes">Connected directly to my computer</property>
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="receives_default">False</property>
+                                                            <property name="active">True</property>
+                                                            <property name="draw_indicator">True</property>
+                                                            <signal name="toggled" handler="restore_source_changed"/>
+                                                          </object>
+                                                          <packing>
+                                                            <property name="position">0</property>
+                                                          </packing>
+                                                        </child>
+                                                        <child>
+                                                          <object class="GtkRadioButton" id="restore_source_use_network">
+                                                            <property name="label" translatable="yes">Shared over a network</property>
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="receives_default">False</property>
+                                                            <property name="draw_indicator">True</property>
+                                                            <property name="group">restore_source_use_local</property>
+                                                          </object>
+                                                          <packing>
+                                                            <property name="position">1</property>
+                                                          </packing>
+                                                        </child>
+                                                      </object>
+                                                    </child>
+                                                  </object>
+                                                </child>
+                                                <child type="label">
+                                                  <object class="GtkLabel" id="frame_top_label3">
+                                                    <property name="visible">True</property>
+                                                    <property name="label" translatable="yes">Where is the source drive?</property>
+                                                    <property name="use_markup">True</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="position">0</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkScrolledWindow" id="scrolledwindow1">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">True</property>
+                                                <property name="hscrollbar_policy">never</property>
+                                                <property name="vscrollbar_policy">automatic</property>
+                                                <child>
+                                                  <object class="GtkViewport" id="viewport1">
+                                                    <property name="visible">True</property>
+                                                    <property name="resize_mode">queue</property>
+                                                    <child>
+                                                      <object class="GtkAlignment" id="alignment1">
+                                                        <property name="visible">True</property>
+                                                        <property name="top_padding">10</property>
+                                                        <child>
+                                                          <object class="GtkVBox" id="vbox8">
+                                                            <property name="visible">True</property>
+                                                            <property name="spacing">10</property>
+                                                            <child>
+                                                            <object class="GtkFrame" id="restore_frame_local">
+                                                            <property name="visible">True</property>
+                                                            <property name="label_xalign">0</property>
+                                                            <property name="shadow_type">none</property>
+                                                            <child>
+                                                            <object class="GtkAlignment" id="alignment4">
+                                                            <property name="visible">True</property>
+                                                            <property name="yscale">0</property>
+                                                            <property name="top_padding">5</property>
+                                                            <property name="bottom_padding">10</property>
+                                                            <property name="left_padding">10</property>
+                                                            <property name="right_padding">10</property>
+                                                            <child>
+                                                            <object class="GtkComboBox" id="restore_source_local">
+                                                            <property name="visible">True</property>
+                                                            <property name="model">partition_list</property>
+                                                            <child>
+                                                            <object class="GtkCellRendererText" id="restore_source_cellrenderertext2"/>
+                                                            <attributes>
+                                                            <attribute name="text">1</attribute>
+                                                            </attributes>
+                                                            </child>
+                                                            </object>
+                                                            </child>
+                                                            </object>
+                                                            </child>
+                                                            <child type="label">
+                                                            <object class="GtkLabel" id="frame_top_label2">
+                                                            <property name="visible">True</property>
+                                                            <property name="xpad">7</property>
+                                                            <property name="label" translatable="yes">Select source drive:</property>
+                                                            <property name="use_markup">True</property>
+                                                            </object>
+                                                            </child>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="expand">False</property>
+                                                            <property name="fill">False</property>
+                                                            <property name="position">0</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkFrame" id="restore_frame_network">
+                                                            <property name="label_xalign">0</property>
+                                                            <property name="shadow_type">none</property>
+                                                            <child>
+                                                            <object class="GtkAlignment" id="alignment7">
+                                                            <property name="visible">True</property>
+                                                            <property name="bottom_padding">5</property>
+                                                            <property name="left_padding">10</property>
+                                                            <property name="right_padding">10</property>
+                                                            <child>
+                                                            <object class="GtkVBox" id="vbox5">
+                                                            <property name="visible">True</property>
+                                                            <child>
+                                                            <object class="GtkAlignment" id="alignment8">
+                                                            <property name="visible">True</property>
+                                                            <property name="yscale">0</property>
+                                                            <property name="top_padding">5</property>
+                                                            <property name="bottom_padding">10</property>
+                                                            <child>
+                                                            <object class="GtkHBox" id="hbox1">
+                                                            <property name="visible">True</property>
+                                                            <property name="spacing">5</property>
+                                                            <child>
+                                                            <object class="GtkComboBox" id="restore_source_network">
+                                                            <property name="visible">True</property>
+                                                            <property name="model">share_list</property>
+                                                            <signal name="changed" handler="restore_source_network_changed"/>
+                                                            <child>
+                                                            <object class="GtkCellRendererText" id="restore_source_cellrenderertext4"/>
+                                                            <attributes>
+                                                            <attribute name="text">1</attribute>
+                                                            </attributes>
+                                                            </child>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="position">0</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkButton" id="restore_source_search">
+                                                            <property name="label" translatable="yes">Search network</property>
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="receives_default">True</property>
+                                                            <signal name="clicked" handler="restore_scan_network"/>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="expand">False</property>
+                                                            <property name="position">1</property>
+                                                            </packing>
+                                                            </child>
+                                                            </object>
+                                                            </child>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="position">0</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkAlignment" id="alignment12">
+                                                            <property name="visible">True</property>
+                                                            <property name="xscale">0.5</property>
+                                                            <property name="yscale">0</property>
+                                                            <property name="bottom_padding">5</property>
+                                                            <child>
+                                                            <object class="GtkTable" id="restore_source_entries">
+                                                            <property name="visible">True</property>
+                                                            <property name="n_rows">4</property>
+                                                            <property name="n_columns">2</property>
+                                                            <property name="column_spacing">5</property>
+                                                            <property name="row_spacing">5</property>
+                                                            <child>
+                                                            <object class="GtkLabel" id="restore_source_user_label1">
+                                                            <property name="visible">True</property>
+                                                            <property name="xalign">1</property>
+                                                            <property name="label" translatable="yes">Server or share location:</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="x_options">GTK_FILL</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkEntry" id="restore_source_server">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="invisible_char">&#x25CF;</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="left_attach">1</property>
+                                                            <property name="right_attach">2</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkLabel" id="restore_source_user_label">
+                                                            <property name="visible">True</property>
+                                                            <property name="xalign">1</property>
+                                                            <property name="label" translatable="yes">Username (Optional):</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="top_attach">1</property>
+                                                            <property name="bottom_attach">2</property>
+                                                            <property name="x_options">GTK_FILL</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkEntry" id="restore_source_user">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="invisible_char">&#x25CF;</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="left_attach">1</property>
+                                                            <property name="right_attach">2</property>
+                                                            <property name="top_attach">1</property>
+                                                            <property name="bottom_attach">2</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkLabel" id="restore_source_pass_label">
+                                                            <property name="visible">True</property>
+                                                            <property name="xalign">1</property>
+                                                            <property name="label" translatable="yes">Password (Optional):</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="top_attach">2</property>
+                                                            <property name="bottom_attach">3</property>
+                                                            <property name="x_options">GTK_FILL</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkEntry" id="restore_source_pass">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="invisible_char">&#x25CF;</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="left_attach">1</property>
+                                                            <property name="right_attach">2</property>
+                                                            <property name="top_attach">2</property>
+                                                            <property name="bottom_attach">3</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkLabel" id="restore_source_domain_label">
+                                                            <property name="visible">True</property>
+                                                            <property name="xalign">1</property>
+                                                            <property name="label" translatable="yes">Domain (Optional):</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="top_attach">3</property>
+                                                            <property name="bottom_attach">4</property>
+                                                            <property name="x_options">GTK_FILL</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkEntry" id="restore_source_domain">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="invisible_char">&#x25CF;</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="left_attach">1</property>
+                                                            <property name="right_attach">2</property>
+                                                            <property name="top_attach">3</property>
+                                                            <property name="bottom_attach">4</property>
+                                                            </packing>
+                                                            </child>
+                                                            </object>
+                                                            </child>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="position">1</property>
+                                                            </packing>
+                                                            </child>
+                                                            </object>
+                                                            </child>
+                                                            </object>
+                                                            </child>
+                                                            <child type="label">
+                                                            <object class="GtkLabel" id="restore_source_frame_label">
+                                                            <property name="visible">True</property>
+                                                            <property name="xpad">7</property>
+                                                            <property name="label" translatable="yes">Select network-shared storage source:</property>
+                                                            <property name="use_markup">True</property>
+                                                            </object>
+                                                            </child>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="expand">False</property>
+                                                            <property name="position">1</property>
+                                                            </packing>
+                                                            </child>
+                                                          </object>
+                                                        </child>
+                                                      </object>
+                                                    </child>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                              <packing>
+                                                <property name="position">1</property>
+                                              </packing>
+                                            </child>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                    <child type="tab">
+                                      <object class="GtkLabel" id="restore_tab1_label">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">Step 1</property>
+                                      </object>
+                                      <packing>
+                                        <property name="tab_fill">False</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkVBox" id="restore_step2_vbox3">
+                                        <property name="visible">True</property>
+                                        <child>
+                                          <object class="GtkLabel" id="restore_step2_text3">
+                                            <property name="visible">True</property>
+                                            <property name="yalign">1</property>
+                                            <property name="ypad">20</property>
+                                            <property name="label" translatable="yes">Click the box below to select the image file to restore from.</property>
+                                            <property name="wrap">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkAlignment" id="restore_step3_alignment">
+                                            <property name="visible">True</property>
+                                            <property name="yalign">0</property>
+                                            <property name="xscale">0.85000002384185791</property>
+                                            <property name="yscale">0</property>
+                                            <child>
+                                              <object class="GtkFileChooserButton" id="restore_file">
+                                                <property name="visible">True</property>
+                                                <property name="filter">restore_filefilter</property>
+                                                <property name="create_folders">False</property>
+                                                <property name="title" translatable="yes">Select Backup Image</property>
+                                                <signal name="selection_changed" handler="restore_file_changed"/>
+                                              </object>
+                                            </child>
+                                          </object>
+                                          <packing>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                      </object>
+                                      <packing>
+                                        <property name="position">1</property>
+                                      </packing>
+                                    </child>
+                                    <child type="tab">
+                                      <object class="GtkLabel" id="restore_tab2_label">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">Step 2</property>
+                                      </object>
+                                      <packing>
+                                        <property name="position">1</property>
+                                        <property name="tab_fill">False</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkVBox" id="restore_step3_vbox">
+                                        <property name="visible">True</property>
+                                        <child>
+                                          <object class="GtkLabel" id="restore_step3_text">
+                                            <property name="visible">True</property>
+                                            <property name="yalign">1</property>
+                                            <property name="ypad">20</property>
+                                            <property name="label" translatable="yes">Select the destination drive you wish to overwrite and restore the selected image to.</property>
+                                            <property name="wrap">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkAlignment" id="restore_step_alignment">
+                                            <property name="visible">True</property>
+                                            <property name="yalign">0</property>
+                                            <property name="xscale">0.85000002384185791</property>
+                                            <property name="yscale">0</property>
+                                            <child>
+                                              <object class="GtkComboBox" id="restore_dest">
+                                                <property name="visible">True</property>
+                                                <property name="model">partition_list</property>
+                                                <child>
+                                                  <object class="GtkCellRendererText" id="restore_dest_cellrenderertext"/>
+                                                  <attributes>
+                                                    <attribute name="text">1</attribute>
+                                                  </attributes>
+                                                </child>
+                                              </object>
+                                            </child>
+                                          </object>
+                                          <packing>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                      </object>
+                                      <packing>
+                                        <property name="position">2</property>
+                                      </packing>
+                                    </child>
+                                    <child type="tab">
+                                      <object class="GtkLabel" id="restore_tab3_label">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">Step 3</property>
+                                      </object>
+                                      <packing>
+                                        <property name="position">2</property>
+                                        <property name="tab_fill">False</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkVBox" id="restore_step4_vbox">
+                                        <property name="visible">True</property>
+                                        <child>
+                                          <object class="GtkLabel" id="restore_step4_text">
+                                            <property name="visible">True</property>
+                                            <property name="yalign">1</property>
+                                            <property name="ypad">20</property>
+                                            <property name="label" translatable="yes">Restoring your system from the image you selected.  This may take an hour or more depending on the speed of your computer and the amount of data.</property>
+                                            <property name="wrap">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkAlignment" id="restore_step4_alignment">
+                                            <property name="visible">True</property>
+                                            <property name="yalign">0</property>
+                                            <property name="xscale">0.85000002384185791</property>
+                                            <property name="yscale">0</property>
+                                            <child>
+                                              <object class="GtkVBox" id="vbox">
+                                                <property name="visible">True</property>
+                                                <child>
+                                                  <object class="GtkProgressBar" id="restore_progress">
+                                                    <property name="visible">True</property>
+                                                    <property name="show_text">True</property>
+                                                  </object>
+                                                  <packing>
+                                                    <property name="position">0</property>
+                                                  </packing>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkLabel" id="restore_progress_status">
+                                                    <property name="visible">True</property>
+                                                    <property name="ypad">10</property>
+                                                    <property name="label" translatable="yes">Time Elapsed / Remaining: </property>
+                                                  </object>
+                                                  <packing>
+                                                    <property name="position">1</property>
+                                                  </packing>
+                                                </child>
+                                              </object>
+                                            </child>
+                                          </object>
+                                          <packing>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                      </object>
+                                      <packing>
+                                        <property name="position">3</property>
+                                      </packing>
+                                    </child>
+                                    <child type="tab">
+                                      <object class="GtkLabel" id="restore_tab4_label">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">Step 4</property>
+                                      </object>
+                                      <packing>
+                                        <property name="position">3</property>
+                                        <property name="tab_fill">False</property>
+                                      </packing>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkAlignment" id="restore_buttonbox_alignment">
+                                <property name="visible">True</property>
+                                <property name="yscale">0</property>
+                                <property name="bottom_padding">10</property>
+                                <property name="left_padding">10</property>
+                                <property name="right_padding">10</property>
+                                <child>
+                                  <object class="GtkHButtonBox" id="restore_buttonbox">
+                                    <property name="visible">True</property>
+                                    <property name="spacing">10</property>
+                                    <property name="layout_style">end</property>
+                                    <child>
+                                      <object class="GtkButton" id="restore_button_cancel">
+                                        <property name="label" translatable="yes">Cancel</property>
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">True</property>
+                                        <property name="receives_default">True</property>
+                                        <signal name="clicked" handler="on_main_app_destroy"/>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">False</property>
+                                        <property name="position">0</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkButton" id="restore_button_next">
+                                        <property name="label" translatable="yes">Next &gt;</property>
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">True</property>
+                                        <property name="receives_default">True</property>
+                                        <signal name="clicked" handler="next_tab"/>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">False</property>
+                                        <property name="position">1</property>
+                                      </packing>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="position">2</property>
+                          </packing>
+                        </child>
+                        <child type="tab">
+                          <object class="GtkLabel" id="main_tab3_label">
+                            <property name="visible">True</property>
+                            <property name="label" translatable="yes">Restore</property>
+                          </object>
+                          <packing>
+                            <property name="position">2</property>
+                            <property name="tab_fill">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkVBox" id="vbox3">
+                            <property name="visible">True</property>
+                            <child>
+                              <object class="GtkAlignment" id="usb_alignment">
+                                <property name="visible">True</property>
+                                <property name="top_padding">10</property>
+                                <property name="bottom_padding">10</property>
+                                <property name="left_padding">10</property>
+                                <property name="right_padding">10</property>
+                                <child>
+                                  <object class="GtkNotebook" id="usb_tabs">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="show_border">False</property>
+                                    <child>
+                                      <object class="GtkVBox" id="usb_step1_vbox">
+                                        <property name="visible">True</property>
+                                        <child>
+                                          <object class="GtkLabel" id="usb_step1_text">
+                                            <property name="visible">True</property>
+                                            <property name="yalign">1</property>
+                                            <property name="ypad">20</property>
+                                            <property name="label" translatable="yes">Click on the box below to select the USB drive (at least 128MB) you want to install to. </property>
+                                            <property name="wrap">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkAlignment" id="usb_step1_alignment">
+                                            <property name="visible">True</property>
+                                            <property name="yalign">0</property>
+                                            <property name="xscale">0.85000002384185791</property>
+                                            <property name="yscale">0</property>
+                                            <child>
+                                              <object class="GtkComboBox" id="usb_dest">
+                                                <property name="visible">True</property>
+                                                <property name="model">drive_list</property>
+                                                <child>
+                                                  <object class="GtkCellRendererText" id="usb_dest_cellrenderertext"/>
+                                                  <attributes>
+                                                    <attribute name="text">1</attribute>
+                                                  </attributes>
+                                                </child>
+                                              </object>
+                                            </child>
+                                          </object>
+                                          <packing>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                      </object>
+                                    </child>
+                                    <child type="tab">
+                                      <object class="GtkLabel" id="usb_tab1_label">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">Step 1</property>
+                                      </object>
+                                      <packing>
+                                        <property name="tab_fill">False</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkVBox" id="usb_step2_vbox">
+                                        <property name="visible">True</property>
+                                        <child>
+                                          <object class="GtkLabel" id="usb_step2_text">
+                                            <property name="visible">True</property>
+                                            <property name="yalign">1</property>
+                                            <property name="ypad">20</property>
+                                            <property name="label" translatable="yes">Installing the software to the selected USB drive.  This will take approximately three minutes.</property>
+                                            <property name="wrap">True</property>
+                                          </object>
+                                          <packing>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkAlignment" id="usb_step2_alignment">
+                                            <property name="visible">True</property>
+                                            <property name="yalign">0</property>
+                                            <property name="xscale">0.85000002384185791</property>
+                                            <property name="yscale">0</property>
+                                            <child>
+                                              <object class="GtkVBox" id="usb_step2_vbox2">
+                                                <property name="visible">True</property>
+                                                <child>
+                                                  <object class="GtkProgressBar" id="usb_progress">
+                                                    <property name="visible">True</property>
+                                                    <property name="show_text">True</property>
+                                                  </object>
+                                                  <packing>
+                                                    <property name="position">0</property>
+                                                  </packing>
+                                                </child>
+                                              </object>
+                                            </child>
+                                          </object>
+                                          <packing>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                      </object>
+                                      <packing>
+                                        <property name="position">1</property>
+                                      </packing>
+                                    </child>
+                                    <child type="tab">
+                                      <object class="GtkLabel" id="usb_tab2_label">
+                                        <property name="visible">True</property>
+                                        <property name="label" translatable="yes">Step 2</property>
+                                      </object>
+                                      <packing>
+                                        <property name="position">1</property>
+                                        <property name="tab_fill">False</property>
+                                      </packing>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkAlignment" id="usb_buttonbox_alignment">
+                                <property name="visible">True</property>
+                                <property name="yscale">0</property>
+                                <property name="bottom_padding">10</property>
+                                <property name="left_padding">10</property>
+                                <property name="right_padding">10</property>
+                                <child>
+                                  <object class="GtkHButtonBox" id="usb_buttonbox">
+                                    <property name="visible">True</property>
+                                    <property name="spacing">10</property>
+                                    <property name="layout_style">end</property>
+                                    <child>
+                                      <object class="GtkButton" id="usb_button_cancel">
+                                        <property name="label" translatable="yes">Cancel</property>
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">True</property>
+                                        <property name="receives_default">True</property>
+                                        <signal name="clicked" handler="on_main_app_destroy"/>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">False</property>
+                                        <property name="position">0</property>
+                                      </packing>
+                                    </child>
+                                    <child>
+                                      <object class="GtkButton" id="usb_button_next">
+                                        <property name="label" translatable="yes">Next &gt;</property>
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">True</property>
+                                        <property name="receives_default">True</property>
+                                        <signal name="clicked" handler="next_tab"/>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">False</property>
+                                        <property name="position">1</property>
+                                      </packing>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="position">3</property>
+                          </packing>
+                        </child>
+                        <child type="tab">
+                          <object class="GtkLabel" id="main_tab4_label">
+                            <property name="visible">True</property>
+                            <property name="label" translatable="yes">USB Installer</property>
+                          </object>
+                          <packing>
+                            <property name="position">3</property>
+                            <property name="tab_fill">False</property>
+                          </packing>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child type="label">
+                  <object class="GtkLabel" id="main_subtitle">
+                    <property name="visible">True</property>
+                    <property name="xpad">5</property>
+                    <property name="label" translatable="yes">Select an Option</property>
+                    <property name="use_markup">True</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"/>
+                      <attribute name="scale" value="1.500000"/>
+                    </attributes>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="position">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkStatusbar" id="main_statusbar">
+            <property name="visible">True</property>
+            <property name="spacing">2</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="position">3</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkFileFilter" id="restore_filefilter"/>
+  <object class="GtkImage" id="button_image_backup">
+    <property name="visible">True</property>
+    <property name="xpad">5</property>
+    <property name="ypad">5</property>
+    <property name="pixbuf">button_backup.png</property>
+    <property name="icon-size">6</property>
+  </object>
+  <object class="GtkImage" id="button_image_restore">
+    <property name="visible">True</property>
+    <property name="xpad">5</property>
+    <property name="ypad">5</property>
+    <property name="pixbuf">button_restore.png</property>
+    <property name="icon-size">6</property>
+  </object>
+</interface>

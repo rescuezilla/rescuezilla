@@ -1,0 +1,16 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Categories=;
+Comment=Manage Drives and Media
+Exec=palimpsest
+Hidden=false
+Icon=palimpsest
+Name=Disk Utility
+StartupNotify=true
+Terminal=false
+Type=Application
+X-GNOME-DocPath=palimpsest/palimpsest.xml
+X-Ubuntu-Gettext-Domain=gnome-disk-utility
+Comment[en_US]=Manage drives and media
+Icon[en_US]=gdu-check-disk

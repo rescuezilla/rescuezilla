@@ -1,0 +1,13 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Icon[en_US]=redo-icon
+Name[en_US]=Redo Backup & Recovery
+Exec=redobackup
+Comment[en_US]=System backup and restore utility
+Name=Redo Backup & Recovery
+Comment=System backup and restore utility
+Icon=redo-icon

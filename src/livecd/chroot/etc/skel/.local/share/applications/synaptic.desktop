@@ -1,0 +1,14 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+GenericName=Package Manager
+Comment=Install, remove and upgrade software packages
+Exec=gksu --description /usr/share/applications/synaptic.desktop /usr/sbin/synaptic
+Icon=synaptic
+Terminal=false
+Type=Application
+Categories=PackageManager;GTK;System;Settings;
+NotShowIn=KDE;
+X-Ubuntu-Gettext-Domain=synaptic
+Name[en_US]=Software Packages
+Name=Software Packages

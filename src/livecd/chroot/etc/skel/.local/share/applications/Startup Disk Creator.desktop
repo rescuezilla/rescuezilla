@@ -1,0 +1,13 @@
+[Desktop Entry]
+Categories=;
+Comment=Create a startup disk using a CD or disc image
+Comment[en_US]=Install Redo Backup to a USB stick
+Exec=usb-creator-gtk
+GenericName=Startup Disk Creator
+Hidden=true
+Icon=usb-creator-gtk
+Name=Startup Disk Creator
+Name[en_US]=Create Bootable USB
+Terminal=false
+Type=Application
+X-Ubuntu-Gettext-Domain=usbcreator

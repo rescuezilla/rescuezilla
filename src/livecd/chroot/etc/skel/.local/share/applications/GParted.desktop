@@ -1,0 +1,15 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Categories=;
+Comment=Create, reorganize, and delete partitions
+Exec=gksu /usr/sbin/gparted
+GenericName=Partition Editor
+Hidden=false
+Icon=gparted
+Name=GParted
+StartupNotify=true
+Terminal=false
+Type=Application
+X-Ubuntu-Gettext-Domain=gparted
+Name[en_US]=Partition Editor

@@ -1,0 +1,17 @@
+[Desktop Entry]
+Categories=GNOME;GTK;Core;Utility;
+Comment=Learn more about GNOME
+Exec=gnome-about
+Hidden=true
+Icon=gnome-logo-icon-transparent
+Name=About GNOME
+NoDisplay=true
+OnlyShowIn=GNOME;
+StartupNotify=true
+Terminal=false
+Type=Application
+X-GNOME-Bugzilla-Bugzilla=GNOME
+X-GNOME-Bugzilla-Component=gnome-about
+X-GNOME-Bugzilla-Product=gnome-desktop
+X-GNOME-Bugzilla-Version=2.32.0
+X-Ubuntu-Gettext-Domain=gnome-desktop-2.0

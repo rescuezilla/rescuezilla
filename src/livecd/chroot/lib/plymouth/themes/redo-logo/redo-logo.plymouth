@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=Redo Logo
+Description=A theme that features a blue background with a logo.
+ModuleName=script
+
+[script]
+ImageDir=/lib/plymouth/themes/redo-logo
+ScriptFile=/lib/plymouth/themes/redo-logo/redo-logo.script

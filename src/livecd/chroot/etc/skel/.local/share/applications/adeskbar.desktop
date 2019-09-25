@@ -1,0 +1,9 @@
+[Desktop Entry]
+Categories=GNOME;Utility;
+Comment=A Quick Application Launcher
+Exec=adeskbar
+Hidden=true
+Icon=adeskbar
+Name=ADesk Bar
+NoDisplay=true
+Type=Application

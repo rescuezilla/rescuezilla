@@ -1,0 +1,107 @@
+<!DOCTYPE Menu
+  PUBLIC '-//freedesktop//DTD Menu 1.0//EN'
+  'http://standards.freedesktop.org/menu-spec/menu-1.0.dtd'>
+<Menu>
+	<Name>Desktop</Name>
+	<MergeFile type="parent">/etc/xdg/menus/settings.menu</MergeFile>
+	<Menu>
+		<Name>Preferences</Name>
+		<AppDir>/root/.local/share/applications</AppDir>
+		<Exclude>
+			<Filename>gnome-about-me.desktop</Filename>
+		</Exclude>
+		<Exclude>
+			<Filename>gnome-appearance-properties.desktop</Filename>
+		</Exclude>
+		<Exclude>
+			<Filename>at-properties.desktop</Filename>
+		</Exclude>
+		<Exclude>
+			<Filename>keyboard.desktop</Filename>
+		</Exclude>
+		<Exclude>
+			<Filename>keybinding.desktop</Filename>
+		</Exclude>
+		<Exclude>
+			<Filename>alacarte.desktop</Filename>
+		</Exclude>
+		<Exclude>
+			<Filename>display-properties.desktop</Filename>
+		</Exclude>
+		<Exclude>
+			<Filename>gnome-settings-mouse.desktop</Filename>
+		</Exclude>
+		<Exclude>
+			<Filename>nm-connection-editor.desktop</Filename>
+		</Exclude>
+		<Exclude>
+			<Filename>gnome-network-properties.desktop</Filename>
+		</Exclude>
+		<Exclude>
+			<Filename>libfm-pref-apps.desktop</Filename>
+		</Exclude>
+		<Exclude>
+			<Filename>default-applications.desktop</Filename>
+		</Exclude>
+		<Exclude>
+			<Filename>window-properties.desktop</Filename>
+		</Exclude>
+		<DirectoryDir>/root/.local/share/desktop-directories</DirectoryDir>
+		<Exclude>
+			<Filename>lxrandr.desktop</Filename>
+		</Exclude>
+		<Exclude>
+			<Filename>lshw-gtk.desktop</Filename>
+		</Exclude>
+		<Exclude>
+			<Filename>lxappearance.desktop</Filename>
+		</Exclude>
+		<Exclude>
+			<Filename>obconf.desktop</Filename>
+		</Exclude>
+	</Menu>
+	<DefaultLayout inline="false"/>
+	<Menu>
+		<Name>alacarte-made-1</Name>
+		<Directory>alacarte-made-1.directory</Directory>
+		<Deleted/>
+	</Menu>
+	<Menu>
+		<Name>Administration</Name>
+		<Exclude>
+			<Filename>palimpsest.desktop</Filename>
+		</Exclude>
+		<AppDir>/root/.local/share/applications</AppDir>
+		<Exclude>
+			<Filename>gparted.desktop</Filename>
+		</Exclude>
+		<Include>
+			<Filename>usb-creator-gtk.desktop</Filename>
+		</Include>
+		<Include>
+			<Filename>Create Bootable USB.desktop</Filename>
+		</Include>
+		<Include>
+			<Filename>Customize Appearance.desktop</Filename>
+		</Include>
+		<Include>
+			<Filename>Hardware Lister.desktop</Filename>
+		</Include>
+		<Include>
+			<Filename>Monitor Settings.desktop</Filename>
+		</Include>
+		<Include>
+			<Filename>Window Settings.desktop</Filename>
+		</Include>
+		<Layout>
+			<Merge type="menus"/>
+			<Filename>Create Bootable USB.desktop</Filename>
+			<Filename>Customize Appearance.desktop</Filename>
+			<Filename>Hardware Lister.desktop</Filename>
+			<Filename>Monitor Settings.desktop</Filename>
+			<Filename>synaptic.desktop</Filename>
+			<Filename>Window Settings.desktop</Filename>
+			<Merge type="files"/>
+		</Layout>
+	</Menu>
+</Menu>

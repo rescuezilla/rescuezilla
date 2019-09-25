@@ -1,0 +1,14 @@
+[Desktop Entry]
+Categories=Application;System;
+Comment=Opens a terminal as the root user, using gksu to ask for the password
+Encoding=UTF-8
+Exec=gksu /usr/bin/x-terminal-emulator
+Hidden=true
+Icon=gksu-root-terminal
+Name=Root Terminal
+NoDisplay=true
+StartupNotify=true
+Terminal=false
+Type=Application
+X-MultipleArgs=false
+X-Ubuntu-Gettext-Domain=gksu

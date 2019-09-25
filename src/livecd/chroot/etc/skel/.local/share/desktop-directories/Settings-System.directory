@@ -1,0 +1,10 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Type=Directory
+Comment=System settings and preferences
+Icon=preferences-system
+X-Ubuntu-Gettext-Domain=gnome-menus
+Name[en_US]=Administration
+Name=Administration
+Comment[en_US]=System settings and preferences

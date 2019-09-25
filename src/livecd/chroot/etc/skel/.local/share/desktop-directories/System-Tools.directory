@@ -1,0 +1,11 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Name=System Tools
+Icon=applications-system
+Type=Directory
+X-Ubuntu-Gettext-Domain=gnome-menus
+Name[en_US]=Disk Tools
+Comment[en_US]=Hard disk maintenance tools
+Comment=Hard disk maintenance 
+Icon[en_US]=/usr/share/icons/gnome-colors-common/scalable/devices/gtk-harddisk.svg

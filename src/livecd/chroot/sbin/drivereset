@@ -1,0 +1,466 @@
+#!/usr/bin/perl -w
+# ----------------------------------------------------------------------
+#   Drive Reset
+#   Resets a hard drive to factory settings.  For more information, see:
+#     * http://ata.wiki.kernel.org/index.php/ATA_Secure_Erase
+#     * http://cmrr.ucsd.edu/people/Hughes/SecureErase.shtml
+# ----------------------------------------------------------------------
+#   Copyright (C) 2010, RedoBackup.org.
+# ----------------------------------------------------------------------
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# ----------------------------------------------------------------------
+
+use strict;
+use warnings;
+use Glib qw{ TRUE FALSE };
+use Gtk2 '-init';
+use Fcntl qw(F_GETFL F_SETFL O_NONBLOCK);
+
+##### Constants found in our program ###################################
+use constant DATA_DIR      => "/usr/share/redo/";
+use constant HDPARM_BIN    => "hdparm";
+use constant GLADE_UI      => "drivereset.glade";
+use constant RESET_STEPS   => ( "Warning!",
+                                "Step 1: Select Target Drive",
+                                "Step 2: Confirm Capabilities",
+                                "Step 3: Factory Reset Drive" );
+
+
+##### Main code ########################################################
+main();
+exit(0);
+
+
+##### Subroutines and callbacks ########################################
+sub main {
+  # Start the main application
+  our $builder;
+  my $window;
+  $builder = Gtk2::Builder->new();
+  $builder->add_from_file(DATA_DIR.GLADE_UI);
+  $window = $builder->get_object('main_app');
+  $builder->connect_signals(undef);
+  $builder->get_object('main_tabs')->set_show_tabs(FALSE);
+  set_subtitle((RESET_STEPS)[0]);
+  $window->show();
+  Gtk2->main();
+}
+
+sub reset_step {
+  # Advance to the next step
+  my $step = $_[0];
+  if (!defined($step)) { $step = 1; }
+  our $builder;
+  $step = $builder->get_object('main_tabs')->get_current_page()+1;
+  set_subtitle((RESET_STEPS)[$step-1]);
+  if ($step == 1) {
+    # Reset Step 1
+    $builder->get_object('next_button')->set_sensitive(TRUE);
+  } elsif ($step == 2) {
+    # Reset Step 2
+    set_drive_list('target_drive');
+    $builder->get_object('next_button')->set_sensitive(TRUE);
+  } elsif ($step == 3) {
+    # Reset Step 3
+    $builder->get_object('next_button')->set_sensitive(FALSE);
+    my $target = $builder->get_object('target_drive')->get_active_text();
+    system("umount $target*");
+    system(HDPARM_BIN." --user-master u --security-disable RESET $target");
+    get_drive_capabilities($target);
+    $builder->get_object('step3_text')->set_text("Getting status for target drive $target:");
+    my $s = '';
+    our %security;
+    if ($security{'frozen'}) {
+      $s = "Your computer has marked the target drive as frozen.  Briefly disconnect and reconnect the target drive's power plug and then click Refresh.";
+      message_box("Your computer's BIOS is protecting your drive by blocking the necessary ATA security commands.\n\nYou may override this by briefly disconnecting and reconnecting the power plug on the target drive in order to unfreeze it.");
+    } else {
+      if ($security{'supported'}) {
+        if ($security{'locked'}) { $s .= "This drive is currently locked.\n"; }
+        if ($security{'time'}>0) {
+          $s .= "Reset will take about $security{'time'} minutes.\n";
+        } else {
+          $s .= "No time estimate provided by drive manufacturer.\nReset generally takes 30-120 minutes.\n";
+        }
+        if ($security{'enhanced'}) { $s .= "Enhanced security erase is supported.\n"; }
+        if ($security{'expired'}) { $s .="Security options are expired; errors may occur.\n"; }
+        my $sector_diff = $security{'sectors_max'} - $security{'sectors_used'};
+        if ($sector_diff > 0) {
+          my $sector_mb = int($sector_diff/2048);
+          $s .= "About $sector_mb"."MB of host-protected area will be freed.\n";
+        }
+        $builder->get_object('refresh_button')->visible(FALSE);
+        $builder->get_object('next_button')->set_sensitive(TRUE);
+        $s .= "\nClick Next to continue.";
+      } else {
+        $s = "Your drive does not appear to support the security erase feature.\n\nThis feature should be present in all modern ATA drives 20GB or larger.  Aborting.";
+      }
+    }
+    $builder->get_object('step3_text')->set_text($s);
+    $builder->get_object('refresh_button')->grab_focus();
+  } elsif ($step == 4) {
+    # Reset Step 4
+    my $response = get_confirmation("If you continue, you will lose all data on this drive, and the drive may become permanently unusable.  This procedure may void your warranty, comes with no guarantee of any kind, and is solely at your own risk.\n\nIf you continue, you will not be able to cancel the operation until it is completed.  Are you certain you wish to continue?");
+    if ($response ne 'yes') {
+      on_main_app_destroy();
+      die("Aborting.\n");
+    }
+    refresh_window();
+    reset_drive();
+    $builder->get_object('next_button')->hide();
+  }
+  refresh_window();
+}
+
+sub reset_drive {
+  # Perform the actual reset  
+  our $builder;
+  our $PROGRESS;
+  our %security;
+  $builder->get_object('progress_bar')->set_sensitive(TRUE);
+  my $target = $builder->get_object('target_drive')->get_active_text();
+  $security{'start'} = time();
+  $security{'finish'} = time() + $security{'time'}*60;
+  refresh_window();
+  print "Writing data to drive $target for verification...\n";
+  system("echo 'INCOMPLETE' | dd of=$target; sync;");
+  sleep(2);
+  print "Reset estimated to last from $security{'start'} until $security{'finish'}...\n";
+  system(HDPARM_BIN." -N p$security{'sectors_max'} $target");
+  sleep(2);
+  system(HDPARM_BIN." --user-master u --security-set-pass RESET $target");
+  sleep(2);
+  get_drive_capabilities($target);
+  sleep(2);
+  if (!$security{'enabled'}) {
+    fatal_crash("Unable to set security password on the drive. Power cycle your computer and try again.");
+  }
+  # Run in enhanced mode if supported
+  if ($security{'enhanced'}) {
+    open $PROGRESS, "time ".HDPARM_BIN." --user-master u --security-erase-enhanced RESET $target 2>&1 |";
+  } else {
+    print "Executing: time ".HDPARM_BIN." --user-master u --security-erase RESET $target |\n";
+    open $PROGRESS, "time ".HDPARM_BIN." --user-master u --security-erase RESET $target |";
+  }
+  my $flags = fcntl($PROGRESS, F_GETFL, 0) or die "\nCouldn't get flags: $!\n";
+  $flags |= O_NONBLOCK;
+  fcntl($PROGRESS, F_SETFL, $flags) or die "\nCouldn't set flags: $!\n";
+  refresh_window();
+  Glib::Timeout->add(50, \&update_reset_progress, $builder->get_object('progress_bar'));
+}
+
+sub update_reset_progress {
+  # Update the reset progress bar
+  our $PROGRESS;
+  my ($progress_bar) = @_;
+  our %security;
+  our $builder;
+  my $buffer = '';
+  my $rv = sysread($PROGRESS, $buffer, 1);
+  print $buffer;
+  if ((!defined($rv))||($rv==1)) {
+    # Show the time elasped and remaining
+    if (defined($security{'time'})) {
+      my $est = $security{'finish'} - $security{'start'};
+      my $cur = $security{'finish'} - time();
+      my $mins_left = sprintf("%.0f", $cur/60);
+      my $pct = ($est-$cur)/$est;
+      my $time_remaining_msg = "Estimated Time Remaining: $mins_left minute";
+      $time_remaining_msg .= "s" if ($mins_left!=1);
+      $builder->get_object('progress_text')->set_text($time_remaining_msg);
+      $progress_bar->set_fraction($pct);
+      my $pct_text = sprintf("%.2f", $pct*100);
+      $progress_bar->set_text("$pct_text% Complete");
+    } else {
+      $builder->get_object('progress_text')->set_text("Your hard drive did not provide an estimated time of completion,\nbut this procedure typically takes about 30-120 minutes.");
+      $progress_bar->set_text("Please wait...");
+      $progress_bar->pulse();
+    }
+    refresh_window();
+    return TRUE;
+  } else {
+    print "Command is complete.\n";
+    $progress_bar->set_fraction(1);
+    $progress_bar->set_text("100% Complete");
+    refresh_window();
+    $builder->get_object('cancel_button')->set_label('Exit');
+    print "BUFFER: $buffer\n";
+    my $target = $builder->get_object('target_drive')->get_active_text();
+    get_drive_capabilities($target);
+    if ($security{'enabled'}) {
+      system(HDPARM_BIN." --user-master u --security-disable RESET $target");
+    }
+    get_drive_capabilities($target);
+    my $elapsed = time() - $security{'start'};
+    $elapsed = sprintf("%.1f", $elapsed/60);
+    system(HDPARM_BIN." --yes-i-know-what-i-am-doing --dco-restore $target");
+    $builder->get_object('progress_text')->set_text("Operation completed in $elapsed minutes.");
+    print "Verifying reset (no text should appear here): ";
+    my $wipe_verified = `dd if=$target bs=1 count=10 | grep 'INCOMPLETE'`;
+    print "'$wipe_verified'\n";
+    if ($wipe_verified =~ m/INCOMPLETE/) {
+      message_box("ERROR: The operation completed, but some data appears to have remained on the drive. It is possible that the drive manufacturer's ATA Secure Erase command does not conform with ANSI standards.");
+    } else {    
+      message_box("Operation complete. Restart your computer before writing any information to the new drive.");
+    }
+    return 0;
+  }
+}
+
+
+##### Form Logic #######################################################
+sub next_tab {
+  # Show the next tab of a Backup or Restore procedure
+  our $builder;
+  $builder->get_object('main_tabs')->next_page();
+  my $tab = $builder->get_object('main_tabs')->get_current_page();
+  reset_step($tab+1);
+}
+
+sub target_refresh {
+  # Refresh and redo step 3
+  reset_step(3);
+}
+
+sub set_subtitle {
+  # Set the subtitle, which is a description of the current step
+  my $subtitle = $_[0];
+  our $builder->get_object('main_subtitle')->set_text($subtitle);
+}
+
+sub set_cursor {
+  # Set the mouse pointer cursor
+  my $cursor = $_[0];
+  our $builder->get_object('main_app')->window()->set_cursor(Gtk2::Gdk::Cursor->new($cursor));
+}
+
+sub set_busy {
+  # Disable the application to indicate that we are busy working
+  if ($_[0] ne '') {
+    set_cursor("watch");
+    our $builder->get_object('main_app')->set_sensitive(FALSE);
+    show_busy_bar($_[0]);
+  } else {
+    set_cursor("arrow");
+    our $builder->get_object('main_app')->set_sensitive(TRUE);
+    our $busy_bar->destroy();
+  }
+  refresh_window();
+}
+
+sub show_busy_bar {
+  # Show a pulsing progress bar
+  my $message = $_[0];
+  if (!defined($message)) { $message = "Please wait..."; }
+  my $parent = our $builder->get_object('main_app');
+  our $busy_bar = Gtk2::Dialog->new('Please Wait...', $parent,
+    'destroy-with-parent',
+    'gtk-cancel' => 'none'
+  );
+  my $pgb = Gtk2::ProgressBar->new();
+  $pgb->set_text($message);
+  my $abox = Gtk2::Alignment->new(.50, .50, 1, 1);
+  $abox->set_padding(30, 30, 30, 30);
+  $busy_bar->vbox->add($abox);
+  #my @children = $busy_bar->vbox->get_children();
+  #$busy_bar->vbox->remove($children[2]);
+  #$busy_bar->vbox->remove($children[1]);
+  $abox->add($pgb);
+  $busy_bar->signal_connect(response => sub { $_[0]->destroy });
+  $busy_bar->show_all;
+  $busy_bar->window()->set_cursor(Gtk2::Gdk::Cursor->new('watch'));
+  Glib::Timeout->add(100, \&update_busy_bar, $pgb);
+}
+
+sub update_busy_bar {
+  # Update the pulsing progress bar
+  my ($progress_bar) = @_;
+  $progress_bar->pulse;
+  return TRUE;
+}
+
+sub refresh_window {
+  # Refresh the application window
+  while (Gtk2->events_pending()) { Gtk2->main_iteration(); }
+}
+
+sub get_confirmation {
+  # Get confirmation from a yes/no dialog
+  our $builder;
+  my $question = "Are you sure?";
+  if (defined($_[0])) { $question = $_[0]; }
+  my $dialog = Gtk2::MessageDialog->new($builder->get_object('main_app'),
+    'destroy-with-parent',
+    'warning', # message type
+    'yes-no', # which set of buttons?
+    $question);
+  my $response = $dialog->run;
+  $dialog->destroy;
+  return $response;
+}
+
+sub fatal_crash {
+  # Crash out with a fatal error message
+  my $parent = our $builder->get_object('main_app');
+  my $message = $_[0].chr(13).chr(13)."Unable to continue. The program will now exit.";
+  my $dialog = Gtk2::MessageDialog->new($parent, 'modal', 'error', 'cancel', $message);
+  $dialog->run;
+  $dialog->destroy;
+  on_main_app_destroy();
+}
+
+sub error_message {
+  # Show a non-fatal error message
+  my $parent = our $builder->get_object('main_app');
+  my $message = $_[0];
+  my $dialog = Gtk2::MessageDialog->new($parent, 'modal', 'warning', 'ok', $message);
+  $dialog->run;
+  $dialog->destroy;
+}
+
+sub message_box {
+  # Show an informational message
+  my $parent = our $builder->get_object('main_app');
+  my $message = $_[0];
+  my $dialog = Gtk2::MessageDialog->new($parent, 'modal', 'info', 'ok', $message);
+  $dialog->run;
+  $dialog->destroy;
+}
+
+sub on_main_app_destroy {
+  # Close the application
+  system('killall -9 hdparm');
+  our $PROGRESS;
+  if (defined($PROGRESS)) { close($PROGRESS); }
+  Gtk2->main_quit();
+  die("Exiting.\n");
+}
+
+
+##### Core program functions ###########################################
+sub set_drive_list {
+  # Get all physical drives (not partitions)
+  set_busy("Getting list of drives...");
+  my @drives = get_drives();
+  if (@drives==0) { fatal_crash('Could not locate any drives attached to your computer.'); }
+  my $cbo = our $builder->get_object($_[0]);
+  my $mdl = $cbo->get_model();
+  $mdl->clear();
+  foreach my $i (0 .. $#drives) {
+    my ($dev, $desc) = split(/\|/, $drives[$i]);
+    my ($dn, $pn) = get_drivenum_partnum($dev);
+    my $drive_desc =  "Drive $dn: $desc";
+    $mdl->set($mdl->append, 0, "$dev", 1, $drive_desc);
+  }
+  $cbo->set_active(0);
+  set_busy(FALSE);
+}
+
+sub get_drive_capabilities {
+  # Get drive capabilities using hdparm -I
+  my $target = $_[0];
+  if ($target eq '') { fatal_crash("The target drive is invalid."); }
+  my $hdparm = HDPARM_BIN;
+  my $data = '';
+  our %security;
+  $security{'host_protected'} = FALSE;
+  $data = `$hdparm -N $target | grep 'max sectors'`;
+  if ($data =~ /enabled/) { $security{'host_protected'} = TRUE; }
+  ($security{'sectors_used'}, $security{'sectors_max'}) = split(/\//, $data);
+  $security{'sectors_used'} =~ s/\D//g;
+  $security{'sectors_max'} =~ s/\D//g;
+  $data = `$hdparm -I $target | grep 'Security:' -A 50`;
+  $data =~ s/\n/\005/g;
+  $data =~ s/\005Logical .*$//g;
+  my @data = split(/\005/, $data);
+  shift(@data);
+  foreach my $line (@data) {
+    if ($line =~ / SECURITY ERASE UNIT\./) {
+      ($security{'time'}) = split(/min for SECURITY ERASE UNIT\./, $line);
+      $security{'time'} = trim($security{'time'});
+    } else {
+      $line =~ s/^\t//g;
+      my ($status, $feature) = split(/\t/, $line);
+      if (!defined($feature)) { $feature = ''; }
+	  if ($status eq 'not') { $status = FALSE; } else { $status = TRUE; }
+      if ($feature eq 'supported') {
+        $security{'supported'} = $status;
+      } elsif ($feature eq 'enabled') {
+        $security{'enabled'} = $status;
+      } elsif ($feature eq 'locked') {
+        $security{'locked'} = $status;
+      } elsif ($feature eq 'frozen') {
+        $security{'frozen'} = $status;
+      } elsif ($feature eq 'expired: security count') {
+        $security{'expired'} = $status;
+      } elsif ($feature eq 'supported: enhanced erase') {
+        $security{'enhanced'} = $status;
+      } else {
+        if ($feature ne '') { print "Error: Feature '$feature' is not recognized!\n"; }
+      }
+    }
+  }
+}
+
+sub get_drives {
+  # Return a list of physical drives (not partitions)
+  my $partlist = '';
+  $partlist = `ls -A1l /dev/disk/by-id/ | grep -v -E 'name-|uuid-|wwn-|scsi-|-part|^total |usb-'`;
+  my @final_list = ();
+  chomp($partlist);
+  if ($partlist eq "") {
+    my @final_list = ();
+  } else {
+    # Create an array of drives
+    my @list = split(/\n/, $partlist);
+    foreach my $line (@list) {
+      # Get each partition's details
+      next if $line =~ m/-part/;
+      refresh_window();
+      my @drivedata = split(/\s+/, $line);
+      my $nf = scalar(@drivedata);
+      my $dev_data = $drivedata[$nf-3];
+      $dev_data =~ s/^.+?-//g;
+      my $dev_desc = substr($dev_data,0,rindex($dev_data, '_'));
+      my $dev = $drivedata[$nf-1];
+      $dev =~ s/^\.\.\/\.\./\/dev/g;
+      my $sizedata = `fdisk -l | grep '^Disk $dev:'`;
+      chomp($sizedata);
+      @drivedata = split(/: /, $sizedata);
+      my $size = $drivedata[1];
+      $size =~ s/\,.*//g;
+      $size = 'LOCKED' if ($size eq '');
+      push(@final_list, "$dev|$dev_desc ($size)");
+    }
+  }
+  @final_list = sort(@final_list);
+  return @final_list;
+}
+
+sub get_drivenum_partnum {
+  # Given a /dev/XXX partition, return the drive and partition numbers
+  my $dpd = $_[0];
+  $dpd =~ s/\/dev\/sd//g;
+  my $dn = substr($dpd,0,1);
+  $dn = ord("\L$dn")-96;
+  my $pn = substr($dpd,1);
+  return ($dn, $pn);
+}
+
+sub trim {
+  # Trim whitespace from both ends of a string
+  my $string = shift;
+  $string =~ s/^\s+//;
+  $string =~ s/\s+$//;
+  return $string;
+}
