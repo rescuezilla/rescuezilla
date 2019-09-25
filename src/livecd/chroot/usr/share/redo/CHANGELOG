@@ -1,4 +1,17 @@
 -------------------------------------------------------------------------------
+  Version 1.0.4 (2012-11-20)
+-------------------------------------------------------------------------------
+  * Base upgrade to Ubuntu 12.04 LTS (Precise)
+  * Percent complete now based on part sizes rather than total number of parts
+  * Windows now have titlebars to ease minimizing, maximizing and closing
+  * Time is now synced to localtime (hardware clock) after boot
+  * Widget theme changed to Bluebird for Gtk3 compatibility
+  * Now has a helpful beep to indicate when long processes are finished
+  * Added alsamixergui to enable mixer button on volume control
+  * Drive reset utility can now operate on multiple drives simultaneously
+  * Removed synaptic and boot-repair packages to reduce image size
+
+-------------------------------------------------------------------------------
   Version 1.0.3 (2012-05-10)
 -------------------------------------------------------------------------------
   * Restore now overwrites MBR and partition table upon completion

@@ -1,0 +1,11 @@
+[Desktop Entry]
+Categories=;
+Comment=Provides information on hardware
+Comment[ca]=Proveeix informació sobre el maquinari
+Exec=lshw-gtk
+Hidden=false
+Icon=lshw-gtk
+Icon[en_US]=/usr/share/icons/gnome-colors-common/scalable/apps/hardinfo.svg
+Name=Hardware Lister
+Terminal=false
+Type=Application

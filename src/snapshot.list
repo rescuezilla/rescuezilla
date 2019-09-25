@@ -1,10 +1,9 @@
 snapshot
 snapshot.list
-packages
+adeskbar.0.4.3-all.deb
+adeskbar-0.4.3.tar.bz2
 livecd/chroot/sbin/redobackup
 livecd/chroot/sbin/drivereset
-livecd/chroot/sbin/usbinstaller
-livecd/chroot/etc/default/rcS
 livecd/chroot/etc/rc.local
 livecd/chroot/etc/skel
 livecd/chroot/lib/plymouth/themes/redo-logo

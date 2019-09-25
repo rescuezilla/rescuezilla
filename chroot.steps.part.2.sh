@@ -7,12 +7,10 @@ DEBIAN_FRONTEND=noninteractive
 
 # Extract the changed files archive
 cd /
-dpkg -i /packages/*.deb
+dpkg -i adeskbar*.deb
 apt-get --yes -f install
-dpkg -i /packages/partclone*
-tar zxvf /packages/fsarchiver-bin-0.6.12.tar.gz -C /packages
-mv /packages/fsarchiver-bin-0.6.12/fsarchiver /sbin/
-rm -rf /packages
+apt-get install --yes python-wnck python-pyinotify python-alsaaudio python-vte python-xlib
+rm -rf *.deb
 
 update-alternatives --install /lib/plymouth/themes/default.plymouth default.plymouth /lib/plymouth/themes/redo-logo/redo-logo.plymouth 100
 update-alternatives --set default.plymouth /lib/plymouth/themes/redo-logo/redo-logo.plymouth
@@ -70,6 +68,14 @@ apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold
 # Explicitly run localepurge. The man page says localepurge "will be automagically invoked by dpkg upon completion of  any  apt
 # installation  run". This did not happen in testing (possibly because of debconf/frontend Noninteractive mode).
 localepurge
+
+# Remove upgraded or old linux kernels if present
+ls /boot/vmlinuz-3.2.**-**-generic > list.txt
+sum=$(cat list.txt | grep '[^ ]' | wc -l)
+if [ $sum -gt 1 ]; then
+  dpkg -l 'linux-*' | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d' | xargs sudo apt-get -y purge
+fi
+rm list.txt
 
 rm /var/lib/dbus/machine-id
 rm /sbin/initctl

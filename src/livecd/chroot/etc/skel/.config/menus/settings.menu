@@ -78,21 +78,6 @@
 		<Include>
 			<Filename>usb-creator-gtk.desktop</Filename>
 		</Include>
-		<Include>
-			<Filename>Create Bootable USB.desktop</Filename>
-		</Include>
-		<Include>
-			<Filename>Customize Appearance.desktop</Filename>
-		</Include>
-		<Include>
-			<Filename>Hardware Lister.desktop</Filename>
-		</Include>
-		<Include>
-			<Filename>Monitor Settings.desktop</Filename>
-		</Include>
-		<Include>
-			<Filename>Window Settings.desktop</Filename>
-		</Include>
 		<Layout>
 			<Merge type="menus"/>
 			<Filename>Create Bootable USB.desktop</Filename>
@@ -103,5 +88,26 @@
 			<Filename>Window Settings.desktop</Filename>
 			<Merge type="files"/>
 		</Layout>
+		<Exclude>
+			<Filename>Create Bootable USB.desktop</Filename>
+		</Exclude>
+		<Exclude>
+			<Filename>Customize Appearance.desktop</Filename>
+		</Exclude>
+		<Exclude>
+			<Filename>Hardware Lister.desktop</Filename>
+		</Exclude>
+		<Exclude>
+			<Filename>Monitor Settings.desktop</Filename>
+		</Exclude>
+		<Exclude>
+			<Filename>synaptic.desktop</Filename>
+		</Exclude>
+		<Exclude>
+			<Filename>Window Settings.desktop</Filename>
+		</Exclude>
+		<Exclude>
+			<Filename>boot-repair.desktop</Filename>
+		</Exclude>
 	</Menu>
 </Menu>

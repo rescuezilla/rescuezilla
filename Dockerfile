@@ -1,11 +1,9 @@
 # Typically, constructing a Linux live image relies on files from the host system. This Dockerfile,
 # a version-controlled mechanism to produce a host system for live image builds.
 
-# Redo Backup and Restore v0.9.8-v0.1.3 was based on Ubuntu 10.10 (Maverick Meerkat). Docker Hub
-# does not host this particular non-LTS base-image, so Ubuntu 10.04 LTS (Lucid Lynx) is used.
 # Note: the host system Ubuntu version (below) is defined separately from the version of the
 # generated Ubuntu image.
-FROM ubuntu:10.04
+FROM ubuntu:12.04
 
 ## Uncomment to substitute a different apt repository. Selecting a mirror geographically closer mirror may
 ## increase network transfer rates.
@@ -26,7 +24,7 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
 RUN apt-get update
 
 # Install required dependencies for the build
-RUN apt-get install --yes make rsync
+RUN apt-get install --yes make rsync sudo
 
 # Install optional dependencies for quality-of-life when debugging
 RUN apt-get install --yes tmux vim

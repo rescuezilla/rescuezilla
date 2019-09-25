@@ -12,7 +12,7 @@ set -x
 #
 #APT_REPOSITORY_URL=http://archive.ubuntu.com/ubuntu
 APT_REPOSITORY_URL=http://old-releases.ubuntu.com/ubuntu
-CODENAME=maverick
+CODENAME=precise
 ARCH=i386
 # The build directory is "build/", unless overridden by an environment variable
 BUILD_DIRECTORY=${BUILD_DIRECTORY:-build}
@@ -40,8 +40,8 @@ chroot chroot/ /bin/bash /chroot.steps.part.1.sh
 
 # Copy the source FHS filesystem tree onto the build's chroot FHS tree, overwriting the base files where conflicts occur
 cd ..
-rsync --archive --progress src/livecd/ $BUILD_DIRECTORY/
-cp -R src/packages $BUILD_DIRECTORY/chroot/
+rsync --archive --progress src/livecd/ $BUILD_DIRECTORY
+cp src/adeskbar*.deb $BUILD_DIRECTORY/chroot/
 
 # Enter chroot again
 cd $BUILD_DIRECTORY
@@ -53,8 +53,8 @@ rm chroot/chroot.steps.part.1.sh chroot/chroot.steps.part.2.sh
 
 apt-get install --yes syslinux squashfs-tools genisoimage memtest86+
 mkdir -p image/casper image/isolinux image/install
-cp chroot/boot/vmlinuz-2.6.*-generic image/casper/vmlinuz
-cp chroot/boot/initrd.img-2.6.*-generic image/casper/initrd.gz
+cp chroot/boot/vmlinuz-3.2.*-generic image/casper/vmlinuz
+cp chroot/boot/initrd.img-3.2.*-generic image/casper/initrd.lz
 cp /usr/lib/syslinux/vesamenu.c32 /usr/lib/syslinux/isolinux.bin image/isolinux/
 cp /boot/memtest86+.bin image/install/memtest
 
@@ -66,10 +66,30 @@ for i in $REMOVE; do
   sed -i "/${i}/d" image/casper/filesystem.manifest-desktop
 done
 
+cat << EOF > image/README.diskdefines
+#define DISKNAME Redo Backup
+#define TYPE binary
+#define TYPEbinary 1
+#define ARCH $ARCH
+#define ARCH$ARCH 1
+#define DISKNUM 1
+#define DISKNUM1 1
+#define TOTALNUM 0
+#define TOTALNUM0 1
+EOF
+
+touch image/ubuntu
+mkdir image/.disk
+cd image/.disk
+touch base_installable
+echo "full_cd/single" > cd_type
+echo "Ubuntu Remix" > info
+echo "http://redobackup.org" > release_notes_url
+cd ../..
+
 rm -rf image/casper/filesystem.squashfs redo.iso
 mksquashfs chroot image/casper/filesystem.squashfs -e boot
 printf $(sudo du -sx --block-size=1 chroot | cut -f1) > image/casper/filesystem.size
-
 cd image
 find . -type f -print0 | xargs -0 md5sum | grep -v "./md5sum.txt" > md5sum.txt
 

@@ -1,0 +1,19 @@
+[Desktop Entry]
+Categories=;
+Comment=Change screen resolution and configure external monitors
+Comment[et]=Muuda ekraani eraldusvõimet ja seadista väliseid kuvareid
+Comment[fi]=Muuta näytön tarkkuutta ja aseta ulkoiset näytöt
+Comment[ja]=解像度の変更と外部モニタの設定を行います
+Comment[zh_TW]=變更螢幕解析度以及設定外接顯示器
+Encoding=UTF-8
+Exec=lxrandr
+Hidden=false
+Icon=/usr/share/icons/gnome-colors-common/scalable/apps/gsd-xrandr.svg
+Icon[en_US]=/usr/share/icons/gnome-colors-common/scalable/apps/gsd-xrandr.svg
+Name=Monitor Settings
+Name[et]=Monitori sätted
+Name[fi]=Näytön asetukset
+Name[ja]=モニタの設定
+Name[zh_TW]=螢幕設定
+Terminal=false
+Type=Application

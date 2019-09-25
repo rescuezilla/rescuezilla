@@ -3,7 +3,7 @@
 #   Redo Backup
 #   A simple GUI interface that allows bare-metal backup and restore.
 # ----------------------------------------------------------------------
-#   Copyright (C) 2011, RedoBackup.org.
+#   Copyright (C) 2012 RedoBackup.org
 # ----------------------------------------------------------------------
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@ use Gtk2 '-init';
 use XML::Simple;
 use Gtk2::SimpleList;
 use IO::Handle;
+use Data::Dumper;
 
 
 ##### Constants found in our program ###################################
@@ -99,13 +100,12 @@ sub main {
   chomp($ver);
   set_status("Version $ver");
   $window->maximize();
-  $window->set_decorated(FALSE);
   $window->show();
   my $mode = '';
   if (defined($ARGV[0])) { $mode = $ARGV[0]; }
   if ($mode eq 'backup') { backup_mode(); }
   if ($mode eq 'restore') { restore_mode(); }
-  if ($mode eq 'install') { usb_mode(); }
+  `notify-send 'Welcome to Redo' 'Many other tools are available from the Start menu in the bottom left corner' -i info`;
   Gtk2->main;
 }
 
@@ -227,7 +227,7 @@ sub backup_dest_network_changed {
         $server =~ s/\d+$//g;
       } else {
         # It's a manually-entered SMB share
-        $server = "//HOST/FOLDER";
+        $server = "//ADDRESS/FOLDER";
       }
     } else {
       # It's an automatically-found share
@@ -243,8 +243,9 @@ sub backup_dest_network_changed {
 
 sub do_backup {
   # Begin the backup process
-  our $builder;
+  our %drives;
   our %status;
+  our $builder;
   $builder->get_object('backup_progress')->set_sensitive(TRUE);
   # Get partition selections and output folder
   my $src = $status{'backup_drive'};
@@ -270,16 +271,29 @@ sub do_backup {
   my @partlist = get_selected_partitions('backup_partitions');
   my $partlist_str = join("\n", @partlist);
   save_file($partlist_str, "$dest/$file.backup");
+  # Get the total bytes we're going to be saving
+  #print Dumper(%drives);
+  my $total_bytes = 0;
+  foreach my $part (@partlist) {
+    my ($dn, $pn) = get_drivenum_partnum($part);
+    my $dev = $src_drive;
+    $dev =~ s/^\/dev\///g;
+    my $part_bytes = $drives{$dev}{'parts'}{$pn}{'bytes'};
+    $total_bytes += $part_bytes;
+  }
   $status{'start'} = time();
   $status{'part_list'} = \@partlist;
   $status{'last_part'} = $partlist[-1];
   $status{'total_parts'} = scalar(@partlist);
   $status{'current_part'} = 0;
+  $status{'total_bytes'} = $total_bytes;
+  $status{'done_bytes'} = 0;
   $status{'frame'} = 0;
   $status{'free'} = get_free_space();
   print "\t* Partition list saved to $dest/$file.backup\n";
   # Create backup by calling progress sub
   print "\t* Total partitions to save: ".$status{'total_parts'}."\n";
+  print "\t* Total bytes to save: ".$status{'total_bytes'}."\n";
   Glib::Timeout->add(50, \&update_backup_progress);
   refresh_window();
 }
@@ -320,7 +334,7 @@ sub update_backup_progress {
       if (!defined($char)) {
         return 1;
       } else {
-        if (($char eq "\n") || ($char eq "\r")) {
+        if (($char eq "\n") || ($char eq "\r") || (ord($char)==27)) {
           undef($char);
         } else {
           $status{'command_output'} .= $char;
@@ -333,7 +347,7 @@ sub update_backup_progress {
   undef($status{'command_output'});
   if (defined($data)) {
     # Remove newlines and lines that are all spaces
-    $data =~ s/\n|^\s+$//g;
+    $data =~ s/\n|\r|\[A|^\s+$//g;
     refresh_window();
     $i++;
     # Split it up and show the results    
@@ -369,10 +383,20 @@ sub update_backup_progress {
       print(">>> Reading super block\n");
       set_status("Reading super block for Drive $dn, Part $pn...");
     } elsif ($data =~ m/Calculating bitmap/) {
-      # Reading super block
+      # Calculating bitmap
       print(">>> Calculating bitmap\n");
       set_status("Calculating bitmap for Drive $dn, Part $pn...");
-    } elsif ($data =~ m/Elapsed.+Rate.+/) {
+    } elsif ($data =~ m/Elapsed.+\%$/) {
+      # Calculating bitmap, percentage given
+      #Elapsed: 00:00:03, Remaining: 00:00:00, Completed:  93.41%
+      my $elapsed = substr($data,9,8);
+      my $remaining = substr($data,30,8);
+      my $pct = substr($data,51,6);
+      $pct =~ s/\s+//g;
+      $builder->get_object('backup_progress_status')->set_text('Reading bitmap for part '.($status{'current_part'}+1)." of ".$status{'total_parts'});
+      print ">>> Calculating bitmap progress: $pct% Remaining: $remaining\n";
+      set_status("Reading bitmap for Drive $dn, Part $pn ($pct% done, $remaining remaining)");
+    } elsif ($data =~ m/Elapsed.+,$/) {
       # Backup progress line
       $status{'frame'}++;
       if ($status{'frame'} >= 10) {
@@ -381,26 +405,20 @@ sub update_backup_progress {
       }
       my $elapsed = substr($data,9,8);
       my $remaining = substr($data,30,8);
-      my $pct = substr($data,50,6);
-      my $rate = substr($data,64,13);
+      my $pct = substr($data,51,6);
+      my $rate = substr($data,60,12);
       $pct =~ s/\s+//g;
       $rate =~ s/\s+//g;
-      print "Elapsed time: *$elapsed* Remaining: *$remaining* Percent: *$pct* Rate: *$rate*\n";
+      print ">>> Elapsed: *$elapsed* | Remaining: *$remaining* | Percent: *$pct* | Speed: *$rate*\n";
       $builder->get_object('backup_progress_status')->set_text("Part ".($status{'current_part'}+1)." of ".$status{'total_parts'}." (".$pct."%)\n$elapsed Elapsed\n$remaining Remaining");
-      #set_status("Saving part ".($status{'current_part'}+1)." of ".$status{'total_parts'}." ($rate)");
-      set_status("Saving at $rate (".$status{'free'}." free space)");
-      my $overall_pct = ($status{'current_part'} / $status{'total_parts'}) + (($pct / 100) / $status{'total_parts'});
+      # Base overall percentage on number of total bytes
+      my $current_bytes = int(($pct/100) * $drives{$src}{'parts'}{$pn}{'bytes'}) + $status{'done_bytes'};
+      my $overall_pct = ($current_bytes / $status{'total_bytes'}) + (($pct / 100) / $status{'total_bytes'});
+      if ($overall_pct > 1) { $overall_pct = 1; }
+      set_status("Saving part ".($status{'current_part'}+1)." (".$drives{$src}{'parts'}{$pn}{'size'}.") at $rate (".$status{'free'}." free space)");
+      print ">>> Drive: $src | Partition: $pn | Current bytes: $current_bytes | Overall: $overall_pct\n";
       $progress_bar->set_fraction($overall_pct);
       $progress_bar->set_text(sprintf("%.2f", $overall_pct * 100)."% Complete");
-    } elsif ($data =~ m/Elapsed.+/) {
-      # Bitmap reading progress line
-      my $elapsed = substr($data,9,8);
-      my $remaining = substr($data,30,8);
-      my $pct = substr($data,50,6);
-      $pct =~ s/\s+//g;
-      #print "Elapsed time: *$elapsed* Remaining: *$remaining* Percent: *$pct*\n";
-      $builder->get_object('backup_progress_status')->set_text('Reading bitmap for part '.($status{'current_part'}+1)." of ".$status{'total_parts'});
-      set_status("Reading bitmap for Drive $dn, Part $pn ($pct% done, $remaining remaining)");
     } elsif ($data =~ m/successfully cloned/) {
       set_status("Partition completed.");
       print ">>> Partition $status{'current_part_device'} completed.\n";
@@ -409,7 +427,7 @@ sub update_backup_progress {
       if ($status{'current_part'}==$status{'total_parts'}-1 ) {
         $builder->get_object('backup_progress_status')->set_text('');
         $progress_bar->set_fraction(1);
-        set_status("Operation completed successfully.");
+        set_status("Backup complete.");
         my @lines = split(/\n/, $data);
         my $start = FALSE;
         $builder->get_object('backup_button_cancel')->set_label('Exit');
@@ -418,6 +436,7 @@ sub update_backup_progress {
         system("sync");
         sleep(0.5);
         system("umount ".MOUNT_POINT);
+        beeper('done');
         my $elapsed = sprintf("%.1f", (time()-$status{'start'})/60);
         message_box("Backup image saved in $elapsed minutes.");
         system("notify-send -i ".APP_ICON." 'Backup saved successfully.'");
@@ -426,8 +445,11 @@ sub update_backup_progress {
       } else {
         close $PROGRESS;
         undef($PROGRESS);
+        # Need to add the size of the partition to the total bytes completed
+        $status{'done_bytes'} += $drives{$src}{'parts'}{$pn}{'bytes'};
+        print ">>> Backed up ".$status{'done_bytes'}." of ".$status{'total_bytes'}." total bytes.\n";
         $status{'current_part'}++;
-        print "Advancing to next partition.\n";
+        print ">>> Advancing to next partition.\n";
         return TRUE;
       }
     } else {
@@ -461,17 +483,8 @@ sub select_backup_folder {
   # Open the folder selection dialog
   our $builder;
   my $folder_chooser = Gtk2::FileChooserDialog->new("Select a Folder", $builder->get_object('main_app'), "select-folder", "Cancel" => "cancel", "Save Here" => "ok");
-  # The "Places" panel might be confusing for some, so let's remove it
-  my @children = $folder_chooser->get_children();
-  @children = $children[0]->get_children();
-  @children = $children[0]->get_children();
-  @children = $children[0]->get_children();
-  @children = $children[0]->get_children();
-  @children = $children[2]->get_children();  
-  $children[0]->hide();
   $folder_chooser->set_modal(TRUE);
   $folder_chooser->set_current_folder(MOUNT_POINT."/".$builder->get_object('backup_folder')->get_text());
-  $folder_chooser->maximize();
   my $response = $folder_chooser->run();
   if ($response eq 'ok') {
     my $current_folder = $folder_chooser->get_current_folder();
@@ -621,6 +634,7 @@ sub do_restore {
   # Restore from the backup
   our $builder;
   our %status;
+  our %drives;
   our $PROGRESS;
   set_status("Preparing destination drive...");
   $builder->get_object('restore_progress')->set_sensitive(TRUE);
@@ -684,6 +698,7 @@ sub do_restore {
   $status{'last_part'} = $partlist[-1];
   $status{'total_parts'} = scalar(@partlist);
   $status{'current_part'} = 0;
+  my $total_bytes = 0;
   # Verify all partitions now exist; crash otherwise
   foreach my $part (@{$status{'part_list'}}) {
     chomp($part);
@@ -697,7 +712,16 @@ sub do_restore {
       print "FAIL\n";
       fatal_crash("The partition table did not restore properly. The backup image may contain all your data, but without a valid partition table, no data can be restored.");
     }
+    my $bytes = `cat /sys/block/$dest_drive/$dest_drive$pn/size`;
+    chomp($bytes);
+    $bytes = abs(int($bytes*512));
+    print "*** Device $dest_drive$pn is $bytes bytes...\n";
+    $drives{$dest_drive}{'parts'}{$pn}{'bytes'} = $bytes;
+    $drives{$dest_drive}{'parts'}{$pn}{'size'} = format_size($bytes);
+    $status{'total_bytes'} += $bytes;
   }
+  $status{'done_bytes'} = 0;
+  print "*** Restoring ".$status{'total_bytes'}." total bytes of partitioned space.\n";
   Glib::Timeout->add(50, \&update_restore_progress);
   refresh_window();
 }
@@ -739,7 +763,7 @@ sub update_restore_progress {
       if (!defined($char)) {
         return 1;
       } else {
-        if (($char eq "\n") || ($char eq "\r")) {
+        if (($char eq "\n") || ($char eq "\r") || (ord($char)==27)) {
           undef($char);
         } else {
           $status{'command_output'} .= $char;
@@ -752,7 +776,7 @@ sub update_restore_progress {
   undef($status{'command_output'});
   if (defined($data)) {
     # Remove newlines and lines that are all spaces
-    $data =~ s/\n|^\s+$//g;
+    $data =~ s/\n|\r|\[A|^\s+$//g;
     refresh_window();
     $i++;
     # Split it up and show the results    
@@ -791,27 +815,32 @@ sub update_restore_progress {
       # Reading super block
       print(">>> Calculating bitmap\n");
       set_status("Calculating bitmap for Drive $dn, Part $pn...");
-    } elsif ($data =~ m/Elapsed.+Rate.+/) {
+    } elsif ($data =~ m/Elapsed.+,$/) {
       # Restore progress line
       my $elapsed = substr($data,9,8);
       my $remaining = substr($data,30,8);
-      my $pct = substr($data,50,6);
-      my $rate = substr($data,64,13);
+      my $pct = substr($data,51,6);
+      my $rate = substr($data,60,12);
       $pct =~ s/\s+//g;
       $rate =~ s/\s+//g;
-      print "Elapsed time: *$elapsed* Remaining: *$remaining* Percent: *$pct* Rate: *$rate*\n";
+      print ">>> (RESTORE) Elapsed: *$elapsed* | Remaining: *$remaining* | Percent: *$pct* | Speed: *$rate*\n";
       $builder->get_object('restore_progress_status')->set_text("Part ".($status{'current_part'}+1)." of ".$status{'total_parts'}." (".$pct."%)\n$elapsed Elapsed\n$remaining Remaining");
-      set_status("Restoring part ".($status{'current_part'}+1)." of ".$status{'total_parts'}." ($rate)");
-      my $overall_pct = ($status{'current_part'} / $status{'total_parts'}) + (($pct / 100) / $status{'total_parts'});
+      # Base overall percentage on number of total bytes
+      my $current_bytes = int(($pct/100) * $drives{$dest_drive}{'parts'}{$pn}{'bytes'}) + $status{'done_bytes'};
+      my $overall_pct = ($current_bytes / $status{'total_bytes'}) + (($pct / 100) / $status{'total_bytes'});
+      if ($overall_pct > 1) { $overall_pct = 1; }
+      set_status("Restoring part ".($status{'current_part'}+1)." (".$drives{$dest_drive}{'parts'}{$pn}{'size'}.") at $rate");
+      print ">>> Drive: $src | Partition: $pn | Current bytes: $current_bytes | Overall: $overall_pct\n";
       $progress_bar->set_fraction($overall_pct);
       $progress_bar->set_text(sprintf("%.2f", $overall_pct * 100)."% Complete");
-    } elsif ($data =~ m/Elapsed.+/) {
-      # Bitmap reading progress line
+    } elsif ($data =~ m/not_used.+/) {
+      # Bitmap reading progress line, no longer appears to be reported
+      # Elapsed: 00:00:02, Remaining: 00:02:25, Completed:   1.36%,   1.83GB/min,
       my $elapsed = substr($data,9,8);
       my $remaining = substr($data,30,8);
-      my $pct = substr($data,50,6);
+      my $pct = substr($data,51,6);
       $pct =~ s/\s+//g;
-      #print "Elapsed time: *$elapsed* Remaining: *$remaining* Percent: *$pct*\n";
+      print ">>> (BITMAP) Elapsed: *$elapsed* | Remaining: *$remaining* | Percent: *$pct*\n";
       $builder->get_object('restore_progress_status')->set_text('Reading bitmap for part '.($status{'current_part'}+1)." of ".$status{'total_parts'});
       set_status("Reading bitmap for Drive $dn, Part $pn ($pct% done, $remaining remaining)");
     } elsif ($data =~ m/Cloned successfully/) {
@@ -836,13 +865,18 @@ sub update_restore_progress {
         sleep(0.5);
         system("umount ".MOUNT_POINT);
         my $elapsed = sprintf("%.1f", (time()-$status{'start'})/60);
+        print ">>> Operation complete.\n";
+        set_status("Restore complete.");
+        beeper('done');
         message_box("Backup restored in $elapsed minutes.");
         system("notify-send -i ".APP_ICON." 'Backup restored successfully.'");
-        print ">>> Operation complete.\n";
         return 0;
       } else {
         close $PROGRESS;
         undef($PROGRESS);
+        # Need to add the size of the partition to the total bytes completed
+        $status{'done_bytes'} += $drives{$dest_drive}{'parts'}{$pn}{'bytes'};
+        print ">>> Backed up ".$status{'done_bytes'}." of ".$status{'total_bytes'}." total bytes.\n";
         $status{'current_part'}++;
         print "Advancing to next partition.\n";
         return TRUE;
@@ -857,112 +891,6 @@ sub update_restore_progress {
     }
   }
   return TRUE;   
-}
-
-
-##### USB Installer Logic #####################################################
-sub usb_mode {
-  # Enter USB Installer mode
-  usb_step(1);
-}
-
-sub usb_step {
-  # Advance to the next USB Installer Step
-  my $step = $_[0];
-  if (!defined($step)) { $step = 1; }
-  our $builder;
-  set_main_title("Install");
-  $builder->get_object('main_tabs')->set_current_page(3);
-  $step = $builder->get_object('usb_tabs')->get_current_page()+1;
-  set_subtitle((USB_STEPS)[$step-1]);
-  my $cdrom = usb_find_cdrom();
-  if ($step == 1) {
-    # USB Step 1
-    find_local_drives();
-    set_usb_dropdown('usb_dest');
-    $builder->get_object('usb_button_next')->set_sensitive(TRUE);
-  } elsif ($step == 2) {
-    # USB Step 2
-    $builder->get_object('usb_button_next')->hide();
-    my $target = $builder->get_object('usb_dest')->get_active_text();
-    my $response = get_confirmation("Are you sure you want to overwrite all data on $target?");
-    if ($response eq 'yes') {
-      do_install($cdrom);
-      message_box("Your USB drive is ready!\n\nPlease remember that you may need to press a key while the computer is starting in order to boot from the USB device."); 
-      system("notify-send -i ".APP_ICON." 'USB installation complete.'");
-      $builder->get_object('usb_button_cancel')->set_label('Exit');
-    } else {
-      on_main_app_destroy();
-    }
-  }
-  refresh_window();
-}
-
-sub do_install {
-  our $builder;
-  my $cdrom = $_[0];
-  my $dev = "/dev/".$builder->get_object('usb_dest')->get_active_text();
-  my $mnt = "/mnt";
-  my $isomnt = "$mnt/isomount";
-  my $usbmnt = "$mnt/usbmount";
-  my $pgb = $builder->get_object('usb_progress');
-  $pgb->set_fraction(0.1);
-  set_status("Erasing existing partition table...");
-  system("dd if=/dev/zero of=$dev bs=1K count=1024; sync");
-  $pgb->set_fraction(0.2);
-  set_status("Writing new partition table...");
-  system("parted -s $dev mklabel msdos");
-  system("parted -s $dev mkpart primary fat32 0 100%");
-  system("parted -s $dev set 1 boot on");
-  $pgb->set_fraction(0.3);
-  set_status("Refreshing partition table...");
-  system("sfdisk -R $dev");
-  $pgb->set_fraction(0.4);
-  set_status("Formatting USB drive...");
-  system("umount $dev?* 2>&1");
-  my $label = CD_LABEL;
-  chomp($label);
-  system("mkfs.vfat -n '$label' -F 32 ".$dev."1");
-  system("sync");
-  $pgb->set_fraction(0.5);
-  set_status("Mounting source CD-ROM...");
-  print "*** Trying to mount CD-ROM device $cdrom at $isomnt...\n";
-  system("mkdir $isomnt; mkdir $usbmnt");
-  system("mount $cdrom $isomnt");
-  $pgb->set_fraction(0.6);
-  set_status("Mounting destination USB drive...");
-  system("umount ".$dev."1 2>&1");
-  system("mount ".$dev."1 $usbmnt");
-  $pgb->set_fraction(0.7);
-  set_status("Copying filesystem to USB drive...");
-  system("cp -Rv $isomnt/* $usbmnt/");
-  system("cp -v /usr/lib/syslinux/vesamenu.c32 $usbmnt/boot/");
-  system("mv $usbmnt/isolinux.cfg $usbmnt/syslinux.cfg");
-  system("sync");
-  $pgb->set_fraction(0.8);
-  set_status("Unmounting devices and cleaning up...");
-  system("umount $isomnt; umount $usbmnt");
-  system("rmdir $isomnt; rmdir $usbmnt");
-  $pgb->set_fraction(0.9);
-  set_status("Making drive bootable...");
-  system("syslinux ".$dev."1; sync");
-  system("dd if=/usr/lib/syslinux/mbr.bin of=$dev bs=440 count=1; sync");
-  $pgb->set_fraction(1.0);
-  set_status("Done.");
-}
-
-sub usb_find_cdrom {
-  my $cd_check_1 = `dd if=/dev/sr0 bs=1 count=64 skip=32768`;
-  my $cd_check_2 = `dd if=/dev/sr1 bs=1 count=64 skip=32768`;
-  my $cdrom = '';
-  my $label = CD_LABEL;
-  chomp($label);
-  if ($cd_check_1 =~ /$label/) { $cdrom = '/dev/sr0'; }
-  if ($cd_check_2 =~ /$label/) { $cdrom = '/dev/sr1'; }
-  if ($cdrom eq '') {
-    fatal_crash("Source CD-ROM not found. Please insert the original disc in your primary CD-ROM drive and try again.");
-  }
-  return $cdrom;
 }
 
 
@@ -1060,10 +988,6 @@ sub show_busy_bar {
   my $abox = Gtk2::Alignment->new(.50, .50, 1, 1);
   $abox->set_padding(30, 30, 30, 30);
   $busy_bar->vbox->add($abox);
-  # After upgrade, this is no longer working (nor required)
-  #my @children = $busy_bar->vbox->get_children();
-  #$busy_bar->vbox->remove($children[2]);
-  #$busy_bar->vbox->remove($children[1]);
   $abox->add($pgb);
   $busy_bar->signal_connect(response => sub { $_[0]->destroy });
   $busy_bar->show_all;
@@ -1088,6 +1012,7 @@ sub fatal_crash {
   my $parent = our $builder->get_object('main_app');
   my $message = $_[0].chr(13).chr(13)."Unable to continue. The program will now exit.";
   my $dialog = Gtk2::MessageDialog->new($parent, 'modal', 'error', 'cancel', $message);
+  beeper('warning');
   $dialog->run;
   $dialog->destroy;
   on_main_app_destroy();
@@ -1099,6 +1024,7 @@ sub error_message {
   my $parent = our $builder->get_object('main_app');
   my $message = $_[0];
   my $dialog = Gtk2::MessageDialog->new($parent, 'modal', 'warning', 'ok', $message);
+  beeper('error');
   $dialog->run;
   $dialog->destroy;
 }
@@ -1420,6 +1346,7 @@ sub find_local_drives {
       $dev_name =~ s/\s*$//g;
       my $size = $drivedata[2];
       $size =~ s/^\s*//g;
+      $size =~ s/\s+//g;
       if (!defined($size)) { $size = 'Unknown'; }
       my ($drivenum) = get_drivenum_partnum($dev);
       my $type = get_drivetype($dev);
@@ -1468,14 +1395,19 @@ sub find_local_partitions {
       $label = trim($label);
       $label = '' if $label eq '<unknown>';
       $size = trim($size);
+      $size =~ s/\s+//g;
       my $dev = $partition;
       $dev =~ s/\d//g;
       my ($dn, $pn) = get_drivenum_partnum($partition);
+      my $bytes = `cat /sys/block/$dev/$dev$pn/size`;
+      chomp($bytes);
+      $bytes = abs(int($bytes*512));
       my $part = {
         'partition' => $partition,
         'fstype'    => $fstype,
         'label'     => $label,
         'size'      => $size,
+        'bytes'     => $bytes,
         'os'        => '',
       };
       # Save the details in a final list
@@ -1655,4 +1587,41 @@ sub get_free_space {
   my ($null1, $null2, $null3, $free) = split(/\s+/, `df $cmd $mount_point | tail -n 1`);
   print "Free space: $free\n";
   return $free;
+}
+
+sub beeper {
+  # Play a system beep pattern
+  my $tone = shift;
+  my $args = '';
+  if ($tone eq 'done') { $args = '-l 100 -f 1200 -n -l 100 -f 1800 -n -l 100 -f 2400'; }
+  if ($tone eq 'warning') { $args = '-f 250 -r 3 -l 50'; }
+  if ($tone eq 'error') { $args = '-l 1000 -f 100'; }
+  system('beep '.$args);
+  return 1;
+}
+
+sub format_size {
+  # Given a size in bytes, make it human-readable
+  my $bytes = $_[0];
+  my $suffix = "";
+  my $x = log($bytes) / log(10);
+  if ($x<3) {
+    $suffix = " bytes";
+  } elsif ($x<6) {
+    $x = 3;
+    $suffix = "KB";
+  } elsif ($x<9) {
+    $x = 6;
+    $suffix = "MB";
+  } elsif ($x<12) {
+    $x = 9;
+    $suffix = "GB";
+  } elsif ($x<15) {
+    $x = 12;
+    $suffix = "TB";
+  } else {
+    $x = 15;
+    $suffix = "PB";
+  }
+  return sprintf("%0.1f", $bytes/(10**$x)).$suffix;
 }

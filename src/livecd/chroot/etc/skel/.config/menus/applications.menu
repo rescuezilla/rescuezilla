@@ -4,7 +4,6 @@
 <Menu>
 	<Name>Applications</Name>
 	<MergeFile type="parent">/etc/xdg/menus/applications.menu</MergeFile>
-	<DefaultLayout inline="false"/>
 	<Menu>
 		<Name>alacarte-made</Name>
 		<Directory>alacarte-made.directory</Directory>
@@ -13,25 +12,6 @@
 	<Include>
 		<Filename>alacarte-made.desktop</Filename>
 	</Include>
-	<Layout>
-		<Merge type="menus"/>
-		<Filename>alacarte-made.desktop</Filename>
-		<Separator/>
-		<Menuname>Accessories</Menuname>
-		<Menuname>Debian</Menuname>
-		<Menuname>Education</Menuname>
-		<Menuname>Games</Menuname>
-		<Menuname>Graphics</Menuname>
-		<Menuname>Internet</Menuname>
-		<Menuname>Office</Menuname>
-		<Menuname>Other</Menuname>
-		<Menuname>Development</Menuname>
-		<Menuname>Science</Menuname>
-		<Menuname>Multimedia</Menuname>
-		<Menuname>System</Menuname>
-		<Menuname>Universal Access</Menuname>
-		<Merge type="files"/>
-	</Layout>
 	<Menu>
 		<Name>Other</Name>
 		<Include>
@@ -107,5 +87,88 @@
 		<Include>
 			<Filename>alacarte-made-2.desktop</Filename>
 		</Include>
+		<Menu>
+			<Name>Preferences</Name>
+			<Exclude>
+				<Filename>lxappearance.desktop</Filename>
+			</Exclude>
+			<AppDir>/root/.local/share/applications</AppDir>
+			<Exclude>
+				<Filename>lshw-gtk.desktop</Filename>
+			</Exclude>
+			<Exclude>
+				<Filename>alacarte.desktop</Filename>
+			</Exclude>
+			<Exclude>
+				<Filename>lxrandr.desktop</Filename>
+			</Exclude>
+			<Exclude>
+				<Filename>nm-connection-editor.desktop</Filename>
+			</Exclude>
+			<Exclude>
+				<Filename>obconf.desktop</Filename>
+			</Exclude>
+		</Menu>
+		<Menu>
+			<Name>Administration</Name>
+			<Exclude>
+				<Filename>synaptic.desktop</Filename>
+			</Exclude>
+			<AppDir>/root/.local/share/applications</AppDir>
+		</Menu>
+		<Exclude>
+			<Filename>debian-uxterm.desktop</Filename>
+		</Exclude>
+		<AppDir>/root/.local/share/applications</AppDir>
+		<Exclude>
+			<Filename>debian-xterm.desktop</Filename>
+		</Exclude>
+	</Menu>
+	<DefaultLayout inline="false"/>
+	<Menu>
+		<Name>alacarte-made-2</Name>
+		<Directory>alacarte-made-2.directory</Directory>
+		<Include>
+			<Filename>Create Bootable USB-1.desktop</Filename>
+		</Include>
+		<Include>
+			<Filename>Customize Appearance-1.desktop</Filename>
+		</Include>
+		<Include>
+			<Filename>Hardware Lister-1.desktop</Filename>
+		</Include>
+		<Include>
+			<Filename>Monitor Settings-1.desktop</Filename>
+		</Include>
+		<Include>
+			<Filename>Window Settings-1.desktop</Filename>
+		</Include>
+	</Menu>
+	<Layout>
+		<Merge type="menus"/>
+		<Filename>alacarte-made.desktop</Filename>
+		<Separator/>
+		<Menuname>Accessories</Menuname>
+		<Menuname>Debian</Menuname>
+		<Menuname>Education</Menuname>
+		<Menuname>Games</Menuname>
+		<Menuname>Graphics</Menuname>
+		<Menuname>Internet</Menuname>
+		<Menuname>Office</Menuname>
+		<Menuname>Other</Menuname>
+		<Menuname>Development</Menuname>
+		<Menuname>Science</Menuname>
+		<Menuname>Multimedia</Menuname>
+		<Menuname>System</Menuname>
+		<Menuname>Universal Access</Menuname>
+		<Menuname>alacarte-made-2</Menuname>
+		<Merge type="files"/>
+	</Layout>
+	<Menu>
+		<Name>Multimedia</Name>
+		<Exclude>
+			<Filename>alsamixergui.desktop</Filename>
+		</Exclude>
+		<AppDir>/root/.local/share/applications</AppDir>
 	</Menu>
 </Menu>

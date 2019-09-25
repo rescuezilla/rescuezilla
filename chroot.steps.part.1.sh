@@ -7,7 +7,7 @@ set -x
 
 APT_REPOSITORY_URL=http://old-releases.ubuntu.com/ubuntu
 #APT_REPOSITORY_URL=http://archive.ubuntu.com/ubuntu
-CODENAME=maverick
+CODENAME=precise
 
 # Prepare the chroot environment
 mount none -t proc /proc
@@ -29,6 +29,7 @@ dpkg-divert --local --rename --add /sbin/initctl
 ln -s /bin/true /sbin/initctl
 
 # Install the basic packages
+perl -p -i -e 's/^set compatible$/set nocompatible/g' /etc/vim/vimrc.tiny
 apt-get install --yes --no-install-recommends discover laptop-detect os-prober linux-generic casper lupin-casper
 
 # Optional: Add update and backport repos. The official v1.0.2 and v1.0.3 ISO
@@ -55,16 +56,10 @@ apt-get install --yes --no-install-recommends xinit \
 apt-get install --yes --no-install-recommends pcmanfm \
                                               chromium-browser \
                                               gtk-theme-switch \
-                                              gtk2-engines \
-                                              murrine-themes \
+                                              shimmer-themes \
                                               gnome-icon-theme \
                                               gnome-brave-icon-theme \
                                               dmz-cursor-theme \
-                                              python-wnck \
-                                              python-xlib \
-                                              python-pyinotify \
-                                              python-alsaaudio \
-                                              python-vte \
                                               maximus \
                                               gpicview \
                                               leafpad \
@@ -73,22 +68,30 @@ apt-get install --yes --no-install-recommends pcmanfm \
                                               lxrandr \
                                               lxterminal \
                                               nitrogen \
-                                              ttf-ubuntu-font-family
+                                              ttf-ubuntu-font-family \
+                                              alsamixergui \
+                                              pm-utils \
+                                              libnotify-bin \
+                                              notify-osd \
+                                              notify-osd-icons
 
 apt-get install --yes --no-install-recommends time \
                                               hdparm \
                                               openssh-client \
-                                              synaptic \
                                               libglib-perl \
                                               libgtk2-perl \
                                               libxml-simple-perl \
+                                              gtk2-engines-pixbuf \
+                                              beep \
                                               rsync \
                                               smartmontools \
                                               gnome-disk-utility \
                                               policykit-1-gnome \
                                               policykit-desktop-privileges \
                                               baobab \
+                                              gsettings-desktop-schemas \
                                               gparted \
+                                              gksu \
                                               lshw-gtk \
                                               testdisk \
                                               usb-creator-gtk \
@@ -107,10 +110,14 @@ apt-get install --yes --no-install-recommends time \
                                               jfsutils \
                                               smbclient \
                                               wget \
-                                              system-config-lvm
+                                              system-config-lvm \
+                                              fsarchiver \
+                                              partclone
 
 ln -s /usr/bin/pcmanfm /usr/bin/nautilus
-rm /usr/bin/{rpcclient,rpcinfo,smbcacls,smbclient,smbcquotas,smbget,smbspool,smbtar}
+gconftool-2 --set /apps/maximus/undecorate --type BOOL false
+rm /usr/bin/{rpcclient,smbcacls,smbclient,smbcquotas,smbget,smbspool,smbtar}
 rm /usr/share/icons/*/icon-theme.cache
 rm -rf /usr/share/doc
 rm -rf /usr/share/man
+rm -rf /etc/network/if-up.d/ntpdate

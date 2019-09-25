@@ -25,7 +25,7 @@ xsetroot -solid "#333333"
 nitrogen --restore &
 
 # network (gnome-network-manger)
-nm-applet &
+#nm-applet &
 
 # power-manager
 #gnome-power-manager &
