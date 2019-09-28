@@ -3,7 +3,7 @@
 
 # Note: the host system Ubuntu version (below) is defined separately from the version of the
 # generated Ubuntu image.
-FROM ubuntu:12.04
+FROM ubuntu:18.04
 
 # Copy the apt repository mirror list into the Docker image.
 # 
@@ -25,7 +25,7 @@ RUN apt-get update
 
 RUN apt-get install --yes \
                           # Install required dependencies for the build
-                          make rsync sudo debootstrap syslinux squashfs-tools genisoimage memtest86+ \
+                          make rsync sudo debootstrap isolinux syslinux squashfs-tools genisoimage memtest86+ \
                           # Install optional dependencies for quality-of-life when debugging
                           tmux vim
 

@@ -111,7 +111,6 @@ apt-get install --yes --no-install-recommends discover \
                                               cryptsetup \
                                               reiserfsprogs \
                                               dosfstools \
-                                              ntfsprogs \
                                               ntfs-3g \
                                               hfsutils \
                                               reiser4progs \
@@ -120,6 +119,13 @@ apt-get install --yes --no-install-recommends discover \
                                               wget \
                                               fsarchiver \
                                               partclone
+
+# Create empty config file for the network-manager service to manage all
+# network devices. This is required for nm-applet to display network devices,
+# and avoid it displaying a "device not managed" error. [1]
+#                                              
+# [1] https://askubuntu.com/a/893614/394984
+touch /etc/NetworkManager/conf.d/10-globally-managed-devices.conf
 
 ln -s /usr/bin/pcmanfm /usr/bin/nautilus
 gconftool-2 --set /apps/maximus/undecorate --type BOOL false

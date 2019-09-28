@@ -3,7 +3,7 @@
 # Echo each command
 set -x
 
-CODENAME=precise
+CODENAME=bionic
 ARCH=i386
 # The build directory is "build/", unless overridden by an environment variable
 BUILD_DIRECTORY=${BUILD_DIRECTORY:-build}
@@ -41,6 +41,8 @@ rsync --archive $PKG_CACHE_DIRECTORY/$DEBOOTSTRAP_CACHE_DIRECTORY/ $BUILD_DIRECT
 #
 # [1] https://unix.stackexchange.com/a/397966
 DEBOOTSTRAP_DIR=$BUILD_DIRECTORY/chroot/debootstrap debootstrap --second-stage --second-stage-target $(readlink -f $BUILD_DIRECTORY/chroot/)
+# Ensures tmp directory has correct mode, including sticky-bit
+chmod 1777 $BUILD_DIRECTORY/chroot/tmp/
 
 # Copy cached apt packages, if present, to reduce need to download packages from internet
 if [ -d "$PKG_CACHE_DIRECTORY/$APT_PKG_CACHE_DIRECTORY/" ] ; then
@@ -85,9 +87,14 @@ rm chroot/root/.bash_history
 rm chroot/chroot.steps.part.1.sh chroot/chroot.steps.part.2.sh
 
 mkdir -p image/casper image/isolinux image/install
-cp chroot/boot/vmlinuz-3.2.*-generic image/casper/vmlinuz
-cp chroot/boot/initrd.img-3.2.*-generic image/casper/initrd.lz
-cp /usr/lib/syslinux/vesamenu.c32 /usr/lib/syslinux/isolinux.bin image/isolinux/
+cp chroot/boot/vmlinuz-4.15.*-generic image/casper/vmlinuz
+cp chroot/boot/initrd.img-4.15.*-generic image/casper/initrd.lz
+cp /usr/lib/syslinux/modules/bios/vesamenu.c32 \
+   /usr/lib/ISOLINUX/isolinux.bin \
+   /usr/lib/syslinux/modules/bios/ldlinux.c32 \
+   /usr/lib/syslinux/modules/bios/libcom32.c32 \
+   /usr/lib/syslinux/modules/bios/libutil.c32 \
+   image/isolinux/
 cp /boot/memtest86+.bin image/install/memtest
 
 # Create manifest
@@ -120,7 +127,7 @@ echo "http://redobackup.org" > release_notes_url
 cd ../..
 
 rm -rf image/casper/filesystem.squashfs redo.iso
-mksquashfs chroot image/casper/filesystem.squashfs -e boot
+mksquashfs chroot image/casper/filesystem.squashfs -e boot -e /sys
 printf $(sudo du -sx --block-size=1 chroot | cut -f1) > image/casper/filesystem.size
 cd image
 find . -type f -print0 | xargs -0 md5sum | grep -v "./md5sum.txt" > md5sum.txt

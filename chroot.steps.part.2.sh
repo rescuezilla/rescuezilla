@@ -6,9 +6,8 @@ set -x
 DEBIAN_FRONTEND=noninteractive
 
 cd /
-
-update-alternatives --install /lib/plymouth/themes/default.plymouth default.plymouth /lib/plymouth/themes/redo-logo/redo-logo.plymouth 100
-update-alternatives --set default.plymouth /lib/plymouth/themes/redo-logo/redo-logo.plymouth
+update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/redo-logo/redo-logo.plymouth 100
+update-alternatives --set default.plymouth /usr/share/plymouth/themes/redo-logo/redo-logo.plymouth
 update-initramfs -u
 
 # Install localepurge, and use currently installed /etc/locale.nopurge config file, not package maintainer's version.
@@ -18,13 +17,12 @@ apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold
 # installation  run". This did not happen in testing (possibly because of debconf/frontend Noninteractive mode).
 localepurge
 
-# Remove upgraded or old linux kernels if present
-ls /boot/vmlinuz-3.2.**-**-generic > list.txt
-sum=$(cat list.txt | grep '[^ ]' | wc -l)
-if [ $sum -gt 1 ]; then
-  dpkg -l 'linux-*' | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d' | xargs sudo apt-get -y purge
-fi
-rm list.txt
+# Remove unused packages (such as old linux kernels, if present)
+# 
+# From `man apt-get`: autoremove is used to remove packages that were
+# automatically installed to satisfy dependencies for other packages and are
+# now no longer needed.
+sudo apt-get --yes autoremove
 
 rm /var/lib/dbus/machine-id
 rm /sbin/initctl
