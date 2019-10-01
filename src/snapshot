@@ -1,2 +1,0 @@
-#!/bin/bash
-tar zcvf snapshot.tar -T snapshot.list
