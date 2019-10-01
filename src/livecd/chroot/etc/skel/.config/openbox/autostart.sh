@@ -21,8 +21,8 @@ xsetroot -solid "#333333"
 # eyes candy (composite)
 # myxcompmgr --startstop &
 
-# restore wallpaper
-nitrogen --restore &
+# Launch PCMan File Manager in desktop mode, to manage desktop icons and wallpaper
+pcmanfm --desktop &
 
 # network (gnome-network-manger)
 #nm-applet &

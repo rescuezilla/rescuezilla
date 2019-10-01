@@ -77,7 +77,6 @@ apt-get install --yes --no-install-recommends discover \
                                               lxmenu-data \
                                               lxrandr \
                                               lxterminal \
-                                              nitrogen \
                                               ttf-ubuntu-font-family \
                                               alsamixergui \
                                               pm-utils \
