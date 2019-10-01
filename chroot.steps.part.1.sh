@@ -77,6 +77,7 @@ apt-get install --yes --no-install-recommends discover \
                                               lxmenu-data \
                                               lxrandr \
                                               lxterminal \
+                                              lxpanel \
                                               ttf-ubuntu-font-family \
                                               alsamixergui \
                                               pm-utils \

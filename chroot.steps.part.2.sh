@@ -5,12 +5,7 @@ set -x
 # Non-interactive apt operations
 DEBIAN_FRONTEND=noninteractive
 
-# Extract the changed files archive
 cd /
-dpkg -i adeskbar*.deb
-apt-get --yes -f install
-apt-get install --yes python-wnck python-pyinotify python-alsaaudio python-vte python-xlib
-rm -rf *.deb
 
 update-alternatives --install /lib/plymouth/themes/default.plymouth default.plymouth /lib/plymouth/themes/redo-logo/redo-logo.plymouth 100
 update-alternatives --set default.plymouth /lib/plymouth/themes/redo-logo/redo-logo.plymouth

@@ -68,7 +68,6 @@ chroot chroot/ /bin/bash /chroot.steps.part.1.sh
 # Copy the source FHS filesystem tree onto the build's chroot FHS tree, overwriting the base files where conflicts occur
 cd ..
 rsync --archive --progress src/livecd/ $BUILD_DIRECTORY
-cp src/adeskbar*.deb $BUILD_DIRECTORY/chroot/
 
 # Enter chroot again
 cd $BUILD_DIRECTORY

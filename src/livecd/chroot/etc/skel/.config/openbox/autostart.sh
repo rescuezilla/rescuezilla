@@ -25,13 +25,13 @@ xsetroot -solid "#333333"
 pcmanfm --desktop &
 
 # network (gnome-network-manger)
-#nm-applet &
+nm-applet &
 
 # power-manager
 #gnome-power-manager &
 
-# adeskbar (panel/systray)
-(sleep 1 && adeskbar)&
+# lxpanel (panel/systray)
+(sleep 1 && lxpanel)&
 
 # Mixer volume
 #(sleep 5 && volti)&
