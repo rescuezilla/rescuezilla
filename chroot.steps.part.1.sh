@@ -118,7 +118,6 @@ apt-get install --yes --no-install-recommends discover \
                                               jfsutils \
                                               smbclient \
                                               wget \
-                                              system-config-lvm \
                                               fsarchiver \
                                               partclone
 
