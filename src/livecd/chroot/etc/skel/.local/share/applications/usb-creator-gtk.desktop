@@ -1,12 +1,11 @@
 [Desktop Entry]
-Categories=System;Settings;GTK;HardwareSettings;
+Name=Startup Disk Creator
+GenericName=Startup Disk Creator
 Comment=Create a startup disk using a CD or disc image
 Exec=usb-creator-gtk
-GenericName=Startup Disk Creator
-Hidden=true
 Icon=usb-creator-gtk
-Name=Startup Disk Creator
-NoDisplay=false
 Terminal=false
 Type=Application
+Categories=System;Settings;GTK;HardwareSettings;
 X-Ubuntu-Gettext-Domain=usbcreator
+NoDisplay=true

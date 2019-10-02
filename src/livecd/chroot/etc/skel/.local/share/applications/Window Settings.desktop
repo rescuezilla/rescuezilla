@@ -20,3 +20,4 @@ StartupNotify=true
 Terminal=false
 Type=Application
 Version=1.0
+NoDisplay=true
