@@ -7,35 +7,33 @@ Global {
   margin=0
   widthtype=percent
   width=100
-  height=26
-  transparent=0
-  tintcolor=#000000
-  alpha=0
+  height=41
+  transparent=1
+  tintcolor=#222327
+  alpha=255
   setdocktype=1
   setpartialstrut=1
   usefontcolor=1
   fontcolor=#ffffff
   usefontsize=0
   fontsize=10
-  background=1
+  background=0
   backgroundfile=/usr/share/lxpanel/images/background.png
+  iconsize=33
+  align=left
 }
 Plugin {
   type=space
   Config {
     Size=2
   }
+  expand=0
 }
 Plugin {
   type=menu
   Config {
-    image=/usr/share/lxpanel/images/my-computer.png
+    image=/usr/share/adeskbar/images/def_icon.png
     system {
-    }
-    separator {
-    }
-    item {
-      command=run
     }
     separator {
     }
@@ -46,47 +44,9 @@ Plugin {
   }
 }
 Plugin {
-  type=launchbar
-  Config {
-    Button {
-      id=pcmanfm.desktop
-    }
-    Button {
-      id=lxde-x-terminal-emulator.desktop
-    }
-    Button {
-      id=lxde-x-www-browser.desktop
-    }
-  }
-}
-Plugin {
   type=space
   Config {
-    Size=4
-  }
-}
-Plugin {
-  type=wincmd
-  Config {
-    Button1=iconify
-    Button2=shade
-  }
-}
-Plugin {
-  type=space
-  Config {
-    Size=4
-  }
-}
-Plugin {
-  type=pager
-  Config {
-  }
-}
-Plugin {
-  type=space
-  Config {
-    Size=4
+    Size=2
   }
 }
 Plugin {
@@ -104,11 +64,8 @@ Plugin {
     FlatButton=0
     MaxTaskWidth=150
     spacing=1
-  }
-}
-Plugin {
-  type=cpu
-  Config {
+    UseSmallerIcons=-1
+    DisableUpscale=0
   }
 }
 Plugin {
@@ -117,12 +74,29 @@ Plugin {
   }
 }
 Plugin {
+  type=batt
+  Config {
+    BackgroundColor=black
+    ChargingColor1=#28f200
+    ChargingColor2=#22cc00
+    DischargingColor1=#ffee00
+    DischargingColor2=#d9ca00
+    HideIfNoBattery=1
+    AlarmCommand=notify-send "Battery low" --icon=battery-caution
+    AlarmTime=5
+    BorderWidth=1
+    Size=8
+    ShowExtendedInformation=0
+    BatteryNumber=0
+  }
+}
+Plugin {
   type=dclock
   Config {
-    ClockFmt=%R
+    ClockFmt=%I:%M %p%n%a, %b %d %Y
     TooltipFmt=%A %x
     BoldFont=0
     IconOnly=0
-    CenterText=0
+    CenterText=1
   }
 }
