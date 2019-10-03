@@ -1,0 +1,7 @@
+! To scale text (for HiDPI monitors) change the DPI configuration
+! For regular monitors, DPI of 96 is fine
+Xft.dpi: 125
+Xft.antialias: true
+Xft.rgba: rgb
+Xft.hinting: true
+Xft.hintstyle: hintslight
