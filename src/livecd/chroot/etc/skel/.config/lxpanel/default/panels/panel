@@ -1,0 +1,128 @@
+# lxpanel <profile> config file. Manually editing is not recommended.
+# Use preference dialog in lxpanel to adjust config when you can.
+
+Global {
+  edge=bottom
+  allign=left
+  margin=0
+  widthtype=percent
+  width=100
+  height=26
+  transparent=0
+  tintcolor=#000000
+  alpha=0
+  setdocktype=1
+  setpartialstrut=1
+  usefontcolor=1
+  fontcolor=#ffffff
+  usefontsize=0
+  fontsize=10
+  background=1
+  backgroundfile=/usr/share/lxpanel/images/background.png
+}
+Plugin {
+  type=space
+  Config {
+    Size=2
+  }
+}
+Plugin {
+  type=menu
+  Config {
+    image=/usr/share/lxpanel/images/my-computer.png
+    system {
+    }
+    separator {
+    }
+    item {
+      command=run
+    }
+    separator {
+    }
+    item {
+      image=gnome-logout
+      command=logout
+    }
+  }
+}
+Plugin {
+  type=launchbar
+  Config {
+    Button {
+      id=pcmanfm.desktop
+    }
+    Button {
+      id=lxde-x-terminal-emulator.desktop
+    }
+    Button {
+      id=lxde-x-www-browser.desktop
+    }
+  }
+}
+Plugin {
+  type=space
+  Config {
+    Size=4
+  }
+}
+Plugin {
+  type=wincmd
+  Config {
+    Button1=iconify
+    Button2=shade
+  }
+}
+Plugin {
+  type=space
+  Config {
+    Size=4
+  }
+}
+Plugin {
+  type=pager
+  Config {
+  }
+}
+Plugin {
+  type=space
+  Config {
+    Size=4
+  }
+}
+Plugin {
+  type=taskbar
+  expand=1
+  Config {
+    tooltips=1
+    IconsOnly=0
+    AcceptSkipPager=1
+    ShowIconified=1
+    ShowMapped=1
+    ShowAllDesks=0
+    UseMouseWheel=1
+    UseUrgencyHint=1
+    FlatButton=0
+    MaxTaskWidth=150
+    spacing=1
+  }
+}
+Plugin {
+  type=cpu
+  Config {
+  }
+}
+Plugin {
+  type=tray
+  Config {
+  }
+}
+Plugin {
+  type=dclock
+  Config {
+    ClockFmt=%R
+    TooltipFmt=%A %x
+    BoldFont=0
+    IconOnly=0
+    CenterText=0
+  }
+}
