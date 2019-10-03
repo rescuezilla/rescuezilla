@@ -99,7 +99,6 @@ apt-get install --yes --no-install-recommends discover \
                                               baobab \
                                               gsettings-desktop-schemas \
                                               gparted \
-                                              gksu \
                                               lshw-gtk \
                                               testdisk \
                                               usb-creator-gtk \
