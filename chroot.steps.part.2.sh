@@ -16,52 +16,6 @@ update-alternatives --install /lib/plymouth/themes/default.plymouth default.plym
 update-alternatives --set default.plymouth /lib/plymouth/themes/redo-logo/redo-logo.plymouth
 update-initramfs -u
 
-# Create localepurge config file with list of locales to keep.
-cat << EOF > /etc/locale.nopurge
-####################################################
-# This is the configuration file for localepurge(8).
-####################################################
-
-####################################################
-# Uncommenting this string enables removal of localized 
-# man pages based on the configuration information for
-# locale files defined below:
-
-MANDELETE
-
-####################################################
-# Uncommenting this string causes localepurge to simply delete
-# locales which have newly appeared on the system without
-# bothering you about it:
-
-DONTBOTHERNEWLOCALE
-
-####################################################
-# Uncommenting this string enables display of freed disk
-# space if localepurge has purged any superfluous data:
-
-SHOWFREEDSPACE
-
-#####################################################
-# Commenting out this string enables faster but less
-# accurate calculation of freed disk space:
-
-#QUICKNDIRTYCALC
-
-#####################################################
-# Commenting out this string disables verbose output:
-
-#VERBOSE
-
-#####################################################
-# Following locales won't be deleted from this system
-# after package installations done with apt-get(8):
-
-en
-en_US
-en_US.UTF-8
-EOF
-
 # Install localepurge, and use currently installed /etc/locale.nopurge config file, not package maintainer's version.
 apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install --yes localepurge
 
