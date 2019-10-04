@@ -38,17 +38,22 @@ mv $APT_SOURCES_CHECKSUM /var/lib/apt/lists/apt.sources.checksum.txt
 mkdir /var/lib/dbus
 apt-get install --yes --no-install-recommends dbus
 dbus-uuidgen > /var/lib/dbus/machine-id
+
 dpkg-divert --local --rename --add /sbin/initctl
 ln -s /bin/true /sbin/initctl
 
 perl -p -i -e 's/^set compatible$/set nocompatible/g' /etc/vim/vimrc.tiny
 
-# Install the basic packages
-apt-get install --yes --no-install-recommends discover laptop-detect os-prober linux-generic casper lupin-casper
 apt-get upgrade --yes
 
-# Install additional packages
-apt-get install --yes --no-install-recommends xinit \
+# Install packages
+apt-get install --yes --no-install-recommends discover \
+                                              laptop-detect \
+                                              os-prober \
+                                              linux-generic \
+                                              casper \
+                                              lupin-casper \
+                                              xinit \
                                               openbox \
                                               obconf \
                                               xserver-xorg \
@@ -57,9 +62,8 @@ apt-get install --yes --no-install-recommends xinit \
                                               network-manager-gnome \
                                               plymouth-x11 \
                                               plymouth-label \
-                                              plymouth-theme-ubuntu-logo
-
-apt-get install --yes --no-install-recommends pcmanfm \
+                                              plymouth-theme-ubuntu-logo \
+                                              pcmanfm \
                                               chromium-browser \
                                               gtk-theme-switch \
                                               shimmer-themes \
@@ -79,9 +83,8 @@ apt-get install --yes --no-install-recommends pcmanfm \
                                               pm-utils \
                                               libnotify-bin \
                                               notify-osd \
-                                              notify-osd-icons
-
-apt-get install --yes --no-install-recommends time \
+                                              notify-osd-icons \
+                                              time \
                                               hdparm \
                                               openssh-client \
                                               libglib-perl \
