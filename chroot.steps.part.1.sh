@@ -5,6 +5,8 @@
 
 set -x
 
+APT_SOURCES_CHECKSUM=$(mktemp --suffix .apt.sources.checksum)
+
 # Prepare the chroot environment
 mount none -t proc /proc
 mount none -t sysfs /sys
@@ -17,18 +19,32 @@ export LC_ALL=C
 # [1] https://github.com/phusion/baseimage-docker/issues/58
 echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 
-apt-get update
+sha1sum /etc/apt/sources.list /etc/apt/sources.list.d/* > $APT_SOURCES_CHECKSUM
+if [ ! -d "/var/lib/apt/lists.cache" ] ; then
+    # Must update apt package indexes if there is nothing cached.
+    apt-get update
+else
+    # Even with a cache, still need to update if sources.list has changed
+    diff $APT_SOURCES_CHECKSUM /var/lib/apt/lists.cache/apt.sources.checksum.txt
+    if [ $? -ne 0 ]; then
+        apt-get update
+    else 
+        rm -rf /var/lib/apt/lists
+        mv /var/lib/apt/lists.cache /var/lib/apt/lists
+    fi
+fi
+mv $APT_SOURCES_CHECKSUM /var/lib/apt/lists/apt.sources.checksum.txt
+
 mkdir /var/lib/dbus
 apt-get install --yes --no-install-recommends dbus
 dbus-uuidgen > /var/lib/dbus/machine-id
 dpkg-divert --local --rename --add /sbin/initctl
 ln -s /bin/true /sbin/initctl
 
-# Install the basic packages
 perl -p -i -e 's/^set compatible$/set nocompatible/g' /etc/vim/vimrc.tiny
-apt-get install --yes --no-install-recommends discover laptop-detect os-prober linux-generic casper lupin-casper
 
-apt-get update
+# Install the basic packages
+apt-get install --yes --no-install-recommends discover laptop-detect os-prober linux-generic casper lupin-casper
 apt-get upgrade --yes
 
 # Install additional packages

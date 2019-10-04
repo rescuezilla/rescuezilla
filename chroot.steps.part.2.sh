@@ -80,7 +80,16 @@ rm list.txt
 rm /var/lib/dbus/machine-id
 rm /sbin/initctl
 dpkg-divert --rename --remove /sbin/initctl
+
+# Move downloaded apt packages and indexes to top-level chroot directory, to be
+# extracted out of chroot and saved for subsequent builds.
+mv /var/cache/apt/archives /var.cache.apt.archives
+mv /var/lib/apt/lists /var.lib.apt.lists
+# From `man apt-get`: "clears out the local repository of retrieved package
+# files. It removes everything but the lock file from /var/cache/apt/archives/
+# and /var/cache/apt/archives/partial/."
 apt-get clean
+
 rm -rf /tmp/*
 rm /etc/resolv.conf
 rm -rf /var/lib/apt/lists/????????*
