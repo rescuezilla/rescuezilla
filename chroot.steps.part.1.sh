@@ -5,10 +5,6 @@
 
 set -x
 
-APT_REPOSITORY_URL=http://old-releases.ubuntu.com/ubuntu
-#APT_REPOSITORY_URL=http://archive.ubuntu.com/ubuntu
-CODENAME=precise
-
 # Prepare the chroot environment
 mount none -t proc /proc
 mount none -t sysfs /sys
@@ -32,12 +28,6 @@ ln -s /bin/true /sbin/initctl
 perl -p -i -e 's/^set compatible$/set nocompatible/g' /etc/vim/vimrc.tiny
 apt-get install --yes --no-install-recommends discover laptop-detect os-prober linux-generic casper lupin-casper
 
-# Optional: Add update and backport repos. The official v1.0.2 and v1.0.3 ISO
-# images did not have the update and backport repos in sources.list, but used
-# the repos to upgrade packages (maybe was used only in debootstrap phase?).
-echo "deb $APT_REPOSITORY_URL $CODENAME main universe multiverse" > /etc/apt/sources.list
-echo "deb $APT_REPOSITORY_URL $CODENAME-updates main universe multiverse" >> /etc/apt/sources.list
-echo "deb $APT_REPOSITORY_URL $CODENAME-backports main universe multiverse" >> /etc/apt/sources.list
 apt-get update
 apt-get upgrade --yes
 

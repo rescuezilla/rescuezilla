@@ -3,15 +3,6 @@
 # Echo each command
 set -x
 
-# Selecting a geographically closer APT mirror may increase network transfer rates.
-#
-# Note: After the support window for a specific release ends, the packages are moved to the 'old-releases' 
-# URL [1], which means substitution becomes mandatory in-order to build older releases from scratch.
-#
-# [1] http://old-releases.ubuntu.com/ubuntu
-#
-#APT_REPOSITORY_URL=http://archive.ubuntu.com/ubuntu
-APT_REPOSITORY_URL=http://old-releases.ubuntu.com/ubuntu
 CODENAME=precise
 ARCH=i386
 # The build directory is "build/", unless overridden by an environment variable
@@ -26,13 +17,18 @@ fi
 mkdir -p $BUILD_DIRECTORY/chroot
 
 cd $BUILD_DIRECTORY
-debootstrap --arch=$ARCH $CODENAME chroot/ $APT_REPOSITORY_URL/
+# Selecting a geographically closer APT mirror may increase network transfer rates.
+#
+# Note: After the support window for a specific release ends, the packages are moved to the 'old-releases' 
+# URL [1], which means substitution becomes mandatory in-order to build older releases from scratch.
+#
+# [1] http://old-releases.ubuntu.com/ubuntu
+debootstrap --arch=$ARCH $CODENAME chroot/ http://archive.ubuntu.com/ubuntu/
 
 # Enter chroot, and launch next stage of script
 mount --bind /dev chroot/dev
 cp /etc/hosts chroot/etc/hosts
 cp /etc/resolv.conf chroot/etc/resolv.conf
-echo "deb $APT_REPOSITORY_URL $CODENAME main universe multiverse" > chroot/etc/apt/sources.list
 cp ../chroot.steps.part.1.sh ../chroot.steps.part.2.sh chroot
 chroot chroot/ /bin/bash /chroot.steps.part.1.sh
 

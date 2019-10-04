@@ -5,16 +5,16 @@
 # generated Ubuntu image.
 FROM ubuntu:12.04
 
-## Uncomment to substitute a different apt repository. Selecting a mirror geographically closer mirror may
-## increase network transfer rates.
-##
-## Note: After the support window for a specific release ends, the packages are moved to the 'old-releases'
-## URL [1], which makes substitution becomes mandatory in-order to build older releases from scratch.
-##
-## [1] http://old-releases.ubuntu.com/ubuntu
-ARG DEFAULT_APT_REPOSITORY_URL=http://archive.ubuntu.com/ubuntu
-ARG REPLACEMENT_APT_REPOSITORY_URL=http://old-releases.ubuntu.com/ubuntu
-RUN sed --in-place "s*${DEFAULT_APT_REPOSITORY_URL}*${REPLACEMENT_APT_REPOSITORY_URL}*g" /etc/apt/sources.list
+# Copy the apt repository mirror list into the Docker image.
+# 
+# For increased transfer rates, consider selecting a mirror geographically
+# closer mirror.
+# 
+# Note: After the support window for a specific release ends, the packages are
+# moved to the 'old-releases' URL, which makes substitution becomes mandatory
+# in-order to build older releases from scratch.
+#
+COPY src/livecd/chroot/etc/apt/sources.list /etc/apt/sources.list
 
 # Ensure all Dockerfile package installation operations are non-interactive, DEBIAN_FRONTEND=noninteractive is insufficient [1]
 # [1] https://github.com/phusion/baseimage-docker/issues/58
