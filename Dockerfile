@@ -23,12 +23,11 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
 # Refresh the apt package metadata
 RUN apt-get update
 
-# Install required dependencies for the build
-RUN apt-get install --yes make rsync sudo
-
-# Install optional dependencies for quality-of-life when debugging
-RUN apt-get install --yes tmux vim
+RUN apt-get install --yes \
+                          # Install required dependencies for the build
+                          make rsync sudo debootstrap syslinux squashfs-tools genisoimage memtest86+ \
+                          # Install optional dependencies for quality-of-life when debugging
+                          tmux vim
 
 # Restore interactivity of package installation within Docker
 RUN echo 'debconf debconf/frontend select Dialog' | debconf-set-selections
-

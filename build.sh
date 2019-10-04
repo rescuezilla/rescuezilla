@@ -23,8 +23,6 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 # Prepare base system
-apt-get update
-apt-get install --yes debootstrap
 mkdir -p $BUILD_DIRECTORY/chroot
 
 cd $BUILD_DIRECTORY
@@ -51,7 +49,6 @@ umount -lf chroot/dev/
 rm chroot/root/.bash_history
 rm chroot/chroot.steps.part.1.sh chroot/chroot.steps.part.2.sh
 
-apt-get install --yes syslinux squashfs-tools genisoimage memtest86+
 mkdir -p image/casper image/isolinux image/install
 cp chroot/boot/vmlinuz-3.2.*-generic image/casper/vmlinuz
 cp chroot/boot/initrd.img-3.2.*-generic image/casper/initrd.lz
