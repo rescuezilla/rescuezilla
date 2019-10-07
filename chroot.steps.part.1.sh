@@ -66,7 +66,7 @@ apt-get install --yes --no-install-recommends discover \
                                               pcmanfm \
                                               chromium-browser \
                                               gtk-theme-switch \
-                                              shimmer-themes \
+                                              bluebird-gtk-theme \
                                               gnome-icon-theme \
                                               gnome-brave-icon-theme \
                                               dmz-cursor-theme \
