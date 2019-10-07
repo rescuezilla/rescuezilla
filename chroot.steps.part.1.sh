@@ -65,7 +65,6 @@ apt-get install --yes --no-install-recommends discover \
                                               plymouth-theme-ubuntu-logo \
                                               pcmanfm \
                                               chromium-browser \
-                                              gtk-theme-switch \
                                               bluebird-gtk-theme \
                                               gnome-icon-theme \
                                               gnome-brave-icon-theme \
@@ -73,7 +72,6 @@ apt-get install --yes --no-install-recommends discover \
                                               maximus \
                                               gpicview \
                                               leafpad \
-                                              lxappearance \
                                               lxmenu-data \
                                               lxrandr \
                                               lxterminal \
