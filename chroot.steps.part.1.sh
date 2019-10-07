@@ -80,6 +80,7 @@ apt-get install --yes --no-install-recommends discover \
                                               lxpanel \
                                               ttf-ubuntu-font-family \
                                               alsamixergui \
+                                              volumeicon-alsa \
                                               pm-utils \
                                               libnotify-bin \
                                               notify-osd \

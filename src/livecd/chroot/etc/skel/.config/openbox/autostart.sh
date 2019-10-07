@@ -27,14 +27,14 @@ pcmanfm --desktop &
 # network (gnome-network-manger)
 nm-applet &
 
+# ALSA volume control widget
+volumeicon &
+
 # power-manager
 #gnome-power-manager &
 
 # lxpanel (panel/systray)
 (sleep 1 && lxpanel)&
-
-# Mixer volume
-#(sleep 5 && volti)&
 
 # Start Redo Backup automatically
 redobackup &
