@@ -1,0 +1,113 @@
+<!DOCTYPE Menu PUBLIC '-//freedesktop//DTD Menu 1.0//EN'
+ 'http://www.freedesktop.org/standards/menu-spec/menu-1.0.dtd'>
+<Menu>
+    <Name>Applications</Name>
+    <MergeFile type='parent'>/etc/xgd/menus/lxde-applications.menu</MergeFile>
+    <DefaultLayout inline="false"/>
+    <Menu>
+        <Name>Accessories</Name>
+        <!-- added by LibFM -->
+        <Include>
+            <Filename>pcmanfm.desktop</Filename>
+        </Include>
+        <!-- added by LibFM -->
+        <Include>
+            <Filename>lxterminal.desktop</Filename>
+        </Include>
+        <!-- deleted by LibFM -->
+        <Exclude>
+            <Filename>org.gnome.DiskUtility.desktop</Filename>
+        </Exclude>
+    </Menu>
+    <Menu>
+        <Name>System</Name>
+        <!-- deleted by LibFM -->
+        <Exclude>
+            <Filename>pcmanfm.desktop</Filename>
+        </Exclude>
+        <!-- deleted by LibFM -->
+        <Exclude>
+            <Filename>org.gnome.baobab.desktop</Filename>
+        </Exclude>
+        <!-- deleted by LibFM -->
+        <Exclude>
+            <Filename>gparted.desktop</Filename>
+        </Exclude>
+        <!-- deleted by LibFM -->
+        <Exclude>
+            <Filename>lshw-gtk.desktop</Filename>
+        </Exclude>
+        <!-- deleted by LibFM -->
+        <Deleted/>
+    </Menu>
+    <Menu>
+        <Name>Development</Name>
+        <!-- deleted by LibFM -->
+        <Deleted/>
+    </Menu>
+    <Menu>
+        <Name>Multimedia</Name>
+        <!-- deleted by LibFM -->
+        <Deleted/>
+    </Menu>
+    <Menu>
+        <Name>DesktopSettings</Name>
+        <!-- added by LibFM -->
+        <Include>
+            <Filename>lshw-gtk.desktop</Filename>
+        </Include>
+        <!-- deleted by LibFM -->
+        <Exclude>
+            <Filename>lxterminal.desktop</Filename>
+        </Exclude>
+        <!-- deleted by LibFM -->
+        <Exclude>
+            <Filename>org.gnome.baobab.desktop</Filename>
+        </Exclude>
+        <!-- deleted by LibFM -->
+        <Exclude>
+            <Filename>gparted.desktop</Filename>
+        </Exclude>
+        <!-- added by LibFM -->
+        <Include>
+            <Filename>alsamixergui.desktop</Filename>
+        </Include>
+        <!-- deleted by LibFM -->
+        <Exclude>
+            <Filename>org.gnome.DiskUtility.desktop</Filename>
+        </Exclude>
+    </Menu>
+    <Menu>
+        <Name>Internet</Name>
+        <!-- deleted by LibFM -->
+        <Exclude>
+            <Filename>chromium-browser.desktop</Filename>
+        </Exclude>
+        <!-- deleted by LibFM -->
+        <Deleted/>
+    </Menu>
+    <Menu>
+        <Name>Other</Name>
+        <!-- deleted by LibFM -->
+        <Exclude>
+            <Filename>redobackup.desktop</Filename>
+        </Exclude>
+        <!-- deleted by LibFM -->
+        <Exclude>
+            <Filename>alsamixergui.desktop</Filename>
+        </Exclude>
+        <!-- added by LibFM -->
+        <Include>
+            <Filename>org.gnome.DiskUtility.desktop</Filename>
+        </Include>
+    </Menu>
+    <Layout>
+       <Merge type="menus"/>
+        <Filename>redobackup.desktop</Filename>
+        <Separator/>
+        <Menuname>Accessories</Menuname>
+        <Menuname>Other</Menuname>
+        <Menuname>DesktopSettings</Menuname>
+        <Merge type="files"/>
+    </Layout>
+</Menu>
