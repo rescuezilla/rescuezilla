@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Action
+Name=Open current directory in terminal
+Profiles=profile-zero;
+Icon=utilities-terminal
+
+[X-Action-Profile profile-zero]
+MimeTypes=inode/directory;
+# Not using /usr/bin/x-terminal-emulator here, as the argument is non-portable.
+Exec=/usr/bin/lxterminal --working-directory=%f
+Name=Default profile
