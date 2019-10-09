@@ -38,6 +38,3 @@ volumeicon &
 
 # Start Redo Backup automatically
 redobackup &
-
-# Maximize all windows
-maximus &

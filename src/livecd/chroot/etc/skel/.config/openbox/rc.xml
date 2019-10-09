@@ -781,5 +781,25 @@
 
   # end of the example
 -->
+      <!-- Auto-maximize all windows, except a whitelist.
+           See [1] for information. Use obxprop to get
+           variable information, as documented above.
+
+           [1] http://openbox.org/wiki/Help:Applications#Example_of_per-app_settings
+      -->
+      <application class="*">
+          <focus>yes</focus>
+          <maximized>true</maximized>
+      </application>
+      <application name="lxterminal">
+          <maximized>false</maximized>
+      </application>
+      <application name="arandr">
+          <maximized>false</maximized>
+      </application>
+      <!-- System logout script -->
+      <application name="yad">
+          <maximized>false</maximized>
+      </application>
   </applications>
 </openbox_config>
