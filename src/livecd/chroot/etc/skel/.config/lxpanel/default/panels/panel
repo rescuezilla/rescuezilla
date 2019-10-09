@@ -38,8 +38,9 @@ Plugin {
     separator {
     }
     item {
+      name=Shutdown
       image=gnome-logout
-      command=logout
+      action=/usr/sbin/graphical-shutdown.sh
     }
   }
 }

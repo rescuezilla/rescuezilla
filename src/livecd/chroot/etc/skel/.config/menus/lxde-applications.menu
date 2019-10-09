@@ -100,6 +100,9 @@
         <Include>
             <Filename>org.gnome.DiskUtility.desktop</Filename>
         </Include>
+        <Exclude>
+            <Filename>yad-icon-browser.desktop</Filename>
+        </Exclude>
     </Menu>
     <Layout>
        <Merge type="menus"/>
