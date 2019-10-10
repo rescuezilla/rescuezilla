@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Action
+Name=Display resolution and layout
+Profiles=profile-zero;
+Icon=preferences-desktop-display
+
+[X-Action-Profile profile-zero]
+MimeTypes=inode/directory;
+# arandr is a well-known, powerful graphical resolution and screen-layout modification program
+# lxrandr is more suitable to LXDE/Lubuntu environments, and is much more user-friendly to simple
+# operations. However lxrandr has been buggy in VirtualBox testing, so only providing arandr for users.
+Exec=/usr/bin/arandr
+Name=Default profile
