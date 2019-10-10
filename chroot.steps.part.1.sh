@@ -73,7 +73,7 @@ apt-get install --yes --no-install-recommends discover \
                                               gpicview \
                                               leafpad \
                                               lxmenu-data \
-                                              lxrandr \
+                                              arandr \
                                               lxterminal \
                                               lxpanel \
                                               ttf-ubuntu-font-family \
