@@ -17,9 +17,6 @@ hwclock -s --localtime --noadjfile
 # Copy the menus and other preferences to the root user's home directory
 su root -c "cp -R /etc/skel/.local /etc/skel/.config /etc/skel/.fonts.conf /etc/skel/.gtkrc-2.0 /root"
 
-# Load up the PC speaker module so we can do some beeping
-modprobe pcspkr
-
 # Start X
 su root -c startx
 
