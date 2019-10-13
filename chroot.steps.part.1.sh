@@ -102,6 +102,7 @@ apt-get install --yes --no-install-recommends discover \
                                               gparted \
                                               lshw-gtk \
                                               testdisk \
+                                              gddrescue \
                                               usb-creator-gtk \
                                               wodim \
                                               curlftpfs \
