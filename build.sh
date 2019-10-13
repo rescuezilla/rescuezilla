@@ -33,7 +33,7 @@ if [ ! -d "$PKG_CACHE_DIRECTORY/$DEBOOTSTRAP_CACHE_DIRECTORY" ] ; then
 fi
 mkdir -p $BUILD_DIRECTORY/chroot
 echo "Copy debootstrap package cache"
-rsync --recursive --links $PKG_CACHE_DIRECTORY/$DEBOOTSTRAP_CACHE_DIRECTORY/ $BUILD_DIRECTORY/chroot/
+rsync --archive $PKG_CACHE_DIRECTORY/$DEBOOTSTRAP_CACHE_DIRECTORY/ $BUILD_DIRECTORY/chroot/
 
 # debootstrap part 2/2: Bootstrap a Debian root filesystem based on cached
 # packages directory (part 2/2) [1] Note DEBOOTSTRAP_DIR is an undocumented
@@ -46,20 +46,20 @@ DEBOOTSTRAP_DIR=$BUILD_DIRECTORY/chroot/debootstrap debootstrap --second-stage -
 if [ -d "$PKG_CACHE_DIRECTORY/$APT_PKG_CACHE_DIRECTORY/" ] ; then
     mkdir -p $BUILD_DIRECTORY/chroot/var/cache/apt/archives/
     echo "Copy apt package cache"
-    rsync --recursive --links $PKG_CACHE_DIRECTORY/$APT_PKG_CACHE_DIRECTORY/ $BUILD_DIRECTORY/chroot/var/cache/apt/archives
+    rsync --archive $PKG_CACHE_DIRECTORY/$APT_PKG_CACHE_DIRECTORY/ $BUILD_DIRECTORY/chroot/var/cache/apt/archives
 fi
 
 # Copy cached apt indexes, if present, to a temporary directory, to reduce need to download packages from internet.
 if [ -d "$PKG_CACHE_DIRECTORY/$APT_INDEX_CACHE_DIRECTORY/" ] ; then
     mkdir -p $BUILD_DIRECTORY/chroot/var/lib/apt/
     echo "Copy apt index cache"
-    rsync --recursive --links $PKG_CACHE_DIRECTORY/$APT_INDEX_CACHE_DIRECTORY/ $BUILD_DIRECTORY/chroot/var/lib/apt/lists.cache
+    rsync --archive $PKG_CACHE_DIRECTORY/$APT_INDEX_CACHE_DIRECTORY/ $BUILD_DIRECTORY/chroot/var/lib/apt/lists.cache
 fi
 
 cd $BUILD_DIRECTORY
 # Enter chroot, and launch next stage of script
 mount --bind /dev chroot/dev
-rsync --recursive --links ../src/livecd/chroot/etc/apt/ chroot/etc/apt
+rsync --archive ../src/livecd/chroot/etc/apt/ chroot/etc/apt
 cp /etc/hosts chroot/etc/hosts
 cp /etc/resolv.conf chroot/etc/resolv.conf
 cp ../chroot.steps.part.1.sh ../chroot.steps.part.2.sh chroot
@@ -67,14 +67,14 @@ chroot chroot/ /bin/bash /chroot.steps.part.1.sh
 
 # Copy the source FHS filesystem tree onto the build's chroot FHS tree, overwriting the base files where conflicts occur
 cd ..
-rsync --archive --progress src/livecd/ $BUILD_DIRECTORY
+rsync --archive src/livecd/ $BUILD_DIRECTORY
 
 # Enter chroot again
 cd $BUILD_DIRECTORY
 chroot chroot/ /bin/bash /chroot.steps.part.2.sh
-rsync --recursive --links chroot/var.cache.apt.archives/ ../$PKG_CACHE_DIRECTORY/$APT_PKG_CACHE_DIRECTORY
+rsync --archive chroot/var.cache.apt.archives/ ../$PKG_CACHE_DIRECTORY/$APT_PKG_CACHE_DIRECTORY
 rm -rf chroot/var.cache.apt.archives
-rsync --recursive --links chroot/var.lib.apt.lists/ ../$PKG_CACHE_DIRECTORY/$APT_INDEX_CACHE_DIRECTORY
+rsync --archive chroot/var.lib.apt.lists/ ../$PKG_CACHE_DIRECTORY/$APT_INDEX_CACHE_DIRECTORY
 rm -rf chroot/var.lib.apt.lists
 
 umount -lf chroot/dev/
