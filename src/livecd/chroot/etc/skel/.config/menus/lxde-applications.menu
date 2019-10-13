@@ -103,6 +103,9 @@
         <Exclude>
             <Filename>yad-icon-browser.desktop</Filename>
         </Exclude>
+        <Exclude>
+            <Filename>chromium-browser.desktop</Filename>
+        </Exclude>
     </Menu>
     <Layout>
        <Merge type="menus"/>
