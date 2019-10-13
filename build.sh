@@ -12,6 +12,13 @@ DEBOOTSTRAP_CACHE_DIRECTORY=debootstrap.$CODENAME.$ARCH
 APT_PKG_CACHE_DIRECTORY=var.cache.apt.archives.$CODENAME.$ARCH
 APT_INDEX_CACHE_DIRECTORY=var.lib.apt.lists.$CODENAME.$ARCH
 
+# If the current commit is not tagged, the version number from `git
+# describe--tags` is X.Y.Z-abc-gGITSHA-dirty, where X.Y.Z is the previous tag,
+# 'abc' is the number of commits since that tag, gGITSHA is the git sha
+# prepended by a 'g', and -dirty is present if the working tree has been
+# modified.
+VERSION_STRING=$(git describe --tags --dirty)
+
 if [[ $EUID -ne 0 ]]; then
    echo "This script must be run as root. Please consult build instructions." 
    exit 1
@@ -70,6 +77,9 @@ chroot chroot/ /bin/bash /chroot.steps.part.1.sh
 # Copy the source FHS filesystem tree onto the build's chroot FHS tree, overwriting the base files where conflicts occur
 cd ..
 rsync --archive src/livecd/ $BUILD_DIRECTORY
+
+# Substitute in the version string into the Redo Backup and Recovery application based on the git tag
+sed --in-place s/VERSION-SUBSTITUTED-BY-BUILD-SCRIPT/${VERSION_STRING}/g $BUILD_DIRECTORY/chroot/usr/share/redo/VERSION
 
 # Copy the menus and other preferences to the root user's home directory
 rsync --archive src/livecd/chroot/etc/skel/ $BUILD_DIRECTORY/chroot/root/
