@@ -71,6 +71,7 @@ mount --bind /dev chroot/dev
 rsync --archive ../src/livecd/chroot/etc/apt/ chroot/etc/apt
 cp /etc/hosts chroot/etc/hosts
 cp /etc/resolv.conf chroot/etc/resolv.conf
+
 cp ../chroot.steps.part.1.sh ../chroot.steps.part.2.sh chroot
 chroot chroot/ /bin/bash /chroot.steps.part.1.sh
 
@@ -80,6 +81,8 @@ rsync --archive src/livecd/ $BUILD_DIRECTORY
 
 # Substitute in the version string into the Redo Backup and Recovery application based on the git tag
 sed --in-place s/VERSION-SUBSTITUTED-BY-BUILD-SCRIPT/${VERSION_STRING}/g $BUILD_DIRECTORY/chroot/usr/share/redo/VERSION
+# Substitute in the version string into the boot menu
+sed --in-place s/VERSION-SUBSTITUTED-BY-BUILD-SCRIPT/${VERSION_STRING}/g $BUILD_DIRECTORY/image/isolinux/isolinux.cfg
 
 # Copy the menus and other preferences to the root user's home directory
 rsync --archive src/livecd/chroot/etc/skel/ $BUILD_DIRECTORY/chroot/root/
