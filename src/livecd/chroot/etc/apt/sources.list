@@ -10,5 +10,5 @@
 
 deb http://archive.ubuntu.com/ubuntu bionic main universe multiverse
 deb http://archive.ubuntu.com/ubuntu bionic-updates main universe multiverse
+deb http://archive.ubuntu.com/ubuntu bionic-security main universe multiverse
 deb http://archive.ubuntu.com/ubuntu bionic-backports main universe multiverse
-
