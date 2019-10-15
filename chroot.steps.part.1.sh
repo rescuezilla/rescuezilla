@@ -64,6 +64,7 @@ apt-get install --yes --no-install-recommends discover \
                                               plymouth-label \
                                               plymouth-theme-ubuntu-logo \
                                               pcmanfm \
+                                              gvfs \
                                               chromium-browser \
                                               bluebird-gtk-theme \
                                               gnome-icon-theme \
