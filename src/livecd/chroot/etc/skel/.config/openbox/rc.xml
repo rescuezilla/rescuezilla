@@ -801,5 +801,10 @@
       <application name="yad">
           <maximized>false</maximized>
       </application>
+      <!-- File manager, including 'Removable medium inserted' messages -->
+      <application name="pcmanfm">
+          <maximized>false</maximized>
+      </application>
+
   </applications>
 </openbox_config>
