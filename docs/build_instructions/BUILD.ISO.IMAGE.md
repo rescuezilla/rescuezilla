@@ -4,23 +4,25 @@
 
 A host system capable of running debootstrap, chroot and bind mounts is required. With such a host system, a bootable ISO image can be generated in a single `make install` command.
 
-To help automate the build across a variety of operating systems, a Dockerfile has been provided. This Dockerfile is used to generate an Ubuntu docker container which may act as the "host system". To be used effectively in development, Docker has a relatively steep learning curve, if you prefer to avoid docker entirely, the `make install` should work without issue on a native Ubuntu installation, or in a Ubuntu virtual machine.
+### Build without docker
 
-### Build instructions using Docker
-
-Suggested dependencies: git, git LFS, Docker (on Debian: https://docs.docker.com/install/linux/docker-ce/debian/)
-
-In a terminal, run the following:
+Any Debian 10, Ubuntu 18.04, or derivative such as Linux Mint should be able to run the following:
 ```bash
+sudo apt-get update
+sudo apt-get install git-lfs git make rsync sudo debootstrap isolinux syslinux squashfs-tools genisoimage memtest86+
 git clone https://github.com/redobackup/redobackup
 cd redobackup/
-
-docker build --tag builder.image .
-docker run --rm --detach --privileged --name builder.container -v `pwd`:/home/redobackup -t builder.image cat
-docker exec -it builder.container make -C /home/redobackup install 
+sudo make install
 
 # Test the generated ISO image in a virtual machine.
+sudo apt-get install virtualbox
 ```
+
+### Build with docker
+
+An optional Dockerfile is provided to generate a consistent build environment on a much larger variety of operating systems. The Dockerfile is managed under version-control just like the source code, which means the ideal build environment is always available, even when building very old commits. Official releases are built using this approach. See .travis.yml for docker build instructions.
+
+To be used effectively in development, Docker has a relatively steep learning curve. If you prefer to avoid docker entirely, stick to the 'Build without docker' instructions.
 
 ### Suggested developer workflow
 
