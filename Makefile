@@ -1,4 +1,6 @@
-install: build.sh chroot.steps.part.1.sh chroot.steps.part.2.sh
+.DEFAULT_GOAL := iso-image
+
+iso-image: build.sh chroot.steps.part.1.sh chroot.steps.part.2.sh
 	./build.sh
 
 clean-build-dir:

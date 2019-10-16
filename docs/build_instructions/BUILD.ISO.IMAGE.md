@@ -2,7 +2,7 @@
 
 ### Background
 
-A host system capable of running debootstrap, chroot and bind mounts is required. With such a host system, a bootable ISO image can be generated in a single `make install` command.
+A host system capable of running debootstrap, chroot and bind mounts is required. With such a host system, a bootable ISO image can be generated in a single `make` command.
 
 ### Build without docker
 
@@ -12,7 +12,8 @@ sudo apt-get update
 sudo apt-get install git-lfs git make rsync sudo debootstrap isolinux syslinux squashfs-tools genisoimage memtest86+
 git lfs clone https://github.com/redobackup/redobackup
 cd redobackup/
-sudo make install
+# sudo privileges required for the chroot bind mount
+sudo make
 
 # Test the generated ISO image in a virtual machine.
 sudo apt-get install virtualbox
