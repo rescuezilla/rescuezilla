@@ -10,7 +10,7 @@ Any Debian 10, Ubuntu 18.04, or derivative such as Linux Mint should be able to 
 ```bash
 sudo apt-get update
 sudo apt-get install git-lfs git make rsync sudo debootstrap isolinux syslinux squashfs-tools genisoimage memtest86+
-git clone https://github.com/redobackup/redobackup
+git lfs clone https://github.com/redobackup/redobackup
 cd redobackup/
 sudo make install
 
