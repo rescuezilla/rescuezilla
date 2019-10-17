@@ -11,9 +11,13 @@ services:
 
 # Launches Docker container to act as 'host system'. See BUILD.ISO.IMAGE.md for more information.
 before_install:
-- docker ps --all
   # Build an immutable docker image from the Dockerfile, labelled with a
   # meaningful tag
+  #
+  # On your local machine, if rebuilding the docker image, it's recommended to
+  # first delete old build artifacts, and also to fix permissions on the pkg
+  # caches by running: 
+  # sudo make clean && sudo chown -R $(id -u):$(id -g) pkg.cache/
 - docker build --tag builder.image .
   # Construct a (mutable) docker container from the docker image, give it
   # extended privileges (required for the chroot bind mount), label it with a
