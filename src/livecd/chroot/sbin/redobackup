@@ -32,6 +32,7 @@ use Sys::CPU;
 
 ##### Constants found in our program ###################################
 use constant VERSION       => `cat /usr/share/redo/VERSION`;
+use constant COMMIT_DATE   => `cat /usr/share/redo/GIT_COMMIT_DATE`;
 use constant CD_LABEL      => `cat /usr/share/redo/TITLE`;
 use constant MOUNT_POINT   => "/mnt/backup";
 use constant DATA_DIR      => "/usr/share/redo/";
@@ -108,7 +109,9 @@ sub main {
   $builder->get_object('usb_tabs')->set_show_border(FALSE);
   my $ver = VERSION;
   chomp($ver);
-  set_status("Version $ver");
+  my $commit_date = COMMIT_DATE;
+  chomp($commit_date);
+  set_status("Version $ver ($commit_date)");
   $window->maximize();
   $window->show();
   my $mode = '';

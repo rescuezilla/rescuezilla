@@ -19,6 +19,9 @@ APT_INDEX_CACHE_DIRECTORY=var.lib.apt.lists.$CODENAME.$ARCH
 # modified.
 VERSION_STRING=$(git describe --tags --dirty)
 
+# Date of current git commit in colon-less ISO 8601 format (2013-04-01T130102)
+GIT_COMMIT_DATE=$(date +"%Y-%m-%dT%H%M%S" --date=@$(git show --no-patch --format=%ct HEAD))
+
 if [[ $EUID -ne 0 ]]; then
    echo "This script must be run as root. Please consult build instructions." 
    exit 1
@@ -95,12 +98,15 @@ rsync --archive src/livecd/ $BUILD_DIRECTORY
 SUBSTITUTIONS=(
     # Redo Backup and Recovery perl script
     "$BUILD_DIRECTORY/chroot/usr/share/redo/VERSION"
+    "$BUILD_DIRECTORY/chroot/usr/share/redo/GIT_COMMIT_DATE"
     # ISOLINUX boot menu 
     "$BUILD_DIRECTORY/image/isolinux/isolinux.cfg"
 )
 for file in "${SUBSTITUTIONS[@]}"; do
     # Substitute version into file
     sed --in-place s/VERSION-SUBSTITUTED-BY-BUILD-SCRIPT/${VERSION_STRING}/g $file
+    # Substitute date
+    sed --in-place s/GIT-COMMIT-DATE-SUBSTITUTED-BY-BUILD-SCRIPT/${GIT_COMMIT_DATE}/g $file
 done
 
 # Copy the menus and other preferences to the root user's home directory
