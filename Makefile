@@ -5,6 +5,10 @@ iso-image: build.sh chroot.steps.part.1.sh chroot.steps.part.2.sh
 
 clean-build-dir:
 	$(info * Deleting build/ directory)
+	umount build/chroot/dev/pts || true
+	umount build/chroot/dev/ || true
+	umount build/chroot/proc/ || true
+	umount build/chroot/sys/ || true
 	rm -rf build/
 
 clean: clean-build-dir
