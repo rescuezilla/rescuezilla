@@ -27,6 +27,7 @@ use XML::Simple;
 use Gtk2::SimpleList;
 use IO::Handle;
 use Data::Dumper;
+use Sys::CPU;
 
 
 ##### Constants found in our program ###################################
@@ -65,6 +66,15 @@ use constant RESTORE_STEPS => ( "Step 1: Select Source Drive",
                                 "Restoring From Backup" );
 use constant USB_STEPS     => ( "Step 1: Select Destination Drive",
                                 "Step 2: Install to USB Drive" );
+
+
+#### get number of cpu threads to use
+my $number_of_cpus = Sys::CPU::cpu_count();
+my $numthreads = $number_of_cpus - 1;
+
+if ($numthreads <= "1") {
+$numthreads = 1;
+}
 
 
 ##### Test code ########################################################
@@ -322,8 +332,8 @@ sub update_backup_progress {
     set_status("Preparing to create backup of Drive $dn, Part $pn...");
     print "*** Processing $part ($fs) using $tool...\n";
     system("umount /dev/$part 2>&1");
-    print "*** Executing: ( $tool -c -F -L /partclone.log -s /dev/$part | gzip -c --fast | split -d -a 3 -b 2048m - /$dest/$file"."_part$pn. ) 2>&1 |\n";
-    open $PROGRESS, "( $tool -c -F -L /partclone.log -s /dev/$part | gzip -c --fast | split -d -a 3 -b 2048m - /$dest/$file"."_part$pn. ) 2>&1 |";
+    print "*** Executing: ( $tool -c -F -L /partclone.log -s /dev/$part | pigz -p $numthreads -c -3 | split -d -a 3 -b 2048m - /$dest/$file"."_part$pn. ) 2>&1 |\n";
+    open $PROGRESS, "( $tool -c -F -L /partclone.log -s /dev/$part | pigz -p $numthreads -c -3 | split -d -a 3 -b 2048m - /$dest/$file"."_part$pn. ) 2>&1 |";
     sleep(0.5);
     return TRUE;
   } else {
@@ -751,8 +761,8 @@ sub update_restore_progress {
     set_status("Preparing to restore backup for Drive $dn, Part $pn...");
     print "*** Processing $part using $tool...\n";
     system("umount /dev/$part 2>&1");
-    print "*** Executing: ( cat /$src"."_part$pn.* | gzip -d -c | $tool -F -L /partclone.log -O /dev/$dest_drive$pn ) 2>&1 |\n";
-    open $PROGRESS, "( cat /$src"."_part$pn.* | gzip -d -c | $tool -F -L /partclone.log -O /dev/$dest_drive$pn ) 2>&1 |";
+    print "*** Executing: ( cat /$src"."_part$pn.* | pigz -d -c | $tool -F -L /partclone.log -O /dev/$dest_drive$pn ) 2>&1 |\n";
+    open $PROGRESS, "( cat /$src"."_part$pn.* | pigz -d -c | $tool -F -L /partclone.log -O /dev/$dest_drive$pn ) 2>&1 |";
     sleep(0.5);
     return TRUE;
   } else {

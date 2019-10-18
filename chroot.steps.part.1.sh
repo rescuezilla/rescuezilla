@@ -91,6 +91,8 @@ apt-get install --yes --no-install-recommends discover \
                                               libglib-perl \
                                               libgtk2-perl \
                                               libxml-simple-perl \
+                                              libsys-cpu-perl \
+                                              pigz \
                                               gtk2-engines-pixbuf \
                                               beep \
                                               rsync \
