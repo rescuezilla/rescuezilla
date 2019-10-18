@@ -136,7 +136,7 @@ cp /usr/lib/syslinux/modules/bios/vesamenu.c32 \
 cp /boot/memtest86+.bin image/install/memtest
 
 # Create manifest
-chroot chroot dpkg-query -W --showformat='${Package} ${Version}\n' | tee image/casper/filesystem.manifest
+chroot chroot dpkg-query -W --showformat='${Package} ${Version}\n' > image/casper/filesystem.manifest
 cp -v image/casper/filesystem.manifest image/casper/filesystem.manifest-desktop
 REMOVE='ubiquity ubiquity-frontend-gtk ubiquity-frontend-kde casper lupin-casper live-initramfs user-setup discover xresprobe os-prober libdebian-installer4'
 for i in $REMOVE; do
