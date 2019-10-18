@@ -37,6 +37,12 @@ if [ ! -d "$PKG_CACHE_DIRECTORY/$DEBOOTSTRAP_CACHE_DIRECTORY" ] ; then
     #
     # [1] http://old-releases.ubuntu.com/ubuntu
     debootstrap --arch=$ARCH --foreign $CODENAME $PKG_CACHE_DIRECTORY/$DEBOOTSTRAP_CACHE_DIRECTORY http://archive.ubuntu.com/ubuntu/
+    RET=$?
+    if [[ $RET -ne 0 ]]; then
+        echo "debootstrap part 1/2 failed. This may occur if you're using an older version of deboostrap"
+        echo "that doesn't have a script for \"$CODENAME\". Please consult the build instructions." 
+        exit 1
+    fi
 fi
 mkdir -p $BUILD_DIRECTORY/chroot
 echo "Copy debootstrap package cache"
@@ -48,6 +54,13 @@ rsync --archive $PKG_CACHE_DIRECTORY/$DEBOOTSTRAP_CACHE_DIRECTORY/ $BUILD_DIRECT
 #
 # [1] https://unix.stackexchange.com/a/397966
 DEBOOTSTRAP_DIR=$BUILD_DIRECTORY/chroot/debootstrap debootstrap --second-stage --second-stage-target $(readlink -f $BUILD_DIRECTORY/chroot/)
+RET=$?
+if [[ $RET -ne 0 ]]; then
+    echo "debootstrap part 2/2 failed. This may occur if the package cache ($PKG_CACHE_DIRECTORY/$DEBOOTSTRAP_CACHE_DIRECTORY/)"
+    echo "exists but is not fully populated. If so, deleting this directory might help. Please consult the build instructions." 
+    exit 1
+fi
+
 # Ensures tmp directory has correct mode, including sticky-bit
 chmod 1777 $BUILD_DIRECTORY/chroot/tmp/
 
