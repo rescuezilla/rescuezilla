@@ -92,10 +92,16 @@ chroot chroot/ /bin/bash /chroot.steps.part.1.sh
 cd ..
 rsync --archive src/livecd/ $BUILD_DIRECTORY
 
-# Substitute in the version string into the Redo Backup and Recovery application based on the git tag
-sed --in-place s/VERSION-SUBSTITUTED-BY-BUILD-SCRIPT/${VERSION_STRING}/g $BUILD_DIRECTORY/chroot/usr/share/redo/VERSION
-# Substitute in the version string into the boot menu
-sed --in-place s/VERSION-SUBSTITUTED-BY-BUILD-SCRIPT/${VERSION_STRING}/g $BUILD_DIRECTORY/image/isolinux/isolinux.cfg
+SUBSTITUTIONS=(
+    # Redo Backup and Recovery perl script
+    "$BUILD_DIRECTORY/chroot/usr/share/redo/VERSION"
+    # ISOLINUX boot menu 
+    "$BUILD_DIRECTORY/image/isolinux/isolinux.cfg"
+)
+for file in "${SUBSTITUTIONS[@]}"; do
+    # Substitute version into file
+    sed --in-place s/VERSION-SUBSTITUTED-BY-BUILD-SCRIPT/${VERSION_STRING}/g $file
+done
 
 # Copy the menus and other preferences to the root user's home directory
 rsync --archive src/livecd/chroot/etc/skel/ $BUILD_DIRECTORY/chroot/root/
