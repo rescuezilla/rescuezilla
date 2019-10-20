@@ -28,16 +28,35 @@ use Glib qw{ TRUE FALSE };
 use Gtk2 '-init';
 use Gtk2::SimpleList;
 use Fcntl qw(F_GETFL F_SETFL O_NONBLOCK);
+use POSIX qw(locale_h);
+use locale;
+use utf8;
+
+# Load translation
+use constant TRANSLATION_DIR => "/usr/share/redo/translations-drivereset/";
+my $lc_messages = setlocale(LC_MESSAGES);
+# Extract the ISO 639-1 code
+my $lang_code = substr($lc_messages,0,2);
+print "LC_MESSAGES locale:             $lc_messages.\n";
+print "Attempting to load translation: ".TRANSLATION_DIR."$lang_code.ko\n\n";
+
+# Exports 'loc'
+use Locale::Maketext::Simple (
+    Path => TRANSLATION_DIR,
+);
+
+# Sets language to the LC_MESSAGES environment variable
+loc_lang($lang_code);
 
 ##### Constants found in our program ###################################
 use constant TEST_MODE     => FALSE;
 use constant DATA_DIR      => "/usr/share/redo/";
 use constant GLADE_UI      => "drivereset.glade";
-my @RESET_STEPS   =  ( "Warning!",
-                       "Step 1: Select Target Drives",
-                       "Step 2: Confirm Drive Reset",
-                       "Step 3: Factory Reset Drives" );
-
+my @RESET_STEPS   =  ( loc("Warning!"),
+                       loc("Step 1: Select Target Drives"),
+                       loc("Step 2: Confirm Drive Reset"),
+                       loc("Step 3: Factory Reset Drives") );
+my $msg = "";
 
 ##### Main code ########################################################
 main();
@@ -99,7 +118,8 @@ sub prepare_all {
   foreach my $target (@targets) {
     $PROGRESS{$target}{'done'} = FALSE;
     $PROGRESS{$target}{'description'} = $drives{$target}{'dev_desc'}." (".$drives{$target}{'dev_size'}.")";
-    update_status($target, "Preparing to reset device $target");
+    $msg = loc("Preparing to reset device [_1]", $target);
+    update_status($target, $msg);
     prepare_drive($target);
     refresh_window();
   }
@@ -112,7 +132,8 @@ sub reset_all {
   our %drives;
   our @targets;
   foreach my $target (@targets) {
-    update_status($target, "Starting to reset device $target");
+    $msg = loc("Starting to reset device [_1]",$target);
+    update_status($target, $msg);
     reset_drive($target);
     refresh_window();
   }
@@ -125,49 +146,61 @@ sub prepare_drive {
   our %PROGRESS;
   my $target = $_[0];
   # Verify that no partitions on this device are mounted
-  update_status($target, "Making sure drive is not mounted");
+  $msg = loc("Making sure drive is not mounted");
+  update_status($target, $msg);
   print "*** umount /dev/$target*\n";
   `umount /dev/$target*`;
   my $mounts = `mount | grep /dev/$target | wc -l`;
   if ($mounts > 0) {
     beeper('warning');
-    message_box("There are $mounts partitions still mounted on device $target. This drive will not be reset.", 'error');
+    $msg = loc("There are [_1] partitions still mounted on device [_2]. This drive will not be reset.", $mounts, $target);
+    message_box($msg, 'error');
     $PROGRESS{$target}{'done'} = TRUE;
     $PROGRESS{$target}{'error'} = TRUE;
-    update_status($target, "Unable to reset drive: Disk is mounted");
+    $msg = loc("Unable to reset drive: Disk is mounted");
+    update_status($target, $msg);
     return 0;
   }
   # Get the drive's current status
-  update_status($target, "Getting current status of device $target");
+  $msg = loc("Getting current status of device [_1]", $target);
+  update_status($target, $msg);
   print "*** udevadm trigger\n";
   `udevadm trigger`;
   sleep(3);
   my $details = get_drive_details($target);
   # Does drive support secure erase commands?
-  update_status($target, "Verifying ATA secure erase support for device $target");
+  $msg = loc("Verifying ATA secure erase support for device [_1]", $target);
+  update_status($target, $msg);
   if ($$details{'id_ata_feature_set_security'} ne '1') {
     beeper('warning');
-    message_box("Device $target does not support the ATA secure erase command. This drive will not be reset.", 'error');
+    $msg = loc("Device [_1] does not support the ATA secure erase command. This drive will not be reset.", $target);
+    message_box($msg, 'error');
     $PROGRESS{$target}{'done'} = TRUE;
     $PROGRESS{$target}{'error'} = TRUE;
-    update_status($target, "Unable to reset drive: ATA secure erase not supported");
+    $msg = loc("Unable to reset drive: ATA secure erase not supported");
+    update_status($target, $msg);
     return 0;
   }
   # Is drive frozen?
-  update_status($target, "Making sure drive is not frozen");
+  $msg = loc("Making sure drive is not frozen");
+  update_status($target, $msg);
   if ($$details{'id_ata_feature_set_security_frozen'} eq '1') {
     beeper('warning');
-    message_box("Device $target is still marked as frozen. This drive will not be reset.", 'error');
+    $msg = loc("Device [_1] is still marked as frozen. This drive will not be reset.",$target);
+    message_box($msg, 'error');
     $PROGRESS{$target}{'done'} = TRUE;
     $PROGRESS{$target}{'error'} = TRUE;
-    update_status($target, "Unable to reset drive: Disk marked frozen");
+    $msg = loc("Unable to reset drive: Disk marked frozen");
+    update_status($target, $msg);
     return 0;
   }
   # Is drive locked or password set?
-  update_status($target, "Making sure drive is not locked");
+  $msg = loc("Making sure drive is not locked");
+  update_status($target, $msg);
   if (($$details{'id_ata_feature_set_security_level'} eq 'high') || ($$details{'id_ata_feature_set_security_locked'} eq '1')) {
-    print "Device $target is already locked. Attempting to proceed anyway.\n";
-    update_status($target, "Device $target is already locked; will attempt to reset");
+    $msg = loc("Device [_1] is already locked. Attempting to proceed anyway.",$target);
+    print $msg."\n";
+    update_status($target, $msg);
   }
   # Set time estimate
   if ($$details{'id_ata_feature_set_security_erase_unit_min'} ne 0) {
@@ -176,19 +209,24 @@ sub prepare_drive {
     $PROGRESS{$target}{'finish'} = 0;
   }
   # Write verification data to drive
-  update_status($target, "Writing verification data to drive $target");
+  $msg = loc("Writing verification data to drive [_1]",$target);
+  update_status($target, $msg);
   print "*** echo 'INCOMPLETE' | dd of=/dev/$target; sync;\n";
   my $result = '';
   if (!TEST_MODE) { $result = `echo 'INCOMPLETE' | dd of=/dev/$target 2>&1; sync;`; }
-  if ($result =~ m/error|fail|problem|device/si) { message_box("Failed to write to drive $target. Reset may fail, but proceeding anyway.", 'warning'); }
+  $msg = loc("Failed to write to drive [_1]. Reset may fail, but proceeding anyway.",$target);
+  if ($result =~ m/error|fail|problem|device/si) { message_box($msg, 'warning'); }
   sleep(1);
   # Set security password for the drive
-  update_status($target, "Setting security password for device $target");
+  $msg = loc("Setting security password for device [_1]", $target);
+  update_status($target, $msg);
   print "*** hdparm --user-master u --security-set-pass RESET /dev/$target\n";
   if (!TEST_MODE) { $result = `hdparm --user-master u --security-set-pass RESET /dev/$target 2>&1`; }
-  if ($result =~ m/error|fail|problem|ioctl|invalid/si) { message_box("Failed to set password for drive $target.", 'warning'); }
+  $msg = loc("Failed to set password for drive [_1]",$target);
+  if ($result =~ m/error|fail|problem|ioctl|invalid/si) { message_box($msg, 'warning'); }
   # Get the drive's current status
-  update_status($target, "Refreshing status of device $target");
+  $msg = loc("Refreshing status of device",$target);
+  update_status($target, $msg);
   print "*** udevadm trigger\n";
   `udevadm trigger`;
   sleep(3);
@@ -197,14 +235,17 @@ sub prepare_drive {
   # Is drive password set?
   if (!TEST_MODE) {
     if (($$details{'id_ata_feature_set_security_enabled'} ne '1') || ($$details{'id_ata_feature_set_security_level'} ne 'high')) {
-      message_box("Could not enable security mode for device $target. This drive will not be reset.", 'error');
+      $msg = loc("Could not enable security mode for device [_1]. This drive will not be reset.", $target);
+      message_box($msg, 'error');
       $PROGRESS{$target}{'done'} = TRUE;
       $PROGRESS{$target}{'error'} = TRUE;
-      update_status($target, "Unable to reset drive: Password could not be set");
+      $msg = loc("Unable to reset drive: Password could not be set");
+      update_status($target, $msg);
       return 0;
     }
   }
-  update_status($target, "Drive is ready to be reset");
+  $msg = loc("Drive is ready to be reset");
+  update_status($target, $msg);
   return 1;
 }
 
@@ -214,7 +255,8 @@ sub reset_drive {
   our %PROGRESS;
   my $target = $_[0];
   # Calculate time estimate
-  update_status($target, "Calculating time estimate for completion");
+  $msg = loc("Calculating time estimate for completion");
+  update_status($target, $msg);
   $PROGRESS{$target}{'start'} = time();
   if ($PROGRESS{$target}{'finish'} ne 0) {
     $PROGRESS{$target}{'finish'} = time() + $PROGRESS{$target}{'finish'} * 60;
@@ -222,7 +264,8 @@ sub reset_drive {
     $PROGRESS{$target}{'finish'} = 0;
   }
   # Start the reset process and set up a pipe
-  update_status($target, "Preparing to issue secure erase command to device $target");
+  $msg = loc("Preparing to issue secure erase command to device [_1]",$target);
+  update_status($target, $msg);
   print "*** time hdparm --user-master u --security-erase RESET /dev/$target |\n";
   if (TEST_MODE) {
     # Pipe to a fake command just to demonstrate what it will look like
@@ -231,11 +274,15 @@ sub reset_drive {
     # Pipe to real ATA secure erase
     open $PROGRESS{$target}{'pipe'}, "time hdparm --user-master u --security-erase RESET /dev/$target |";
   }
-  my $flags = fcntl($PROGRESS{$target}{'pipe'}, F_GETFL, 0) or message_box("Reset started for $target, but we may not know when it finishes because we couldn't get flags on the process: $!", 'warning');
+  my $msg = loc("Reset started for [_1], but we may not know when it finishes because we couldn't get flags on the process: ", $target);
+  my $flags = fcntl($PROGRESS{$target}{'pipe'}, F_GETFL, 0) or message_box("$msg $!", 'warning');
   $flags |= O_NONBLOCK;
-  fcntl($PROGRESS{$target}{'pipe'}, F_SETFL, $flags) or message_box("Reset started for $target, but we may not know when it finishes because we couldn't set flags on the process: $!", 'warning');
-  print "Reset estimated to last from ".$PROGRESS{$target}{'start'}." until ".$PROGRESS{$target}{'finish'}."...\n";
-  update_status($target, "Resetting...");
+  $msg = loc("Reset started for [_1], but we may not know when it finishes because we couldn't set flags on the process: ", $target);
+  fcntl($PROGRESS{$target}{'pipe'}, F_SETFL, $flags) or message_box("$msg $!", 'warning');
+  $msg = loc("Reset estimated to last from [_1] until [_2]",$PROGRESS{$target}{'start'},$PROGRESS{$target}{'finish'});
+  print "$msg...\n";
+  $msg = loc("Resetting...");
+  update_status($target, $msg);
   return 1;
 }
 
@@ -256,16 +303,24 @@ sub update_progress {
   if ($PROGRESS{'done'}) { return FALSE; }
   my $progress_bar = our $builder->get_object('progress_bar');
   my $tv = $builder->get_object('target_progress');
+  my $device_heading = loc("Device");
+  my $desc_heading = loc("Description");
+  my $sn_heading = loc("Serial Number");
+  my $drive_size_heading = loc("Drive Size");
+  my $connection_heading = loc("Connection");
+  my $estimate_heading = loc("Estimate");
+  my $percent_heading = loc("Percent");
+  my $status_heading = loc("Status");
   my $slist = Gtk2::SimpleList->new_from_treeview(
     $tv,
-    'Device'          => 'text',
-    'Description'     => 'text',
-    'Serial Number'   => 'text',
-    'Drive Size'      => 'text',
-    'Connection'      => 'text',
-    'Estimate'        => 'text',
-    'Percent'         => 'text',
-    'Status'          => 'text',
+    $device_heading          => 'text',
+    $desc_heading            => 'text',
+    $sn_heading              => 'text',
+    $drive_size_heading      => 'text',
+    $connection_heading      => 'text',
+    $estimate_heading        => 'text',
+    $percent_heading         => 'text',
+    $status_heading          => 'text',
   );
   foreach my $target (@targets) {
     my $dev_estimate = $drives{$target}{'id_ata_feature_set_security_erase_unit_min'};
@@ -282,49 +337,54 @@ sub update_progress {
           my $mins_left = sprintf("%.1f", $cur/60);
           my $pct = ($est-$cur)/$est;
           if ($mins_left<=0) { $mins_left = 0; $pct = 1; }
-          my $time_remaining_msg = "About $mins_left minute";
+          my $time_remaining_msg = loc("About [_1] minute", $mins_left);
           $time_remaining_msg .= "s" if ($mins_left!=1);
-          $time_remaining_msg .= " remaining";
+          $time_remaining_msg .= loc(" remaining");
           my $pct_text = sprintf("%.2f", $pct*100);
           $pct_complete = "$pct_text%";
           $PROGRESS{$target}{'status'} = $time_remaining_msg;
         } else {
           my $elapsed = time() - $PROGRESS{$target}{'start'};
           $elapsed = sprintf("%.1f", $elapsed/60);
-          $PROGRESS{$target}{'status'} = "Resetting: $elapsed minutes elapsed";
+          $msg = loc("Resetting: [_1] minutes elapsed", $elapsed);
+          $PROGRESS{$target}{'status'} = $msg;
         }
      } else {
-        print "Reset of $target is complete.\n";
+        $msg = loc("Reset of [_1] is complete.",$target);
+        print "$msg.\n";
         if (!$PROGRESS{$target}{'done'}) {
           # This code will be executed once, when the target drive is done
           $PROGRESS{$target}{'finish'} = time();
           my $elapsed = $PROGRESS{$target}{'finish'} - $PROGRESS{$target}{'start'};
           $elapsed = sprintf("%.1f", $elapsed/60);
-          $PROGRESS{$target}{'status'} = "Reset completed in $elapsed minutes";
+          $PROGRESS{$target}{'status'} = loc("Reset completed in [_1] minutes", $elapsed);
           $pct_complete = "100%";
-          print "Verifying no data is on drive...\n";
+          print loc("Verifying no data is on drive...")."\n";
           my $bytes_checked = 0;
-          open(my $FILE, "/dev/$target") or print "Could not read from device!\n";
+          $msg = loc("Could not read from device!");
+          open(my $FILE, "/dev/$target") or print "$msg\n";
           binmode($FILE);
           while ( ($bytes_checked<=32768) && (read($FILE, my $byte, 1)) ) {
-            print "Verifying char $bytes_checked on $target: ".ord($byte)."\n";
+            $msg = loc("Verifying char [_1] on [_2]: [_3].",$bytes_checked,$target,ord($byte));
+            print "$msg"."\n";
             if (ord($byte)!=0) {
-              print "*** Data found on drive!\n";
-              $PROGRESS{$target}{'status'} = "Reset failed: Drive still contains data";
+              $msg = loc("Data found on drive!");
+              print "*** $msg\n";
+              $PROGRESS{$target}{'status'} = loc("Reset failed: Drive still contains data");
               $PROGRESS{$target}{'error'} = 1;
             }
             $bytes_checked++;
           }
           close($FILE);
           if ($bytes_checked==0) {
-            $PROGRESS{$target}{'status'} = "Reset failed: Could not verify reset";
+            $PROGRESS{$target}{'status'} = loc("Reset failed: Could not verify reset");
             $PROGRESS{$target}{'error'} = 1;
           }
         }
         $PROGRESS{$target}{'done'} = TRUE;
       }
     }
-    if ((defined($dev_estimate)) && ($dev_estimate eq '0')) { $dev_estimate = 'Unknown'; } else { $dev_estimate .= " minutes"; }
+    if ((defined($dev_estimate)) && ($dev_estimate eq '0')) { $dev_estimate = loc('Unknown'); } else { $dev_estimate .= loc(" minutes"); }
     if ($PROGRESS{$target}{'done'}) { $pct_complete = 'DONE'; }
     if ($PROGRESS{$target}{'error'}) { $pct_complete = 'ERROR'; }
     push @{$slist->{data}}, [ $target, $drives{$target}{'dev_desc'}, $drives{$target}{'id_serial_short'}, $drives{$target}{'dev_size'}, $drives{$target}{'id_bus'}, $dev_estimate, $pct_complete, $PROGRESS{$target}{'status'} ];
@@ -341,18 +401,22 @@ sub update_progress {
     refresh_window();
     final_cleanup();
     $progress_bar->set_fraction(1);
-    $progress_bar->set_text("100% Complete");
-    $builder->get_object('cancel_button')->set_label('Exit');
+    $msg = loc("100% Complete");
+    $progress_bar->set_text($msg);
+    $msg = loc("Exit");
+    $builder->get_object('cancel_button')->set_label($msg);
     refresh_window();
     beeper('done');
-    message_box("Drive reset complete. Restart your computer before writing any information to the target drives.");
+    $msg = loc("Drive reset complete. Restart your computer before writing any information to the target drives.");
+    message_box($msg);
   } else {
     # Pulse the progress bar
-    $progress_bar->set_text("Please wait...");
+    $msg = loc("Please wait...");
+    $progress_bar->set_text($msg);
     $progress_bar->pulse();
   }
   refresh_window();
-  print "Progress:";
+  print loc("Progress:");
   print Dumper(\%PROGRESS);
   if (!$PROGRESS{'done'}) { return TRUE; } else { return FALSE; }
 }
@@ -361,12 +425,13 @@ sub final_cleanup {
   # Make sure all the drives are unlocked and no passwords are set
   our @targets;
   our %PROGRESS;
-  print "Confirming that all drives are unlocked.\n";
+  print loc("Confirming that all drives are unlocked.")."\n";
   foreach my $target (@targets) {
     if ($PROGRESS{$target}{'error'}) {
-      message_box("Device $target was not reset: ".$PROGRESS{$target}{'status'}, 'warning');
+      $msg = loc("Device [_1] was not reset: [_2]",$target,$PROGRESS{$target}{'status'});
+      message_box($msg, 'warning');
     }
-    print "Checking device $target:\n";
+    print loc("Checking device [_1]", $target)."\n";
     sleep(1);
     `udevadm trigger`;
     sleep(3);
@@ -374,10 +439,10 @@ sub final_cleanup {
     print Dumper($details);
     # Is drive locked or password set?
     if (($$details{'id_ata_feature_set_security_level'} eq 'high') || ($$details{'id_ata_feature_set_security_locked'} eq '1')) {
-      print "Reset completed on $target, but drive remains locked. Attempting to unlock drive...\n";
+      print loc("Reset completed on [_1], but drive remains locked. Attempting to unlock drive...",$target)."\n";
       if (!TEST_MODE) { `hdparm --user-master u --security-disable RESET /dev/$target`; }
       # Get the drive's current status
-      print "Refreshing status of device $target...\n";
+      print loc("Refreshing status of device [_1]...",$target)."\n";
       print "*** udevadm trigger\n";
       `udevadm trigger`;
       sleep(3);
@@ -385,10 +450,11 @@ sub final_cleanup {
       # Is drive locked and password set?
       if (($$details{'id_ata_feature_set_security_level'} eq 'high') || ($$details{'id_ata_feature_set_security_locked'} eq '1')) {
         beeper('warning');
-        message_box("Could not disable security mode for device $target.  You may need to run the 'hdparm --security-disable' command before this drive can be used.", 'warning');
+        $msg = loc("Could not disable security mode for device [_1].  You may need to run the 'hdparm --security-disable' command before this drive can be used.", $target);
+        message_box($msg, 'warning');
       }
     } else {
-      print "Device $target is unlocked.\n";
+      print loc("Device [_1] is unlocked.",$target)."\n";
     }
     # If the drive is unlocked, see if there are HPA sectors that could be freed
     if (($$details{'id_ata_feature_set_security_level'} ne 'high') && ($$details{'id_ata_feature_set_security_locked'} ne '1')) {
@@ -398,21 +464,25 @@ sub final_cleanup {
       my $sector_diff = $sectors_real - $sectors_visible;
       if ($sector_diff > 0) {
         my $sector_mb = int($sector_diff/2048);
-        print "Device $target has $sector_mb MB allocated to HPA.\n";
+        print loc("Device [_1] has [_2] MB allocated to HPA.",$target,$sector_mb)."\n";
         my $result = '';
-        my $response = get_confirmation("Would you like to attempt to free ".$sector_mb."MB of host-protected area (HPA) on this hard drive?");
+        $msg = loc("Would you like to attempt to free [_1]MB of host-protected area (HPA) on this hard drive?",$sector_mb);
+        my $response = get_confirmation($msg);
         if (($response eq 'yes') && (!TEST_MODE)) {
           $result = `hdparm -N p$sectors_real /dev/$target 2>&1`;
+          $msg = loc("Command executed. Response:\n\n[_1]",$result);
           message_box("Command executed. Response:\n\n$result");
         }
-        $response = get_confirmation("Would you like to attempt to restore the manufacturer's device configuration (DCO) on this hard drive?");
+        $msg = loc("Would you like to attempt to restore the manufacturer's device configuration (DCO) on this hard drive?");
+        $response = get_confirmation("$msg");
         if (($response eq 'yes') && (!TEST_MODE)) {
           $result = `hdparm --yes-i-know-what-i-am-doing --dco-restore /dev/$target 2>&1`;
-          message_box("Command executed. Response:\n\n$result");
+          $msg = loc("Command executed. Response:\n\n[_1]",$result);
+          message_box($msg);
         }
       }
     } else {
-      print "Device $target does not have any HPA space to recover.\n";
+      print loc("Device [_1] does not have any HPA space to recover.",$target)."\n";
     }
   }
 }
@@ -452,7 +522,7 @@ sub target_changed {
   @targets = get_target_list('target_drives');
   foreach my $dev (@targets) {
     if ((defined($drives{$dev}{'id_ata_feature_set_security_frozen'})) && ($drives{$dev}{'id_ata_feature_set_security_frozen'} eq '1')) {
-      print "Drive $dev selected but currently frozen.\n";
+      print loc("Drive [_1] selected but currently frozen.",$dev)."\n";
       $next_enabled = FALSE;
     }
   }
@@ -489,9 +559,10 @@ sub set_busy {
 sub show_busy_bar {
   # Show a pulsing progress bar
   my $message = $_[0];
-  if (!defined($message)) { $message = "Please wait..."; }
+  my $please_wait_msg = loc("Please wait...");
+  if (!defined($message)) { $message = $please_wait_msg; }
   my $parent = our $builder->get_object('main_app');
-  our $busy_bar = Gtk2::Dialog->new('Please Wait...', $parent,
+  our $busy_bar = Gtk2::Dialog->new($please_wait_msg, $parent,
     'destroy-with-parent',
     'gtk-cancel' => 'none'
   );
@@ -522,7 +593,7 @@ sub refresh_window {
 sub get_confirmation {
   # Get confirmation from a yes/no dialog
   our $builder;
-  my $question = "Are you sure?";
+  my $question = loc("Are you sure?");
   if (defined($_[0])) { $question = $_[0]; }
   my $dialog = Gtk2::MessageDialog->new($builder->get_object('main_app'),
     'destroy-with-parent',
@@ -547,21 +618,30 @@ sub message_box {
 
 sub set_drive_list {
   # Get all physical drives (not partitions)
-  set_busy("Reading status for each drive...");
+  $msg = loc("Reading status for each drive...");
+  set_busy($msg);
   our %drives = get_drive_list();
   our @targets;
   if (keys(%drives)==0) { fatal_crash('Could not locate any partitions on your computer.'); }
   my $tv = our $builder->get_object($_[0]);
+  my $device_heading = loc("Device");
+  my $reset_heading = loc("Reset?");
+  my $desc_heading = loc("Description");
+  my $sn_heading = loc("Serial Number");
+  my $drive_size_heading = loc("Drive Size");
+  my $connection_heading = loc("Connection");
+  my $time_estimate_heading = loc("Time Estimate");
+  my $status_heading = loc("Status");
   my $slist = Gtk2::SimpleList->new_from_treeview(
     $tv,
-    'Device'          => 'text',
-    'Reset?'          => 'bool',
-    'Description'     => 'text',
-    'Serial Number'   => 'text',
-    'Drive Size'      => 'text',
-    'Connection'      => 'text',
-    'Time Estimate'   => 'text',
-    'Status'          => 'text',
+    $device_heading          => 'text',
+    $reset_heading           => 'bool',
+    $desc_heading            => 'text',
+    $sn_heading              => 'text',
+    $drive_size_heading      => 'text',
+    $connection_heading      => 'text',
+    $time_estimate_heading   => 'text',
+    $status_heading          => 'text',
   );
   my $dev = '';
   for $dev (sort keys %drives) {
@@ -571,9 +651,13 @@ sub set_drive_list {
     my $dev_desc = $drives{$dev}{'dev_desc'};
     my $dev_serial = $drives{$dev}{'id_serial_short'};
     my $dev_estimate = $drives{$dev}{'id_ata_feature_set_security_erase_unit_min'};
-    if ((defined($dev_estimate)) && ($dev_estimate eq '0')) { $dev_estimate = 'Unknown'; } else { $dev_estimate .= " minutes"; }
+    my $unknown = loc("Unknown");
+    my $minutes = loc(" minutes");
+    if ((defined($dev_estimate)) && ($dev_estimate eq '0')) { $dev_estimate = $unknown; } else { $dev_estimate .= $minutes; }
     my $dev_status = $drives{$dev}{'id_ata_feature_set_security_frozen'};
-    if ((defined($dev_status)) && ($dev_status eq '1')) { $dev_status = 'FROZEN'; } else { $dev_status = 'READY'; }
+    my $frozen = loc("FROZEN");
+    my $ready = loc("READY");
+    if ((defined($dev_status)) && ($dev_status eq '1')) { $dev_status = $frozen; } else { $dev_status = $ready; }
     if ((defined($drives{$dev}{'id_ata_feature_set_security_locked'})) && ($drives{$dev}{'id_ata_feature_set_security_locked'} eq '1')) { $dev_status = 'LOCKED'; }
     if ((defined($drives{$dev}{'id_ata_feature_set_security'})) && ($drives{$dev}{'id_ata_feature_set_security'} eq '1')) {
       # This drive is capable of being reset
@@ -657,7 +741,7 @@ sub get_drivenum_partnum {
 sub fatal_crash {
   # Crash out with a fatal error message
   my $parent = our $builder->get_object('main_app');
-  my $message = $_[0].chr(13).chr(13)."Unable to continue. The program will now exit.";
+  my $message = $_[0].chr(13).chr(13).loc("Unable to continue. The program will now exit.");
   my $dialog = Gtk2::MessageDialog->new($parent, 'modal', 'error', 'cancel', $message);
   beeper('error');
   $dialog->run;
@@ -681,7 +765,8 @@ sub on_main_app_destroy {
   our $PROGRESS;
   if (defined($PROGRESS)) { close($PROGRESS); }
   Gtk2->main_quit();
-  die("Exiting.\n");
+  $msg = loc("Exiting");
+  die("$msg.\n");
 }
 
 sub suspend_power {
