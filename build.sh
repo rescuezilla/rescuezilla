@@ -96,6 +96,7 @@ cd ..
 rsync --archive src/livecd/ $BUILD_DIRECTORY
 
 LANG_CODES=(
+    "fr"
 )
 for lang in "${LANG_CODES[@]}"; do
     BASE="$BUILD_DIRECTORY/chroot/usr/share/locale/$lang/LC_MESSAGES/"

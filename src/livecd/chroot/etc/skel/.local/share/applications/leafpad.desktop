@@ -47,3 +47,4 @@ Categories=GTK;Utility;TextEditor;
 Icon[en_US]=/usr/share/icons/gnome/32x32/apps/accessories-text-editor.png
 Name[en_US]=Text Editor
 Name=Text Editor
+Name[fr]=Editeur de texte

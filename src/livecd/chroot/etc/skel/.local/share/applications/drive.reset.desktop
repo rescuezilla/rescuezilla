@@ -6,6 +6,7 @@ Type=Application
 Terminal=false
 Icon[en_US]=gdu-unmountable
 Name[en_US]=Drive Reset
+Name[fr]=Reset Disque
 Exec=drivereset
 Comment[en_US]=Reset a hard drive to factory defaults
 Name=Drive Reset

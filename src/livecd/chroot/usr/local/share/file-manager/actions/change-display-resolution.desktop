@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Action
 Name=Display resolution and layout
+Name[fr]=ARandR
 Profiles=profile-zero;
 Icon=preferences-desktop-display
 

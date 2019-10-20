@@ -12,22 +12,22 @@ msgstr ""
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 msgid "Warning!"
-msgstr ""
+msgstr "Attention!"
 
 msgid "Step 1: Select Target Drives"
-msgstr ""
+msgstr "Etape 1: Sélectionnez les disques cibles"
 
 msgid "Step 2: Confirm Drive Reset"
-msgstr ""
+msgstr "Etape 2: Confirmez l'effacement"
 
 msgid "Step 3: Factory Reset Drives"
-msgstr ""
+msgstr "Etape 3: Réinitialise à l'état usine"
 
 msgid "Preparing to reset device [_1]"
 msgstr ""
@@ -98,7 +98,7 @@ msgid "Unable to reset drive: Password could not be set"
 msgstr ""
 
 msgid "Drive is ready to be reset"
-msgstr ""
+msgstr "Le disque est prêt à être réinitialisé"
 
 msgid "Calculating time estimate for completion"
 msgstr ""
@@ -123,28 +123,28 @@ msgid "Resetting..."
 msgstr ""
 
 msgid "Device"
-msgstr ""
+msgstr "Disque"
 
 msgid "Description"
 msgstr ""
 
 msgid "Serial Number"
-msgstr ""
+msgstr "N° de série"
 
 msgid "Drive Size"
-msgstr ""
+msgstr "Taille"
 
 msgid "Connection"
 msgstr ""
 
 msgid "Estimate"
-msgstr ""
+msgstr "Estimé"
 
 msgid "Percent"
 msgstr ""
 
 msgid "Status"
-msgstr ""
+msgstr "Statut"
 
 msgid "About [_1] minute"
 msgstr ""
@@ -189,7 +189,7 @@ msgid "100% Complete"
 msgstr ""
 
 msgid "Exit"
-msgstr ""
+msgstr "Quitter"
 
 msgid ""
 "Drive reset complete. Restart your computer before writing any information "
@@ -197,7 +197,7 @@ msgid ""
 msgstr ""
 
 msgid "Please wait..."
-msgstr ""
+msgstr "Veuillez patienter..."
 
 msgid "Progress:"
 msgstr ""
@@ -253,25 +253,25 @@ msgid "Drive [_1] selected but currently frozen."
 msgstr ""
 
 msgid "Are you sure?"
-msgstr ""
+msgstr "Êtes-vous sûr?"
 
 msgid "Reading status for each drive..."
 msgstr ""
 
 msgid "Reset?"
-msgstr ""
+msgstr "Effacer?"
 
 msgid "Time Estimate"
-msgstr ""
+msgstr "Temps estimé"
 
 msgid "FROZEN"
-msgstr ""
+msgstr "FIGE"
 
 msgid "READY"
-msgstr ""
+msgstr "PRET"
 
 msgid "Unable to continue. The program will now exit."
-msgstr ""
+msgstr "Impossible de continuer. Le programme vamaintenant s'arrêter."
 
 msgid "Exiting"
 msgstr ""

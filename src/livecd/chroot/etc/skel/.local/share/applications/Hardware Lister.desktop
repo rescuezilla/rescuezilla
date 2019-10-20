@@ -2,10 +2,12 @@
 Categories=;
 Comment=Provides information on hardware
 Comment[ca]=Proveeix informació sobre el maquinari
+Comment[fr]=Fourni des informations sur le matériel
 Exec=lshw-gtk
 Hidden=false
 Icon=lshw-gtk
 Icon[en_US]=/usr/share/icons/gnome-colors-common/scalable/apps/hardinfo.svg
 Name=Hardware Lister
+Name[fr]=Informations matériel
 Terminal=false
 Type=Application
