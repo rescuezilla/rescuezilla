@@ -50,13 +50,13 @@ apt-get upgrade --yes
 apt-get install --yes --no-install-recommends discover \
                                               laptop-detect \
                                               os-prober \
-                                              linux-generic \
+                                              linux-generic-hwe-18.04 \
                                               casper \
                                               lupin-casper \
                                               xinit \
                                               openbox \
                                               obconf \
-                                              xserver-xorg \
+                                              xserver-xorg-hwe-18.04 \
                                               x11-xserver-utils \
                                               xterm \
                                               network-manager-gnome \

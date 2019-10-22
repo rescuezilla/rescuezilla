@@ -125,8 +125,8 @@ rm chroot/root/.bash_history
 rm chroot/chroot.steps.part.1.sh chroot/chroot.steps.part.2.sh
 
 mkdir -p image/casper image/isolinux image/install
-cp chroot/boot/vmlinuz-4.15.*-generic image/casper/vmlinuz
-cp chroot/boot/initrd.img-4.15.*-generic image/casper/initrd.lz
+cp chroot/boot/vmlinuz-*-generic image/casper/vmlinuz
+cp chroot/boot/initrd.img-*-generic image/casper/initrd.lz
 cp /usr/lib/syslinux/modules/bios/vesamenu.c32 \
    /usr/lib/ISOLINUX/isolinux.bin \
    /usr/lib/syslinux/modules/bios/ldlinux.c32 \
