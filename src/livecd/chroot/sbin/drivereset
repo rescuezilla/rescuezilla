@@ -33,10 +33,10 @@ use Fcntl qw(F_GETFL F_SETFL O_NONBLOCK);
 use constant TEST_MODE     => FALSE;
 use constant DATA_DIR      => "/usr/share/redo/";
 use constant GLADE_UI      => "drivereset.glade";
-use constant RESET_STEPS   => ( "Warning!",
-                                "Step 1: Select Target Drives",
-                                "Step 2: Confirm Drive Reset",
-                                "Step 3: Factory Reset Drives" );
+my @RESET_STEPS   =  ( "Warning!",
+                       "Step 1: Select Target Drives",
+                       "Step 2: Confirm Drive Reset",
+                       "Step 3: Factory Reset Drives" );
 
 
 ##### Main code ########################################################
@@ -54,7 +54,7 @@ sub main {
   $window = $builder->get_object('main_app');
   $builder->connect_signals(undef);
   $builder->get_object('main_tabs')->set_show_tabs(FALSE);
-  set_subtitle((RESET_STEPS)[0]);
+  set_subtitle($RESET_STEPS[0]);
   $window->show();
   Gtk2->main();
 }
@@ -65,7 +65,7 @@ sub reset_step {
   if (!defined($step)) { $step = 1; }
   our $builder;
   $step = $builder->get_object('main_tabs')->get_current_page()+1;
-  set_subtitle((RESET_STEPS)[$step-1]);
+  set_subtitle($RESET_STEPS[$step-1]);
   if ($step == 1) {
     # Reset Step 1
     $builder->get_object('next_button')->set_sensitive(TRUE);
