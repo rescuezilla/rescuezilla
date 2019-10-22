@@ -805,6 +805,10 @@
       <application name="pcmanfm">
           <maximized>false</maximized>
       </application>
+      <!-- GParted including 'Applying pending operations' window -->
+      <application name="gpartedbin">
+          <maximized>false</maximized>
+      </application>
 
   </applications>
 </openbox_config>
