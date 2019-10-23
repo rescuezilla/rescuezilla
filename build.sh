@@ -95,6 +95,29 @@ chroot chroot/ /bin/bash /chroot.steps.part.1.sh
 cd ..
 rsync --archive src/livecd/ $BUILD_DIRECTORY
 
+LANG_CODES=(
+)
+for lang in "${LANG_CODES[@]}"; do
+    BASE="$BUILD_DIRECTORY/chroot/usr/share/locale/$lang/LC_MESSAGES/"
+    pushd $BASE
+    # Convert *.ko text-based GTK translations into *.mo.
+    APP_NAMES=(
+        "redobackup"
+        "drivereset"
+        "graphical-shutdown"
+    )
+    for app_name in "${APP_NAMES[@]}"; do
+        msgfmt --output-file="$app_name.mo" "$app_name.ko"
+        if [[ $? -ne 0 ]]; then
+            echo "Error: Unable to convert $app_name's $lang translation from text-based ko format to binary mo format."
+            exit 1
+        fi
+        # Remove unused *.ko file
+        rm "$app_name.ko"
+    done
+    popd
+done
+
 SUBSTITUTIONS=(
     # Redo Backup and Recovery perl script
     "$BUILD_DIRECTORY/chroot/usr/share/redo/VERSION"
