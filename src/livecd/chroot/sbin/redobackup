@@ -114,6 +114,9 @@ sub main {
   our $builder;
   my $window;
   $builder = Gtk2::Builder->new();
+  # Load translations to strings in the Glade file.
+  print("Setting GTK translation domain to load files from eg, /usr/share/locale/".$lang_code."/LC_MESSAGES/redobackup.mo\n");
+  $builder->set_translation_domain("redobackup");
   $builder->add_from_file(DATA_DIR.GLADE_UI);
   $window = $builder->get_object('main_app');
   $builder->connect_signals(undef);
