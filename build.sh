@@ -126,13 +126,27 @@ rm chroot/chroot.steps.part.1.sh chroot/chroot.steps.part.2.sh
 
 mkdir -p image/casper image/isolinux image/install
 cp chroot/boot/vmlinuz-*-generic image/casper/vmlinuz
+if [[ $? -ne 0 ]]; then
+    echo "Error: Failed to copy vmlinuz image."
+    exit 1
+fi
+
 cp chroot/boot/initrd.img-*-generic image/casper/initrd.lz
+if [[ $? -ne 0 ]]; then
+    echo "Error: Failed to copy initrd image."
+    exit 1
+fi
+
 cp /usr/lib/syslinux/modules/bios/vesamenu.c32 \
    /usr/lib/ISOLINUX/isolinux.bin \
    /usr/lib/syslinux/modules/bios/ldlinux.c32 \
    /usr/lib/syslinux/modules/bios/libcom32.c32 \
    /usr/lib/syslinux/modules/bios/libutil.c32 \
    image/isolinux/
+if [[ $? -ne 0 ]]; then
+    echo "Error: Failed to copy ISOLINUX files."
+    exit 1
+fi
 cp /boot/memtest86+.bin image/install/memtest
 
 # Create manifest
