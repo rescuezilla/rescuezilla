@@ -66,6 +66,7 @@ apt-get install --yes --no-install-recommends discover \
                                               pcmanfm \
                                               gvfs \
                                               chromium-browser \
+                                              chromium-browser-l10n \
                                               bluebird-gtk-theme \
                                               gnome-icon-theme \
                                               gnome-brave-icon-theme \
