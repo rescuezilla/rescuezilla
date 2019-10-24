@@ -176,7 +176,7 @@ After attempting to unfreeze a drive, click &lt;b&gt;Refresh&lt;/b&gt; to see it
                             <property name="spacing">10</property>
                             <child>
                               <object class="GtkButton" id="btnSuspend">
-                                <property name="label">Suspend Power</property>
+                                <property name="label" translatable="yes">Suspend Power</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
