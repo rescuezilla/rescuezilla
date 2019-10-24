@@ -9,14 +9,20 @@
 # [2] https://sourceforge.net/p/yad-dialog/wiki/Examples/
 # [3] https://www.systutorials.com/docs/linux/man/1-yad/
 
+end_session=$(gettext "graphical-shutdown" "End Session")
+cancel=$(gettext "graphical-shutdown" "Cancel")
+shutdown=$(gettext "graphical-shutdown" "Shutdown")
+reboot=$(gettext "graphical-shutdown" "Reboot")
+choose_action=$(gettext "graphical-shutdown" "Choose action.")
+
 yad --center \
     --width 300 \
-    --title "End Session" \
+    --title="$end_session" \
     --image=gnome-shutdown \
-    --button="Cancel:0" \
-    --button="Shutdown:1" \
-    --button="Reboot:2" \
-    --text "Choose action."
+    --button="$cancel:0" \
+    --button="$shutdown:1" \
+    --button="$reboot:2" \
+    --text "$choose_action"
 
 ret=$?
 
