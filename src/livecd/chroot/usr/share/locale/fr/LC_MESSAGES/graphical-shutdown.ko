@@ -1,0 +1,20 @@
+msgid ""
+msgstr ""
+"Language: fr\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "End Session"
+msgstr "Quitter la session"
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "Shutdown"
+msgstr "Arrêter"
+
+msgid "Reboot"
+msgstr "Redémarrer"
+
+msgid "Choose action."
+msgstr "Choisir une option"
