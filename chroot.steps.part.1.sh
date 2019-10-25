@@ -125,7 +125,8 @@ apt-get install --yes --no-install-recommends discover \
                                               wget \
                                               fsarchiver \
                                               partclone \
-                                              language-pack-gnome-fr-base
+                                              language-pack-gnome-fr-base \
+                                              language-pack-gnome-de-base
 
 # Create empty config file for the network-manager service to manage all
 # network devices. This is required for nm-applet to display network devices,
