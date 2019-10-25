@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Action
 Name=Open current directory in terminal
+Name[fr]=Terminal
 Profiles=profile-zero;
 Icon=utilities-terminal
 

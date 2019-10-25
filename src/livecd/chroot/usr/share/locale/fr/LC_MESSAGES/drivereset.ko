@@ -1,0 +1,103 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-10-25 20:31+1030\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "/dev/sdx"
+msgstr ""
+
+msgid "Drive Reset Utility"
+msgstr "Utilitaire d'effacement de disque"
+
+msgid "Step"
+msgstr "Etape"
+
+msgid ""
+"<b>WARNING!  This utility will permanently delete all data on your hard "
+"drive and reset it to factory defaults.</b>\n"
+"\n"
+"Each target drive must be UNFROZEN. One way to achieve this is by "
+"disconnecting and reconnecting the power cable to your drive, but "
+"manufacturers warn against this due to risks of electric shock and hardware "
+"damage.\n"
+"\n"
+"<b>PROCEED AT YOUR OWN RISK!</b>"
+msgstr "<b>ATTENTION! Cet utilitaire effacera de façon définitive toutes les "
+"données de votre disque dur et le réinitialisera dans sa configuration d'usine.</b>\n"
+"\n"
+"Chaque disque cible doit être marqué PRET. Une façon d'y parvenir est de "
+"déconnecter et reconnecter le câble d'alimentation de votre disque, mais les fabricants "
+"ne le recommandent pas en raison des risques de chocs électriques pouvant entraîner des "
+"dégâts matériels.\n"
+"\n"
+"<b>VOUS ETES AVERTI DES RISQUES DE CETTE OPERATION!</b>"
+
+msgid "Warning!"
+msgstr "Attention !"
+
+msgid ""
+"Please select the drives you wish to reset. Each targeted drive must be "
+"marked READY to proceed.\n"
+"\n"
+"If a drive is marked FROZEN, you may be able to unfreeze it by suspending "
+"the computer, or by carefully disconnecting and reconnecting the drive's "
+"power cable.\n"
+"\n"
+"After attempting to unfreeze a drive, click <b>Refresh</b> to see its status."
+msgstr ""
+"Veuillez sélectionner les disques à effacer. Chaque disque cible doit être "
+"marqué PRET pour que l'opération puisse se faire.\n"
+"\n"
+"Si un disque est marqué FIGE, vous pouvez le débloquer en suspendant "
+"l'alimentation, ou en déconnectant et reconnectant avec précaution le "
+"câble d'alimentation du disque.\n"
+"\n"
+"Après avoir tenté de débloquer un disque, cliquer sur <b>Actualiser</b> pour voir son statut."
+
+msgid "Suspend Power"
+msgstr "Suspendre l'alimentation"
+
+msgid "Step 1"
+msgstr "Etape 1"
+
+msgid ""
+"This is your last chance to cancel.\n"
+"\n"
+"<b>If you proceed, all data on the target drives will be permanently and "
+"irretrievably destroyed!</b>\n"
+"\n"
+"Selected drives will be reset simultaneously.  The process will finish when "
+"all targeted drives have been reset."
+msgstr "C'est votre dernière possibilité d'abandon.\n"
+"\n"
+"<b>Si vous poursuivez, toutes les données des disques cibles seront définitivement perdues sans possibilité de les récupérer !</b>"
+"\n"
+"Les disques sélectionnés seront effacés simultanément. Le processus prendra fin quand tous les disques cibles seront effacés."
+
+msgid "Step 2"
+msgstr "Etape 2"
+
+msgid ""
+"Resetting the selected drives.  Please be patient.  Secure erase can take 2 "
+"or more hours to complete."
+msgstr "Réinitialisation des disques sélectionnés. Veuillez patienter. L'effacement complet peut demander 2 heures ou plus."
+
+msgid "Step 3"
+msgstr "Etape 3"
+
+msgid "Next >"
+msgstr "Suivant >"

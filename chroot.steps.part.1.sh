@@ -124,7 +124,8 @@ apt-get install --yes --no-install-recommends discover \
                                               smbclient \
                                               wget \
                                               fsarchiver \
-                                              partclone
+                                              partclone \
+                                              language-pack-gnome-fr-base
 
 # Create empty config file for the network-manager service to manage all
 # network devices. This is required for nm-applet to display network devices,

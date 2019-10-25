@@ -1,0 +1,428 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-10-25 20:31+1030\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Step 1: Select Source Drive"
+msgstr "Etape 1: Choix de la source"
+
+msgid "Step 2: Select Partitions to Save"
+msgstr "Etape 2: Choix des partitions à sauvegarder"
+
+msgid "Step 3: Select Destination Drive"
+msgstr "Etape 3: Sélectionnez la destination de la sauvegarde"
+
+msgid "Step 4: Select Destination Folder"
+msgstr "Etape 4: Sélectionnez le répertoire de sauvegarde"
+
+msgid "Step 5: Name Your Backup"
+msgstr "Etape 5: Donnez un nom à votre sauvegarde"
+
+msgid "Creating Backup Image"
+msgstr "Création de la sauvegarde"
+
+msgid "Step 1: Select Backup Drive"
+msgstr "Etape 1: Sélectionnez le périphérique source"
+
+msgid "Step 2: Select Backup Image"
+msgstr "Etape 2: Sélectionnez l'image à restaurer"
+
+msgid "Step 3: Select Drive To Restore"
+msgstr "Etape 3: Sélectionnez le disque à restaurer"
+
+msgid "Restoring From Backup"
+msgstr "Restauration à partir d'une sauvegarde"
+
+msgid "Step 1: Select Destination Drive"
+msgstr "Etape 1: Sélectionnez le périphérique de destination"
+
+msgid "Step 2: Install to USB Drive"
+msgstr "Etape 2: Installation sur la clé USB"
+
+msgid "Welcome to Redo"
+msgstr "Bienvenue dans Redo"
+
+msgid ""
+"Many other tools are available from the Start menu in the bottom left corner"
+msgstr "Beaucoup d'autres outils sont disponibles à partir du menu principal accessible dans l'angle en bas à gauche"
+
+msgid "Backup"
+msgstr "Sauvegarde"
+
+msgid ""
+"Could not access the destination drive. If the device is shared on a "
+"network, ensure that the username and password you provided are correct and "
+"try again."
+msgstr "Impossible d'accéder au disque de destination. Si le périphérique est partagé sur un réseau, assurez-vous que le nom d'utilisateur et le mot de passe sont corrects et essayez à nouveau."
+
+msgid ""
+"Warning! This drive has only [_1]MB of free space. Make sure your backup "
+"will fit."
+msgstr "Attention! Ce disque a seulement [_1]MB d'espace libre. Assurez-vous que cela sera suffisant pour votre sauvegarde."
+
+msgid "Backup [_1] to [_2]"
+msgstr "Sauvegarde [_1] vers [_2]"
+
+msgid "MBR and partition table of [_1] saved to [_2]"
+msgstr "MBR et table de partitions de [_1] sauvés sur [_2]"
+
+msgid "Size of [_1] ([_2] bytes) saved to [_3]"
+msgstr "Taille de [_1] ([_2] bytes) sauvé sur [_3]"
+
+msgid "Partition list saved to [_1]"
+msgstr "Liste des partitions sauvées sur [_1]"
+
+msgid "Total partitions to save: [_1]"
+msgstr "Nombre de partitions à sauver : [_1]"
+
+msgid "Total bytes to save: [_1]"
+msgstr "Taille totale de la sauvegarde : [_1]"
+
+msgid "Preparing to create backup of Drive [_1], Part [_2]..."
+msgstr "Préparation de la sauvegarde du disque [_1], Partition [_2]..."
+
+msgid "Processing [_1] ([_2]) using [_3]..."
+msgstr "Processus [_1] ([_2]) en cours [_3]"
+
+msgid "Executing: "
+msgstr "Exécute : "
+
+msgid "Starting to clone [_1]"
+msgstr "Démarrage de la sauvegarde [_1]"
+
+msgid "List of partitions:"
+msgstr "Liste des partitions :"
+
+msgid "(Processing)"
+msgstr "(En cours)"
+
+msgid "Device size: [_1]"
+msgstr "Taille du périphérique : [_1]"
+
+msgid "Space in use: [_1]"
+msgstr "Espace utilisé : [_1]"
+
+msgid "Warning: [_1]"
+msgstr "Attention: [_1]"
+
+msgid "Reading super block"
+msgstr "Lecture des informations du disque"
+
+msgid "Reading super block for Drive [_1], Part [_2]..."
+msgstr "Lecture des infromations du disque [_1], Partition [_2]..."
+
+msgid "Calculating bitmap"
+msgstr ""
+
+msgid "Calculating bitmap for Drive [_1], Part [_2]..."
+msgstr "Calcul de la taille de l'image pour le disque [_1], Partition [_2]..."
+
+msgid "Reading bitmap for part [_1] of [_2]"
+msgstr "Lecture des informations pour la partition [_1] de [_2]"
+
+msgid "Calculating bitmap progress: [_1]% Remaining: [_2]"
+msgstr "Calcul du temps de lecture: [_1]% Restant: [_2]"
+
+#, perl-format
+msgid "Reading bitmap for Drive [_1], Part [_2] ([_3]% done, [_4] remaining)"
+msgstr "Lecture de l'image pour le disque [_1], partition [_2] ([_3]% done, [_4] remaining)"
+
+msgid "Elapsed: *[_1]* | Remaining: *[_2]* | Percent: *[_3]* | Speed: *[_4]*"
+msgstr "Passé: *[_1]* | Restant: *[_2]* | Percent: *[_3]* | Speed: *[_4]*"
+
+msgid ""
+"Part [_1] of [_2] ([_3]%)\n"
+"[_4] Elapsed\n"
+"[_5] Remaining"
+msgstr "Partition [_1] de [_2] ([_3]%)\n"
+"[_4] Passé\n"
+"[_5] Restant"
+
+msgid "Saving part [_1] ([_2]) at [_3] ([_4] free space)"
+msgstr "Sauve la partition [_1] ([_2]) at [_3] ([_4] free space)"
+
+msgid "Drive: [_1] | Partition: [_2] | Current bytes: [_3] | Overall: [_4]"
+msgstr "Disque : [_1] | Partition: [_2] | Current bytes: [_3] | Overall: [_4]"
+
+msgid "[_1]% Complete"
+msgstr "[_1]% Complet"
+
+msgid "Partition completed."
+msgstr "Partition sauvée."
+
+msgid "Partition [_1] completed."
+msgstr "Partition [_1] complet."
+
+msgid "Current part: [_1]"
+msgstr ""
+
+msgid "Total parts: [_1]"
+msgstr "Nombre de partitions : [_1]"
+
+msgid "Backup complete."
+msgstr "Sauvegarde terminée."
+
+msgid "Exit"
+msgstr "Quitter"
+
+msgid "Backup image saved in [_1] minutes."
+msgstr "Sauvegarde faite en [_1] minutes"
+
+msgid "Backup saved successfully."
+msgstr "Sauvegarde réalisée avec succès."
+
+msgid "Select a Folder"
+msgstr "Sélectionner un répertoire"
+
+msgid "Cancel"
+msgstr "Abandon"
+
+msgid "Save Here"
+msgstr "Sauver ici"
+
+msgid "You must select a folder inside [_1]"
+msgstr "Vous devez sélectionner un dossier dans [_1]"
+
+msgid "Please select a different folder."
+msgstr "Veuillez choisir un autre dossier."
+
+msgid "Restore"
+msgstr ""
+
+msgid ""
+"Could not access the source drive. If the device is shared on a network, "
+"ensure that the username and password you provided are correct and try again."
+msgstr "Accès impossible au disque source. Si le périphérique est partagé sur un réseau, assurez-vous que le nom d'utilisateur et le mot de passe sont corrects et essayez à nouveau."
+
+msgid "Preparing destination drive..."
+msgstr "Préparation du disque de destination..."
+
+msgid "Comparing [_1] to [_2]..."
+msgstr "Compare [_1] à [_2]..."
+
+msgid ""
+"Are you sure you want to restore the backup to the same drive the source "
+"image is located on?\n"
+"\n"
+"Unless you know what you are doing, this will result in loss of all data on "
+"the drive, including the backup image!"
+msgstr "Etes-vous sûr de vouloir restaurer l'image sur le  disque où se trouve l'image source ?\n"
+"\n"
+"Sauf si vous savez ce que vous faites, cela se traduira par la perte de toutes les données sur le disque, y compris l'image de sauvegarde!"
+
+msgid "Aborting."
+msgstr ""
+
+msgid ""
+"The drive you are attempting to restore to is [_1] MB smaller than the "
+"original. You must restore to a drive that is the same size or larger than "
+"the original."
+msgstr ""
+
+msgid "Could not read from [_1]! Aborting."
+msgstr ""
+
+msgid ""
+"Are you sure you want to restore the backup to /dev/[_1]? Doing so will "
+"permanently overwrite the data on this drive!"
+msgstr "Êtes-vous sûr de vouloir restaurer l'image sur /dev/[_1]? Ceci réécrira les données de façon définitive sur ce disque!"
+
+msgid "Writing MBR to [_1]"
+msgstr ""
+
+msgid "Writing master boot record to destination drive..."
+msgstr ""
+
+msgid "Restoring partition table to [_1]"
+msgstr ""
+
+msgid "Writing extended partition table to destination drive..."
+msgstr ""
+
+msgid "Reloading partition table from [_1]"
+msgstr ""
+
+msgid "Reloading new partition table from destination drive..."
+msgstr ""
+
+msgid "Verifying that /dev/[_1] exists and can be restored to: "
+msgstr ""
+
+msgid "OK"
+msgstr ""
+
+msgid "FAIL"
+msgstr ""
+
+msgid ""
+"The partition table did not restore properly. The backup image may contain "
+"all your data, but without a valid partition table, no data can be restored."
+msgstr "La table des partitions n'a pas été restaurée correctement. L'image de sauvegarde peut contenir toutes vos données, mais sans table de partitions valide les données ne peuvent être restaurées."
+
+msgid "Device [_1][_2] is [_3] bytes..."
+msgstr ""
+
+msgid "Restoring [_1] total bytes of partitioned space."
+msgstr ""
+
+msgid "Preparing to restore backup for Drive [_1], Part [_2]..."
+msgstr "Préparation de la restauration du disque [_1], partition [_2]..."
+
+msgid "Processing [_1] using [_2]..."
+msgstr "Processus [_1] en cours [_2]..."
+
+msgid "Starting to restore [_1]"
+msgstr ""
+
+msgid "Warning: "
+msgstr "Attention: "
+
+msgid "Reading super block:"
+msgstr ""
+
+msgid ""
+"(RESTORE) Elapsed: *[_1]* | Remaining: *[_2]* | Percent: *[_3]* | Speed: "
+"*[_4]*"
+msgstr "(RESTORE) Ecoulé: *[_1]* | Restant: *[_2]* | Pourcentage: *[_3]* | Vitesse: *[_4]*"
+
+msgid "Restoring part [_1] ([_2]) at [_3]"
+msgstr ""
+
+msgid "(BITMAP) Elapsed: *[_1]* | Remaining: *[_2]* | Percent: *[_3]*"
+msgstr "(BITMAP) Ecoulé: *[_1]* | Restant: *[_2]* | Pourcentage: *[_3]*"
+
+msgid "Operation completed successfully."
+msgstr ""
+
+msgid "Rewriting master boot record to destination drive..."
+msgstr ""
+
+msgid "Operation complete."
+msgstr ""
+
+msgid "Restore complete."
+msgstr ""
+
+msgid "Backup restored in [_1] minutes."
+msgstr "Sauvegarde restaurée en [_1] minutes."
+
+msgid "Backup restored successfully."
+msgstr "Sauvegarde restaurée avec succès."
+
+msgid "Backed up [_1] of [_2] total bytes."
+msgstr ""
+
+msgid "Advancing to next partition."
+msgstr ""
+
+msgid "Are you sure?"
+msgstr "Êtes-vous sûr?"
+
+msgid "Ready"
+msgstr ""
+
+msgid "Done."
+msgstr ""
+
+msgid "Please wait..."
+msgstr "Veuillez patienter..."
+
+msgid "Unable to continue. The program will now exit."
+msgstr "Impossible de continuer. Le programme vamaintenant s'arrêter."
+
+msgid "Fatal Error:"
+msgstr ""
+
+msgid "Could not open [_1] for writing!"
+msgstr ""
+
+msgid ""
+"The device type '[_1]' is not valid.  Did you forget to select a backup "
+"location?"
+msgstr "Le dispositif [_1] is not valid.  N'auriez-vous pas oublié de sélectionner une source de sauvegarde?"
+
+msgid "Getting list of drives..."
+msgstr ""
+
+msgid "Could not locate any drives attached to your computer."
+msgstr ""
+
+msgid "No drives available."
+msgstr ""
+
+msgid "Could not locate any partitions on your computer."
+msgstr ""
+
+msgid "Drive [_1]"
+msgstr "Disque [_1]"
+
+msgid ", Part [_1]"
+msgstr ", partition [_1]"
+
+msgid "Omitting backup source [_1] from destination list"
+msgstr ""
+
+msgid "FTP server [_1]"
+msgstr ""
+
+msgid "Shared folder [_1] on [_2]"
+msgstr "Dossier partagé [_1] sur [_2]"
+
+msgid "Shared folder specified below"
+msgstr "Dossier partagé indiqué ci-dessous"
+
+msgid "FTP server specified below"
+msgstr "Serveur FTP indiqué ci-dessous"
+
+msgid "Part"
+msgstr "Partition"
+
+msgid "Save"
+msgstr "Sauvegarder"
+
+msgid "Description"
+msgstr ""
+
+msgid "Obtaining partitions for drives..."
+msgstr "Recherche des répertoires partagés sur le réseau..."
+
+msgid "Unknown size"
+msgstr ""
+
+msgid "Drive [_1], Part [_2]"
+msgstr "Disque [_1], partition [_2]"
+
+msgid "Part [_1]"
+msgstr "partition [_1]"
+
+msgid "Drive [_1] ([_2]): [_3]"
+msgstr "Disque [_1] ([_2]): [_3]"
+
+msgid "Drive [_1] ([_2]): USB [_3]"
+msgstr "Disque [_1] ([_2]): USB [_3]"
+
+msgid "Identifying disk drives..."
+msgstr "Identification des disques..."
+
+msgid "Searching network for shared drives..."
+msgstr "Recherche des répertoires partagés sur le réseau..."
+
+msgid "Free space: [_1]"
+msgstr ""
+
+msgid " bytes"
+msgstr ""
