@@ -12,55 +12,56 @@ msgstr ""
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 msgid "Backup and Restore Utility"
 msgstr ""
 
 msgid "Welcome"
-msgstr ""
+msgstr "Willkommen"
 
 msgid ""
 "Easily create a backup image of your computer, or completely restore from "
 "one.  Click an option to begin:"
-msgstr ""
+msgstr "Ermöglicht das einfache Erstellen eines Backups oder die Wiederherstellung Ihres Computersystems.\n\n"
+"Klicken Sie auf eine der Optionen, um zu beginnen:"
 
 msgid "Backup"
 msgstr ""
 
 msgid "Restore"
-msgstr ""
+msgstr "Wiederherstellung"
 
 msgid ""
 "Click on the box below to select the source drive that you would like to "
 "create a backup image from."
-msgstr ""
+msgstr "Wählen Sie im unten stehenden Feld, das Laufwerk (Quell- Laufwerk), von dem Sie ein Backup- Image erstellen möchten."
 
 msgid "Step 1"
-msgstr ""
+msgstr "Schritt 1"
 
 msgid ""
 "Select which parts of the drive to create a backup of.  Leave all parts "
 "selected if you are unsure."
-msgstr ""
+msgstr "Wählen Sie, von welchen Partitionen des Laufwerks, ein Backup erstellt werden soll. Wählen Sie im Zweifelsfall alle Teile aus."
 
 msgid "Step 2"
-msgstr ""
+msgstr "Schritt 2"
 
 msgid "Connected directly to my computer"
-msgstr ""
+msgstr "Direkt an meinen Computer angeschlossen"
 
 msgid "Shared over a network"
-msgstr ""
+msgstr "Über das Netzwerk verbunden"
 
 msgid "Where is the destination drive?"
-msgstr ""
+msgstr "Wo befindet sich das Ziel- Laufwerk?"
 
 msgid "Select destination drive:"
-msgstr ""
+msgstr "Ziel- Laufwerk wählen:"
 
 msgid "Search network"
 msgstr ""
@@ -81,7 +82,7 @@ msgid "Select network-shared storage destination:"
 msgstr ""
 
 msgid "Step 3"
-msgstr ""
+msgstr "Schritt 3"
 
 msgid ""
 "Click <b>Browse</b> to select or create a folder on the destination drive "
@@ -89,78 +90,81 @@ msgid ""
 "\n"
 "The folder a backup is saved in is usually a description of the computer, e."
 "g. <b>office1</b> or <b>zack-laptop</b>."
-msgstr ""
+msgstr "Klicken Sie auf  Durchsuchen oder erstellen Sie einen Ordner, auf dem Ziel- Laufwerk, in welchem Ihr Backup- Image gespeichert werden soll. "
+"Wählen Sie für die Bezeichnung des Ordners z.B MeinPC oder Pauls-Laptop."
 
 msgid "Browse..."
-msgstr ""
+msgstr "Durchsuchen"
 
 msgid "Step 4"
-msgstr ""
+msgstr "Schritt 4"
 
 msgid ""
 "Provide a unique name for this backup image, such as the date.  Today's date "
 "is automatically entered for you below.\n"
 "\n"
 "You may only use letters, numbers, and dashes in your backup name."
-msgstr ""
+msgstr "Geben Sie einen eindeutigen Namen für das Backup- Image ein. (z.B. , wie vorgeschlagen, das aktuelle Datum)\n"
+"\n"
+"Sie dürfen nur Buchstaben, Zahlen und Bindestriche in Ihrem Backup- Namen verwenden!"
 
 msgid "Step 5"
-msgstr ""
+msgstr "Schritt 5"
 
 msgid ""
 "Backing up your system to the location you selected.  This may take an hour "
 "or more depending on the speed of your computer and the amount of data."
-msgstr ""
+msgstr "Ihr Computersystem wird nun am ausgewählten Ort gesichert. Dies könnte durchaus eine Stunde oder sogar länger dauern.(abhängig von der Geschwindigkeit Ihres Computers und der Datenmenge)"
 
 msgid "Time Elapsed / Remaining: "
-msgstr ""
+msgstr "verstrichen Zeit / Restzeit: "
 
 msgid "Step 6"
-msgstr ""
+msgstr "Schritt 6"
 
 msgid "Cancel"
-msgstr ""
+msgstr "Abbrechen"
 
 msgid "Next >"
-msgstr ""
+msgstr "Weiter >"
 
 msgid "Where is the source drive?"
-msgstr ""
+msgstr "Wo befindet sich das Quell- Laufwerk?"
 
 msgid "Select source drive:"
-msgstr ""
+msgstr "Quell- Laufwerk wählen:"
 
 msgid "Select network-shared storage source:"
 msgstr ""
 
 msgid "Click the box below to select the image file to restore from."
-msgstr ""
+msgstr "Wählen Sie im unten stehenden Feld, die Backup- Image Datei, von welcher Sie die Wiederherstellung durchführen möchten."
 
 msgid "Select Backup Image"
-msgstr ""
+msgstr "Backup Image auswählen"
 
 msgid ""
 "Select the destination drive you wish to overwrite and restore the selected "
 "image to."
-msgstr ""
+msgstr "Wählen Sie das Ziel- Laufwerk, welches mit Hilfe der ausgewählte Backup- Image Datei, wieder hergestellt werden soll. Alle evtl. vorhandenen Daten des Ziel- Laufwerkes werden hierbei gelöscht!"
 
 msgid ""
 "Restoring your system from the image you selected.  This may take an hour or "
 "more depending on the speed of your computer and the amount of data."
-msgstr ""
+msgstr "Ihr Computersystem wird nun von der ausgewählten Backup- Image Datei wieder hergestellt. Dies könnte durchaus eine Stunde oder sogar länger dauern.(abhängig von der Geschwindigkeit Ihres Computers und der Datenmenge)"
 
 msgid ""
 "Click on the box below to select the USB drive (at least 128MB) you want to "
 "install to. "
-msgstr ""
+msgstr "Wählen Sie im unten stehenden Feld, das USB-Laufwerk (mindestens 128 MB), auf welches installiert werden soll."
 
 msgid ""
 "Installing the software to the selected USB drive.  This will take "
 "approximately three minutes."
-msgstr ""
+msgstr "Installation der Software erfolgt auf das ausgewählte USB-Laufwerk. (Dauer ca. 3 Minuten) "
 
 msgid "USB Installer"
 msgstr ""
 
 msgid "Select an Option"
-msgstr ""
+msgstr "Bitte Option wählen"

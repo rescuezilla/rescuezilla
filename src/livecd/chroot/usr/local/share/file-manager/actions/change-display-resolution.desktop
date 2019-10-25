@@ -2,6 +2,7 @@
 Type=Action
 Name=Display resolution and layout
 Name[fr]=ARandR
+Name[de]=Bildschirmeinstellungen
 Profiles=profile-zero;
 Icon=preferences-desktop-display
 

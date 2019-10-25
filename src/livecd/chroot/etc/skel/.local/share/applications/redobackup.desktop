@@ -9,5 +9,6 @@ Name[en_US]=Redo Backup & Recovery
 Exec=redobackup
 Comment[en_US]=System backup and restore utility
 Name=Redo Backup & Recovery
+Name[de]=Redo Backup und Recovery
 Comment=System backup and restore utility
 Icon=redo-icon
