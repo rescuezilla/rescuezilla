@@ -18,6 +18,16 @@ Redo can be booted on any PC or Mac from a USB stick, or CD, and uses the exact 
 * File explorer for copying and editing files even if system won't boot
 * Based on Ubuntu and partclone
 
+## Supported Languages
+
+Redo has been translated into the following languages:
+
+* English
+* Français
+* Deutsch
+
+Redo is being active developed and is _not_ accepting any additional translations at this stage.
+
 ## Screenshots
 
 <a href="docs/images/screenshot.select.an.option.jpeg"><img width=245 height=183 src="docs/images/screenshot.select.an.option.jpeg" alt="Provides browser access even if you can't log into your PC"></a>
