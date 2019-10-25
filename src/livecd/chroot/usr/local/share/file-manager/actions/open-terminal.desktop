@@ -2,6 +2,7 @@
 Type=Action
 Name=Open current directory in terminal
 Name[fr]=Terminal
+Name[de]=Befehlszeile verwenden
 Profiles=profile-zero;
 Icon=utilities-terminal
 
