@@ -1,0 +1,83 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-10-25 20:36+1030\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "/dev/sdx"
+msgstr ""
+
+msgid "Drive Reset Utility"
+msgstr ""
+
+msgid "Step"
+msgstr ""
+
+msgid ""
+"<b>WARNING!  This utility will permanently delete all data on your hard "
+"drive and reset it to factory defaults.</b>\n"
+"\n"
+"Each target drive must be UNFROZEN. One way to achieve this is by "
+"disconnecting and reconnecting the power cable to your drive, but "
+"manufacturers warn against this due to risks of electric shock and hardware "
+"damage.\n"
+"\n"
+"<b>PROCEED AT YOUR OWN RISK!</b>"
+msgstr ""
+
+msgid "Warning!"
+msgstr ""
+
+msgid ""
+"Please select the drives you wish to reset. Each targeted drive must be "
+"marked READY to proceed.\n"
+"\n"
+"If a drive is marked FROZEN, you may be able to unfreeze it by suspending "
+"the computer, or by carefully disconnecting and reconnecting the drive's "
+"power cable.\n"
+"\n"
+"After attempting to unfreeze a drive, click <b>Refresh</b> to see its status."
+msgstr ""
+
+msgid "Suspend Power"
+msgstr ""
+
+msgid "Step 1"
+msgstr ""
+
+msgid ""
+"This is your last chance to cancel.\n"
+"\n"
+"<b>If you proceed, all data on the target drives will be permanently and "
+"irretrievably destroyed!</b>\n"
+"\n"
+"Selected drives will be reset simultaneously.  The process will finish when "
+"all targeted drives have been reset."
+msgstr ""
+
+msgid "Step 2"
+msgstr ""
+
+msgid ""
+"Resetting the selected drives.  Please be patient.  Secure erase can take 2 "
+"or more hours to complete."
+msgstr ""
+
+msgid "Step 3"
+msgstr ""
+
+msgid "Next >"
+msgstr ""

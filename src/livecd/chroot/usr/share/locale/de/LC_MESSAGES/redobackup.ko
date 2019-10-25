@@ -1,0 +1,166 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-10-25 20:36+1030\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Backup and Restore Utility"
+msgstr ""
+
+msgid "Welcome"
+msgstr ""
+
+msgid ""
+"Easily create a backup image of your computer, or completely restore from "
+"one.  Click an option to begin:"
+msgstr ""
+
+msgid "Backup"
+msgstr ""
+
+msgid "Restore"
+msgstr ""
+
+msgid ""
+"Click on the box below to select the source drive that you would like to "
+"create a backup image from."
+msgstr ""
+
+msgid "Step 1"
+msgstr ""
+
+msgid ""
+"Select which parts of the drive to create a backup of.  Leave all parts "
+"selected if you are unsure."
+msgstr ""
+
+msgid "Step 2"
+msgstr ""
+
+msgid "Connected directly to my computer"
+msgstr ""
+
+msgid "Shared over a network"
+msgstr ""
+
+msgid "Where is the destination drive?"
+msgstr ""
+
+msgid "Select destination drive:"
+msgstr ""
+
+msgid "Search network"
+msgstr ""
+
+msgid "Server or share location:"
+msgstr ""
+
+msgid "Username (Optional):"
+msgstr ""
+
+msgid "Password (Optional):"
+msgstr ""
+
+msgid "Domain (Optional):"
+msgstr ""
+
+msgid "Select network-shared storage destination:"
+msgstr ""
+
+msgid "Step 3"
+msgstr ""
+
+msgid ""
+"Click <b>Browse</b> to select or create a folder on the destination drive "
+"where your new backup image will be saved.\n"
+"\n"
+"The folder a backup is saved in is usually a description of the computer, e."
+"g. <b>office1</b> or <b>zack-laptop</b>."
+msgstr ""
+
+msgid "Browse..."
+msgstr ""
+
+msgid "Step 4"
+msgstr ""
+
+msgid ""
+"Provide a unique name for this backup image, such as the date.  Today's date "
+"is automatically entered for you below.\n"
+"\n"
+"You may only use letters, numbers, and dashes in your backup name."
+msgstr ""
+
+msgid "Step 5"
+msgstr ""
+
+msgid ""
+"Backing up your system to the location you selected.  This may take an hour "
+"or more depending on the speed of your computer and the amount of data."
+msgstr ""
+
+msgid "Time Elapsed / Remaining: "
+msgstr ""
+
+msgid "Step 6"
+msgstr ""
+
+msgid "Cancel"
+msgstr ""
+
+msgid "Next >"
+msgstr ""
+
+msgid "Where is the source drive?"
+msgstr ""
+
+msgid "Select source drive:"
+msgstr ""
+
+msgid "Select network-shared storage source:"
+msgstr ""
+
+msgid "Click the box below to select the image file to restore from."
+msgstr ""
+
+msgid "Select Backup Image"
+msgstr ""
+
+msgid ""
+"Select the destination drive you wish to overwrite and restore the selected "
+"image to."
+msgstr ""
+
+msgid ""
+"Restoring your system from the image you selected.  This may take an hour or "
+"more depending on the speed of your computer and the amount of data."
+msgstr ""
+
+msgid ""
+"Click on the box below to select the USB drive (at least 128MB) you want to "
+"install to. "
+msgstr ""
+
+msgid ""
+"Installing the software to the selected USB drive.  This will take "
+"approximately three minutes."
+msgstr ""
+
+msgid "USB Installer"
+msgstr ""
+
+msgid "Select an Option"
+msgstr ""
