@@ -55,7 +55,6 @@ apt-get install --yes --no-install-recommends discover \
                                               lupin-casper \
                                               xinit \
                                               openbox \
-                                              obconf \
                                               xserver-xorg-hwe-18.04 \
                                               xserver-xorg-video-vesa-hwe-18.04 \
                                               x11-xserver-utils \
