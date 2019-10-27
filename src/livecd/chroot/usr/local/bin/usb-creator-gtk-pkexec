@@ -1,0 +1,2 @@
+#!/bin/sh
+pkexec "/usr/bin/usb-creator-gtk" "$@"

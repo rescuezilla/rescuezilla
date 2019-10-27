@@ -231,7 +231,7 @@ Keywords[zh_HK]=storage;space;cleanup;儲存區;空間;清理;
 Keywords[zh_TW]=storage;space;cleanup;儲存區;空間;清理;
 Keywords=storage;space;cleanup;
 TryExec=baobab
-Exec=baobab
+Exec=baobab-pkexec
 # Translators: Do NOT translate or transliterate this text (this is an icon file name)!
 Icon[ar]=baobab
 Icon[be]=baobab

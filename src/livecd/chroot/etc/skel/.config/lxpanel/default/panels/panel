@@ -40,7 +40,7 @@ Plugin {
     item {
       name=Shutdown
       image=gnome-logout
-      action=/usr/sbin/graphical-shutdown.sh
+      action=/usr/sbin/graphical-shutdown-pkexec
     }
   }
 }

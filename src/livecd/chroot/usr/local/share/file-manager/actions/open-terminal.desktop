@@ -9,5 +9,5 @@ Icon=utilities-terminal
 [X-Action-Profile profile-zero]
 MimeTypes=inode/directory;
 # Not using /usr/bin/x-terminal-emulator here, as the argument is non-portable.
-Exec=/usr/bin/lxterminal --working-directory=%f
+Exec=/usr/local/bin/lxterminal-pkexec --working-directory=%f
 Name=Default profile

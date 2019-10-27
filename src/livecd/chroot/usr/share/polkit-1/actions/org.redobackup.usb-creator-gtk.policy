@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE policyconfig PUBLIC "-//freedesktop//DTD PolicyKit Policy Configuration 1.0//EN"
+ "http://www.freedesktop.org/standards/PolicyKit/1/policyconfig.dtd">
+<policyconfig>
+
+    <vendor>Redo Backup and Recovery</vendor>
+    <vendor_url>http://redobackup.org/</vendor_url>
+    <icon_name>usb-creator-gtk</icon_name>
+    <action id="org.redobackup.usb-creator-gtk">
+
+        <description gettext-domain="redobackup">Run usb-creator-gtk as root</description>
+        <message gettext-domain="redobackup">Authentication is required to run usb-creator-gtk as root</message>
+        <defaults>
+            <allow_any>auth_admin</allow_any>
+            <allow_inactive>auth_admin</allow_inactive>
+            <allow_active>auth_admin</allow_active>
+        </defaults>
+        <annotate key="org.freedesktop.policykit.exec.path">/usr/bin/usb-creator-gtk</annotate>
+        <annotate key="org.freedesktop.policykit.exec.allow_gui">true</annotate>
+
+    </action>
+
+</policyconfig>

@@ -2,7 +2,7 @@
 Name=Startup Disk Creator
 GenericName=Startup Disk Creator
 Comment=Create a startup disk using a CD or disc image
-Exec=usb-creator-gtk
+Exec=usb-creator-gtk-pkexec
 Icon=usb-creator-gtk
 Terminal=false
 Type=Application

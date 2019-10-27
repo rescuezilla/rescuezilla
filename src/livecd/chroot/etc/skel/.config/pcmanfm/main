@@ -1,5 +1,5 @@
 [General]
-terminal=x-terminal-emulator
+terminal=lxterminal-pkexec
 
 [Window]
 [Desktop]
