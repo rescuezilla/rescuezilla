@@ -805,10 +805,33 @@
       <application name="pcmanfm">
           <maximized>false</maximized>
       </application>
-      <!-- GParted including 'Applying pending operations' window -->
-      <application name="gpartedbin">
+      <!-- GParted including 'Apply operations to device', 'Applying pending operations' window -->
+      <application name="gpartedbin" title="Apply*">
           <maximized>false</maximized>
       </application>
-
+      <!-- Do not maximize redobackup's loading bar -->
+      <application name="*" title="Please wait...">
+          <maximized>false</maximized>
+      </application>
+      <!-- Do not maximize alsamixergui -->
+      <application class="*" title="ALSA Mixer">
+          <maximized>false</maximized>
+      </application>
+      <application name="nm-connection-editor">
+          <maximized>false</maximized>
+      </application>
+       <application name="gpicview">
+          <maximized>false</maximized>
+      </application>
+      <application name="leafpad">
+          <maximized>false</maximized>
+      </application>
+      <application name="lshw-gtk">
+          <maximized>false</maximized>
+      </application>
+      <application name="usb-creator-gtk">
+          <maximized>false</maximized>
+      </application>
+ 
   </applications>
 </openbox_config>
