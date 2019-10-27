@@ -129,6 +129,16 @@ apt-get install --yes --no-install-recommends discover \
                                               language-pack-gnome-fr-base \
                                               language-pack-gnome-de-base
 
+# Install the packages that have custom configuration files managed in the
+# source tree, and use non-interactive conflict resolution to choose those
+# configuration files, not package maintainer's versions.  The non-interactive
+# conflict resolutions means its the responsibility of the of the build script
+# maintainer to periodically ensure the version-controlled configuration file
+# hasn't does not become too old and out-of-date compared to the package
+# maintainer's version.
+#
+apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install --yes slim
+
 # Create empty config file for the network-manager service to manage all
 # network devices. This is required for nm-applet to display network devices,
 # and avoid it displaying a "device not managed" error. [1]

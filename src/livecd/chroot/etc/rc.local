@@ -14,7 +14,4 @@
 # Set the time to the local hardware clock
 hwclock -s --localtime --noadjfile
 
-# Start X
-su root -c startx
-
 exit 0
