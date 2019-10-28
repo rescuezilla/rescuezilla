@@ -120,6 +120,12 @@
         <Exclude>
             <Filename>lshw-gtk.desktop</Filename>
         </Exclude>
+        <Exclude>
+            <Filename>org.gnome.baobab.desktop</Filename>
+        </Exclude>
+        <Exclude>
+            <Filename>org.gnome.baobab-pkexec.desktop</Filename>
+        </Exclude>
     </Menu>
     <Layout>
        <Merge type="menus"/>
