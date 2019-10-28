@@ -76,6 +76,12 @@
         <Exclude>
             <Filename>org.gnome.DiskUtility.desktop</Filename>
         </Exclude>
+        <Exclude>
+            <Filename>debian-uxterm.desktop</Filename>
+        </Exclude>
+        <Exclude>
+            <Filename>debian-xterm.desktop</Filename>
+        </Exclude>
     </Menu>
     <Menu>
         <Name>Internet</Name>
@@ -105,6 +111,12 @@
         </Exclude>
         <Exclude>
             <Filename>chromium-browser.desktop</Filename>
+        </Exclude>
+        <Exclude>
+            <Filename>debian-uxterm.desktop</Filename>
+        </Exclude>
+        <Exclude>
+            <Filename>debian-xterm.desktop</Filename>
         </Exclude>
     </Menu>
     <Layout>
