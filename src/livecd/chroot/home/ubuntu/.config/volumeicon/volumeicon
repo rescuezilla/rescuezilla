@@ -8,7 +8,7 @@ notification_type=0
 
 [StatusIcon]
 stepsize=5
-onclick=xterm -e 'alsamixer'
+onclick=alsamixergui
 theme=Default
 use_panel_specific_icons=false
 reverse_scroll_direction=false
