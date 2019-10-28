@@ -134,9 +134,6 @@ for file in "${SUBSTITUTIONS[@]}"; do
     sed --in-place s/GIT-COMMIT-DATE-SUBSTITUTED-BY-BUILD-SCRIPT/${GIT_COMMIT_DATE}/g $file
 done
 
-# Copy the menus and other preferences to the root user's home directory
-rsync --archive src/livecd/chroot/etc/skel/ $BUILD_DIRECTORY/chroot/root/
-
 # Enter chroot again
 cd $BUILD_DIRECTORY
 chroot chroot/ /bin/bash /chroot.steps.part.2.sh
