@@ -424,12 +424,14 @@ sub update_backup_progress {
   # See if the filehandle is open
   if (!defined($PROGRESS)) {
     # No command is being executed
-    my $tool = which_backup_tool($fs);
+    my $tool = "";
+    my $extra_args = "";
+    ($tool, $extra_args) = &which_backup_tool($fs);
     set_status(loc("Preparing to create backup of Drive [_1], Part [_2]...",$dn, $pn));
     print "*** ".loc("Processing [_1] ([_2]) using [_3]...",$part,$fs,$tool)."\n";
     system("umount /dev/$part 2>&1");
-    print "*** Executing: ( $tool -c -F -L /$dest/$file"."_part$pn"."_partclone.log -s /dev/$part | gzip -c --fast | split -d -a 3 -b 2048m - /$dest/$file"."_part$pn. ) 2>&1 |\n";
-    open $PROGRESS, "( $tool -c -F -L /$dest/$file"."_part$pn"."_partclone.log -s /dev/$part | gzip -c --fast | split -d -a 3 -b 2048m - /$dest/$file"."_part$pn. ) 2>&1 |";
+    print "*** Executing: ( $tool $extra_args -F -L /$dest/$file"."_part$pn"."_partclone.log -s /dev/$part | gzip -c --fast | split -d -a 3 -b 2048m - /$dest/$file"."_part$pn. ) 2>&1 |\n";
+    open $PROGRESS, "( $tool $extra_args -F -L /$dest/$file"."_part$pn"."_partclone.log -s /dev/$part | gzip -c --fast | split -d -a 3 -b 2048m - /$dest/$file"."_part$pn. ) 2>&1 |";
     sleep(0.5);
     return TRUE;
   } else {
@@ -1197,6 +1199,7 @@ sub which_backup_tool {
   # Determine which backup tool to call based on the FS type
   my $fs = $_[0];
   my $tool = "partclone.";
+  my $args = " -c ";
   if ($fs =~ m/ext/) {
     $tool .= "extfs";
   } elsif ($fs =~ m/fat/) {
@@ -1219,8 +1222,9 @@ sub which_backup_tool {
     $tool .= "xfs";
   } else {
     $tool .= "dd";
+    $args = "";
   }
-  return $tool;
+  return ($tool, $args);
 }
 
 sub mount_data {
