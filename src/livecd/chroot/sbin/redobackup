@@ -297,7 +297,7 @@ sub do_backup {
   $src_drive = "/dev/".$src_drive;
   # Save MBR
   system("dd if=$src_drive of=$dest/$file.mbr bs=32768 count=1");
-  system("sfdisk -dx $src_drive > $dest/$file.sfdisk");
+  system("sfdisk -d $src_drive > $dest/$file.sfdisk");
   print "\t* ".loc("MBR and partition table of [_1] saved to [_2]",$src_drive,$dest)."\n";
   # Save size of source drive in blocks
   my $bd = `fdisk -l $src_drive | grep '$src_drive:'`;
@@ -730,12 +730,12 @@ sub do_restore {
   sleep(0.5);  
   print "*** ".loc("Restoring partition table to [_1]",$dest_drive)."\n";
   set_status(loc("Writing extended partition table to destination drive..."));
-  system("sfdisk -fx /dev/$dest_drive < $src_sfdisk; sync");
+  system("sfdisk -f /dev/$dest_drive < $src_sfdisk; sync");
   sleep(0.5);
   print "*** ".loc("Reloading partition table from [_1]",$dest_drive)."\n";
   set_status(loc("Reloading new partition table from destination drive..."));
   system("umount /mnt/$dest_drive?* 2>&1");
-  system("sfdisk -R /dev/$dest_drive");
+  system("blockdev --rereadpt /dev/$dest_drive");
   sleep(1);
   $status{'start'} = time();
   $status{'part_list'} = \@partlist;
