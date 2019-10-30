@@ -430,8 +430,9 @@ sub update_backup_progress {
     set_status(loc("Preparing to create backup of Drive [_1], Part [_2]...",$dn, $pn));
     print "*** ".loc("Processing [_1] ([_2]) using [_3]...",$part,$fs,$tool)."\n";
     system("umount /dev/$part 2>&1");
-    print "*** Executing: ( $tool $extra_args -F -L /$dest/$file"."_part$pn"."_partclone.log -s /dev/$part | gzip -c --fast | split -d -a 3 -b 2048m - /$dest/$file"."_part$pn. ) 2>&1 |\n";
-    open $PROGRESS, "( $tool $extra_args -F -L /$dest/$file"."_part$pn"."_partclone.log -s /dev/$part | gzip -c --fast | split -d -a 3 -b 2048m - /$dest/$file"."_part$pn. ) 2>&1 |";
+    my $backup_cmd = "( $tool $extra_args -F -L /$dest/$file"."_part$pn"."_partclone.log -s /dev/$part | gzip -c --fast | split -d -a 3 -b 2048m - /$dest/$file"."_part$pn. ) 2>&1 |";
+    print "*** ".loc("Executing: ")."$backup_cmd\n";
+    open $PROGRESS, "$backup_cmd";
     sleep(0.5);
     return TRUE;
   } else {
@@ -878,8 +879,9 @@ sub update_restore_progress {
     print "*** ".loc("Processing [_1] using [_2]...","$dest_drive$pn",$tool)."\n";
     system("umount /dev/$dest_drive$pn 2>&1");
     system("umount /dev/$part 2>&1");
-    print "*** ".loc("Executing: ")."( cat /$src"."_part$pn.* | pigz -d -c | $tool -F -L /partclone.log -O /dev/$dest_drive$pn ) 2>&1 |\n";
-    open $PROGRESS, "( cat /$src"."_part$pn.* | pigz -d -c | $tool -F -L /partclone.log -O /dev/$dest_drive$pn ) 2>&1 |";
+    my $restore_cmd = "( cat /$src"."_part$pn.* | pigz -d -c | $tool -F -L /partclone.log -O /dev/$dest_drive$pn ) 2>&1 |";
+    print "*** ".loc("Executing: ")."$restore_cmd\n";
+    open $PROGRESS, "$restore_cmd";
     sleep(0.5);
     return TRUE;
   } else {
