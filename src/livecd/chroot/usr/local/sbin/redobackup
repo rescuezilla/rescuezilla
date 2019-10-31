@@ -505,7 +505,7 @@ sub update_backup_progress {
       $msg = loc("Reading bitmap for part [_1] of [_2]",$status{'current_part'}+1,$status{'total_parts'});
       $builder->get_object('backup_progress_status')->set_text($msg);
       print ">>> ".loc("Calculating bitmap progress: [_1]% Remaining: [_2]",$pct,$remaining)."\n";
-      set_status(loc("Reading bitmap for Drive [_1], Part [_2] ([_3]% done, [_4] remaining)"),$dn,$pn,$pct,$remaining);
+      set_status(loc("Reading bitmap for Drive [_1], Part [_2] ([_3]% done, [_4] remaining)",$dn,$pn,$pct,$remaining));
     } elsif ($data =~ m/Elapsed.+,$/) {
       # Backup progress line
       $status{'frame'}++;
