@@ -363,7 +363,7 @@ sub do_backup {
   $bytes =~ s/\D//g;
   my $file_size_path = "$dest/$file.size";
   system("echo $bytes > $file_size_path");
-  my $ptab_bytes = max(values partends($ptab));
+  my $ptab_bytes = max(partends($ptab));
   die "fdisk reports smaller drive size $bytes than determined from partition table $ptab_bytes\n" unless $bytes >= $ptab_bytes;
   $bytes = $ptab_bytes;
   system("echo $bytes > $dest/$file.size");
@@ -771,7 +771,7 @@ sub do_restore {
   my $src_fdisk_text = `cat $src_sfdisk`;
   if ('sectors' eq fdisk_units($src_fdisk_text)) {
     print "*** Reading original drive partition table.\n";
-    my $src_bytes_fdisk = max(values partends($src_fdisk_text));
+    my $src_bytes_fdisk = max(partends($src_fdisk_text));
     if ($src_bytes_fdisk > $src_bytes) {
       print "Warning: stored size of original drive $src_bytes is smaller than size calculated from original partition table $src_bytes_fdisk !\n";
     }
