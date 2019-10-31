@@ -530,7 +530,7 @@ sub update_backup_progress {
       $progress_bar->set_fraction($overall_pct);
       $msg = loc("[_1]% Complete", sprintf("%.2f", $overall_pct * 100));
       $progress_bar->set_text($msg);
-    } elsif ($data =~ m/successfully cloned/) {
+    } elsif (($data =~ m/successfully cloned/) || ($data =~ m/Cloned successfully./)) {
       set_status(loc("Partition completed."));
       print ">>> ".loc("Partition [_1] completed.", $status{'current_part_device'})."\n";
       print "\t".loc("Current part: [_1]",$status{'current_part'}+1)."\n";
