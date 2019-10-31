@@ -31,6 +31,7 @@ use Sys::CPU;
 use POSIX qw(locale_h);
 use locale;
 use utf8;
+use Method::Signatures::Simple;
 
 # Load translation
 use constant TRANSLATION_DIR => "/usr/share/redo/translations-redobackup/";
@@ -56,7 +57,6 @@ use constant MOUNT_POINT   => "/mnt/backup";
 use constant DATA_DIR      => "/usr/share/redo/";
 use constant APP_ICON      => DATA_DIR."redobackup-icon.png";
 use constant GLADE_UI      => "redobackup.glade";
-use constant MAX_WIDTH     => 96;
 use constant FS_SUPPORT    => ( "ext2",
                                 "ext3",
                                 "ext4",
@@ -97,6 +97,67 @@ if ($numthreads <= "1") {
 $numthreads = 1;
 }
 
+sub default_share_name {
+    my $share = `cat /etc/redo/share`;
+    chomp $share;
+    return $share;
+}
+
+sub allow_source_overwrite {
+    my $overwrite = not (-e "/etc/redo/no_source_overwrite");
+    return $overwrite;
+}
+
+func max(@values) {
+  if (!@values) { return -INF; }
+  my $max = $values[0];
+  foreach my $val (@values) {
+    if ($val > $max) { $max = $val ; }
+  }
+  return $max;
+}
+
+func fdisk_units($text) {
+  my @matches = ( $text =~ /unit: ([^[:space:]]+)/g );
+  my $count = @matches;
+  if (@matches  < 1) { return undef; }
+  if (@matches == 1) { return $matches[0]; }
+  my $same = 'TRUE'; foreach my $unit (@matches) { $same = ($same and ($unit eq $matches[0])); }
+  if ($same) { return $matches[0]; }
+  else { return undef; }
+}
+
+func parttab($text) {
+  my @text = split("\n", $text);
+  my %parts;
+  foreach my $line (@text) {
+    my @match = ($line =~ /^[[:blank:]]*(\/dev\/[[:alnum:]]+|-)[[:blank:]]+:[[:blank:]]*start=[[:blank:]]*([[:digit:]]+), size=[[:blank:]]*([[:digit:]]+), Id=[[:blank:]]*([[:xdigit:]]+)/);
+    if (@match && $match[3]) {
+      if (((length $match[0]) < 3) || !$match[2]) {
+        print "Error on line: " . $line;
+        print "\n";
+      }
+      my %res = (start => $match[1], length => $match[2], id => hex($match[3]), end => ($match[1]+$match[2]));
+      $parts{$match[0]}= \%res;
+    }
+  }
+  foreach my $part (keys %parts) {
+    print $part . " ";
+    foreach my $val (keys %{$parts{$part}}) {
+      print $val . ": " . ${$parts{$part}}{$val} ."\t";
+    }
+    print  "\n";
+  }
+  return \%parts;
+}
+
+func partends($text) {
+  my %parts = %{parttab($text)};
+  foreach my $part (keys %parts) {
+    $parts{$part} = ${$parts{$part}}{'end'} * 512;
+  }
+  return \%parts;
+}
 
 ##### Test code ########################################################
 #$ARGV[0] = 'restore';
@@ -265,7 +326,7 @@ sub backup_dest_network_changed {
         $server =~ s/\d+$//g;
       } else {
         # It's a manually-entered SMB share
-        $server = "//ADDRESS/FOLDER";
+        $server = default_share_name;
       }
     } else {
       # It's an automatically-found share
@@ -297,14 +358,19 @@ sub do_backup {
   $src_drive = "/dev/".$src_drive;
   # Save MBR
   system("dd if=$src_drive of=$dest/$file.mbr bs=32768 count=1");
-  system("sfdisk -dx $src_drive > $dest/$file.sfdisk");
+  system("sfdisk -d $src_drive > $dest/$file.sfdisk");
+  my $ptab = `sfdisk -d $src_drive`;
+  die "fdisk units must be sectors.\n" unless (fdisk_units($ptab) eq 'sectors');
   print "\t* ".loc("MBR and partition table of [_1] saved to [_2]",$src_drive,$dest)."\n";
   # Save size of source drive in blocks
-  my $bd = `fdisk -l $src_drive | grep '$src_drive:'`;
-  my (undef, $bytes) = split(", ", $bd);
+  my $bytes = `/sbin/blockdev --getsize64 $src_drive`;
   $bytes =~ s/\D//g;
   my $file_size_path = "$dest/$file.size";
-  system("echo $bytes > $file_size_path");  
+  system("echo $bytes > $file_size_path");
+  my $ptab_bytes = max(partends($ptab));
+  die "blockdev reports smaller drive size $bytes than determined from partition table $ptab_bytes\n" unless $bytes >= $ptab_bytes;
+  $bytes = $ptab_bytes;
+  system("echo $bytes > $dest/$file.size");
   print "\t* ".loc("Size of [_1] ([_2] bytes) saved to [_3]",$src_drive,$bytes,$file_size_path)."\n";
   # Save list of partitions we will be backing up
   my @partlist = get_selected_partitions('backup_partitions');
@@ -362,8 +428,8 @@ sub update_backup_progress {
     set_status(loc("Preparing to create backup of Drive [_1], Part [_2]...",$dn, $pn));
     print "*** ".loc("Processing [_1] ([_2]) using [_3]...",$part,$fs,$tool)."\n";
     system("umount /dev/$part 2>&1");
-    print "*** ".loc("Executing: ")."( $tool -c -F -L /partclone.log -s /dev/$part | pigz -p $numthreads -c -3 | split -d -a 3 -b 2048m - /$dest/$file"."_part$pn. ) 2>&1 |\n";
-    open $PROGRESS, "( $tool -c -F -L /partclone.log -s /dev/$part | pigz -p $numthreads -c -3 | split -d -a 3 -b 2048m - /$dest/$file"."_part$pn. ) 2>&1 |";
+    print "*** Executing: ( $tool -c -F -L /$dest/$file"."_part$pn"."_partclone.log -s /dev/$part | gzip -c --fast | split -d -a 3 -b 2048m - /$dest/$file"."_part$pn. ) 2>&1 |\n";
+    open $PROGRESS, "( $tool -c -F -L /$dest/$file"."_part$pn"."_partclone.log -s /dev/$part | gzip -c --fast | split -d -a 3 -b 2048m - /$dest/$file"."_part$pn. ) 2>&1 |";
     sleep(0.5);
     return TRUE;
   } else {
@@ -646,7 +712,7 @@ sub restore_source_network_changed {
         $server =~ s/\d+$//g;
       } else {
         # It's a manually-entered SMB share
-        $server = "//HOST/FOLDER";
+        $server = default_share_name;
       }
     } else {
       # It's an automatically-found share
@@ -696,7 +762,12 @@ sub do_restore {
   $src_drive =~ s/\d//g;
   print loc("Comparing [_1] to [_2]...",$src_drive,$dest_drive)."\n";
   if ($src_drive eq $dest_drive) {
-    my $response = get_confirmation(loc("Are you sure you want to restore the backup to the same drive the source image is located on?\n\nUnless you know what you are doing, this will result in loss of all data on the drive, including the backup image!"));
+    my $response = 'no';
+    if (allow_source_overwrite) {
+      $response = get_confirmation(loc("Are you sure you want to restore the backup to the same drive the source image is located on?\n\nUnless you know what you are doing, this will result in loss of all data on the drive, including the backup image!"));
+    } else {
+      error_message("Not restoring to the source drive!");
+    }
     if ($response ne 'yes') {
       on_main_app_destroy();
       die(loc("Aborting.")."\n");
@@ -706,8 +777,17 @@ sub do_restore {
   my $src_bytes = `cat $src_size`;
   $src_bytes =~ s/\D//g;
   print "*** Size of original drive: $src_bytes bytes\n";
-  my $bd = `fdisk -l /dev/$dest_drive | grep '/dev/$dest_drive:'`;
-  my (undef, $dest_bytes) = split(", ", $bd);
+  my $src_fdisk_text = `cat $src_sfdisk`;
+  if ('sectors' eq fdisk_units($src_fdisk_text)) {
+    print "*** Reading original drive partition table.\n";
+    my $src_bytes_fdisk = max(partends($src_fdisk_text));
+    if ($src_bytes_fdisk > $src_bytes) {
+      print "Warning: stored size of original drive $src_bytes is smaller than size calculated from original partition table $src_bytes_fdisk !\n";
+    }
+    $src_bytes = $src_bytes_fdisk;
+    print "*** Size of original drive (from partition table): $src_bytes bytes\n";
+  }
+  my $dest_bytes = `/sbin/blockdev --getsize64 /dev/$dest_drive`;
   $dest_bytes =~ s/\D//g;
   print "*** Size of destination drive: $dest_bytes bytes\n";
   if ($src_bytes > $dest_bytes) {
@@ -730,12 +810,12 @@ sub do_restore {
   sleep(0.5);  
   print "*** ".loc("Restoring partition table to [_1]",$dest_drive)."\n";
   set_status(loc("Writing extended partition table to destination drive..."));
-  system("sfdisk -fx /dev/$dest_drive < $src_sfdisk; sync");
+  system("sfdisk -f /dev/$dest_drive < $src_sfdisk; sync");
   sleep(0.5);
   print "*** ".loc("Reloading partition table from [_1]",$dest_drive)."\n";
   set_status(loc("Reloading new partition table from destination drive..."));
   system("umount /mnt/$dest_drive?* 2>&1");
-  system("sfdisk -R /dev/$dest_drive");
+  system("blockdev --rereadpt /dev/$dest_drive");
   sleep(1);
   $status{'start'} = time();
   $status{'part_list'} = \@partlist;
@@ -793,7 +873,8 @@ sub update_restore_progress {
     my $tool = "partclone.restore";
     system("umount /mnt/$dest_drive$pn 2>&1; dd if=/dev/zero of=/dev/$dest_drive$pn bs=1K count=1000; sync");
     set_status(loc("Preparing to restore backup for Drive [_1], Part [_2]...",$dn,$pn));
-    print "*** ".loc("Processing [_1] using [_2]...",$part,$tool)."\n";
+    print "*** ".loc("Processing [_1] using [_2]...","$dest_drive$pn",$tool)."\n";
+    system("umount /dev/$dest_drive$pn 2>&1");
     system("umount /dev/$part 2>&1");
     print "*** ".loc("Executing: ")."( cat /$src"."_part$pn.* | pigz -d -c | $tool -F -L /partclone.log -O /dev/$dest_drive$pn ) 2>&1 |\n";
     open $PROGRESS, "( cat /$src"."_part$pn.* | pigz -d -c | $tool -F -L /partclone.log -O /dev/$dest_drive$pn ) 2>&1 |";
@@ -1152,18 +1233,44 @@ sub mount_data {
   for ($status{'mount_type'}) {
     if (/DEV/) {
       # Mount a regular drive
+      my $retcode;
       $status{'mount_source'} =~ s/\|//g;
-      system("mount /dev/$status{'mount_source'} ".MOUNT_POINT);
       print "* ".loc("Executing: ")."mount /dev/$status{'mount_source'} ".MOUNT_POINT."\n";
+      $retcode = system( "mount \Q/dev/$status{'mount_source'}\E ".MOUNT_POINT);
+      if ($retcode != 0) {
+       my $mount;
+       my $mp = MOUNT_POINT;
+       $mount = `grep ^\Q/dev/$status{'mount_source'}\E /proc/mounts`;
+       chomp $mount;
+       $mount = (split( / /, $mount))[1];
+       if ($mount) {
+          print "* Executing: mount --bind \Q${mount}\E ".MOUNT_POINT."\n";
+         system             "mount --bind \Q${mount}\E ".MOUNT_POINT;
+       }
+      }
     } elsif (/SMB/) {
       # Mount a network share
+      my $args;
+      my $tmpfile = '';
       my @smbargs = ();
       if ($status{'mount_user'} ne '') { push(@smbargs, "username=".$status{'mount_user'}); }
       if ($status{'mount_pass'} ne '') { push(@smbargs, "password=".$status{'mount_pass'}); }
-      if ($status{'mount_domain'} ne '') { push(@smbargs, "dom=".$status{'mount_domain'}); }
-      my $args = join(',', @smbargs);
-      if ($args eq '') { $args = "guest"; }
+      if ($status{'mount_domain'} ne '') { push(@smbargs, "domain=".$status{'mount_domain'}); }
+      my $cred = join("\n", @smbargs);
+      if ($cred eq '') { $args = "guest"; }
+      else {
+        $tmpfile = `mktemp`;
+        chomp($tmpfile);
+        open(my $tmpfd, '>', $tmpfile);
+        print $tmpfd "$cred\n";
+        close($tmpfd);
+        $args = "credentials='$tmpfile'";
+        # If the user does not supply password moutnt would try to prompt for
+        # one locking up the application unless guest is specified.
+        if ($status{'mount_pass'} eq '') { $args = "$args,guest"; }
+      }
       system("mount.cifs '$status{'mount_source'}' ".MOUNT_POINT." -o $args");
+      if ($tmpfile ne '') { system(("shred", "-u",  $tmpfile));}
       print "* ".loc("Executing: ")."mount.cifs '$status{'mount_source'}' ".MOUNT_POINT." -o $args\n";
     } elsif (/FTP/) {
       # Mount an FTP server
@@ -1198,7 +1305,6 @@ sub set_drive_dropdown {
   for my $drive (sort keys %drives) {
     $dev = $drives{$drive}{'device'};
     $desc = $drives{$drive}{'desc'};
-    if (length($desc)>MAX_WIDTH+3) { $desc = substr($desc,0,MAX_WIDTH).'...'; }
     if ((defined($_[1])) && ($_[1] eq 'usb')) {
       if ($drives{$drive}{'type'} eq 'usb') {
         $mdl->set($mdl->append, 0, $dev, 1, $desc);
@@ -1249,7 +1355,6 @@ sub set_partition_dropdown {
       if (grep $_ eq $part, @blacklist) {
         print "*** ".loc("Omitting backup source [_1] from destination list",$part)."\n";
       } else {
-        if (length($part_desc)>MAX_WIDTH+3) { $part_desc = substr($part_desc,0,MAX_WIDTH).'...'; }
         $mdl->set($mdl->append, 0, "DEV|$part", 1, $part_desc);
       }
     }
@@ -1277,7 +1382,6 @@ sub set_share_dropdown {
       $share_desc = loc("Shared folder [_1] on [_2]",$folder,$host);
     }
     if ((defined($desc))&&($desc ne '')) { $share_desc .= " ($desc)"; }
-    if (length($share_desc)>MAX_WIDTH+3) { $share_desc = substr($share_desc,0,MAX_WIDTH).'...'; }
     $mdl->set($mdl->append, 0, "$type|$share", 1, $share_desc);
   }
   $mdl->set($mdl->append, 0, "SMB|", 1, loc("Shared folder specified below"));
