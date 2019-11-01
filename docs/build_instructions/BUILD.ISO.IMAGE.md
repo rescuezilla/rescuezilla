@@ -9,7 +9,8 @@ A host system capable of running debootstrap, chroot and bind mounts is required
 Any Debian 10, Ubuntu 18.04, or derivative such as Linux Mint should be able to run the following:
 ```bash
 sudo apt-get update
-sudo apt-get install git-lfs git make rsync sudo debootstrap isolinux syslinux squashfs-tools genisoimage memtest86+ gettext
+sudo apt-get install git-lfs git make rsync sudo debootstrap isolinux syslinux syslinux-utils \
+                     squashfs-tools genisoimage memtest86+ gettext
 git lfs clone https://github.com/redobackup/redobackup
 cd redobackup/
 # sudo privileges required for the chroot bind mount

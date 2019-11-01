@@ -206,7 +206,7 @@ printf $(sudo du -sx --block-size=1 chroot | cut -f1) > image/casper/filesystem.
 cd image
 find . -type f -print0 | xargs -0 md5sum | grep -v "./md5sum.txt" > md5sum.txt
 
-# Create ISO image (part 1/2), with -boot-info-table modifying isolinux.bin with 56-byte "boot information table" # at offset 8 in the file."
+# Create ISO image (part 1/3), with -boot-info-table modifying isolinux.bin with 56-byte "boot information table" # at offset 8 in the file."
 # See `man genisoimage` for more information. This modification invalidates the isolinux.bin md5sum calculated above.
 genisoimage -r \
             -V "Redo Backup" \
@@ -222,7 +222,7 @@ genisoimage -r \
 
 # Generate fresh md5sum containing the -boot-info-table modified isolinux.bin
 find . -type f -print0 | xargs -0 md5sum | grep -v "./md5sum.txt" > md5sum.txt
-# Create ISO image (part 2/2), the --boot-info-table modification has already been made to isolinux.bin, so the md5sum remains correct this time.
+# Create ISO image (part 2/3), the --boot-info-table modification has already been made to isolinux.bin, so the md5sum remains correct this time.
 rm ../redo.iso
 genisoimage -r \
             -V "Redo Backup" \
@@ -235,7 +235,11 @@ genisoimage -r \
             -boot-load-size 4 \
             -boot-info-table \
             -o ../redo.iso . 
+
 cd ..
+
+# Make ISO image USB bootable (part 3/3)
+isohybrid redo.iso
 
 # TODO: Evaluate the "Errata" sections of the Redo Backup and Recovery
 # TODO: Sourceforge Wiki, and determine if the build scripts need modification.
