@@ -1278,7 +1278,7 @@ sub mount_data {
       if ($status{'mount_user'} ne '') { $ftpargs = "-o user=".$status{'mount_user'}; }
       if ($status{'mount_pass'} ne '') { $ftpargs .= ":".$status{'mount_pass'}; }
       system("curlftpfs $status{'mount_source'} ".MOUNT_POINT." $ftpargs");
-      print "* ".loc("Executing: ")."curlftpfs $status{'mount_source'} ".MOUNT_POINT." $ftpargs\n";
+      print "* ".loc("Executing: ")."curlftpfs $status{'mount_source'} ".MOUNT_POINT." <redacted>\n";
     } else {
       fatal_crash(loc("The device type '[_1]' is not valid.  Did you forget to select a backup location?",$status{'mount_type'}));
     }
