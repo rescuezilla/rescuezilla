@@ -208,13 +208,33 @@ find . -type f -print0 | xargs -0 md5sum | grep -v "./md5sum.txt" > md5sum.txt
 
 # Create ISO image (part 1/2), with -boot-info-table modifying isolinux.bin with 56-byte "boot information table" # at offset 8 in the file."
 # See `man genisoimage` for more information. This modification invalidates the isolinux.bin md5sum calculated above.
-genisoimage -r -V "Redo Backup" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o ../redo.iso . 
+genisoimage -r \
+            -V "Redo Backup" \
+            -cache-inodes \
+            -J \
+            -l \
+            -b isolinux/isolinux.bin \
+            -c isolinux/boot.cat \
+            -no-emul-boot \
+            -boot-load-size 4 \
+            -boot-info-table \
+            -o ../redo.iso . 
 
 # Generate fresh md5sum containing the -boot-info-table modified isolinux.bin
 find . -type f -print0 | xargs -0 md5sum | grep -v "./md5sum.txt" > md5sum.txt
 # Create ISO image (part 2/2), the --boot-info-table modification has already been made to isolinux.bin, so the md5sum remains correct this time.
 rm ../redo.iso
-genisoimage -r -V "Redo Backup" -cache-inodes -J -l -b isolinux/isolinux.bin -c isolinux/boot.cat -no-emul-boot -boot-load-size 4 -boot-info-table -o ../redo.iso . 
+genisoimage -r \
+            -V "Redo Backup" \
+            -cache-inodes \
+            -J \
+            -l \
+            -b isolinux/isolinux.bin \
+            -c isolinux/boot.cat \
+            -no-emul-boot \
+            -boot-load-size 4 \
+            -boot-info-table \
+            -o ../redo.iso . 
 cd ..
 
 # TODO: Evaluate the "Errata" sections of the Redo Backup and Recovery
