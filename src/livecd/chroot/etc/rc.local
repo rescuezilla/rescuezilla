@@ -14,4 +14,10 @@
 # Set the time to the local hardware clock
 hwclock -s --localtime --noadjfile
 
+# Change ownership livecd user home dir to the ubuntu user
+# Otherwise its the UID/GID of the account which runs the build
+# FIXME: Find a better way. Permissions are managed by git works well, but
+# FIXME: user/group ownership are not tracked.
+chown -R ubuntu:ubuntu /home/ubuntu
+
 exit 0
