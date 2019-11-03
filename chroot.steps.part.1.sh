@@ -126,6 +126,18 @@ apt-get install --yes --no-install-recommends discover \
                                               wget \
                                               fsarchiver \
                                               partclone \
+                                              exfat-fuse \
+                                              exfat-utils \
+                                              btrfs-tools \
+                                              btrfs-progs \
+                                              udisks2-btrfs \
+                                              hfsplus \
+                                              hfsprogs \
+                                              f2fs-tools \
+                                              lvm2 \
+                                              xfsdump \
+                                              xfsprogs \
+                                              udftools \
                                               language-pack-gnome-fr-base \
                                               language-pack-gnome-de-base
 
