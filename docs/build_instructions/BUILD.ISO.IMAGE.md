@@ -11,8 +11,8 @@ Any Debian 10, Ubuntu 18.04, or derivative such as Linux Mint should be able to 
 sudo apt-get update
 sudo apt-get install git-lfs git make rsync sudo debootstrap isolinux syslinux syslinux-utils \
                      squashfs-tools genisoimage memtest86+ gettext
-git lfs clone https://github.com/redobackup/redobackup
-cd redobackup/
+git lfs clone https://github.com/rescuezilla/rescuezilla
+cd rescuezilla/
 # sudo privileges required for the chroot bind mount
 sudo make
 

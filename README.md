@@ -1,10 +1,10 @@
 ![Redo Backup and Recovery Logo](docs/images/redo.logo.png)
 
-# Redo Backup and Recovery [![Build Status](https://travis-ci.org/redobackup/redobackup.svg?branch=master)](https://travis-ci.org/redobackup/redobackup) 
+# Rescuezilla [![Build Status](https://travis-ci.org/rescuezilla/rescuezilla.svg?branch=master)](https://travis-ci.org/rescuezilla/rescuezilla) 
 
-Redo Backup and Recovery is an extremely easy-to-use graphical environment for system rescue, including full system backup, bare metal recovery, partition editing, undeleting files, web browsing, and more.
+Rescuezilla (formerly _Redo Backup and Recovery_) is an extremely easy-to-use graphical environment for system rescue, including full system backup, bare metal recovery, partition editing, undeleting files, web browsing, and more.
 
-Redo can be booted on any PC or Mac from a USB stick, or CD, and uses the exact same reliable, battle-tested ‘partclone’ utility that Clonezilla uses. For many people, the alternative open-source tools Clonezilla and SysRescueCD, are intimidating and difficult to use, so Redo provides an easy-to-use graphical environment like the leading commercial tools, Norton Ghost and Acronis True Image.
+Rescuezilla can be booted on any PC or Mac from a USB stick, or CD, and uses the exact same reliable, battle-tested ‘partclone’ utility that Clonezilla uses. For many people, the alternative open-source tools Clonezilla and SysRescueCD, are intimidating and difficult to use, so Redo provides an easy-to-use graphical environment like the leading commercial tools, Norton Ghost and Acronis True Image.
 
 ## Features
 
@@ -20,13 +20,13 @@ Redo can be booted on any PC or Mac from a USB stick, or CD, and uses the exact 
 
 ## Supported Languages
 
-Redo has been translated into the following languages:
+Rescuezilla has been translated into the following languages:
 
 * English
 * Français
 * Deutsch
 
-Redo is being active developed and is _not_ accepting any additional translations at this stage.
+Rescuezilla is being active developed and is _not_ accepting any additional translations at this stage.
 
 ## Screenshots
 
@@ -39,7 +39,7 @@ Redo is being active developed and is _not_ accepting any additional translation
 
 ## Downloads
 
-Old, out-of-date releases (from 2012) are available at the old Sourceforge page: https://sourceforge.net/projects/redobackup/files/
+Old, out-of-date releases (from 2012) are available at the old Redo Backup and Recovery Sourceforge page: https://sourceforge.net/projects/redobackup/files/
 
 Check back here soon for a more modern release!
 

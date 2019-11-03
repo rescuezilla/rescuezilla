@@ -19,7 +19,7 @@
    video card and/or monitor
 
  * Remember that hardware support is limited to that of Ubuntu, and that your
-   hardware must be compatible with Ubuntu in order to work with Redo Backup
+   hardware must be compatible with Ubuntu in order to work with Rescuezilla
 
  * There are a multitude of boot options available for Ubuntu, which may help
    your specific hardware run -- search online for "ubuntu boot options"

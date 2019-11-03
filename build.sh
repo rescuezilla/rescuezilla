@@ -125,7 +125,7 @@ for lang in "${LANG_CODES[@]}"; do
 done
 
 SUBSTITUTIONS=(
-    # Redo Backup and Recovery perl script
+    # Rescuezilla perl script
     "$BUILD_DIRECTORY/chroot/usr/share/redo/VERSION"
     "$BUILD_DIRECTORY/chroot/usr/share/redo/GIT_COMMIT_DATE"
     # ISOLINUX boot menu 
@@ -189,7 +189,7 @@ for i in $REMOVE; do
 done
 
 cat << EOF > image/README.diskdefines
-#define DISKNAME Redo Backup
+#define DISKNAME Rescuezilla
 #define TYPE binary
 #define TYPEbinary 1
 #define ARCH $ARCH
@@ -206,7 +206,7 @@ cd image/.disk
 touch base_installable
 echo "full_cd/single" > cd_type
 echo "Ubuntu Remix" > info
-echo "http://redobackup.org" > release_notes_url
+echo "https://rescuezilla.com" > release_notes_url
 cd ../..
 
 rm -rf image/casper/filesystem.squashfs redo.iso
@@ -218,7 +218,7 @@ find . -type f -print0 | xargs -0 md5sum | grep -v "./md5sum.txt" > md5sum.txt
 # Create ISO image (part 1/3), with -boot-info-table modifying isolinux.bin with 56-byte "boot information table" # at offset 8 in the file."
 # See `man genisoimage` for more information. This modification invalidates the isolinux.bin md5sum calculated above.
 genisoimage -r \
-            -V "Redo Backup" \
+            -V "Rescuezilla" \
             -cache-inodes \
             -J \
             -l \
@@ -234,7 +234,7 @@ find . -type f -print0 | xargs -0 md5sum | grep -v "./md5sum.txt" > md5sum.txt
 # Create ISO image (part 2/3), the --boot-info-table modification has already been made to isolinux.bin, so the md5sum remains correct this time.
 rm ../redo.iso
 genisoimage -r \
-            -V "Redo Backup" \
+            -V "Rescuezilla" \
             -cache-inodes \
             -J \
             -l \

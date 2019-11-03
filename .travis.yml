@@ -23,9 +23,9 @@ before_install:
   # extended privileges (required for the chroot bind mount), label it with a
   # meaningful name, execute the application /bin/cat, so the container doesn't
   # automatically exit
-- docker run --rm --detach --privileged --name=builder.container --volume=`pwd`:/home/redobackup/ --tty builder.image cat
+- docker run --rm --detach --privileged --name=builder.container --volume=`pwd`:/home/rescuezilla/ --tty builder.image cat
 script:
   # Execute the Makefile's install target within the docker container. This step
   # may take some time. Hundreds of megabytes of packages are downloaded from the
   # Ubuntu mirror during a build.
-- docker exec --interactive --tty --workdir=/home/redobackup/ builder.container make
+- docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make

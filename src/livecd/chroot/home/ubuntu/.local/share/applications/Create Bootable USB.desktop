@@ -1,7 +1,7 @@
 [Desktop Entry]
 Categories=;
 Comment=Create a startup disk using a CD or disc image
-Comment[en_US]=Install Redo Backup to a USB stick
+Comment[en_US]=Install Rescuezilla to a USB stick
 Exec=usb-creator-gtk-pkexec
 GenericName=Startup Disk Creator
 Hidden=false

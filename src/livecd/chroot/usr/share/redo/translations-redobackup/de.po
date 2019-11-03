@@ -53,8 +53,8 @@ msgstr "Schritt 1: Ziel - Laufwerk wählen"
 msgid "Step 2: Install to USB Drive"
 msgstr "Schritt 2: Auf USB Laufwerk intallieren"
 
-msgid "Welcome to Redo"
-msgstr "Willkommen zu Redo Backup and Restore"
+msgid "Welcome to Rescuezilla"
+msgstr "Willkommen zu Rescuezilla"
 
 msgid ""
 "Many other tools are available from the Start menu in the bottom left corner"

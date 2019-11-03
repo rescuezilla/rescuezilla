@@ -36,5 +36,5 @@ volumeicon &
 # lxpanel (panel/systray)
 (sleep 1 && lxpanel)&
 
-# Start Redo Backup (as root via PolicyKit) automatically
+# Start Rescuezilla (as root via PolicyKit) automatically
 redobackup-pkexec &
