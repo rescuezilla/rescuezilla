@@ -809,7 +809,7 @@
       <application name="gpartedbin" title="Apply*">
           <maximized>false</maximized>
       </application>
-      <!-- Do not maximize redobackup's loading bar -->
+      <!-- Do not maximize rescuezilla's loading bar -->
       <application name="*" title="Please wait...">
           <maximized>false</maximized>
       </application>

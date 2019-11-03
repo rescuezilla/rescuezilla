@@ -108,7 +108,7 @@ for lang in "${LANG_CODES[@]}"; do
     pushd $BASE
     # Convert *.ko text-based GTK translations into *.mo.
     APP_NAMES=(
-        "redobackup"
+        "rescuezilla"
         "drivereset"
         "graphical-shutdown"
     )
@@ -126,8 +126,8 @@ done
 
 SUBSTITUTIONS=(
     # Rescuezilla perl script
-    "$BUILD_DIRECTORY/chroot/usr/share/redo/VERSION"
-    "$BUILD_DIRECTORY/chroot/usr/share/redo/GIT_COMMIT_DATE"
+    "$BUILD_DIRECTORY/chroot/usr/share/rescuezilla/VERSION"
+    "$BUILD_DIRECTORY/chroot/usr/share/rescuezilla/GIT_COMMIT_DATE"
     # ISOLINUX boot menu 
     "$BUILD_DIRECTORY/image/isolinux/isolinux.cfg"
 )
@@ -209,7 +209,7 @@ echo "Ubuntu Remix" > info
 echo "https://rescuezilla.com" > release_notes_url
 cd ../..
 
-rm -rf image/casper/filesystem.squashfs redo.iso
+rm -rf image/casper/filesystem.squashfs rescuezilla.iso
 mksquashfs chroot image/casper/filesystem.squashfs -e boot -e /sys
 printf $(sudo du -sx --block-size=1 chroot | cut -f1) > image/casper/filesystem.size
 cd image
@@ -227,12 +227,12 @@ genisoimage -r \
             -no-emul-boot \
             -boot-load-size 4 \
             -boot-info-table \
-            -o ../redo.iso . 
+            -o ../rescuezilla.iso . 
 
 # Generate fresh md5sum containing the -boot-info-table modified isolinux.bin
 find . -type f -print0 | xargs -0 md5sum | grep -v "./md5sum.txt" > md5sum.txt
 # Create ISO image (part 2/3), the --boot-info-table modification has already been made to isolinux.bin, so the md5sum remains correct this time.
-rm ../redo.iso
+rm ../rescuezilla.iso
 genisoimage -r \
             -V "Rescuezilla" \
             -cache-inodes \
@@ -243,12 +243,12 @@ genisoimage -r \
             -no-emul-boot \
             -boot-load-size 4 \
             -boot-info-table \
-            -o ../redo.iso . 
+            -o ../rescuezilla.iso . 
 
 cd ..
 
 # Make ISO image USB bootable (part 3/3)
-isohybrid redo.iso
+isohybrid rescuezilla.iso
 
 # TODO: Evaluate the "Errata" sections of the Redo Backup and Recovery
 # TODO: Sourceforge Wiki, and determine if the build scripts need modification.

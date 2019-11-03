@@ -95,7 +95,7 @@
         <Name>Other</Name>
         <!-- deleted by LibFM -->
         <Exclude>
-            <Filename>redobackup.desktop</Filename>
+            <Filename>rescuezilla.desktop</Filename>
         </Exclude>
         <!-- deleted by LibFM -->
         <Exclude>
@@ -129,7 +129,7 @@
     </Menu>
     <Layout>
        <Merge type="menus"/>
-        <Filename>redobackup.desktop</Filename>
+        <Filename>rescuezilla.desktop</Filename>
         <Separator/>
         <Menuname>Accessories</Menuname>
         <Menuname>Other</Menuname>

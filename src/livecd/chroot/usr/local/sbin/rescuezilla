@@ -34,7 +34,7 @@ use utf8;
 use Method::Signatures::Simple;
 
 # Load translation
-use constant TRANSLATION_DIR => "/usr/share/redo/translations-redobackup/";
+use constant TRANSLATION_DIR => "/usr/share/rescuezilla/translations-rescuezilla/";
 my $lc_messages = setlocale(LC_MESSAGES);
 # Extract the ISO 639-1 code
 my $lang_code = substr($lc_messages,0,2);
@@ -50,13 +50,13 @@ use Locale::Maketext::Simple (
 loc_lang($lang_code);
 
 ##### Constants found in our program ###################################
-use constant VERSION       => `cat /usr/share/redo/VERSION`;
-use constant COMMIT_DATE   => `cat /usr/share/redo/GIT_COMMIT_DATE`;
-use constant CD_LABEL      => `cat /usr/share/redo/TITLE`;
+use constant VERSION       => `cat /usr/share/rescuezilla/VERSION`;
+use constant COMMIT_DATE   => `cat /usr/share/rescuezilla/GIT_COMMIT_DATE`;
+use constant CD_LABEL      => `cat /usr/share/rescuezilla/TITLE`;
 use constant MOUNT_POINT   => "/mnt/backup";
-use constant DATA_DIR      => "/usr/share/redo/";
+use constant DATA_DIR      => "/usr/share/rescuezilla/";
 use constant APP_ICON      => DATA_DIR."redobackup-icon.png";
-use constant GLADE_UI      => "redobackup.glade";
+use constant GLADE_UI      => "rescuezilla.glade";
 use constant FS_SUPPORT    => ( "ext2",
                                 "ext3",
                                 "ext4",
@@ -98,13 +98,13 @@ $numthreads = 1;
 }
 
 sub default_share_name {
-    my $share = `cat /etc/redo/share`;
+    my $share = `cat /etc/rescuezilla/share`;
     chomp $share;
     return $share;
 }
 
 sub allow_source_overwrite {
-    my $overwrite = not (-e "/etc/redo/no_source_overwrite");
+    my $overwrite = not (-e "/etc/rescuezilla/no_source_overwrite");
     return $overwrite;
 }
 
@@ -176,8 +176,8 @@ sub main {
   my $window;
   $builder = Gtk2::Builder->new();
   # Load translations to strings in the Glade file.
-  print("Setting GTK translation domain to load files from eg, /usr/share/locale/".$lang_code."/LC_MESSAGES/redobackup.mo\n");
-  $builder->set_translation_domain("redobackup");
+  print("Setting GTK translation domain to load files from eg, /usr/share/locale/".$lang_code."/LC_MESSAGES/rescuezilla.mo\n");
+  $builder->set_translation_domain("rescuezilla");
   $builder->add_from_file(DATA_DIR.GLADE_UI);
   $window = $builder->get_object('main_app');
   $builder->connect_signals(undef);

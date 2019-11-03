@@ -33,7 +33,7 @@ use locale;
 use utf8;
 
 # Load translation
-use constant TRANSLATION_DIR => "/usr/share/redo/translations-drivereset/";
+use constant TRANSLATION_DIR => "/usr/share/rescuezilla/translations-drivereset/";
 my $lc_messages = setlocale(LC_MESSAGES);
 # Extract the ISO 639-1 code
 my $lang_code = substr($lc_messages,0,2);
@@ -50,7 +50,7 @@ loc_lang($lang_code);
 
 ##### Constants found in our program ###################################
 use constant TEST_MODE     => FALSE;
-use constant DATA_DIR      => "/usr/share/redo/";
+use constant DATA_DIR      => "/usr/share/rescuezilla/";
 use constant GLADE_UI      => "drivereset.glade";
 my @RESET_STEPS   =  ( loc("Warning!"),
                        loc("Step 1: Select Target Drives"),

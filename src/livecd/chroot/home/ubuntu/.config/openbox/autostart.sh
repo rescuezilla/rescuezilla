@@ -37,4 +37,4 @@ volumeicon &
 (sleep 1 && lxpanel)&
 
 # Start Rescuezilla (as root via PolicyKit) automatically
-redobackup-pkexec &
+rescuezilla-pkexec &

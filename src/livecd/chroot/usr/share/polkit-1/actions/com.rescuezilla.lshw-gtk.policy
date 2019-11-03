@@ -5,17 +5,17 @@
 
     <vendor>Rescuezilla</vendor>
     <vendor_url>https://rescuezilla.com/</vendor_url>
-    <icon_name>graphical-shutdown.sh</icon_name>
-    <action id="org.redobackup.graphical-shutdown.sh">
+    <icon_name>lshw-gtk</icon_name>
+    <action id="com.rescuezilla.lshw-gtk">
 
-        <description gettext-domain="graphical-shutdown.sh">Run graphical-shutdown.sh as root</description>
-        <message gettext-domain="graphical-shutdown.sh">Authentication is required to run graphical-shutdown.sh as root</message>
+        <description gettext-domain="rescuezilla">Run lshw-gtk as root</description>
+        <message gettext-domain="rescuezilla">Authentication is required to run lshw-gtk as root</message>
         <defaults>
             <allow_any>auth_admin</allow_any>
             <allow_inactive>auth_admin</allow_inactive>
             <allow_active>auth_admin</allow_active>
         </defaults>
-        <annotate key="org.freedesktop.policykit.exec.path">/usr/sbin/graphical-shutdown.sh</annotate>
+        <annotate key="org.freedesktop.policykit.exec.path">/usr/bin/lshw-gtk</annotate>
         <annotate key="org.freedesktop.policykit.exec.allow_gui">true</annotate>
 
     </action>
