@@ -130,6 +130,9 @@ SUBSTITUTIONS=(
     "$BUILD_DIRECTORY/chroot/usr/share/rescuezilla/GIT_COMMIT_DATE"
     # ISOLINUX boot menu 
     "$BUILD_DIRECTORY/image/isolinux/isolinux.cfg"
+    # Chromium browser homepage query-string, to be able to provide a "You are using an old version. Please update."
+    # message when users open the web browser with a (inevitably) decades old version.
+    "$BUILD_DIRECTORY/chroot/home/ubuntu/.config/chromium/Default/Preferences"
 )
 for file in "${SUBSTITUTIONS[@]}"; do
     # Substitute version into file

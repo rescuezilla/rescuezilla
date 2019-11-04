@@ -23,7 +23,7 @@
          "bookmarks": [ "chrome-extension://eemcgdkfndhakfknompkggombfjjjeno/main.html" ]
       }
    },
-   "homepage": "http://zebradots.com/",
+   "homepage": "https://rescuezilla.com/?v=VERSION-SUBSTITUTED-BY-BUILD-SCRIPT",
    "homepage_is_newtabpage": false,
    "ntp": {
       "pref_version": 1,
