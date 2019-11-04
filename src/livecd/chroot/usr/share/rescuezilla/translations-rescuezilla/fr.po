@@ -92,6 +92,9 @@ msgstr "Nombre de partitions à sauver : [_1]"
 msgid "Total bytes to save: [_1]"
 msgstr "Taille totale de la sauvegarde : [_1]"
 
+msgid "The tool [_1] does not exist"
+msgstr ""
+
 msgid "Preparing to create backup of Drive [_1], Part [_2]..."
 msgstr "Préparation de la sauvegarde du disque [_1], Partition [_2]..."
 
@@ -253,6 +256,9 @@ msgstr ""
 msgid "Writing extended partition table to destination drive..."
 msgstr ""
 
+msgid "Detected backup created with [_1]"
+msgstr ""
+
 msgid "Reloading partition table from [_1]"
 msgstr ""
 
@@ -282,8 +288,20 @@ msgstr ""
 msgid "Preparing to restore backup for Drive [_1], Part [_2]..."
 msgstr "Préparation de la restauration du disque [_1], partition [_2]..."
 
+msgid ""
+"No version number detected. Therefore backup assumed to be made by v1.0.4, "
+"so using [_1] partclone.restore."
+msgstr ""
+
+msgid ""
+"Using partclone [_1] to restore the [_2] backup, for maximum compatibility"
+msgstr ""
+
 msgid "Processing [_1] using [_2]..."
 msgstr "Processus [_1] en cours [_2]..."
+
+msgid "Restoring backup created with version: [_1]"
+msgstr ""
 
 msgid "Starting to restore [_1]"
 msgstr ""

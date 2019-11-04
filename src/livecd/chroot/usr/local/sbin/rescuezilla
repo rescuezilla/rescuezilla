@@ -422,12 +422,20 @@ sub update_backup_progress {
   $dest =~ s/ /\\ /g;
   my $file = $builder->get_object('backup_name')->get_text();
   my $fs = lc($drives{$src}{'parts'}{$pn}{'fstype'});
+  # Write the Rescuezilla version to a file to help future versions best handle future backwards-compatibility
+  my $version = VERSION;
+  chomp($version);
+  system("echo $version > $dest/$file.rescuezilla.backup_version");
   # See if the filehandle is open
   if (!defined($PROGRESS)) {
     # No command is being executed
     my $tool = "";
     my $extra_args = "";
     ($tool, $extra_args) = &which_backup_tool($fs);
+    my $tool_missing_msg = loc("The tool [_1] does not exist", "/usr/sbin/$tool");
+    fatal_crash($tool_missing_msg) unless -e "/usr/sbin/$tool";
+    # Write the exact partclone command used to create the backup of the current partition. This tool is required during restore.
+    system("echo $tool > $dest/$file.partclone.command.part$pn");
     set_status(loc("Preparing to create backup of Drive [_1], Part [_2]...",$dn, $pn));
     print "*** ".loc("Processing [_1] ([_2]) using [_3]...",$part,$fs,$tool)."\n";
     system("umount /dev/$part 2>&1");
@@ -814,7 +822,16 @@ sub do_restore {
   sleep(0.5);  
   print "*** ".loc("Restoring partition table to [_1]",$dest_drive)."\n";
   set_status(loc("Writing extended partition table to destination drive..."));
-  system("sfdisk -f /dev/$dest_drive < $src_sfdisk; sync");
+  my $backup_version = `cat /$src.rescuezilla.backup_version`;
+  chomp($backup_version);
+  print loc("Detected backup created with [_1]",$backup_version)."\n";
+  my $restore_cmd = "";
+  if (("$backup_version" cmp "") == 0) {
+      # Using sfdisk version bundled with Redo Backup and Recovery v1.0.4, with the required arguments that have been removed from newer versions
+      system("sfdisk.v2.20.1 -fx /dev/$dest_drive < $src_sfdisk; sync");
+  } else {
+      system("sfdisk -f /dev/$dest_drive < $src_sfdisk; sync");
+  }
   sleep(0.5);
   print "*** ".loc("Reloading partition table from [_1]",$dest_drive)."\n";
   set_status(loc("Reloading new partition table from destination drive..."));
@@ -873,14 +890,34 @@ sub update_restore_progress {
   my $src_mbr = $src.'.mbr';
   # See if the filehandle is open
   if (!defined($PROGRESS)) {
-    # No command is being executed
-    my $tool = "partclone.restore";
     system("umount /mnt/$dest_drive$pn 2>&1; dd if=/dev/zero of=/dev/$dest_drive$pn bs=1K count=1000; sync");
     set_status(loc("Preparing to restore backup for Drive [_1], Part [_2]...",$dn,$pn));
-    print "*** ".loc("Processing [_1] using [_2]...","$dest_drive$pn",$tool)."\n";
     system("umount /dev/$dest_drive$pn 2>&1");
     system("umount /dev/$part 2>&1");
-    my $restore_cmd = "( cat /$src"."_part$pn.* | pigz -d -c | $tool -F -L /partclone.log -O /dev/$dest_drive$pn ) 2>&1 |";
+    my $backup_version = `cat /$src.rescuezilla.backup_version`;
+    chomp($backup_version);
+    print loc("Detected backup created with [_1]",$backup_version)."\n";
+    my $restore_cmd = "";
+    if (("$backup_version" cmp "") == 0) {
+        my $partclone_ver = "v0.2.43";
+        print loc("No version number detected. Therefore backup assumed to be made by v1.0.4, so using [_1] partclone.restore.", $partclone_ver)."\n";
+        # The Redo Backup v1.0.4 partclone version uses different restore syntax, and autodetects raw formats differently
+        print loc("Using partclone [_1] to restore the [_2] backup, for maximum compatibility",$partclone_ver,"Redo Backup and Recovery v1.0.4")."\n";
+        my $tool = "partclone.restore.$partclone_ver";
+        print "*** ".loc("Processing [_1] using [_2]...","$dest_drive$pn",$tool)."\n";
+        $restore_cmd = "( cat /$src"."_part$pn.* | pigz -d -c | $tool -F -L /partclone.log -O /dev/$dest_drive$pn ) 2>&1 |";
+    } else {
+        # Assume backup was created with a format compatible with the 1.0.5 release.
+        # TODO: Compare the MAJOR.MINOR.PATCH components that make up the version number to automatically handle newer versions
+        # TODO: when the backup format and partclone syntax have not changed.
+        print loc("Restoring backup created with version: [_1]",$backup_version)."\n";
+        my $tool = `cat $src.partclone.command.part$pn`;
+        chomp($tool);
+        my $tool_missing_msg = loc("The tool [_1] does not exist", "/usr/sbin/$tool");
+        fatal_crash($tool_missing_msg) unless -e "/usr/sbin/$tool";
+        print "*** ".loc("Processing [_1] using [_2]...","$dest_drive$pn",$tool)."\n";
+        $restore_cmd = "( cat /$src"."_part$pn.* | pigz -d -c | $tool --restore -F -L /partclone.log -O /dev/$dest_drive$pn ) 2>&1 |";
+    }
     print "*** ".loc("Executing: ")."$restore_cmd\n";
     open $PROGRESS, "$restore_cmd";
     sleep(0.5);
