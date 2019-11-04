@@ -4,7 +4,7 @@
 
 Rescuezilla (formerly _Redo Backup and Recovery_) is an extremely easy-to-use graphical environment for system rescue, including full system backup, bare metal recovery, partition editing, undeleting files, web browsing, and more.
 
-Rescuezilla can be booted on any PC or Mac from a USB stick, or CD, and uses the exact same reliable, battle-tested ‘partclone’ utility that Clonezilla uses. For many people, the alternative open-source tools Clonezilla and SysRescueCD, are intimidating and difficult to use, so Redo provides an easy-to-use graphical environment like the leading commercial tools, Norton Ghost and Acronis True Image.
+Rescuezilla can be booted on any PC or Mac from a USB stick, or CD, and uses the exact same reliable, battle-tested ‘partclone’ utility that Clonezilla uses. For many people, the alternative open-source tools Clonezilla and SysRescueCD, are intimidating and difficult to use, so Rescuezilla provides an easy-to-use graphical environment like the leading commercial tools, Norton Ghost and Acronis True Image.
 
 ## Features
 
@@ -26,7 +26,7 @@ Rescuezilla has been translated into the following languages:
 * Français
 * Deutsch
 
-Rescuezilla is being active developed and is _not_ accepting any additional translations at this stage.
+See [Translations HOWTO](https://github.com/rescuezilla/rescuezilla/wiki/Translations-HOWTO) for more information.
 
 ## Screenshots
 
@@ -39,10 +39,28 @@ Rescuezilla is being active developed and is _not_ accepting any additional tran
 
 ## Downloads
 
-Old, out-of-date releases (from 2012) are available at the old Redo Backup and Recovery Sourceforge page: https://sourceforge.net/projects/redobackup/files/
+Rescuezilla releases (including the old, out-of-date _Redo Backup and Recovery_ ISO images) can be found at the GitHub release page: https://github.com/rescuezilla/rescuezilla/releases
 
-Check back here soon for a more modern release!
+Please consult the [FAQ](https://rescuezilla.com/help.html) and the [limitations page](https://github.com/rescuezilla/rescuezilla/wiki/Rescuezilla-Limitations) to determine if Rescuezilla is right for you.
+
+Please consider becoming a [Patreon](https://www.patreon.com/rescuezilla) to help fund Rescuezilla's continued development!
+
+## Future development
+
+Rescuezilla features are prioritized according to the [roadmap](https://github.com/rescuezilla/rescuezilla/wiki/Rescuezilla-Project-Roadmap). Please consider becoming a [Patreon](https://www.patreon.com/rescuezilla) to help fund Rescuezilla's continued development!
+
+## History
+
+Below table shows an abridged history of Rescuezilla. See the CHANGELOG for more information.
+
+| Release | Release Date | Operating System | Notes |
+| --- | --- | --- | --- |
+| Rescuezilla 1.0.5 | 2019-11-08 | Ubuntu 18.04 LTS | New maintainer |
+| Redo Backup 1.0.4 | 2012-11-20 | Ubuntu 12.04 LTS | |
+| Redo Backup 0.9.8 | 2011-03-10 | Ubuntu 10.10 | Original author deleted v0.9.2-v0.9.7 |
+| Redo Backup 0.9.2 | 2010-06-24 | xPUD |  |
 
 ## Building 
 
-- See [Building ISO image](docs/build_instructions/BUILD.ISO.IMAGE.md)
+See [Building ISO image](docs/build_instructions/BUILD.ISO.IMAGE.md)
+
