@@ -43,3 +43,5 @@ rm -rf /var/lib/apt/lists/????????*
 umount -lf /proc
 umount -lf /sys
 umount -lf /dev/pts
+
+exit 0

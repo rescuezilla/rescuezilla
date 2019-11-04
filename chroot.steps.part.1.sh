@@ -141,6 +141,11 @@ apt-get install --yes --no-install-recommends discover \
                                               language-pack-gnome-fr-base \
                                               language-pack-gnome-de-base
 
+if [[ $? -ne 0 ]]; then
+    echo "Error: Failed to install packages."
+    exit 1
+fi
+
 # Install the packages that have custom configuration files managed in the
 # source tree, and use non-interactive conflict resolution to choose those
 # configuration files, not package maintainer's versions.  The non-interactive

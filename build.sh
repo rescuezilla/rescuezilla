@@ -90,6 +90,10 @@ cp /etc/resolv.conf chroot/etc/resolv.conf
 
 cp ../chroot.steps.part.1.sh ../chroot.steps.part.2.sh chroot
 chroot chroot/ /bin/bash /chroot.steps.part.1.sh
+if [[ $? -ne 0 ]]; then
+    echo "Error: Failed to execute chroot steps part 1."
+    exit 1
+fi
 
 # Copy the source FHS filesystem tree onto the build's chroot FHS tree, overwriting the base files where conflicts occur
 cd ..
@@ -137,6 +141,11 @@ done
 # Enter chroot again
 cd $BUILD_DIRECTORY
 chroot chroot/ /bin/bash /chroot.steps.part.2.sh
+if [[ $? -ne 0 ]]; then
+    echo "Error: Failed to execute chroot steps part 2."
+    exit 1
+fi
+
 rsync --archive chroot/var.cache.apt.archives/ ../$PKG_CACHE_DIRECTORY/$APT_PKG_CACHE_DIRECTORY
 rm -rf chroot/var.cache.apt.archives
 rsync --archive chroot/var.lib.apt.lists/ ../$PKG_CACHE_DIRECTORY/$APT_INDEX_CACHE_DIRECTORY
