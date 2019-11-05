@@ -809,6 +809,9 @@
       <application name="gpartedbin" title="Apply*">
           <maximized>false</maximized>
       </application>
+      <application name="gpartedbin" title="Information*">
+          <maximized>false</maximized>
+      </application>
       <!-- Do not maximize rescuezilla's loading bar -->
       <application name="*" title="Please wait...">
           <maximized>false</maximized>
