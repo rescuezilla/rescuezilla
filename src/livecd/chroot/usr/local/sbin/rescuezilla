@@ -817,8 +817,8 @@ sub do_restore {
   sleep(0.5);
   print "*** ".loc("Reloading partition table from [_1]",$dest_drive)."\n";
   set_status(loc("Reloading new partition table from destination drive..."));
-  system("umount /mnt/$dest_drive?* 2>&1");
-  system("blockdev --rereadpt /dev/$dest_drive");
+  system("umount /dev/$dest_drive?* 2>&1");
+  system("partprobe /dev/$dest_drive");
   sleep(1);
   $status{'start'} = time();
   $status{'part_list'} = \@partlist;
