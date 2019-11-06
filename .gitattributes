@@ -5,3 +5,5 @@
 *.tar.gz filter=lfs diff=lfs merge=lfs -text
 *.deb filter=lfs diff=lfs merge=lfs -text
 *.exe filter=lfs diff=lfs merge=lfs -text
+src/livecd/chroot/usr/sbin/sfdisk.v2.20.1 filter=lfs diff=lfs merge=lfs -text
+src/livecd/chroot/usr/sbin/partclone.restore.v0.2.43 filter=lfs diff=lfs merge=lfs -text
