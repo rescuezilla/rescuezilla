@@ -1,7 +1,8 @@
 {
    "browser": {
       "check_default_browser": false,
-      "custom_chrome_frame": false
+      "custom_chrome_frame": false,
+      "show_home_button": true
    },
    "countryid_at_install": 21843,
    "default_search_provider": {
@@ -25,6 +26,12 @@
    },
    "homepage": "https://rescuezilla.com/?v=VERSION-SUBSTITUTED-BY-BUILD-SCRIPT",
    "homepage_is_newtabpage": false,
+   "session": {
+    "restore_on_startup": 4,
+    "startup_urls": [
+      "https://rescuezilla.com/?v=VERSION-SUBSTITUTED-BY-BUILD-SCRIPT"
+    ]
+   },
    "ntp": {
       "pref_version": 1,
       "shown_sections": 29,
