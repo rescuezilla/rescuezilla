@@ -1295,9 +1295,9 @@ sub mount_data {
       my $args;
       my $tmpfile = '';
       my @smbargs = ();
-      if ($status{'mount_user'} ne '') { push(@smbargs, "username='".$status{'mount_user'}."'"); }
-      if ($status{'mount_pass'} ne '') { push(@smbargs, "password='".$status{'mount_pass'}."'"); }
-      if ($status{'mount_domain'} ne '') { push(@smbargs, "domain='".$status{'mount_domain'}."'"); }
+      if ($status{'mount_user'} ne '') { push(@smbargs, "username=".$status{'mount_user'}); }
+      if ($status{'mount_pass'} ne '') { push(@smbargs, "password=".$status{'mount_pass'}); }
+      if ($status{'mount_domain'} ne '') { push(@smbargs, "domain=".$status{'mount_domain'}); }
       my $cred = join("\n", @smbargs);
       if ($cred eq '') { $args = "guest"; }
       else {
@@ -1311,9 +1311,10 @@ sub mount_data {
         # one locking up the application unless guest is specified.
         if ($status{'mount_pass'} eq '') { $args = "$args,guest"; }
       }
-      system("mount.cifs '$status{'mount_source'}' ".MOUNT_POINT." -o $args");
+      my $cifs_mount = "mount.cifs '$status{'mount_source'}' ".MOUNT_POINT." -o $args";
+      print "* ".loc("Executing: ").$cifs_mount."\n";
+      system($cifs_mount);
       if ($tmpfile ne '') { system(("shred", "-u",  $tmpfile));}
-      print "* ".loc("Executing: ")."mount.cifs '$status{'mount_source'}' ".MOUNT_POINT." -o $args\n";
     } elsif (/FTP/) {
       # Mount an FTP server
       my $ftpargs = '';
