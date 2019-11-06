@@ -11,4 +11,8 @@
 deb http://archive.ubuntu.com/ubuntu bionic main universe multiverse
 deb http://archive.ubuntu.com/ubuntu bionic-updates main universe multiverse
 deb http://archive.ubuntu.com/ubuntu bionic-security main universe multiverse
+
+# Backports and proposed configured with a preference file to ensure its never
+# automatically selected
 deb http://archive.ubuntu.com/ubuntu bionic-backports main universe multiverse
+deb http://archive.ubuntu.com/ubuntu bionic-proposed main universe multiverse
