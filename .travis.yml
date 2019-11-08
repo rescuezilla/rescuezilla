@@ -29,3 +29,18 @@ script:
   # may take some time. Hundreds of megabytes of packages are downloaded from the
   # Ubuntu mirror during a build.
 - docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make
+
+
+# When a new tag is pushed, upload the ISO image as a draft release on GitHub
+
+before_deploy:
+  - mv build/rescuezilla.iso build/redobackup-livecd-$TRAVIS_TAG.iso
+
+deploy:
+  provider: releases
+  api_key: $GITHUB_TOKEN
+  file: build/redobackup-livecd-$TRAVIS_TAG.iso
+  draft: true
+  skip_cleanup: true
+  on:
+    tags: true
