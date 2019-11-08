@@ -25,6 +25,10 @@ before_install:
   # automatically exit
 - docker run --rm --detach --privileged --name=builder.container --volume=`pwd`:/home/rescuezilla/ --tty builder.image cat
 script:
+  # DANGER: Delete all untracked files and directories to ensure pristine env (do *not* use this on your working dir)
+- git clean -dfX && git clean -dfx
+  # DANGER: Do *not* use this on your working dir
+- git reset --hard HEAD
   # Execute the Makefile's install target within the docker container. This step
   # may take some time. Hundreds of megabytes of packages are downloaded from the
   # Ubuntu mirror during a build.
