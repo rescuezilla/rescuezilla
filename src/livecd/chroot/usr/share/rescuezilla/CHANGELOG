@@ -1,4 +1,81 @@
 -------------------------------------------------------------------------------
+  Version 1.0.5 (2019-11-08) 
+-------------------------------------------------------------------------------
+* Upgraded base to Ubuntu 18.04 LTS (Bionic) from Ubuntu 12.04 LTS (Precise)
+* Renamed project Rescuezilla but keeping ‘Redo’ for v1.0.5 (See ‘Project Announcements’ below)
+* Switched to Hardware Enablement kernel for best support of new hardware (thanks OAM775!)
+* Ensured official image bootable as both USB drive and CD (v1.0.4 was only bootable as a CD)
+* Added SliM (Simple Login Manager) to fix boot sometimes failing to start graphical environment
+* Switched to running the graphical session as unpriviliged user, for improved security
+* Removed deprecated gksu (graphical frontend to su/sudo), which was never necessary
+* Added PolicyKit policies to provide root privileges to certain applications (via pkexec)
+* Removed deprecated system-config-lvm (graphical LVM editor)
+* Replaced deprecated adeskbar (start menu) with lxpanel
+* Configured lxpanel to closely match adeskbar’s look-and-feel
+* Added yad dialog application and a custom graphical shutdown menu
+* Removed drivereset from start menu as Rescuezilla maintainer does not have a test environment
+* Replaced ‘maximus’ with openbox's builtin maximize settings, toggleable per-app
+* Switched to ‘pigz’ multithreaded gzip based on OAM775’s old releases (thanks!)
+* Fixed SMB/FTP passwords not working with special characters (thanks Dave Kipfer!)
+* Imported patches from Michal Suchanek’s git repo from 2012 and 2015, as practical (see next)
+* Added ability to restore partition to a drive smaller than the original (thanks Michal!)
+* Added ability to configure default share name via /etc/rescuezilla/share (thanks Michal!)
+* Added log file for each partition’s partclone operation (thanks Michal!)
+* Stopped printing of SMB credentials when mounting drives (thanks Michal!)
+* Stopped printing of FTP credentials when mounting drives
+* Removed deprecated sfdisk ‘-x’ argument used to save extended partition information
+* Replaced deprecated ‘sfdisk -R’ call with ‘blockdev –rereadpt’, to force reload partition info
+* Fixed Master Boot Record size being incorrectly 32768 bytes, not 512 bytes (thanks louvetch)
+* Writes Rescuezilla version in the backup directory to help backwards compatibility
+* Writes partition information during backup so Ubuntu 18.04 partclone can correctly restore
+* Moved script from /sbin/redobackup to /usr/local/sbin/rescuezilla as per File Hierarchy Standard
+* Added filesystem-aware backup/restore of btrfs, exfat, f2fs filesystems
+* Fixed backup/restore of ufs, vmfs, jfs, hfs, reiserfs filesystems
+* Add filesystem utilities so GParted can modify btfs, hfs+, ufs, xfs filesystems
+* Added GNU ddrescue command-line data recovery tool
+* Added to right-click menu a ‘change screen resolution’ function
+* Added to right-click menu an ‘open terminal here’ function
+* Improved HiDPI display support by setting DPI to 125, not 96
+* Improved HiDPI display support by increasing size of openbox titlebars
+* Added release timestamp and version information to boot menu
+* Added release timestamp to the status bar of the Redo Backup perl app
+* Replaced buggy lxrandr (resolution changer), with arandr (graphical screen resolution/layout)
+* Removed ‘nitrogen’ wallpaper manager application
+* Configured PCManFM file manger for desktop management and wallpaper display
+* Added desktop icons for important applications, mounted media
+* Writes all of redobackup/drivereset output to a file in a desktop directory, for easier bug reporting
+* Fixed pcmanfm Tools menu “Open Current Folder in Terminal” functionality
+* Removed unnecessary theme configuration: lxappearance, gtk-theme-switcher2, obconf
+* Added maketext localization framework to Redo Backup script, for easier translations
+* Added French/Français translation adapted from louvetch’s old release (merci!)
+* Added German/Deutsch translation adapted from chcatzsf’s old release (dankeschön!)
+* Appended translations to boot menu (future release will make this scalable to more languages)
+* ISO image grown to ~620MB mostly due to bloated Ubuntu, Chromium and language packs
+                                    Project Announcements
+* Redo Backup and Recovery is back, with a new maintainer and an active support forum
+* The author of Redo Backup and Recovery remains uncontactable (despite many attempts)
+* The new maintainer does not control redobackup.org or Redo Backup and Recovery Sourceforge
+* The most realistic path is continuing active development under a different name.
+* Redo Backup and Recovery is in the process of being rebranded Rescuezilla
+* Rescuezilla v1.0.5 can restore backups created with Redo Backup v1.0.4
+* For now, Redo Backup’s Sourceforge Project continues to be the official support forum
+                                    Development updates
+* Created GitHub organization to manage development (http://github.com/redobackup/redobackup)
+* Added automated build scripts (adapting the tedious build instructions from the Sourceforge Wiki)
+* Added Dockerfile to optionally construct the optimal build environment for any git commit
+* Integrated Travis-CI.org continious integration build bot, for increased release rigor
+* Added script to display differences between *any* two Redo Backup and Recovery ISO images
+* Imported source of the older versions (v0.9.8-v1.0.4) from the snapshot release tarballs
+* Reconstructed v0.9.8-v1.0.4 build scripts based on CHANGELOGs, official ISO images
+* Enhanced build scripts with deb package caching, to minimize network usage of a typical build
+* Unified the unofficial releases (OAM775’s pigz/HWE changes, louvetch’s French translation,
+  and chcatzsf’s German translation, Michal Suchanek’s v1.0.3 patches) into a git repository on GitHub
+* Reconstructed the official Redo Backup and Recovery webpage using the Wayback Machine
+* Added Project Roadmap, Translation HOWTO to GitHub Wiki
+* Uploaded reconstructed website to https://rescuezilla.com
+* Created Patreon account to help fund continued development
+
+-------------------------------------------------------------------------------
   Version 1.0.4 (2012-11-20)
 -------------------------------------------------------------------------------
   * Base upgrade to Ubuntu 12.04 LTS (Precise)
