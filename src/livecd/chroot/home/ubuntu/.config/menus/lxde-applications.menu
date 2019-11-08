@@ -126,6 +126,9 @@
         <Exclude>
             <Filename>org.gnome.baobab-pkexec.desktop</Filename>
         </Exclude>
+        <Exclude>
+            <Filename>drive.reset.desktop</Filename>
+        </Exclude>
     </Menu>
     <Layout>
        <Merge type="menus"/>
