@@ -30,12 +30,12 @@ See [Translations HOWTO](https://github.com/rescuezilla/rescuezilla/wiki/Transla
 
 ## Screenshots
 
-<a href="docs/images/screenshot.select.an.option.jpeg"><img width=245 height=183 src="docs/images/screenshot.select.an.option.jpeg" alt="Provides browser access even if you can't log into your PC"></a>
-<a href="docs/images/screenshot.partitioning.jpeg"><img width=245 height=183 src="docs/images/screenshot.partitioning.jpeg" alt="Many powerful tools available from the start button"></a>
-<a href="docs/images/screenshot.start.menu.tools.jpeg"><img width=245 height=183 src="docs/images/screenshot.start.menu.tools.jpeg" alt="Select video mode, check CD integrity, or test RAM at boot"></a>
-<a href="docs/images/screenshot.firefox.web.browsing.jpeg"><img width=245 height=183 src="docs/images/screenshot.firefox.web.browsing.jpeg" alt="Format drives, resize partitions, and encrypt volumes easily"></a>
-<a href="docs/images/screenshot.select.backup.destination.drive.jpeg"><img width=245 height=183 src="docs/images/screenshot.select.backup.destination.drive.jpeg" alt="Save to hard drive, network shared folder, or FTP server"></a>
-<a href="docs/images/screenshot.boot.menu.jpeg"><img width=245 height=183 src="docs/images/screenshot.boot.menu.jpeg" alt="Easy point and click interface anyone can use"></a>
+<a href="docs/images/screenshot.select.an.option.png"><img width=245 height=183 src="docs/images/screenshot.select.an.option.png" alt="Provides browser access even if you can't log into your PC"></a>
+<a href="docs/images/screenshot.partitioning.png"><img width=245 height=183 src="docs/images/screenshot.partitioning.png" alt="Many powerful tools available from the start button"></a>
+<a href="docs/images/screenshot.start.menu.tools.png"><img width=245 height=183 src="docs/images/screenshot.start.menu.tools.png" alt="Select video mode, check CD integrity, or test RAM at boot"></a>
+<a href="docs/images/screenshot.chromium.web.browsing.png"><img width=245 height=183 src="docs/images/screenshot.chromium.web.browsing.png" alt="Format drives, resize partitions, and encrypt volumes easily"></a>
+<a href="docs/images/screenshot.select.backup.destination.drive.png"><img width=245 height=183 src="docs/images/screenshot.select.backup.destination.drive.png" alt="Save to hard drive, network shared folder, or FTP server"></a>
+<a href="docs/images/screenshot.boot.menu.png"><img width=245 height=183 src="docs/images/screenshot.boot.menu.png" alt="Easy point and click interface anyone can use"></a>
 
 ## Downloads
 
