@@ -439,7 +439,7 @@ sub update_backup_progress {
     set_status(loc("Preparing to create backup of Drive [_1], Part [_2]...",$dn, $pn));
     print "*** ".loc("Processing [_1] ([_2]) using [_3]...",$part,$fs,$tool)."\n";
     system("umount /dev/$part 2>&1");
-    my $backup_cmd = "( $tool $extra_args -F -L /$dest/$file"."_part$pn"."_partclone.log -s /dev/$part | gzip -c --fast | split -d -a 3 -b 2048m - /$dest/$file"."_part$pn. ) 2>&1 |";
+    my $backup_cmd = "( $tool $extra_args -F -L /$dest/$file"."_part$pn"."_partclone.log -s /dev/$part | pigz -c --fast | split -d -a 3 -b 2048m - /$dest/$file"."_part$pn. ) 2>&1 |";
     print "*** ".loc("Executing: ")."$backup_cmd\n";
     open $PROGRESS, "$backup_cmd";
     sleep(0.5);
