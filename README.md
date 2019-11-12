@@ -64,3 +64,4 @@ Below table shows an abridged history of Rescuezilla. See the CHANGELOG for more
 
 See [Building ISO image](docs/build_instructions/BUILD.ISO.IMAGE.md)
 
+[Download pre-built Rescuezilla ISO images on the GitHub Releases page](https://github.com/rescuezilla/rescuezilla/releases)
