@@ -438,7 +438,7 @@ sub update_backup_progress {
     system("echo $tool > $dest/$file.partclone.command.part$pn");
     set_status(loc("Preparing to create backup of Drive [_1], Part [_2]...",$dn, $pn));
     print "*** ".loc("Processing [_1] ([_2]) using [_3]...",$part,$fs,$tool)."\n";
-    umount_device("/dev/$part");
+    system("umount /dev/$part 2>&1");
     my $backup_cmd = "( $tool $extra_args -F -L /$dest/$file"."_part$pn"."_partclone.log -s /dev/$part | pigz -c --fast | split -d -a 3 -b 2048m - /$dest/$file"."_part$pn. ) 2>&1 |";
     print "*** ".loc("Executing: ")."$backup_cmd\n";
     open $PROGRESS, "$backup_cmd";
@@ -556,7 +556,7 @@ sub update_backup_progress {
         # Unmount stuff
         system("sync");
         sleep(0.5);
-        umount_device(MOUNT_POINT);
+        system("umount ".MOUNT_POINT);
         beeper('done');
         my $elapsed = sprintf("%.1f", (time()-$status{'start'})/60);
         message_box(loc("Backup image saved in [_1] minutes.", $elapsed));
@@ -1330,21 +1330,6 @@ sub mount_data {
   my $mounted = `mount | grep '$mp' | wc -l`;
   return $mounted;
 }
-
-sub umount_device {
-  my $device_node = $_[0];
-  my $has_unmounted = false;
-  while ( $has_unmounted == false ) {
-    system("umount $device_node 2>&1");
-    if ($? == 0) {
-      $has_unmounted = true;
-    } else {
-        my $unmount_msg = loc("Failed to unmount: [_1]. Please exit any other applications using this device and click 'OK'", "/dev/$part");
-        error_message($data);
-    }
-  }
-}
-
 
 sub set_usb_dropdown {
   # Get all physical drives that are USB drives
