@@ -1,0 +1,175 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-10-25 20:36+1030\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Carlos Luna <caralu74@protonmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Backup and Restore Utility"
+msgstr "Utilidad de copia de seguridad y restauración"
+
+msgid "Welcome"
+msgstr "Bienvenido"
+
+msgid ""
+"Easily create a backup image of your computer, or completely restore from "
+"one.  Click an option to begin:"
+msgstr "Cree fácilmente una imagen de copia de seguridad de su equipo o restaurela completamente desde.\n\n"
+"Haga clic en una de las opciones para empezar:"
+
+msgid "Backup"
+msgstr "Copia de respaldo/seguridad"
+
+msgid "Restore"
+msgstr "Restaurar"
+
+msgid ""
+"Click on the box below to select the source drive that you would like to "
+"create a backup image from."
+msgstr "En el siguiente campo, seleccione el disco/unidad (disco/unidad de origen) desde el que desea crear una imagen de copia de seguridad."
+
+msgid "Step 1"
+msgstr "Paso 1"
+
+msgid ""
+"Select which parts of the drive to create a backup of.  Leave all parts "
+"selected if you are unsure."
+msgstr "Seleccione qué particiones de la unidad se deben respaldar. En caso de duda, seleccione todas las partes."
+
+msgid "Step 2"
+msgstr "Paso 2"
+
+msgid "Connected directly to my computer"
+msgstr "Conectar directamente a mi computador"
+
+msgid "Shared over a network"
+msgstr "Conectar a travez de la red"
+
+msgid "Where is the destination drive?"
+msgstr "¿Dónde está el disco de destino?"
+
+msgid "Select destination drive:"
+msgstr "Seleccione la unidad de destino:"
+
+msgid "Search network"
+msgstr "Buscar red"
+
+msgid "Server or share location:"
+msgstr "Servidor o ubicación compartida:"
+
+msgid "Username (Optional):"
+msgstr "Nombre de usuario (Opcional):"
+
+msgid "Password (Optional):"
+msgstr "Contraseña (Opcional):"
+
+msgid "Domain (Optional):"
+msgstr "Dominio (Opcional):"
+
+msgid "Select network-shared storage destination:"
+msgstr "Seleccione el destino de almacenamiento compartido en red:"
+
+msgid "Step 3"
+msgstr "Paso 3"
+
+msgid ""
+"Click <b>Browse</b> to select or create a folder on the destination drive "
+"where your new backup image will be saved.\n"
+"\n"
+"The folder a backup is saved in is usually a description of the computer, e."
+"g. <b>office1</b> or <b>zack-laptop</b>."
+msgstr "Haga clic en <b>Examinar</b> o cree una carpeta en la unidad de destino donde se almacenará la imagen de copia de seguridad. \n"
+"La carpeta en la que se guarda una copia de seguridad suele ser una descripción del computador, e."
+"j. <b>MI_PC</b> o <b>Portatil-Juan</b>."
+
+msgid "Browse..."
+msgstr "Buscar ..."
+
+msgid "Step 4"
+msgstr "Paso 4"
+
+msgid ""
+"Provide a unique name for this backup image, such as the date.  Today's date "
+"is automatically entered for you below.\n"
+"\n"
+"You may only use letters, numbers, and dashes in your backup name."
+msgstr "Proporcione un nombre único para esta imagen de copia de seguridad, como la fecha.  La fecha de hoy "
+"se ingresa automáticamente para usted a continuación. \n"
+"\n"
+"Sólo puedes usar letras, números y guiones en el nombre de la copia de seguridad."
+
+msgid "Step 5"
+msgstr "Paso 5"
+
+msgid ""
+"Backing up your system to the location you selected.  This may take an hour "
+"or more depending on the speed of your computer and the amount of data."
+msgstr "Haciendo una copia de seguridad de su sistema en la ubicación que seleccionó.  Esto puede tardar una hora "
+"o más dependiendo de la velocidad de su computador y de la cantidad de datos."
+
+msgid "Time Elapsed / Remaining: "
+msgstr "Tiempo transcurrido / Restante: "
+
+msgid "Step 6"
+msgstr "Paso 6"
+
+msgid "Cancel"
+msgstr "Cancel"
+
+msgid "Next >"
+msgstr "Siguiente >"
+
+msgid "Where is the source drive?"
+msgstr "¿Donde esta la unidad de origen?"
+
+msgid "Select source drive:"
+msgstr "Seleccione la unidad de origen:"
+
+msgid "Select network-shared storage source:"
+msgstr "Seleccione la fuente de almacenamiento compartida en red:"
+
+msgid "Click the box below to select the image file to restore from."
+msgstr "Haga clic en el cuadro a continuación para seleccionar el archivo de imagen para restaurar."
+
+msgid "Select Backup Image"
+msgstr "Seleccione la imagen de copia de seguridad"
+
+msgid ""
+"Select the destination drive you wish to overwrite and restore the selected "
+"image to."
+msgstr "Seleccione el disco de destino que desea restaurar, utilizando el archivo de imagen de copia de seguridad seleccionado. "
+"¡Se borran todos los datos existentes en la unidad de destino!"
+msgid ""
+"Restoring your system from the image you selected.  This may take an hour or "
+"more depending on the speed of your computer and the amount of data."
+msgstr "Restaurando su sistema desde la imagen seleccionada. Esto puede demorarse una hora o "
+"más dependiendo de la velocidad de su computador y de la cantidad de datos"
+msgid ""
+"Click on the box below to select the USB drive (at least 128MB) you want to "
+"install to. "
+msgstr "Haga clic en el cuadro de abajo para seleccionar la unidad USB (al menos 128MB) en la que "
+"desea instalar. "
+
+msgid ""
+"Installing the software to the selected USB drive.  This will take "
+"approximately three minutes."
+msgstr "Instalando el software en la unidad USB seleccionada. Esto tomará"
+"aproximadamente tres minutos."
+
+msgid "USB Installer"
+msgstr "Instalador USB"
+
+msgid "Select an Option"
+msgstr "Seleccione una opción"
