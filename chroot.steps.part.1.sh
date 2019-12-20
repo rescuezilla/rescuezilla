@@ -139,7 +139,8 @@ apt-get install --yes --no-install-recommends discover \
                                               xfsprogs \
                                               udftools \
                                               language-pack-gnome-fr-base \
-                                              language-pack-gnome-de-base
+                                              language-pack-gnome-de-base \
+                                              language-pack-gnome-es-base
 
 if [[ $? -ne 0 ]]; then
     echo "Error: Failed to install packages."

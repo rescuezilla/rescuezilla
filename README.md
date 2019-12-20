@@ -25,6 +25,7 @@ Rescuezilla has been translated into the following languages:
 * English
 * Français
 * Deutsch
+* Español
 
 See [Translations HOWTO](https://github.com/rescuezilla/rescuezilla/wiki/Translations-HOWTO) for more information.
 
