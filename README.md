@@ -22,10 +22,10 @@ Rescuezilla can be booted on any PC or Mac from a USB stick, or CD, and uses the
 
 Rescuezilla has been translated into the following languages:
 
-* English
-* Français
-* Deutsch
-* Español
+* English (en-US)
+* Français (fr-FR)
+* Deutsch (de-DE)
+* Español (es-ES)
 
 See [Translations HOWTO](https://github.com/rescuezilla/rescuezilla/wiki/Translations-HOWTO) for more information.
 
