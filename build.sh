@@ -113,13 +113,17 @@ for lang in "${LANG_CODES[@]}"; do
         "graphical-shutdown"
     )
     for app_name in "${APP_NAMES[@]}"; do
-        msgfmt --output-file="$app_name.mo" "$app_name.ko"
-        if [[ $? -ne 0 ]]; then
-            echo "Error: Unable to convert $app_name's $lang translation from text-based ko format to binary mo format."
-            exit 1
+        if [[ ! -f "$app_name.ko" ]]; then
+            echo "Warning: $BASE/$app_name.ko translation for $lang does not exist. Skipping."
+        else
+            msgfmt --output-file="$app_name.mo" "$app_name.ko"
+            if [[ $? -ne 0 ]]; then
+                echo "Error: Unable to convert $app_name's $lang translation from text-based ko format to binary mo format."
+                exit 1
+            fi
+            # Remove unused *.ko file
+            rm "$app_name.ko"
         fi
-        # Remove unused *.ko file
-        rm "$app_name.ko"
     done
     popd
 done
