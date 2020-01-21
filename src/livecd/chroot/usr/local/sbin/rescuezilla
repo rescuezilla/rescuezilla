@@ -438,7 +438,8 @@ sub update_backup_progress {
     system("echo $tool > $dest/$file.partclone.command.part$pn");
     set_status(loc("Preparing to create backup of Drive [_1], Part [_2]...",$dn, $pn));
     print "*** ".loc("Processing [_1] ([_2]) using [_3]...",$part,$fs,$tool)."\n";
-    system("umount /dev/$part 2>&1");
+    umount_warn_on_busy("/dev/$part");
+
     my $backup_cmd = "( $tool $extra_args -F -L /$dest/$file"."_part$pn"."_partclone.log -s /dev/$part | pigz -c --fast | split -d -a 3 -b 2048m - /$dest/$file"."_part$pn. ) 2>&1 |";
     print "*** ".loc("Executing: ")."$backup_cmd\n";
     open $PROGRESS, "$backup_cmd";
@@ -556,7 +557,7 @@ sub update_backup_progress {
         # Unmount stuff
         system("sync");
         sleep(0.5);
-        system("umount ".MOUNT_POINT);
+        umount_warn_on_busy(MOUNT_POINT);
         beeper('done');
         my $elapsed = sprintf("%.1f", (time()-$status{'start'})/60);
         message_box(loc("Backup image saved in [_1] minutes.", $elapsed));
@@ -814,7 +815,7 @@ sub do_restore {
     on_main_app_destroy();
     die("Aborting.\n");
   }
-  system("umount /mnt/$dest_drive?* 2>&1");
+  umount_warn_on_busy("/mnt/$dest_drive?*");
   sleep(0.5);
   print "*** ".loc("Writing MBR to [_1]",$dest_drive)."\n";
   set_status(loc("Writing master boot record to destination drive..."));
@@ -835,7 +836,7 @@ sub do_restore {
   sleep(0.5);
   print "*** ".loc("Reloading partition table from [_1]",$dest_drive)."\n";
   set_status(loc("Reloading new partition table from destination drive..."));
-  system("umount /dev/$dest_drive?* 2>&1");
+  umount_warn_on_busy("/dev/$dest_drive?*");
   system("partprobe /dev/$dest_drive");
   sleep(1);
   $status{'start'} = time();
@@ -890,10 +891,10 @@ sub update_restore_progress {
   my $src_mbr = $src.'.mbr';
   # See if the filehandle is open
   if (!defined($PROGRESS)) {
-    system("umount /mnt/$dest_drive$pn 2>&1; dd if=/dev/zero of=/dev/$dest_drive$pn bs=1K count=1000; sync");
+    umount_warn_on_busy("/dev/$dest_drive$pn");
+    umount_warn_on_busy("/dev/$part");
+    system("dd if=/dev/zero of=/dev/$dest_drive$pn bs=1K count=1000; sync");
     set_status(loc("Preparing to restore backup for Drive [_1], Part [_2]...",$dn,$pn));
-    system("umount /dev/$dest_drive$pn 2>&1");
-    system("umount /dev/$part 2>&1");
     my $backup_version = `cat /$src.rescuezilla.backup_version`;
     chomp($backup_version);
     print loc("Detected backup created with [_1]",$backup_version)."\n";
@@ -1033,7 +1034,7 @@ sub update_restore_progress {
         set_status(loc("Rewriting master boot record to destination drive..."));
         system("dd of=/dev/$dest_drive if=$src_mbr bs=32768 count=1; sync;");
         sleep(0.5);
-        system("umount ".MOUNT_POINT);
+        umount_warn_on_busy(MOUNT_POINT);
         my $elapsed = sprintf("%.1f", (time()-$status{'start'})/60);
         print ">>> ".loc("Operation complete.")."\n";
         set_status(loc("Restore complete."));
@@ -1070,11 +1071,26 @@ sub get_confirmation {
   # Get confirmation from a yes/no dialog
   our $builder;
   my $question = loc("Are you sure?");
-	if (defined($_[0])) { $question = $_[0]; }
+  if (defined($_[0])) { $question = $_[0]; }
   my $dialog = Gtk2::MessageDialog->new($builder->get_object('main_app'),
     'destroy-with-parent',
     'warning', # message type
     'yes-no', # which set of buttons?
+    $question);
+  my $response = $dialog->run;
+  $dialog->destroy;
+  return $response;
+}
+
+sub get_retry_confirmation {
+  # Get user response to potentially fatal error
+  our $builder;
+  my $question = loc("Are you sure?");
+  if (defined($_[0])) { $question = $_[0]; }
+  my $dialog = Gtk2::MessageDialog->new($builder->get_object('main_app'),
+    'destroy-with-parent',
+    'warning', # message type
+    'ok-cancel', # which set of buttons?
     $question);
   my $response = $dialog->run;
   $dialog->destroy;
@@ -1270,7 +1286,7 @@ sub mount_data {
   our %shares;
   our %status;
   system("mkdir -p ".MOUNT_POINT);
-  system("umount ".MOUNT_POINT." 2>&1");
+  umount_warn_on_busy(MOUNT_POINT);
   our $builder;
   for ($status{'mount_type'}) {
     if (/DEV/) {
@@ -1329,6 +1345,74 @@ sub mount_data {
   my $mp = MOUNT_POINT;
   my $mounted = `mount | grep '$mp' | wc -l`;
   return $mounted;
+}
+
+sub umount_partition {
+  # Attempts to unmount a partition and returns whether the partition is still mounted.
+  # Checking whether the drive is still mounted is required because both umount'ing an
+  # already unmounted drive, and umount'ing a busy drive return the exit code 32,
+  # which means "mount failure". The `findmnt` application is a portable way to
+  # delineate this two situations.
+  #
+  # Input arguments:
+  #   0, mount_point: The device node (or "/dev/sda") or mount point ("/mnt/test_path").
+  #                   Note: Wildcards and asterisks *are* supported.
+  #
+  # Returns:
+  #   list of partitions which are still mounted. Success if length 0.
+
+  my $mount_point = $_[0];
+
+  # Attempt to unmount the mount point.
+  system("umount ".$mount_point." 2>&1");
+
+  # Use findmnt to robustly check whether the provided path (which may contain wildcard
+  # characters) is mounted on Linux.
+  my @partition_list = glob("$mount_point");
+  my @still_mounted = ();
+  foreach my $partition (@partition_list) {
+    # Extract the "/dev/..." device node string from the input (which may be a mount point)
+    my $device_node = `findmnt --raw --noheadings --output SOURCE \'$partition\'`;
+    chomp($device_node);
+    if ($device_node ne '') {
+      push @still_mounted, $device_node;
+    }
+  }
+  return @still_mounted;
+} 
+
+sub umount_warn_on_busy {
+  # Unmounts a partition. If the partition is busy, it will warn the user and
+  # allow the user to either fix the problem or abort the application.
+  #
+  # Input arguments:
+  #   0, mount_point: The device node (or "/dev/sda") or mount point ("/mnt/test_path").
+  #                   Note: Wildcards and asterisks *are* supported.
+
+  my $mount_point = $_[0];
+  # Keep looping until the busy partition list is empty
+  my @busy_device_node_list = umount_partition("$mount_point");
+  print "The length of the busy partition is ".scalar(@busy_device_node_list)." \n";
+  while (scalar(@busy_device_node_list) != 0) {
+    my $partition_pretty_string = "";
+    foreach my $device_node (@busy_device_node_list) {
+      # Retrieve the device node and mount path (caller could have provided either)
+      my $mount_path = `findmnt --raw --noheadings --output TARGET \'$device_node\'`;
+      chomp($mount_path);
+      $partition_pretty_string = $partition_pretty_string.$device_node.": ".$mount_path."\n";
+      print loc("Unable to unmount partition: [_1]", $partition_pretty_string)."\n";
+    }
+    my $partition_busy_msg = loc("Partition(s) were unable to be unmounted. Please close any applications using the following partition(s) and click OK.\n\n [_1]",$partition_pretty_string);
+    my $response = get_retry_confirmation($partition_busy_msg);
+    if ($response eq 'cancel') {
+      $response = get_confirmation(loc("Are you sure you want to exit?"));
+      if ($response eq 'yes') {
+        on_main_app_destroy();
+        die(loc("Aborting.")."\n");
+      }
+    }
+    @busy_device_node_list = umount_partition("$mount_point");
+  }
 }
 
 sub set_usb_dropdown {
