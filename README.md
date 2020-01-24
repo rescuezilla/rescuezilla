@@ -38,18 +38,6 @@ See [Translations HOWTO](https://github.com/rescuezilla/rescuezilla/wiki/Transla
 <a href="docs/images/screenshot.select.backup.destination.drive.png"><img width=245 height=183 src="docs/images/screenshot.select.backup.destination.drive.png" alt="Save to hard drive, network shared folder, or FTP server"></a>
 <a href="docs/images/screenshot.boot.menu.png"><img width=245 height=183 src="docs/images/screenshot.boot.menu.png" alt="Easy point and click interface anyone can use"></a>
 
-## Downloads
-
-Rescuezilla releases (including the old, out-of-date _Redo Backup and Recovery_ ISO images) can be found at the GitHub release page: https://github.com/rescuezilla/rescuezilla/releases
-
-Please consult the [FAQ](https://rescuezilla.com/help.html) and the [limitations page](https://github.com/rescuezilla/rescuezilla/wiki/Rescuezilla-Limitations) to determine if Rescuezilla is right for you.
-
-Please consider becoming a [Patreon](https://www.patreon.com/rescuezilla) to help fund Rescuezilla's continued development!
-
-## Future development
-
-Rescuezilla features are prioritized according to the [roadmap](https://github.com/rescuezilla/rescuezilla/wiki/Rescuezilla-Project-Roadmap). Please consider becoming a [Patreon](https://www.patreon.com/rescuezilla) to help fund Rescuezilla's continued development!
-
 ## History
 
 Below table shows an abridged history of Rescuezilla. See the CHANGELOG for more information.
@@ -65,4 +53,16 @@ Below table shows an abridged history of Rescuezilla. See the CHANGELOG for more
 
 See [Building ISO image](docs/build_instructions/BUILD.ISO.IMAGE.md)
 
-[Download pre-built Rescuezilla ISO images on the GitHub Releases page](https://github.com/rescuezilla/rescuezilla/releases)
+## Future development
+
+Rescuezilla features are prioritized according to the [roadmap](https://github.com/rescuezilla/rescuezilla/wiki/Rescuezilla-Project-Roadmap). Please consider becoming a [Patreon](https://www.patreon.com/rescuezilla) to help fund Rescuezilla's continued development!
+
+## Limitations and support
+
+Please consult the [FAQ](https://rescuezilla.com/help.html) and the [limitations page](https://github.com/rescuezilla/rescuezilla/wiki/Rescuezilla-Limitations) to determine if Rescuezilla is right for you.
+
+## Downloads
+
+[Download Rescuezilla ISO images on the GitHub Release page](https://github.com/rescuezilla/rescuezilla/releases)
+
+If you want the project to continue, please consider [supporting the project on Patreon to help fund Rescuezilla's continued development](https://www.patreon.com/rescuezilla)!
