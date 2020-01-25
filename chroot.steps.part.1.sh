@@ -56,7 +56,7 @@ apt-get install --yes --no-install-recommends discover \
                                               xinit \
                                               openbox \
                                               xserver-xorg-hwe-18.04 \
-                                              xserver-xorg-video-vesa-hwe-18.04 \
+                                              xserver-xorg-video-all-hwe-18.04 \
                                               x11-xserver-utils \
                                               xterm \
                                               network-manager-gnome \
