@@ -79,6 +79,9 @@ msgstr "Mot de passe : (optionnel):"
 msgid "Domain (Optional):"
 msgstr "Domaine : (optionnel):"
 
+msgid "Version (Optional):"
+msgstr ""
+
 msgid "Select network-shared storage destination:"
 msgstr "Sélectionnez le partage réseau de destination :"
 

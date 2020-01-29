@@ -78,6 +78,9 @@ msgstr "Contraseña (Opcional):"
 msgid "Domain (Optional):"
 msgstr "Dominio (Opcional):"
 
+msgid "Version (Optional):"
+msgstr ""
+
 msgid "Select network-shared storage destination:"
 msgstr "Seleccione el destino de almacenamiento compartido en red:"
 

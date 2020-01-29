@@ -259,6 +259,7 @@ sub backup_step {
       $status{'mount_user'} = $builder->get_object('backup_dest_user')->get_text();
       $status{'mount_pass'} = $builder->get_object('backup_dest_pass')->get_text();
       $status{'mount_domain'} = $builder->get_object('backup_dest_domain')->get_text();
+      $status{'mount_version'} = $builder->get_object('backup_dest_version')->get_text();
     }
     my $mount_ok = mount_data();
     if ($mount_ok==0) {
@@ -320,6 +321,7 @@ sub backup_dest_network_changed {
     my ($type, $server) = split(/\|/, $share);
     my $server_editable = TRUE;
     my $domain_editable = TRUE;
+    my $version_editable = TRUE;
     if ($server eq '') {
       if ($type eq 'FTP') {
         # It's a manually-entered FTP share
@@ -334,10 +336,14 @@ sub backup_dest_network_changed {
       $server =~ s/^smb:|^ftp:\/\///g;
       $server_editable = FALSE;
     }
-    if ($type ne 'SMB') { $domain_editable = FALSE; }
+    if ($type ne 'SMB') {
+      $domain_editable = FALSE;
+      $version_editable = FALSE;
+    }
     $builder->get_object('backup_dest_server')->set_text($server);
     $builder->get_object('backup_dest_server')->set_sensitive($server_editable);
     $builder->get_object('backup_dest_domain')->set_sensitive($domain_editable);
+    $builder->get_object('backup_dest_version')->set_sensitive($version_editable);
   }
 }
 
@@ -663,6 +669,7 @@ sub restore_step {
       $status{'mount_user'} = $builder->get_object('restore_source_user')->get_text();
       $status{'mount_pass'} = $builder->get_object('restore_source_pass')->get_text();
       $status{'mount_domain'} = $builder->get_object('restore_source_domain')->get_text();
+      $status{'mount_version'} = $builder->get_object('restore_source_version')->get_text();
     }
     my $mount_ok = mount_data();
     if ($mount_ok==0) {
@@ -718,6 +725,7 @@ sub restore_source_network_changed {
     my ($type, $server) = split(/\|/, $share);
     my $server_editable = TRUE;
     my $domain_editable = TRUE;
+    my $version_editable = TRUE;
     if ($server eq '') {
       if ($type eq 'FTP') {
         # It's a manually-entered FTP share
@@ -732,10 +740,14 @@ sub restore_source_network_changed {
       $server =~ s/^smb:|^ftp:\/\///g;
       $server_editable = FALSE;
     }
-    if ($type ne 'SMB') { $domain_editable = FALSE; }
+    if ($type ne 'SMB') {
+      $domain_editable = FALSE;
+      $version_editable = FALSE;
+    }
     $builder->get_object('restore_source_server')->set_text($server);
     $builder->get_object('restore_source_server')->set_sensitive($server_editable);
     $builder->get_object('restore_source_domain')->set_sensitive($domain_editable);
+    $builder->get_object('restore_source_version')->set_sensitive($version_editable);
   }
 }
 
@@ -1314,6 +1326,7 @@ sub mount_data {
       if ($status{'mount_user'} ne '') { push(@smbargs, "username=".$status{'mount_user'}); }
       if ($status{'mount_pass'} ne '') { push(@smbargs, "password=".$status{'mount_pass'}); }
       if ($status{'mount_domain'} ne '') { push(@smbargs, "domain=".$status{'mount_domain'}); }
+      if ($status{'mount_version'} ne '') { push(@smbargs, "vers=".$status{'mount_version'}); }
       my $cred = join("\n", @smbargs);
       if ($cred eq '') { $args = "guest"; }
       else {
