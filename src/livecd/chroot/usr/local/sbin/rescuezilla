@@ -1320,30 +1320,33 @@ sub mount_data {
       }
     } elsif (/SMB/) {
       # Mount a network share
-      my $args;
-      my $tmpfile = '';
-      my @smbargs = ();
-      if ($status{'mount_user'} ne '') { push(@smbargs, "username=".$status{'mount_user'}); }
-      if ($status{'mount_pass'} ne '') { push(@smbargs, "password=".$status{'mount_pass'}); }
-      if ($status{'mount_domain'} ne '') { push(@smbargs, "domain=".$status{'mount_domain'}); }
-      if ($status{'mount_version'} ne '') { push(@smbargs, "vers=".$status{'mount_version'}); }
-      my $cred = join("\n", @smbargs);
-      if ($cred eq '') { $args = "guest"; }
-      else {
-        $tmpfile = `mktemp`;
-        chomp($tmpfile);
-        open(my $tmpfd, '>', $tmpfile);
+      my $smb_args;
+
+      # Write CIFS/SMB username/password credentials to a tmp file, so it does not get logged.
+      my @smb_credential_args = ();
+      if ($status{'mount_user'} ne '') { push(@smb_credential_args, "username=".$status{'mount_user'}); }
+      if ($status{'mount_pass'} ne '') { push(@smb_credential_args, "password=".$status{'mount_pass'}); }
+      my $cred = join("\n", @smb_credential_args);
+      my $credential_tmp_file = '';
+      if ($cred eq '') {
+        $smb_args = "guest";
+      } else {
+        $credential_tmp_file = `mktemp`;
+        chomp($credential_tmp_file);
+        open(my $tmpfd, '>', $credential_tmp_file);
         print $tmpfd "$cred\n";
         close($tmpfd);
-        $args = "credentials='$tmpfile'";
-        # If the user does not supply password moutnt would try to prompt for
+        $smb_args = "credentials='$credential_tmp_file'";
+        # If the user does not supply password mount would try to prompt for
         # one locking up the application unless guest is specified.
-        if ($status{'mount_pass'} eq '') { $args = "$args,guest"; }
+        if ($status{'mount_pass'} eq '') { $smb_args = "$smb_args,guest"; }
       }
-      my $cifs_mount = "mount.cifs '$status{'mount_source'}' ".MOUNT_POINT." -o $args";
+      if ($status{'mount_domain'} ne '') { $smb_args = "$smb_args,domain=".$status{'mount_domain'}; }
+      if ($status{'mount_version'} ne '') { $smb_args = "$smb_args,vers=".$status{'mount_version'}; }
+      my $cifs_mount = "mount.cifs '$status{'mount_source'}' ".MOUNT_POINT." -o $smb_args";
       print "* ".loc("Executing: ").$cifs_mount."\n";
       system($cifs_mount);
-      if ($tmpfile ne '') { system(("shred", "-u",  $tmpfile));}
+      if ($credential_tmp_file ne '') { system(("shred", "-u",  $credential_tmp_file));}
     } elsif (/FTP/) {
       # Mount an FTP server
       my $ftpargs = '';
