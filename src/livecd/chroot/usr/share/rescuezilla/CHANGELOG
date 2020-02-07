@@ -25,7 +25,6 @@
 * Stopped printing of FTP credentials when mounting drives
 * Removed deprecated sfdisk ‘-x’ argument used to save extended partition information
 * Replaced deprecated ‘sfdisk -R’ call with ‘blockdev –rereadpt’, to force reload partition info
-* Fixed Master Boot Record size being incorrectly 32768 bytes, not 512 bytes (thanks louvetch)
 * Writes Rescuezilla version in the backup directory to help backwards compatibility
 * Writes partition information during backup so Ubuntu 18.04 partclone can correctly restore
 * Moved script from /sbin/redobackup to /usr/local/sbin/rescuezilla as per File Hierarchy Standard
