@@ -1407,7 +1407,6 @@ sub umount_warn_on_busy {
   my $mount_point = $_[0];
   # Keep looping until the busy partition list is empty
   my @busy_device_node_list = umount_partition("$mount_point");
-  print "The length of the busy partition is ".scalar(@busy_device_node_list)." \n";
   while (scalar(@busy_device_node_list) != 0) {
     my $partition_pretty_string = "";
     foreach my $device_node (@busy_device_node_list) {
