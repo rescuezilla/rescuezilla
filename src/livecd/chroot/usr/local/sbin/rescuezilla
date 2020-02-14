@@ -904,7 +904,6 @@ sub update_restore_progress {
   # See if the filehandle is open
   if (!defined($PROGRESS)) {
     umount_warn_on_busy("/dev/$dest_drive$pn");
-    umount_warn_on_busy("/dev/$part");
     system("dd if=/dev/zero of=/dev/$dest_drive$pn bs=1K count=1000; sync");
     set_status(loc("Preparing to restore backup for Drive [_1], Part [_2]...",$dn,$pn));
     my $backup_version = `cat /$src.rescuezilla.backup_version`;
