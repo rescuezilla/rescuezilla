@@ -206,6 +206,10 @@ sub main {
   my $welcome = loc("Welcome to Rescuezilla");
   my $tools_msg = loc("Many other tools are available from the Start menu in the bottom left corner");
   system("notify-send \"".$welcome."\" \"".$tools_msg."\" -i info");
+  print loc("Disabling swap partitions")."\n";
+  # Ensure swap is turned off during every launch. Potential gotcha: GParted
+  # reportedly re-enables swap.
+  system("swapoff --all");
   Gtk2->main;
 }
 
@@ -2001,7 +2005,7 @@ sub save_partition_list {
   # Convert array into string with line breaks after each partition
   my $linebroken_partition_string = join("\n", @partitions);
   save_file($linebroken_partition_string, $output_file);
-  print "\t* ".loc("Partition list saved to [_1]",$file_backup_path)."\n";
+  print "\t* ".loc("Partition list saved to [_1]",$output_file)."\n";
 }
 
 
