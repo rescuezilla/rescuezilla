@@ -381,9 +381,7 @@ sub do_backup {
   print "\t* ".loc("Size of [_1] ([_2] bytes) saved to [_3]",$src_drive,$bytes,$file_size_path)."\n";
   # Save list of partitions we will be backing up
   my @partlist = get_selected_partitions('backup_partitions');
-  my $partlist_str = join("\n", @partlist);
-  my $file_backup_path = "$dest/$file.backup";
-  save_file($partlist_str, $file_backup_path);
+  save_partition_list(\@partlist, "$dest/$file.backup");
   # Get the total bytes we're going to be saving
   #print Dumper(%drives);
   my $total_bytes = 0;
@@ -402,7 +400,6 @@ sub do_backup {
   $status{'done_bytes'} = 0;
   $status{'frame'} = 0;
   $status{'free'} = get_free_space();
-  print "\t* ".loc("Partition list saved to [_1]",$file_backup_path)."\n";
   # Create backup by calling progress sub
   print "\t* ".loc("Total partitions to save: [_1]",$status{'total_parts'})."\n";
   print "\t* ".loc("Total bytes to save: [_1]",$status{'total_bytes'})."\n";
@@ -1977,6 +1974,36 @@ sub join_device_string {
   }
   return $joined;
 }
+
+sub save_partition_list {
+  # Takes an array containing a list of partitions and saves it to an output file. More recent device node patterns,
+  # such as NVMe drives' nvmeAnBpC are rewritten in the format sdzC to preserve the compatibility of Rescuezilla v1.0.5
+  # to be able to restore NVMe partitions to non-NVMe drives as it processes the source partition list during a
+  # restore operation.
+  #
+  # Input arguments:
+  #   partition array: An array containing the partitions being backed up. Eg, 'sda1', 'sda2', 'sda3'.
+  #   output file: Output file to write the partitions separated by a newline (\n)
+  my @partitions = @{$_[0]};
+  my $output_file = $_[1];
+
+  foreach my $part (@partitions) {
+     # During a restore process, the original partition string is processed. Given Rescuezilla v1.0.5 does not
+     # support the NVMe drive pattern (nvmeAnBpC), rewriting any NVMe drive patterns to an sdzC pattern means that
+     # Rescuezilla v1.0.5 is able to restore partitions which were originally backed up from an NVMe devices by
+     # newer version of Rescuezilla.
+     if ($part =~ /nvme.*/) {
+       my ($original_base_device, $original_partition_number) = split_device_string($part);
+       $part = join_device_string("sdz", $original_partition_number);
+     }
+  }
+
+  # Convert array into string with line breaks after each partition
+  my $linebroken_partition_string = join("\n", @partitions);
+  save_file($linebroken_partition_string, $output_file);
+  print "\t* ".loc("Partition list saved to [_1]",$file_backup_path)."\n";
+}
+
 
 sub get_drivetype {
   # Given an "sdX" device, return the string that indicates its type
