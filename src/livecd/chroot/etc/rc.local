@@ -20,4 +20,9 @@ hwclock -s --localtime --noadjfile
 # FIXME: user/group ownership are not tracked.
 chown -R ubuntu:ubuntu /home/ubuntu
 
+# Disable swap partitions as Rescuezilla for disaster recovery from dying disks
+# or in data forensics, situations where writing to a disk is a bad thing.
+# FIXME: Find a way ensure swap is never enabled including early in the boot process.
+swapoff --all
+
 exit 0
