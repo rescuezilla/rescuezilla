@@ -206,7 +206,8 @@ sub main {
   my $welcome = loc("Welcome to Rescuezilla");
   my $tools_msg = loc("Many other tools are available from the Start menu in the bottom left corner");
   system("notify-send \"".$welcome."\" \"".$tools_msg."\" -i info");
-  print loc("Disabling swap partitions")."\n";
+  # Log message are usually relevant only to developers, no need to localize them, especially as enduser may not familiar with Linux.
+  print "Disabling swap partitions\n";
   # Ensure swap is turned off during every launch. Potential gotcha: GParted
   # reportedly re-enables swap.
   system("swapoff --all");
@@ -1883,6 +1884,7 @@ sub get_enduser_drive_number {
       $base_device = $input_partition;
     }
   } elsif ($lsblk_exit_code == 1) {
+    # Error log message relevant only for developers, no need to localize them for enduser not familiar with Linux.
     print "lsblk reported error.\n";
     return -1;
   } elsif ($lsblk_exit_code == 32) {
@@ -1909,6 +1911,7 @@ sub get_enduser_drive_number {
     $index++;
   }
   if ($enduser_drive_number == -1) {
+    # Error log message relevant only for developers, no need to localize them for enduser not familiar with Linux.
     print "Could not find $base_device string in: @all_base_devices\n";
     return -1;
   }
@@ -1937,6 +1940,7 @@ sub split_device_string {
   my $partition_number = $input_partition;
   $partition_number =~ s/.*[a-zA-Z]//;
   if ($partition_number eq "") {
+    # Error log message relevant only for developers, no need to localize them for enduser not familiar with Linux.
     print "Input partition $input_partition could not be parsed.\n";
   } else {
     $partition_number = int($partition_number);
