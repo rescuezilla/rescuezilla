@@ -207,6 +207,12 @@ msgstr "Soll die Wiederherstellung tatsächlich auf das Quell - Laufwerk erfolge
 msgid "Aborting."
 msgstr ""
 
+#. Context for translators: The two popular unofficial updates of Redo Backup v1.0.4 by Sourceforge user louvetch have a major bug.
+#. This major bug affected both the English language and French language versions of this unofficial update. All data can be restored with careful
+#. manual intervention. Given the popularity of those unofficial updates, translating this error message is still important.
+msgid "The backup's extended partition information is empty or missing. This happens with incomplete backups created by an unofficial Redo Backup update. If the backup contains extended partitions, these will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore the extended partitions. Please consult [_1] for information and assistance. The destination drive has not yet been modified. Do you wish to continue with the restore?"
+msgstr ""
+
 msgid "The drive you are attempting to restore to is [_1] MB smaller than the original. You must restore to a drive that is the same size or larger than the original."
 msgstr "Das Laufwerk, das Sie versuchen wiederherzustellen, ist [_1] MB kleiner als das Original. Das Ziel - Laufwerk muss gleich groß oder größer, als das Original Lauferk, sein."
 
