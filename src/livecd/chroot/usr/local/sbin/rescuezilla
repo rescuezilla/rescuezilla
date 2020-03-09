@@ -803,7 +803,25 @@ sub do_restore {
   $src_bytes =~ s/\D//g;
   print "*** Size of original drive: $src_bytes bytes\n";
   my $src_fdisk_text = `cat $src_sfdisk`;
-  if ('sectors' eq fdisk_units($src_fdisk_text)) {
+  # louvetch's popular unofficial Ubuntu 16.04 Redo Backup v1.0.4 update writes empty sfdisk file, so the restore logic needs to carefully
+  # workaround this to preserve backwards compatibility (see https://github.com/rescuezilla/rescuezilla/issues/32 for more information)
+  my $louvetch_extended_partition_skip = 0;
+  my $is_empty_sfdisk = (("$src_fdisk_text" cmp "") == 0);
+  if ($is_empty_sfdisk) {
+    my $empty_sfdisk_bug_url = "https://github.com/rescuezilla/rescuezilla/wiki/Bugs-in-unofficial-Redo-Backup-updates#bugs-in-louvetchs-ubuntu-1604-releases";
+    # Context for translators: The two popular unofficial updates of Redo Backup v1.0.4 by Sourceforge user louvetch have a major bug.
+    # This major bug affected both the English language and French language versions of this unofficial update. All data can be restored with careful
+    # manual intervention. Given the popularity of those unofficial updates, translating this error message is still important.
+    my $empty_sfdisk_msg = loc("The backup's extended partition information is empty or missing. This happens with incomplete backups created by an unofficial Redo Backup update. If the backup contains extended partitions, these will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore the extended partitions. Please consult [_1] for information and assistance. The destination drive has not yet been modified. Do you wish to continue with the restore?", $empty_sfdisk_bug_url);
+    print "$empty_sfdisk_msg\n";
+    my $response = get_confirmation($empty_sfdisk_msg);
+    if ($response ne 'yes') {
+      on_main_app_destroy();
+      die("Aborting.\n");
+    }
+    $louvetch_extended_partition_skip = 1;
+  } elsif ('sectors' eq fdisk_units($src_fdisk_text)) {
+    # If sfdisk file is present, check whether the partition can be successfully restored.
     print "*** Reading original drive partition table.\n";
     my $src_bytes_fdisk = max(partends($src_fdisk_text));
     if ($src_bytes_fdisk > $src_bytes) {
@@ -811,13 +829,13 @@ sub do_restore {
     }
     $src_bytes = $src_bytes_fdisk;
     print "*** Size of original drive (from partition table): $src_bytes bytes\n";
-  }
-  my $dest_bytes = `/sbin/blockdev --getsize64 /dev/$dest_drive`;
-  $dest_bytes =~ s/\D//g;
-  print "*** Size of destination drive: $dest_bytes bytes\n";
-  if ($src_bytes > $dest_bytes) {
-    my $diff_mb = int((($src_bytes - $dest_bytes) / 1024) / 1024);
-    fatal_crash(loc("The drive you are attempting to restore to is [_1] MB smaller than the original. You must restore to a drive that is the same size or larger than the original.",$diff_mb));
+    my $dest_bytes = `/sbin/blockdev --getsize64 /dev/$dest_drive`;
+    $dest_bytes =~ s/\D//g;
+    print "*** Size of destination drive: $dest_bytes bytes\n";
+    if ($src_bytes > $dest_bytes) {
+      my $diff_mb = int((($src_bytes - $dest_bytes) / 1024) / 1024);
+      fatal_crash(loc("The drive you are attempting to restore to is [_1] MB smaller than the original. You must restore to a drive that is the same size or larger than the original.",$diff_mb));
+    }
   }
   open INFILE, $src_parts or fatal_crash(loc("Could not read from [_1]! Aborting.",$src_parts));
   my @partlist = <INFILE>;
@@ -839,11 +857,16 @@ sub do_restore {
   chomp($backup_version);
   print loc("Detected backup created with [_1]",$backup_version)."\n";
   my $restore_cmd = "";
-  if (("$backup_version" cmp "") == 0) {
-      # Using sfdisk version bundled with Redo Backup and Recovery v1.0.4, with the required arguments that have been removed from newer versions
-      system("sfdisk.v2.20.1 -fx /dev/$dest_drive < $src_sfdisk; sync");
+  if ($is_empty_sfdisk) {
+    # Handle restore for louvetch's unofficial Ubuntu 16.04 Redo Backup update (see https://github.com/rescuezilla/rescuezilla/issues/32)
+    print "Skipping restoring partition table using sfdisk, as backup's partition information is empty or missing\n";
   } else {
-      system("sfdisk -f /dev/$dest_drive < $src_sfdisk; sync");
+    if (("$backup_version" cmp "") == 0) {
+        # Using sfdisk version bundled with Redo Backup and Recovery v1.0.4, with the required arguments that have been removed from newer versions
+        system("sfdisk.v2.20.1 -fx /dev/$dest_drive < $src_sfdisk; sync");
+    } else {
+        system("sfdisk -f /dev/$dest_drive < $src_sfdisk; sync");
+    }
   }
   sleep(0.5);
   print "*** ".loc("Reloading partition table from [_1]",$dest_drive)."\n";
@@ -867,19 +890,27 @@ sub do_restore {
     my $part_check = `file /dev/$dest_partition_node | grep 'block special' | wc -l`;
     if ($part_check==1) {
       print loc("OK")."\n";
+      # Add the partition information to the global variables used to share state
+      # TODO: Overhaul this application to remove use of global variables to share state.
+      my $bytes = `cat /sys/block/$dest_drive/$dest_partition_node/size`;
+      chomp($bytes);
+      $bytes = abs(int($bytes*512));
+      print "*** ".loc("Device [_1] is [_2] bytes...",$dest_partition_node,$bytes)."\n";
+      # TODO: Indexing by source partition number (not dest). This is acceptable within current limitations
+      # TODO: (immature partition-to-partition backup), but should be rectified in future.
+      $drives{$dest_drive}{'parts'}{$src_partition_number}{'bytes'} = $bytes;
+      $drives{$dest_drive}{'parts'}{$src_partition_number}{'size'} = format_size($bytes);
+      $status{'total_bytes'} += $bytes;
     } else {
       print loc("FAIL")."\n";
-      fatal_crash(loc("The partition table did not restore properly. The backup image may contain all your data, but without a valid partition table, no data can be restored."));
+      # A partition table that did not restore properly is a fatal error.
+      # The only exception is when handling backwards compatibility for the Ubuntu 16.04-based unofficial Redo updates.
+      if ($louvetch_extended_partition_skip == 0) {
+        fatal_crash(loc("The partition table did not restore properly. The backup image may contain all your data, but without a valid partition table, no data can be restored."));
+      } else {
+        print "*** ".loc("The parititon table didn't restore properly but continuing with restore (louvetch extended partition)");
+      }
     }
-    my $bytes = `cat /sys/block/$dest_drive/$dest_partition_node/size`;
-    chomp($bytes);
-    $bytes = abs(int($bytes*512));
-    print "*** ".loc("Device [_1] is [_2] bytes...",$dest_partition_node,$bytes)."\n";
-    # TODO: Indexing by source partition number (not dest). This is acceptable within current limitations
-    # TODO: (immature partition-to-partition backup), but should be rectified in future.
-    $drives{$dest_drive}{'parts'}{$src_partition_number}{'bytes'} = $bytes;
-    $drives{$dest_drive}{'parts'}{$src_partition_number}{'size'} = format_size($bytes);
-    $status{'total_bytes'} += $bytes;
   }
   $status{'done_bytes'} = 0;
   print "*** ".loc("Restoring [_1] total bytes of partitioned space.",$status{'total_bytes'})."\n";
