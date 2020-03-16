@@ -222,6 +222,13 @@ msgstr "¡No se puede leer de [_1]! Abortando."
 msgid "Are you sure you want to restore the backup to /dev/[_1]? Doing so will permanently overwrite the data on this drive!"
 msgstr "¿Está seguro de que desea restaurar la copia respaldo/seguridad a /dev/[_1]? ¡Si lo hace, sobrescribirá permanentemente los datos de esta unidad/disco!"
 
+#. Context for translators: Two popular unofficial Redo Backup v1.0.4 updates by Sourceforge user chcatzsf have major bugs where bootloaders like GRUB are not not fully backed up, so Linux-based operating
+#. cannot boot after a restore. This bug only affected those two updates (German-language only) and the problem can be fixed with careful manual intervention. Translating this message into languages other
+#. than English and German is not required.
+#. Full details in: https://github.com/rescuezilla/rescuezilla/wiki/Bugs-in-unofficial-Redo-Backup-updates#bugs-in-chcatzsfs-ubuntu-1310-and-1404-releases-german-language-only
+msgid "The backup's bootloader data is shorter than expected. This happens with backups created by an unofficial Redo Backup update. If the backup contained certain bootloaders like GRUB, the restored hard drive will not boot correctly without a manual fix. All data is still fully recoverable but manual intervention may required to restore the bootloader. Please consult [_1] for information and assistance. The destination drive has not yet been modified. Do you wish to continue with the restore?"
+msgstr ""
+
 msgid "Writing MBR to [_1]"
 msgstr "Escribiendo MBR en [_1]"
 
