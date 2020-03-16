@@ -368,7 +368,7 @@ sub do_backup {
   my $enduser_drive_number = get_enduser_drive_number($src);
   my ($base_device, $partition_number) = split_device_string($src);
   my $src_drive = "/dev/$base_device";
-  # Save MBR
+  # Saves MBR, as well as the bytes containing the GRUB stage 1.5 boot loader
   system("dd if=$src_drive of=$dest/$file.mbr bs=32768 count=1");
   system("sfdisk -d $src_drive > $dest/$file.sfdisk");
   my $ptab = `sfdisk -d $src_drive`;
@@ -847,6 +847,27 @@ sub do_restore {
   }
   umount_warn_on_busy("/mnt/$dest_drive?*");
   sleep(0.5);
+
+  # Get filesize of MBR backup via stat array
+  my $src_mbr_size = ((stat $src_mbr)[7]);
+  # An old unofficial update of Redo Backup v1.0.4 changed backed up only 512 bytes from the start of the disk instead of 32,768 bytes. This means
+  # the GRUB stage 1.5 boot loader may be lost for any user who has created a backup using that old, unofficial update and is restoring to a disk that
+  # has since been erased. See the URL below for more information.
+  if ($src_mbr_size==512)  {
+    # Explain the situation to users with this issue and link to further information about how the GRUB boot loader can be regenerated, and confirm whether they wish to proceed.
+    my $truncated_bootloader_bug_url = "https://github.com/rescuezilla/rescuezilla/wiki/Bugs-in-unofficial-Redo-Backup-updates#bugs-in-chcatzsfs-ubuntu-1310-and-1404-releases-german-language-only";
+
+    # Context for translators: Two popular unofficial Redo Backup v1.0.4 updates by Sourceforge user chcatzsf have major bugs where bootloaders like GRUB are not not fully backed up, so Linux-based operating
+    # cannot boot after a restore. This bug only affected those two updates (German-language only) and the problem can be fixed with careful manual intervention. Translating this message into languages other
+    # than English and German is not required.
+    # Full details in: https://github.com/rescuezilla/rescuezilla/wiki/Bugs-in-unofficial-Redo-Backup-updates#bugs-in-chcatzsfs-ubuntu-1310-and-1404-releases-german-language-only
+    my $missing_bootloader_bytes_msg = loc("The backup's bootloader data is shorter than expected. This happens with backups created by an unofficial Redo Backup update. If the backup contained certain bootloaders like GRUB, the restored hard drive will not boot correctly without a manual fix. All data is still fully recoverable but manual intervention may required to restore the bootloader. Please consult [_1] for information and assistance. The destination drive has not yet been modified. Do you wish to continue with the restore?",$truncated_bootloader_bug_url);
+    my $response = get_confirmation($missing_bootloader_bytes_msg);
+    if ($response ne 'yes') {
+      on_main_app_destroy();
+      die("Aborting.\n");
+    }
+  }
   print "*** ".loc("Writing MBR to [_1]",$dest_drive)."\n";
   set_status(loc("Writing master boot record to destination drive..."));
   system("dd of=/dev/$dest_drive if=$src_mbr bs=32768 count=1; sync;");
