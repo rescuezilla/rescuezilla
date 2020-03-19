@@ -536,7 +536,7 @@ sub update_backup_progress {
       $pct =~ s/\s+//g;
       $rate =~ s/\s+//g;
       print ">>> ".loc("Elapsed: *[_1]* | Remaining: *[_2]* | Percent: *[_3]* | Speed: *[_4]*",$elapsed,$remaining,$pct,$rate)."\n";
-      $msg = loc("Part [_1] of [_2] ([_3]%)\n[_4] Elapsed\n[_5] Remaining",$status{'current_part'}+1, $status{'total_parts'},$pct,$elapsed,$remaining);
+      $msg = loc("Part [_1] of [_2] ([_3]%) [_4] Elapsed [_5] Remaining",$status{'current_part'}+1, $status{'total_parts'},$pct,$elapsed,$remaining);
       $builder->get_object('backup_progress_status')->set_text($msg);
       # Base overall percentage on number of total bytes
       my $current_bytes = int(($pct/100) * $drives{$src}{'parts'}{$partition_number}{'bytes'}) + $status{'done_bytes'};
@@ -789,7 +789,7 @@ sub do_restore {
   if ($src_drive eq $dest_drive) {
     my $response = 'no';
     if (allow_source_overwrite) {
-      $response = get_confirmation(loc("Are you sure you want to restore the backup to the same drive the source image is located on?\n\nUnless you know what you are doing, this will result in loss of all data on the drive, including the backup image!"));
+      $response = get_confirmation(loc("Are you sure you want to restore the backup to the same drive the source image is located on? Unless you know what you are doing, this will result in loss of all data on the drive, including the backup image!"));
     } else {
       error_message("Not restoring to the source drive!");
     }
@@ -1007,7 +1007,7 @@ sub update_restore_progress {
       $pct =~ s/\s+//g;
       $rate =~ s/\s+//g;
       print ">>> ".loc("(RESTORE) Elapsed: *[_1]* | Remaining: *[_2]* | Percent: *[_3]* | Speed: *[_4]*",$elapsed,$remaining,$pct,$rate)."\n";
-      $msg = loc("Part [_1] of [_2] ([_3]%)\n[_4] Elapsed\n[_5] Remaining",$status{'current_part'}+1,$status{'total_parts'},$pct,$elapsed,$remaining);
+      $msg = loc("Part [_1] of [_2] ([_3]%) [_4] Elapsed [_5] Remaining",$status{'current_part'}+1,$status{'total_parts'},$pct,$elapsed,$remaining);
       $builder->get_object('restore_progress_status')->set_text($msg);
       # Base overall percentage on number of total bytes
       my $current_bytes = int(($pct/100) * $drives{$dest_drive}{'parts'}{$partition_number}{'bytes'}) + $status{'done_bytes'};
@@ -1420,7 +1420,10 @@ sub umount_warn_on_busy {
       $partition_pretty_string = $partition_pretty_string.$device_node.": ".$mount_path."\n";
       print loc("Unable to unmount partition: [_1]", $partition_pretty_string)."\n";
     }
-    my $partition_busy_msg = loc("Partition(s) were unable to be unmounted. Please close any applications using the following partition(s) and click OK.\n\n [_1]",$partition_pretty_string);
+    my $partition_busy_msg = loc("Partition(s) were unable to be unmounted. Please close any applications using the following partition(s) and click OK.");
+    # Append the busy partition information onto the localized string because localization framework not handling newlines well.
+    # Not an ideal solution as localization should generally have access to the variable references, but works fine.
+    $partition_busy_msg = "$partition_busy_msg\n\n$partition_pretty_string";
     my $response = get_retry_confirmation($partition_busy_msg);
     if ($response eq 'cancel') {
       $response = get_confirmation(loc("Are you sure you want to exit?"));

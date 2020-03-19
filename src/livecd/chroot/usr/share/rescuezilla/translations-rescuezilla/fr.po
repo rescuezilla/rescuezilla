@@ -56,22 +56,16 @@ msgstr "Etape 2: Installation sur la clé USB"
 msgid "Welcome to Rescuezilla"
 msgstr "Bienvenue dans Rescuezilla"
 
-msgid ""
-"Many other tools are available from the Start menu in the bottom left corner"
+msgid "Many other tools are available from the Start menu in the bottom left corner"
 msgstr "Beaucoup d'autres outils sont disponibles à partir du menu principal accessible dans l'angle en bas à gauche"
 
 msgid "Backup"
 msgstr "Sauvegarde"
 
-msgid ""
-"Could not access the destination drive. If the device is shared on a "
-"network, ensure that the username and password you provided are correct and "
-"try again."
+msgid "Could not access the destination drive. If the device is shared on a network, ensure that the username and password you provided are correct and try again."
 msgstr "Impossible d'accéder au disque de destination. Si le périphérique est partagé sur un réseau, assurez-vous que le nom d'utilisateur et le mot de passe sont corrects et essayez à nouveau."
 
-msgid ""
-"Warning! This drive has only [_1]MB of free space. Make sure your backup "
-"will fit."
+msgid "Warning! This drive has only [_1]MB of free space. Make sure your backup will fit."
 msgstr "Attention! Ce disque a seulement [_1]MB d'espace libre. Assurez-vous que cela sera suffisant pour votre sauvegarde."
 
 msgid "Backup [_1] to [_2]"
@@ -82,9 +76,6 @@ msgstr "MBR et table de partitions de [_1] sauvés sur [_2]"
 
 msgid "Size of [_1] ([_2] bytes) saved to [_3]"
 msgstr "Taille de [_1] ([_2] bytes) sauvé sur [_3]"
-
-msgid "Partition list saved to [_1]"
-msgstr "Liste des partitions sauvées sur [_1]"
 
 msgid "Total partitions to save: [_1]"
 msgstr "Nombre de partitions à sauver : [_1]"
@@ -147,13 +138,8 @@ msgstr "Lecture de l'image pour le disque [_1], partition [_2] ([_3]% done, [_4]
 msgid "Elapsed: *[_1]* | Remaining: *[_2]* | Percent: *[_3]* | Speed: *[_4]*"
 msgstr "Passé: *[_1]* | Restant: *[_2]* | Percent: *[_3]* | Speed: *[_4]*"
 
-msgid ""
-"Part [_1] of [_2] ([_3]%)\n"
-"[_4] Elapsed\n"
-"[_5] Remaining"
-msgstr "Partition [_1] de [_2] ([_3]%)\n"
-"[_4] Passé\n"
-"[_5] Restant"
+msgid "Part [_1] of [_2] ([_3]%) [_4] Elapsed [_5] Remaining"
+msgstr "Partition [_1] de [_2] ([_3]%) [_4] Passé [_5] Restant"
 
 msgid "Saving part [_1] ([_2]) at [_3] ([_4] free space)"
 msgstr "Sauve la partition [_1] ([_2]) at [_3] ([_4] free space)"
@@ -206,9 +192,7 @@ msgstr "Veuillez choisir un autre dossier."
 msgid "Restore"
 msgstr ""
 
-msgid ""
-"Could not access the source drive. If the device is shared on a network, "
-"ensure that the username and password you provided are correct and try again."
+msgid "Could not access the source drive. If the device is shared on a network, ensure that the username and password you provided are correct and try again."
 msgstr "Accès impossible au disque source. Si le périphérique est partagé sur un réseau, assurez-vous que le nom d'utilisateur et le mot de passe sont corrects et essayez à nouveau."
 
 msgid "Preparing destination drive..."
@@ -217,31 +201,19 @@ msgstr "Préparation du disque de destination..."
 msgid "Comparing [_1] to [_2]..."
 msgstr "Compare [_1] à [_2]..."
 
-msgid ""
-"Are you sure you want to restore the backup to the same drive the source "
-"image is located on?\n"
-"\n"
-"Unless you know what you are doing, this will result in loss of all data on "
-"the drive, including the backup image!"
-msgstr "Etes-vous sûr de vouloir restaurer l'image sur le  disque où se trouve l'image source ?\n"
-"\n"
-"Sauf si vous savez ce que vous faites, cela se traduira par la perte de toutes les données sur le disque, y compris l'image de sauvegarde!"
+msgid "Are you sure you want to restore the backup to the same drive the source image is located on? Unless you know what you are doing, this will result in loss of all data on the drive, including the backup image!"
+msgstr "Etes-vous sûr de vouloir restaurer l'image sur le  disque où se trouve l'image source ? Sauf si vous savez ce que vous faites, cela se traduira par la perte de toutes les données sur le disque, y compris l'image de sauvegarde!"
 
 msgid "Aborting."
 msgstr ""
 
-msgid ""
-"The drive you are attempting to restore to is [_1] MB smaller than the "
-"original. You must restore to a drive that is the same size or larger than "
-"the original."
+msgid "The drive you are attempting to restore to is [_1] MB smaller than the original. You must restore to a drive that is the same size or larger than the original."
 msgstr ""
 
 msgid "Could not read from [_1]! Aborting."
 msgstr ""
 
-msgid ""
-"Are you sure you want to restore the backup to /dev/[_1]? Doing so will "
-"permanently overwrite the data on this drive!"
+msgid "Are you sure you want to restore the backup to /dev/[_1]? Doing so will permanently overwrite the data on this drive!"
 msgstr "Êtes-vous sûr de vouloir restaurer l'image sur /dev/[_1]? Ceci réécrira les données de façon définitive sur ce disque!"
 
 msgid "Writing MBR to [_1]"
@@ -265,6 +237,7 @@ msgstr ""
 msgid "Reloading new partition table from destination drive..."
 msgstr ""
 
+#. FIXME: Update this misleading comment (including localizations if possible)
 msgid "Verifying that /dev/[_1] exists and can be restored to: "
 msgstr ""
 
@@ -274,12 +247,10 @@ msgstr ""
 msgid "FAIL"
 msgstr ""
 
-msgid ""
-"The partition table did not restore properly. The backup image may contain "
-"all your data, but without a valid partition table, no data can be restored."
+msgid "The partition table did not restore properly. The backup image may contain all your data, but without a valid partition table, no data can be restored."
 msgstr "La table des partitions n'a pas été restaurée correctement. L'image de sauvegarde peut contenir toutes vos données, mais sans table de partitions valide les données ne peuvent être restaurées."
 
-msgid "Device [_1][_2] is [_3] bytes..."
+msgid "Device [_1] is [_2] bytes..."
 msgstr ""
 
 msgid "Restoring [_1] total bytes of partitioned space."
@@ -288,13 +259,11 @@ msgstr ""
 msgid "Preparing to restore backup for Drive [_1], Part [_2]..."
 msgstr "Préparation de la restauration du disque [_1], partition [_2]..."
 
-msgid ""
-"No version number detected. Therefore backup assumed to be made by v1.0.4, "
-"so using [_1] partclone.restore."
+msgid "No version number detected. Therefore backup assumed to be made by v1.0.4, so using [_1] partclone.restore."
 msgstr ""
 
-msgid ""
-"Using partclone [_1] to restore the [_2] backup, for maximum compatibility"
+#. The Redo Backup v1.0.4 partclone version uses different restore syntax, and autodetects raw formats differently
+msgid "Using partclone [_1] to restore the [_2] backup, for maximum compatibility"
 msgstr ""
 
 msgid "Processing [_1] using [_2]..."
@@ -312,9 +281,7 @@ msgstr "Attention: "
 msgid "Reading super block:"
 msgstr ""
 
-msgid ""
-"(RESTORE) Elapsed: *[_1]* | Remaining: *[_2]* | Percent: *[_3]* | Speed: "
-"*[_4]*"
+msgid "(RESTORE) Elapsed: *[_1]* | Remaining: *[_2]* | Percent: *[_3]* | Speed: *[_4]*"
 msgstr "(RESTORE) Ecoulé: *[_1]* | Restant: *[_2]* | Pourcentage: *[_3]* | Vitesse: *[_4]*"
 
 msgid "Restoring part [_1] ([_2]) at [_3]"
@@ -368,11 +335,19 @@ msgstr ""
 msgid "Could not open [_1] for writing!"
 msgstr ""
 
-msgid ""
-"The device type '[_1]' is not valid.  Did you forget to select a backup "
-"location?"
+msgid "The device type '[_1]' is not valid.  Did you forget to select a backup location?"
 msgstr "Le dispositif [_1] is not valid.  N'auriez-vous pas oublié de sélectionner une source de sauvegarde?"
 
+msgid "Unable to unmount partition: [_1]"
+msgstr ""
+
+msgid "Partition(s) were unable to be unmounted. Please close any applications using the following partition(s) and click OK."
+msgstr ""
+
+msgid "Are you sure you want to exit?"
+msgstr ""
+
+#. Get all physical drives
 msgid "Getting list of drives..."
 msgstr ""
 
@@ -421,6 +396,9 @@ msgstr "Recherche des répertoires partagés sur le réseau..."
 msgid "Unknown size"
 msgstr ""
 
+#. FIXME: Unclear why this l10n string lookup doesn't work with this string,
+#. FIXME: but works with other strings.
+#. FIXME: May be bug with maketext deduplication?
 msgid "Drive [_1], Part [_2]"
 msgstr "Disque [_1], partition [_2]"
 
@@ -438,6 +416,9 @@ msgstr "Identification des disques..."
 
 msgid "Searching network for shared drives..."
 msgstr "Recherche des répertoires partagés sur le réseau..."
+
+msgid "Partition list saved to [_1]"
+msgstr "Liste des partitions sauvées sur [_1]"
 
 msgid "Free space: [_1]"
 msgstr ""
