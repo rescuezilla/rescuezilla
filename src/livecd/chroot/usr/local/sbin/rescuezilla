@@ -39,12 +39,15 @@ my $lc_messages = setlocale(LC_MESSAGES);
 # Extract the ISO 639-1 code
 my $lang_code = substr($lc_messages,0,2);
 print "LC_MESSAGES locale:             $lc_messages.\n";
-print "Attempting to load translation: ".TRANSLATION_DIR."$lang_code.ko\n\n";
+print "Attempting to load translation: ".TRANSLATION_DIR."$lang_code.po\n\n";
 
 # Exports 'loc'
 use Locale::Maketext::Simple (
     Path => TRANSLATION_DIR,
     Decode => 1,
+    # Use gettext %1 variable interpolation/substitution than maketext's [_1] style,
+    # as maketext's style wasn't working for all strings (possibly due to encoding issues)
+    Style => 'gettext',
 );
 
 # Sets language to the LC_MESSAGES environment variable
@@ -276,7 +279,7 @@ sub backup_step {
       $builder->get_object('backup_folder')->set_text('/');
       $builder->get_object('backup_folder_browse')->grab_focus();
       my $free_mb = get_free_space(1);
-      if ($free_mb < 1000) { message_box(loc("Warning! This drive has only [_1]MB of free space. Make sure your backup will fit.", $free_mb)); }
+      if ($free_mb < 1000) { message_box(loc("Warning! This drive has only %1MB of free space. Make sure your backup will fit.", $free_mb)); }
     }
     $builder->get_object('backup_button_next')->set_sensitive(TRUE);
   } elsif ($step == 5) {
@@ -362,7 +365,7 @@ sub do_backup {
   # Get partition selections and output folder
   my $src = $status{'backup_drive'};
   my $dest = MOUNT_POINT.$builder->get_object('backup_folder')->get_text();
-  print "*** ".loc("Backup [_1] to [_2]",$src, $dest)." ***\n\n";
+  print "*** ".loc("Backup %1 to %2",$src, $dest)." ***\n\n";
   $dest =~ s/\/$//;
   $dest =~ s/ /\\ /g;
   my $file = $builder->get_object('backup_name')->get_text();
@@ -374,7 +377,7 @@ sub do_backup {
   system("sfdisk -d $src_drive > $dest/$file.sfdisk");
   my $ptab = `sfdisk -d $src_drive`;
   die "fdisk units must be sectors.\n" unless (fdisk_units($ptab) eq 'sectors');
-  print "\t* ".loc("MBR and partition table of [_1] saved to [_2]",$src_drive,$dest)."\n";
+  print "\t* ".loc("MBR and partition table of %1 saved to %2",$src_drive,$dest)."\n";
   # Save size of source drive in blocks
   my $bytes = `/sbin/blockdev --getsize64 $src_drive`;
   $bytes =~ s/\D//g;
@@ -384,7 +387,7 @@ sub do_backup {
   die "blockdev reports smaller drive size $bytes than determined from partition table $ptab_bytes\n" unless $bytes >= $ptab_bytes;
   $bytes = $ptab_bytes;
   system("echo $bytes > $dest/$file.size");
-  print "\t* ".loc("Size of [_1] ([_2] bytes) saved to [_3]",$src_drive,$bytes,$file_size_path)."\n";
+  print "\t* ".loc("Size of %1 (%2 bytes) saved to %3",$src_drive,$bytes,$file_size_path)."\n";
   # Save list of partitions we will be backing up
   my @partlist = get_selected_partitions('backup_partitions');
   save_partition_list(\@partlist, "$dest/$file.backup");
@@ -406,8 +409,8 @@ sub do_backup {
   $status{'done_bytes'} = 0;
   $status{'frame'} = 0;
   $status{'free'} = get_free_space();
-  print "\t* ".loc("Total partitions to save: [_1]",$status{'total_parts'})."\n";
-  print "\t* ".loc("Total bytes to save: [_1]",$status{'total_bytes'})."\n";
+  print "\t* ".loc("Total partitions to save: %1",$status{'total_parts'})."\n";
+  print "\t* ".loc("Total bytes to save: %1",$status{'total_bytes'})."\n";
   # Create backup by calling progress sub
   Glib::Timeout->add(50, \&update_backup_progress);
   refresh_window();
@@ -441,12 +444,12 @@ sub update_backup_progress {
     my $tool = "";
     my $extra_args = "";
     ($tool, $extra_args) = &which_backup_tool($fs);
-    my $tool_missing_msg = loc("The tool [_1] does not exist", "/usr/sbin/$tool");
+    my $tool_missing_msg = loc("The tool %1 does not exist", "/usr/sbin/$tool");
     fatal_crash($tool_missing_msg) unless -e "/usr/sbin/$tool";
     # Write the exact partclone command used to create the backup of the current partition. This tool is required during restore.
     system("echo $tool > $dest/$file.partclone.command.part$partition_number");
-    set_status(loc("Preparing to create backup of Drive [_1], Part [_2]...",$enduser_drive_number, $partition_number));
-    print "*** ".loc("Processing [_1] ([_2]) using [_3]...",$part,$fs,$tool)."\n";
+    set_status(loc("Preparing to create backup of Drive %1, Part %2...",$enduser_drive_number, $partition_number));
+    print "*** ".loc("Processing %1 (%2) using %3...",$part,$fs,$tool)."\n";
     umount_warn_on_busy("/dev/$part");
 
     my $backup_cmd = "( $tool $extra_args -F -L /$dest/$file"."_part$partition_number"."_partclone.log -s /dev/$part | pigz -c --fast | split -d -a 3 -b 2048m - /$dest/$file"."_part$partition_number. ) 2>&1 |";
@@ -484,7 +487,7 @@ sub update_backup_progress {
       my (undef, $current_part) = split(/\(\/dev\//, $data);
       $current_part =~ s/\).*$//g;
       $status{'current_part_device'} = $current_part;
-      print ">>> ".loc("Starting to clone [_1]",$status{'current_part_device'})."\n";
+      print ">>> ".loc("Starting to clone %1",$status{'current_part_device'})."\n";
       print ">>> ".loc("List of partitions:")."\n";
       foreach my $item (@{$status{'part_list'}}) {
         $msg = '';
@@ -495,23 +498,23 @@ sub update_backup_progress {
       # Device size reported
       my (undef, $dev_size) = split(/: /, $data);
       $dev_size =~ s/^\s+|\s+$//g;
-      print(">>> ".loc("Device size: [_1]",$dev_size)."\n");
+      print(">>> ".loc("Device size: %1",$dev_size)."\n");
     } elsif ($data =~ m/Space in use: /) {
       # Device used space reported
       my (undef, $dev_used) = split(/: /, $data);
       $dev_used =~ s/^\s+|\s+$//g;
-      print(">>> ".loc("Space in use: [_1]",$dev_used)."\n");
+      print(">>> ".loc("Space in use: %1",$dev_used)."\n");
     } elsif ($data =~ m/^.*\.c.*: /) {
       # A warning was encountered
       my (undef, $warning) = split(/: /, $data);
-      print(">>> ".loc("Warning: [_1]", $warning)."\n");
-      set_status(loc("Warning: [_1]", $warning));
+      print(">>> ".loc("Warning: %1", $warning)."\n");
+      set_status(loc("Warning: %1", $warning));
     } elsif ($data =~ m/Reading Super Block/) {
       print(">>> ".loc("Reading super block")."\n");
-      set_status(loc("Reading super block for Drive [_1], Part [_2]...",$enduser_drive_number,$partition_number));
+      set_status(loc("Reading super block for Drive %1, Part %2...",$enduser_drive_number,$partition_number));
     } elsif ($data =~ m/Calculating bitmap/) {
       print(">>> ".loc("Calculating bitmap")."\n");
-      set_status(loc("Calculating bitmap for Drive [_1], Part [_2]...",$enduser_drive_number,$partition_number));
+      set_status(loc("Calculating bitmap for Drive %1, Part %2...",$enduser_drive_number,$partition_number));
     } elsif ($data =~ m/Elapsed.+\%$/) {
       # Calculating bitmap, percentage given
       #Elapsed: 00:00:03, Remaining: 00:00:00, Completed:  93.41%
@@ -519,10 +522,10 @@ sub update_backup_progress {
       my $remaining = substr($data,30,8);
       my $pct = substr($data,51,6);
       $pct =~ s/\s+//g;
-      $msg = loc("Reading bitmap for part [_1] of [_2]",$status{'current_part'}+1,$status{'total_parts'});
+      $msg = loc("Reading bitmap for part %1 of %2",$status{'current_part'}+1,$status{'total_parts'});
       $builder->get_object('backup_progress_status')->set_text($msg);
-      print ">>> ".loc("Calculating bitmap progress: [_1]% Remaining: [_2]",$pct,$remaining)."\n";
-      set_status(loc("Reading bitmap for Drive [_1], Part [_2] ([_3]% done, [_4] remaining)",$enduser_drive_number,$partition_number,$pct,$remaining));
+      print ">>> ".loc("Calculating bitmap progress: %1% Remaining: %2",$pct,$remaining)."\n";
+      set_status(loc("Reading bitmap for Drive %1, Part %2 (%3% done, %4 remaining)",$enduser_drive_number,$partition_number,$pct,$remaining));
     } elsif ($data =~ m/Elapsed.+,$/) {
       # Backup progress line
       $status{'frame'}++;
@@ -536,23 +539,23 @@ sub update_backup_progress {
       my $rate = substr($data,60,12);
       $pct =~ s/\s+//g;
       $rate =~ s/\s+//g;
-      print ">>> ".loc("Elapsed: *[_1]* | Remaining: *[_2]* | Percent: *[_3]* | Speed: *[_4]*",$elapsed,$remaining,$pct,$rate)."\n";
-      $msg = loc("Part [_1] of [_2] ([_3]%) [_4] Elapsed [_5] Remaining",$status{'current_part'}+1, $status{'total_parts'},$pct,$elapsed,$remaining);
+      print ">>> ".loc("Elapsed: *%1* | Remaining: *%2* | Percent: *%3* | Speed: *%4*",$elapsed,$remaining,$pct,$rate)."\n";
+      $msg = loc("Part %1 of %2 (%3%) %4 Elapsed %5 Remaining",$status{'current_part'}+1, $status{'total_parts'},$pct,$elapsed,$remaining);
       $builder->get_object('backup_progress_status')->set_text($msg);
       # Base overall percentage on number of total bytes
       my $current_bytes = int(($pct/100) * $drives{$src}{'parts'}{$partition_number}{'bytes'}) + $status{'done_bytes'};
       my $overall_pct = ($current_bytes / $status{'total_bytes'}) + (($pct / 100) / $status{'total_bytes'});
       if ($overall_pct > 1) { $overall_pct = 1; }
-      set_status(loc("Saving part [_1] ([_2]) at [_3] ([_4] free space)", $status{'current_part'}+1, $drives{$src}{'parts'}{$partition_number}{'size'},$rate,$status{'free'}));
-      print ">>> ".loc("Drive: [_1] | Partition: [_2] | Current bytes: [_3] | Overall: [_4]",$src,$partition_number,$current_bytes,$overall_pct)."\n";
+      set_status(loc("Saving part %1 (%2) at %3 (%4 free space)", $status{'current_part'}+1, $drives{$src}{'parts'}{$partition_number}{'size'},$rate,$status{'free'}));
+      print ">>> ".loc("Drive: %1 | Partition: %2 | Current bytes: %3 | Overall: %4",$src,$partition_number,$current_bytes,$overall_pct)."\n";
       $progress_bar->set_fraction($overall_pct);
-      $msg = loc("[_1]% Complete", sprintf("%.2f", $overall_pct * 100));
+      $msg = loc("%1% Complete", sprintf("%.2f", $overall_pct * 100));
       $progress_bar->set_text($msg);
     } elsif (($data =~ m/successfully cloned/) || ($data =~ m/Cloned successfully./)) {
       set_status(loc("Partition completed."));
-      print ">>> ".loc("Partition [_1] completed.", $status{'current_part_device'})."\n";
-      print "\t".loc("Current part: [_1]",$status{'current_part'}+1)."\n";
-      print "\t".loc("Total parts: [_1]",$status{'total_parts'})."\n";
+      print ">>> ".loc("Partition %1 completed.", $status{'current_part_device'})."\n";
+      print "\t".loc("Current part: %1",$status{'current_part'}+1)."\n";
+      print "\t".loc("Total parts: %1",$status{'total_parts'})."\n";
       if ($status{'current_part'}==$status{'total_parts'}-1 ) {
         $builder->get_object('backup_progress_status')->set_text('');
         $progress_bar->set_fraction(1);
@@ -567,7 +570,7 @@ sub update_backup_progress {
         umount_warn_on_busy(MOUNT_POINT);
         beeper('done');
         my $elapsed = sprintf("%.1f", (time()-$status{'start'})/60);
-        message_box(loc("Backup image saved in [_1] minutes.", $elapsed));
+        message_box(loc("Backup image saved in %1 minutes.", $elapsed));
         $msg = loc("Backup saved successfully.");
         system("notify-send -i ".APP_ICON." \"".$msg."\"");
         print ">>> Operation complete.\n";
@@ -622,7 +625,7 @@ sub select_backup_folder {
       $current_folder = substr($current_folder,length(MOUNT_POINT));
       if ($current_folder eq '') { $current_folder = '/'; }
     } else {
-      error_message(loc("You must select a folder inside [_1]",MOUNT_POINT).chr(13).chr(13).loc("Please select a different folder."));
+      error_message(loc("You must select a folder inside %1",MOUNT_POINT).chr(13).chr(13).loc("Please select a different folder."));
       $current_folder = '/';
     }
     $builder->get_object('backup_folder')->set_text($current_folder);
@@ -786,7 +789,7 @@ sub do_restore {
   # Warn if we are restoring to the source drive
   my $src_drive = $status{'mount_source'};
   $src_drive =~ s/\d//g;
-  print loc("Comparing [_1] to [_2]...",$src_drive,$dest_drive)."\n";
+  print loc("Comparing %1 to %2...",$src_drive,$dest_drive)."\n";
   if ($src_drive eq $dest_drive) {
     my $response = 'no';
     if (allow_source_overwrite) {
@@ -813,7 +816,7 @@ sub do_restore {
     # Context for translators: The two popular unofficial updates of Redo Backup v1.0.4 by Sourceforge user louvetch have a major bug.
     # This major bug affected both the English language and French language versions of this unofficial update. All data can be restored with careful
     # manual intervention. Given the popularity of those unofficial updates, translating this error message is still important.
-    my $empty_sfdisk_msg = loc("The backup's extended partition information is empty or missing. This happens with incomplete backups created by an unofficial Redo Backup update. If the backup contains extended partitions, these will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore the extended partitions. Please consult [_1] for information and assistance. The destination drive has not yet been modified. Do you wish to continue with the restore?", $empty_sfdisk_bug_url);
+    my $empty_sfdisk_msg = loc("The backup's extended partition information is empty or missing. This happens with incomplete backups created by an unofficial Redo Backup update. If the backup contains extended partitions, these will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore the extended partitions. Please consult %1 for information and assistance. The destination drive has not yet been modified. Do you wish to continue with the restore?", $empty_sfdisk_bug_url);
     print "$empty_sfdisk_msg\n";
     my $response = get_confirmation($empty_sfdisk_msg);
     if ($response ne 'yes') {
@@ -835,13 +838,13 @@ sub do_restore {
     print "*** Size of destination drive: $dest_bytes bytes\n";
     if ($src_bytes > $dest_bytes) {
       my $diff_mb = int((($src_bytes - $dest_bytes) / 1024) / 1024);
-      fatal_crash(loc("The drive you are attempting to restore to is [_1] MB smaller than the original. You must restore to a drive that is the same size or larger than the original.",$diff_mb));
+      fatal_crash(loc("The drive you are attempting to restore to is %1 MB smaller than the original. You must restore to a drive that is the same size or larger than the original.",$diff_mb));
     }
   }
-  open INFILE, $src_parts or fatal_crash(loc("Could not read from [_1]! Aborting.",$src_parts));
+  open INFILE, $src_parts or fatal_crash(loc("Could not read from %1! Aborting.",$src_parts));
   my @partlist = <INFILE>;
   close INFILE;
-  my $response = get_confirmation(loc("Are you sure you want to restore the backup to /dev/[_1]? Doing so will permanently overwrite the data on this drive!",$dest_drive));
+  my $response = get_confirmation(loc("Are you sure you want to restore the backup to /dev/%1? Doing so will permanently overwrite the data on this drive!",$dest_drive));
   if ($response ne 'yes') {
     on_main_app_destroy();
     die("Aborting.\n");
@@ -862,22 +865,22 @@ sub do_restore {
     # cannot boot after a restore. This bug only affected those two updates (German-language only) and the problem can be fixed with careful manual intervention. Translating this message into languages other
     # than English and German is not required.
     # Full details in: https://github.com/rescuezilla/rescuezilla/wiki/Bugs-in-unofficial-Redo-Backup-updates#bugs-in-chcatzsfs-ubuntu-1310-and-1404-releases-german-language-only
-    my $missing_bootloader_bytes_msg = loc("The backup's bootloader data is shorter than expected. This happens with backups created by an unofficial Redo Backup update. If the backup contained certain bootloaders like GRUB, the restored hard drive will not boot correctly without a manual fix. All data is still fully recoverable but manual intervention may required to restore the bootloader. Please consult [_1] for information and assistance. The destination drive has not yet been modified. Do you wish to continue with the restore?",$truncated_bootloader_bug_url);
+    my $missing_bootloader_bytes_msg = loc("The backup's bootloader data is shorter than expected. This happens with backups created by an unofficial Redo Backup update. If the backup contained certain bootloaders like GRUB, the restored hard drive will not boot correctly without a manual fix. All data is still fully recoverable but manual intervention may required to restore the bootloader. Please consult %1 for information and assistance. The destination drive has not yet been modified. Do you wish to continue with the restore?",$truncated_bootloader_bug_url);
     my $response = get_confirmation($missing_bootloader_bytes_msg);
     if ($response ne 'yes') {
       on_main_app_destroy();
       die("Aborting.\n");
     }
   }
-  print "*** ".loc("Writing MBR to [_1]",$dest_drive)."\n";
+  print "*** ".loc("Writing MBR to %1",$dest_drive)."\n";
   set_status(loc("Writing master boot record to destination drive..."));
   system("dd of=/dev/$dest_drive if=$src_mbr bs=32768 count=1; sync;");
   sleep(0.5);  
-  print "*** ".loc("Restoring partition table to [_1]",$dest_drive)."\n";
+  print "*** ".loc("Restoring partition table to %1",$dest_drive)."\n";
   set_status(loc("Writing extended partition table to destination drive..."));
   my $backup_version = `cat /$src.rescuezilla.backup_version`;
   chomp($backup_version);
-  print loc("Detected backup created with [_1]",$backup_version)."\n";
+  print loc("Detected backup created with %1",$backup_version)."\n";
   my $restore_cmd = "";
   if ($is_empty_sfdisk) {
     # Handle restore for louvetch's unofficial Ubuntu 16.04 Redo Backup update (see https://github.com/rescuezilla/rescuezilla/issues/32)
@@ -891,7 +894,7 @@ sub do_restore {
     }
   }
   sleep(0.5);
-  print "*** ".loc("Reloading partition table from [_1]",$dest_drive)."\n";
+  print "*** ".loc("Reloading partition table from %1",$dest_drive)."\n";
   set_status(loc("Reloading new partition table from destination drive..."));
   umount_warn_on_busy("/dev/$dest_drive?*");
   system("partprobe /dev/$dest_drive");
@@ -908,7 +911,7 @@ sub do_restore {
     my ($src_base_device, $src_partition_number) = split_device_string($part);
     my $dest_partition_node = join_device_string($dest_drive, $src_partition_number);
     # FIXME: Update this misleading comment (including localizations if possible)
-    print "*** ".loc("Verifying that /dev/[_1] exists and can be restored to: ",$dest_partition_node);
+    print "*** ".loc("Verifying that /dev/%1 exists and can be restored to: ",$dest_partition_node);
     my $part_check = `file /dev/$dest_partition_node | grep 'block special' | wc -l`;
     if ($part_check==1) {
       print loc("OK")."\n";
@@ -917,7 +920,7 @@ sub do_restore {
       my $bytes = `cat /sys/block/$dest_drive/$dest_partition_node/size`;
       chomp($bytes);
       $bytes = abs(int($bytes*512));
-      print "*** ".loc("Device [_1] is [_2] bytes...",$dest_partition_node,$bytes)."\n";
+      print "*** ".loc("Device %1 is %2 bytes...",$dest_partition_node,$bytes)."\n";
       # TODO: Indexing by source partition number (not dest). This is acceptable within current limitations
       # TODO: (immature partition-to-partition backup), but should be rectified in future.
       $drives{$dest_drive}{'parts'}{$src_partition_number}{'bytes'} = $bytes;
@@ -935,7 +938,7 @@ sub do_restore {
     }
   }
   $status{'done_bytes'} = 0;
-  print "*** ".loc("Restoring [_1] total bytes of partitioned space.",$status{'total_bytes'})."\n";
+  print "*** ".loc("Restoring %1 total bytes of partitioned space.",$status{'total_bytes'})."\n";
   Glib::Timeout->add(50, \&update_restore_progress);
   refresh_window();
 }
@@ -964,29 +967,29 @@ sub update_restore_progress {
   if (!defined($PROGRESS)) {
     umount_warn_on_busy("/dev/$dest_partition_node");
     system("dd if=/dev/zero of=/dev/$dest_partition_node bs=1K count=1000; sync");
-    set_status(loc("Preparing to restore backup for Drive [_1], Part [_2]...",$enduser_drive_string,$partition_number));
+    set_status(loc("Preparing to restore backup for Drive %1, Part %2...",$enduser_drive_string,$partition_number));
     my $backup_version = `cat /$src.rescuezilla.backup_version`;
     chomp($backup_version);
-    print loc("Detected backup created with [_1]",$backup_version)."\n";
+    print loc("Detected backup created with %1",$backup_version)."\n";
     my $restore_cmd = "";
     if (("$backup_version" cmp "") == 0) {
         my $partclone_ver = "v0.2.43";
-        print loc("No version number detected. Therefore backup assumed to be made by v1.0.4, so using [_1] partclone.restore.", $partclone_ver)."\n";
+        print loc("No version number detected. Therefore backup assumed to be made by v1.0.4, so using %1 partclone.restore.", $partclone_ver)."\n";
         # The Redo Backup v1.0.4 partclone version uses different restore syntax, and autodetects raw formats differently
-        print loc("Using partclone [_1] to restore the [_2] backup, for maximum compatibility",$partclone_ver,"Redo Backup and Recovery v1.0.4")."\n";
+        print loc("Using partclone %1 to restore the %2 backup, for maximum compatibility",$partclone_ver,"Redo Backup and Recovery v1.0.4")."\n";
         my $tool = "partclone.restore.$partclone_ver";
-        print "*** ".loc("Processing [_1] using [_2]...","$dest_partition_node",$tool)."\n";
+        print "*** ".loc("Processing %1 using %2...","$dest_partition_node",$tool)."\n";
         $restore_cmd = "( cat /$src"."_part$partition_number.* | pigz -d -c | $tool -F -L /partclone.log -O /dev/$dest_partition_node ) 2>&1 |";
     } else {
-        print loc("Restoring backup created with version: [_1]",$backup_version)."\n";
+        print loc("Restoring backup created with version: %1",$backup_version)."\n";
         # Assuming backup was created with a format compatible with the 1.0.5 release.
         # TODO: Compare the MAJOR.MINOR.PATCH components that make up the version number to automatically handle newer versions
         # TODO: when the backup format and partclone syntax have not changed.
         my $tool = `cat $src.partclone.command.part$partition_number`;
         chomp($tool);
-        my $tool_missing_msg = loc("The tool [_1] does not exist", "/usr/sbin/$tool");
+        my $tool_missing_msg = loc("The tool %1 does not exist", "/usr/sbin/$tool");
         fatal_crash($tool_missing_msg) unless -e "/usr/sbin/$tool";
-        print "*** ".loc("Processing [_1] using [_2]...","$dest_partition_node",$tool)."\n";
+        print "*** ".loc("Processing %1 using %2...","$dest_partition_node",$tool)."\n";
         $restore_cmd = "( cat /$src"."_part$partition_number.* | pigz -d -c | $tool --restore -F -L /partclone.log -O /dev/$dest_partition_node ) 2>&1 |";
     }
     print "*** ".loc("Executing: ")."$restore_cmd\n";
@@ -1023,7 +1026,7 @@ sub update_restore_progress {
       my (undef, $current_part) = split(/\(\/dev\//, $data);
       $current_part =~ s/\).*$//g;
       $status{'current_part_device'} = $current_part;
-      print ">>> ".loc("Starting to restore [_1]",$status{'current_part_device'})."\n";
+      print ">>> ".loc("Starting to restore %1",$status{'current_part_device'})."\n";
       print ">>> ".loc("List of partitions:")."\n";
       foreach my $item (@{$status{'part_list'}}) {
         $msg = '';
@@ -1034,12 +1037,12 @@ sub update_restore_progress {
       # Device size reported
       my (undef, $dev_size) = split(/: /, $data);
       $dev_size =~ s/^\s+|\s+$//g;
-      print(">>> ".loc("Device size: [_1]",$dev_size)."\n");
+      print(">>> ".loc("Device size: %1",$dev_size)."\n");
     } elsif ($data =~ m/Space in use: /) {
       # Device used space reported
       my (undef, $dev_used) = split(/: /, $data);
       $dev_used =~ s/^\s+|\s+$//g;
-      print(">>> ".loc("Space in use: [_1]",$dev_used)."\n");
+      print(">>> ".loc("Space in use: %1",$dev_used)."\n");
     } elsif ($data =~ m/^.*\.c.*: /) {
       # A warning was encountered
       my (undef, $warning) = split(/: /, $data);
@@ -1047,10 +1050,10 @@ sub update_restore_progress {
       set_status(loc("Warning: ")."$warning");
     } elsif ($data =~ m/Reading Super Block/) {
       print(">>> ".loc("Reading super block:")."\n");
-      set_status(loc("Reading super block for Drive [_1], Part [_2]...",$enduser_drive_string,$partition_number));
+      set_status(loc("Reading super block for Drive %1, Part %2...",$enduser_drive_string,$partition_number));
     } elsif ($data =~ m/Calculating bitmap/) {
       print(">>> ".loc("Calculating bitmap")."\n");
-      set_status(loc("Calculating bitmap for Drive [_1], Part [_2]...",$enduser_drive_string,$partition_number));
+      set_status(loc("Calculating bitmap for Drive %1, Part %2...",$enduser_drive_string,$partition_number));
     } elsif ($data =~ m/Elapsed.+,$/) {
       # Restore progress line
       my $elapsed = substr($data,9,8);
@@ -1059,17 +1062,17 @@ sub update_restore_progress {
       my $rate = substr($data,60,12);
       $pct =~ s/\s+//g;
       $rate =~ s/\s+//g;
-      print ">>> ".loc("(RESTORE) Elapsed: *[_1]* | Remaining: *[_2]* | Percent: *[_3]* | Speed: *[_4]*",$elapsed,$remaining,$pct,$rate)."\n";
-      $msg = loc("Part [_1] of [_2] ([_3]%) [_4] Elapsed [_5] Remaining",$status{'current_part'}+1,$status{'total_parts'},$pct,$elapsed,$remaining);
+      print ">>> ".loc("(RESTORE) Elapsed: *%1* | Remaining: *%2* | Percent: *%3* | Speed: *%4*",$elapsed,$remaining,$pct,$rate)."\n";
+      $msg = loc("Part %1 of %2 (%3%) %4 Elapsed %5 Remaining",$status{'current_part'}+1,$status{'total_parts'},$pct,$elapsed,$remaining);
       $builder->get_object('restore_progress_status')->set_text($msg);
       # Base overall percentage on number of total bytes
       my $current_bytes = int(($pct/100) * $drives{$dest_drive}{'parts'}{$partition_number}{'bytes'}) + $status{'done_bytes'};
       my $overall_pct = ($current_bytes / $status{'total_bytes'}) + (($pct / 100) / $status{'total_bytes'});
       if ($overall_pct > 1) { $overall_pct = 1; }
-      set_status(loc("Restoring part [_1] ([_2]) at [_3]",$status{'current_part'}+1,$drives{$dest_drive}{'parts'}{$partition_number}{'size'},$rate));
-      print ">>> ".loc("Drive: [_1] | Partition: [_2] | Current bytes: [_3] | Overall: [_4]",$src,$partition_number,$current_bytes,$overall_pct)."\n";
+      set_status(loc("Restoring part %1 (%2) at %3",$status{'current_part'}+1,$drives{$dest_drive}{'parts'}{$partition_number}{'size'},$rate));
+      print ">>> ".loc("Drive: %1 | Partition: %2 | Current bytes: %3 | Overall: %4",$src,$partition_number,$current_bytes,$overall_pct)."\n";
       $progress_bar->set_fraction($overall_pct);
-      $msg = loc("[_1]% Complete", sprintf("%.2f", $overall_pct * 100));
+      $msg = loc("%1% Complete", sprintf("%.2f", $overall_pct * 100));
       $progress_bar->set_text($msg);
     } elsif ($data =~ m/not_used.+/) {
       # Bitmap reading progress line, no longer appears to be reported
@@ -1078,15 +1081,15 @@ sub update_restore_progress {
       my $remaining = substr($data,30,8);
       my $pct = substr($data,51,6);
       $pct =~ s/\s+//g;
-      print ">>> ".loc("(BITMAP) Elapsed: *[_1]* | Remaining: *[_2]* | Percent: *[_3]*",$elapsed,$remaining,$pct)."\n";
-      $msg = loc("Reading bitmap for part [_1] of [_2]",$status{'current_part'}+1,$status{'total_parts'});
+      print ">>> ".loc("(BITMAP) Elapsed: *%1* | Remaining: *%2* | Percent: *%3*",$elapsed,$remaining,$pct)."\n";
+      $msg = loc("Reading bitmap for part %1 of %2",$status{'current_part'}+1,$status{'total_parts'});
       $builder->get_object('restore_progress_status')->set_text($msg);
-      set_status(loc("Reading bitmap for Drive [_1], Part [_2] ([_3]% done, [_4] remaining)",$enduser_drive_string,$partition_number,$pct,$remaining));
+      set_status(loc("Reading bitmap for Drive %1, Part %2 (%3% done, %4 remaining)",$enduser_drive_string,$partition_number,$pct,$remaining));
     } elsif ($data =~ m/Cloned successfully/) {
       set_status(loc("Partition completed."));
-      print ">>> ".loc("Partition [_1] completed.",$status{'current_part_device'})."\n";
-      print "\t".loc("Current part: [_1]",$status{'current_part'}+1)."\n";
-      print "\t".loc("Total parts: [_1]",$status{'total_parts'})."\n";
+      print ">>> ".loc("Partition %1 completed.",$status{'current_part_device'})."\n";
+      print "\t".loc("Current part: %1",$status{'current_part'}+1)."\n";
+      print "\t".loc("Total parts: %1",$status{'total_parts'})."\n";
       if ($status{'current_part'}==$status{'total_parts'}-1 ) {
         $builder->get_object('restore_progress_status')->set_text('');
         $progress_bar->set_fraction(1);
@@ -1098,7 +1101,7 @@ sub update_restore_progress {
         # Unmount stuff
         system("sync");
         sleep(0.5);
-        print "*** ".loc("Writing MBR to [_1]",$dest_drive)."\n";
+        print "*** ".loc("Writing MBR to %1",$dest_drive)."\n";
         set_status(loc("Rewriting master boot record to destination drive..."));
         system("dd of=/dev/$dest_drive if=$src_mbr bs=32768 count=1; sync;");
         sleep(0.5);
@@ -1107,7 +1110,7 @@ sub update_restore_progress {
         print ">>> ".loc("Operation complete.")."\n";
         set_status(loc("Restore complete."));
         beeper('done');
-        message_box(loc("Backup restored in [_1] minutes.",$elapsed));
+        message_box(loc("Backup restored in %1 minutes.",$elapsed));
         $msg = loc("Backup restored successfully.");
         system("notify-send -i ".APP_ICON." \"".$msg."\"");
         return 0;
@@ -1116,7 +1119,7 @@ sub update_restore_progress {
         undef($PROGRESS);
         # Need to add the size of the partition to the total bytes completed
         $status{'done_bytes'} += $drives{$dest_drive}{'parts'}{$partition_number}{'bytes'};
-        print ">>> ".loc("Backed up [_1] of [_2] total bytes.",$status{'done_bytes'},$status{'total_bytes'})."\n";
+        print ">>> ".loc("Backed up %1 of %2 total bytes.",$status{'done_bytes'},$status{'total_bytes'})."\n";
         $status{'current_part'}++;
         print loc("Advancing to next partition.")."\n";
         return TRUE;
@@ -1314,7 +1317,7 @@ sub save_file {
   my $data = $_[0];
   my $outfile = $_[1];
   $outfile =~ s/\\//g;
-  open(OUT, ">$outfile") or die(loc("Could not open [_1] for writing!",$outfile)."\n");
+  open(OUT, ">$outfile") or die(loc("Could not open %1 for writing!",$outfile)."\n");
   print OUT $data;
   close OUT;
 }
@@ -1411,7 +1414,7 @@ sub mount_data {
       system("curlftpfs $status{'mount_source'} ".MOUNT_POINT." $ftpargs");
       print "* ".loc("Executing: ")."curlftpfs $status{'mount_source'} ".MOUNT_POINT." <redacted>\n";
     } else {
-      fatal_crash(loc("The device type '[_1]' is not valid.  Did you forget to select a backup location?",$status{'mount_type'}));
+      fatal_crash(loc("The device type '%1' is not valid.  Did you forget to select a backup location?",$status{'mount_type'}));
     }
   }
   my $mp = MOUNT_POINT;
@@ -1471,7 +1474,7 @@ sub umount_warn_on_busy {
       my $mount_path = `findmnt --raw --noheadings --output TARGET \'$device_node\'`;
       chomp($mount_path);
       $partition_pretty_string = $partition_pretty_string.$device_node.": ".$mount_path."\n";
-      print loc("Unable to unmount partition: [_1]", $partition_pretty_string)."\n";
+      print loc("Unable to unmount partition: %1", $partition_pretty_string)."\n";
     }
     my $partition_busy_msg = loc("Partition(s) were unable to be unmounted. Please close any applications using the following partition(s) and click OK.");
     # Append the busy partition information onto the localized string because localization framework not handling newlines well.
@@ -1554,13 +1557,13 @@ sub set_partition_dropdown {
       my $size = $drives{$drive}{'parts'}{$data}{'size'};
       if (!defined($size)) { $size = "Unknown size"; }
       my $os = $drives{$drive}{'parts'}{$data}{'os'};
-      my $part_desc =  loc("Drive [_1]",$enduser_drive_number);
-      if ($num_parts > 1) { $part_desc .= loc(", Part [_1]",$partition_number); }
+      my $part_desc =  loc("Drive %1",$enduser_drive_number);
+      if ($num_parts > 1) { $part_desc .= loc(", Part %1",$partition_number); }
       $part_desc .= ": ($size $fs)";
       if ($os ne '') { $part_desc .= " $os"; }
       if ($label ne '') { $part_desc .= " $label"; }
       if (grep $_ eq $part, @blacklist) {
-        print "*** ".loc("Omitting backup source [_1] from destination list",$part)."\n";
+        print "*** ".loc("Omitting backup source %1 from destination list",$part)."\n";
       } else {
         if (length($part_desc)>MAX_WIDTH+3) { $part_desc = substr($part_desc,0,MAX_WIDTH).'...'; }
         $mdl->set($mdl->append, 0, "DEV|$part", 1, $part_desc);
@@ -1585,9 +1588,9 @@ sub set_share_dropdown {
     if (!defined($host)) { $host = $ip; }
     my $share_desc = '';
     if ($type eq 'FTP') {
-      $share_desc = loc("FTP server \U[_1]",$host);
+      $share_desc = loc("FTP server \U%1",$host);
     } elsif ($type eq 'SMB') {
-      $share_desc = loc("Shared folder [_1] on [_2]",$folder,$host);
+      $share_desc = loc("Shared folder %1 on %2",$folder,$host);
     }
     if ((defined($desc))&&($desc ne '')) { $share_desc .= " ($desc)"; }
     if (length($share_desc)>MAX_WIDTH+3) { $share_desc = substr($share_desc,0,MAX_WIDTH).'...'; }
@@ -1646,7 +1649,7 @@ sub set_partition_list {
       # FIXME: Unclear why this l10n string lookup doesn't work with this string,
       # FIXME: but works with other strings.
       # FIXME: May be bug with maketext deduplication?
-      my $part_desc = loc("Drive [_1], Part [_2]",$enduser_drive_number,$partition_number);
+      my $part_desc = loc("Drive %1, Part %2",$enduser_drive_number,$partition_number);
       $part_desc .= ": ($size $fs)";
       if ($os ne '') { $part_desc .= " $os"; }
       if ($label ne '') { $part_desc .= ", $label"; }
@@ -1668,7 +1671,7 @@ sub print_drive_list {
       print "\t$drive_key = $drives{$dev}{$drive_key}\n";
       if(ref($drives{$dev}{$drive_key}) eq 'HASH') {
         for my $partition_number (sort keys %{ $drives{$dev}{$drive_key} }) {
-          print "\t".loc("Part [_1]",$partition_number).":\n";
+          print "\t".loc("Part %1",$partition_number).":\n";
           for my $pk (sort keys %{ $drives{$dev}{$drive_key}{$partition_number} }) {
             print "\t\t$pk = $drives{$dev}{$drive_key}{$partition_number}{$pk}\n";
           }
@@ -1720,8 +1723,8 @@ sub find_local_drives {
       my $enduser_drive_number = get_enduser_drive_number($dev);
       my ($base_device, $partition_number) = split_device_string($dev);
       my $type = get_drivetype($dev);
-      my $desc = loc("Drive [_1] ([_2]): [_3]",$enduser_drive_number,$size,$dev_name);
-      if ($type eq 'usb') { $desc = loc("Drive [_1] ([_2]): USB [_3]",$enduser_drive_number,$size,$dev_name); }
+      my $desc = loc("Drive %1 (%2): %3",$enduser_drive_number,$size,$dev_name);
+      if ($type eq 'usb') { $desc = loc("Drive %1 (%2): USB %3",$enduser_drive_number,$size,$dev_name); }
       $drives{$dev} = {
         'device'               => $dev,
         'enduser_drive_number' => $enduser_drive_number,
@@ -2061,7 +2064,7 @@ sub save_partition_list {
   # Convert array into string with line breaks after each partition
   my $linebroken_partition_string = join("\n", @partitions);
   save_file($linebroken_partition_string, $output_file);
-  print "\t* ".loc("Partition list saved to [_1]",$output_file)."\n";
+  print "\t* ".loc("Partition list saved to %1",$output_file)."\n";
 }
 
 
@@ -2103,7 +2106,7 @@ sub get_free_space {
     $cmd = "-h";
   }
   my ($null1, $null2, $null3, $free) = split(/\s+/, `df $cmd $mount_point | tail -n 1`);
-  print loc("Free space: [_1]",$free)."\n";
+  print loc("Free space: %1",$free)."\n";
   return $free;
 }
 

@@ -29,31 +29,31 @@ msgstr "Etape 2: Confirmez l'effacement"
 msgid "Step 3: Factory Reset Drives"
 msgstr "Etape 3: Réinitialise à l'état usine"
 
-msgid "Preparing to reset device [_1]"
+msgid "Preparing to reset device %1"
 msgstr ""
 
-msgid "Starting to reset device [_1]"
+msgid "Starting to reset device %1"
 msgstr ""
 
 msgid "Making sure drive is not mounted"
 msgstr ""
 
 msgid ""
-"There are [_1] partitions still mounted on device [_2]. This drive will not "
+"There are %1 partitions still mounted on device %2. This drive will not "
 "be reset."
 msgstr ""
 
 msgid "Unable to reset drive: Disk is mounted"
 msgstr ""
 
-msgid "Getting current status of device [_1]"
+msgid "Getting current status of device %1"
 msgstr ""
 
-msgid "Verifying ATA secure erase support for device [_1]"
+msgid "Verifying ATA secure erase support for device %1"
 msgstr ""
 
 msgid ""
-"Device [_1] does not support the ATA secure erase command. This drive will "
+"Device %1 does not support the ATA secure erase command. This drive will "
 "not be reset."
 msgstr ""
 
@@ -63,7 +63,7 @@ msgstr ""
 msgid "Making sure drive is not frozen"
 msgstr ""
 
-msgid "Device [_1] is still marked as frozen. This drive will not be reset."
+msgid "Device %1 is still marked as frozen. This drive will not be reset."
 msgstr ""
 
 msgid "Unable to reset drive: Disk marked frozen"
@@ -72,26 +72,26 @@ msgstr ""
 msgid "Making sure drive is not locked"
 msgstr ""
 
-msgid "Device [_1] is already locked. Attempting to proceed anyway."
+msgid "Device %1 is already locked. Attempting to proceed anyway."
 msgstr ""
 
-msgid "Writing verification data to drive [_1]"
+msgid "Writing verification data to drive %1"
 msgstr ""
 
-msgid "Failed to write to drive [_1]. Reset may fail, but proceeding anyway."
+msgid "Failed to write to drive %1. Reset may fail, but proceeding anyway."
 msgstr ""
 
-msgid "Setting security password for device [_1]"
+msgid "Setting security password for device %1"
 msgstr ""
 
-msgid "Failed to set password for drive [_1]"
+msgid "Failed to set password for drive %1"
 msgstr ""
 
 msgid "Refreshing status of device"
 msgstr ""
 
 msgid ""
-"Could not enable security mode for device [_1]. This drive will not be reset."
+"Could not enable security mode for device %1. This drive will not be reset."
 msgstr ""
 
 msgid "Unable to reset drive: Password could not be set"
@@ -103,20 +103,20 @@ msgstr "Le disque est prêt à être réinitialisé"
 msgid "Calculating time estimate for completion"
 msgstr ""
 
-msgid "Preparing to issue secure erase command to device [_1]"
+msgid "Preparing to issue secure erase command to device %1"
 msgstr ""
 
 msgid ""
-"Reset started for [_1], but we may not know when it finishes because we "
+"Reset started for %1, but we may not know when it finishes because we "
 "couldn't get flags on the process: "
 msgstr ""
 
 msgid ""
-"Reset started for [_1], but we may not know when it finishes because we "
+"Reset started for %1, but we may not know when it finishes because we "
 "couldn't set flags on the process: "
 msgstr ""
 
-msgid "Reset estimated to last from [_1] until [_2]"
+msgid "Reset estimated to last from %1 until %2"
 msgstr ""
 
 msgid "Resetting..."
@@ -146,19 +146,19 @@ msgstr ""
 msgid "Status"
 msgstr "Statut"
 
-msgid "About [_1] minute"
+msgid "About %1 minute"
 msgstr ""
 
 msgid " remaining"
 msgstr ""
 
-msgid "Resetting: [_1] minutes elapsed"
+msgid "Resetting: %1 minutes elapsed"
 msgstr ""
 
-msgid "Reset of [_1] is complete."
+msgid "Reset of %1 is complete."
 msgstr ""
 
-msgid "Reset completed in [_1] minutes"
+msgid "Reset completed in %1 minutes"
 msgstr ""
 
 msgid "Verifying no data is on drive..."
@@ -167,7 +167,7 @@ msgstr ""
 msgid "Could not read from device!"
 msgstr ""
 
-msgid "Verifying char [_1] on [_2]: [_3]."
+msgid "Verifying char %1 on %2: %3."
 msgstr ""
 
 msgid "Data found on drive!"
@@ -205,40 +205,40 @@ msgstr ""
 msgid "Confirming that all drives are unlocked."
 msgstr ""
 
-msgid "Device [_1] was not reset: [_2]"
+msgid "Device %1 was not reset: %2"
 msgstr ""
 
-msgid "Checking device [_1]"
+msgid "Checking device %1"
 msgstr ""
 
 msgid ""
-"Reset completed on [_1], but drive remains locked. Attempting to unlock "
+"Reset completed on %1, but drive remains locked. Attempting to unlock "
 "drive..."
 msgstr ""
 
-msgid "Refreshing status of device [_1]..."
+msgid "Refreshing status of device %1..."
 msgstr ""
 
 msgid ""
-"Could not disable security mode for device [_1].  You may need to run the "
+"Could not disable security mode for device %1.  You may need to run the "
 "'hdparm --security-disable' command before this drive can be used."
 msgstr ""
 
-msgid "Device [_1] is unlocked."
+msgid "Device %1 is unlocked."
 msgstr ""
 
-msgid "Device [_1] has [_2] MB allocated to HPA."
+msgid "Device %1 has %2 MB allocated to HPA."
 msgstr ""
 
 msgid ""
-"Would you like to attempt to free [_1]MB of host-protected area (HPA) on "
+"Would you like to attempt to free %1MB of host-protected area (HPA) on "
 "this hard drive?"
 msgstr ""
 
 msgid ""
 "Command executed. Response:\n"
 "\n"
-"[_1]"
+"%1"
 msgstr ""
 
 msgid ""
@@ -246,10 +246,10 @@ msgid ""
 "(DCO) on this hard drive?"
 msgstr ""
 
-msgid "Device [_1] does not have any HPA space to recover."
+msgid "Device %1 does not have any HPA space to recover."
 msgstr ""
 
-msgid "Drive [_1] selected but currently frozen."
+msgid "Drive %1 selected but currently frozen."
 msgstr ""
 
 msgid "Are you sure?"
