@@ -405,9 +405,9 @@ sub do_backup {
   $status{'done_bytes'} = 0;
   $status{'frame'} = 0;
   $status{'free'} = get_free_space();
-  # Create backup by calling progress sub
   print "\t* ".loc("Total partitions to save: [_1]",$status{'total_parts'})."\n";
   print "\t* ".loc("Total bytes to save: [_1]",$status{'total_bytes'})."\n";
+  # Create backup by calling progress sub
   Glib::Timeout->add(50, \&update_backup_progress);
   refresh_window();
 }
@@ -506,11 +506,9 @@ sub update_backup_progress {
       print(">>> ".loc("Warning: [_1]", $warning)."\n");
       set_status(loc("Warning: [_1]", $warning));
     } elsif ($data =~ m/Reading Super Block/) {
-      # Reading super block
       print(">>> ".loc("Reading super block")."\n");
       set_status(loc("Reading super block for Drive [_1], Part [_2]...",$enduser_drive_number,$partition_number));
     } elsif ($data =~ m/Calculating bitmap/) {
-      # Calculating bitmap
       print(">>> ".loc("Calculating bitmap")."\n");
       set_status(loc("Calculating bitmap for Drive [_1], Part [_2]...",$enduser_drive_number,$partition_number));
     } elsif ($data =~ m/Elapsed.+\%$/) {
@@ -927,10 +925,10 @@ sub update_restore_progress {
         print "*** ".loc("Processing [_1] using [_2]...","$dest_partition_node",$tool)."\n";
         $restore_cmd = "( cat /$src"."_part$partition_number.* | pigz -d -c | $tool -F -L /partclone.log -O /dev/$dest_partition_node ) 2>&1 |";
     } else {
-        # Assume backup was created with a format compatible with the 1.0.5 release.
+        print loc("Restoring backup created with version: [_1]",$backup_version)."\n";
+        # Assuming backup was created with a format compatible with the 1.0.5 release.
         # TODO: Compare the MAJOR.MINOR.PATCH components that make up the version number to automatically handle newer versions
         # TODO: when the backup format and partclone syntax have not changed.
-        print loc("Restoring backup created with version: [_1]",$backup_version)."\n";
         my $tool = `cat $src.partclone.command.part$partition_number`;
         chomp($tool);
         my $tool_missing_msg = loc("The tool [_1] does not exist", "/usr/sbin/$tool");
@@ -995,11 +993,9 @@ sub update_restore_progress {
       print(">>> ".loc("Warning: ")."$warning\n");
       set_status(loc("Warning: ")."$warning");
     } elsif ($data =~ m/Reading Super Block/) {
-      # Reading super block
       print(">>> ".loc("Reading super block:")."\n");
       set_status(loc("Reading super block for Drive [_1], Part [_2]...",$enduser_drive_string,$partition_number));
     } elsif ($data =~ m/Calculating bitmap/) {
-      # Reading super block
       print(">>> ".loc("Calculating bitmap")."\n");
       set_status(loc("Calculating bitmap for Drive [_1], Part [_2]...",$enduser_drive_string,$partition_number));
     } elsif ($data =~ m/Elapsed.+,$/) {
