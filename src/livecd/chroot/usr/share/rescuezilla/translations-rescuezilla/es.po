@@ -65,38 +65,38 @@ msgstr "Copia de respaldo/seguridad"
 msgid "Could not access the destination drive. If the device is shared on a network, ensure that the username and password you provided are correct and try again."
 msgstr "No se pudo acceder a la unidad de destino. Si el dispositivo se comparte en una red, asegúrese de que el nombre de usuario y la contraseña que escribió son correctos eInténtelo de nuevo."
 
-msgid "Warning! This drive has only [_1]MB of free space. Make sure your backup will fit."
-msgstr "¡Advertencia! Esta unidad/disco solo tiene [_1] MB de espacio libre. Asegúrese de que su copia de seguridadencajará."
+msgid "Warning! This drive has only %1MB of free space. Make sure your backup will fit."
+msgstr "¡Advertencia! Esta unidad/disco solo tiene %1 MB de espacio libre. Asegúrese de que su copia de seguridadencajará."
 
-msgid "Backup [_1] to [_2]"
-msgstr "Copia de respaldo/seguridad [_1] a [_2]"
+msgid "Backup %1 to %2"
+msgstr "Copia de respaldo/seguridad %1 a %2"
 
-msgid "MBR and partition table of [_1] saved to [_2]"
-msgstr "MBR y tabla de particiones de[_1] guardada en[_2]"
+msgid "MBR and partition table of %1 saved to %2"
+msgstr "MBR y tabla de particiones de%1 guardada en%2"
 
-msgid "Size of [_1] ([_2] bytes) saved to [_3]"
-msgstr "Tamaño de [_1] ([_2] bytes) guardado en [_3]"
+msgid "Size of %1 (%2 bytes) saved to %3"
+msgstr "Tamaño de %1 (%2 bytes) guardado en %3"
 
-msgid "Total partitions to save: [_1]"
-msgstr "Total de particiones para guardar: [_1]"
+msgid "Total partitions to save: %1"
+msgstr "Total de particiones para guardar: %1"
 
-msgid "Total bytes to save: [_1]"
-msgstr "Total de bytes para guardar: [_1]"
+msgid "Total bytes to save: %1"
+msgstr "Total de bytes para guardar: %1"
 
-msgid "The tool [_1] does not exist"
-msgstr "La herramienta [_1] no existe"
+msgid "The tool %1 does not exist"
+msgstr "La herramienta %1 no existe"
 
-msgid "Preparing to create backup of Drive [_1], Part [_2]..."
-msgstr "Preparando para crear una copia de respaldo/seguridad de la unidad/disco[_1], partición[_2]...."
+msgid "Preparing to create backup of Drive %1, Part %2..."
+msgstr "Preparando para crear una copia de respaldo/seguridad de la unidad/disco%1, partición%2...."
 
-msgid "Processing [_1] ([_2]) using [_3]..."
-msgstr "Procesando [_1] ([_2]) usando [_3]..."
+msgid "Processing %1 (%2) using %3..."
+msgstr "Procesando %1 (%2) usando %3..."
 
 msgid "Executing: "
 msgstr "Ejecutando"
 
-msgid "Starting to clone [_1]"
-msgstr "Empezando a clonar [_1] "
+msgid "Starting to clone %1"
+msgstr "Empezando a clonar %1 "
 
 msgid "List of partitions:"
 msgstr "Lista de particiones"
@@ -104,63 +104,63 @@ msgstr "Lista de particiones"
 msgid "(Processing)"
 msgstr "(Procesando)"
 
-msgid "Device size: [_1]"
-msgstr "Tamaño de la unidad/disco: [_1]"
+msgid "Device size: %1"
+msgstr "Tamaño de la unidad/disco: %1"
 
-msgid "Space in use: [_1]"
-msgstr "Espacio en uso: [_1]"
+msgid "Space in use: %1"
+msgstr "Espacio en uso: %1"
 
-msgid "Warning: [_1]"
-msgstr "Advertencia: [_1]"
+msgid "Warning: %1"
+msgstr "Advertencia: %1"
 
 msgid "Reading super block"
 msgstr "Lectura del súper bloque (metadatos del sistema de archivos)"
 
-msgid "Reading super block for Drive [_1], Part [_2]..."
-msgstr "Lectura del superbloque para la unidad/disco [_1], Parte [_2] ..."
+msgid "Reading super block for Drive %1, Part %2..."
+msgstr "Lectura del superbloque para la unidad/disco %1, Parte %2 ..."
 
 msgid "Calculating bitmap"
 msgstr "Calculando mapa de bits"
 
-msgid "Calculating bitmap for Drive [_1], Part [_2]..."
-msgstr "Calculando mapa de bits de la unidad/disco [_1], partición [_2] ..."
+msgid "Calculating bitmap for Drive %1, Part %2..."
+msgstr "Calculando mapa de bits de la unidad/disco %1, partición %2 ..."
 
-msgid "Reading bitmap for part [_1] of [_2]"
-msgstr "Leyendo mapa de bits de la partición [_1] de [_2]"
+msgid "Reading bitmap for part %1 of %2"
+msgstr "Leyendo mapa de bits de la partición %1 de %2"
 
-msgid "Calculating bitmap progress: [_1]% Remaining: [_2]"
-msgstr "Calculando le progreso del mapa de bits: [_1]% Restante: [_2]"
+msgid "Calculating bitmap progress: %1% Remaining: %2"
+msgstr "Calculando le progreso del mapa de bits: %1% Restante: %2"
 
 #, perl-format
-msgid "Reading bitmap for Drive [_1], Part [_2] ([_3]% done, [_4] remaining)"
-msgstr "Leyendo mapa de bits de la unidad/disco [_1], Partición [_2] ([_3]% terminado, [_4] restante)"
+msgid "Reading bitmap for Drive %1, Part %2 (%3% done, %4 remaining)"
+msgstr "Leyendo mapa de bits de la unidad/disco %1, Partición %2 (%3% terminado, %4 restante)"
 
-msgid "Elapsed: *[_1]* | Remaining: *[_2]* | Percent: *[_3]* | Speed: *[_4]*"
-msgstr "Transcurrido: *[_1]* | Restante: *[_2]* | Porcentaje: *[_3]* | Velocidad: *[_4]*"
+msgid "Elapsed: *%1* | Remaining: *%2* | Percent: *%3* | Speed: *%4*"
+msgstr "Transcurrido: *%1* | Restante: *%2* | Porcentaje: *%3* | Velocidad: *%4*"
 
-msgid "Part [_1] of [_2] ([_3]%) [_4] Elapsed [_5] Remaining"
-msgstr "Partición [_1] de [_2] ([_3]%) [_4] Transcurrido [_5] Restante"
+msgid "Part %1 of %2 (%3%) %4 Elapsed %5 Remaining"
+msgstr "Partición %1 de %2 (%3%) %4 Transcurrido %5 Restante"
 
-msgid "Saving part [_1] ([_2]) at [_3] ([_4] free space)"
-msgstr "Guardando parte [_1] ([_2]) con [_3] ([_4] espacio libre)"
+msgid "Saving part %1 (%2) at %3 (%4 free space)"
+msgstr "Guardando parte %1 (%2) con %3 (%4 espacio libre)"
 
-msgid "Drive: [_1] | Partition: [_2] | Current bytes: [_3] | Overall: [_4]"
-msgstr "Unidad/disco: [_1] | Partición: [_2] | bytes actuales: [_3] | de: [_4]"
+msgid "Drive: %1 | Partition: %2 | Current bytes: %3 | Overall: %4"
+msgstr "Unidad/disco: %1 | Partición: %2 | bytes actuales: %3 | de: %4"
 
-msgid "[_1]% Complete"
-msgstr "[_1]% Completado"
+msgid "%1% Complete"
+msgstr "%1% Completado"
 
 msgid "Partition completed."
 msgstr "Partición completada."
 
-msgid "Partition [_1] completed."
-msgstr "Partición [_1] completada."
+msgid "Partition %1 completed."
+msgstr "Partición %1 completada."
 
-msgid "Current part: [_1]"
-msgstr "Parte actual: [_1]"
+msgid "Current part: %1"
+msgstr "Parte actual: %1"
 
-msgid "Total parts: [_1]"
-msgstr "Partes totales: [_1]"
+msgid "Total parts: %1"
+msgstr "Partes totales: %1"
 
 msgid "Backup complete."
 msgstr "Copia de respaldo/seguridad completada."
@@ -168,8 +168,8 @@ msgstr "Copia de respaldo/seguridad completada."
 msgid "Exit"
 msgstr "Salir"
 
-msgid "Backup image saved in [_1] minutes."
-msgstr "Copia de respaldo/seguridad guardada en [_1] minuto(s)."
+msgid "Backup image saved in %1 minutes."
+msgstr "Copia de respaldo/seguridad guardada en %1 minuto(s)."
 
 msgid "Backup saved successfully."
 msgstr "Copia de respaldo/seguridad guardada exitosamente."
@@ -183,8 +183,8 @@ msgstr "Cancelar"
 msgid "Save Here"
 msgstr "Guardar aquí"
 
-msgid "You must select a folder inside [_1]"
-msgstr "Debe seleccionar un directorio/carpeta dentro de [_1]"
+msgid "You must select a folder inside %1"
+msgstr "Debe seleccionar un directorio/carpeta dentro de %1"
 
 msgid "Please select a different folder."
 msgstr "Seleccione por favor un directorio/carpeta diferente."
@@ -198,8 +198,8 @@ msgstr "No se pudo acceder a la unidad/disco de origen. Si el dispositivo se com
 msgid "Preparing destination drive..."
 msgstr "Preparando la unidad/disco de destino..."
 
-msgid "Comparing [_1] to [_2]..."
-msgstr "Comparando [_1] con [_2]..."
+msgid "Comparing %1 to %2..."
+msgstr "Comparando %1 con %2..."
 
 msgid "Are you sure you want to restore the backup to the same drive the source image is located on? Unless you know what you are doing, this will result in loss of all data on the drive, including the backup image!"
 msgstr "¿Está seguro de que desea restaurar la copia de respaldo/seguridad en la misma unidad/discoen la que se encuentra la copia de respaldo/seguridad de origen? ¡CUIDADO! ¡A menos que sepa lo que está haciendo, esto resultará en la pérdida de todos los datosde la unidad/disco, incluyendo la copia de respaldo/seguridad!"
@@ -210,49 +210,49 @@ msgstr "Abortar"
 #. Context for translators: The two popular unofficial updates of Redo Backup v1.0.4 by Sourceforge user louvetch have a major bug.
 #. This major bug affected both the English language and French language versions of this unofficial update. All data can be restored with careful
 #. manual intervention. Given the popularity of those unofficial updates, translating this error message is still important.
-msgid "The backup's extended partition information is empty or missing. This happens with incomplete backups created by an unofficial Redo Backup update. If the backup contains extended partitions, these will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore the extended partitions. Please consult [_1] for information and assistance. The destination drive has not yet been modified. Do you wish to continue with the restore?"
+msgid "The backup's extended partition information is empty or missing. This happens with incomplete backups created by an unofficial Redo Backup update. If the backup contains extended partitions, these will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore the extended partitions. Please consult %1 for information and assistance. The destination drive has not yet been modified. Do you wish to continue with the restore?"
 msgstr ""
 
-msgid "The drive you are attempting to restore to is [_1] MB smaller than the original. You must restore to a drive that is the same size or larger than the original."
-msgstr "La unidad/disco a la que está intentando restaurar es [_1] MB más pequeña que la original. Debe restaurar en una unidad/disco que tenga el mismo tamaño o que sea mayor que la original."
+msgid "The drive you are attempting to restore to is %1 MB smaller than the original. You must restore to a drive that is the same size or larger than the original."
+msgstr "La unidad/disco a la que está intentando restaurar es %1 MB más pequeña que la original. Debe restaurar en una unidad/disco que tenga el mismo tamaño o que sea mayor que la original."
 
-msgid "Could not read from [_1]! Aborting."
-msgstr "¡No se puede leer de [_1]! Abortando."
+msgid "Could not read from %1! Aborting."
+msgstr "¡No se puede leer de %1! Abortando."
 
-msgid "Are you sure you want to restore the backup to /dev/[_1]? Doing so will permanently overwrite the data on this drive!"
-msgstr "¿Está seguro de que desea restaurar la copia respaldo/seguridad a /dev/[_1]? ¡Si lo hace, sobrescribirá permanentemente los datos de esta unidad/disco!"
+msgid "Are you sure you want to restore the backup to /dev/%1? Doing so will permanently overwrite the data on this drive!"
+msgstr "¿Está seguro de que desea restaurar la copia respaldo/seguridad a /dev/%1? ¡Si lo hace, sobrescribirá permanentemente los datos de esta unidad/disco!"
 
 #. Context for translators: Two popular unofficial Redo Backup v1.0.4 updates by Sourceforge user chcatzsf have major bugs where bootloaders like GRUB are not not fully backed up, so Linux-based operating
 #. cannot boot after a restore. This bug only affected those two updates (German-language only) and the problem can be fixed with careful manual intervention. Translating this message into languages other
 #. than English and German is not required.
 #. Full details in: https://github.com/rescuezilla/rescuezilla/wiki/Bugs-in-unofficial-Redo-Backup-updates#bugs-in-chcatzsfs-ubuntu-1310-and-1404-releases-german-language-only
-msgid "The backup's bootloader data is shorter than expected. This happens with backups created by an unofficial Redo Backup update. If the backup contained certain bootloaders like GRUB, the restored hard drive will not boot correctly without a manual fix. All data is still fully recoverable but manual intervention may required to restore the bootloader. Please consult [_1] for information and assistance. The destination drive has not yet been modified. Do you wish to continue with the restore?"
+msgid "The backup's bootloader data is shorter than expected. This happens with backups created by an unofficial Redo Backup update. If the backup contained certain bootloaders like GRUB, the restored hard drive will not boot correctly without a manual fix. All data is still fully recoverable but manual intervention may required to restore the bootloader. Please consult %1 for information and assistance. The destination drive has not yet been modified. Do you wish to continue with the restore?"
 msgstr ""
 
-msgid "Writing MBR to [_1]"
-msgstr "Escribiendo MBR en [_1]"
+msgid "Writing MBR to %1"
+msgstr "Escribiendo MBR en %1"
 
 msgid "Writing master boot record to destination drive..."
 msgstr "Escribiendo master boot record en la unidad/disco de destino..."
 
-msgid "Restoring partition table to [_1]"
-msgstr "Restaurando la tabla de particiones a [_1]"
+msgid "Restoring partition table to %1"
+msgstr "Restaurando la tabla de particiones a %1"
 
 msgid "Writing extended partition table to destination drive..."
 msgstr "Escribiendo la tabla de particiones extendida en la unidad/disco de destino..."
 
-msgid "Detected backup created with [_1]"
-msgstr "Detectada copia de respaldo/seguridad creada con [_1]"
+msgid "Detected backup created with %1"
+msgstr "Detectada copia de respaldo/seguridad creada con %1"
 
-msgid "Reloading partition table from [_1]"
-msgstr "Recargando tabla de particones de [_1]"
+msgid "Reloading partition table from %1"
+msgstr "Recargando tabla de particones de %1"
 
 msgid "Reloading new partition table from destination drive..."
 msgstr "Recargando nueva tabla de particiones desde la unidad/disco de destino..."
 
 #. FIXME: Update this misleading comment (including localizations if possible)
-msgid "Verifying that /dev/[_1] exists and can be restored to: "
-msgstr "Verificando que /dev/[_1] existe y puede ser restaurado a: "
+msgid "Verifying that /dev/%1 exists and can be restored to: "
+msgstr "Verificando que /dev/%1 existe y puede ser restaurado a: "
 
 msgid "OK"
 msgstr "OK"
@@ -263,30 +263,30 @@ msgstr "FALLÓ"
 msgid "The partition table did not restore properly. The backup image may contain all your data, but without a valid partition table, no data can be restored."
 msgstr "La tabla de particiones no se ha restaurado correctamente. La imagen de copia de respaldo/seguridad puede contener todos los datos, pero sin una tabla de particiones válida, no se puede restaurar ningún dato."
 
-msgid "Device [_1] is [_2] bytes..."
-msgstr "Unidad/disco [_1] es de [_2] bytes..."
+msgid "Device %1 is %2 bytes..."
+msgstr "Unidad/disco %1 es de %2 bytes..."
 
-msgid "Restoring [_1] total bytes of partitioned space."
-msgstr "Restaurando [_1] byte(s) del espacio total particionado."
+msgid "Restoring %1 total bytes of partitioned space."
+msgstr "Restaurando %1 byte(s) del espacio total particionado."
 
-msgid "Preparing to restore backup for Drive [_1], Part [_2]..."
-msgstr "Preparando la restauración de la copia de respaldo/seguridad de la unidad/disco [_1], Partición [_2]..."
+msgid "Preparing to restore backup for Drive %1, Part %2..."
+msgstr "Preparando la restauración de la copia de respaldo/seguridad de la unidad/disco %1, Partición %2..."
 
-msgid "No version number detected. Therefore backup assumed to be made by v1.0.4, so using [_1] partclone.restore."
-msgstr "No se ha detectado el número de versión. Entonces se asume que la copia de respaldo/seguridad está hecha por la v1.0.4, así que se esta usando [_1] partclone.restore."
+msgid "No version number detected. Therefore backup assumed to be made by v1.0.4, so using %1 partclone.restore."
+msgstr "No se ha detectado el número de versión. Entonces se asume que la copia de respaldo/seguridad está hecha por la v1.0.4, así que se esta usando %1 partclone.restore."
 
 #. The Redo Backup v1.0.4 partclone version uses different restore syntax, and autodetects raw formats differently
-msgid "Using partclone [_1] to restore the [_2] backup, for maximum compatibility"
-msgstr "Usando partclone [_1] para restaurar la copia de respaldo/seguridad [_2], para maximizar la compatibilidad"
+msgid "Using partclone %1 to restore the %2 backup, for maximum compatibility"
+msgstr "Usando partclone %1 para restaurar la copia de respaldo/seguridad %2, para maximizar la compatibilidad"
 
-msgid "Processing [_1] using [_2]..."
-msgstr "Procesando [_1] usando [_2]"
+msgid "Processing %1 using %2..."
+msgstr "Procesando %1 usando %2"
 
-msgid "Restoring backup created with version: [_1]"
-msgstr "Restaurando la copia de respaldo/seguridad con la versión: [_1]"
+msgid "Restoring backup created with version: %1"
+msgstr "Restaurando la copia de respaldo/seguridad con la versión: %1"
 
-msgid "Starting to restore [_1]"
-msgstr "Iniciando la restauración [_1]"
+msgid "Starting to restore %1"
+msgstr "Iniciando la restauración %1"
 
 msgid "Warning: "
 msgstr "Advertencia: "
@@ -294,14 +294,14 @@ msgstr "Advertencia: "
 msgid "Reading super block:"
 msgstr "Leyendo Superblock: "
 
-msgid "(RESTORE) Elapsed: *[_1]* | Remaining: *[_2]* | Percent: *[_3]* | Speed: *[_4]*"
-msgstr "(RESTAURANDO) Transcurrido: *[_1]* | Restante: *[_2]* | Porcentaje: *[_3]* | Velocidad: *[_4]*"
+msgid "(RESTORE) Elapsed: *%1* | Remaining: *%2* | Percent: *%3* | Speed: *%4*"
+msgstr "(RESTAURANDO) Transcurrido: *%1* | Restante: *%2* | Porcentaje: *%3* | Velocidad: *%4*"
 
-msgid "Restoring part [_1] ([_2]) at [_3]"
-msgstr "Restaurando partición [_1] ([_2]) en [_3]"
+msgid "Restoring part %1 (%2) at %3"
+msgstr "Restaurando partición %1 (%2) en %3"
 
-msgid "(BITMAP) Elapsed: *[_1]* | Remaining: *[_2]* | Percent: *[_3]*"
-msgstr "(BITMAP) Transcurrido: *[_1]* | Restante: *[_2]* | Porcentaje: *[_3]*"
+msgid "(BITMAP) Elapsed: *%1* | Remaining: *%2* | Percent: *%3*"
+msgstr "(BITMAP) Transcurrido: *%1* | Restante: *%2* | Porcentaje: *%3*"
 
 msgid "Operation completed successfully."
 msgstr "Proceso completado con exito."
@@ -315,14 +315,14 @@ msgstr "Proceso completado"
 msgid "Restore complete."
 msgstr "Restaurción completa."
 
-msgid "Backup restored in [_1] minutes."
-msgstr "Copia de respaldo/seguridad restaurada en [_1] Minuto."
+msgid "Backup restored in %1 minutes."
+msgstr "Copia de respaldo/seguridad restaurada en %1 Minuto."
 
 msgid "Backup restored successfully."
 msgstr "Copia de respaldo/seguridad restaurada con exito."
 
-msgid "Backed up [_1] of [_2] total bytes."
-msgstr "Respaldado [_1] de [_2] bytes totales"
+msgid "Backed up %1 of %2 total bytes."
+msgstr "Respaldado %1 de %2 bytes totales"
 
 msgid "Advancing to next partition."
 msgstr "Avanzando a la siguiente partición"
@@ -345,13 +345,13 @@ msgstr "No se puede continuar. El programa finalizara."
 msgid "Fatal Error:"
 msgstr "Error fatal"
 
-msgid "Could not open [_1] for writing!"
-msgstr "¡No se puede abrir [_1] para escritura!"
+msgid "Could not open %1 for writing!"
+msgstr "¡No se puede abrir %1 para escritura!"
 
-msgid "The device type '[_1]' is not valid.  Did you forget to select a backup location?"
-msgstr "El tipo de unidad/disco[_1] no está permitido.  ¿Ha olvidado seleccionar una ubicación de copia de seguridad?"
+msgid "The device type '%1' is not valid.  Did you forget to select a backup location?"
+msgstr "El tipo de unidad/disco%1 no está permitido.  ¿Ha olvidado seleccionar una ubicación de copia de seguridad?"
 
-msgid "Unable to unmount partition: [_1]"
+msgid "Unable to unmount partition: %1"
 msgstr ""
 
 msgid "Partition(s) were unable to be unmounted. Please close any applications using the following partition(s) and click OK."
@@ -373,20 +373,20 @@ msgstr "No hay unidades/discos disponibles."
 msgid "Could not locate any partitions on your computer."
 msgstr "No se encuentran particiones en el disco duro del ordenador."
 
-msgid "Drive [_1]"
-msgstr "unidad/disco [_1]"
+msgid "Drive %1"
+msgstr "unidad/disco %1"
 
-msgid ", Part [_1]"
-msgstr ", Partición [_1]"
+msgid ", Part %1"
+msgstr ", Partición %1"
 
-msgid "Omitting backup source [_1] from destination list"
-msgstr "Omitiendo la fuente de la copia de respaldo/seguridad[_1] de la lista de destinos"
+msgid "Omitting backup source %1 from destination list"
+msgstr "Omitiendo la fuente de la copia de respaldo/seguridad%1 de la lista de destinos"
 
-msgid "FTP server [_1]"
-msgstr "Servidor FTP [_1]"
+msgid "FTP server %1"
+msgstr "Servidor FTP %1"
 
-msgid "Shared folder [_1] on [_2]"
-msgstr "Directorio/carpeta coompartida[_1] en [_2]"
+msgid "Shared folder %1 on %2"
+msgstr "Directorio/carpeta coompartida%1 en %2"
 
 msgid "Shared folder specified below"
 msgstr "Directorio/carpeta compartida especificada a continuación"
@@ -412,17 +412,17 @@ msgstr "Tamaño desconocido"
 #. FIXME: Unclear why this l10n string lookup doesn't work with this string,
 #. FIXME: but works with other strings.
 #. FIXME: May be bug with maketext deduplication?
-msgid "Drive [_1], Part [_2]"
-msgstr "Unidad/disco [_1], Partición [_2]"
+msgid "Drive %1, Part %2"
+msgstr "Unidad/disco %1, Partición %2"
 
-msgid "Part [_1]"
-msgstr "Partición [_1]"
+msgid "Part %1"
+msgstr "Partición %1"
 
-msgid "Drive [_1] ([_2]): [_3]"
-msgstr "Unidad/disco [_1] ([_2]): [_3]"
+msgid "Drive %1 (%2): %3"
+msgstr "Unidad/disco %1 (%2): %3"
 
-msgid "Drive [_1] ([_2]): USB [_3]"
-msgstr "Unidad/disco [_1] ([_2]): USB [_3]"
+msgid "Drive %1 (%2): USB %3"
+msgstr "Unidad/disco %1 (%2): USB %3"
 
 msgid "Identifying disk drives..."
 msgstr "Identificando de unidades de disco......."
@@ -430,11 +430,11 @@ msgstr "Identificando de unidades de disco......."
 msgid "Searching network for shared drives..."
 msgstr "Examinando la red en busca de unidades/discos compartidos..."
 
-msgid "Partition list saved to [_1]"
-msgstr "Lista de particiones guardada en [_1]"
+msgid "Partition list saved to %1"
+msgstr "Lista de particiones guardada en %1"
 
-msgid "Free space: [_1]"
-msgstr "Espacio libre: [_1]"
+msgid "Free space: %1"
+msgstr "Espacio libre: %1"
 
 msgid " bytes"
 msgstr " bytes"
