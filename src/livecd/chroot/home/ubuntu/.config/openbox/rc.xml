@@ -812,10 +812,22 @@
       <application name="gpartedbin" title="Information*">
           <maximized>false</maximized>
       </application>
+
       <!-- Do not maximize rescuezilla's loading bar -->
+      <!-- TODO: Find a neater way that does not require listing every supported language. -->
       <application name="*" title="Please wait...">
           <maximized>false</maximized>
       </application>
+      <application name="*" title="Veuillez patienter...">
+          <maximized>false</maximized>
+      </application>
+      <application name="*" title="Bitte warten...">
+          <maximized>false</maximized>
+      </application>
+      <application name="*" title="Espere por favor...">
+          <maximized>false</maximized>
+      </application>
+
       <!-- Do not maximize alsamixergui -->
       <application class="*" title="ALSA Mixer">
           <maximized>false</maximized>
