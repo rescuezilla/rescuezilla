@@ -44,6 +44,7 @@ print "Attempting to load translation: ".TRANSLATION_DIR."$lang_code.ko\n\n";
 # Exports 'loc'
 use Locale::Maketext::Simple (
     Path => TRANSLATION_DIR,
+    Decode => 1,
 );
 
 # Sets language to the LC_MESSAGES environment variable
