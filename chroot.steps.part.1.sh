@@ -57,6 +57,8 @@ apt-get install --yes --no-install-recommends discover \
                                               openbox \
                                               xserver-xorg-hwe-18.04 \
                                               xserver-xorg-video-all-hwe-18.04 \
+                                              xserver-xorg-video-intel-hwe-18.04 \
+                                              xserver-xorg-video-qxl-hwe-18.04 \
                                               x11-xserver-utils \
                                               xterm \
                                               network-manager-gnome \
