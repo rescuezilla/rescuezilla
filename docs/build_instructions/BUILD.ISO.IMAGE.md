@@ -1,5 +1,7 @@
 ## Building a bootable ISO image
 
+Note: [You can download the latest Rescuezilla ISO image here](https://github.com/rescuezilla/rescuezilla/releases/latest). This page is intended for developers.
+ 
 ### Background
 
 A host system capable of running debootstrap, chroot and bind mounts is required. With such a host system, a bootable ISO image can be generated in a single `make` command.
