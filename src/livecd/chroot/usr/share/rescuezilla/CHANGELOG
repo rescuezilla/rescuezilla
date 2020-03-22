@@ -1,4 +1,22 @@
 -------------------------------------------------------------------------------
+  Version 1.0.5.1 (2020-03-24) 
+-------------------------------------------------------------------------------
+* Added support for NVMe hard drives (#27)
+* Fixed Redo Backup’s notorious “restore succeeded but all partitions unknown” bug (#36)
+* Fixed restoring of backups created with several old and buggy unofficial Redo Backup v1.0.4 updates
+* Fixed “stuck at text login prompt unless using Safe Mode” issue (#25)
+* Added version field for SMB/CIFS network drives for connecting to older shares (#22)
+* Added retry unmount box to fix backing up of unmountable partitions (#16)
+* Prevented Rescuezilla using swap partitions that are present (#37)
+* Switched drive/partition list to sort by numeric not lexical ordering (1/2/3/10, not 1/10/2/3)
+* Fixed switch to multithreaded ‘pigz’ for backup compression, which was intended for v1.0.5
+* Lowered X11 text scaling back to 100%, not 125% to prevent excessive number of linebreaks
+* Added /etc/rescuezilla/no_source_overwrite to always prevent overwriting source drive
+* Ensured French Safe Mode boots into French-language with French keymap, not into English
+* Added Spanish/Español (ES-es) translation by caralu74 (¡gracias!) (#31)
+* Fixed French/German/Spanish translated strings not being substituted, glyph rendering issues
+
+-------------------------------------------------------------------------------
   Version 1.0.5 (2019-11-08) 
 -------------------------------------------------------------------------------
 * Upgraded base to Ubuntu 18.04 LTS (Bionic) from Ubuntu 12.04 LTS (Precise)
