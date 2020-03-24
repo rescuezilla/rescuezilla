@@ -6,7 +6,7 @@ Rescuezilla (formerly _Redo Backup and Recovery_) is an extremely easy-to-use gr
 
 Rescuezilla can be booted on any PC or Mac from a USB stick, or CD, and uses the exact same reliable, battle-tested ‘partclone’ utility that Clonezilla uses. For many people, the alternative open-source tools Clonezilla and SysRescueCD, are intimidating and difficult to use, so Rescuezilla provides an easy-to-use graphical environment like the leading commercial tools, Norton Ghost and Acronis True Image.
 
-Rescuezilla [relies on Patreon support](https://www.patreon.com/rescuezilla) for continued development.
+Rescuezilla [relies on Patreon support](https://www.patreon.com/join/rescuezilla) for continued development.
 
 ## Features
 
@@ -59,7 +59,7 @@ See [Building ISO image](docs/build_instructions/BUILD.ISO.IMAGE.md)
 
 ## Future development
 
-Rescuezilla features are prioritized according to the [roadmap](https://github.com/rescuezilla/rescuezilla/wiki/Rescuezilla-Project-Roadmap). Please consider becoming a [Patreon to help fund Rescuezilla's continued development](https://www.patreon.com/rescuezilla)!
+Rescuezilla features are prioritized according to the [roadmap](https://github.com/rescuezilla/rescuezilla/wiki/Rescuezilla-Project-Roadmap). Please consider becoming a [Patreon to help fund Rescuezilla's continued development](https://www.patreon.com/join/rescuezilla)!
 
 ## Limitations and support
 
