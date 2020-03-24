@@ -567,13 +567,13 @@ sub update_backup_progress {
         # Unmount stuff
         system("sync");
         sleep(0.5);
-        umount_warn_on_busy(MOUNT_POINT);
         beeper('done');
         my $elapsed = sprintf("%.1f", (time()-$status{'start'})/60);
         message_box(loc("Backup image saved in %1 minutes.", $elapsed));
         $msg = loc("Backup saved successfully.");
         system("notify-send -i ".APP_ICON." \"".$msg."\"");
         print ">>> Operation complete.\n";
+        umount_warn_on_busy(MOUNT_POINT);
         return 0;
       } else {
         close $PROGRESS;
@@ -1105,7 +1105,6 @@ sub update_restore_progress {
         set_status(loc("Rewriting master boot record to destination drive..."));
         system("dd of=/dev/$dest_drive if=$src_mbr bs=32768 count=1; sync;");
         sleep(0.5);
-        umount_warn_on_busy(MOUNT_POINT);
         my $elapsed = sprintf("%.1f", (time()-$status{'start'})/60);
         print ">>> ".loc("Operation complete.")."\n";
         set_status(loc("Restore complete."));
@@ -1113,6 +1112,7 @@ sub update_restore_progress {
         message_box(loc("Backup restored in %1 minutes.",$elapsed));
         $msg = loc("Backup restored successfully.");
         system("notify-send -i ".APP_ICON." \"".$msg."\"");
+        umount_warn_on_busy(MOUNT_POINT);
         return 0;
       } else {
         close $PROGRESS;
