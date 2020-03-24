@@ -45,11 +45,11 @@ See [Translations HOWTO](https://github.com/rescuezilla/rescuezilla/wiki/Transla
 Below table shows an abridged history of Rescuezilla. See the CHANGELOG for more information.
 
 | Release             | Release Date | Operating System | Notes |
-| ------------------- | ---------- | ------------------ | ---------------------------------- |
-| Rescuezilla 1.0.5.1 | 2020-03-24 | Ubuntu 18.04.4 LTS | [Download page](https://github.com/rescuezilla/rescuezilla/releases/latest)
-| Rescuezilla 1.0.5   | 2019-11-08 | Ubuntu 18.04.3 LTS | New maintainer. See [Release Thread](https://sourceforge.net/p/redobackup/discussion/1169663/thread/116063b485/).
-| Unofficial updates  | Various    | Various            | Before Rescuezilla, several users created [buggy, unofficial updates](https://github.com/rescuezilla/rescuezilla/wiki/Bugs-in-unofficial-Redo-Backup-updates#identifying-redo-backup-versions)
-| Redo Backup 1.0.4   | 2012-11-20 | Ubuntu 12.04.1 LTS |
+| ------------------- | ---------- | -------------- | ---------------------------------- |
+| Rescuezilla 1.0.5.1 | 2020-03-24 | Ubuntu 18.04.4 | [Download page](https://github.com/rescuezilla/rescuezilla/releases/latest)
+| Rescuezilla 1.0.5   | 2019-11-08 | Ubuntu 18.04.3 | New maintainer. See [Release Thread](https://sourceforge.net/p/redobackup/discussion/1169663/thread/116063b485/).
+| Unofficial updates  | Various    | Various            | Pre-Rescuezilla [buggy updates](https://github.com/rescuezilla/rescuezilla/wiki/Bugs-in-unofficial-Redo-Backup-updates#identifying-redo-backup-versions)
+| Redo Backup 1.0.4   | 2012-11-20 | Ubuntu 12.04.1 |
 | Redo Backup 0.9.8   | 2011-03-10 | Ubuntu 10.10       | Original author deleted v0.9.2-v0.9.7
 | Redo Backup 0.9.2   | 2010-06-24 | xPUD               |
 
