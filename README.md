@@ -33,12 +33,12 @@ See [Translations HOWTO](https://github.com/rescuezilla/rescuezilla/wiki/Transla
 
 ## Screenshots
 
-<a href="docs/images/screenshot.select.an.option.png"><img width=245 height=183 src="docs/images/screenshot.select.an.option.png" alt="Provides browser access even if you can't log into your PC"></a>
-<a href="docs/images/screenshot.partitioning.png"><img width=245 height=183 src="docs/images/screenshot.partitioning.png" alt="Many powerful tools available from the start button"></a>
-<a href="docs/images/screenshot.start.menu.tools.png"><img width=245 height=183 src="docs/images/screenshot.start.menu.tools.png" alt="Select video mode, check CD integrity, or test RAM at boot"></a>
-<a href="docs/images/screenshot.chromium.web.browsing.png"><img width=245 height=183 src="docs/images/screenshot.chromium.web.browsing.png" alt="Format drives, resize partitions, and encrypt volumes easily"></a>
-<a href="docs/images/screenshot.select.backup.destination.drive.png"><img width=245 height=183 src="docs/images/screenshot.select.backup.destination.drive.png" alt="Save to hard drive, network shared folder, or FTP server"></a>
-<a href="docs/images/screenshot.boot.menu.png"><img width=245 height=183 src="docs/images/screenshot.boot.menu.png" alt="Easy point and click interface anyone can use"></a>
+<a href="https://raw.githubusercontent.com/rescuezilla/rescuezilla.github.io/master/media/screenshots/2.png"><img width=245 height=183 src="https://raw.githubusercontent.com/rescuezilla/rescuezilla.github.io/master/media/screenshots/2.png" alt="Easy point and click interface anyone can use"></a>
+<a href="https://raw.githubusercontent.com/rescuezilla/rescuezilla.github.io/master/media/screenshots/3.png"><img width=245 height=183 src="https://raw.githubusercontent.com/rescuezilla/rescuezilla.github.io/master/media/screenshots/3.png" alt="Backups up only the used space"></a>
+<a href="https://raw.githubusercontent.com/rescuezilla/rescuezilla.github.io/master/media/screenshots/6.png"><img width=245 height=183 src="https://raw.githubusercontent.com/rescuezilla/rescuezilla.github.io/master/media/screenshots/6.png" alt="Many powerful tools available from the start button"></a>
+<a href="https://raw.githubusercontent.com/rescuezilla/rescuezilla.github.io/master/media/screenshots/7.png"><img width=245 height=183 src="https://raw.githubusercontent.com/rescuezilla/rescuezilla.github.io/master/media/screenshots/7.png"  alt="Provides browser access even if you can't log into your PC"></a>
+<a href="https://raw.githubusercontent.com/rescuezilla/rescuezilla.github.io/master/media/screenshots/4.png"><img width=245 height=183 src="https://raw.githubusercontent.com/rescuezilla/rescuezilla.github.io/master/media/screenshots/4.png" alt="Save to hard drive, network shared folder, or FTP server"></a>
+<a href="https://raw.githubusercontent.com/rescuezilla/rescuezilla.github.io/master/media/screenshots/1.png"><img width=245 height=183 src="https://raw.githubusercontent.com/rescuezilla/rescuezilla.github.io/master/media/screenshots/1.png" alt="Select video mode, check CD integrity, or test RAM at boot"></a>
 
 ## History
 
@@ -48,7 +48,7 @@ Below table shows an abridged history of Rescuezilla. See the CHANGELOG for more
 | ------------------- | ---------- | -------------- | ---------------------------------- |
 | Rescuezilla 1.0.5.1 | 2020-03-24 | Ubuntu 18.04.4 | [Download page](https://github.com/rescuezilla/rescuezilla/releases/latest)
 | Rescuezilla 1.0.5   | 2019-11-08 | Ubuntu 18.04.3 | New maintainer. See [Release Thread](https://sourceforge.net/p/redobackup/discussion/1169663/thread/116063b485/).
-| Unofficial updates  | Various    | Various            | Pre-Rescuezilla [buggy updates](https://github.com/rescuezilla/rescuezilla/wiki/Bugs-in-unofficial-Redo-Backup-updates#identifying-redo-backup-versions)
+| Unofficial updates  | Various    | Various            | Pre-Rescuezilla [updates](https://github.com/rescuezilla/rescuezilla/wiki/Bugs-in-unofficial-Redo-Backup-updates#identifying-redo-backup-versions)
 | Redo Backup 1.0.4   | 2012-11-20 | Ubuntu 12.04.1 |
 | Redo Backup 0.9.8   | 2011-03-10 | Ubuntu 10.10       | Original author deleted v0.9.2-v0.9.7
 | Redo Backup 0.9.2   | 2010-06-24 | xPUD               |
