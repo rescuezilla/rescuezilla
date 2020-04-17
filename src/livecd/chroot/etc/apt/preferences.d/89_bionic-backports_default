@@ -1,3 +1,0 @@
-Package: *
-Pin: release n=bionic-backports
-Pin-Priority: 500
