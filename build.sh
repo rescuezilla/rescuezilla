@@ -5,6 +5,7 @@ set -x
 
 CODENAME=bionic
 ARCH=i386
+RESCUEZILLA_ISO_FILENAME=rescuezilla.$ARCH.iso
 # The build directory is "build/", unless overridden by an environment variable
 BUILD_DIRECTORY=${BUILD_DIRECTORY:-build}
 PKG_CACHE_DIRECTORY=${PKG_CACHE_DIRECTORY:-pkg.cache}
@@ -239,7 +240,7 @@ echo "Ubuntu Remix" > info
 echo "https://rescuezilla.com" > release_notes_url
 cd ../..
 
-rm -rf image/casper/filesystem.squashfs rescuezilla.iso
+rm -rf image/casper/filesystem.squashfs "$RESCUEZILLA_ISO_FILENAME"
 mksquashfs chroot image/casper/filesystem.squashfs -e boot -e /sys
 printf $(sudo du -sx --block-size=1 chroot | cut -f1) > image/casper/filesystem.size
 cd image
@@ -257,12 +258,12 @@ genisoimage -r \
             -no-emul-boot \
             -boot-load-size 4 \
             -boot-info-table \
-            -o ../rescuezilla.iso . 
+            -o "../$RESCUEZILLA_ISO_FILENAME" . 
 
 # Generate fresh md5sum containing the -boot-info-table modified isolinux.bin
 find . -type f -print0 | xargs -0 md5sum | grep -v "./md5sum.txt" > md5sum.txt
 # Create ISO image (part 2/3), the --boot-info-table modification has already been made to isolinux.bin, so the md5sum remains correct this time.
-rm ../rescuezilla.iso
+rm "../$RESCUEZILLA_ISO_FILENAME"
 genisoimage -r \
             -V "Rescuezilla" \
             -cache-inodes \
@@ -273,12 +274,12 @@ genisoimage -r \
             -no-emul-boot \
             -boot-load-size 4 \
             -boot-info-table \
-            -o ../rescuezilla.iso . 
+            -o "../$RESCUEZILLA_ISO_FILENAME" . 
 
 cd ..
 
 # Make ISO image USB bootable (part 3/3)
-isohybrid rescuezilla.iso
+isohybrid "$RESCUEZILLA_ISO_FILENAME"
 
 # TODO: Evaluate the "Errata" sections of the Redo Backup and Recovery
 # TODO: Sourceforge Wiki, and determine if the build scripts need modification.
