@@ -130,7 +130,6 @@ apt-get install --yes --no-install-recommends discover \
                                               partclone \
                                               exfat-fuse \
                                               exfat-utils \
-                                              btrfs-tools \
                                               btrfs-progs \
                                               udisks2-btrfs \
                                               hfsplus \
