@@ -84,20 +84,42 @@ fi
 cd $BUILD_DIRECTORY
 # Enter chroot, and launch next stage of script
 mount --bind /dev chroot/dev
-rsync --archive ../src/livecd/chroot/etc/apt/ chroot/etc/apt
+
+# Copy files related to network connectivity
 cp /etc/hosts chroot/etc/hosts
 cp /etc/resolv.conf chroot/etc/resolv.conf
 
+# Synchronize apt package manager configuration files
+rsync --archive ../src/livecd/chroot/etc/apt/ chroot/etc/apt
+# Renames the apt-preferences file to ensure backports and proposed
+# repositories for the desired code name are never automatically selected.
+pushd "chroot/etc/apt/preferences.d/"
+mv "89_CODENAME_SUBSTITUTE-backports_default" "89_$CODENAME-backports_default"
+mv "90_CODENAME_SUBSTITUTE-proposed_default" "90_$CODENAME-proposed_default"
+popd
+APT_CONFIG_FILES=(
+    "chroot/etc/apt/preferences.d/89_$CODENAME-backports_default"
+    "chroot/etc/apt/preferences.d/90_$CODENAME-proposed_default"
+    "chroot/etc/apt/sources.list"
+)
+# Substitute Ubuntu code name into relevant apt configuration files
+for apt_config_file in "${APT_CONFIG_FILES[@]}"; do
+  sed --in-place s/CODENAME_SUBSTITUTE/$CODENAME/g $apt_config_file
+done
+
 cp ../chroot.steps.part.1.sh ../chroot.steps.part.2.sh chroot
+# Launch first stage chroot. In other words, run commands within the root filesystem
+# that is being constructed using binaries from within that root filesystem.
 chroot chroot/ /bin/bash /chroot.steps.part.1.sh
 if [[ $? -ne 0 ]]; then
     echo "Error: Failed to execute chroot steps part 1."
     exit 1
 fi
 
-# Copy the source FHS filesystem tree onto the build's chroot FHS tree, overwriting the base files where conflicts occur
 cd ..
-rsync --archive src/livecd/ $BUILD_DIRECTORY
+# Copy the source FHS filesystem tree onto the build's chroot FHS tree, overwriting the base files where conflicts occur.
+# The only exception the apt package manager configuration files which have already been copied above.
+rsync --archive --exclude "chroot/etc/apt" src/livecd/ $BUILD_DIRECTORY
 
 LANG_CODES=(
     "fr"

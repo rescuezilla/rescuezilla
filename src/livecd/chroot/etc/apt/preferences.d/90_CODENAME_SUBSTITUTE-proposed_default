@@ -1,0 +1,3 @@
+Package: *
+Pin: release a=CODENAME_SUBSTITUTE-proposed
+Pin-Priority: -1
