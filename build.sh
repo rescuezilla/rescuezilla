@@ -101,6 +101,9 @@ mount --bind /dev chroot/dev
 cp /etc/hosts chroot/etc/hosts
 cp /etc/resolv.conf chroot/etc/resolv.conf
 
+# Copy the CHANGELOG
+rsync --archive "$BASEDIR/CHANGELOG" "$BUILD_DIRECTORY/chroot/usr/share/rescuezilla/"
+
 # Synchronize apt package manager configuration files
 rsync --archive "$BASEDIR/src/livecd/chroot/etc/apt/" "$BUILD_DIRECTORY/chroot/etc/apt"
 # Renames the apt-preferences file to ensure backports and proposed
