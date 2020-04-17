@@ -38,12 +38,15 @@ script:
 # When a new tag is pushed, upload the ISO image as a draft release on GitHub
 
 before_deploy:
-  - mv build/rescuezilla.i386.iso build/redobackup-livecd-$TRAVIS_TAG.iso
+  - mv build/rescuezilla.amd64.iso build/rescuezilla-$TRAVIS_TAG-64bit.iso
+  - mv build/rescuezilla.i386.iso build/rescuezilla-$TRAVIS_TAG-32bit.iso
 
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
-  file: build/redobackup-livecd-$TRAVIS_TAG.iso
+  file:
+    - build/rescuezilla-$TRAVIS_TAG-64bit.iso
+    - build/rescuezilla-$TRAVIS_TAG-32bit.iso
   draft: true
   skip_cleanup: true
   on:
