@@ -73,7 +73,6 @@ apt-get install --yes --no-install-recommends discover \
                                               gnome-icon-theme \
                                               gnome-brave-icon-theme \
                                               dmz-cursor-theme \
-                                              maximus \
                                               yad \
                                               gpicview \
                                               leafpad \
