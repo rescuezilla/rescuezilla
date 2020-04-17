@@ -67,8 +67,10 @@ apt-get install --yes --no-install-recommends discover \
                                               plymouth-theme-ubuntu-logo \
                                               pcmanfm \
                                               gvfs \
-                                              chromium-browser \
-                                              chromium-browser-l10n \
+                                              firefox \
+                                              firefox-locale-fr \
+                                              firefox-locale-de \
+                                              firefox-locale-es \
                                               bluebird-gtk-theme \
                                               gnome-icon-theme \
                                               gnome-brave-icon-theme \
