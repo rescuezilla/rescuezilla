@@ -1,0 +1,15 @@
+{
+  "policies": {
+    "Homepage": {
+      "URL": "https://rescuezilla.com/?v=VERSION-SUBSTITUTED-BY-BUILD-SCRIPT"
+    },
+    "DisableTelemetry": true, 
+    "OfferToSaveLogins": false,
+    "NewTabPage": false, 
+    "OverrideFirstRunPage": "",
+    "OverridePostUpdatePage": "",
+    "Preferences": {
+      "browser.tabs.warnOnClose": false
+    }
+  }
+}

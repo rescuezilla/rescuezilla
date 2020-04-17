@@ -85,10 +85,6 @@
     <Menu>
         <Name>Internet</Name>
         <!-- deleted by LibFM -->
-        <Exclude>
-            <Filename>chromium-browser.desktop</Filename>
-        </Exclude>
-        <!-- deleted by LibFM -->
         <Deleted/>
     </Menu>
     <Menu>
