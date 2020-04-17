@@ -75,7 +75,7 @@ apt-get install --yes --no-install-recommends discover \
                                               dmz-cursor-theme \
                                               yad \
                                               gpicview \
-                                              leafpad \
+                                              mousepad \
                                               lxmenu-data \
                                               arandr \
                                               lxterminal \
