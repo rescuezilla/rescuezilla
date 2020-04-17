@@ -306,5 +306,8 @@ genisoimage -r \
 # Make ISO image USB bootable (part 3/3)
 isohybrid "$BUILD_DIRECTORY/$RESCUEZILLA_ISO_FILENAME"
 
+cd "$BUILD_DIRECTORY"
+mv "$BUILD_DIRECTORY/$RESCUEZILLA_ISO_FILENAME" ../
+
 # TODO: Evaluate the "Errata" sections of the Redo Backup and Recovery
 # TODO: Sourceforge Wiki, and determine if the build scripts need modification.
