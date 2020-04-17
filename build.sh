@@ -3,8 +3,14 @@
 # Echo each command
 set -x
 
-CODENAME=bionic
-ARCH=i386
+# Set the default base operating system, using the Ubuntu release's shortened code name [1].
+# [1] https://wiki.ubuntu.com/Releases
+CODENAME="${CODENAME:-bionic}"
+
+# Sets CPU architecture using Ubuntu designation [1]
+# [1] https://help.ubuntu.com/lts/installation-guide/armhf/ch02s01.html
+ARCH="${ARCH:-i386}"
+
 RESCUEZILLA_ISO_FILENAME=rescuezilla.$ARCH.iso
 # The build directory is "build/", unless overridden by an environment variable
 BUILD_DIRECTORY=${BUILD_DIRECTORY:-build}
