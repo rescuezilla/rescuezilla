@@ -11,9 +11,15 @@ CODENAME="${CODENAME:-bionic}"
 # [1] https://help.ubuntu.com/lts/installation-guide/armhf/ch02s01.html
 ARCH="${ARCH:-i386}"
 
+# Directory containing this build script
+BASEDIR=$(dirname $(readlink -f "$0"))
+
 RESCUEZILLA_ISO_FILENAME=rescuezilla.$ARCH.iso
 # The build directory is "build/", unless overridden by an environment variable
-BUILD_DIRECTORY=${BUILD_DIRECTORY:-build}
+BUILD_DIRECTORY=${BUILD_DIRECTORY:-build/}
+mkdir -p "$BUILD_DIRECTORY/chroot"
+# Ensure the build directory is an absolute path
+BUILD_DIRECTORY=$( readlink -f "$BUILD_DIRECTORY" )
 PKG_CACHE_DIRECTORY=${PKG_CACHE_DIRECTORY:-pkg.cache}
 DEBOOTSTRAP_CACHE_DIRECTORY=debootstrap.$CODENAME.$ARCH
 APT_PKG_CACHE_DIRECTORY=var.cache.apt.archives.$CODENAME.$ARCH
@@ -54,16 +60,15 @@ if [ ! -d "$PKG_CACHE_DIRECTORY/$DEBOOTSTRAP_CACHE_DIRECTORY" ] ; then
         exit 1
     fi
 fi
-mkdir -p $BUILD_DIRECTORY/chroot
 echo "Copy debootstrap package cache"
-rsync --archive $PKG_CACHE_DIRECTORY/$DEBOOTSTRAP_CACHE_DIRECTORY/ $BUILD_DIRECTORY/chroot/
+rsync --archive "$PKG_CACHE_DIRECTORY/$DEBOOTSTRAP_CACHE_DIRECTORY/" "$BUILD_DIRECTORY/chroot/"
 
 # debootstrap part 2/2: Bootstrap a Debian root filesystem based on cached
 # packages directory (part 2/2) [1] Note DEBOOTSTRAP_DIR is an undocumented
 # environment variable used by debootstrap according to [1].
 #
 # [1] https://unix.stackexchange.com/a/397966
-DEBOOTSTRAP_DIR=$BUILD_DIRECTORY/chroot/debootstrap debootstrap --second-stage --second-stage-target $(readlink -f $BUILD_DIRECTORY/chroot/)
+DEBOOTSTRAP_DIR="$BUILD_DIRECTORY/chroot/debootstrap" debootstrap --second-stage --second-stage-target $(readlink -f "$BUILD_DIRECTORY/chroot/")
 RET=$?
 if [[ $RET -ne 0 ]]; then
     echo "debootstrap part 2/2 failed. This may occur if the package cache ($PKG_CACHE_DIRECTORY/$DEBOOTSTRAP_CACHE_DIRECTORY/)"
@@ -72,23 +77,23 @@ if [[ $RET -ne 0 ]]; then
 fi
 
 # Ensures tmp directory has correct mode, including sticky-bit
-chmod 1777 $BUILD_DIRECTORY/chroot/tmp/
+chmod 1777 "$BUILD_DIRECTORY/chroot/tmp/"
 
 # Copy cached apt packages, if present, to reduce need to download packages from internet
 if [ -d "$PKG_CACHE_DIRECTORY/$APT_PKG_CACHE_DIRECTORY/" ] ; then
-    mkdir -p $BUILD_DIRECTORY/chroot/var/cache/apt/archives/
+    mkdir -p "$BUILD_DIRECTORY/chroot/var/cache/apt/archives/"
     echo "Copy apt package cache"
-    rsync --archive $PKG_CACHE_DIRECTORY/$APT_PKG_CACHE_DIRECTORY/ $BUILD_DIRECTORY/chroot/var/cache/apt/archives
+    rsync --archive "$PKG_CACHE_DIRECTORY/$APT_PKG_CACHE_DIRECTORY/" "$BUILD_DIRECTORY/chroot/var/cache/apt/archives"
 fi
 
 # Copy cached apt indexes, if present, to a temporary directory, to reduce need to download packages from internet.
 if [ -d "$PKG_CACHE_DIRECTORY/$APT_INDEX_CACHE_DIRECTORY/" ] ; then
-    mkdir -p $BUILD_DIRECTORY/chroot/var/lib/apt/
+    mkdir -p "$BUILD_DIRECTORY/chroot/var/lib/apt/"
     echo "Copy apt index cache"
-    rsync --archive $PKG_CACHE_DIRECTORY/$APT_INDEX_CACHE_DIRECTORY/ $BUILD_DIRECTORY/chroot/var/lib/apt/lists.cache
+    rsync --archive "$PKG_CACHE_DIRECTORY/$APT_INDEX_CACHE_DIRECTORY/" "$BUILD_DIRECTORY/chroot/var/lib/apt/lists.cache"
 fi
 
-cd $BUILD_DIRECTORY
+cd "$BUILD_DIRECTORY"
 # Enter chroot, and launch next stage of script
 mount --bind /dev chroot/dev
 
@@ -97,7 +102,7 @@ cp /etc/hosts chroot/etc/hosts
 cp /etc/resolv.conf chroot/etc/resolv.conf
 
 # Synchronize apt package manager configuration files
-rsync --archive ../src/livecd/chroot/etc/apt/ chroot/etc/apt
+rsync --archive "$BASEDIR/src/livecd/chroot/etc/apt/" "$BUILD_DIRECTORY/chroot/etc/apt"
 # Renames the apt-preferences file to ensure backports and proposed
 # repositories for the desired code name are never automatically selected.
 pushd "chroot/etc/apt/preferences.d/"
@@ -114,7 +119,7 @@ for apt_config_file in "${APT_CONFIG_FILES[@]}"; do
   sed --in-place s/CODENAME_SUBSTITUTE/$CODENAME/g $apt_config_file
 done
 
-cp ../chroot.steps.part.1.sh ../chroot.steps.part.2.sh chroot
+cp "$BASEDIR/chroot.steps.part.1.sh" "$BASEDIR/chroot.steps.part.2.sh" chroot
 # Launch first stage chroot. In other words, run commands within the root filesystem
 # that is being constructed using binaries from within that root filesystem.
 chroot chroot/ /bin/bash /chroot.steps.part.1.sh
@@ -123,10 +128,10 @@ if [[ $? -ne 0 ]]; then
     exit 1
 fi
 
-cd ..
+cd "$BASEDIR"
 # Copy the source FHS filesystem tree onto the build's chroot FHS tree, overwriting the base files where conflicts occur.
 # The only exception the apt package manager configuration files which have already been copied above.
-rsync --archive --exclude "chroot/etc/apt" src/livecd/ $BUILD_DIRECTORY
+rsync --archive --exclude "chroot/etc/apt" src/livecd/ "$BUILD_DIRECTORY"
 
 LANG_CODES=(
     "fr"
@@ -135,7 +140,7 @@ LANG_CODES=(
 )
 for lang in "${LANG_CODES[@]}"; do
     BASE="$BUILD_DIRECTORY/chroot/usr/share/locale/$lang/LC_MESSAGES/"
-    pushd $BASE
+    pushd "$BASE"
     # Convert *.ko text-based GTK translations into *.mo.
     APP_NAMES=(
         "rescuezilla"
@@ -192,16 +197,16 @@ for file in "${SUBSTITUTIONS[@]}"; do
 done
 
 # Enter chroot again
-cd $BUILD_DIRECTORY
+cd "$BUILD_DIRECTORY"
 chroot chroot/ /bin/bash /chroot.steps.part.2.sh
 if [[ $? -ne 0 ]]; then
     echo "Error: Failed to execute chroot steps part 2."
     exit 1
 fi
 
-rsync --archive chroot/var.cache.apt.archives/ ../$PKG_CACHE_DIRECTORY/$APT_PKG_CACHE_DIRECTORY
+rsync --archive chroot/var.cache.apt.archives/ "$BASEDIR/$PKG_CACHE_DIRECTORY/$APT_PKG_CACHE_DIRECTORY"
 rm -rf chroot/var.cache.apt.archives
-rsync --archive chroot/var.lib.apt.lists/ ../$PKG_CACHE_DIRECTORY/$APT_INDEX_CACHE_DIRECTORY
+rsync --archive chroot/var.lib.apt.lists/ "$BASEDIR/$PKG_CACHE_DIRECTORY/$APT_INDEX_CACHE_DIRECTORY"
 rm -rf chroot/var.lib.apt.lists
 
 umount -lf chroot/dev/
@@ -280,12 +285,12 @@ genisoimage -r \
             -no-emul-boot \
             -boot-load-size 4 \
             -boot-info-table \
-            -o "../$RESCUEZILLA_ISO_FILENAME" . 
+            -o "$BUILD_DIRECTORY/$RESCUEZILLA_ISO_FILENAME" . 
 
 # Generate fresh md5sum containing the -boot-info-table modified isolinux.bin
 find . -type f -print0 | xargs -0 md5sum | grep -v "./md5sum.txt" > md5sum.txt
 # Create ISO image (part 2/3), the --boot-info-table modification has already been made to isolinux.bin, so the md5sum remains correct this time.
-rm "../$RESCUEZILLA_ISO_FILENAME"
+rm "$BUILD_DIRECTORY/$RESCUEZILLA_ISO_FILENAME"
 genisoimage -r \
             -V "Rescuezilla" \
             -cache-inodes \
@@ -296,12 +301,10 @@ genisoimage -r \
             -no-emul-boot \
             -boot-load-size 4 \
             -boot-info-table \
-            -o "../$RESCUEZILLA_ISO_FILENAME" . 
-
-cd ..
+            -o "$BUILD_DIRECTORY/$RESCUEZILLA_ISO_FILENAME" . 
 
 # Make ISO image USB bootable (part 3/3)
-isohybrid "$RESCUEZILLA_ISO_FILENAME"
+isohybrid "$BUILD_DIRECTORY/$RESCUEZILLA_ISO_FILENAME"
 
 # TODO: Evaluate the "Errata" sections of the Redo Backup and Recovery
 # TODO: Sourceforge Wiki, and determine if the build scripts need modification.
