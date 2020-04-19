@@ -54,30 +54,32 @@ use Locale::Maketext::Simple (
 loc_lang($lang_code);
 
 ##### Constants found in our program ###################################
-use constant VERSION       => `cat /usr/share/rescuezilla/VERSION`;
-use constant COMMIT_DATE   => `cat /usr/share/rescuezilla/GIT_COMMIT_DATE`;
-use constant CD_LABEL      => `cat /usr/share/rescuezilla/TITLE`;
-use constant MOUNT_POINT   => "/mnt/backup";
-use constant DATA_DIR      => "/usr/share/rescuezilla/";
-use constant APP_ICON      => DATA_DIR."redobackup-icon.png";
-use constant GLADE_UI      => "rescuezilla.glade";
-use constant MAX_WIDTH     => 96;
-use constant FS_SUPPORT    => ( "ext2",
-                                "ext3",
-                                "ext4",
-                                "fat",
-                                "fat12",
-                                "fat16",
-                                "fat32",
-                                "jfs",
-                                "vfat",
-                                "ntfs",
-                                "hfsp",
-                                "reiser4",
-                                "reiserfs",
-                                "ufs",
-                                "vmfs",
-                                "xfs" );
+use constant VERSION         => `cat /usr/share/rescuezilla/VERSION`;
+use constant COMMIT_DATE     => `cat /usr/share/rescuezilla/GIT_COMMIT_DATE`;
+use constant REGISTER_WIDTH  => `cat /usr/share/rescuezilla/REGISTER_WIDTH`;
+use constant ARCH            => `cat /usr/share/rescuezilla/ARCH`;
+use constant CD_LABEL        => `cat /usr/share/rescuezilla/TITLE`;
+use constant MOUNT_POINT     => "/mnt/backup";
+use constant DATA_DIR        => "/usr/share/rescuezilla/";
+use constant APP_ICON        => DATA_DIR."redobackup-icon.png";
+use constant GLADE_UI        => "rescuezilla.glade";
+use constant MAX_WIDTH       => 96;
+use constant FS_SUPPORT      => ( "ext2",
+                                  "ext3",
+                                  "ext4",
+                                  "fat",
+                                  "fat12",
+                                  "fat16",
+                                  "fat32",
+                                  "jfs",
+                                  "vfat",
+                                  "ntfs",
+                                  "hfsp",
+                                  "reiser4",
+                                  "reiserfs",
+                                  "ufs",
+                                  "vmfs",
+                                  "xfs" );
 
 my @BACKUP_STEPS  = ( loc("Step 1: Select Source Drive"),
                       loc("Step 2: Select Partitions to Save"),
@@ -198,9 +200,14 @@ sub main {
   $builder->get_object('usb_tabs')->set_show_border(FALSE);
   my $ver = VERSION;
   chomp($ver);
+  my $arch = ARCH;
+  chomp($arch);
+  # End-users cannot be expected to understand the intimidating term 'i386' or 'amd64', can be expected to read the term "64bit"
+  my $register_width = REGISTER_WIDTH;
+  chomp($register_width);
   my $commit_date = COMMIT_DATE;
   chomp($commit_date);
-  set_status("Version $ver ($commit_date)");
+  set_status("Version $ver ($register_width $arch) $commit_date");
   $window->maximize();
   $window->show();
   my $mode = '';
