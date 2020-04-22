@@ -98,6 +98,7 @@ apt-get install --yes --no-install-recommends discover \
                                               libsys-cpu-perl \
                                               liblocale-maketext-lexicon-perl \
                                               libmethod-signatures-simple-perl \
+                                              libstring-shellquote-perl \
                                               pigz \
                                               gtk2-engines-pixbuf \
                                               beep \
