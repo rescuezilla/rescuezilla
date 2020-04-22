@@ -183,7 +183,7 @@ sub main {
   my $window;
   $builder = Gtk2::Builder->new();
   # Load translations to strings in the Glade file.
-  print("Setting GTK translation domain to load files from eg, /usr/share/locale/".$lang_code."/LC_MESSAGES/rescuezilla.mo\n");
+  print("Setting GTK translation domain to load files from eg, /usr/share/locale/${lang_code}/LC_MESSAGES/rescuezilla.mo\n");
   $builder->set_translation_domain("rescuezilla");
   $builder->add_from_file(DATA_DIR.GLADE_UI);
   $window = $builder->get_object('main_app');
@@ -216,7 +216,7 @@ sub main {
   if ($mode eq 'restore') { restore_mode(); }
   my $welcome = loc("Welcome to Rescuezilla");
   my $tools_msg = loc("Many other tools are available from the Start menu in the bottom left corner");
-  system("notify-send \"".$welcome."\" \"".$tools_msg."\" -i info");
+  system("notify-send '${welcome}' '${tools_msg}' -i info");
   # Log message are usually relevant only to developers, no need to localize them, especially as enduser may not familiar with Linux.
   print "Disabling swap partitions\n";
   # Ensure swap is turned off during every launch. Potential gotcha: GParted
@@ -459,7 +459,7 @@ sub update_backup_progress {
     print "*** ".loc("Processing %1 (%2) using %3...",$part,$fs,$tool)."\n";
     umount_warn_on_busy("/dev/$part");
 
-    my $backup_cmd = "( $tool $extra_args -F -L /$dest/$file"."_part$partition_number"."_partclone.log -s /dev/$part | pigz -c --fast | split -d -a 3 -b 2048m - /$dest/$file"."_part$partition_number. ) 2>&1 |";
+    my $backup_cmd = "( $tool $extra_args -F -L /${dest}/${file}_part${partition_number}_partclone.log -s /dev/$part | pigz -c --fast | split -d -a 3 -b 2048m - /${dest}/${file}_part${partition_number}. ) 2>&1 |";
     print "*** ".loc("Executing: ")."$backup_cmd\n";
     open $PROGRESS, "$backup_cmd";
     sleep(0.5);
@@ -578,7 +578,7 @@ sub update_backup_progress {
         my $elapsed = sprintf("%.1f", (time()-$status{'start'})/60);
         message_box(loc("Backup image saved in %1 minutes.", $elapsed));
         $msg = loc("Backup saved successfully.");
-        system("notify-send -i ".APP_ICON." \"".$msg."\"");
+        system("notify-send -i ".APP_ICON." '${msg}'");
         print ">>> Operation complete.\n";
         umount_warn_on_busy(MOUNT_POINT);
         return 0;
@@ -587,7 +587,7 @@ sub update_backup_progress {
         undef($PROGRESS);
         # Need to add the size of the partition to the total bytes completed
         $status{'done_bytes'} += $drives{$src}{'parts'}{$partition_number}{'bytes'};
-        print ">>> Backed up ".$status{'done_bytes'}." of ".$status{'total_bytes'}." total bytes.\n";
+        print ">>> Backed up $status{'done_bytes'} of $status{'total_bytes'} total bytes.\n";
         $status{'current_part'}++;
         print ">>> Advancing to next partition.\n";
         return TRUE;
@@ -986,7 +986,7 @@ sub update_restore_progress {
         print loc("Using partclone %1 to restore the %2 backup, for maximum compatibility",$partclone_ver,"Redo Backup and Recovery v1.0.4")."\n";
         my $tool = "partclone.restore.$partclone_ver";
         print "*** ".loc("Processing %1 using %2...","$dest_partition_node",$tool)."\n";
-        $restore_cmd = "( cat /$src"."_part$partition_number.* | pigz -d -c | $tool -F -L /partclone.log -O /dev/$dest_partition_node ) 2>&1 |";
+        $restore_cmd = "( cat /${src}_part${partition_number}.* | pigz -d -c | $tool -F -L /partclone.log -O /dev/$dest_partition_node ) 2>&1 |";
     } else {
         print loc("Restoring backup created with version: %1",$backup_version)."\n";
         # Assuming backup was created with a format compatible with the 1.0.5 release.
@@ -997,7 +997,7 @@ sub update_restore_progress {
         my $tool_missing_msg = loc("The tool %1 does not exist", "/usr/sbin/$tool");
         fatal_crash($tool_missing_msg) unless -e "/usr/sbin/$tool";
         print "*** ".loc("Processing %1 using %2...","$dest_partition_node",$tool)."\n";
-        $restore_cmd = "( cat /$src"."_part$partition_number.* | pigz -d -c | $tool --restore -F -L /partclone.log -O /dev/$dest_partition_node ) 2>&1 |";
+        $restore_cmd = "( cat /${src}_part${partition_number}.* | pigz -d -c | $tool --restore -F -L /partclone.log -O /dev/$dest_partition_node ) 2>&1 |";
     }
     print "*** ".loc("Executing: ")."$restore_cmd\n";
     open $PROGRESS, "$restore_cmd";
@@ -1118,7 +1118,7 @@ sub update_restore_progress {
         beeper('done');
         message_box(loc("Backup restored in %1 minutes.",$elapsed));
         $msg = loc("Backup restored successfully.");
-        system("notify-send -i ".APP_ICON." \"".$msg."\"");
+        system("notify-send -i ".APP_ICON." '${msg}'");
         umount_warn_on_busy(MOUNT_POINT);
         return 0;
       } else {
@@ -1446,7 +1446,7 @@ sub umount_partition {
   my $mount_point = $_[0];
 
   # Attempt to unmount the mount point.
-  system("umount ".$mount_point." 2>&1");
+  system("umount ${mount_point} 2>&1");
 
   # Use findmnt to robustly check whether the provided path (which may contain wildcard
   # characters) is mounted on Linux.
@@ -1480,7 +1480,7 @@ sub umount_warn_on_busy {
       # Retrieve the device node and mount path (caller could have provided either)
       my $mount_path = `findmnt --raw --noheadings --output TARGET \'$device_node\'`;
       chomp($mount_path);
-      $partition_pretty_string = $partition_pretty_string.$device_node.": ".$mount_path."\n";
+      $partition_pretty_string = $partition_pretty_string.$device_node.": ${mount_path}\n";
       print loc("Unable to unmount partition: %1", $partition_pretty_string)."\n";
     }
     my $partition_busy_msg = loc("Partition(s) were unable to be unmounted. Please close any applications using the following partition(s) and click OK.");
@@ -2038,7 +2038,7 @@ sub join_device_string {
   my $joined = "";
   if ($base_device_node =~ /nvme.*/) {
     # If the target device node is an NVMe drive, append the letter 'p' (nvme0n1p3)
-    $joined = $base_device_node."p".$partition_number;
+    $joined = "${base_device_node}p${partition_number}";
   } else {
     $joined = $base_device_node.$partition_number;
   }
