@@ -32,6 +32,7 @@ use POSIX qw(locale_h);
 use locale;
 use utf8;
 use Method::Signatures::Simple;
+use String::ShellQuote;
 
 # Load translation
 use constant TRANSLATION_DIR => "/usr/share/rescuezilla/translations-rescuezilla/";
@@ -372,31 +373,47 @@ sub do_backup {
   # Get partition selections and output folder
   my $src = $status{'backup_drive'};
   my $dest = MOUNT_POINT.$builder->get_object('backup_folder')->get_text();
-  print "*** ".loc("Backup %1 to %2",$src, $dest)." ***\n\n";
+  # Remove trailing forward slash (if any)
   $dest =~ s/\/$//;
-  $dest =~ s/ /\\ /g;
+  print "*** ".loc("Backup %1 to %2",$src, $dest)." ***\n\n";
   my $file = $builder->get_object('backup_name')->get_text();
   my $enduser_drive_number = get_enduser_drive_number($src);
   my ($base_device, $partition_number) = split_device_string($src);
   my $src_drive = "/dev/$base_device";
-  # Saves MBR, as well as the bytes containing the GRUB stage 1.5 boot loader
-  system("dd if=$src_drive of=$dest/$file.mbr bs=32768 count=1");
-  system("sfdisk -d $src_drive > $dest/$file.sfdisk");
-  my $ptab = `sfdisk -d $src_drive`;
+  # Save MBR, as well as the bytes containing the GRUB stage 1.5 boot loader
+  my $quoted_mbr_file = shell_quote("$dest/$file.mbr");
+  my $dd_cmd = "dd if='$src_drive' of=$quoted_mbr_file bs=32768 count=1";
+  print("Saving Master Boot Record (MBR) and any GRUB stage 1.5 loader: $dd_cmd\n");
+  system($dd_cmd);
+  # Save partition table
+  my $quoted_sfdisk_file = shell_quote("$dest/$file.sfdisk");
+  my $sfdisk_cmd = "sfdisk -d '$src_drive' > $quoted_sfdisk_file";
+  print("Saving partition table: $sfdisk_cmd\n");
+  system($sfdisk_cmd);
+  my $ptab = `cat $quoted_sfdisk_file`;
+  print("Saved partition table: $ptab\n");
   die "fdisk units must be sectors.\n" unless (fdisk_units($ptab) eq 'sectors');
   print "\t* ".loc("MBR and partition table of %1 saved to %2",$src_drive,$dest)."\n";
   # Save size of source drive in blocks
-  my $bytes = `/sbin/blockdev --getsize64 $src_drive`;
+  my $blockdev_cmd = "/sbin/blockdev --getsize64 '$src_drive'";
+  print("Running $blockdev_cmd\n");
+  my $bytes = `$blockdev_cmd`;
+  print("Unprocessed blockdev output: $bytes\n");
   $bytes =~ s/\D//g;
-  my $file_size_path = "$dest/$file.size";
-  system("echo $bytes > $file_size_path");
+  my $quoted_filesize_path = shell_quote("$dest/$file.size");
+  my $save_filesize_cmd = "echo $bytes > $quoted_filesize_path";
+  print("Running $save_filesize_cmd\n");
+  system($save_filesize_cmd);
   my $ptab_bytes = max(partends($ptab));
   die "blockdev reports smaller drive size $bytes than determined from partition table $ptab_bytes\n" unless $bytes >= $ptab_bytes;
   $bytes = $ptab_bytes;
-  system("echo $bytes > $dest/$file.size");
-  print "\t* ".loc("Size of %1 (%2 bytes) saved to %3",$src_drive,$bytes,$file_size_path)."\n";
+  print("Running $save_filesize_cmd\n");
+  system($save_filesize_cmd);
+  print "\t* ".loc("Size of %1 (%2 bytes) saved to %3",$src_drive,$bytes,$quoted_filesize_path)."\n";
+  print "Getting selected partitions\n";
   # Save list of partitions we will be backing up
   my @partlist = get_selected_partitions('backup_partitions');
+  print "Saving selected partitions to file\n";
   save_partition_list(\@partlist, "$dest/$file.backup");
   # Get the total bytes we're going to be saving
   #print Dumper(%drives);
@@ -438,13 +455,14 @@ sub update_backup_progress {
   my $src = $status{'backup_drive'};
   my $dest = MOUNT_POINT.$builder->get_object('backup_folder')->get_text();
   $dest =~ s/\/$//;
-  $dest =~ s/ /\\ /g;
+  # Get the file string, and ensure certain characters (eg, single-quotes) are escaped.
   my $file = $builder->get_object('backup_name')->get_text();
   my $fs = lc($drives{$src}{'parts'}{$partition_number}{'fstype'});
   # Write the Rescuezilla version to a file to help future versions best handle future backwards-compatibility
   my $version = VERSION;
   chomp($version);
-  system("echo $version > $dest/$file.rescuezilla.backup_version");
+  my $quoted_backup_version_file = shell_quote("$dest/$file.rescuezilla.backup_version");
+  system("echo '$version' > $quoted_backup_version_file");
   # See if the filehandle is open
   if (!defined($PROGRESS)) {
     # No command is being executed
@@ -454,12 +472,14 @@ sub update_backup_progress {
     my $tool_missing_msg = loc("The tool %1 does not exist", "/usr/sbin/$tool");
     fatal_crash($tool_missing_msg) unless -e "/usr/sbin/$tool";
     # Write the exact partclone command used to create the backup of the current partition. This tool is required during restore.
-    system("echo $tool > $dest/$file.partclone.command.part$partition_number");
+    my $quoted_partition_tool = shell_quote("$dest/$file.partclone.command.part$partition_number");
+    system("echo '$tool' > $quoted_partition_tool");
     set_status(loc("Preparing to create backup of Drive %1, Part %2...",$enduser_drive_number, $partition_number));
     print "*** ".loc("Processing %1 (%2) using %3...",$part,$fs,$tool)."\n";
     umount_warn_on_busy("/dev/$part");
-
-    my $backup_cmd = "( $tool $extra_args -F -L /${dest}/${file}_part${partition_number}_partclone.log -s /dev/$part | pigz -c --fast | split -d -a 3 -b 2048m - /${dest}/${file}_part${partition_number}. ) 2>&1 |";
+    my $quoted_partition_log_file = shell_quote("/${dest}/${file}_part${partition_number}_partclone.log");
+    my $quoted_partition_split_prefix = shell_quote("/${dest}/${file}_part${partition_number}.");
+    my $backup_cmd = "( $tool $extra_args -F -L $quoted_partition_log_file -s '/dev/$part' | pigz -c --fast | split -d -a 3 -b 2048m - $quoted_partition_split_prefix ) 2>&1 |";
     print "*** ".loc("Executing: ")."$backup_cmd\n";
     open $PROGRESS, "$backup_cmd";
     sleep(0.5);
@@ -784,10 +804,11 @@ sub do_restore {
   our $PROGRESS;
   set_status(loc("Preparing destination drive..."));
   $builder->get_object('restore_progress')->set_sensitive(TRUE);
+  # Get the source prefix string, and ensure certain characters (eg, single-quotes) are escaped.
   my $src = $builder->get_object('restore_file')->get_filename();
+  # Get the destination directory string, and ensure certain characters (eg, single-quotes) are escaped.
   my $dest_drive = $builder->get_object('restore_dest')->get_active_text();
   $src =~ s/\.backup$//g;
-  $src =~ s/ /\\ /g;
   my $src_mbr = $src.'.mbr';
   my $src_parts = $src.'.backup';
   $src_parts =~ s/\\//g;
@@ -810,10 +831,12 @@ sub do_restore {
     }
   }
   # Get sizes of original and destination drives in bytes
-  my $src_bytes = `cat $src_size`;
+  my $quoted_src_size = shell_quote($src_size);
+  my $src_bytes = `cat $quoted_src_size`;
   $src_bytes =~ s/\D//g;
   print "*** Size of original drive: $src_bytes bytes\n";
-  my $src_fdisk_text = `cat $src_sfdisk`;
+  my $quoted_src_sfdisk = shell_quote($src_sfdisk);
+  my $src_fdisk_text = `cat $quoted_src_sfdisk`;
   # louvetch's popular unofficial Ubuntu 16.04 Redo Backup v1.0.4 update writes empty sfdisk file, so the restore logic needs to carefully
   # workaround this to preserve backwards compatibility (see https://github.com/rescuezilla/rescuezilla/issues/32 for more information)
   my $louvetch_extended_partition_skip = 0;
@@ -840,7 +863,7 @@ sub do_restore {
     }
     $src_bytes = $src_bytes_fdisk;
     print "*** Size of original drive (from partition table): $src_bytes bytes\n";
-    my $dest_bytes = `/sbin/blockdev --getsize64 /dev/$dest_drive`;
+    my $dest_bytes = `/sbin/blockdev --getsize64 '/dev/$dest_drive'`;
     $dest_bytes =~ s/\D//g;
     print "*** Size of destination drive: $dest_bytes bytes\n";
     if ($src_bytes > $dest_bytes) {
@@ -848,7 +871,8 @@ sub do_restore {
       fatal_crash(loc("The drive you are attempting to restore to is %1 MB smaller than the original. You must restore to a drive that is the same size or larger than the original.",$diff_mb));
     }
   }
-  open INFILE, $src_parts or fatal_crash(loc("Could not read from %1! Aborting.",$src_parts));
+  # The open() function does not appear to be processed input through a shell, so no need to use shell_quote().
+  open(INFILE, $src_parts) or fatal_crash(loc("Could not read from %1! Aborting.",$src_parts));
   my @partlist = <INFILE>;
   close INFILE;
   my $response = get_confirmation(loc("Are you sure you want to restore the backup to /dev/%1? Doing so will permanently overwrite the data on this drive!",$dest_drive));
@@ -881,11 +905,13 @@ sub do_restore {
   }
   print "*** ".loc("Writing MBR to %1",$dest_drive)."\n";
   set_status(loc("Writing master boot record to destination drive..."));
-  system("dd of=/dev/$dest_drive if=$src_mbr bs=32768 count=1; sync;");
+  my $quoted_src_mbr = shell_quote($src_mbr);
+  system("dd of='/dev/$dest_drive' if=$quoted_src_mbr bs=32768 count=1; sync;");
   sleep(0.5);  
   print "*** ".loc("Restoring partition table to %1",$dest_drive)."\n";
   set_status(loc("Writing extended partition table to destination drive..."));
-  my $backup_version = `cat /$src.rescuezilla.backup_version`;
+  my $quoted_backup_version_file = shell_quote("/$src.rescuezilla.backup_version");
+  my $backup_version = `cat $quoted_backup_version_file`;
   chomp($backup_version);
   print loc("Detected backup created with %1",$backup_version)."\n";
   my $restore_cmd = "";
@@ -895,16 +921,16 @@ sub do_restore {
   } else {
     if (("$backup_version" cmp "") == 0) {
         # Using sfdisk version bundled with Redo Backup and Recovery v1.0.4, with the required arguments that have been removed from newer versions
-        system("sfdisk.v2.20.1 -fx /dev/$dest_drive < $src_sfdisk; sync");
+        system("sfdisk.v2.20.1 -fx '/dev/$dest_drive' < $quoted_src_sfdisk; sync");
     } else {
-        system("sfdisk -f /dev/$dest_drive < $src_sfdisk; sync");
+        system("sfdisk -f '/dev/$dest_drive' < $quoted_src_sfdisk; sync");
     }
   }
   sleep(0.5);
   print "*** ".loc("Reloading partition table from %1",$dest_drive)."\n";
   set_status(loc("Reloading new partition table from destination drive..."));
   umount_warn_on_busy("/dev/$dest_drive?*");
-  system("partprobe /dev/$dest_drive");
+  system("partprobe '/dev/$dest_drive'");
   sleep(1);
   $status{'start'} = time();
   $status{'part_list'} = \@partlist;
@@ -919,12 +945,12 @@ sub do_restore {
     my $dest_partition_node = join_device_string($dest_drive, $src_partition_number);
     # FIXME: Update this misleading comment (including localizations if possible)
     print "*** ".loc("Verifying that /dev/%1 exists and can be restored to: ",$dest_partition_node);
-    my $part_check = `file /dev/$dest_partition_node | grep 'block special' | wc -l`;
+    my $part_check = `file '/dev/$dest_partition_node' | grep 'block special' | wc -l`;
     if ($part_check==1) {
       print loc("OK")."\n";
       # Add the partition information to the global variables used to share state
       # TODO: Overhaul this application to remove use of global variables to share state.
-      my $bytes = `cat /sys/block/$dest_drive/$dest_partition_node/size`;
+      my $bytes = `cat '/sys/block/$dest_drive/$dest_partition_node/size'`;
       chomp($bytes);
       $bytes = abs(int($bytes*512));
       print "*** ".loc("Device %1 is %2 bytes...",$dest_partition_node,$bytes)."\n";
@@ -968,36 +994,38 @@ sub update_restore_progress {
   # Combine the target drive with the current partition number in an NVMe-aware manner.
   my $dest_partition_node = join_device_string($dest_drive, $partition_number);
   $src =~ s/\.backup$//g;
-  $src =~ s/ /\\ /g;
   my $src_mbr = $src.'.mbr';
   # See if the filehandle is open
   if (!defined($PROGRESS)) {
     umount_warn_on_busy("/dev/$dest_partition_node");
-    system("dd if=/dev/zero of=/dev/$dest_partition_node bs=1K count=1000; sync");
+    system("dd if=/dev/zero of='/dev/$dest_partition_node' bs=1K count=1000; sync");
     set_status(loc("Preparing to restore backup for Drive %1, Part %2...",$enduser_drive_string,$partition_number));
-    my $backup_version = `cat /$src.rescuezilla.backup_version`;
+    my $quoted_backup_version_file = shell_quote("/$src.rescuezilla.backup_version");
+    my $backup_version = `cat $quoted_backup_version_file`;
     chomp($backup_version);
     print loc("Detected backup created with %1",$backup_version)."\n";
     my $restore_cmd = "";
+    my $quoted_src_partition_prefix = shell_quote("/${src}_part${partition_number}");
     if (("$backup_version" cmp "") == 0) {
         my $partclone_ver = "v0.2.43";
         print loc("No version number detected. Therefore backup assumed to be made by v1.0.4, so using %1 partclone.restore.", $partclone_ver)."\n";
         # The Redo Backup v1.0.4 partclone version uses different restore syntax, and autodetects raw formats differently
         print loc("Using partclone %1 to restore the %2 backup, for maximum compatibility",$partclone_ver,"Redo Backup and Recovery v1.0.4")."\n";
         my $tool = "partclone.restore.$partclone_ver";
-        print "*** ".loc("Processing %1 using %2...","$dest_partition_node",$tool)."\n";
-        $restore_cmd = "( cat /${src}_part${partition_number}.* | pigz -d -c | $tool -F -L /partclone.log -O /dev/$dest_partition_node ) 2>&1 |";
+        print "*** ".loc("Processing %1 using %2...",$dest_partition_node,$tool)."\n";
+        $restore_cmd = "( cat $quoted_src_partition_prefix.* | pigz -d -c | $tool -F -L /partclone.log -O '/dev/$dest_partition_node' ) 2>&1 |";
     } else {
         print loc("Restoring backup created with version: %1",$backup_version)."\n";
         # Assuming backup was created with a format compatible with the 1.0.5 release.
         # TODO: Compare the MAJOR.MINOR.PATCH components that make up the version number to automatically handle newer versions
         # TODO: when the backup format and partclone syntax have not changed.
-        my $tool = `cat $src.partclone.command.part$partition_number`;
+        my $quoted_partition_partclone_command_file = shell_quote("$src.partclone.command.part$partition_number");
+        my $tool = `cat $quoted_partition_partclone_command_file`;
         chomp($tool);
         my $tool_missing_msg = loc("The tool %1 does not exist", "/usr/sbin/$tool");
         fatal_crash($tool_missing_msg) unless -e "/usr/sbin/$tool";
-        print "*** ".loc("Processing %1 using %2...","$dest_partition_node",$tool)."\n";
-        $restore_cmd = "( cat /${src}_part${partition_number}.* | pigz -d -c | $tool --restore -F -L /partclone.log -O /dev/$dest_partition_node ) 2>&1 |";
+        print "*** ".loc("Processing %1 using %2...",$dest_partition_node,$tool)."\n";
+        $restore_cmd = "( cat $quoted_src_partition_prefix.* | pigz -d -c | $tool --restore -F -L /partclone.log -O '/dev/$dest_partition_node' ) 2>&1 |";
     }
     print "*** ".loc("Executing: ")."$restore_cmd\n";
     open $PROGRESS, "$restore_cmd";
@@ -1110,7 +1138,8 @@ sub update_restore_progress {
         sleep(0.5);
         print "*** ".loc("Writing MBR to %1",$dest_drive)."\n";
         set_status(loc("Rewriting master boot record to destination drive..."));
-        system("dd of=/dev/$dest_drive if=$src_mbr bs=32768 count=1; sync;");
+        my $quoted_src_mbr = shell_quote($src_mbr);
+        system("dd of=/dev/$dest_drive if=$quoted_src_mbr bs=32768 count=1; sync;");
         sleep(0.5);
         my $elapsed = sprintf("%.1f", (time()-$status{'start'})/60);
         print ">>> ".loc("Operation complete.")."\n";
@@ -1323,7 +1352,7 @@ sub save_file {
   # Save a string to the specified file
   my $data = $_[0];
   my $outfile = $_[1];
-  $outfile =~ s/\\//g;
+  # The open() function does not appear to be processed input through a shell, so no need to use shell_quote().
   open(OUT, ">$outfile") or die(loc("Could not open %1 for writing!",$outfile)."\n");
   print OUT $data;
   close OUT;
@@ -1409,7 +1438,8 @@ sub mount_data {
       }
       if ($status{'mount_domain'} ne '') { $smb_args = "$smb_args,domain=".$status{'mount_domain'}; }
       if ($status{'mount_version'} ne '') { $smb_args = "$smb_args,vers=".$status{'mount_version'}; }
-      my $cifs_mount = "mount.cifs '$status{'mount_source'}' ".MOUNT_POINT." -o $smb_args";
+      my $quoted_mount_source = shell_quote($status{'mount_source'});
+      my $cifs_mount = "mount.cifs $quoted_mount_source ".MOUNT_POINT." -o $smb_args";
       print "* ".loc("Executing: ").$cifs_mount."\n";
       system($cifs_mount);
       if ($credential_tmp_file ne '') { system(("shred", "-u",  $credential_tmp_file));}
@@ -1418,7 +1448,8 @@ sub mount_data {
       my $ftpargs = '';
       if ($status{'mount_user'} ne '') { $ftpargs = "-o user='".$status{'mount_user'}."'"; }
       if ($status{'mount_pass'} ne '') { $ftpargs .= ":'".$status{'mount_pass'}."'"; }
-      system("curlftpfs $status{'mount_source'} ".MOUNT_POINT." $ftpargs");
+      my $quoted_mount_source = shell_quote($status{'mount_source'});
+      system("curlftpfs $quoted_mount_source ".MOUNT_POINT." $ftpargs");
       print "* ".loc("Executing: ")."curlftpfs $status{'mount_source'} ".MOUNT_POINT." <redacted>\n";
     } else {
       fatal_crash(loc("The device type '%1' is not valid.  Did you forget to select a backup location?",$status{'mount_type'}));
@@ -1445,8 +1476,9 @@ sub umount_partition {
 
   my $mount_point = $_[0];
 
+  my $quoted_mount_point = shell_quote($mount_point);
   # Attempt to unmount the mount point.
-  system("umount ${mount_point} 2>&1");
+  system("umount $quoted_mount_point 2>&1");
 
   # Use findmnt to robustly check whether the provided path (which may contain wildcard
   # characters) is mounted on Linux.
