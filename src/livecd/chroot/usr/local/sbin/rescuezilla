@@ -139,7 +139,7 @@ func parttab($text) {
   my @text = split("\n", $text);
   my %parts;
   foreach my $line (@text) {
-    my @match = ($line =~ /^[[:blank:]]*(\/dev\/[[:alnum:]]+|-)[[:blank:]]+:[[:blank:]]*start=[[:blank:]]*([[:digit:]]+), size=[[:blank:]]*([[:digit:]]+), Id=[[:blank:]]*([[:xdigit:]]+)/);
+    my @match = ($line =~ /^[[:blank:]]*(\/dev\/[[:alnum:]]+|-)[[:blank:]]+:[[:blank:]]*start=[[:blank:]]*([[:digit:]]+), size=[[:blank:]]*([[:digit:]]+), type=[[:blank:]]*([[:xdigit:]]+)/);
     if (@match && $match[3]) {
       if (((length $match[0]) < 3) || !$match[2]) {
         print "Error on line: " . $line;
@@ -400,13 +400,15 @@ sub do_backup {
   my $bytes = `$blockdev_cmd`;
   print("Unprocessed blockdev output: $bytes\n");
   $bytes =~ s/\D//g;
+  # Get the byte offset of the end of the last partition selected
+  my $ptab_bytes = max(values(%{partends($ptab)}));
+  print "partition table reports drive size $ptab_bytes\n";
+  die "blockdev reports smaller drive size $bytes than determined from partition table $ptab_bytes\n" unless $bytes >= $ptab_bytes;
+  $bytes = $ptab_bytes;
   my $quoted_filesize_path = shell_quote("$dest/$file.size");
   my $save_filesize_cmd = "echo $bytes > $quoted_filesize_path";
   print("Running $save_filesize_cmd\n");
   system($save_filesize_cmd);
-  my $ptab_bytes = max(partends($ptab));
-  die "blockdev reports smaller drive size $bytes than determined from partition table $ptab_bytes\n" unless $bytes >= $ptab_bytes;
-  $bytes = $ptab_bytes;
   print("Running $save_filesize_cmd\n");
   system($save_filesize_cmd);
   print "\t* ".loc("Size of %1 (%2 bytes) saved to %3",$src_drive,$bytes,$quoted_filesize_path)."\n";
@@ -854,7 +856,8 @@ sub do_restore {
   } elsif ('sectors' eq fdisk_units($src_fdisk_text)) {
     # If sfdisk file is present, check whether the partition can be successfully restored.
     print "*** Reading original drive partition table.\n";
-    my $src_bytes_fdisk = max(partends($src_fdisk_text));
+    # Get the byte offset of the end of the last partition listed in the backup
+    my $src_bytes_fdisk = max(values(%{partends($src_fdisk_text)}));
     if ($src_bytes_fdisk > $src_bytes) {
       print "Warning: stored size of original drive $src_bytes is smaller than size calculated from original partition table $src_bytes_fdisk !\n";
     }
