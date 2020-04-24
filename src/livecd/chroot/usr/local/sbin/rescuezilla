@@ -455,7 +455,6 @@ sub update_backup_progress {
   my $src = $status{'backup_drive'};
   my $dest = MOUNT_POINT.$builder->get_object('backup_folder')->get_text();
   $dest =~ s/\/$//;
-  # Get the file string, and ensure certain characters (eg, single-quotes) are escaped.
   my $file = $builder->get_object('backup_name')->get_text();
   my $fs = lc($drives{$src}{'parts'}{$partition_number}{'fstype'});
   # Write the Rescuezilla version to a file to help future versions best handle future backwards-compatibility
@@ -804,9 +803,7 @@ sub do_restore {
   our $PROGRESS;
   set_status(loc("Preparing destination drive..."));
   $builder->get_object('restore_progress')->set_sensitive(TRUE);
-  # Get the source prefix string, and ensure certain characters (eg, single-quotes) are escaped.
   my $src = $builder->get_object('restore_file')->get_filename();
-  # Get the destination directory string, and ensure certain characters (eg, single-quotes) are escaped.
   my $dest_drive = $builder->get_object('restore_dest')->get_active_text();
   $src =~ s/\.backup$//g;
   my $src_mbr = $src.'.mbr';
