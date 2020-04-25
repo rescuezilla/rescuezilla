@@ -5,7 +5,7 @@ set -x
 
 # Set the default base operating system, using the Ubuntu release's shortened code name [1].
 # [1] https://wiki.ubuntu.com/Releases
-CODENAME="${CODENAME:-bionic}"
+CODENAME="${CODENAME:-focal}"
 
 # Sets CPU architecture using Ubuntu designation [1]
 # [1] https://help.ubuntu.com/lts/installation-guide/armhf/ch02s01.html

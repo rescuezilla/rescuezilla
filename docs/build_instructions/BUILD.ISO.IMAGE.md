@@ -11,6 +11,8 @@ A host system capable of running debootstrap, chroot and bind mounts is required
 Any Debian 10, Ubuntu 18.04, or derivative such as Linux Mint should be able to run the following:
 ```bash
 sudo apt-get update
+# The AMD64 version of Rescuezilla is based on Ubuntu 20.04 Focal, so you may find you need a more
+# recent version of debootstrap (from the backports repository) to bootstrap a Focal environment.
 sudo apt-get install git-lfs git make rsync sudo debootstrap isolinux syslinux syslinux-utils \
                      squashfs-tools genisoimage memtest86+ gettext
 git lfs clone https://github.com/rescuezilla/rescuezilla
