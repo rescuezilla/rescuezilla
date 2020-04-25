@@ -1,11 +1,11 @@
-.DEFAULT_GOAL := i386
+.DEFAULT_GOAL := amd64
 .PHONY: all amd64 i386 clean-build-dir clean clean-all
 
 all: amd64 i386
 
 buildscripts = build.sh chroot.steps.part.1.sh chroot.steps.part.2.sh
 
-amd64: ARCH=amd64 CODENAME=bionic
+amd64: ARCH=amd64 CODENAME=focal
 amd64: $(buildscripts)
 	CODENAME=$(CODENAME) ARCH=$(ARCH) ./build.sh
 
