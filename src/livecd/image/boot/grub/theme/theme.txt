@@ -1,0 +1,41 @@
+desktop-image: "bg_redo.png"
+desktop-image-scale-method: "crop"
+
+title-color: "black"
+title-font: "DejaVu Sans Bold 16"
+
+# Example title text                                                Rescuezilla X.Y.Z 64bit 20XX-YY-ZZT012345
+title-text: "                                                       Rescuezilla VERSION-SUBSTITUTED-BY-BUILD-SCRIPT REGISTER-WIDTH-SUBSTITUTED-BY-BUILD-SCRIPT GIT-COMMIT-DATE-SUBSTITUTED-BY-BUILD-SCRIPT"
+message-font: "Unifont Regular 16"
+terminal-font: "Unifont Regular 16"
+
+#help bar at the bottom
++ label {
+        top = 100%-50
+        left = 55%
+        width = 45%
+        height = 20
+        text = "@KEYMAP_SHORT@"
+        align = "center"
+        color = "black"
+        font = "DejaVu Sans Bold 16"
+}
+
+#boot menu
++ boot_menu {
+        left = 60%
+        width = 40%
+        top = 20%
+        height = 90%
+        item_color = "black"
+        item_font = "DejaVu Sans Bold 14"
+        selected_item_color= "#ffffff"
+        selected_item_font = "Unifont Regular 16"
+        item_height = 16
+        item_padding = 0
+        item_spacing = 4
+        icon_width = 0
+        icon_heigh = 0
+        item_icon_space = 0
+}
+
