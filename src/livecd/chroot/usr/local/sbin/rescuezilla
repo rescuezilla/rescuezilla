@@ -84,7 +84,8 @@ use constant DATA_DIR        => "/usr/share/rescuezilla/";
 use constant APP_ICON        => DATA_DIR."redobackup-icon.png";
 use constant GLADE_UI        => "rescuezilla.glade";
 use constant MAX_WIDTH       => 96;
-use constant FS_SUPPORT      => ( "ext2",
+use constant FS_SUPPORT      => ( "apfs",
+                                  "ext2",
                                   "ext3",
                                   "ext4",
                                   "fat",
@@ -1471,6 +1472,15 @@ sub which_backup_tool {
     $tool .= "ntfs";
   } elsif ($fs =~ m/reiser4/) {
     $tool .= "reiser4";
+  } elsif ($fs =~ m/apfs/) {
+    # Sanity check the presence of executable partclone.apfs
+    # FIXME: For portability across distributions, should use a method that checks all of $PATH 
+    if (-e "/usr/sbin/partclone.apfs") {
+      $tool .= "apfs";
+    } else {
+      print "partclone.apfs is missing. Falling back to byte-for-byte copy.\n";
+      $tool .= "dd";
+    }
   } elsif ($fs =~ m/xfs/) {
     $tool .= "xfs";
   } else {
