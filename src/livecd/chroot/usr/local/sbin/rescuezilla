@@ -810,12 +810,10 @@ sub do_restore {
   $src =~ s/\.backup$//g;
   my $src_mbr = $src.'.mbr';
   my $src_parts = $src.'.backup';
-  $src_parts =~ s/\\//g;
   my $src_size = $src.'.size';
   my $src_sfdisk = $src.'.sfdisk';
   # Warn if we are restoring to the source drive
   my $src_drive = $status{'mount_source'};
-  $src_drive =~ s/\d//g;
   print loc("Comparing %1 to %2...",$src_drive,$dest_drive)."\n";
   if ($src_drive eq $dest_drive) {
     my $response = 'no';
