@@ -32,7 +32,7 @@ script:
   # Execute the Makefile's install target within the docker container. This step
   # may take some time. Hundreds of megabytes of packages are downloaded from the
   # Ubuntu mirror during a build.
-- docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make
+- docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make all
 
 
 # When a new tag is pushed, upload the ISO image as a draft release on GitHub
