@@ -4,21 +4,30 @@ Note: [You can download the latest Rescuezilla ISO image here](https://github.co
  
 ### Background
 
-A host system capable of running debootstrap, chroot and bind mounts is required. With such a host system, a bootable ISO image can be generated in a single `make` command.
+An Ubuntu 18.04, or similar Ubuntu-package environment capable of running debootstrap, chroot and bind mounts is currently required. A single `make` command can generate an AMD64 ISO image and an i386 image, which are capable of booting from USB sticks, CD, DVD and any EFI firmware, including with EFI Secure Boot switched on.
+
+Unfortunately, building on Debian and other non Ubuntu-package environments will not work properly, as Debian's package repositories contain different versions of key packages which happen to only trust Debian certificates, namely the Microsoft-signed EFI shim (`shim-signed`), and the Debian-signed GRUB bootloader (`grub-efi-amd64-signed`). This means that when Secure Boot is enabled, an EFI boot will fail to authenticate Rescuezilla's Canonical-signed kernel images leaving the developer in GRUB Rescue Mode. Fortunately, developers who use any distribution which does not use Canonical's Ubuntu packages (such as Debian) are able to easily construct the ideal Ubuntu-based build environment by following the "Build _with_ docker" instructions on this page. This restriction will be reduced with task [#59](https://github.com/rescuezilla/rescuezilla/issues/59).
 
 ### Build without docker
 
-Any Debian 10, Ubuntu 18.04, or derivative such as Linux Mint should be able to run the following:
+The following instructions should work on Ubuntu or Ubuntu-derived distributions, but are _not_ recommended on Debian or Debian-derived environments (see above):
+
 ```bash
 sudo apt-get update
 # The AMD64 version of Rescuezilla is based on Ubuntu 20.04 Focal, so you may find you need a more
 # recent version of debootstrap (from the backports repository) to bootstrap a Focal environment.
-sudo apt-get install git-lfs git make rsync sudo debootstrap isolinux syslinux syslinux-utils \
-                     squashfs-tools genisoimage gettext
+sudo apt-get install git-lfs git make sudo \
+                     rsync debootstrap gettext squashfs-tools dosfstools mtools xorriso \
+                     # GRUB bootloaders used with i386 and AMD64 ISO images to booting using both MBR and EFI
+                     grub-efi-amd64-bin grub-efi-ia32-bin grub-pc-bin \
+                     # The Microsoft-signed EFI shim and Canonical-signed GRUB binaries need to contain
+                     # Canonical certificates, not Debian certificates (see "Background" section above)
+                     shim-signed  grub-efi-amd64-signed
+
 git lfs clone https://github.com/rescuezilla/rescuezilla
 cd rescuezilla/
 # sudo privileges required for the chroot bind mount
-sudo make
+sudo make amd64 i386
 
 # Test the generated ISO image in a virtual machine.
 sudo apt-get install virtualbox

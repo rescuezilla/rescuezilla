@@ -183,7 +183,7 @@ SUBSTITUTIONS=(
     "$BUILD_DIRECTORY/chroot/usr/share/rescuezilla/ARCH"
     "$BUILD_DIRECTORY/chroot/usr/share/rescuezilla/REGISTER_WIDTH"
     # ISOLINUX boot menu 
-    "$BUILD_DIRECTORY/image/isolinux/isolinux.cfg"
+    "$BUILD_DIRECTORY/image/boot/grub/theme/theme.txt"
     # Firefox browser homepage query-string, to be able to provide a "You are using an old version. Please update."
     # message when users open the web browser with a (inevitably) decades old version.
     "$BUILD_DIRECTORY/chroot/usr/lib/firefox/distribution/policies.json"
@@ -216,7 +216,7 @@ umount -lf chroot/dev/
 rm chroot/root/.bash_history
 rm chroot/chroot.steps.part.1.sh chroot/chroot.steps.part.2.sh
 
-mkdir -p image/casper image/isolinux image/install
+mkdir -p image/casper image/install
 cp chroot/boot/vmlinuz-*-generic image/casper/vmlinuz
 if [[ $? -ne 0 ]]; then
     echo "Error: Failed to copy vmlinuz image."
@@ -228,17 +228,6 @@ chmod 644 image/casper/vmlinuz
 cp chroot/boot/initrd.img-*-generic image/casper/initrd.lz
 if [[ $? -ne 0 ]]; then
     echo "Error: Failed to copy initrd image."
-    exit 1
-fi
-
-cp /usr/lib/syslinux/modules/bios/vesamenu.c32 \
-   /usr/lib/ISOLINUX/isolinux.bin \
-   /usr/lib/syslinux/modules/bios/ldlinux.c32 \
-   /usr/lib/syslinux/modules/bios/libcom32.c32 \
-   /usr/lib/syslinux/modules/bios/libutil.c32 \
-   image/isolinux/
-if [[ $? -ne 0 ]]; then
-    echo "Error: Failed to copy ISOLINUX files."
     exit 1
 fi
 
@@ -275,40 +264,172 @@ rm -rf image/casper/filesystem.squashfs "$RESCUEZILLA_ISO_FILENAME"
 mksquashfs chroot image/casper/filesystem.squashfs -e boot -e /sys
 printf $(sudo du -sx --block-size=1 chroot | cut -f1) > image/casper/filesystem.size
 cd image
+
+# Create unpacked EFI directory
+mkdir --parents "$BUILD_DIRECTORY/image/EFI/BOOT/"
+# Add the Microsoft-signed EFI Secure Boot shim for AMD64 to the EFI System Partition (ESP). Also renames the shim to be the default bootloader
+# so is automatically launched when the UEFI firmware launches this device. Given the target Linux kernel is Canonical-signed, for Secure Boot
+# to work the shim needs to be from Ubuntu's `shim-signed` package (which trusts Canonical keys), see below.
+cp /usr/lib/shim/shimx64.efi.signed "$BUILD_DIRECTORY/image/EFI/BOOT/BOOTx64.EFI"
+# Add the Canonical-signed GRUB EFI loader executable for AMD64 to the ESP. This is a small EFI executable which is launched by the shim. It reads
+# the nearby grub.cfg and uses it to access the squashfs-compressed filesystem to read another grub.cfg access other GRUB modules etc.
+#
+# Given the target Linux kernel is Canonical-signed, for Secure Boot to work the shim needs to be from Ubuntu's `grub-efi-amd64-signed package`
+# (which trusts Canonical keys), it will not verify with Debian's `grub-efi-amd64-signed` package (as it trusts Debian's keys, so cannot verify
+# a Canonical-signed kernel)
+cp /usr/lib/grub/x86_64-efi-signed/grubx64.efi.signed "$BUILD_DIRECTORY/image/EFI/BOOT/grubx64.efi"
+# Deploy the GRUB AMD64 support files, including loadable modules
+cp -r /usr/lib/grub/x86_64-efi "$BUILD_DIRECTORY/image/boot/grub/"
+
+mkdir "$BUILD_DIRECTORY/image/boot/grub/fonts"
+# Deploy unicode font
+cp /usr/share/grub/unicode.pf2 "$BUILD_DIRECTORY/image/boot/grub/fonts"
+
+# Copy the GRUB EFI loader executable for i386 (there is no signed GRUB EFI versions available for i386). Multiple EFI bootloaders for different
+# CPU architectures can safely co-exist (given the different filenames), with the EFI firmware launching the correctly named executable.
+# Also, Bay Trail Intel Atom CPUs apparently have 64-bit CPUs with 32-bit UEFI, so having both i386 and amd64 executable on an amd64 ISO seems good.
+cp /usr/lib/grub/i386-efi/monolithic/grubia32.efi "$BUILD_DIRECTORY/image/EFI/BOOT/BOOTIA32.EFI"
+# Deploy i386 GRUB EFI support files, including loadable modules
+cp -r /usr/lib/grub/i386-efi "$BUILD_DIRECTORY/image/boot/grub/"
+# Deploy i386 GRUB non-EFI support files to support El Torito optical disk boot on both i386 and amd64 systems using either ISO architecture variant
+cp -r /usr/lib/grub/i386-pc "$BUILD_DIRECTORY/image/boot/grub/"
+
+# Create an EFI System Partition (ESP), by first creating a small blank file then formatting a file as a FAT16 filesystem.
+#
+# Background: The UEFI firmware on a computer accesses the EFI System Partition, which is a small partition, which is immediately
+# after the MBR (on non-removable drives) and launches an executable bootloader (in this case GRUB), which contains the filesystem drivers
+# requires to to launch the next stage (in this case accessing the squashfs-compressed root filesystem to the display GRUB menu.
+#
+# More information on EFI bootloaders available in [1]
+#
+# [1] https://www.rodsbooks.com/efi-bootloaders/index.html
+ESP_FAT_IMAGE="$BUILD_DIRECTORY/image/boot/esp.img"
+rm "$ESP_FAT_IMAGE"
+# Create an zeroed 6MiB file
+dd if=/dev/zero of="$ESP_FAT_IMAGE" count=6 bs=1M
+if [[ $? -ne 0 ]]; then
+    echo "Error: Failed to create blank file for EFI System Partition."
+    exit 1
+fi
+# Creates a FAT16 filesystem, from the UEFI specification: "The EFI firmware must support the FAT32, FAT16, and FAT12 variants of the EFI
+# file system. What variant of EFI FAT to use is defined by the size of the media." and "EFI encompasses the use of FAT32 for a system
+# partition, and FAT12 or FAT16 for removable media." (from https://uefi.org/sites/default/files/resources/UEFI_Spec_2_8_final.pdf)
+mkfs.msdos "$ESP_FAT_IMAGE"
+if [[ $? -ne 0 ]]; then
+    echo "Error: Failed to create MSDOS filesystem for EFI System Partition (ESP)."
+    exit 1
+fi
+
+# Pack the EFI subdirectory in the "unpacked" EFI System Partition (ESP) temporary directory *into* [1] the FAT16 filesystem image to form the
+# completed ESP (EFI System Partition) image.
+# [1] See https://en.wikipedia.org/wiki/Mtools#Usage for more information.
+mcopy -s -i "$ESP_FAT_IMAGE" "$BUILD_DIRECTORY/image/EFI" ::
+if [[ $? -ne 0 ]]; then
+    echo "Error: Failed to pack EFI System Partition directory structure into FAT filesystem."
+    exit 1
+fi
+# TODO: Delete the unpacked EFI/ directory. Currently it's still required because while EFI System Partition is correctly accessed and launched by
+# all EFI firmware that has been tested, for some reason GRUB still tries to load (cd0)/EFI/ubuntu/grub.cfg from the ISO9660 filesystem, rather
+# than loading the same file from the within the EFI system partition. Keeping the directory has no negative impact on the enduser except a
+# few wasted megabytes.
+
+# Generate the i386 CD-ROM/USB drive El Torito boot image (used for both AMD64/i386 CD-ROM boot) and save it in the ISO image filesystem
+# TODO: Reduce number of GRUB modules to the absolute bare minimum.
+grub-mkimage --format i386-pc-eltorito --output "$BUILD_DIRECTORY/image/boot/grub/grub.eltorito.bootstrap.img" --compression auto --prefix /boot/grub boot linux search normal configfile part_gpt fat iso9660 biosdisk test keystatus gfxmenu regexp probe efiemu all_video gfxterm font echo read ls cat png jpeg halt reboot part_msdos biosdisk
+if [[ $? -ne 0 ]]; then
+    echo "Error: Failed to create the GRUB bootstrap image required for El Torito CD-ROM boot."
+    exit 1
+fi
+
+# Pack the 'image' subdirectory to become a bootable ISO 9660 image using xorrisofs (which is "xorriso" but using the mkisofs/genisoimage
+# compatibility mode).
+#
+# Constructing bootable ISO 9660 images is likely to be very esoteric knowledge for most developers reading this, so to better understand
+# how it works, here is a quick reference/glossary:
+#
+# * ISO9660 is a filesystem commonly used on DVDs/CDs (though the filesystem UDF is also widely used on DVDs, and also used with Blu-Ray).
+# * The goal here is to create a bootable ISO9660 image that works as a USB stick on legacy BIOS (MBR partition table), EFI (including Secure Boot),
+#   and CD boot (El Torito boot catalog).
+# * "EFI systems normally boot from optical discs by reading a FAT image file in El Torito format and treating that file as an ESP". This is in
+#   contrast to the typical hard drive where the EFI partition resides on the disk rather than as an filesystem image file.
+# * Historically, ISO9660 images were commonly created by mkisofs. mkisofs is no longer maintained. Debian repositories contain a fork of mkisofs named
+#   genisoimage (forked in 2006), but it too is no longer developed (no bug fixes or features). Fortunately, xorriso is a command-line utility which is
+#   maintained, widely available, and provides a compatibility mode for mkisofs' much clearer and higher-level command-line usage. While this
+#   compatibility mode is accessible by launching xorriso with the "-as mkisofs" argument, the alternate executable xorrisofs achieves the same goal
+#   more conveniently and with its own manpage.
+# * The ISO9660 specification has had a number of extensions over the years. They are important to better understand xorrisofs command-line arguments:
+#   * Rock Ridge added POSIX-style attributes (eg, ownership) and was developed in the early 1990s (named after a fictional town from a 1974 movie)
+#   * Joliet reduced filename restrictions and was released by Microsoft in the mid-1990s
+#   * El Torito is the CD-ROM boot record specification, which was released in 1995 (named after the restaurant it was supposedly defined in)
+#   * An ISO 9660 filesystem can contain an MBR (Master Boot Record), ESP (EFI System Partition) and GPT (GUID Partition Table) without hampering the
+#     (up-to 63) El Torito boot records. The MBR/GPT is stored in the first 32KiB of the filesystem. For developers familiar to hard drive layouts,
+#     it may seem like a strange concept to have the MBR partition table stored within filesystem, rather than before the filesystem definition.
+#
+# Note: `man xorriso` is not at all relevant here. Instead, use `man xorrisofs` for more information on the arguments below. Also please note xorrisofs
+#       specifies long-options sometimes with single-dash but other times with two dashes.
+xorrisofs_args=(
+               # Output image path
+               --output "$BUILD_DIRECTORY/$RESCUEZILLA_ISO_FILENAME"
+               # Set filesystem volume ID
+               --volid "Rescuezilla"
+               # "Enable Rock Ridge and set user and group id of all files in the ISO image to 0." (prevents files in the ISO image using uid/gid of
+               # the user running the build. Also "Grant r-permissions to all. Deny all w-permissions. If any x-permission is set, grant x-permission to all.
+               # Remove s-bit and t-bit". This does not affect the Linux root filesystem as it is squashfs-compressed so carries its own file attributes.
+               -rational-rock
+               # "Enable the production of an additional Joliet directory tree along with the ISO 9660 Rock Ridge tree".
+               -joliet
+               # "Allow up to 31 characters in ISO file names"
+               -full-iso9660-filenames
+               # Installs GRUB2 into the Master Boot Record (MBR) present within the ISO9660 "System Area", in order to support for disk boot
+               # via legacy BIOS (eg, bootable USB sticks), while maintaining CD-ROM boot
+               --grub2-mbr /usr/lib/grub/i386-pc/boot_hybrid.img
+               # Specifies a boot image (using path relative to the ISO filesystem root) in the current entry of the El Torito catalog, and mark it
+               # as bootable on legacy BIOS. This executable is 32-bit, but can load 64-bit systems.
+               -eltorito-boot boot/grub/grub.eltorito.bootstrap.img
+               # "Overwrite bytes 2548 to 2555 in the current boot image by the address" of the above boot image
+               --grub2-boot-info
+               # Don't emulate floppy disk when loading this El Torito boot image (to avoid requiring image exactly "1.2, 1.44or 2.88 Mb" in size)
+               -no-emul-boot
+               # Publishes El Torito boot catalog as datafile on the ISO. This file "is not significant for the booting PC-BIOS or EFI,
+               # but it may later be read by other programs in order to learn about the available boot images"
+               -eltorito-catalog boot/boot.cat
+               # "Specifies the number of "virtual" (512-byte) sectors to load in no-emulation mode. The default is to load the entire boot file."
+               -boot-load-size 4
+               # Patches the legacy BIOS boot image (specified above with -b above) with a 56-byte "boot information table". This is supposedly
+               # important for MBR legacy boot, and is used in examples across the internet. It populates the "Block address of the Primary Volume
+               # Descriptor, block address of the boot image file, size of the boot image file"
+               -boot-info-table
+               # Specifies a boot image file (using path relative to the ISO filesystem root) to be mentioned in the current entry of the El Torito
+               # boot catalog and mark suitable as EFI.  
+               # Remember, "EFI systems normally boot from optical discs by reading a FAT image file and treating that file as an EFI System Partition"
+               #
+               # Please note, internally to xorrisofs this command first runs -eltorito-alt-boot (which finalizes the previously specified El Torito boot
+               # catalog entry), then starts a second El Torito boot parameters set (up to 63 possible per ISO9660 filesystem), then specifies the
+               # boot image file and marks it as suitable for EFI, then uses --no-emul-boot to stop floppy disk emulation (see above), then finalizes this
+               # newly defined El Torito boot catalog entry.
+               --efi-boot "boot/esp.img"
+               # Exposes the EFI System Partition (ESP) image (specified above) in the GPT (GUID Partition Table) the ESP. In other words, exposes
+               # the FAT partition that a computer's EFI firmware reads when booting from a USB stick (as opposed to the optical media case which boots
+               # using EFI by reading the ESP from an image file)
+               -efi-boot-part --efi-boot-image
+               # Use contents of the specified directory as the ISO filesystem root
+               "$BUILD_DIRECTORY/image/"
+             )
+# Create ISO image (part 1/4), with --boot-info-table argument modifying the El Torito boot image used for legacy BIOS booting (see comment above)
+xorrisofs "${xorrisofs_args[@]}"
+
+# Extract from the ISO image the El Torito boot image used for legacy BIOS booting, as it has been modified by --boot-info-table (part 2/4)
+TEMP_MOUNT_DIR=$(mktemp --directory --suffix $RESCUEZILLA_ISO_FILENAME.temp.mount.dir)
+mount "$BUILD_DIRECTORY/$RESCUEZILLA_ISO_FILENAME" "$TEMP_MOUNT_DIR"
+cp "$TEMP_MOUNT_DIR/boot/grub/grub.eltorito.bootstrap.img" "$BUILD_DIRECTORY/image/boot/grub/grub.eltorito.bootstrap.img"
+umount $TEMP_MOUNT_DIR
+rmdir $TEMP_MOUNT_DIR
+
+# Generate an md5sum of all files, including the MBR boot image now modified by --boot-info-table. (part 3/4)
 find . -type f -print0 | xargs -0 md5sum | grep -v "./md5sum.txt" > md5sum.txt
 
-# Create ISO image (part 1/3), with -boot-info-table modifying isolinux.bin with 56-byte "boot information table" # at offset 8 in the file."
-# See `man genisoimage` for more information. This modification invalidates the isolinux.bin md5sum calculated above.
-genisoimage -r \
-            -V "Rescuezilla" \
-            -cache-inodes \
-            -J \
-            -l \
-            -b isolinux/isolinux.bin \
-            -c isolinux/boot.cat \
-            -no-emul-boot \
-            -boot-load-size 4 \
-            -boot-info-table \
-            -o "$BUILD_DIRECTORY/$RESCUEZILLA_ISO_FILENAME" . 
-
-# Generate fresh md5sum containing the -boot-info-table modified isolinux.bin
-find . -type f -print0 | xargs -0 md5sum | grep -v "./md5sum.txt" > md5sum.txt
-# Create ISO image (part 2/3), the --boot-info-table modification has already been made to isolinux.bin, so the md5sum remains correct this time.
-rm "$BUILD_DIRECTORY/$RESCUEZILLA_ISO_FILENAME"
-genisoimage -r \
-            -V "Rescuezilla" \
-            -cache-inodes \
-            -J \
-            -l \
-            -b isolinux/isolinux.bin \
-            -c isolinux/boot.cat \
-            -no-emul-boot \
-            -boot-load-size 4 \
-            -boot-info-table \
-            -o "$BUILD_DIRECTORY/$RESCUEZILLA_ISO_FILENAME" . 
-
-# Make ISO image USB bootable (part 3/3)
-isohybrid "$BUILD_DIRECTORY/$RESCUEZILLA_ISO_FILENAME"
+# Create ISO image (part 4/4), the --boot-info-table modification already having been made to the MBR boot image, and md5sum capturing this correctly
+xorrisofs "${xorrisofs_args[@]}"
 
 cd "$BUILD_DIRECTORY"
 mv "$BUILD_DIRECTORY/$RESCUEZILLA_ISO_FILENAME" ../
