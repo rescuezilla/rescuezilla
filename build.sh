@@ -222,6 +222,8 @@ if [[ $? -ne 0 ]]; then
     echo "Error: Failed to copy vmlinuz image."
     exit 1
 fi
+# Ensures compressed Linux kernel image is readable during the MD5 checksum at boot
+chmod 644 image/casper/vmlinuz
 
 cp chroot/boot/initrd.img-*-generic image/casper/initrd.lz
 if [[ $? -ne 0 ]]; then
