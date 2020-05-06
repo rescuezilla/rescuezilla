@@ -46,6 +46,12 @@ perl -p -i -e 's/^set compatible$/set nocompatible/g' /etc/vim/vimrc.tiny
 
 apt-get upgrade --yes
 
+# Ensure initramfs configuration file matches package maintainer's version during
+# rebuild on ISO image, so that the build is fully unattended while avoiding
+# another use of Dpkg::Options. See the other sed command below for original
+# modification of initramfs.conf and the reason for the modification.
+sed --in-place s/COMPRESS=gzip/COMPRESS=lz4/g /etc/initramfs-tools/initramfs.conf
+
 # Install packages
 apt-get install --yes --no-install-recommends discover \
                                               laptop-detect \
@@ -159,6 +165,14 @@ fi
 # maintainer's version.
 #
 apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install --yes slim
+
+# Prevent "initramfs unpacking failed: Decoding failed" message on Ubuntu 19.10
+# and Ubuntu 20.04 systems [1] [2]. Using gzip means supposedly slower boot
+# than lz4 compression, but it's a worthwhile trade-off to prevent any 
+# non-technical end-users from seeing an error message.
+# [1] https://bugs.launchpad.net/ubuntu/+source/ubuntu-meta/+bug/1870260
+# [2] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1835660
+sed --in-place s/COMPRESS=lz4/COMPRESS=gzip/g /etc/initramfs-tools/initramfs.conf
 
 # Create empty config file for the network-manager service to manage all
 # network devices. This is required for nm-applet to display network devices,
