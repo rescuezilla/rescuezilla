@@ -241,7 +241,6 @@ if [[ $? -ne 0 ]]; then
     echo "Error: Failed to copy ISOLINUX files."
     exit 1
 fi
-cp /boot/memtest86+.bin image/install/memtest
 
 # Create manifest
 chroot chroot dpkg-query -W --showformat='${Package} ${Version}\n' > image/casper/filesystem.manifest
