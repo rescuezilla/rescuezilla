@@ -14,7 +14,7 @@ sudo apt-get update
 # The AMD64 version of Rescuezilla is based on Ubuntu 20.04 Focal, so you may find you need a more
 # recent version of debootstrap (from the backports repository) to bootstrap a Focal environment.
 sudo apt-get install git-lfs git make rsync sudo debootstrap isolinux syslinux syslinux-utils \
-                     squashfs-tools genisoimage memtest86+ gettext
+                     squashfs-tools genisoimage gettext
 git lfs clone https://github.com/rescuezilla/rescuezilla
 cd rescuezilla/
 # sudo privileges required for the chroot bind mount

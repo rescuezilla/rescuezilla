@@ -35,7 +35,7 @@ RUN apt-get update
 
 RUN apt-get install --yes \
                           # Install required dependencies for the build
-                          make rsync sudo debootstrap isolinux syslinux syslinux-utils squashfs-tools genisoimage memtest86+ git gettext \
+                          make rsync sudo debootstrap isolinux syslinux syslinux-utils squashfs-tools genisoimage git gettext \
                           # Install optional dependencies for quality-of-life when debugging
                           tmux vim
 
