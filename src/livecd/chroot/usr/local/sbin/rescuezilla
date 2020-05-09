@@ -33,6 +33,11 @@ use locale;
 use utf8;
 use Method::Signatures::Simple;
 use String::ShellQuote;
+use Capture::Tiny ':all';
+
+# Ensures standard input/output handled with UTF-8 encoding
+binmode(STDOUT, ":utf8");
+binmode(STDERR, ":utf8");
 
 # Load translation
 use constant TRANSLATION_DIR => "/usr/share/rescuezilla/translations-rescuezilla/";
@@ -278,9 +283,22 @@ sub backup_step {
       $status{'mount_domain'} = $builder->get_object('backup_dest_domain')->get_text();
       $status{'mount_version'} = $builder->get_object('backup_dest_version')->get_text();
     }
-    my $mount_ok = mount_data();
+    my $mount_ok = 0;
+    my $mount_cmd = "";
+    my $mount_stderr_msg = "";
+    ($mount_ok, $mount_cmd, $mount_stderr_msg) = &mount_data();
     if ($mount_ok==0) {
-      message_box(loc("Could not access the destination drive. If the device is shared on a network, ensure that the username and password you provided are correct and try again."));
+      my $failed_to_access_drive_msg =  loc("Could not access the destination drive:\n\n%1", $mount_stderr_msg);
+      # The error message printed by the mount command provides a more descriptive explanation about why the network mount failed
+      # (eg, could not resolve address for XYZ), but is sometimes only available in English. Also network mounts configured by technical users
+      # may be used by non-technical users.
+      my $check_username_password_msg =  loc("Please ensure the username, password and other fields provided are correct, and try again.");
+      my $internal_mount_cmd_msg =  loc("The mount command used internally was: `%1`", $mount_cmd);
+      if (($status{'mount_type'} =~ /SMB/) or ($status{'mount_type'} =~ /FTP/)) {
+        message_box("$failed_to_access_drive_msg\n\n$check_username_password_msg\n\n$internal_mount_cmd_msg");
+      } else {
+        message_box("$failed_to_access_drive_msg");
+      }
       $step = $builder->get_object('backup_tabs')->set_current_page(2);
       set_subtitle($BACKUP_STEPS[2]);
     } else  {
@@ -707,9 +725,24 @@ sub restore_step {
       $status{'mount_domain'} = $builder->get_object('restore_source_domain')->get_text();
       $status{'mount_version'} = $builder->get_object('restore_source_version')->get_text();
     }
-    my $mount_ok = mount_data();
+    my $mount_ok = 0;
+    my $mount_cmd = "";
+    my $mount_stderr_msg = "";
+    ($mount_ok, $mount_cmd, $mount_stderr_msg) = &mount_data();
     if ($mount_ok==0) {
-      message_box(loc("Could not access the source drive. If the device is shared on a network, ensure that the username and password you provided are correct and try again."));
+      my $failed_to_access_drive_msg =  loc("Could not access the source drive:\n\n%1", $mount_stderr_msg);
+      # The error message printed by the mount command provides a more descriptive explanation about why the network mount failed
+      # (eg, could not resolve address for XYZ), but is sometimes only available in English. Also network mounts configured by technical users
+      # may be used by non-technical users.
+      my $check_username_password_msg =  loc("Please ensure the username, password and other fields provided are correct, and try again.");
+      my $internal_mount_cmd_msg =  loc("The mount command used internally was: `%1`", $mount_cmd);
+      if (($status{'mount_type'} =~ /SMB/) or ($status{'mount_type'} =~ /FTP/)) {
+        # Display error message for network mount type (SMB/CIFS, FTP)
+        message_box("$failed_to_access_drive_msg\n\n$check_username_password_msg\n\n$internal_mount_cmd_msg");
+      } else {
+        # Display error message for directly connected hard drive
+        message_box("$failed_to_access_drive_msg");
+      }
       $step = $builder->get_object('restore_tabs')->set_current_page(0);
       set_subtitle($RESTORE_STEPS[0]);
     } else  {
@@ -1392,19 +1425,31 @@ sub which_backup_tool {
 }
 
 sub mount_data {
+  # Mounts the specified local disk, SMB/CIFS server or FTP server
+  # TODO: Overhaul this application to remove use of global variables to share state. (https://github.com/rescuezilla/rescuezilla/issues/49)
+  # Returns: mount status, the mount command which was used last, and the stderr string of that command.
+
   # Mount the data device that backup images are stored on
   our %shares;
   our %status;
   system("mkdir -p ".MOUNT_POINT);
   umount_warn_on_busy(MOUNT_POINT);
   our $builder;
+
+  my $mount_cmd = "";
+  my $mount_stdout = "";
+  my $mount_stderr = "";
+  my $mount_retcode = 0;
   for ($status{'mount_type'}) {
     if (/DEV/) {
       # Mount a regular drive
       my $retcode;
       $status{'mount_source'} =~ s/\|//g;
-      print "* ".loc("Executing: ")."mount /dev/$status{'mount_source'} ".MOUNT_POINT."\n";
-      $retcode = system( "mount \Q/dev/$status{'mount_source'}\E ".MOUNT_POINT);
+      my $quoted_mount_source = shell_quote("/dev/$status{'mount_source'}");
+      $mount_cmd = "mount $quoted_mount_source ".MOUNT_POINT;
+      print "* ".loc("Executing: ")."$mount_cmd\n";
+      ($mount_stdout, $mount_stderr, $mount_retcode) = capture { system($mount_cmd); };
+      print("stdout: $mount_stdout\nstderr: $mount_stderr\n");
       if ($retcode != 0) {
        my $mount;
        my $mp = MOUNT_POINT;
@@ -1412,8 +1457,11 @@ sub mount_data {
        chomp $mount;
        $mount = (split( / /, $mount))[1];
        if ($mount) {
-          print "* Executing: mount --bind \Q${mount}\E ".MOUNT_POINT."\n";
-         system             "mount --bind \Q${mount}\E ".MOUNT_POINT;
+         $quoted_mount_source = shell_quote($mount);
+         $mount_cmd = "mount $quoted_mount_source ".MOUNT_POINT;
+         print "* ".loc("Executing: ")."$mount_cmd\n";
+         ($mount_stdout, $mount_stderr, $mount_retcode) = capture { system($mount_cmd); };
+         print("stdout: $mount_stdout\nstderr: $mount_stderr\n");
        }
       }
     } elsif (/SMB/) {
@@ -1442,9 +1490,10 @@ sub mount_data {
       if ($status{'mount_domain'} ne '') { $smb_args = "$smb_args,domain=".$status{'mount_domain'}; }
       if ($status{'mount_version'} ne '') { $smb_args = "$smb_args,vers=".$status{'mount_version'}; }
       my $quoted_mount_source = shell_quote($status{'mount_source'});
-      my $cifs_mount = "mount.cifs $quoted_mount_source ".MOUNT_POINT." -o $smb_args";
-      print "* ".loc("Executing: ").$cifs_mount."\n";
-      system($cifs_mount);
+      $mount_cmd = "mount.cifs $quoted_mount_source ".MOUNT_POINT." -o $smb_args";
+      print "* ".loc("Executing: ").$mount_cmd."\n";
+      ($mount_stdout, $mount_stderr, $mount_retcode) = capture { system($mount_cmd); };
+      print("stdout: $mount_stdout\nstderr: $mount_stderr\n");
       if ($credential_tmp_file ne '') { system(("shred", "-u",  $credential_tmp_file));}
     } elsif (/FTP/) {
       # Mount an FTP server
@@ -1452,15 +1501,18 @@ sub mount_data {
       if ($status{'mount_user'} ne '') { $ftpargs = "-o user='".$status{'mount_user'}."'"; }
       if ($status{'mount_pass'} ne '') { $ftpargs .= ":'".$status{'mount_pass'}."'"; }
       my $quoted_mount_source = shell_quote($status{'mount_source'});
-      system("curlftpfs $quoted_mount_source ".MOUNT_POINT." $ftpargs");
-      print "* ".loc("Executing: ")."curlftpfs $status{'mount_source'} ".MOUNT_POINT." <redacted>\n";
+      # FTP mount command without username/password
+      $mount_cmd = "curlftpfs $quoted_mount_source ".MOUNT_POINT;
+      ($mount_stdout, $mount_stderr) = capture { system($mount_cmd." $ftpargs"); };
+      print("stdout: $mount_stdout\nstderr: $mount_stderr\n");
+      print "* ".loc("Executing: ")."$mount_cmd <username/password arguments redacted> \n";
     } else {
       fatal_crash(loc("The device type '%1' is not valid.  Did you forget to select a backup location?",$status{'mount_type'}));
     }
   }
   my $mp = MOUNT_POINT;
   my $mounted = `mount | grep '$mp' | wc -l`;
-  return $mounted;
+  return ($mounted, $mount_cmd, $mount_stderr);
 }
 
 sub umount_partition {
