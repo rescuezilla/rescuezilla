@@ -392,7 +392,9 @@ sub do_backup {
   system($sfdisk_cmd);
   my $ptab = `cat $quoted_sfdisk_file`;
   print("Saved partition table: $ptab\n");
-  die "fdisk units must be sectors.\n" unless (fdisk_units($ptab) eq 'sectors');
+  # This error is unlikely to ever occur on the Rescuezilla ISO image, but may occur if a user runs the frontend on misconfigured environments.
+  my $fdisk_units_wrong_msg = loc("Partition table output malformed: fdisk units must be sectors. Are all pre-requisites correctly installed?");
+  fatal_crash($fdisk_units_wrong_msg) unless (fdisk_units($ptab) eq 'sectors');
   print "\t* ".loc("MBR and partition table of %1 saved to %2",$src_drive,$dest)."\n";
   # Save size of source drive in blocks
   my $blockdev_cmd = "/sbin/blockdev --getsize64 '$src_drive'";
@@ -403,7 +405,9 @@ sub do_backup {
   # Get the byte offset of the end of the last partition selected
   my $ptab_bytes = max(values(%{partends($ptab)}));
   print "partition table reports drive size $ptab_bytes\n";
-  die "blockdev reports smaller drive size $bytes than determined from partition table $ptab_bytes\n" unless $bytes >= $ptab_bytes;
+  # This error is unlikely to ever occur on the Rescuezilla ISO image, but may occur if a user runs the frontend on misconfigured environments.
+  my $blockdev_ptab_mismatch_msg = loc("blockdev reports smaller drive size %1 than determined from partition table %2", $bytes, $ptab_bytes);
+  fatal_crash($blockdev_ptab_mismatch_msg) unless $bytes >= $ptab_bytes;
   $bytes = $ptab_bytes;
   my $quoted_filesize_path = shell_quote("$dest/$file.size");
   my $save_filesize_cmd = "echo $bytes > $quoted_filesize_path";
@@ -1350,8 +1354,9 @@ sub save_file {
   # Save a string to the specified file
   my $data = $_[0];
   my $outfile = $_[1];
+  my $failed_to_open_file = loc("Could not open %1 for writing!",$outfile);
   # The open() function does not appear to be processed input through a shell, so no need to use shell_quote().
-  open(OUT, ">$outfile") or die(loc("Could not open %1 for writing!",$outfile)."\n");
+  open(OUT, ">$outfile") or fatal_crash($failed_to_open_file);
   print OUT $data;
   close OUT;
 }
