@@ -71,8 +71,16 @@ msgstr "¡Advertencia! Esta unidad/disco solo tiene %1 MB de espacio libre. Aseg
 msgid "Backup %1 to %2"
 msgstr "Copia de respaldo/seguridad %1 a %2"
 
+#. This error is unlikely to ever occur on the Rescuezilla ISO image, but may occur if a user runs the frontend on misconfigured environments.
+msgid "Partition table output malformed: fdisk units must be sectors. Are all pre-requisites correctly installed?"
+msgstr ""
+
 msgid "MBR and partition table of %1 saved to %2"
 msgstr "MBR y tabla de particiones de%1 guardada en%2"
+
+#. This error is unlikely to ever occur on the Rescuezilla ISO image, but may occur if a user runs the frontend on misconfigured environments.
+msgid "blockdev reports smaller drive size %1 than determined from partition table %2"
+msgstr ""
 
 msgid "Size of %1 (%2 bytes) saved to %3"
 msgstr "Tamaño de %1 (%2 bytes) guardado en %3"
