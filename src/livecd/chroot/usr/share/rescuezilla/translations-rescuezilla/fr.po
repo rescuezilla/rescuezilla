@@ -62,8 +62,17 @@ msgstr "Beaucoup d'autres outils sont disponibles à partir du menu principal ac
 msgid "Backup"
 msgstr "Sauvegarde"
 
-msgid "Could not access the destination drive. If the device is shared on a network, ensure that the username and password you provided are correct and try again."
-msgstr "Impossible d'accéder au disque de destination. Si le périphérique est partagé sur un réseau, assurez-vous que le nom d'utilisateur et le mot de passe sont corrects et essayez à nouveau."
+msgid "Could not access the destination drive:\n\n%1"
+msgstr "Impossible d'accéder au disque de destination.\n\n%1"
+
+#. The error message printed by the mount command provides a more descriptive explanation about why the network mount failed
+#. (eg, could not resolve address for XYZ), but is sometimes only available in English. Also network mounts configured by technical users
+#. may be used by non-technical users.
+msgid "Please ensure the username, password and other fields provided are correct, and try again."
+msgstr "Si le périphérique est partagé sur un réseau, assurez-vous que le nom d'utilisateur et le mot de passe sont corrects et essayez à nouveau."
+
+msgid "The mount command used internally was: `%1`"
+msgstr ""
 
 msgid "Warning! This drive has only %1MB of free space. Make sure your backup will fit."
 msgstr "Attention! Ce disque a seulement %1MB d'espace libre. Assurez-vous que cela sera suffisant pour votre sauvegarde."
@@ -200,8 +209,8 @@ msgstr "Veuillez choisir un autre dossier."
 msgid "Restore"
 msgstr ""
 
-msgid "Could not access the source drive. If the device is shared on a network, ensure that the username and password you provided are correct and try again."
-msgstr "Accès impossible au disque source. Si le périphérique est partagé sur un réseau, assurez-vous que le nom d'utilisateur et le mot de passe sont corrects et essayez à nouveau."
+msgid "Could not access the source drive:\n\n%1"
+msgstr "Accès impossible au disque source."
 
 msgid "Preparing destination drive..."
 msgstr "Préparation du disque de destination..."

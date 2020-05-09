@@ -98,6 +98,7 @@ apt-get install --yes --no-install-recommends discover \
                                               time \
                                               hdparm \
                                               openssh-client \
+                                              libcapture-tiny-perl \
                                               libglib-perl \
                                               libgtk2-perl \
                                               libxml-simple-perl \

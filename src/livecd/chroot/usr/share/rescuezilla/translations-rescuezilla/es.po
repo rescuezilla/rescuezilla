@@ -62,8 +62,17 @@ msgstr "Hay muchas más opciones disponibles desde la esquina inferior izquierda
 msgid "Backup"
 msgstr "Copia de respaldo/seguridad"
 
-msgid "Could not access the destination drive. If the device is shared on a network, ensure that the username and password you provided are correct and try again."
-msgstr "No se pudo acceder a la unidad de destino. Si el dispositivo se comparte en una red, asegúrese de que el nombre de usuario y la contraseña que escribió son correctos eInténtelo de nuevo."
+msgid "Could not access the destination drive:\n\n%1"
+msgstr "No se pudo acceder a la unidad de destino.\n\n%1"
+
+#. The error message printed by the mount command provides a more descriptive explanation about why the network mount failed
+#. (eg, could not resolve address for XYZ), but is sometimes only available in English. Also network mounts configured by technical users
+#. may be used by non-technical users.
+msgid "Please ensure the username, password and other fields provided are correct, and try again."
+msgstr "Si el dispositivo se comparte en una red, asegúrese de que el nombre de usuario y la contraseña que escribió son correctos eInténtelo de nuevo."
+
+msgid "The mount command used internally was: `%1`"
+msgstr ""
 
 msgid "Warning! This drive has only %1MB of free space. Make sure your backup will fit."
 msgstr "¡Advertencia! Esta unidad/disco solo tiene %1 MB de espacio libre. Asegúrese de que su copia de seguridadencajará."
@@ -200,8 +209,8 @@ msgstr "Seleccione por favor un directorio/carpeta diferente."
 msgid "Restore"
 msgstr "Restaurar"
 
-msgid "Could not access the source drive. If the device is shared on a network, ensure that the username and password you provided are correct and try again."
-msgstr "No se pudo acceder a la unidad/disco de origen. Si el dispositivo se comparte en una red,Asegúrese de que el nombre de usuario y la contraseña que escribió son correctos e inténtelo de nuevo."
+msgid "Could not access the source drive:\n\n%1"
+msgstr "No se pudo acceder a la unidad/disco de origen.\n\n%1"
 
 msgid "Preparing destination drive..."
 msgstr "Preparando la unidad/disco de destino..."
