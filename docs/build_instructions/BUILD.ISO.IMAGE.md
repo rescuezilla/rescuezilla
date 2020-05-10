@@ -6,7 +6,7 @@ Note: [You can download the latest Rescuezilla ISO image here](https://github.co
 
 An Ubuntu 18.04, or similar Ubuntu-package environment capable of running debootstrap, chroot and bind mounts is currently required. A single `make` command can generate an AMD64 ISO image and an i386 image, which are capable of booting from USB sticks, CD, DVD and any EFI firmware, including with EFI Secure Boot switched on.
 
-Unfortunately, building on Debian and other non Ubuntu-package environments will not work properly, as Debian's package repositories contain different versions of key packages which happen to only trust Debian certificates, namely the Microsoft-signed EFI shim (`shim-signed`), and the Debian-signed GRUB bootloader (`grub-efi-amd64-signed`). This means that when Secure Boot is enabled, an EFI boot will fail to authenticate Rescuezilla's Canonical-signed kernel images leaving the developer in GRUB Rescue Mode. Fortunately, developers who use any distribution which does not use Canonical's Ubuntu packages (such as Debian) are able to easily construct the ideal Ubuntu-based build environment by following the "Build _with_ docker" instructions on this page. This restriction will be reduced with task [#59](https://github.com/rescuezilla/rescuezilla/issues/59).
+Unfortunately, building on Debian and other non Ubuntu-package environments will not work properly, as Debian's package repositories contain different versions of key packages which happen to only trust Debian certificates, namely the Debian-signed GRUB bootloader (`grub-efi-amd64-signed`) which is launched by the Microsoft-signed EFI shim (`shim-signed`). This means that when Secure Boot is enabled, an EFI boot will fail to authenticate Rescuezilla's Canonical-signed kernel images leaving the developer in GRUB Rescue Mode. Fortunately, developers who use any distribution which does not use Canonical's Ubuntu packages (such as Debian) are able to easily construct the ideal Ubuntu-based build environment by following the "Build _with_ docker" instructions on this page. The requirement for a build environment containing Canonical's Ubuntu packages will be removed with task [#59](https://github.com/rescuezilla/rescuezilla/issues/59).
 
 ### Build without docker
 
@@ -18,11 +18,14 @@ sudo apt-get update
 # recent version of debootstrap (from the backports repository) to bootstrap a Focal environment.
 sudo apt-get install git-lfs git make sudo \
                      rsync debootstrap gettext squashfs-tools dosfstools mtools xorriso \
-                     # GRUB bootloaders used with i386 and AMD64 ISO images to booting using both MBR and EFI
+                     # GRUB bootloader and support modules for booting both MBR and EFI boot
+                     # across CPU architectures. Notably the AMD64 image *legacy boot* uses
+                     # the same 32-bit bootloader as the i386 image.
                      grub-efi-amd64-bin grub-efi-ia32-bin grub-pc-bin \
-                     # The Microsoft-signed EFI shim and Canonical-signed GRUB binaries need to contain
-                     # Canonical certificates, not Debian certificates (see "Background" section above)
-                     shim-signed  grub-efi-amd64-signed
+                     # For Secure Boot, the GRUB binaries need to trust Canonical
+                     # signatures, not Debian signatures, as GRUB needs to verify the
+                     # Canonical-signed Linux kernel (see "Background" section above).
+                     shim-signed grub-efi-amd64-signed
 
 git lfs clone https://github.com/rescuezilla/rescuezilla
 cd rescuezilla/
