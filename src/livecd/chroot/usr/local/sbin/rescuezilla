@@ -398,18 +398,35 @@ sub do_backup {
   my $enduser_drive_number = get_enduser_drive_number($src);
   my ($base_device, $partition_number) = split_device_string($src);
   my $src_drive = "/dev/$base_device";
-  # Save MBR, as well as the bytes containing the GRUB stage 1.5 boot loader
-  my $quoted_mbr_file = shell_quote("$dest/$file.mbr");
-  my $dd_cmd = "dd if='$src_drive' of=$quoted_mbr_file bs=32768 count=1";
-  print("Saving Master Boot Record (MBR) and any GRUB stage 1.5 loader: $dd_cmd\n");
-  system($dd_cmd);
   # Save partition table
   my $quoted_sfdisk_file = shell_quote("$dest/$file.sfdisk");
-  my $sfdisk_cmd = "sfdisk -d '$src_drive' > $quoted_sfdisk_file";
+  # Backup partition table. Works whether MBR-formatted or GPT-formatted disk.
+  # TODO: Evaluate use of sgdisk, which my be more appropriate for robust GPT backup/restore
+  my $sfdisk_cmd = "sfdisk --reorder --dump '$src_drive' > $quoted_sfdisk_file";
   print("Saving partition table: $sfdisk_cmd\n");
   system($sfdisk_cmd);
   my $ptab = `cat $quoted_sfdisk_file`;
   print("Saved partition table: $ptab\n");
+  # Extract the number sectors until first partition (sfdisk seems to report 512 byte sectors even on 4K sector disks)
+  # On MBR only disks, this is the "post-MBR gap" which contains GRUB2's core.img (known as stage 1.5 on GRUB legacy).
+  my $partition1_sector_offset = `grep 'start=' $quoted_sfdisk_file | head --lines 1 | sed 's_.*start=[[:space:]]*__g' | sed 's_,.*__g'`;
+  $partition1_sector_offset = trim($partition1_sector_offset);
+  # Sanity check that the regex and calculation did not fail.
+  if (("$partition1_sector_offset" cmp "") == 0) {
+     print("Warning: Unable to calculate offset to first partition.\n");
+     # If the calculation did fail for some reason continue to proceed, but assuming large 1MiB post-MBR gap alignment.
+     $partition1_sector_offset=2048;
+  }
+  # Want all sectors from start of disk until the sector before the first partition.
+  my $num_sectors_to_partition1=$partition1_sector_offset - 1;
+  my $quoted_mbr_file = shell_quote("$dest/$file.mbr");
+  # Copy all bytes before the first partition. This gets the MBR, Primary GPT (if any) and on MBR systems ensures 
+  # the post-MBR gap is fully backed up (which often contains GRUB2 core.img bootloader or GRUB Legacy stage 1.5 bootloader).
+  # For whatever reason, the Sector number calculated by sfdisk is always in terms of 512 byte sectors even on 4K sector disks.
+  my $dd_cmd = "dd if='$src_drive' of=$quoted_mbr_file bs=512 count=$num_sectors_to_partition1";
+  print("Saving Master Boot Record (MBR) and any GRUB stage 1.5 loader: $dd_cmd\n");
+  system($dd_cmd);
+
   # This error is unlikely to ever occur on the Rescuezilla ISO image, but may occur if a user runs the frontend on misconfigured environments.
   my $fdisk_units_wrong_msg = loc("Partition table output malformed: fdisk units must be sectors. Are all pre-requisites correctly installed?");
   fatal_crash($fdisk_units_wrong_msg) unless (fdisk_units($ptab) eq 'sectors');
@@ -941,7 +958,8 @@ sub do_restore {
   print "*** ".loc("Writing MBR to %1",$dest_drive)."\n";
   set_status(loc("Writing master boot record to destination drive..."));
   my $quoted_src_mbr = shell_quote($src_mbr);
-  system("dd of='/dev/$dest_drive' if=$quoted_src_mbr bs=32768 count=1; sync;");
+  # Restore MBR, primary GPT, and alignment gap (which on MBR systems is the post-MBR gap containing the GRUB2 core.img)
+  system("dd if=$quoted_src_mbr of='/dev/$dest_drive' bs=512; sync;");
   sleep(0.5);  
   print "*** ".loc("Restoring partition table to %1",$dest_drive)."\n";
   set_status(loc("Writing extended partition table to destination drive..."));
