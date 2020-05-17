@@ -35,6 +35,10 @@ else
 fi
 mv $APT_SOURCES_CHECKSUM /var/lib/apt/lists/apt.sources.checksum.txt
 
+# Clean out local repository of retrieved packages which "no longer be downloaded, and are largely useless."
+# "This allows a cache to be maintained over a long period without it growing out of control."
+apt-get autoclean
+
 mkdir /var/lib/dbus
 apt-get install --yes --no-install-recommends dbus
 dbus-uuidgen > /var/lib/dbus/machine-id
@@ -52,107 +56,138 @@ apt-get upgrade --yes
 # modification of initramfs.conf and the reason for the modification.
 sed --in-place s/COMPRESS=gzip/COMPRESS=lz4/g /etc/initramfs-tools/initramfs.conf
 
-# Install packages
-apt-get install --yes --no-install-recommends discover \
-                                              laptop-detect \
-                                              os-prober \
-                                              linux-generic-hwe-18.04 \
-                                              casper \
-                                              lupin-casper \
-                                              xinit \
-                                              openbox \
-                                              xserver-xorg-hwe-18.04 \
-                                              xserver-xorg-video-all-hwe-18.04 \
-                                              xserver-xorg-video-intel-hwe-18.04 \
-                                              xserver-xorg-video-qxl-hwe-18.04 \
-                                              x11-xserver-utils \
-                                              xterm \
-                                              network-manager-gnome \
-                                              plymouth-x11 \
-                                              plymouth-label \
-                                              plymouth-theme-ubuntu-logo \
-                                              pcmanfm \
-                                              gvfs \
-                                              firefox \
-                                              firefox-locale-fr \
-                                              firefox-locale-de \
-                                              firefox-locale-es \
-                                              bluebird-gtk-theme \
-                                              gnome-icon-theme \
-                                              gnome-brave-icon-theme \
-                                              dmz-cursor-theme \
-                                              yad \
-                                              gpicview \
-                                              mousepad \
-                                              lxmenu-data \
-                                              arandr \
-                                              lxterminal \
-                                              lxpanel \
-                                              ttf-ubuntu-font-family \
-                                              alsamixergui \
-                                              volumeicon-alsa \
-                                              pm-utils \
-                                              libnotify-bin \
-                                              notify-osd \
-                                              notify-osd-icons \
-                                              time \
-                                              hdparm \
-                                              openssh-client \
-                                              libcapture-tiny-perl \
-                                              libfile-tee-perl \
-                                              libglib-perl \
-                                              libgtk2-perl \
-                                              libxml-simple-perl \
-                                              libsys-cpu-perl \
-                                              liblocale-maketext-lexicon-perl \
-                                              libmethod-signatures-simple-perl \
-                                              libstring-shellquote-perl \
-                                              pigz \
-                                              gtk2-engines-pixbuf \
-                                              beep \
-                                              rsync \
-                                              smartmontools \
-                                              gnome-disk-utility \
-                                              policykit-1-gnome \
-                                              policykit-desktop-privileges \
-                                              baobab \
-                                              gsettings-desktop-schemas \
-                                              gparted \
-                                              lshw-gtk \
-                                              testdisk \
-                                              gddrescue \
-                                              usb-creator-gtk \
-                                              wodim \
-                                              curlftpfs \
-                                              nmap \
-                                              cifs-utils \
-                                              libnotify-bin \
-                                              cryptsetup \
-                                              reiserfsprogs \
-                                              dosfstools \
-                                              ntfs-3g \
-                                              hfsutils \
-                                              reiser4progs \
-                                              jfsutils \
-                                              smbclient \
-                                              wget \
-                                              fsarchiver \
-                                              partclone \
-                                              exfat-fuse \
-                                              exfat-utils \
-                                              btrfs-progs \
-                                              udisks2-btrfs \
-                                              hfsplus \
-                                              hfsprogs \
-                                              f2fs-tools \
-                                              lvm2 \
-                                              xfsdump \
-                                              xfsprogs \
-                                              udftools \
-                                              language-pack-gnome-fr-base \
-                                              language-pack-gnome-de-base \
-                                              language-pack-gnome-es-base
+# Packages specific to Rescuezilla 32-bit build (currently based Ubuntu 18.04 Bionic)
+# Hardware Enablement (HWE, also called LTS Enablement Stack) [1] [2]
+# https://wiki.ubuntu.com/Kernel/LTSEnablementStack
+# https://ubuntu.com/about/release-cycle
+pkgs_specific_to_32bit=("linux-generic-hwe-18.04"
+                        "xserver-xorg-hwe-18.04"
+                        "xserver-xorg-video-all-hwe-18.04"
+                        "xserver-xorg-video-intel-hwe-18.04"
+                        "xserver-xorg-video-qxl-hwe-18.04"
+)
 
+# Packages specific to Rescuezilla 64-bit build (currently based Ubuntu 20.04 Focal)
+# TODO: Switch to Hardware Enablement (HWE, also called LTS Enablement Stack) [1] [2]
+#       when it is released.
+# https://wiki.ubuntu.com/Kernel/LTSEnablementStack
+# https://ubuntu.com/about/release-cycle
+pkgs_specific_to_64bit=("linux-generic-hwe-18.04"
+                        "xserver-xorg-hwe-18.04"
+                        "xserver-xorg-video-all-hwe-18.04"
+                        "xserver-xorg-video-intel-hwe-18.04"
+                        "xserver-xorg-video-qxl-hwe-18.04"
+)
+
+# Packages common to both  32-bit and 64-bit build
+# TODO: Documentation each package with why these particular packages are present,
+# TODO: and what they do.
+common_pkgs=("discover"
+             "laptop-detect"
+             "os-prober"
+             "casper"
+             "lupin-casper"
+             "xinit"
+             "openbox"
+             "x11-xserver-utils"
+             "xterm"
+             "network-manager-gnome"
+             "plymouth-x11"
+             "plymouth-label"
+             "plymouth-theme-ubuntu-logo"
+             "pcmanfm"
+             "gvfs"
+             "firefox"
+             "firefox-locale-fr"
+             "firefox-locale-de"
+             "firefox-locale-es"
+             "bluebird-gtk-theme"
+             "gnome-icon-theme"
+             "gnome-brave-icon-theme"
+             "dmz-cursor-theme"
+             "yad"
+             "gpicview"
+             "mousepad"
+             "lxmenu-data"
+             "arandr"
+             "lxterminal"
+             "lxpanel"
+             "ttf-ubuntu-font-family"
+             "alsamixergui"
+             "volumeicon-alsa"
+             "pm-utils"
+             "libnotify-bin"
+             "notify-osd"
+             "notify-osd-icons"
+             "time"
+             "hdparm"
+             "openssh-client"
+             "libcapture-tiny-perl"
+             "libfile-tee-perl"
+             "libglib-perl"
+             "libgtk2-perl"
+             "libxml-simple-perl"
+             "libsys-cpu-perl"
+             "liblocale-maketext-lexicon-perl"
+             "libmethod-signatures-simple-perl"
+             "libstring-shellquote-perl"
+             "pigz"
+             "gtk2-engines-pixbuf"
+             "beep"
+             "rsync"
+             "smartmontools"
+             "gnome-disk-utility"
+             "policykit-1-gnome"
+             "policykit-desktop-privileges"
+             "baobab"
+             "gsettings-desktop-schemas"
+             "gparted"
+             "lshw-gtk"
+             "testdisk"
+             "gddrescue"
+             "usb-creator-gtk"
+             "wodim"
+             "curlftpfs"
+             "nmap"
+             "cifs-utils"
+             "libnotify-bin"
+             "cryptsetup"
+             "reiserfsprogs"
+             "dosfstools"
+             "ntfs-3g"
+             "hfsutils"
+             "reiser4progs"
+             "jfsutils"
+             "smbclient"
+             "wget"
+             "fsarchiver"
+             "partclone"
+             "exfat-fuse"
+             "exfat-utils"
+             "btrfs-progs"
+             "udisks2-btrfs"
+             "hfsplus"
+             "hfsprogs"
+             "f2fs-tools"
+             "lvm2"
+             "xfsdump"
+             "xfsprogs"
+             "udftools"
+             "language-pack-gnome-fr-base"
+             "language-pack-gnome-de-base"
+             "language-pack-gnome-es-base"
+)
+
+if  [ "$ARCH" == "i386" ]; then
+  apt_pkg_list=("${pkgs_specific_to_32bit[@]}" "${common_pkgs[@]}")
+elif  [ "$ARCH" == "amd64" ]; then
+  apt_pkg_list=("${pkgs_specific_to_64bit[@]}" "${common_pkgs[@]}")
+else
+  echo "Warning: unknown register width $ARCH"
+  exit 1
+fi
+
+apt-get install --yes --no-install-recommends "${apt_pkg_list[@]}"
 if [[ $? -ne 0 ]]; then
     echo "Error: Failed to install packages."
     exit 1
@@ -179,7 +214,7 @@ sed --in-place s/COMPRESS=lz4/COMPRESS=gzip/g /etc/initramfs-tools/initramfs.con
 # Create empty config file for the network-manager service to manage all
 # network devices. This is required for nm-applet to display network devices,
 # and avoid it displaying a "device not managed" error. [1]
-#                                              
+#
 # [1] https://askubuntu.com/a/893614/394984
 touch /etc/NetworkManager/conf.d/10-globally-managed-devices.conf
 
