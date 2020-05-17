@@ -34,10 +34,24 @@ use utf8;
 use Method::Signatures::Simple;
 use String::ShellQuote;
 use Capture::Tiny ':all';
+use File::Tee qw(tee);
 
 # Ensures standard input/output handled with UTF-8 encoding
 binmode(STDOUT, ":utf8");
 binmode(STDERR, ":utf8");
+
+my $log_date=`date '+%Y%m%dT%H%M%S'`;
+chomp($log_date);
+my $log_filename="rescuezilla.log.$log_date.txt";
+my $quoted_tmp_log_path = shell_quote("/tmp/$log_filename");
+# Ensure STDERR autoflushes buffer, to workaround supposed Perl File::Tee bug: https://rt.cpan.org/Public/Bug/Display.html?id=128168
+STDOUT->autoflush(1);
+STDERR->autoflush(1);
+# Ensures all output automatically written to temp log file, as well as STDOUT/STDERR. This particular
+# file does not persist between reboots (and Rescuezilla normally runs in a non-persistent environment),
+# but it forms the basis of the log placed in the backup destination directory.
+tee(STDOUT, { prefix => 'STDOUT: ', autoflush => 1, lock => 1, mode => '>>', open => $quoted_tmp_log_path });
+tee(STDERR, { prefix => 'STDERR: ', autoflush => 1, lock => 1, mode => '>>', open => $quoted_tmp_log_path });
 
 # Load translation
 use constant TRANSLATION_DIR => "/usr/share/rescuezilla/translations-rescuezilla/";
@@ -389,12 +403,21 @@ sub do_backup {
   our %drives;
   our %status;
   our $builder;
+  # TODO: Overhaul this application to remove use of global variables to share state.
+  our $tee_stdout_pid;
+  our $tee_stderr_pid;
   $builder->get_object('backup_progress')->set_sensitive(TRUE);
   # Get partition selections and output folder
   my $src = $status{'backup_drive'};
   my $dest = MOUNT_POINT.$builder->get_object('backup_folder')->get_text();
   # Remove trailing forward slash (if any)
   $dest =~ s/\/$//;
+  # Ensure log file persists between reboots by copying the temp log file into backup destination
+  # and continue logging stdout/stderr.
+  my $quoted_destination_log_path = shell_quote("$dest/$log_filename");
+  system("cp $quoted_tmp_log_path $quoted_destination_log_path");
+  $tee_stdout_pid = tee(STDOUT, { prefix => 'STDOUT: ', autoflush => 1, lock => 1, mode => '>>', open => $quoted_destination_log_path });
+  $tee_stderr_pid = tee(STDERR, { prefix => 'STDERR: ', autoflush => 1, lock => 1, mode => '>>', open => $quoted_destination_log_path });
   print "*** ".loc("Backup %1 to %2",$src, $dest)." ***\n\n";
   my $file = $builder->get_object('backup_name')->get_text();
   my $enduser_drive_number = get_enduser_drive_number($src);
@@ -489,6 +512,9 @@ sub update_backup_progress {
   our %drives;
   our %status;
   our $builder;
+  # TODO: Overhaul this application to remove use of global variables to share state.
+  our $tee_stdout_pid;
+  our $tee_stderr_pid;
   my $progress_bar = $builder->get_object('backup_progress');
   my $data = undef;
   our $i;
@@ -642,6 +668,16 @@ sub update_backup_progress {
         $msg = loc("Backup saved successfully.");
         system("notify-send -i ".APP_ICON." '${msg}'");
         print ">>> Operation complete.\n";
+        print("Stopping logging so that destination directory can be unmounted\n");
+        system("sync");
+        # FIXME: Appears to close the entire STDERR/STDOUT streams (which are used for more logs than just this one file).
+        # FIXME: This is sufficient for now as exits after backup complete so nothing further to log.
+        # FIXME: Need to understand the exact reasons and fix the File::Tee library if required.
+        my $cnt = kill('HUP', $tee_stdout_pid, $tee_stderr_pid);
+        if ($cnt != 2) {
+          print("Failed to stop logging in destination directory. Killing destination log.\n");
+          kill('KILL', $tee_stdout_pid, $tee_stderr_pid);
+        }
         umount_warn_on_busy(MOUNT_POINT);
         return 0;
       } else {
@@ -1469,7 +1505,7 @@ sub mount_data {
       $mount_cmd = "mount $quoted_mount_source ".MOUNT_POINT;
       print "* ".loc("Executing: ")."$mount_cmd\n";
       ($mount_stdout, $mount_stderr, $mount_retcode) = capture { system($mount_cmd); };
-      print("stdout: $mount_stdout\nstderr: $mount_stderr\n");
+      print("mount command stdout: $mount_stdout\nmount command stderr: $mount_stderr\n");
       if ($retcode != 0) {
        my $mount;
        my $mp = MOUNT_POINT;

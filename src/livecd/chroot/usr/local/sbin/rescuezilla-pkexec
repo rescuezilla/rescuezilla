@@ -1,5 +1,8 @@
 #!/bin/sh
 NAME=rescuezilla
+# Launches Rescuezilla with root permissions (via PolKit configuration), and writes
+# out a log file into a desktop directory. This log file is to help advanced users
+# of the Rescuezilla (non-persistent) live environment quickly troubleshoot.
 LOG_DATE=$(date +%Y%m%dT%H%M%S)
 LOG_DIR="/home/ubuntu/Desktop/$NAME.logs"
 mkdir "$LOG_DIR"
