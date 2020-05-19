@@ -1943,17 +1943,21 @@ sub find_local_partitions {
     }
     # Identify any operating systems
     refresh_window();
+    # os-prober produces output in the form: (may vary on EFI vs non-EFI)
+    # /dev/nvme0n1p1@/EFI/Microsoft/Boot/bootmgfw.efi:Windows Boot Manager:Windows:efi
+    # TODO: Overhaul application and add unit tests
     my $oslist = `os-prober`;
+    print("os-prober output:\n$oslist\n");
     chomp($oslist);
     if ($oslist ne "") {
       my @list = split(/\n/, $oslist);
       foreach my $line (@list) {
         my ($os_part, $os_name, $os_type, $os_loader) = split(/:/, $line);
-        my $dev = $os_part;
-        my $enduser_drive_number = get_enduser_drive_number($os_part);
-        my ($base_device, $partition_number) = split_device_string($os_part);
-        $dev =~ s/\d|\/dev\///g;
-        if ($os_name ne '') {
+        my ($device_node, $efi_bootloader) = split(/@/, $os_part);
+        # Remove leading "/dev/"
+        $device_node =~ s/^\/dev\///g;
+        my ($dev, $partition_number) = split_device_string($device_node);
+        if ($dev ne '') {
           $drives{$dev}{'parts'}{$partition_number}{'os'} = $os_name;
         }
       }
