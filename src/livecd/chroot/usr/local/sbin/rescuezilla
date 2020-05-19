@@ -1812,6 +1812,9 @@ sub find_local_drives {
   # Set the list of local drives, (only SCSI and USB drives)
   our %drives;
   my $drivelist = `fsarchiver probe 2>&1`;
+  # For debug purposes, print the fsarchiver probe output.
+  # TODO: Overhaul text processing to with clear, unit tested functions
+  print("fsarchiver probe output:\n$drivelist\n");
   chomp($drivelist);
   if ($drivelist eq "") {
     return FALSE;
@@ -1860,6 +1863,9 @@ sub find_local_partitions {
   our %drives;
   set_busy(loc("Identifying disk drives..."));
   my $partlist = `fsarchiver probe 2>&1`;
+  # For debug purposes, print the fsarchiver probe output.
+  # TODO: Overhaul text processing to with clear, unit tested functions
+  print("fsarchiver probe output:\n$partlist\n");
   chomp($partlist);
   if ($partlist =~ m/Failed to detect disks and filesystems/) {
     return FALSE;
