@@ -213,7 +213,9 @@ sub main {
   chomp($register_width);
   my $commit_date = COMMIT_DATE;
   chomp($commit_date);
-  set_status("Version $ver ($register_width $arch) $commit_date");
+  my $human_readable_version = "$ver ($register_width $arch) $commit_date";
+  set_status("Version $human_readable_version");
+  print("Rescuezilla version is $human_readable_version\n");
   $window->maximize();
   $window->show();
   my $mode = '';
