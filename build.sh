@@ -141,6 +141,14 @@ cd "$BASEDIR"
 # The only exception the apt package manager configuration files which have already been copied above.
 rsync --archive --exclude "chroot/etc/apt" src/livecd/ "$BUILD_DIRECTORY"
 
+# Copy the FHS tree of each application into the build directory.
+rsync --archive "src/apps/rescuezilla/rescuezilla/" "$BUILD_DIRECTORY/chroot/"
+# Note: drivereset is currently unmaintained and de-emphasized so needs to be re-evaluated and overhauled.
+rsync --archive "src/apps/drivereset/drivereset/" "$BUILD_DIRECTORY/chroot/"
+rsync --archive "src/apps/graphical-shutdown/graphical-shutdown/" "$BUILD_DIRECTORY/chroot/"
+# Create Rescuezilla desktop icon
+ln -s /usr/share/applications/rescuezilla.desktop "$BUILD_DIRECTORY/chroot/home/ubuntu/Desktop/rescuezilla.desktop"
+
 LANG_CODES=(
     "fr"
     "de"
