@@ -1499,14 +1499,13 @@ sub mount_data {
   for ($status{'mount_type'}) {
     if (/DEV/) {
       # Mount a regular drive
-      my $retcode;
       $status{'mount_source'} =~ s/\|//g;
       my $quoted_mount_source = shell_quote("/dev/$status{'mount_source'}");
       $mount_cmd = "mount $quoted_mount_source ".MOUNT_POINT;
       print "* ".loc("Executing: ")."$mount_cmd\n";
       ($mount_stdout, $mount_stderr, $mount_retcode) = capture { system($mount_cmd); };
       print("mount command stdout: $mount_stdout\nmount command stderr: $mount_stderr\n");
-      if ($retcode != 0) {
+      if ($mount_retcode != 0) {
        my $mount;
        my $mp = MOUNT_POINT;
        $mount = `grep ^\Q/dev/$status{'mount_source'}\E /proc/mounts`;
