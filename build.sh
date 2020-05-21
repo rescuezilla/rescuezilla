@@ -141,43 +141,13 @@ cd "$BASEDIR"
 # The only exception the apt package manager configuration files which have already been copied above.
 rsync --archive --exclude "chroot/etc/apt" src/livecd/ "$BUILD_DIRECTORY"
 
-# Copy the FHS tree of each application into the build directory.
-rsync --archive "src/apps/rescuezilla/rescuezilla/" "$BUILD_DIRECTORY/chroot/"
-# Note: drivereset is currently unmaintained and de-emphasized so needs to be re-evaluated and overhauled.
-rsync --archive "src/apps/drivereset/drivereset/" "$BUILD_DIRECTORY/chroot/"
-rsync --archive "src/apps/graphical-shutdown/graphical-shutdown/" "$BUILD_DIRECTORY/chroot/"
+cp --archive $BUILD_DIRECTORY/../*.deb "$BUILD_DIRECTORY/chroot/"
+if [[ $? -ne 0 ]]; then
+    echo "Error: Failed to copy Rescuezilla deb packages."
+    exit 1
+fi
 # Create Rescuezilla desktop icon
 ln -s /usr/share/applications/rescuezilla.desktop "$BUILD_DIRECTORY/chroot/home/ubuntu/Desktop/rescuezilla.desktop"
-
-LANG_CODES=(
-    "fr"
-    "de"
-    "es"
-)
-for lang in "${LANG_CODES[@]}"; do
-    BASE="$BUILD_DIRECTORY/chroot/usr/share/locale/$lang/LC_MESSAGES/"
-    pushd "$BASE"
-    # Convert *.ko text-based GTK translations into *.mo.
-    APP_NAMES=(
-        "rescuezilla"
-        "drivereset"
-        "graphical-shutdown"
-    )
-    for app_name in "${APP_NAMES[@]}"; do
-        if [[ ! -f "$app_name.ko" ]]; then
-            echo "Warning: $BASE/$app_name.ko translation for $lang does not exist. Skipping."
-        else
-            msgfmt --output-file="$app_name.mo" "$app_name.ko"
-            if [[ $? -ne 0 ]]; then
-                echo "Error: Unable to convert $app_name's $lang translation from text-based ko format to binary mo format."
-                exit 1
-            fi
-            # Remove unused *.ko file
-            rm "$app_name.ko"
-        fi
-    done
-    popd
-done
 
 # Most end-users will not understand the terms i386 and AMD64.
 MEMORY_BUS_WIDTH=""
@@ -190,10 +160,6 @@ else
 fi
 
 SUBSTITUTIONS=(
-    # Rescuezilla perl script
-    "$BUILD_DIRECTORY/chroot/usr/share/rescuezilla/VERSION"
-    "$BUILD_DIRECTORY/chroot/usr/share/rescuezilla/GIT_COMMIT_DATE"
-    "$BUILD_DIRECTORY/chroot/usr/share/rescuezilla/ARCH"
     # GRUB boot menu 
     "$BUILD_DIRECTORY/image/boot/grub/theme/theme.txt"
     # Firefox browser homepage query-string, to be able to provide a "You are using an old version. Please update."

@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := amd64
-.PHONY: all amd64 i386 clean-build-dir clean clean-all
+.PHONY: all amd64 i386 deb clean-build-dir clean clean-all
 
 all: amd64 i386
 
@@ -16,6 +16,14 @@ i386: CODENAME=bionic
 export ARCH CODENAME
 i386: deb $(buildscripts)
 	./build.sh
+
+deb: BASE_BUILD_DIR=$(shell pwd)/build/deb/
+deb:
+	cd src/apps/rescuezilla/ && BUILD_DIR=$(BASE_BUILD_DIR) $(MAKE) && mv $(BASE_BUILD_DIR)/rescuezilla_*.deb  $(BASE_BUILD_DIR)/../
+	# The "drivereset" frontend is currently not maintained and is
+	# de-emphasized until a complete overhaul in future
+	cd src/apps/drivereset/ && BUILD_DIR=$(BASE_BUILD_DIR) $(MAKE) && mv $(BASE_BUILD_DIR)/drivereset_*.deb  $(BASE_BUILD_DIR)/../
+	cd src/apps/graphical-shutdown/ && BUILD_DIR=$(BASE_BUILD_DIR) $(MAKE) && mv $(BASE_BUILD_DIR)/graphical-shutdown_*.deb  $(BASE_BUILD_DIR)/../
 
 clean-build-dir:
 	$(info * Unmounting chroot bind mounts)
