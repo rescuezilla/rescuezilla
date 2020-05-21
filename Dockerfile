@@ -37,6 +37,7 @@ RUN apt-get install --yes \
                           # Install required dependencies for the build
                           make rsync sudo debootstrap squashfs-tools xorriso git gettext dosfstools mtools \
                           shim-signed grub-efi-amd64-signed grub-efi-amd64-bin grub-efi-ia32-bin grub-pc-bin \
+                          devscripts debhelper \
                           # Install optional dependencies for quality-of-life when debugging
                           tmux vim
 

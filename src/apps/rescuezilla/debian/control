@@ -1,0 +1,19 @@
+Source: rescuezilla
+Section: admin
+Priority: optional
+Maintainer: Shasheen Ediriweera <rescuezilla@gmail.com>
+Build-Depends: debhelper (>= 11), devscripts
+Standards-Version: 4.1.3
+Homepage: https://rescuezilla.com
+Vcs-Browser: https://github.com/rescuezilla/rescuezilla
+Vcs-Git: https://github.com/rescuezilla/rescuezilla.git
+
+Package: rescuezilla
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, smbclient, fsarchiver, partclone, libcapture-tiny-perl, libfile-tee-perl, libglib-perl, libgtk2-perl, libxml-simple-perl, libsys-cpu-perl, liblocale-maketext-lexicon-perl, libmethod-signatures-simple-perl, libstring-shellquote-perl, pigz, nmap, os-prober, gvfs, curlftpfs, cifs-utils, smbclient, fsarchiver, file, libnotify-bin
+Description: Graphical hard drive backup and restore
+ Rescuezilla is an extremely easy-to-use graphical environment for hard drive
+ backup and restore. For many people, the alternative open-source tools
+ Clonezilla and SysRescueCD, are intimidating and difficult to use, so
+ Rescuezilla provides an easy-to-use graphical environment like the leading
+ commercial tools, Norton Ghost and Acronis True Image.

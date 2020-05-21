@@ -1,0 +1,5 @@
+rescuezilla (1.0.5.1-1) unstable; urgency=low
+
+  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+
+ -- Shasheen Ediriweera <rescuezilla@gmail.com>  Thu, 21 May 2020 15:40:41 +0930

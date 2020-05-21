@@ -1,0 +1,18 @@
+Source: graphical-shutdown
+Section: x11
+Priority: optional
+Maintainer: Shasheen Ediriweera <rescuezilla@gmail.com>
+Build-Depends: debhelper (>= 11), devscripts
+Standards-Version: 4.1.3
+Homepage: https://rescuezilla.com
+Vcs-Browser: https://github.com/rescuezilla/rescuezilla
+Vcs-Git: https://github.com/rescuezilla/rescuezilla.git
+
+Package: graphical-shutdown
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, yad
+Description: Minimal graphical shutdown menu
+ Provides simplified shutdown menu for use-cases where menu items such as
+ logout, suspend or lockscreen are considered extraneous and should not be
+ shown to the enduser. Specifically this is important in the Rescuezilla
+ live environment where many users will have never even used Linux before.

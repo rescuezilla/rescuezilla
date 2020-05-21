@@ -7,6 +7,22 @@ DEBIAN_FRONTEND=noninteractive
 
 cd /
 
+
+# Install Rescuezilla frontend, other rescuezilla packages and all dependencies.
+DEB_PACKAGES=/*.deb
+for f in $DEB_PACKAGES
+do
+  # gdebi installs deb files and resolves dependencies from the apt repositories.
+  gdebi --non-interactive $f
+  if [[ $? -ne 0 ]]; then
+    echo "Error: Failed to install Rescuezilla deb packages."
+    exit 1
+  fi
+done
+
+# Delete the now-installed deb files from the chroot filesystem
+rm /*.deb
+
 update-alternatives --set x-terminal-emulator /usr/bin/lxterminal
 update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/redo-logo/redo-logo.plymouth 100
 update-alternatives --set default.plymouth /usr/share/plymouth/themes/redo-logo/redo-logo.plymouth
