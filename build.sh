@@ -167,11 +167,11 @@ for lang in "${LANG_CODES[@]}"; do
 done
 
 # Most end-users will not understand the terms i386 and AMD64.
-REGISTER_WIDTH=""
+MEMORY_BUS_WIDTH=""
 if  [ "$ARCH" == "i386" ]; then
-  REGISTER_WIDTH="32bit"
+  MEMORY_BUS_WIDTH="32bit"
 elif  [ "$ARCH" == "amd64" ]; then
-  REGISTER_WIDTH="64bit"
+  MEMORY_BUS_WIDTH="64bit"
 else
     echo "Warning: unknown register width $ARCH"
 fi
@@ -181,8 +181,7 @@ SUBSTITUTIONS=(
     "$BUILD_DIRECTORY/chroot/usr/share/rescuezilla/VERSION"
     "$BUILD_DIRECTORY/chroot/usr/share/rescuezilla/GIT_COMMIT_DATE"
     "$BUILD_DIRECTORY/chroot/usr/share/rescuezilla/ARCH"
-    "$BUILD_DIRECTORY/chroot/usr/share/rescuezilla/REGISTER_WIDTH"
-    # ISOLINUX boot menu 
+    # GRUB boot menu 
     "$BUILD_DIRECTORY/image/boot/grub/theme/theme.txt"
     # Firefox browser homepage query-string, to be able to provide a "You are using an old version. Please update."
     # message when users open the web browser with a (inevitably) decades old version.
@@ -194,7 +193,7 @@ for file in "${SUBSTITUTIONS[@]}"; do
     # Substitute CPU architecture description into file
     sed --in-place s/ARCH-SUBSTITUTED-BY-BUILD-SCRIPT/${ARCH}/g $file
     # Substitute CPU human-readable CPU architecture into file
-    sed --in-place s/REGISTER-WIDTH-SUBSTITUTED-BY-BUILD-SCRIPT/${REGISTER_WIDTH}/g $file
+    sed --in-place s/MEMORY-BUS-WIDTH-SUBSTITUTED-BY-BUILD-SCRIPT/${MEMORY_BUS_WIDTH}/g $file
     # Substitute date
     sed --in-place s/GIT-COMMIT-DATE-SUBSTITUTED-BY-BUILD-SCRIPT/${GIT_COMMIT_DATE}/g $file
 done

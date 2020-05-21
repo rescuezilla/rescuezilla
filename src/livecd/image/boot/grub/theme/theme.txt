@@ -5,7 +5,7 @@ title-color: "black"
 title-font: "DejaVu Sans Bold 16"
 
 # Example title text                                                Rescuezilla X.Y.Z 64bit 20XX-YY-ZZT012345
-title-text: "                                                       Rescuezilla VERSION-SUBSTITUTED-BY-BUILD-SCRIPT REGISTER-WIDTH-SUBSTITUTED-BY-BUILD-SCRIPT GIT-COMMIT-DATE-SUBSTITUTED-BY-BUILD-SCRIPT"
+title-text: "                                                       Rescuezilla VERSION-SUBSTITUTED-BY-BUILD-SCRIPT MEMORY-BUS-WIDTH-SUBSTITUTED-BY-BUILD-SCRIPT GIT-COMMIT-DATE-SUBSTITUTED-BY-BUILD-SCRIPT"
 message-font: "Unifont Regular 16"
 terminal-font: "Unifont Regular 16"
 

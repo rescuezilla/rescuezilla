@@ -76,8 +76,6 @@ loc_lang($lang_code);
 ##### Constants found in our program ###################################
 use constant VERSION         => `cat /usr/share/rescuezilla/VERSION`;
 use constant COMMIT_DATE     => `cat /usr/share/rescuezilla/GIT_COMMIT_DATE`;
-use constant REGISTER_WIDTH  => `cat /usr/share/rescuezilla/REGISTER_WIDTH`;
-use constant ARCH            => `cat /usr/share/rescuezilla/ARCH`;
 use constant CD_LABEL        => `cat /usr/share/rescuezilla/TITLE`;
 use constant MOUNT_POINT     => "/mnt/backup";
 use constant DATA_DIR        => "/usr/share/rescuezilla/";
@@ -220,14 +218,16 @@ sub main {
   $builder->get_object('usb_tabs')->set_show_border(FALSE);
   my $ver = VERSION;
   chomp($ver);
-  my $arch = ARCH;
-  chomp($arch);
-  # End-users cannot be expected to understand the intimidating term 'i386' or 'amd64', can be expected to read the term "64bit"
-  my $register_width = REGISTER_WIDTH;
-  chomp($register_width);
+  # Get the memory bus width (that is, 32 or 64 bit computing). End-users are expected to read the term "64bit",
+  # but cannot be expected to read the intimidating term Linux distribution arch 'i386'/'amd64' (which is also
+  # misleading as Debian/Ubuntu's i386 version is actually i686). Nor do users need to read the "machine hardware name"
+  # 'i686'/'x86_64' (from `arch` or `uname -m`).
+  my $memory_bus_width = `getconf LONG_BIT`;
+  chomp($memory_bus_width);
+  $memory_bus_width = $memory_bus_width."bit";
   my $commit_date = COMMIT_DATE;
   chomp($commit_date);
-  my $human_readable_version = "$ver ($register_width $arch) $commit_date";
+  my $human_readable_version = "$ver ($memory_bus_width) $commit_date";
   set_status("Version $human_readable_version");
   print("Rescuezilla version is $human_readable_version\n");
   $window->maximize();
