@@ -230,6 +230,12 @@ sub main {
   my $human_readable_version = "$ver ($memory_bus_width) $commit_date";
   set_status("Version $human_readable_version");
   print("Rescuezilla version is $human_readable_version\n");
+  # Print more OS information, to help debug problems from users using the frontend downloaded
+  # from their distro's package manager, rather than Rescuezilla's controlled environment
+  my $lsb_release = `lsb_release -a`;
+  print("lsb_release -a:\n$lsb_release");
+  my $uname_a = `uname -a`;
+  print("uname -a:\n$uname_a");
   $window->maximize();
   $window->show();
   my $mode = '';
