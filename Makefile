@@ -5,13 +5,17 @@ all: amd64 i386
 
 buildscripts = build.sh chroot.steps.part.1.sh chroot.steps.part.2.sh
 
-amd64: ARCH=amd64 CODENAME=focal
-amd64: $(buildscripts)
-	CODENAME=$(CODENAME) ARCH=$(ARCH) ./build.sh
+amd64: ARCH=amd64
+amd64: CODENAME=focal
+export ARCH CODENAME
+amd64: deb $(buildscripts)
+	./build.sh
 
-i386: ARCH=i386 CODENAME=bionic
-i386: $(buildscripts)
-	CODENAME=$(CODENAME) ARCH=$(ARCH) ./build.sh
+i386: ARCH=i386
+i386: CODENAME=bionic
+export ARCH CODENAME
+i386: deb $(buildscripts)
+	./build.sh
 
 clean-build-dir:
 	$(info * Unmounting chroot bind mounts)
