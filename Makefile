@@ -39,4 +39,4 @@ clean: clean-build-dir
 clean-all: clean-build-dir
 	$(info )
 	$(info * Deleting cached apt-get indexes AND cached deb packages)
-	rm -rf pkg-cache/
+	rm -rf pkg.cache/
