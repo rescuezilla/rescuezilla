@@ -5,11 +5,11 @@ set -x
 
 # Set the default base operating system, using the Ubuntu release's shortened code name [1].
 # [1] https://wiki.ubuntu.com/Releases
-CODENAME="${CODENAME:-focal}"
+CODENAME="${CODENAME:-INVALID}"
 
 # Sets CPU architecture using Ubuntu designation [1]
 # [1] https://help.ubuntu.com/lts/installation-guide/armhf/ch02s01.html
-ARCH="${ARCH:-i386}"
+ARCH="${ARCH:-INVALID}"
 
 # Directory containing this build script
 BASEDIR=$(dirname $(readlink -f "$0"))
@@ -38,6 +38,11 @@ GIT_COMMIT_DATE=$(date +"%Y-%m-%dT%H%M%S" --date=@$(git show --no-patch --format
 if [[ $EUID -ne 0 ]]; then
    echo "This script must be run as root. Please consult build instructions." 
    exit 1
+fi
+
+if [ "$CODENAME" = "INVALID" ] || [ "$ARCH" = "INVALID" ]; then
+  echo "The variable CODENAME=${CODENAME} or ARCH=${ARCH} was not set correctly. Are you using the Makefile? Please consult build instructions."
+  exit 1
 fi
 
 # debootstrap part 1/2: If package cache doesn't exist, download the packages
