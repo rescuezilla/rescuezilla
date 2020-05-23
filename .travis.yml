@@ -1,4 +1,6 @@
-language: minimal
+language: shell
+
+os: linux
 
 # The build bot OS environment does not really matter, as the docker image
 # provides the primary host environment for the build. However, a more recent
@@ -49,11 +51,11 @@ before_deploy:
 
 deploy:
   provider: releases
-  api_key: $GITHUB_TOKEN
+  token: $GITHUB_TOKEN
   file:
     - build/rescuezilla-$TRAVIS_TAG-64bit.iso
     - build/rescuezilla-$TRAVIS_TAG-32bit.iso
   draft: true
-  skip_cleanup: true
+  cleanup: false
   on:
     tags: true
