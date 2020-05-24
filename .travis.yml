@@ -9,6 +9,12 @@ dist: bionic
 services:
   - docker
 
+git:
+  # Disable shallow clone, this prevents the build failing when the number of commits
+  # since the last git tag exceeds Travis-CI's default --depth=50 argument, causing the
+  #  `git describe --tags` to error, which causes the deb package build to fail.
+  depth: false
+
 # Launches Docker container to act as 'host system'. See BUILD.ISO.IMAGE.md for more information.
 before_install:
   # Build an immutable docker image from the Dockerfile, labelled with a

@@ -7,6 +7,10 @@ BUILD_DIR?=build
 ABS_BUILD_PATH=$(abspath $(BUILD_DIR))
 APP_NAME?=NO_APP_NAME_SET
 
+# TODO: When GNU Make 4.2 becomes available in build environment, use $(.SHELLSTATUS) [1]
+# TODO: to check the exit codes of the below shell commands, so improve resilience of this Makefile.
+# [1] https://stackoverflow.com/a/40710111
+
 # Get the most recent git tag (deb files don't support git SHA's, so need to abbreviate)
 LAST_TAGGED_VERSION=$(shell git describe --tags --abbrev=0)
 # Full git version to embed
