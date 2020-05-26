@@ -1,22 +1,28 @@
+# Documentation: https://www.gnu.org/software/grub/manual/grub/grub.html#Theme-file-format
+
 desktop-image: "bg_redo.png"
 desktop-image-scale-method: "crop"
 
-title-color: "black"
-title-font: "DejaVu Sans Bold 16"
+# Not using 'title-text' (nor 'title-color' and 'title-font') as it seems to have limited flexibility in positioning.
+title-text: ""
 
-# Example title text                                                Rescuezilla X.Y.Z 64bit 20XX-YY-ZZT012345
-title-text: "                                                       Rescuezilla VERSION-SUBSTITUTED-BY-BUILD-SCRIPT MEMORY-BUS-WIDTH-SUBSTITUTED-BY-BUILD-SCRIPT GIT-COMMIT-DATE-SUBSTITUTED-BY-BUILD-SCRIPT"
 message-font: "Unifont Regular 16"
 terminal-font: "Unifont Regular 16"
 
-#help bar at the bottom
+# Display version information using label field
 + label {
-        top = 100%-50
-        left = 55%
-        width = 45%
-        height = 20
-        text = "@KEYMAP_SHORT@"
-        align = "center"
+        # The distance from the left border of container to left border of the object in either of three formats:
+        #
+        # x     Value in pixels
+        # p%    Percentage
+        # p%+x  mixture of both
+        left = 0%
+        top = 5%
+        width = 100%
+        height = 10%
+        # This field is modified by the build scripts, typically in the form: "X.Y.Z 64bit 20XX-YY-ZZT012345"
+        text = "VERSION-SUBSTITUTED-BY-BUILD-SCRIPT MEMORY-BUS-WIDTH-SUBSTITUTED-BY-BUILD-SCRIPT GIT-COMMIT-DATE-SUBSTITUTED-BY-BUILD-SCRIPT"
+        align = "right"
         color = "black"
         font = "DejaVu Sans Bold 16"
 }
@@ -24,13 +30,14 @@ terminal-font: "Unifont Regular 16"
 #boot menu
 + boot_menu {
         left = 60%
-        width = 40%
         top = 20%
-        height = 90%
-        item_color = "black"
+        width = 40%
+        height = 55%
         item_font = "DejaVu Sans Bold 14"
-        selected_item_color= "#ffffff"
-        selected_item_font = "Unifont Regular 16"
+        item_color = "black"
+        selected_item_color = "white"
+        # The image file pattern for the selected item highlight styled box.
+        selected_item_pixmap_style = "select_*.png"
         item_height = 16
         item_padding = 0
         item_spacing = 4
@@ -39,3 +46,39 @@ terminal-font: "Unifont Regular 16"
         item_icon_space = 0
 }
 
+# Countdown for automatic booting of the default menu option
++ progress_bar {
+        left = 55%
+        top = 75%
+        width = 40%
+        # Height parameter does not seem to be respected for some reason (bar too thick)
+        height = 3%
+        # The text to display. If “id“ is set to “__timeout__“ and no “text“ property is set then the amount of seconds will be shown.
+        id = "__timeout__"
+        # The border color for plain solid color rendering.
+        # (Using a color from the background image)
+        fg_color = "#345278"
+        # The background color for plain solid color rendering.
+        bg_color = "white"
+        # The border color for plain solid color rendering.
+        border_color = "black"
+        text_color = "#F39721"
+        font = "DejaVu Sans Bold 6"
+        # The text to display on the progress bar. If the progress bar’s ID is set to “__timeout__“ and the value of this property is set to
+        # “@TIMEOUT_NOTIFICATION_SHORT@“, “@TIMEOUT_NOTIFICATION_MIDDLE@“ or “@TIMEOUT_NOTIFICATION_LONG@“, then GRUB will update this property
+        # with an informative message as the timeout approaches.
+        text = "@TIMEOUT_NOTIFICATION_MIDDLE@"
+}
+
+
+# Hotkey legend bar (the "Press 'e' to edit boot options" menu)
++ label {
+        left = 0%
+        top = 90%
+        width = 100%
+        height = 10%
+        text = "@KEYMAP_SHORT@"
+        align = "right"
+        color = "black"
+        item_font = "DejaVu Sans Bold 14"
+}
