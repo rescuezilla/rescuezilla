@@ -1,0 +1,42 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-05-27 14:12+0930\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Start Rescuezilla"
+msgstr "Iniciar Rescuezilla"
+
+msgid "If boot fails, reboot and try selecting Safe Mode instead"
+msgstr "Si el arranque falla, reinicie e intente seleccionando en su lugar el modo a prueba de fallos"
+
+msgid "Safe Mode"
+msgstr "Modo seguro"
+
+msgid "Prompts for a video mode and loads the USB image into RAM"
+msgstr "Solicita un modo de vídeo y carga la imagen USB en la RAM"
+
+msgid "Check USB for defects"
+msgstr "Comprobar si hay defectos en la USB"
+
+msgid "Verify integrity of USB drive"
+msgstr "Compruebe si hay errores en la memoria del computador"
+
+msgid "Enter BIOS Setup"
+msgstr ""
+
+msgid "Configure machine's firmware, boot options etc"
+msgstr ""

@@ -149,6 +149,29 @@ fi
 # Create Rescuezilla desktop icon
 ln -s /usr/share/applications/rescuezilla.desktop "$BUILD_DIRECTORY/chroot/home/ubuntu/Desktop/rescuezilla.desktop"
 
+LANG_CODES=(
+    "fr"
+    "de"
+    "es"
+)
+
+# Process GRUB locale files
+pushd "$BUILD_DIRECTORY/image/boot/grub/locale/"
+for lang in "${LANG_CODES[@]}"; do
+        if [[ ! -f "$lang.ko" ]]; then
+                echo "Warning: $long.ko translation does not exist. Skipping."
+        else
+                msgfmt --output-file="$lang.mo" "$lang.ko"
+                if [[ $? -ne 0 ]]; then
+                        echo "Error: Unable to convert GRUB bootloader configuration $lang translation from text-based ko format to binary mo format."
+                        exit 1
+                fi
+                # Remove unused *.ko file
+                rm "$app_name.ko"
+        fi
+done
+popd
+
 # Most end-users will not understand the terms i386 and AMD64.
 MEMORY_BUS_WIDTH=""
 if  [ "$ARCH" == "i386" ]; then
