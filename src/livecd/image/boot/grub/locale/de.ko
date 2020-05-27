@@ -1,0 +1,42 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-05-27 14:12+0930\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Start Rescuezilla"
+msgstr "Rescuezilla"
+
+msgid "If boot fails, reboot and try selecting Safe Mode instead"
+msgstr "Startet Rescuezilla. Sollte das Booten hiermit nicht  möglich sein, bitte den Abgesicherten Modus versuchen."
+
+msgid "Safe Mode"
+msgstr "Abgesicherter Modus"
+
+msgid "Prompts for a video mode and loads the USB image into RAM"
+msgstr "Versucht das Redo System mit einer Hardware unabhängigeren Konfiguration zu starten."
+
+msgid "Check USB for defects"
+msgstr "Rescuezilla CD prüfen"
+
+msgid "Verify integrity of USB drive"
+msgstr "Prüft die eingelegte Rescuezilla CD auf Defekte."
+
+msgid "Enter BIOS Setup"
+msgstr ""
+
+msgid "Configure machine's firmware, boot options etc"
+msgstr ""
