@@ -40,3 +40,9 @@ msgstr ""
 
 msgid "Configure machine's firmware, boot options etc"
 msgstr ""
+
+msgid "Memory test"
+msgstr "Prueba de memoria"
+
+msgid "Check computer memory for errors"
+msgstr "Compruebe si hay errores en la memoria del computador"

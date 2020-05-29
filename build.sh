@@ -217,7 +217,7 @@ umount -lf chroot/dev/
 rm chroot/root/.bash_history
 rm chroot/chroot.steps.part.1.sh chroot/chroot.steps.part.2.sh
 
-mkdir -p image/casper image/install
+mkdir -p image/casper image/memtest
 cp chroot/boot/vmlinuz-*-generic image/casper/vmlinuz
 if [[ $? -ne 0 ]]; then
     echo "Error: Failed to copy vmlinuz image."
@@ -229,6 +229,12 @@ chmod 644 image/casper/vmlinuz
 cp chroot/boot/initrd.img-*-generic image/casper/initrd.lz
 if [[ $? -ne 0 ]]; then
     echo "Error: Failed to copy initrd image."
+    exit 1
+fi
+
+cp /boot/memtest86+.bin image/memtest/
+if [[ $? -ne 0 ]]; then
+    echo "Error: Failed to copy memtest86+ binary from host system."
     exit 1
 fi
 
