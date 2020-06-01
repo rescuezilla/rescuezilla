@@ -1,7 +1,8 @@
 {
   "policies": {
     "Homepage": {
-      "URL": "https://rescuezilla.com/?v=VERSION-SUBSTITUTED-BY-BUILD-SCRIPT"
+      "URL": "https://patreon.com/join/rescuezilla",
+      "Additional": [ "https://rescuezilla.com/?v=VERSION-SUBSTITUTED-BY-BUILD-SCRIPT" ]
     },
     "DisableTelemetry": true, 
     "OfferToSaveLogins": false,
