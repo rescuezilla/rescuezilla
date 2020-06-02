@@ -1,3 +1,9 @@
+rescuezilla (1.0.6-1) unstable; urgency=low
+
+  * New upstream version.
+
+ -- Shasheen Ediriweera <rescuezilla@gmail.com>  Tue, 2 Jun 2020 12:29:49 +0930
+
 rescuezilla (1.0.5.1-1) unstable; urgency=low
 
   * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
