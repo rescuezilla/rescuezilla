@@ -1,4 +1,4 @@
-![Redo Backup and Recovery Logo](docs/images/redo.logo.png)
+![Rescuezilla banner](src/apps/rescuezilla/rescuezilla/usr/share/rescuezilla/banner.png)
 
 # Rescuezilla [![Build Status](https://travis-ci.org/rescuezilla/rescuezilla.svg?branch=master)](https://travis-ci.org/rescuezilla/rescuezilla) 
 

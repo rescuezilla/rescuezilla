@@ -39,7 +39,7 @@
   <object class="GtkWindow" id="main_app">
     <property name="title" translatable="yes">Rescuezilla</property>
     <property name="window_position">center</property>
-    <property name="icon">redobackup-icon.png</property>
+    <property name="icon">icon.png</property>
     <signal name="destroy" handler="on_main_app_destroy"/>
     <child>
       <object class="GtkVBox" id="main_vbox">
@@ -52,7 +52,7 @@
                 <property name="visible">True</property>
                 <property name="xalign">1</property>
                 <property name="yalign">0</property>
-                <property name="pixbuf">redobackup-title.png</property>
+                <property name="pixbuf">banner.png</property>
               </object>
             </child>
           </object>

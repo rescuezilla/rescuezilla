@@ -1,6 +1,6 @@
 # Documentation: https://www.gnu.org/software/grub/manual/grub/grub.html#Theme-file-format
 
-desktop-image: "bg_redo.png"
+desktop-image: "boot_menu_background.png"
 desktop-image-scale-method: "crop"
 
 # Not using 'title-text' (nor 'title-color' and 'title-font') as it seems to have limited flexibility in positioning.
