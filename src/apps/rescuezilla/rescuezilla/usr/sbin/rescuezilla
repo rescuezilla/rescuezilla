@@ -429,6 +429,17 @@ sub do_backup {
   my $enduser_drive_number = get_enduser_drive_number($src);
   my ($base_device, $partition_number) = split_device_string($src);
   my $src_drive = "/dev/$base_device";
+  # Sanity check filename was valid for this filesystem
+  # TODO: Ideally a sanity check to this effect would occur while the user is typing the filename, and not cause a fatal crash.
+  my $touch_stdout = "";
+  my $touch_stderr = "";
+  my $touch_retcode = "";
+  my $quoted_tmp_sanity_check = shell_quote("$dest/$file.test.file");
+  ($touch_stdout, $touch_stderr, $touch_retcode) = capture { system("touch $quoted_tmp_sanity_check") };
+  print("touch command stdout: $touch_stdout\ntouch command stderr: $touch_stderr\n");
+  my $touch_sanity_check_failed_msg = loc("Failed to write destination file. Please confirm it is valid to create the provided file path, and try again.");
+  fatal_crash($touch_sanity_check_failed_msg."\n\n$touch_stdout\n$touch_stderr") unless ($touch_retcode eq 0);
+  system("rm $quoted_tmp_sanity_check");
   # Save partition table
   my $quoted_sfdisk_file = shell_quote("$dest/$file.sfdisk");
   # Backup partition table. Works whether MBR-formatted or GPT-formatted disk.
@@ -712,8 +723,6 @@ sub backup_name_changed {
   our $builder;
   my $val = FALSE;
   my $backup_name = $builder->get_object('backup_name')->get_text();
-  $backup_name =~ s/[^\w|-]|_+//g;
-  $builder->get_object('backup_name')->set_text($backup_name);
   if ($backup_name ne '') {
     $val = TRUE;  
   } else {
