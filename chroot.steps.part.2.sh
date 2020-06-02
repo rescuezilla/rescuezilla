@@ -24,8 +24,8 @@ done
 rm /*.deb
 
 update-alternatives --set x-terminal-emulator /usr/bin/lxterminal
-update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/redo-logo/redo-logo.plymouth 100
-update-alternatives --set default.plymouth /usr/share/plymouth/themes/redo-logo/redo-logo.plymouth
+update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/rescuezilla-logo/rescuezilla-logo.plymouth 100
+update-alternatives --set default.plymouth /usr/share/plymouth/themes/rescuezilla-logo/rescuezilla-logo.plymouth
 
 update-initramfs -u
 

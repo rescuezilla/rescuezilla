@@ -4,10 +4,9 @@
 Version=1.0
 Type=Application
 Terminal=false
-Icon[en_US]=redo-icon
 Name[en_US]=Rescuezilla
 Exec=rescuezilla-pkexec
 Comment[en_US]=System backup and restore utility
 Name=Rescuezilla
 Comment=System backup and restore utility
-Icon=redo-icon
+Icon=rescuezilla

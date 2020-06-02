@@ -1,4 +1,4 @@
-#  redo-logo.script - boot splash plugin
+#  rescuezilla-logo.script - boot splash plugin
 # 
 
 # Set the text colour in (rgb / 256)
@@ -146,12 +146,12 @@ Window.SetBackgroundBottomColor (0.137, 0.216, 0.314);  # an equally nice colour
 
 bits_per_pixel = Window.GetBitsPerPixel ();
 if (bits_per_pixel == 4) {
-    logo_filename = "redo_logo16.png";
+    logo_filename = "rescuezilla_logo16.png";
     progress_dot_off_filename = "progress_dot_off16.png";
     progress_dot_on_filename = "progress_dot_on16.png";
     password_field_filename = "password_field16.png";
 } else {
-    logo_filename = "redo_logo.png";
+    logo_filename = "rescuezilla_logo.png";
     progress_dot_off_filename = "progress_dot_off.png";
     progress_dot_on_filename = "progress_dot_on.png";
     password_field_filename = "password_field.png";

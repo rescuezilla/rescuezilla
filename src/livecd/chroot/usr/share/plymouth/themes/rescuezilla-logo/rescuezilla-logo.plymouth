@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=Redo Logo
+Description=A theme that features a blue background with a logo.
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/rescuezilla-logo
+ScriptFile=/usr/share/plymouth/themes/rescuezilla-logo/rescuezilla-logo.script
