@@ -1,4 +1,45 @@
 -------------------------------------------------------------------------------
+  Version 1.0.6 (2020-06-18) 
+-------------------------------------------------------------------------------
+
+* Added 64-bit version (this fixes the slow transfer rates issue on systems with >16GB RAM) (#3)
+* Added support for booting on EFI-only machines (including with Secure Boot enabled) [64-bit only] (#1)
+* Switched ISOLINUX bootloader to GRUB affecting all boot approaches: BIOS, EFI and CD-ROM
+* Upgraded OS base to Ubuntu 20.04 LTS (Focal) from 18.04 LTS (Bionic) [64-bit only] (#51)
+* Ubuntu 20.04 has dropped 32-bit, so Rescuezilla 32-bit remains based on Ubuntu 18.04
+* Fixed issue preventing backup/restore of drives smaller than typically ~40 megabytes (#55)
+* Fixed broken GRUB backup affecting _some_ 1MiB-aligned filesystems on MBR-formatted disks,
+  by copying all of “post-MBR gap” between MBR and first partition, not just typical 32KiB. (#50)
+* Fixed a “stuck at 0%” issue when paths contain certain special characters (#15)
+* Removed false menu items such as “(Windows Boot Manager, )” by correctly merging items (#69)
+* Removed restrictions which prevented users entering special characters in filenames and paths
+* Fixed use of silver “Bluebird” theme, replacing the dull grey default used by v1.0.5/v1.0.5.1 (#48)
+* Increased logging of internal commands for improved ability to track down reported bugs
+* Writes the log file into destination directory (so it always persists between reboots) (#61)
+* Improved the error message when a mount (of CIFS/SMB network share) fails
+* Adds boot menu item to enter “BIOS” firmware setup [EFI-boot only]
+* Replaced Redo Backup logo with new Rescuezilla logo (with “Tux” pengiun mascot) (#62)
+* Switched ISO naming to eg, “rescuezilla-1.0.6-32bit.iso” from “redobackup-livecd-1.0.6.iso”
+* Installs Rescuezilla frontend as a deb package, which increases flexibility of installation (#13)
+* Moved scripts from tertiary File Hierarchy Standard (eg, /usr/local/sbin/rescuezilla) to secondary 
+  FHS (eg, /usr/sbin/rescuezilla) as the rationale that scripts were “developed by the system 
+  administrator of the system it is deployed on” is no longer valid when installing as a deb package
+* Added GRUB packages to assist users who want to use Rescuezilla to perform a GRUB repair (#50)
+* Minimized divergence of Rescuezilla 32-bit and 64-bit package environment: (see below)
+* Replaced Chromium Web Browser with Firefox to avoid Ubuntu 20.04 snap-based packaging as snaps 
+  cannot yet (#63) be installed in chroot-based environments (which the Rescuezilla build uses)
+* Replaced unsupported ‘leafpad’ text editor with similarly lightweight ‘mousepad’ text editor
+* Removed ‘maximus’ auto-maximize package (as behavior replaced by OpenBox config in v1.0.5)
+* Added [Patreon](https://www.patreon.com/join/rescuezilla) as a second Firefox homepage, to 
+  help achieve sustainable funding.
+                                    Project Announcements
+* The original Redo Backup and Recovery author has resurfaced after a 7.5 year absence to release
+  an incompatible update named Redo Rescue, with features planned for Rescuezilla v1.0.7.
+* Rescuezilla is moving to a new support forum, and will continue to provide world-class
+  user support, backwards compatibility, bugs fixes and features.
+* The Rescuezilla project will continue to be developed, with major upgrades planned for v1.0.7.
+
+-------------------------------------------------------------------------------
   Version 1.0.5.1 (2020-03-24) 
 -------------------------------------------------------------------------------
 * Added support for NVMe hard drives (#27)
