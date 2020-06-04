@@ -543,8 +543,7 @@ sub update_backup_progress {
     my $tool = "";
     my $extra_args = "";
     ($tool, $extra_args) = &which_backup_tool($fs);
-    my $tool_missing_msg = loc("The tool %1 does not exist", "/usr/sbin/$tool");
-    fatal_crash($tool_missing_msg) unless -e "/usr/sbin/$tool";
+    check_command("$tool --version");
     # Write the exact partclone command used to create the backup of the current partition. This tool is required during restore.
     my $quoted_partition_tool = shell_quote("$dest/$file.partclone.command.part$partition_number");
     system("echo '$tool' > $quoted_partition_tool");
@@ -1017,10 +1016,17 @@ sub do_restore {
     print "Skipping restoring partition table using sfdisk, as backup's partition information is empty or missing\n";
   } else {
     if (("$backup_version" cmp "") == 0) {
+        my $sfdisk_ver = "v2.20.1";
+        print("No version number detected. Therefore backup assumed to be made by v1.0.4, so using $sfdisk_ver sfdisk.\n");
         # Using sfdisk version bundled with Redo Backup and Recovery v1.0.4, with the required arguments that have been removed from newer versions
-        system("sfdisk.v2.20.1 -fx '/dev/$dest_drive' < $quoted_src_sfdisk; sync");
+        print("Using sfdisk $sfdisk_ver to restore the Redo Backup and Recovery v1.0.4 backup, for maximum compatibility\n");
+        my $tool = "sfdisk.$sfdisk_ver";
+        check_command("$tool --version");
+        system("$tool -fx '/dev/$dest_drive' < $quoted_src_sfdisk; sync");
     } else {
-        system("sfdisk -f '/dev/$dest_drive' < $quoted_src_sfdisk; sync");
+        my $tool = "sfdisk";
+        check_command("$tool --version");
+        system("$tool -f '/dev/$dest_drive' < $quoted_src_sfdisk; sync");
     }
   }
   sleep(0.5);
@@ -1105,10 +1111,11 @@ sub update_restore_progress {
     my $quoted_src_partition_prefix = shell_quote("/${src}_part${partition_number}");
     if (("$backup_version" cmp "") == 0) {
         my $partclone_ver = "v0.2.43";
-        print loc("No version number detected. Therefore backup assumed to be made by v1.0.4, so using %1 partclone.restore.", $partclone_ver)."\n";
+        print("No version number detected. Therefore backup assumed to be made by v1.0.4, so using $partclone_ver partclone.restore.\n");
         # The Redo Backup v1.0.4 partclone version uses different restore syntax, and autodetects raw formats differently
-        print loc("Using partclone %1 to restore the %2 backup, for maximum compatibility",$partclone_ver,"Redo Backup and Recovery v1.0.4")."\n";
+        print("Using partclone $partclone_ver to restore the Redo Backup and Recovery v1.0.4 backup, for maximum compatibility\n");
         my $tool = "partclone.restore.$partclone_ver";
+        check_command("$tool --version");
         print "*** ".loc("Processing %1 using %2...",$dest_partition_node,$tool)."\n";
         $restore_cmd = "( cat $quoted_src_partition_prefix.* | pigz -d -c | $tool -F -L /partclone.log -O '/dev/$dest_partition_node' ) 2>&1 |";
     } else {
@@ -1119,8 +1126,7 @@ sub update_restore_progress {
         my $quoted_partition_partclone_command_file = shell_quote("$src.partclone.command.part$partition_number");
         my $tool = `cat $quoted_partition_partclone_command_file`;
         chomp($tool);
-        my $tool_missing_msg = loc("The tool %1 does not exist", "/usr/sbin/$tool");
-        fatal_crash($tool_missing_msg) unless -e "/usr/sbin/$tool";
+        check_command("$tool --version");
         print "*** ".loc("Processing %1 using %2...",$dest_partition_node,$tool)."\n";
         $restore_cmd = "( cat $quoted_src_partition_prefix.* | pigz -d -c | $tool --restore -F -L /partclone.log -O '/dev/$dest_partition_node' ) 2>&1 |";
     }
@@ -2310,4 +2316,24 @@ sub format_size {
     $suffix = "PB";
   }
   return sprintf("%0.1f", $bytes/(10**$x)).$suffix;
+}
+
+sub check_command {
+  # Check given command correctly executes with exit code zero, fatal crash otherwise.
+  #
+  # TODO: Make this not do a fatal crash, but return instead
+  #
+  # Input arguments:
+  #   cmd: Command to run. Eg 'ls --version'
+  my $cmd = $_[0];
+
+  my $tool_stdout = "";
+  my $tool_stderr = "";
+  my $tool_retcode = 0;
+  ($tool_stdout, $tool_stderr, $tool_retcode) = capture { system($cmd); };
+  print("$cmd ($tool_retcode):\n$tool_stdout\n\n$tool_stderr");
+  if ($tool_retcode != 0) {
+    my $tool_failed_msg = loc("Failed to run command: %1\n%2\n%3", $cmd, $tool_stderr, $tool_stdout);
+    fatal_crash($tool_failed_msg);
+  }
 }
