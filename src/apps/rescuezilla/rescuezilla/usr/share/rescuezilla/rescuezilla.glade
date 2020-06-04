@@ -37,7 +37,7 @@
     </columns>
   </object>
   <object class="GtkWindow" id="main_app">
-    <property name="title" translatable="yes">Backup and Restore Utility</property>
+    <property name="title" translatable="yes">Rescuezilla</property>
     <property name="window_position">center</property>
     <property name="icon">redobackup-icon.png</property>
     <signal name="destroy" handler="on_main_app_destroy"/>
