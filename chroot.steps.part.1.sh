@@ -65,6 +65,7 @@ pkgs_specific_to_32bit=("linux-generic-hwe-18.04"
                         "xserver-xorg-video-all-hwe-18.04"
                         "xserver-xorg-video-intel-hwe-18.04"
                         "xserver-xorg-video-qxl-hwe-18.04"
+
 )
 
 # Packages specific to Rescuezilla 64-bit build (currently based Ubuntu 20.04 Focal)
@@ -77,6 +78,11 @@ pkgs_specific_to_64bit=("linux-generic-hwe-18.04"
                         "xserver-xorg-video-all-hwe-18.04"
                         "xserver-xorg-video-intel-hwe-18.04"
                         "xserver-xorg-video-qxl-hwe-18.04"
+                        # Packages which may assist users needing to do a GRUB repair (64-bit EFI)
+                       "shim-signed"
+                       "grub-efi-amd64-signed"
+                       "grub-efi-amd64-bin"
+                       "grub-efi-ia32-bin"
 )
 
 # Packages common to both  32-bit and 64-bit build
@@ -153,6 +159,7 @@ common_pkgs=("discover"
              "xfsdump"
              "xfsprogs"
              "udftools"
+             "grub-pc-bin"
              "language-pack-gnome-fr-base"
              "language-pack-gnome-de-base"
              "language-pack-gnome-es-base"
