@@ -199,7 +199,6 @@ sed --in-place s/COMPRESS=lz4/COMPRESS=gzip/g /etc/initramfs-tools/initramfs.con
 touch /etc/NetworkManager/conf.d/10-globally-managed-devices.conf
 
 ln -s /usr/bin/pcmanfm /usr/bin/nautilus
-gconftool-2 --set /apps/maximus/undecorate --type BOOL false
 rm /usr/bin/{rpcclient,smbcacls,smbclient,smbcquotas,smbget,smbspool,smbtar}
 rm /usr/share/icons/*/icon-theme.cache
 rm -rf /usr/share/doc
