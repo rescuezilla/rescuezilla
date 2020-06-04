@@ -289,13 +289,6 @@ msgstr "Wiederherstellung %1 Bytes der Partition."
 msgid "Preparing to restore backup for Drive %1, Part %2..."
 msgstr "Bereite Wiederherstellung von Laufwerk %1, Partition %2 vor..."
 
-msgid "No version number detected. Therefore backup assumed to be made by v1.0.4, so using %1 partclone.restore."
-msgstr ""
-
-#. The Redo Backup v1.0.4 partclone version uses different restore syntax, and autodetects raw formats differently
-msgid "Using partclone %1 to restore the %2 backup, for maximum compatibility"
-msgstr ""
-
 msgid "Processing %1 using %2..."
 msgstr "Bearbeite %1 nutze %2"
 
@@ -454,4 +447,7 @@ msgid "Free space: %1"
 msgstr ""
 
 msgid " bytes"
+msgstr ""
+
+msgid "Failed to run command: %1\n%2\n%3"
 msgstr ""
