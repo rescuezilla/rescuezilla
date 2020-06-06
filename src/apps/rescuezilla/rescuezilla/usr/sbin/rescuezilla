@@ -1016,7 +1016,9 @@ sub do_restore {
     print "Skipping restoring partition table using sfdisk, as backup's partition information is empty or missing\n";
   } else {
     if (("$backup_version" cmp "") == 0) {
-        my $sfdisk_ver = "v2.20.1";
+        my $memory_bus_width = `getconf LONG_BIT`;
+        chomp($memory_bus_width);
+        my $sfdisk_ver = "v2.20.1.${memory_bus_width}bit";
         print("No version number detected. Therefore backup assumed to be made by v1.0.4, so using $sfdisk_ver sfdisk.\n");
         # Using sfdisk version bundled with Redo Backup and Recovery v1.0.4, with the required arguments that have been removed from newer versions
         print("Using sfdisk $sfdisk_ver to restore the Redo Backup and Recovery v1.0.4 backup, for maximum compatibility\n");
@@ -1110,7 +1112,9 @@ sub update_restore_progress {
     my $restore_cmd = "";
     my $quoted_src_partition_prefix = shell_quote("/${src}_part${partition_number}");
     if (("$backup_version" cmp "") == 0) {
-        my $partclone_ver = "v0.2.43";
+        my $memory_bus_width = `getconf LONG_BIT`;
+        chomp($memory_bus_width);
+        my $partclone_ver = "v0.2.43.${memory_bus_width}bit";
         print("No version number detected. Therefore backup assumed to be made by v1.0.4, so using $partclone_ver partclone.restore.\n");
         # The Redo Backup v1.0.4 partclone version uses different restore syntax, and autodetects raw formats differently
         print("Using partclone $partclone_ver to restore the Redo Backup and Recovery v1.0.4 backup, for maximum compatibility\n");
