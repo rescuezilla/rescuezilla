@@ -1,0 +1,6 @@
+[submodule "src/third-party/partclone"]
+	path = src/third-party/partclone
+	url = https://github.com/rescuezilla/partclone
+[submodule "src/third-party/util-linux"]
+	path = src/third-party/util-linux
+	url = https://github.com/rescuezilla/util-linux

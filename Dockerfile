@@ -39,6 +39,13 @@ RUN apt-get install --yes \
                           dosfstools mtools \
                           shim-signed grub-efi-amd64-signed grub-efi-amd64-bin grub-efi-ia32-bin grub-pc-bin \
                           devscripts debhelper \
+                          # Dependencies for "sfdisk" and "partclone.restore" build.
+                          libtool-bin gawk pkg-config comerr-dev docbook-xsl e2fslibs-dev fuse \
+                          libaal-dev libblkid-dev libbsd-dev libext2fs-dev libncurses5-dev \
+                          libncursesw5-dev libntfs-3g88 libreadline-gplv2-dev libreadline5 \
+                          libreiser4-dev libtinfo-dev libxslt1.1 nilfs-tools ntfs-3g ntfs-3g-dev \
+                          quilt sgml-base uuid-dev vmfs-tools xfslibs-dev xfsprogs xml-core \
+                          xsltproc \
                           # Install optional dependencies for quality-of-life when debugging
                           tmux vim
 

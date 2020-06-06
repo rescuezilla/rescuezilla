@@ -24,10 +24,23 @@ sudo apt-get install git-lfs git make sudo \
                      # For Secure Boot, the GRUB binaries need to trust Canonical
                      # signatures, not Debian signatures, as GRUB needs to verify the
                      # Canonical-signed Linux kernel (see "EFI Secure Boot" section below).
-                     shim-signed grub-efi-amd64-signed
+                     shim-signed grub-efi-amd64-signed \
+                     # To provide backwards compatibility of Redo Backup v1.0.4 backups on
+                     # AMD64 systems, install the dependencies required to build some very
+                     # old versions of "sfdisk" and "partclone.restore". More recent
+                     # versions of sfdisk and partclone are used for all other operations.
+                     libtool-bin gawk pkg-config comerr-dev docbook-xsl e2fslibs-dev fuse \
+                     libaal-dev libblkid-dev libbsd-dev libext2fs-dev libncurses5-dev \
+                     libncursesw5-dev libntfs-3g88 libreadline-gplv2-dev libreadline5 \
+                     libreiser4-dev libtinfo-dev libxslt1.1 nilfs-tools ntfs-3g ntfs-3g-dev \
+                     quilt sgml-base uuid-dev vmfs-tools xfslibs-dev xfsprogs xml-core \
+                     xsltproc
 
 git lfs clone https://github.com/rescuezilla/rescuezilla
 cd rescuezilla/
+git submodule init
+# Download 'partclone' and 'util-linux' submodules
+git submodule update --recursive
 # Optional: Build only the standalone deb packages without bothering with the live environment
 make deb
 # Build the amd64 ISO image, the i386 ISO image, and the deb files.
