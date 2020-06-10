@@ -1770,7 +1770,7 @@ sub set_share_dropdown {
     if (length($share_desc)>MAX_WIDTH+3) { $share_desc = substr($share_desc,0,MAX_WIDTH).'...'; }
     $mdl->set($mdl->append, 0, "$type|$share", 1, $share_desc);
   }
-  $mdl->set($mdl->append, 0, "SMB|", 1, loc("Shared folder specified below"));
+  $mdl->set($mdl->append, 0, "SMB|", 1, loc("SMB/CIFS shared folder specified below"));
   $mdl->set($mdl->append, 0, "FTP|", 1, loc("FTP server specified below"));  
   $cbo->set_active(0);
 }
