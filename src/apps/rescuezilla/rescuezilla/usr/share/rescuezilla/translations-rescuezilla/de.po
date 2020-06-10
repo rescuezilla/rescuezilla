@@ -392,16 +392,10 @@ msgstr ""
 msgid "Omitting backup source %1 from destination list"
 msgstr ""
 
-msgid "FTP server %1"
-msgstr ""
-
 msgid "Shared folder %1 on %2"
 msgstr ""
 
 msgid "SMB/CIFS shared folder specified below"
-msgstr ""
-
-msgid "FTP server specified below"
 msgstr ""
 
 msgid "Part"

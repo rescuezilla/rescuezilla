@@ -392,17 +392,11 @@ msgstr ", Partición %1"
 msgid "Omitting backup source %1 from destination list"
 msgstr "Omitiendo la fuente de la copia de respaldo/seguridad%1 de la lista de destinos"
 
-msgid "FTP server %1"
-msgstr "Servidor FTP %1"
-
 msgid "Shared folder %1 on %2"
 msgstr "Directorio/carpeta coompartida%1 en %2"
 
 msgid "SMB/CIFS shared folder specified below"
 msgstr "Directorio/carpeta compartida especificada a continuación"
-
-msgid "FTP server specified below"
-msgstr "Servidor FTP especificado a continuación"
 
 msgid "Part"
 msgstr "Partición"
