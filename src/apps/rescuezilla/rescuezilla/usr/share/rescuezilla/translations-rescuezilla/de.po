@@ -398,7 +398,7 @@ msgstr ""
 msgid "Shared folder %1 on %2"
 msgstr ""
 
-msgid "Shared folder specified below"
+msgid "SMB/CIFS shared folder specified below"
 msgstr ""
 
 msgid "FTP server specified below"

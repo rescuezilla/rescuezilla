@@ -398,7 +398,7 @@ msgstr ""
 msgid "Shared folder %1 on %2"
 msgstr "Dossier partagé %1 sur %2"
 
-msgid "Shared folder specified below"
+msgid "SMB/CIFS shared folder specified below"
 msgstr "Dossier partagé indiqué ci-dessous"
 
 msgid "FTP server specified below"

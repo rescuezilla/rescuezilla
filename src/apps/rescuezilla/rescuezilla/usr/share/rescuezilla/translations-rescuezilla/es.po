@@ -398,7 +398,7 @@ msgstr "Servidor FTP %1"
 msgid "Shared folder %1 on %2"
 msgstr "Directorio/carpeta coompartida%1 en %2"
 
-msgid "Shared folder specified below"
+msgid "SMB/CIFS shared folder specified below"
 msgstr "Directorio/carpeta compartida especificada a continuación"
 
 msgid "FTP server specified below"
