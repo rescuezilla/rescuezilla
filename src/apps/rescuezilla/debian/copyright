@@ -3,8 +3,8 @@ Upstream-Name: rescuezilla
 Source: https://rescuezilla.com/
 
 Files: *
-Copyright: 2019- Shasheen Ediriweera
-           2010-2012 Redo Backup and Recovery original author (unknown)
+Copyright: 2019- Shasheen Ediriweera <rescuezilla@gmail.com>
+           2010-2012 Redo Backup and Recovery <info@zebradots.com>
 License: GPL-3.0+
 
 Files: debian/*
