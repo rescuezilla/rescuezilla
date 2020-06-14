@@ -2,11 +2,11 @@
 
 # Rescuezilla [![Build Status](https://travis-ci.org/rescuezilla/rescuezilla.svg?branch=master)](https://travis-ci.org/rescuezilla/rescuezilla) 
 
-Rescuezilla (formerly _Redo Backup and Recovery_) is an extremely easy-to-use graphical environment for system rescue, including full system backup, bare metal recovery, partition editing, undeleting files, web browsing, and more.
+Rescuezilla is an extremely easy-to-use graphical environment for system rescue, including full system backup, bare metal recovery, partition editing, undeleting files, web browsing, and more.
 
 Rescuezilla can be booted on any PC or Mac from a USB stick, or CD, and uses the exact same reliable, battle-tested ‘partclone’ utility that Clonezilla uses. For many people, the alternative open-source tools Clonezilla and SysRescueCD, are intimidating and difficult to use, so Rescuezilla provides an easy-to-use graphical environment like the leading commercial tools, Norton Ghost and Acronis True Image.
 
-Rescuezilla [relies on Patreon support](https://www.patreon.com/join/rescuezilla) for continued development.
+Rescuezilla is an actively maintained fork of an old application named _Redo Backup and Recovery_ and [relies on Patreon support](https://www.patreon.com/join/rescuezilla) for continued development.
 
 ## Features
 
