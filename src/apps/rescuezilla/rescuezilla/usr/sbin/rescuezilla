@@ -434,6 +434,14 @@ sub do_backup {
   my $touch_sanity_check_failed_msg = loc("Failed to write destination file. Please confirm it is valid to create the provided file path, and try again.");
   fatal_crash($touch_sanity_check_failed_msg."\n\n$touch_stdout\n$touch_stderr") unless ($touch_retcode eq 0);
   system("rm $quoted_tmp_sanity_check");
+  if ($status{'mount_type'} =~ /SMB/) {
+      # Display a fatal error if the "ESTALE" SMB/CIFS issue is detected, with a clear message explaining the issue.
+      my $estale_bug_message = "Failed to write test file $dest/$file.test.file into the SMB mount directory. This may occur when using a more recent SMB server. The root cause is being investigated.\n\nAs a workaround, please select a local destination or an alternative SMB server.\n\nSee https://github.com/rescuezilla/rescuezilla/issues/84 for more information.";
+      # This open() function is not processing the path through a shell, so no need to use shell_quote().
+      open(OUT, ">$dest/$file.test.file") or fatal_crash($estale_bug_message);
+      close OUT;
+      system("rm $quoted_tmp_sanity_check");
+  }
   # Save partition table
   my $quoted_sfdisk_file = shell_quote("$dest/$file.sfdisk");
   # Backup partition table. Works whether MBR-formatted or GPT-formatted disk.
@@ -1452,7 +1460,7 @@ sub save_file {
   my $data = $_[0];
   my $outfile = $_[1];
   my $failed_to_open_file = loc("Could not open %1 for writing!",$outfile);
-  # The open() function does not appear to be processed input through a shell, so no need to use shell_quote().
+  # This open() function is not processing the path through a shell, so no need to use shell_quote().
   open(OUT, ">$outfile") or fatal_crash($failed_to_open_file);
   print OUT $data;
   close OUT;
