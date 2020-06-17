@@ -46,7 +46,8 @@ Below table shows an abridged history of Rescuezilla. See the CHANGELOG for more
 
 | Release             | Release Date | Operating System | Notes |
 | ------------------- | ---------- | -------------- | ---------------------------------- |
-| Rescuezilla 1.0.5.1 | 2020-03-24 | Ubuntu 18.04.4 | [Download page](https://github.com/rescuezilla/rescuezilla/releases/latest)
+| Rescuezilla 1.0.6 | 2020-06-17 | Ubuntu 20.04 (64-bit) | [Download page](https://github.com/rescuezilla/rescuezilla/releases/latest)
+| Rescuezilla 1.0.5.1 | 2020-03-24 | Ubuntu 18.04.4 |
 | Rescuezilla 1.0.5   | 2019-11-08 | Ubuntu 18.04.3 | New maintainer. See [Release Thread](https://sourceforge.net/p/redobackup/discussion/1169663/thread/116063b485/).
 | Unofficial updates  | Various    | Various            | Pre-Rescuezilla [updates](https://github.com/rescuezilla/rescuezilla/wiki/Bugs-in-unofficial-Redo-Backup-updates#identifying-redo-backup-versions)
 | Redo Backup 1.0.4   | 2012-11-20 | Ubuntu 12.04.1 |
