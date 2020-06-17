@@ -1,4 +1,4 @@
-![Rescuezilla banner](src/apps/rescuezilla/rescuezilla/usr/share/rescuezilla/banner.png)
+[![Rescuezilla banner](docs/images/banner.big.png)](https://rescuezilla.com) 
 
 # Rescuezilla [![Build Status](https://travis-ci.org/rescuezilla/rescuezilla.svg?branch=master)](https://travis-ci.org/rescuezilla/rescuezilla) 
 
