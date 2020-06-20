@@ -16,11 +16,11 @@
    viewBox="0 0 23.283332 23.283333"
    version="1.1"
    id="svg1308"
-   sodipodi:docname="rescuezilla.svg"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   sodipodi:docname="rescuezilla.mascot.only.svg"
    inkscape:export-filename="/home/sge/Documents/rescuezilla/rescuezilla/src/apps/rescuezilla/rescuezilla/usr/share/rescuezilla/icon.png"
-   inkscape:export-xdpi="69.818184"
-   inkscape:export-ydpi="69.818184"
-   inkscape:version="0.92.4 (5da689c313, 2019-01-14)">
+   inkscape:export-xdpi="69.82"
+   inkscape:export-ydpi="69.82">
   <defs
      id="defs1302">
     <clipPath
@@ -64,17 +64,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="10.084375"
-     inkscape:cx="43.655437"
-     inkscape:cy="44.431079"
+     inkscape:zoom="6.4717623"
+     inkscape:cx="45.161928"
+     inkscape:cy="-18.817051"
      inkscape:document-units="mm"
-     inkscape:current-layer="flowRoot7427-2-6-0-9-9-8"
+     inkscape:current-layer="g26594"
      showgrid="true"
      units="px"
-     inkscape:window-width="1916"
-     inkscape:window-height="2121"
+     inkscape:window-width="1912"
+     inkscape:window-height="2098"
      inkscape:window-x="1920"
-     inkscape:window-y="18"
+     inkscape:window-y="26"
      inkscape:window-maximized="0">
     <inkscape:grid
        type="xygrid"
@@ -98,7 +98,7 @@
      id="layer1"
      transform="translate(0,-273.71666)">
     <g
-       transform="matrix(0.26458333,0,0,0.26458333,-69.670768,248.95091)"
+       transform="matrix(0.26861613,0,0,0.26861613,-70.910137,248.39599)"
        id="g26594"
        style="display:inline;enable-background:new">
       <path
@@ -265,7 +265,7 @@ R"
         <path
            d="m 402.71371,524.7832 h -11.92 v -60.32 h 12 q 2.96,0 5.2,0.24 2.24,0.16 5.44,1.12 3.28,0.96 5.36,2.72 2.08,1.68 3.6,5.12 1.6,3.36 1.6,8.08 0,10.88 -8.56,15.6 l 10.48,27.44 h -12.56 l -10.48,-27.84 h -0.16 z m 0,-50.48 v 16.08 l 2.08,0.08 q 3.92,0 5.76,-2.32 1.84,-2.4 1.84,-6.32 0,-3.52 -1.92,-5.6 -1.92,-2.16 -6.16,-1.92 z"
            style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:condensed;font-size:76px;line-height:1;font-family:'Futura LT';-inkscape-font-specification:'Futura LT Bold Condensed';text-align:center;letter-spacing:-2.82999992px;word-spacing:0px;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:5.49059772;stroke-miterlimit:5.17142868;stroke-dasharray:none;stroke-opacity:1"
-           id="path1993" />
+           id="path2971" />
       </g>
     </g>
   </g>
