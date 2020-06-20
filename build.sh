@@ -146,8 +146,9 @@ if [[ $? -ne 0 ]]; then
     echo "Error: Failed to copy Rescuezilla deb packages."
     exit 1
 fi
-# Create Rescuezilla desktop icon
+# Create desktop icon shortcuts
 ln -s /usr/share/applications/rescuezilla.desktop "$BUILD_DIRECTORY/chroot/home/ubuntu/Desktop/rescuezilla.desktop"
+ln -s /usr/share/applications/mousepad.desktop "$BUILD_DIRECTORY/chroot/home/ubuntu/Desktop/mousepad.desktop"
 
 LANG_CODES=(
     "fr"

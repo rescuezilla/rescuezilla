@@ -2,14 +2,14 @@
 [Added Associations]
 video/ogg=gnome-mplayer.desktop
 image/png=mirage.desktop;
-text/html=chromium-browser.desktop;leafpad.desktop;
+text/html=chromium-browser.desktop;mousepad.desktop;
 application/zip=file-roller.desktop;
 audio/mpeg=deadbeef.desktop;
 application/x-compressed-tar=file-roller.desktop;
-text/x-readme=leafpad.desktop;
-text/x-python=leafpad.desktop;
+text/x-readme=mousepad.desktop;
+text/x-python=mousepad.desktop;
 application/pdf=evince.desktop;
-text/plain=leafpad.desktop;
+text/plain=mousepad.desktop;
 image/jpeg=mirage.desktop;
 video/x-flv=gnome-mplayer.desktop;
 video/mp4=gnome-mplayer.desktop;

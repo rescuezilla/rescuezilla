@@ -838,7 +838,7 @@
        <application name="gpicview">
           <maximized>false</maximized>
       </application>
-      <application name="leafpad">
+      <application name="mousepad">
           <maximized>false</maximized>
       </application>
       <application name="lshw-gtk">
