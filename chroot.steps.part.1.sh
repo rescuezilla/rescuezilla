@@ -191,6 +191,11 @@ fi
 #
 apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install --yes slim
 
+# Lowers systemd timeout if a service cannot start, as a 90 second delay in boot/shutdown
+# provides a very poor user experience.
+sed --in-place 's/#DefaultTimeoutStartSec=90s/DefaultTimeoutStartSec=10s/g' /etc/systemd/system.conf
+sed --in-place 's/#DefaultTimeoutStopSec=90s/DefaultTimeoutStopSec=10s/g' /etc/systemd/system.conf
+
 # Prevent "initramfs unpacking failed: Decoding failed" message on Ubuntu 19.10
 # and Ubuntu 20.04 systems [1] [2]. Using gzip means supposedly slower boot
 # than lz4 compression, but it's a worthwhile trade-off to prevent any 
