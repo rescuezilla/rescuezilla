@@ -20,21 +20,3 @@ xsetroot -solid "#333333"
 
 # eyes candy (composite)
 # myxcompmgr --startstop &
-
-# Launch PCMan File Manager in desktop mode, to manage desktop icons and wallpaper
-pcmanfm --desktop &
-
-# network (gnome-network-manger)
-nm-applet &
-
-# ALSA volume control widget
-volumeicon &
-
-# power-manager
-#gnome-power-manager &
-
-# lxpanel (panel/systray)
-(sleep 1 && lxpanel)&
-
-# Start Rescuezilla (as root via PolicyKit) automatically
-rescuezilla-pkexec &
