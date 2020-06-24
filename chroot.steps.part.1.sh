@@ -92,8 +92,8 @@ common_pkgs=("discover"
              "laptop-detect"
              "casper"
              "lupin-casper"
-             "xinit"
              "openbox"
+             "lightdm"
              "x11-xserver-utils"
              "xterm"
              "network-manager-gnome"
@@ -180,16 +180,6 @@ if [[ $? -ne 0 ]]; then
     echo "Error: Failed to install packages."
     exit 1
 fi
-
-# Install the packages that have custom configuration files managed in the
-# source tree, and use non-interactive conflict resolution to choose those
-# configuration files, not package maintainer's versions.  The non-interactive
-# conflict resolutions means its the responsibility of the of the build script
-# maintainer to periodically ensure the version-controlled configuration file
-# hasn't does not become too old and out-of-date compared to the package
-# maintainer's version.
-#
-apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install --yes slim
 
 # Lowers systemd timeout if a service cannot start, as a 90 second delay in boot/shutdown
 # provides a very poor user experience.
