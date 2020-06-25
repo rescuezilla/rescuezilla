@@ -15,10 +15,11 @@ Rescuezilla is an actively maintained fork of an old application named _Redo Bac
 * Boots from Live CD or a USB drive on any PC or Mac
 * Full system backup, bare metal recovery, partition editing, data protection, web browsing, and more
 * Extra tools for hard drive partitioning, factory reset, undeleting files
-* Can automatically locate network storage (shared folders & FTP servers)
 * Web browser for downloading drivers, reading documentation
 * File explorer for copying and editing files even if system won't boot
 * Based on Ubuntu and partclone
+
+Rescuezilla is currently only suitable for backup and restore of _whole hard drives_. It is **not** yet well-suited for restoring single partitions individually, as might be desired for users with dual-boot systems. Even with this limitation Rescuezilla is still useful for many end-users. Rescuezilla v1.0.7 will be released in a few months and will be a major upgrade, adding support for backup and restoring images in Clonezilla format, in addition to adding the ability to restore partitions individually.
 
 ## Supported Languages
 
@@ -46,7 +47,8 @@ Below table shows an abridged history of Rescuezilla. See the CHANGELOG for more
 
 | Release             | Release Date | Operating System | Notes |
 | ------------------- | ---------- | -------------- | ---------------------------------- |
-| Rescuezilla 1.0.6 | 2020-06-17 | Ubuntu 20.04 (64-bit) | [Download page](https://github.com/rescuezilla/rescuezilla/releases/latest)
+| Rescuezilla 1.0.6.1 | 2020-06-26 | Ubuntu 20.04 (64-bit) | [Download page](https://github.com/rescuezilla/rescuezilla/releases/latest)
+| Rescuezilla 1.0.6 | 2020-06-17 | Ubuntu 20.04 (64-bit) | Added EFI support (including Secure Boot)
 | Rescuezilla 1.0.5.1 | 2020-03-24 | Ubuntu 18.04.4 |
 | Rescuezilla 1.0.5   | 2019-11-08 | Ubuntu 18.04.3 | New maintainer. See [Release Thread](https://sourceforge.net/p/redobackup/discussion/1169663/thread/116063b485/).
 | Unofficial updates  | Various    | Various            | Pre-Rescuezilla [updates](https://github.com/rescuezilla/rescuezilla/wiki/Bugs-in-unofficial-Redo-Backup-updates#identifying-redo-backup-versions)
