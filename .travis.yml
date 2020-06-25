@@ -37,11 +37,17 @@ script:
 - git clean -dfX && git clean -dfx
   # DANGER: Do *not* use this on your working dir
 - git reset --hard HEAD
+  # List any working directory files to help debug any unclean working directory issues
+- docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make status
   # Execute the Makefile's install target within the docker container. This step
   # may take some time. Hundreds of megabytes of packages are downloaded from the
   # Ubuntu mirror during a build.
-- docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make all
-
+- docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make amd64
+  # List any working directory files to help debug any unclean working directory issues
+- docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make status
+- docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make i386
+  # List any working directory files to help debug any unclean working directory issues
+- docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make status
 
 # When a new tag is pushed, upload the ISO image as a draft release on GitHub
 

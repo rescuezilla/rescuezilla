@@ -79,7 +79,17 @@ clean-build-dir:
 	$(info * Deleting build/ directory)
 	rm -rf build/
 
- 
+# Print git status for all git submodules, to help debug when the working directory is non-pristine.
+status: UTIL_LINUX_SRC_DIR=$(shell pwd)/src/third-party/util-linux
+status: PARTCLONE_SRC_DIR=$(shell pwd)/src/third-party/partclone
+status:
+	$(info * Top level Rescuezilla git status.)
+	git status
+	$(info * util-linux git submodule status.)
+	cd $(UTIL_LINUX_SRC_DIR) && git status
+	$(info * partclone git submodule status.)
+	cd $(PARTCLONE_SRC_DIR) && git status
+
 clean: clean-build-dir
 	$(info )
 	$(info * Deleting cached apt-get indexes, but KEEPING cached deb packages.)
