@@ -34,8 +34,8 @@ deb:
 # [1] For full details, see: https://github.com/rescuezilla/rescuezilla/issues/77
 
 sfdisk.v2.20.1.amd64: SRC_DIR=$(shell pwd)/src/third-party/util-linux
-sfdisk.v2.20.1.amd64: UTIL_LINUX_BUILD_DIR=$(AMD64_BUILD_DIR)/util-linux
 sfdisk.v2.20.1.amd64: AMD64_BUILD_DIR=$(shell pwd)/build/focal.amd64
+sfdisk.v2.20.1.amd64: UTIL_LINUX_BUILD_DIR=$(AMD64_BUILD_DIR)/util-linux
 sfdisk.v2.20.1.amd64:
 	mkdir --parents $(UTIL_LINUX_BUILD_DIR) $(AMD64_BUILD_DIR)/chroot/usr/sbin/
 	cd $(UTIL_LINUX_BUILD_DIR) && $(SRC_DIR)/autogen.sh
@@ -44,8 +44,8 @@ sfdisk.v2.20.1.amd64:
 	mv $(UTIL_LINUX_BUILD_DIR)/fdisk/sfdisk $(AMD64_BUILD_DIR)/chroot/usr/sbin/sfdisk.v2.20.1.64bit
 
 partclone.restore.v0.2.43.amd64: SRC_DIR=$(shell pwd)/src/third-party/partclone
-partclone.restore.v0.2.43.amd64: PARTCLONE_BUILD_DIR=$(AMD64_BUILD_DIR)/partclone
 partclone.restore.v0.2.43.amd64: AMD64_BUILD_DIR=$(shell pwd)/build/focal.amd64
+partclone.restore.v0.2.43.amd64: PARTCLONE_BUILD_DIR=$(AMD64_BUILD_DIR)/partclone
 partclone.restore.v0.2.43.amd64:
 	mkdir --parents $(PARTCLONE_BUILD_DIR) $(AMD64_BUILD_DIR)/chroot/usr/sbin/
 	# Builds partclone v0.2.43, but disables support for the following filesystems: XFS, reiserfs, UFS, VMFS and JFS.
@@ -67,6 +67,8 @@ partclone.restore.v0.2.43.amd64:
 	cd $(PARTCLONE_BUILD_DIR) && $(SRC_DIR)/configure --enable-static --enable-extfs --enable-reiser4 --enable-hfsp --enable-fat --enable-ntfs --enable-btrfs
 	cd $(PARTCLONE_BUILD_DIR) && make
 	mv $(PARTCLONE_BUILD_DIR)/src/partclone.restore $(AMD64_BUILD_DIR)/chroot/usr/sbin/partclone.restore.v0.2.43.64bit
+	# FIXME: Building out-of-tree modifies two files in the source directory during the TravisCI docker build (but works fine on a local build)
+	cd $(SRC_DIR) && git checkout -- config.h.in configure
 
 clean-build-dir:
 	$(info * Unmounting chroot bind mounts)
