@@ -1,4 +1,16 @@
 -------------------------------------------------------------------------------
+  Version 1.0.6.1 (2020-06-26) 
+-------------------------------------------------------------------------------
+
+* Improved slow shutdown on Rescuezilla 64-bit (which was caused by file manager application) (#87)
+* Fixed French, German and Spanish keyboard layout not being selected (#99)
+* Skipped “Please remove the installation medium, then press ENTER” after shutdown (#87)
+* Fixed mousepad text editor’s shortcuts and file-associations (#98)
+* Added grub2-common package for /usr/sbin/grub-install executable, which was intended for v1.0.6 (#50)
+* Fixed version string indicating TravisCI build bot on v1.0.6 used non-pristine build directory (#102)
+* Tweaked Rescuezilla wallpaper, splash screen, icon for aesthetics
+
+-------------------------------------------------------------------------------
   Version 1.0.6 (2020-06-18) 
 -------------------------------------------------------------------------------
 
