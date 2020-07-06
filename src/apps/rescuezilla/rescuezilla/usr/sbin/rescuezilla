@@ -61,7 +61,7 @@ display_yad() {
 #
 #  Define base command for executing Rescuezilla
 #
-BASE_CMD="/usr/sbin/rescuezillapl $*"
+BASE_CMD="/usr/sbin/rescuezillapy $*"
 
 #
 # Cannot launch Rescuezilla if GParted is already running.
@@ -76,8 +76,8 @@ fi
 #
 #  Only permit one instance of Rescuezilla to execute at a time
 #
-if test "z`ps -e | grep rescuezillapl`" != "z"; then
-    MESSAGE="The process rescuezillapl is already running.\n\nOnly one rescuezillapl process is permitted."
+if test "z`ps -e | grep rescuezillapy`" != "z"; then
+    MESSAGE="The process rescuezillapy is already running.\n\nOnly one rescuezillapy process is permitted."
     printf "$MESSAGE\n"
     display_yad "Rescuezilla" "$MESSAGE"
     exit 1
@@ -88,7 +88,7 @@ fi
 #
 if test "x`id -u`" != "x0"; then
     #
-    #  If there is no configured SU program run rescuezillapl as
+    #  If there is no configured SU program run rescuezillapy as
     #  non-root to display the graphical error about needing root
     #  privileges.
     #
@@ -236,7 +236,7 @@ done
 #  daemons are running.
 #  Else use udisks if binary exists and daemon is running.
 #  Otherwise use hal-lock for invocation if binary exists and daemon is running.
-#  If the above checks fail then simply run rescuezillapl.
+#  If the above checks fail then simply run rescuezillapy.
 #
 if test "x$HAVE_UDISKS2_INHIBIT" = "xyes"; then
     /usr/lib/udisks2/udisks2-inhibit $BASE_CMD
