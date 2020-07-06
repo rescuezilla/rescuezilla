@@ -23,14 +23,14 @@ msgstr "Démarrer Redo Backup"
 msgid "If boot fails, reboot and try selecting Graphical fallback instead"
 msgstr ""
 
-msgid "Graphical fallback"
-msgstr "TRANSLATE: Graphical fallback"
+msgid "Graphical fallback mode"
+msgstr "Mode de secours graphique"
 
 msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
 msgstr ""
 
 msgid "Load USB into RAM"
-msgstr "TRANSLATE: Load USB into RAM"
+msgstr "Charger l'USB dans la RAM"
 
 msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
 msgstr "" 

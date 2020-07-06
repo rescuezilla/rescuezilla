@@ -139,6 +139,7 @@ common_pkgs=("discover"
              "baobab"
              "gsettings-desktop-schemas"
              "gparted"
+             "mdadm"
              "lshw-gtk"
              "testdisk"
              "gddrescue"
@@ -214,8 +215,8 @@ cat << EOF > /tmp/gparted.rescuezilla.check.sh
 #
 # Cannot launch GParted if Rescuezilla is running.
 #
-if test "z\`ps -e | grep rescuezillapl\`" != "z"; then
-        MESSAGE="Cannot launch GParted becuase the process rescuezillapl is running.\n\nClose Rescuezilla then try again."
+if test "z\`ps -e | grep rescuezillapy\`" != "z"; then
+        MESSAGE="Cannot launch GParted because the process rescuezillapy is running.\n\nClose Rescuezilla then try again."
         printf "\$MESSAGE"
         yad --center --width 300 --title="\$TITLE." --button="OK:0" --text "\$MESSAGE"
         exit 1

@@ -1,0 +1,375 @@
+# ----------------------------------------------------------------------
+#   Copyright (C) 2012 RedoBackup.org
+#   Copyright (C) 2003-2020 Steven Shiau <steven _at_ clonezilla org>
+#   Copyright (C) 2019-2020 Rescuezilla.com <rescuezilla@gmail.com>
+# ----------------------------------------------------------------------
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# ----------------------------------------------------------------------
+import copy
+import threading
+import traceback
+
+import gi
+
+gi.require_version("Gtk", "3.0")
+from gi.repository import GObject, GLib
+
+from parser.clonezilla_image import ClonezillaImage
+from parser.combined_drive_state import CombinedDriveState
+from parser.lvm import Lvm
+from parser.redobackup_legacy_image import RedoBackupLegacyImage
+from utility import Utility, ErrorMessageModalPopup, _, PleaseWaitModalPopup
+
+# FIXME: The LVM handling in this class could be vastly improved.
+class PartitionsToRestore:
+    def __init__(self, builder, restore_image_partition_list):
+        self.builder = builder
+        self.restore_partition_selection_list = restore_image_partition_list
+        self.destination_partition_combobox_list = self.builder.get_object("destination_partition_combobox_list")
+        self.restore_partition_treeview = self.builder.get_object("restore_step4_image_partition_treeview")
+
+        self.NOT_RESTORING_PARTITION_KEY = "DISABLED"
+        self.NOT_RESTORING_PARTITION_ENDUSER_FRIENDLY = "Not restoring this partition"
+        self.win = self.builder.get_object("main_window")
+
+        self.overwriting_partition_table_message = "<b>" + _("You will be overwriting the partition table.") + "</b>"
+        self.not_overwriting_partition_table_message = _("You will <b>not</b> be overwriting the partition table.")
+
+        self.lvm_lv_path_list = []
+        self.lvm_lv_path_lock = threading.Lock()
+
+        # FIXME: Refactor the code to remove the need for this ugly initialization.
+        self.dest_drive_dict = {"partitions": {}}
+
+        self.selected_image = None
+        self.dest_drive_key = ""
+        self.dest_drive_node = {}
+
+    def initialize_individual_partition_restore_list(self, selected_image, dest_drive_node, dest_drive_desc,
+                                                     dest_drive_dict):
+        self.selected_image = selected_image
+        self.dest_drive_node = dest_drive_node
+        self.dest_drive_desc = dest_drive_desc
+        self.dest_drive_dict = dest_drive_dict
+
+        if isinstance(self.selected_image, ClonezillaImage):
+            print("Got selected Clonezilla image: " + str(selected_image.image_format_dict_dict))
+        elif isinstance(self.selected_image, RedoBackupLegacyImage):
+            print("Got selected RedoBackupLegacy image: " + str(selected_image.sfdisk_dict))
+        self._use_image_partition_table()
+
+        info_string = "<b>" + _("Selected image") + "</b> " + GObject.markup_escape_text(self.selected_image.absolute_path) + "\n" + "<b>" + _("Destination device") + "</b> " + GObject.markup_escape_text(self.dest_drive_desc)
+        if isinstance(self.selected_image, ClonezillaImage) and len(
+                self.selected_image.short_device_node_disk_list) > 1:
+            # FIXME: Support Clonezilla multidisk images with subdisk selection combobox
+            info_string += "\n" + "<b>" + _("IMPORTANT: Only selecting FIRST disk in Clonezilla image containing MULTIPLE DISKS.") + "</b>"
+        self.builder.get_object("restore_step4_selected_image_text").set_markup(info_string)
+
+        print("Have selected image " + str(self.selected_image))
+        print("Have drive dict " + str(self.dest_drive_dict))
+
+        # If the image has a partition table, the overwrite toggle is enabled and defaults to True. Otherwise
+        # it's not possible to overwrite the partition table.
+        overwrite_partition_table_checkbutton = self.builder.get_object("overwrite_partition_table_checkbutton")
+        overwrite_partition_table_checkbutton.set_sensitive(self.selected_image.has_partition_table())
+        overwrite_partition_table_checkbutton.set_active(self.selected_image.has_partition_table())
+
+    def completed_toggle(self):
+        if self.please_wait_popup is not None:
+            self.please_wait_popup.destroy()
+            self.please_wait_popup = None
+
+    # Starts LVM and umounts all relevant logical volumes
+    # FIXME: Similar code is is duplicated elsewhere in the codebase.
+    def _scan_and_unmount_existing_lvm(self, dest_partitions, is_overwriting_partition_table):
+        with self.lvm_lv_path_lock:
+            self.lvm_lv_path_list.clear()
+
+        error_message = ""
+        try:
+            # Gathering LVM logical volumes.
+            # Start the Logical Volume Manager (LVM). Caller raises Exception on failure
+            Lvm.start_lvm2(logger=None)
+            vg_state_dict = Lvm.get_volume_group_state_dict(logger=None)
+
+            for dest_partition_key in dest_partitions:
+                # Figure out LVM Volume Groups and Logical Volumes
+                relevant_vg_name_list = []
+                for report_dict in vg_state_dict['report']:
+                    for vg_dict in report_dict['vg']:
+                        if 'pv_name' in vg_dict.keys() and dest_partition_key == vg_dict['pv_name']:
+                            if 'vg_name' in vg_dict.keys():
+                                vg_name = vg_dict['vg_name']
+                            else:
+                                error_message += "Could not find volume group name vg_name in " + str(vg_dict) + "\n"
+                                # TODO: Re-evaluate how exactly Clonezilla uses /NOT_FOUND and whether introducing it here
+                                # TODO: could improve Rescuezilla/Clonezilla interoperability.
+                                continue
+                            if 'pv_uuid' in vg_dict.keys():
+                                pv_uuid = vg_dict['pv_uuid']
+                            else:
+                                error_message += "Could not find physical volume UUID pv_uuid in " + str(vg_dict) + "\n"
+                                continue
+                            relevant_vg_name_list.append(vg_name)
+                lv_state_dict = Lvm.get_logical_volume_state_dict(logger=None)
+                for report_dict in lv_state_dict['report']:
+                    for lv_dict in report_dict['lv']:
+                        # Only consider VGs that match the partitions to backup list
+                        if 'vg_name' in lv_dict.keys() and lv_dict['vg_name'] in relevant_vg_name_list:
+                            vg_name = lv_dict['vg_name']
+                            if 'lv_path' in lv_dict.keys():
+                                lv_path = lv_dict['lv_path']
+                                is_unmounted, message = Utility.umount_warn_on_busy(lv_path)
+                                if not is_unmounted:
+                                    error_message += message
+                                else:
+                                    # TODO: Make this logic better
+                                    with self.lvm_lv_path_lock:
+                                        self.lvm_lv_path_list.append(lv_path)
+                            else:
+                                continue
+
+            # Stop the Logical Volume Manager (LVM)
+            failed_logical_volume_list, failed_volume_group_list = Lvm.shutdown_lvm2(self.builder, None)
+            for failed_volume_group in failed_volume_group_list:
+                error_message += "Failed to shutdown Logical Volume Manager (LVM) Volume Group (VG): " + failed_volume_group[
+                    0] + "\n\n" + failed_volume_group[1].stderr
+                GLib.idle_add(self.post_lvm_preparation, is_overwriting_partition_table, False, error_message)
+                return
+
+            for failed_logical_volume in failed_logical_volume_list:
+                error_message += "Failed to shutdown Logical Volume Manager (LVM) Logical Volume (LV): " + \
+                          failed_logical_volume[0] + "\n\n" + failed_logical_volume[1].stderr
+                GLib.idle_add(self.post_lvm_preparation, is_overwriting_partition_table, False, error_message)
+                return
+            GLib.idle_add(self.post_lvm_preparation, is_overwriting_partition_table, True, error_message)
+        except Exception as e:
+            tb = traceback.format_exc()
+            traceback.print_exc()
+            message = "Unable to process Logical Volume Manager (LVMs): " + tb
+            GLib.idle_add(self.post_lvm_preparation, is_overwriting_partition_table, False, error_message)
+        GLib.idle_add(self.post_lvm_preparation, is_overwriting_partition_table, True, error_message)
+
+    def overwrite_partition_table_toggle(self, is_overwriting_partition_table):
+        print("Overwrite partition table toggle changed to " + str(is_overwriting_partition_table))
+        if is_overwriting_partition_table:
+            # Don't need to scan for existing LVM logical volumes when overwriting partition table.
+            self.post_lvm_preparation(is_overwriting_partition_table, True, "")
+        else:
+            self.win.set_sensitive(False)
+            self.please_wait_popup = PleaseWaitModalPopup(self.builder, title=_("Please wait..."), message=_("Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."))
+            self.please_wait_popup.show()
+            if 'partitions' in self.dest_drive_dict.keys():
+                partitions = self.dest_drive_dict['partitions']
+            else:
+                # TODO: Make this logic better.
+                partitions = self.dest_drive_dict
+            thread = threading.Thread(target=self._scan_and_unmount_existing_lvm, args=[copy.deepcopy(partitions).keys(), is_overwriting_partition_table])
+            thread.daemon = True
+            thread.start()
+
+    def post_lvm_preparation(self, is_overwriting_partition_table, is_lvm_shutdown_success, lvm_error_message):
+        if self.please_wait_popup is not None:
+            self.please_wait_popup.destroy()
+            self.please_wait_popup = None
+
+        if not is_lvm_shutdown_success or len(lvm_error_message) != 0:
+            error = ErrorMessageModalPopup(self.builder, lvm_error_message)
+            # Ensure that the overwrite partition table button stays checked.
+            is_overwriting_partition_table = True
+            overwrite_partition_table_checkbutton = self.builder.get_object("overwrite_partition_table_checkbutton")
+            overwrite_partition_table_checkbutton.set_sensitive(self.selected_image.has_partition_table())
+            overwrite_partition_table_checkbutton.set_active(self.selected_image.has_partition_table())
+
+        if is_overwriting_partition_table:
+            overwrite_partition_table_warning_text = self.overwriting_partition_table_message + _("The \"destination partition\" column has been updated using the information stored within the backup image.\n\n<b>If partitions have been resized, new partitions added, or additional operating systems installed <i>since the backup image was created</i>, then the destination drive's partition table will not match the backup image, and overwriting the destination drive's partition table will render these resized and additional partitions permanently inaccessible.</b> If you have not modified the partition table in such a way since creating this backup then overwriting the partition table is completely safe and will have no negative effects.")
+            self.builder.get_object(
+                "restore_step4_overwrite_partition_table_warning_label").set_markup(
+                overwrite_partition_table_warning_text)
+            self._use_image_partition_table()
+        else:
+            target_node_warning_text = self.not_overwriting_partition_table_message + _("The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table.")
+            self.builder.get_object(
+                "restore_step4_overwrite_partition_table_warning_label").set_markup(target_node_warning_text)
+            self._use_existing_drive_partition_table()
+        self.builder.get_object("destination_partition_combobox_cell_renderer").set_sensitive(not is_overwriting_partition_table)
+
+    def change_combo_box(self, path_string, target_node_string, enduser_friendly_string):
+        print(
+            "Changing the combobox on row " + path_string + " to " + target_node_string + " / " + enduser_friendly_string)
+        liststore_iter = self.restore_partition_selection_list.get_iter(path_string)
+
+        self._swap_destination_partition_node_with_backup(liststore_iter)
+        self.restore_partition_selection_list.set_value(liststore_iter, 3, target_node_string)
+        self.restore_partition_selection_list.set_value(liststore_iter, 4, enduser_friendly_string)
+        # Automatically tick the restore checkbox
+        self.restore_partition_selection_list.set_value(liststore_iter, 1, True)
+
+    def toggle_restore_of_row(self, iter, new_toggle_state):
+        # Need to be able to disable restore of individual partitions.
+
+        is_empty_dest_partition = False
+        if self.restore_partition_selection_list.get_value(iter, 5) == self.NOT_RESTORING_PARTITION_KEY:
+            is_empty_dest_partition = True
+        if new_toggle_state and is_empty_dest_partition:
+            print("Blocking enabling the toggle when the destination partition is not set")
+            error = ErrorMessageModalPopup(self.builder,
+                                           _("No destination partition selected. Use the destination partition drop-down menu to select the destination"))
+            return
+
+        # Update the underlying model to ensure the checkbox will reflect the new state
+        self.restore_partition_selection_list.set_value(iter, 1, new_toggle_state)
+        self._swap_destination_partition_node_with_backup(iter)
+        # If the row has been disabled, update the combobox
+        if not new_toggle_state:
+            self.restore_partition_selection_list.set_value(iter, 3, self.NOT_RESTORING_PARTITION_KEY)
+            self.restore_partition_selection_list.set_value(iter, 4, self.NOT_RESTORING_PARTITION_ENDUSER_FRIENDLY)
+
+    def _use_image_partition_table(self):
+        # Populate image partition list
+        self.destination_partition_combobox_list.clear()
+        self.restore_partition_selection_list.clear()
+        if isinstance(self.selected_image, ClonezillaImage):
+            for image_format_dict_key in self.selected_image.image_format_dict_dict.keys():
+                print("ClonezillaImage contains partition " + image_format_dict_key)
+                # TODO: Support Clonezilla multidisk
+                short_device_key = self.selected_image.short_device_node_disk_list[0]
+                if self.selected_image.does_image_key_belong_to_device(image_format_dict_key, short_device_key):
+                    if self.selected_image.image_format_dict_dict[image_format_dict_key]['is_lvm_logical_volume']:
+                        # The destination of an LVM logical volume within a partition (eg /dev/cl/root) is unchanged
+                        dest_partition = self.selected_image.image_format_dict_dict[image_format_dict_key][
+                            'logical_volume_long_device_node']
+                        flat_description = "Logical Volume " + image_format_dict_key + ": " + self.selected_image.flatten_partition_string(
+                            short_device_key, image_format_dict_key)
+                    else:
+                        # The destination partition of a regular partition in the image (eg, /dev/sda4) is dependent on
+                        # the destination drive node (eg /dev/sdb) so we need to split and join the device so the
+                        # mapping correctly reads "/dev/sdb4".
+                        image_base_device_node, image_partition_number = Utility.split_device_string(image_format_dict_key)
+                        # Combine image partition number with destination device node base
+                        dest_partition = Utility.join_device_string(self.dest_drive_node, image_partition_number)
+                        flat_description = "Partition " + str(
+                            image_partition_number) + ": " + self.selected_image.flatten_partition_string(
+                            short_device_key, image_format_dict_key)
+                    self.destination_partition_combobox_list.append([dest_partition, flat_description])
+                    self.restore_partition_selection_list.append(
+                        [image_format_dict_key, True, flat_description, dest_partition, flat_description,
+                         dest_partition, flat_description])
+        elif isinstance(self.selected_image, RedoBackupLegacyImage):
+            for short_device_node in self.selected_image.short_device_node_partition_list:
+                image_base_device_node, image_partition_number = Utility.split_device_string(short_device_node)
+                # Combine image partition number with destination device node base
+                dest_partition = Utility.join_device_string(self.dest_drive_node, image_partition_number)
+                # FIXME: Ensure the assertion that the key being used is valid for the dictionary is true.
+                flat_description = "Partition " + str(
+                    image_partition_number) + " (" + dest_partition + "): " + self.selected_image.flatten_partition_string(
+                    short_device_node)
+                self.destination_partition_combobox_list.append([dest_partition, flat_description])
+                self.restore_partition_selection_list.append(
+                    [short_device_node, True, flat_description, dest_partition, flat_description, dest_partition,
+                     flat_description])
+
+        self.builder.get_object("destination_partition_combobox_cell_renderer").set_sensitive(False)
+
+    def _use_existing_drive_partition_table(self):
+        self.destination_partition_combobox_list.clear()
+        self.restore_partition_selection_list.clear()
+
+        num_destination_partitions = 0
+
+        with self.lvm_lv_path_lock:
+            for lvm_lv_path in self.lvm_lv_path_list:
+                self.destination_partition_combobox_list.append([lvm_lv_path, "Logical Volume: " + lvm_lv_path])
+                num_destination_partitions += 1
+
+        print("Looking at " + str(self.selected_image) + " and " + str(self.dest_drive_dict))
+
+        # For the safety of end-users, ensure the initial combobox mapping is blank. It's possible to autogenerate a
+        # mapping, but this could be wrong so far simpler for now to leave the mapping blank and rely on end-user
+        # decisions.
+        flattened_part_description = self.NOT_RESTORING_PARTITION_ENDUSER_FRIENDLY
+        dest_partition_key = self.NOT_RESTORING_PARTITION_KEY
+        is_restoring_partition = False
+
+        # Populate image partition selection list (left-hand side column)
+        if isinstance(self.selected_image, ClonezillaImage):
+            for image_format_dict_key in self.selected_image.image_format_dict_dict.keys():
+                # TODO: Support Clonezilla multidisk
+                short_device_key = self.selected_image.short_device_node_disk_list[0]
+                if self.selected_image.does_image_key_belong_to_device(image_format_dict_key, short_device_key):
+                    if self.selected_image.image_format_dict_dict[image_format_dict_key]['is_lvm_logical_volume']:
+                        flat_image_part_description = "Logical Volume " + image_format_dict_key + ": " + self.selected_image.flatten_partition_string(
+                            short_device_key, image_format_dict_key)
+                    else:
+                        image_base_device_node, image_partition_number = Utility.split_device_string(image_format_dict_key)
+                        flat_image_part_description = "Partition " + str(
+                            image_partition_number) + ": " + self.selected_image.flatten_partition_string(short_device_key,
+                                                                                                          image_format_dict_key)
+                    self.restore_partition_selection_list.append(
+                        [image_format_dict_key, is_restoring_partition, flat_image_part_description, dest_partition_key,
+                         flattened_part_description,
+                         dest_partition_key, flattened_part_description])
+                    num_destination_partitions += 1
+        elif isinstance(self.selected_image, RedoBackupLegacyImage):
+            partitions = self.selected_image.short_device_node_partition_list
+            for image_format_dict_key in partitions:
+                image_base_device_node, image_partition_number = Utility.split_device_string(image_format_dict_key)
+                flat_image_part_description = "Partition " + str(
+                image_partition_number) + ": " + self.selected_image.flatten_partition_string(image_format_dict_key)
+                self.restore_partition_selection_list.append(
+                    [image_format_dict_key, is_restoring_partition, flat_image_part_description, dest_partition_key,
+                     flattened_part_description,
+                     dest_partition_key, flattened_part_description])
+                num_destination_partitions += 1
+
+        if num_destination_partitions == 0:
+            # The destination disk must be empty.
+            self.restore_partition_selection_list.append(
+                [self.dest_drive_node, is_restoring_partition, flat_image_part_description, self.dest_drive_node,
+                 flattened_part_description,
+                 dest_partition_key, flattened_part_description])
+
+        # Populate combobox (right-hand side column)
+        num_combo_box_entries = 0
+        if 'partitions' in self.dest_drive_dict.keys() and len(self.dest_drive_dict['partitions'].keys()) > 0:
+            # Loop over the partitions in in the destination drive
+            for dest_partition_key in self.dest_drive_dict['partitions'].keys():
+                if 'type' in self.dest_drive_dict['partitions'][dest_partition_key].keys() and self.dest_drive_dict['partitions'][dest_partition_key]['type'] == "extended":
+                    # Do not add a destination combobox entry for any Extended Boot Record (EBR) destination partition
+                    # nodes to reduce risk of user confusion.
+                    continue
+
+                flattened_part_description = dest_partition_key + ": " + CombinedDriveState.flatten_part(
+                    self.dest_drive_dict['partitions'][dest_partition_key])
+                self.destination_partition_combobox_list.append([dest_partition_key, flattened_part_description])
+                num_combo_box_entries += 1
+
+        if num_combo_box_entries == 0:
+            # TODO: Improve disk description
+            flattened_disk_description = self.dest_drive_node
+            # If there are no partitions in the destination drive, we place the entire drive as the destination
+            self.destination_partition_combobox_list.append([self.dest_drive_node, "WHOLE DRIVE " + flattened_disk_description])
+
+        self.builder.get_object("destination_partition_combobox_cell_renderer").set_sensitive(True)
+
+    def _swap_destination_partition_node_with_backup(self, liststore_iter):
+        current_value = self.restore_partition_selection_list.get_value(liststore_iter, 3)
+        old_value = self.restore_partition_selection_list.get_value(liststore_iter, 5)
+        self.restore_partition_selection_list.set_value(liststore_iter, 3, old_value)
+        self.restore_partition_selection_list.set_value(liststore_iter, 5, current_value)
+
+        current_value = self.restore_partition_selection_list.get_value(liststore_iter, 4)
+        old_value = self.restore_partition_selection_list.get_value(liststore_iter, 6)
+        self.restore_partition_selection_list.set_value(liststore_iter, 4, old_value)
+        self.restore_partition_selection_list.set_value(liststore_iter, 6, current_value)
