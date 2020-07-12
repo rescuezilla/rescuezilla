@@ -1,0 +1,13 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=true
+Icon[en_US]=/usr/share/icons/gnome-colors-common/scalable/status/user-trash-full.svg
+Name[en_US]=File Recovery (Undelete)
+Exec=testdisk-pkexec
+Comment[en_US]=Recover deleted and lost files
+Name=File Recovery (Undelete)
+Comment=Recover deleted and lost files
+Icon=/usr/share/icons/gnome-colors-common/scalable/status/user-trash-full.svg
