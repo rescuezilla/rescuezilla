@@ -2,12 +2,12 @@
 # Any customization should be done in ~/.gtkrc-2.0.mine instead.
 
 include "/root/.gtkrc-2.0.mine"
-gtk-theme-name="Bluebird"
+gtk-theme-name="Breeze"
 gtk-icon-theme-name="gnome-brave"
 gtk-font-name="Sans 10"
 gtk-cursor-theme-name="DMZ-White"
 gtk-cursor-theme-size=0
-gtk-toolbar-style=GTK_TOOLBAR_ICONS
+gtk-toolbar-style=GTK_TOOLBAR_BOTH
 gtk-toolbar-icon-size=GTK_ICON_SIZE_LARGE_TOOLBAR
 gtk-button-images=1
 gtk-menu-images=1
@@ -15,4 +15,5 @@ gtk-enable-event-sounds=1
 gtk-enable-input-feedback-sounds=1
 gtk-xft-antialias=1
 gtk-xft-hinting=1
-gtk-xft-hintstyle="hintfull"
+gtk-xft-hintstyle="hintslight"
+gtk-xft-rgba="rgb"
