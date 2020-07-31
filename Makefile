@@ -20,9 +20,6 @@ i386: deb $(buildscripts)
 deb: BASE_BUILD_DIR=$(shell pwd)/build/deb/
 deb:
 	cd src/apps/rescuezilla/ && BUILD_DIR=$(BASE_BUILD_DIR) $(MAKE) && mv $(BASE_BUILD_DIR)/rescuezilla_*.deb  $(BASE_BUILD_DIR)/../
-	# The "drivereset" frontend is currently not maintained and is
-	# de-emphasized until a complete overhaul in future
-	cd src/apps/drivereset/ && BUILD_DIR=$(BASE_BUILD_DIR) $(MAKE) && mv $(BASE_BUILD_DIR)/drivereset_*.deb  $(BASE_BUILD_DIR)/../
 	cd src/apps/graphical-shutdown/ && BUILD_DIR=$(BASE_BUILD_DIR) $(MAKE) && mv $(BASE_BUILD_DIR)/graphical-shutdown_*.deb  $(BASE_BUILD_DIR)/../
 
 # Build AMD64 binaries for the version of 'sfdisk' and 'partclone' used on Redo Backup v1.0.4, to maximize backwards compatibility
