@@ -781,72 +781,14 @@
 
   # end of the example
 -->
-      <!-- Auto-maximize all windows, except a whitelist.
+      <!-- Auto-maximize a select list of applications.
            See [1] for information. Use obxprop to get
            variable information, as documented above.
 
            [1] http://openbox.org/wiki/Help:Applications#Example_of_per-app_settings
       -->
-      <application class="*">
-          <focus>yes</focus>
+      <application name="Rescuezilla">
           <maximized>true</maximized>
       </application>
-      <application name="lxterminal">
-          <maximized>false</maximized>
-      </application>
-      <application name="arandr">
-          <maximized>false</maximized>
-      </application>
-      <!-- System logout script -->
-      <application name="yad">
-          <maximized>false</maximized>
-      </application>
-      <!-- File manager, including 'Removable medium inserted' messages -->
-      <application name="pcmanfm">
-          <maximized>false</maximized>
-      </application>
-      <!-- GParted including 'Apply operations to device', 'Applying pending operations' window -->
-      <application name="gpartedbin" title="Apply*">
-          <maximized>false</maximized>
-      </application>
-      <application name="gpartedbin" title="Information*">
-          <maximized>false</maximized>
-      </application>
-
-      <!-- Do not maximize rescuezilla's loading bar -->
-      <!-- TODO: Find a neater way that does not require listing every supported language. -->
-      <application name="*" title="Please wait...">
-          <maximized>false</maximized>
-      </application>
-      <application name="*" title="Veuillez patienter...">
-          <maximized>false</maximized>
-      </application>
-      <application name="*" title="Bitte warten...">
-          <maximized>false</maximized>
-      </application>
-      <application name="*" title="Espere por favor...">
-          <maximized>false</maximized>
-      </application>
-
-      <!-- Do not maximize alsamixergui -->
-      <application class="*" title="ALSA Mixer">
-          <maximized>false</maximized>
-      </application>
-      <application name="nm-connection-editor">
-          <maximized>false</maximized>
-      </application>
-       <application name="gpicview">
-          <maximized>false</maximized>
-      </application>
-      <application name="mousepad">
-          <maximized>false</maximized>
-      </application>
-      <application name="lshw-gtk">
-          <maximized>false</maximized>
-      </application>
-      <application name="usb-creator-gtk">
-          <maximized>false</maximized>
-      </application>
- 
   </applications>
 </openbox_config>
