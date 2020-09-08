@@ -1,0 +1,217 @@
+#!/bin/sh
+#     Name:  gparted
+#  Purpose:  Perform appropriate startup of GParted executable gpartedbin.
+#
+#            The purpose of these startup methods is to prevent
+#            devices from being automounted, and to ensure only one
+#            instance of GParted is running.  File system problems can
+#            occur if devices are mounted prior to the completion of
+#            GParted's operations, or if multiple partition editing
+#            tools are in use concurrently.
+#
+# Copyright (C) 2008, 2009, 2010, 2013, 2015 Curtis Gedak
+#
+#  This file is part of GParted.
+#
+#  GParted is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  GParted is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with GParted.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+#
+#  Only permit one instance of GParted to execute at a time
+#
+if test "z`ps -e | grep gpartedbin`" != "z"; then
+	echo "The process gpartedbin is already running."
+	echo "Only one gpartedbin process is permitted."
+	exit 1
+fi
+
+#
+#  Define base command for executing GParted
+#
+BASE_CMD="@sbindir@/gpartedbin $*"
+
+#
+#  For non-root users try to get authorisation to run GParted as root.
+#
+if test "x`id -u`" != "x0"; then
+	#
+	#  If there is no configured SU program run gpartedbin as
+	#  non-root to display the graphical error about needing root
+	#  privileges.
+	#
+	if test "x@gksuprog@" = "x"; then
+		echo "Root privileges are required for running gparted."
+		$BASE_CMD
+		exit 1
+	fi
+
+	#
+	# Interim workaround to allow GParted run by root access to the
+	# X11 display server under Wayland.  If configured with
+	# './configure --enable-xhost-root', the xhost command is
+	# available and root has not been granted access to the X11
+	# display via xhost, then grant access.
+	#
+	ENABLE_XHOST_ROOT=@enable_xhost_root@
+	GRANTED_XHOST_ROOT=no
+	if test "x$ENABLE_XHOST_ROOT" = 'xyes' && xhost 1> /dev/null 2>&1; then
+		if ! xhost | grep -qi 'SI:localuser:root$'; then
+			xhost +SI:localuser:root
+			GRANTED_XHOST_ROOT=yes
+		fi
+	fi
+
+	#
+	# Run gparted as root.
+	#
+	@gksuprog@ '@bindir@/gparted' "$@"
+	status=$?
+
+	#
+	# Revoke root access to the X11 display, only if we granted it.
+	#
+	if test "x$GRANTED_XHOST_ROOT" = 'xyes'; then
+		xhost -SI:localuser:root
+	fi
+	exit $status
+fi
+
+#
+#  Search PATH to determine if systemctl program can be found
+#  and if appropriate daemon is running.
+#
+HAVE_SYSTEMCTL=no
+for k in '' `echo "$PATH" | sed 's,:, ,g'`; do
+	if test -x "$k/systemctl"; then
+		if test "z`ps -e | grep systemd`" != "z"; then
+			HAVE_SYSTEMCTL=yes
+			break
+		fi
+	fi
+done
+
+#
+#  Check if udisks2-inhibit exists in known location
+#  and if appropriate daemon is running.
+#
+HAVE_UDISKS2_INHIBIT=no
+if test -x "/usr/lib/udisks2/udisks2-inhibit"; then
+	if test "z`ps -e | grep 'udisksd'`" != "z"; then
+		HAVE_UDISKS2_INHIBIT=yes
+	fi
+fi
+
+#
+#  Search PATH to determine if udisks program can be found
+#  and if appropriate daemon is running.
+#
+HAVE_UDISKS=no
+for k in '' `echo "$PATH" | sed 's,:, ,g'`; do
+	if test -x "$k/udisks"; then
+		if test "z`ps -e | grep udisks-daemon`" != "z"; then
+			HAVE_UDISKS=yes
+			break
+		fi
+	fi
+done
+
+#
+#  Search PATH to determine if hal-lock program can be found
+#  and if appropriate daemon is running.
+#
+HAVE_HAL_LOCK=no
+for k in '' `echo "$PATH" | sed 's,:, ,g'`; do
+	if test -x "$k/hal-lock"; then
+		if test "z`ps -e | grep hald`" != "z"; then
+			HAVE_HAL_LOCK=yes
+			break
+		fi
+	fi
+done
+
+#
+#  Use systemctl to prevent automount by masking currently unmasked mount points
+#
+if test "x$HAVE_SYSTEMCTL" = "xyes"; then
+	MOUNTLIST=`systemctl list-units --full --all -t mount --no-legend \
+	  | grep -v masked | cut -f1 -d' ' \
+	  | egrep -v '^(dev-hugepages|dev-mqueue|proc-sys-fs-binfmt_misc|run-user-.*-gvfs|sys-fs-fuse-connections|sys-kernel-config|sys-kernel-debug)'`
+	systemctl --runtime mask --quiet -- $MOUNTLIST
+fi
+
+#
+# Create temporary blank overrides for all udev rules which automatically
+# start Linux Software RAID array members.
+#
+# Udev stores volatile / temporary runtime rules in directory /run/udev/rules.d.
+# Older versions use /dev/.udev/rules.d instead, and even older versions don't
+# have such a directory at all.  Volatile / temporary rules are use to override
+# default rules from /lib/udev/rules.d.  (Permanent local administrative rules
+# in directory /etc/udev/rules.d override all others).  See udev(7) manual page
+# from various versions of udev for details.
+#
+# Default udev rules containing mdadm to incrementally start array members are
+# found in 64-md-raid.rules and/or 65-md-incremental.rules, depending on the
+# distribution and age.  The rules may be commented out or not exist at all.
+#
+UDEV_TEMP_MDADM_RULES=''  # List of temporary override rules files.
+for udev_temp_d in /run/udev /dev/.udev; do
+	if test -d "$udev_temp_d"; then
+		test ! -d "$udev_temp_d/rules.d" && mkdir "$udev_temp_d/rules.d"
+		udev_mdadm_rules=`egrep -l '^[^#].*mdadm (-I|--incremental)' /lib/udev/rules.d/*.rules 2> /dev/null`
+		UDEV_TEMP_MDADM_RULES=`echo "$udev_mdadm_rules" | sed 's,^/lib/udev,'"$udev_temp_d"','`
+		break
+	fi
+done
+for rule in $UDEV_TEMP_MDADM_RULES; do
+	touch "$rule"
+done
+
+#
+#  Use udisks2-inhibit if udisks2-inhibit exists and deamon running.
+#  Else use both udisks and hal-lock for invocation if both binaries exist and both
+#  daemons are running.
+#  Else use udisks if binary exists and daemon is running.
+#  Otherwise use hal-lock for invocation if binary exists and daemon is running.
+#  If the above checks fail then simply run gpartedbin.
+#
+if test "x$HAVE_UDISKS2_INHIBIT" = "xyes"; then
+	/usr/lib/udisks2/udisks2-inhibit $BASE_CMD
+elif test "x$HAVE_UDISKS" = "xyes" && test "x$HAVE_HAL_LOCK" = "xyes"; then
+	udisks --inhibit -- \
+		hal-lock --interface org.freedesktop.Hal.Device.Storage --exclusive \
+			--run "$BASE_CMD"
+elif test "x$HAVE_UDISKS" = "xyes"; then
+	udisks --inhibit -- $BASE_CMD
+elif test "x$HAVE_HAL_LOCK" = "xyes"; then
+	hal-lock --interface org.freedesktop.Hal.Device.Storage --exclusive \
+		--run "$BASE_CMD"
+else
+	$BASE_CMD
+fi
+
+#
+# Clear any temporary override udev rules used to stop udev automatically
+# starting Linux Software RAID array members.
+#
+for rule in $UDEV_TEMP_MDADM_RULES; do
+	rm -f "$rule"
+done
+
+#
+#  Use systemctl to restore that status of any mount points changed above
+#
+if test "x$HAVE_SYSTEMCTL" = "xyes"; then
+	systemctl --runtime unmask --quiet -- $MOUNTLIST
+fi
