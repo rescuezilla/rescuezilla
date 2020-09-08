@@ -11,4 +11,4 @@ volumeicon &
 (sleep 1 && lxpanel)&
 
 # Start Rescuezilla (as root via PolicyKit) automatically
-rescuezilla-pkexec &
+rescuezilla &
