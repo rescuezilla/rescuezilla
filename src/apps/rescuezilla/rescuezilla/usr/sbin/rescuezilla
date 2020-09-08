@@ -1,17 +1,19 @@
 #!/bin/sh
-#     Name:  gparted
-#  Purpose:  Perform appropriate startup of GParted executable gpartedbin.
+#     Name:  rescuezilla
+#  Purpose:  Perform appropriate startup of Rescuezilla executable gparted.py.
 #
 #            The purpose of these startup methods is to prevent
 #            devices from being automounted, and to ensure only one
-#            instance of GParted is running.  File system problems can
+#            instance of Rescuezilla is running.  File system problems can
 #            occur if devices are mounted prior to the completion of
-#            GParted's operations, or if multiple partition editing
+#            Rescuezilla's operations, or if multiple partition editing
 #            tools are in use concurrently.
 #
 # Copyright (C) 2008, 2009, 2010, 2013, 2015 Curtis Gedak
+# Copyright (C) 2020 Rescuezilla.com <rescuezilla@gmail.com>
 #
-#  This file is part of GParted.
+#  This file has been imported from the GParted project as it happens to be
+#  perfectly suited for the Rescuezilla project
 #
 #  GParted is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -27,64 +29,90 @@
 #  along with GParted.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+display_yad() {
+    TITLE=$1
+    MESSAGE=$2
+
+    if test -x "/usr/bin/yad"; then
+        yad --center \
+            --title="$TITLE." \
+            --button="OK:0" \
+            --text "$MESSAGE"
+        if [ "$?" -eq 0 ]; then
+            exit 1
+        fi
+    fi
+}
+
 #
-#  Only permit one instance of GParted to execute at a time
+#  Define base command for executing Rescuezilla
+#
+BASE_CMD="/usr/sbin/rescuezillapl $*"
+
+#
+# Cannot launch Rescuezilla if GParted is already running.
 #
 if test "z`ps -e | grep gpartedbin`" != "z"; then
-	echo "The process gpartedbin is already running."
-	echo "Only one gpartedbin process is permitted."
-	exit 1
+    MESSAGE="Cannot launch Rescuezilla because the process gpartedbin is running.\n\nClose GParted then try again."
+    printf "$MESSAGE\n"
+    display_yad "Rescuezilla" "$MESSAGE"
+    exit 1
 fi
 
 #
-#  Define base command for executing GParted
+#  Only permit one instance of Rescuezilla to execute at a time
 #
-BASE_CMD="@sbindir@/gpartedbin $*"
+if test "z`ps -e | grep rescuezillapl`" != "z"; then
+    MESSAGE="The process rescuezillapl is already running.\n\nOnly one rescuezillapl process is permitted."
+    printf "$MESSAGE\n"
+    display_yad "Rescuezilla" "$MESSAGE"
+    exit 1
+fi
 
 #
-#  For non-root users try to get authorisation to run GParted as root.
+#  For non-root users try to get authorisation to run Rescuezilla as root.
 #
 if test "x`id -u`" != "x0"; then
-	#
-	#  If there is no configured SU program run gpartedbin as
-	#  non-root to display the graphical error about needing root
-	#  privileges.
-	#
-	if test "x@gksuprog@" = "x"; then
-		echo "Root privileges are required for running gparted."
-		$BASE_CMD
-		exit 1
-	fi
+    #
+    #  If there is no configured SU program run rescuezillapl as
+    #  non-root to display the graphical error about needing root
+    #  privileges.
+    #
+        if test "xpkexec --disable-internal-agent" = "x"; then
+        echo "Root privileges are required for running gparted."
+        $BASE_CMD
+        exit 1
+    fi
 
-	#
-	# Interim workaround to allow GParted run by root access to the
-	# X11 display server under Wayland.  If configured with
-	# './configure --enable-xhost-root', the xhost command is
-	# available and root has not been granted access to the X11
-	# display via xhost, then grant access.
-	#
-	ENABLE_XHOST_ROOT=@enable_xhost_root@
-	GRANTED_XHOST_ROOT=no
-	if test "x$ENABLE_XHOST_ROOT" = 'xyes' && xhost 1> /dev/null 2>&1; then
-		if ! xhost | grep -qi 'SI:localuser:root$'; then
-			xhost +SI:localuser:root
-			GRANTED_XHOST_ROOT=yes
-		fi
-	fi
+    #
+    # Interim workaround to allow Rescuezilla run by root access to the
+    # X11 display server under Wayland.  If configured with
+    # './configure --enable-xhost-root', the xhost command is
+    # available and root has not been granted access to the X11
+    # display via xhost, then grant access.
+    #
+    ENABLE_XHOST_ROOT=@enable_xhost_root@
+    GRANTED_XHOST_ROOT=no
+    if test "x$ENABLE_XHOST_ROOT" = 'xyes' && xhost 1> /dev/null 2>&1; then
+        if ! xhost | grep -qi 'SI:localuser:root$'; then
+            xhost +SI:localuser:root
+            GRANTED_XHOST_ROOT=yes
+        fi
+    fi
 
-	#
-	# Run gparted as root.
-	#
-	@gksuprog@ '@bindir@/gparted' "$@"
-	status=$?
+        #
+        # Run rescuezilla as root.
+        #
+        pkexec --disable-internal-agent '/usr/sbin/rescuezilla' "$@"
+        status=$?
 
-	#
-	# Revoke root access to the X11 display, only if we granted it.
-	#
-	if test "x$GRANTED_XHOST_ROOT" = 'xyes'; then
-		xhost -SI:localuser:root
-	fi
-	exit $status
+    #
+    # Revoke root access to the X11 display, only if we granted it.
+    #
+    if test "x$GRANTED_XHOST_ROOT" = 'xyes'; then
+        xhost -SI:localuser:root
+    fi
+    exit $status
 fi
 
 #
@@ -93,12 +121,12 @@ fi
 #
 HAVE_SYSTEMCTL=no
 for k in '' `echo "$PATH" | sed 's,:, ,g'`; do
-	if test -x "$k/systemctl"; then
-		if test "z`ps -e | grep systemd`" != "z"; then
-			HAVE_SYSTEMCTL=yes
-			break
-		fi
-	fi
+    if test -x "$k/systemctl"; then
+        if test "z`ps -e | grep systemd`" != "z"; then
+            HAVE_SYSTEMCTL=yes
+            break
+        fi
+    fi
 done
 
 #
@@ -107,9 +135,9 @@ done
 #
 HAVE_UDISKS2_INHIBIT=no
 if test -x "/usr/lib/udisks2/udisks2-inhibit"; then
-	if test "z`ps -e | grep 'udisksd'`" != "z"; then
-		HAVE_UDISKS2_INHIBIT=yes
-	fi
+    if test "z`ps -e | grep 'udisksd'`" != "z"; then
+        HAVE_UDISKS2_INHIBIT=yes
+    fi
 fi
 
 #
@@ -118,12 +146,12 @@ fi
 #
 HAVE_UDISKS=no
 for k in '' `echo "$PATH" | sed 's,:, ,g'`; do
-	if test -x "$k/udisks"; then
-		if test "z`ps -e | grep udisks-daemon`" != "z"; then
-			HAVE_UDISKS=yes
-			break
-		fi
-	fi
+    if test -x "$k/udisks"; then
+        if test "z`ps -e | grep udisks-daemon`" != "z"; then
+            HAVE_UDISKS=yes
+            break
+        fi
+    fi
 done
 
 #
@@ -132,22 +160,22 @@ done
 #
 HAVE_HAL_LOCK=no
 for k in '' `echo "$PATH" | sed 's,:, ,g'`; do
-	if test -x "$k/hal-lock"; then
-		if test "z`ps -e | grep hald`" != "z"; then
-			HAVE_HAL_LOCK=yes
-			break
-		fi
-	fi
+    if test -x "$k/hal-lock"; then
+        if test "z`ps -e | grep hald`" != "z"; then
+            HAVE_HAL_LOCK=yes
+            break
+        fi
+    fi
 done
 
 #
 #  Use systemctl to prevent automount by masking currently unmasked mount points
 #
 if test "x$HAVE_SYSTEMCTL" = "xyes"; then
-	MOUNTLIST=`systemctl list-units --full --all -t mount --no-legend \
-	  | grep -v masked | cut -f1 -d' ' \
-	  | egrep -v '^(dev-hugepages|dev-mqueue|proc-sys-fs-binfmt_misc|run-user-.*-gvfs|sys-fs-fuse-connections|sys-kernel-config|sys-kernel-debug)'`
-	systemctl --runtime mask --quiet -- $MOUNTLIST
+    MOUNTLIST=`systemctl list-units --full --all -t mount --no-legend \
+      | grep -v masked | cut -f1 -d' ' \
+      | egrep -v '^(dev-hugepages|dev-mqueue|proc-sys-fs-binfmt_misc|run-user-.*-gvfs|sys-fs-fuse-connections|sys-kernel-config|sys-kernel-debug)'`
+    systemctl --runtime mask --quiet -- $MOUNTLIST
 fi
 
 #
@@ -167,15 +195,15 @@ fi
 #
 UDEV_TEMP_MDADM_RULES=''  # List of temporary override rules files.
 for udev_temp_d in /run/udev /dev/.udev; do
-	if test -d "$udev_temp_d"; then
-		test ! -d "$udev_temp_d/rules.d" && mkdir "$udev_temp_d/rules.d"
-		udev_mdadm_rules=`egrep -l '^[^#].*mdadm (-I|--incremental)' /lib/udev/rules.d/*.rules 2> /dev/null`
-		UDEV_TEMP_MDADM_RULES=`echo "$udev_mdadm_rules" | sed 's,^/lib/udev,'"$udev_temp_d"','`
-		break
-	fi
+    if test -d "$udev_temp_d"; then
+        test ! -d "$udev_temp_d/rules.d" && mkdir "$udev_temp_d/rules.d"
+        udev_mdadm_rules=`egrep -l '^[^#].*mdadm (-I|--incremental)' /lib/udev/rules.d/*.rules 2> /dev/null`
+        UDEV_TEMP_MDADM_RULES=`echo "$udev_mdadm_rules" | sed 's,^/lib/udev,'"$udev_temp_d"','`
+        break
+    fi
 done
 for rule in $UDEV_TEMP_MDADM_RULES; do
-	touch "$rule"
+    touch "$rule"
 done
 
 #
@@ -184,21 +212,21 @@ done
 #  daemons are running.
 #  Else use udisks if binary exists and daemon is running.
 #  Otherwise use hal-lock for invocation if binary exists and daemon is running.
-#  If the above checks fail then simply run gpartedbin.
+#  If the above checks fail then simply run rescuezillapl.
 #
 if test "x$HAVE_UDISKS2_INHIBIT" = "xyes"; then
-	/usr/lib/udisks2/udisks2-inhibit $BASE_CMD
+    /usr/lib/udisks2/udisks2-inhibit $BASE_CMD
 elif test "x$HAVE_UDISKS" = "xyes" && test "x$HAVE_HAL_LOCK" = "xyes"; then
-	udisks --inhibit -- \
-		hal-lock --interface org.freedesktop.Hal.Device.Storage --exclusive \
-			--run "$BASE_CMD"
+    udisks --inhibit -- \
+        hal-lock --interface org.freedesktop.Hal.Device.Storage --exclusive \
+            --run "$BASE_CMD"
 elif test "x$HAVE_UDISKS" = "xyes"; then
-	udisks --inhibit -- $BASE_CMD
+    udisks --inhibit -- $BASE_CMD
 elif test "x$HAVE_HAL_LOCK" = "xyes"; then
-	hal-lock --interface org.freedesktop.Hal.Device.Storage --exclusive \
-		--run "$BASE_CMD"
+    hal-lock --interface org.freedesktop.Hal.Device.Storage --exclusive \
+        --run "$BASE_CMD"
 else
-	$BASE_CMD
+    $BASE_CMD
 fi
 
 #
@@ -206,12 +234,12 @@ fi
 # starting Linux Software RAID array members.
 #
 for rule in $UDEV_TEMP_MDADM_RULES; do
-	rm -f "$rule"
+    rm -f "$rule"
 done
 
 #
 #  Use systemctl to restore that status of any mount points changed above
 #
 if test "x$HAVE_SYSTEMCTL" = "xyes"; then
-	systemctl --runtime unmask --quiet -- $MOUNTLIST
+    systemctl --runtime unmask --quiet -- $MOUNTLIST
 fi
