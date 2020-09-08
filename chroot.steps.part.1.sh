@@ -205,6 +205,27 @@ sed --in-place s/COMPRESS=lz4/COMPRESS=gzip/g /etc/initramfs-tools/initramfs.con
 # [1] https://askubuntu.com/a/893614/394984
 touch /etc/NetworkManager/conf.d/10-globally-managed-devices.conf
 
+# Prevent GParted from launching if there is an instance of Rescuezilla running.
+#
+cat << EOF > /tmp/gparted.rescuezilla.check.sh
+#!/bin/sh
+#
+# Cannot launch GParted if Rescuezilla is running.
+#
+if test "z\`ps -e | grep rescuezillapl\`" != "z"; then
+        MESSAGE="Cannot launch GParted becuase the process rescuezillapl is running.\n\nClose Rescuezilla then try again."
+        printf "\$MESSAGE"
+        yad --center --width 300 --title="\$TITLE." --button="OK:0" --text "\$MESSAGE"
+        exit 1
+fi
+EOF
+cp /usr/sbin/gparted /usr/sbin/gparted.copy
+# Remove #!/bin/sh shebang from the GParted launcher script
+sed --in-place '1d' /usr/sbin/gparted.copy
+# Prepend the Rescuezilla check to the GParted launcher script.
+cat /tmp/gparted.rescuezilla.check.sh /usr/sbin/gparted.copy > /usr/sbin/gparted
+rm /usr/sbin/gparted.copy
+
 ln -s /usr/bin/pcmanfm /usr/bin/nautilus
 rm /usr/bin/{rpcclient,smbcacls,smbclient,smbcquotas,smbget,smbspool,smbtar}
 rm /usr/share/icons/*/icon-theme.cache
