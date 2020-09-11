@@ -32,7 +32,6 @@ Plugin {
 Plugin {
   type=menu
   Config {
-    image=/usr/share/adeskbar/images/def_icon.png
     system {
     }
     separator {
