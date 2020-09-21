@@ -20,14 +20,20 @@ msgstr ""
 msgid "Start Rescuezilla"
 msgstr "Rescuezilla"
 
-msgid "If boot fails, reboot and try selecting Safe Mode instead"
-msgstr "Startet Rescuezilla. Sollte das Booten hiermit nicht  möglich sein, bitte den Abgesicherten Modus versuchen."
+msgid "If boot fails, reboot and try selecting Graphical fallback instead"
+msgstr ""
 
-msgid "Safe Mode"
-msgstr "Abgesicherter Modus"
+msgid "Graphical fallback"
+msgstr "TRANSLATE: Graphical fallback"
 
-msgid "Prompts for a video mode and loads the USB image into RAM"
-msgstr "Versucht das Redo System mit einer Hardware unabhängigeren Konfiguration zu starten."
+msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
+msgstr ""
+
+msgid "Load USB into RAM"
+msgstr "TRANSLATE: Load USB into RAM"
+
+msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
+msgstr ""
 
 msgid "Check USB for defects"
 msgstr "Rescuezilla CD prüfen"

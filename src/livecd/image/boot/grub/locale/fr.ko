@@ -20,14 +20,20 @@ msgstr ""
 msgid "Start Rescuezilla"
 msgstr "Démarrer Redo Backup"
 
-msgid "If boot fails, reboot and try selecting Safe Mode instead"
-msgstr "Si le boot échoue, rebootez et réessayez en selectionnant le mode sans échec à la place"
+msgid "If boot fails, reboot and try selecting Graphical fallback instead"
+msgstr ""
 
-msgid "Safe Mode"
-msgstr "Mode sans échec"
+msgid "Graphical fallback"
+msgstr "TRANSLATE: Graphical fallback"
 
-msgid "Prompts for a video mode and loads the USB image into RAM"
-msgstr "Propose un mode vidéo et charge l'image CD en mémoire"
+msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
+msgstr ""
+
+msgid "Load USB into RAM"
+msgstr "TRANSLATE: Load USB into RAM"
+
+msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
+msgstr "" 
 
 msgid "Check USB for defects"
 msgstr "Vérifie l'intégrité du CD"
