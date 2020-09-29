@@ -1,4 +1,6 @@
 #!/bin/sh
+# "Write each command to standard error (preceded by a ‘+ ’) before it is executed.  Useful for debugging"
+set -x
 #     Name:  rescuezilla
 #  Purpose:  Perform appropriate startup of Rescuezilla executable gparted.py.
 #
@@ -28,6 +30,18 @@
 #  You should have received a copy of the GNU General Public License
 #  along with GParted.  If not, see <http://www.gnu.org/licenses/>.
 #
+
+# Helper function to run systemd as 'ubuntu' user, useful to mask out certain problematic systemd mount units.
+# Mask the systemd mounts.To prevent "Failed to connect to bus: No such file or directory", adapted env variable from [1]
+# [1]  https://askubuntu.com/a/1121053/394984
+# FIXME: Re-evaluate this entire approach. It's currently sufficient for Rescuezilla's live environment, but definitely
+# won't apply to all environments which Rescuezilla may run on.
+run_systemctl_as_ubuntu() {
+    CMD=$1
+    UBUNTU_USER_XDG_RUNTIME_DIR="/run/user/999"
+    UBUNTU_USER_DBUS_SESSION_BUS_ADDRESS="unix:path=${XDG_RUNTIME_DIR}/bus"
+    XDG_RUNTIME_DIR="$UBUNTU_USER_XDG_RUNTIME_DIR" DBUS_SESSION_BUS_ADDRESS="$UBUNTU_USER_DBUS_SESSION_BUS_ADDRESS" su ubuntu -c "$CMD"
+}
 
 display_yad() {
     TITLE=$1
@@ -176,6 +190,16 @@ if test "x$HAVE_SYSTEMCTL" = "xyes"; then
       | grep -v masked | cut -f1 -d' ' \
       | egrep -v '^(dev-hugepages|dev-mqueue|proc-sys-fs-binfmt_misc|run-user-.*-gvfs|sys-fs-fuse-connections|sys-kernel-config|sys-kernel-debug)'`
     systemctl --runtime mask --quiet -- $MOUNTLIST
+
+    # The Rescuezilla live environment has a user named 'ubuntu' with user ID 999. The existance of a GNOME Virtual Filesystem (GVFS) mount causes
+    # Rescuezilla to fail on some restore operations, due to gvfs preventing the partition table from refreshing.
+    UBUNTU_USER_MOUNTLIST=$( run_systemctl_as_ubuntu "systemctl --user list-units --full --all -t mount --no-legend \
+      | grep -v masked | cut -f1 -d' ' \
+      | egrep -v '^(dev-hugepages|dev-mqueue|proc-sys-fs-binfmt_misc|run-user-.*-gvfs|sys-fs-fuse-connections|sys-kernel-config|sys-kernel-debug)' | xargs")
+    run_systemctl_as_ubuntu "systemctl --user --runtime mask --quiet -- $UBUNTU_USER_MOUNTLIST"
+    # FIXME: Re-consider how to best handle GVFS
+    #UBUNTU_USER_GVFS_MOUNTLIST=$( run_systemctl_as_ubuntu "systemctl --user list-units --full --all --no-legend | cut -f1 -d' ' | grep '^gvfs-' | xargs")
+    #run_systemctl_as_ubuntu "systemctl --user --runtime mask --now --quiet -- $UBUNTU_USER_GVFS_MOUNTLIST"
 fi
 
 #
@@ -242,4 +266,6 @@ done
 #
 if test "x$HAVE_SYSTEMCTL" = "xyes"; then
     systemctl --runtime unmask --quiet -- $MOUNTLIST
+    run_systemctl_as_ubuntu "systemctl --user --runtime unmask --quiet -- $UBUNTU_USER_MOUNTLIST"
+    #run_systemctl_as_ubuntu "systemctl --user --runtime unmask --quiet -- $UBUNTU_USER_GVFS_MOUNTLIST"
 fi

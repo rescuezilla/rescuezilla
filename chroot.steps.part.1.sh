@@ -102,8 +102,10 @@ common_pkgs=("discover"
              "plymouth-theme-ubuntu-logo"
              "pcmanfm"
              # PCManFM recommended packages to resolve paths like eg, smb://fileserver/johnsmith
-             "gvfs-backends"
-             "gvfs-fuse"
+             # TODO: Re-enable GVFS packages -- seems to cause issues around preventing refreshing partition
+             # tables due to  busy disks. See Rescuezilla launch script for more information.
+             #"gvfs-backends"
+             #"gvfs-fuse"
              "firefox"
              "firefox-locale-fr"
              "firefox-locale-de"
