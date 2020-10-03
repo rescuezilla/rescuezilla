@@ -61,6 +61,7 @@ deploy:
   file:
     - build/rescuezilla-$TRAVIS_TAG-64bit.iso
     - build/rescuezilla-$TRAVIS_TAG-32bit.iso
+    - build/rescuezilla_$TRAVIS_TAG_all.deb
   draft: true
   cleanup: false
   on:
