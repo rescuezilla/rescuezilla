@@ -45,7 +45,6 @@ script:
 - docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make amd64
   # List any working directory files to help debug any unclean working directory issues
 - docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make status
-- docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make i386
   # List any working directory files to help debug any unclean working directory issues
 - docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make status
 
@@ -53,14 +52,12 @@ script:
 
 before_deploy:
   - sudo mv build/rescuezilla.amd64.iso build/rescuezilla-$TRAVIS_TAG-64bit.iso
-  - sudo mv build/rescuezilla.i386.iso build/rescuezilla-$TRAVIS_TAG-32bit.iso
 
 deploy:
   provider: releases
   token: $GITHUB_TOKEN
   file:
     - build/rescuezilla-$TRAVIS_TAG-64bit.iso
-    - build/rescuezilla-$TRAVIS_TAG-32bit.iso
     - build/rescuezilla_$TRAVIS_TAG_all.deb
   draft: true
   cleanup: false
