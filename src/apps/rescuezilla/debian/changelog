@@ -1,8 +1,18 @@
+rescuezilla (2.0) unstable; urgency=low
+
+  * New upstream version.
+  * Added support for Clonezilla disk imaging
+  * Added ability to restore partitions individually
+  * Rewrote application in Python3 from Perl
+  * See the upstream CHANGELOG for full details
+
+ -- Shasheen Ediriweera <rescuezilla@gmail.com>  Wed, 14 Oct 2020 11:19:50 +0930
+
 rescuezilla (1.0.6.1-1) unstable; urgency=low
 
   * New upstream version.
 
- -- Shasheen Ediriweera <rescuezilla@gmail.com>  Fri 26 Jun 2020 13:27:52 +0930
+ -- Shasheen Ediriweera <rescuezilla@gmail.com>  Fri, 26 Jun 2020 13:27:52 +0930
 
 rescuezilla (1.0.6-1) unstable; urgency=low
 

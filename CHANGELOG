@@ -1,4 +1,41 @@
 -------------------------------------------------------------------------------
+  Version 2.0 (2020-10-14) 
+-------------------------------------------------------------------------------
+
+* Switched to creating backups in Clonezilla format for full interoperability with Clonezilla
+  Rescuezilla is now a drop-in replacement to Clonezilla! (#4) This means backups created
+  using Clonezilla can be restored using Rescuezilla, and vice versa :)
+* Warning: Backups created with Rescuezilla v2.0 or newer cannot be restored using earlier
+  versions of Rescuezilla. Backups created with older versions of Rescuezilla can still of
+  course be restored with v2.0 or newer
+* Added ability to restore individual partitions, and not overwrite partition table (#46)
+* Rewrote the Rescuezilla frontend in the Python3 programming language (#49, #48, #111)
+* Added backup/restore confirmation and summary pages, back button (#6)
+* Improved exit code handling and error messages (#29, #114), image selection (#109)
+* Added the ability to backup and restore software RAID (md) devices (#45)
+* Added the ability to backup and restore SD card (mmcblk) devices (#95)
+* Added filesystem-aware backup/restore of Linux Logical Volume Manager (LVM) (#44)
+* Improved ability to restore to disks smaller or larger than original (#96)
+* Adapted GParted launcher script to temporarily shutdown file manager's one-click mount and
+  prevent GParted and Rescuezilla from running at the same time, to reduce risk of conflicts
+* Added GParted desktop shortcut
+* Released Rescuezilla as standalone deb file for advanced users on Ubuntu 20.04 (#119)
+* Disabled 32-bit ISO image temporarily until Python virtual environment configured (#120)
+* Switched from unmaintained SLiM (Simple Login Manager) to LightDM for reliability (#101, #115)
+* Separated 'Safe Mode' boot menu item to two: "Graphical fallback mode" and "Load USB into RAM"
+* Disabled Linux time sync to prevent hardware clock modification (thanks zebradots!) (#107)
+* Improved window auto-maximization settings for improved usability
+* Switches from GTK Bluebird theme to Breeze theme (#52)
+* Renamed existing photorec start menu shortcut to "Photograph deep scan" (112)
+* Added start menu shortcut for the TestDisk command-line undelete / file recovery app (#112)
+* Added nouveau-firmware package to improve support for ~2009 vintage NVidia graphics cards
+* Replaced start menu gear icon with lxpanel default icon based on user feedback
+* Added Patreon link to Rescuezilla's logo to help achieve sustainable funding
+                                    Project Announcements
+* RESCUEZILLA IS NOW OFFICIALLY OPEN FOR TRANSLATIONS! See the Translations HOWTO page for
+  more information.
+
+-------------------------------------------------------------------------------
   Version 1.0.6.1 (2020-06-26) 
 -------------------------------------------------------------------------------
 
