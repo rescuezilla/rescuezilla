@@ -94,6 +94,8 @@ common_pkgs=("discover"
              "lupin-casper"
              "openbox"
              "lightdm"
+             # Firmware package for NVidia cards from ~2009 (newer cards have firmware in the kernel)
+             "nouveau-firmware"
              "x11-xserver-utils"
              "xterm"
              "network-manager-gnome"
