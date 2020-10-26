@@ -155,6 +155,7 @@ LANG_CODES=(
     "fr"
     "de"
     "es"
+    "pt"
 )
 
 # Process GRUB locale files
