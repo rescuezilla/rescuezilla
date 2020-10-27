@@ -163,6 +163,7 @@ for lang in "${LANG_CODES[@]}"; do
         if [[ ! -f "$lang.ko" ]]; then
                 echo "Warning: $long.ko translation does not exist. Skipping."
         else
+                echo "Converting language translation file: $BUILD_DIRECTORY/image/boot/grub/locale/$lang.ko" 
                 msgfmt --output-file="$lang.mo" "$lang.ko"
                 if [[ $? -ne 0 ]]; then
                         echo "Error: Unable to convert GRUB bootloader configuration $lang translation from text-based ko format to binary mo format."
