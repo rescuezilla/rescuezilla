@@ -22,9 +22,8 @@ import subprocess
 import traceback
 from datetime import datetime
 
-import gi
-
 from backup_manager import BackupManager
+from mount_backup_image_partition import MountBackupImagePartition
 from mount_local_path import MountLocalPath
 from mount_network_path import MountNetworkPath
 from restore_manager import RestoreManager
@@ -34,10 +33,11 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, GObject
 
 from partitions_to_restore import PartitionsToRestore
+from image_manager import ImageManager
 from drive_query import DriveQuery
 from image_folder_query import ImageFolderQuery
 from utility import ErrorMessageModalPopup, FolderSelectionPopup, Utility, AreYouSureModalPopup, _
-from wizard_state import Mode, Page, MOUNT_DIR
+from wizard_state import Mode, Page, MOUNT_DIR, IMAGE_EXPLORER_DIR
 
 
 class Handler:
@@ -58,7 +58,7 @@ class Handler:
    PyGTK-specific API documentation https://developer.gnome.org/pygtk/stable/class-gtknotebook.html
    """
 
-    def __init__(self, builder):
+    def __init__(self, builder, is_image_explorer_mode):
         # The GTKBuilder is used to retrieve any arbitrary GTK widgets using "id" attributes in the GTKBuilder
         # (.glade) XML file
         self.builder = builder
@@ -82,6 +82,8 @@ class Handler:
 
         self.restore_partition_selection_list = self.builder.get_object("restore_partition_selection_list")
         self.backup_image = PartitionsToRestore(self.builder, self.restore_partition_selection_list)
+        self.image_explorer_partition_selection_list = self.builder.get_object("image_explorer_partition_selection_list")
+        self.image_explorer = ImageManager(self.builder, self.image_explorer_partition_selection_list)
         self.set_support_information_linkbutton_visible(False)
         self.set_patreon_call_to_action_visible(True)
         # TODO: Remove the need to set this variable to None
@@ -97,18 +99,22 @@ class Handler:
 
         self.backup_manager = BackupManager(builder, self.human_readable_version)
         self.restore_manager = RestoreManager(builder)
+        if is_image_explorer_mode:
+            self.display_image_explorer_wizard()
 
     # Suggest the user read the frequently asked questions, then potentially proceed to the support forum.
     def set_support_information_linkbutton_visible(self, is_visible):
         self.builder.get_object("welcome_support_linkbutton").set_visible(is_visible)
         self.builder.get_object("backup_step8_support_linkbutton").set_visible(is_visible)
         self.builder.get_object("restore_step7_support_linkbutton").set_visible(is_visible)
+        self.builder.get_object("image_explorer_support_linkbutton").set_visible(is_visible)
 
     # Ask users to contribute on the crowdfunding website Patreon.
     def set_patreon_call_to_action_visible(self, is_visible):
         self.builder.get_object("welcome_patreon_linkbutton").set_visible(is_visible)
         self.builder.get_object("backup_step8_patreon_linkbutton").set_visible(is_visible)
         self.builder.get_object("restore_step7_patreon_linkbutton").set_visible(is_visible)
+        self.builder.get_object("image_explorer_patreon_linkbutton").set_visible(is_visible)
 
     def display_welcome_page(self):
         self.current_page = Page.WELCOME
@@ -148,6 +154,27 @@ class Handler:
         self.builder.get_object("button_next").set_sensitive(True)
         # Remove access to any summary pages from prior operations
         self.has_prior_summary_page = False
+
+    def launch_image_explorer_app(self, button):
+        subprocess.Popen(["/usr/sbin/image-explorer"])
+
+    def display_image_explorer_wizard(self):
+        self.mode = Mode.IMAGE_EXPLORER
+        self.main_statusbar.pop(self.main_statusbar.get_context_id("version"))
+        self.current_page = Page.RESTORE_SOURCE_LOCATION_SELECTION
+        self.builder.get_object("mode_tabs").set_current_page(3)
+        # Enable the back navigation button, disable the next (because only 1 page in this mode)
+        self.builder.get_object("button_back").set_sensitive(True)
+        self.builder.get_object("button_next").set_sensitive(False)
+        # Don't show the backup/forward buttons while Image Explorer is in beta
+        self.builder.get_object("button_back").set_visible(False)
+        self.builder.get_object("button_next").set_visible(False)
+        # Remove access to any summary pages from prior operations
+        self.has_prior_summary_page = False
+        self.builder.get_object("button_mount").set_sensitive(False)
+        self.builder.get_object("button_open_file_manager").set_sensitive(False)
+        self.set_parts_of_image_explorer_page_sensitive(True)
+        self.is_partition_mounted = False
 
     def get_row(self, id):
         treeselection = self.builder.get_object(id)
@@ -441,6 +468,9 @@ class Handler:
                     self.builder.get_object("restore_tabs").set_current_page(5)
                 else:
                     print("Unexpected")
+            elif self.mode == Mode.IMAGE_EXPLORER:
+                self.current_page = Page.WELCOME
+                self.display_welcome_page()
             else:
                 print("Unexpected")
             print("Moving to mode=" + str(self.mode) + " on page " + str(self.current_page))
@@ -456,11 +486,11 @@ class Handler:
             if self.mode == Mode.BACKUP:
                 self.current_page = Page.BACKUP_DESTINATION_FOLDER
                 self.builder.get_object("backup_tabs").set_current_page(3)
-                self.selected_folder(mounted_path, False)
+                self.selected_image_folder(mounted_path, False)
             else:
                 self.current_page = Page.RESTORE_SOURCE_IMAGE_SELECTION
                 self.builder.get_object("restore_tabs").set_current_page(1)
-                self.selected_folder(mounted_path, True)
+                self.selected_image_folder(mounted_path, True)
 
     # Called via AreYouSure prompt
     def _restore_confirmation_callback(self, is_affirmative):
@@ -616,17 +646,15 @@ class Handler:
     def backup_name_changed(self):
         return
 
-    def select_backup_folder(self, button):
-        backup_folder_label = self.builder.get_object("backup_folder_label")
-        folder_selection_popup = FolderSelectionPopup(self.builder, self.selected_folder, MOUNT_DIR, False)
+    def select_image_folder(self, button):
+        folder_selection_popup = FolderSelectionPopup(self.builder, callback=self.selected_image_folder, default_directory=MOUNT_DIR, is_allow_selecting_folder_outside_mount=False)
         return
 
-    def select_restore_folder(self, button):
-        restore_folder_label = self.builder.get_object("restore_folder_label")
-        folder_selection_popup = FolderSelectionPopup(self.builder, self.selected_folder, MOUNT_DIR, True)
+    def select_image_explorer_image_folder(self, button):
+        folder_selection_popup = FolderSelectionPopup(self.builder, callback=self.selected_image_folder, default_directory="/", is_allow_selecting_folder_outside_mount=True)
         return
 
-    def selected_folder(self, text, is_allow_selecting_folder_outside_mount):
+    def selected_image_folder(self, text, is_allow_selecting_folder_outside_mount):
         print("Received path " + text)
         if not is_allow_selecting_folder_outside_mount and not MOUNT_DIR in text:
             error = ErrorMessageModalPopup(self.builder,
@@ -710,4 +738,105 @@ class Handler:
         # FIXME: Overhaul network share handling.
         error = ErrorMessageModalPopup(self.builder, "Search network function is disabled and will be re-introduced in the next version.\n\nPlease enter the network details manually.")
 
+    def _on_image_partition_mount_completed_callback(self, is_success):
+        if is_success:
+            self.set_support_information_linkbutton_visible(False)
+            self.set_patreon_call_to_action_visible(True)
+            self.set_parts_of_image_explorer_page_sensitive(False)
+        else:
+            self.set_support_information_linkbutton_visible(True)
+            self.set_patreon_call_to_action_visible(False)
+            self.set_parts_of_image_explorer_page_sensitive(True)
 
+    def selection_changed_populate_partitions(self, treeselection):
+        self.builder.get_object("button_mount").set_sensitive(False)
+        self.image_explorer_partition_selection_list.clear()
+        list_store, iter = self.get_row("image_explorer_destination_folder_image_files_treeselection")
+        if iter is None:
+            error = ErrorMessageModalPopup(self.builder, "No image selected")
+        else:
+            selected_image_absolute_path = list_store.get(iter, 0)[0]
+            print("User image: " + selected_image_absolute_path)
+            image = self.image_folder_query.image_dict[selected_image_absolute_path]
+            if image.is_needs_decryption:
+                error = ErrorMessageModalPopup(self.builder,
+                                               "Ecryptfs encrypted images are not supported by current version of Rescuezilla.\n\nSupport for ecryptfs will be improved in a future version.\n\nHowever, as a temporary workaround, it is possible to carefully use the ecryptfs command line utility to mount and decrypt the image, and then point Rescuezilla to this ecryptfs mount point and then use Rescuezilla to restore the image as normal.")
+            else:
+                if len(image.short_device_node_disk_list) > 1:
+                    # Unlike Rescuezilla, Clonezilla is able to backup multiple devices at the same time into
+                    # a single image. The Rescuezilla user-interface doesn't yet support this, so the first
+                    # disk is always selected.
+                    error = ErrorMessageModalPopup(self.builder, _(
+                        "IMPORTANT: Only selecting FIRST disk in Clonezilla image containing MULTIPLE DISKS.") + "\n\n" + "Multidisk Clonezilla images are not fully supported by the current version of Rescuezilla.\n\nOnly the FIRST disk in the multidisk image has been selected.\n\nBefore proceeding, please double-check if this is suitable.")
+
+                # Not using index = path.get_indices()[0], as the next button could also be used not double-click.
+                try:
+                    self.image_explorer.populate_partition_selection_table(image)
+                except Exception as e:
+                    tb = traceback.format_exc()
+                    traceback.print_exc()
+                    error = ErrorMessageModalPopup(self.builder, "Unable to process image " + tb)
+
+    # Callback for double click (row-activate).
+    def row_activated_partition_selected(self, treeview, path, view_column):
+        self.mount_partition(button=None)
+
+    def partition_selection_changed(self, treeselection):
+        self.builder.get_object("button_mount").set_sensitive(True)
+
+    def mount_partition(self, button):
+        if self.is_partition_mounted:
+            # Unmount partition
+            MountBackupImagePartition.unmount(self.builder, callback=self._post_backup_image_unmount_callback, mounted_path=IMAGE_EXPLORER_DIR)
+        else:
+            list_store, iter = self.get_row("image_explorer_destination_folder_image_files_treeselection")
+            selected_image_absolute_path = list_store.get(iter, 0)[0]
+            image = self.image_folder_query.image_dict[selected_image_absolute_path]
+
+            list_store, iter = self.get_row("image_explorer_image_partition_treeselection")
+            selected_partition_key = list_store.get(iter, 0)[0]
+
+            MountBackupImagePartition.mount_backup_image_partition(self.builder, callback=self._post_backup_image_mount_callback, backup_image=image, partition_key_to_mount=selected_partition_key, destination_path=IMAGE_EXPLORER_DIR)
+
+    def open_file_manager(self, button):
+        Utility.open_path_in_filemanager_as_non_root("ubuntu", IMAGE_EXPLORER_DIR)
+
+    def set_mounted_state(self, is_mounted):
+        if is_mounted:
+            self.is_partition_mounted = True
+            self.builder.get_object("button_mount").set_label(_("Unmount"))
+            self.set_parts_of_image_explorer_page_sensitive(False)
+            self.builder.get_object("button_open_file_manager").set_sensitive(True)
+        else:
+            self.is_partition_mounted = False
+            self.builder.get_object("button_mount").set_label(_("Mount"))
+            self.set_parts_of_image_explorer_page_sensitive(True)
+            self.builder.get_object("button_open_file_manager").set_sensitive(False)
+
+    # Sets sensitivity of all elements on the Image Explorer page
+    def set_parts_of_image_explorer_page_sensitive(self, is_sensitive):
+        self.builder.get_object("image_explorer_folder_label").set_sensitive(is_sensitive)
+        self.builder.get_object("image_explorer_folder_browse").set_sensitive(is_sensitive)
+        self.builder.get_object("image_explorer_destination_folder_image_files_treeview").set_sensitive(is_sensitive)
+        self.builder.get_object("image_explorer_image_partition_treeview").set_sensitive(is_sensitive)
+        self.builder.get_object("button_back").set_sensitive(is_sensitive)
+
+    def _post_backup_image_unmount_callback(self, is_success, error_message=""):
+        if not is_success:
+            error = ErrorMessageModalPopup(self.builder, error_message)
+            self.set_support_information_linkbutton_visible(True)
+            self.set_patreon_call_to_action_visible(False)
+        else:
+            self.set_mounted_state(False)
+            self.set_support_information_linkbutton_visible(False)
+            self.set_patreon_call_to_action_visible(True)
+
+    def _post_backup_image_mount_callback(self, is_success, error_message=""):
+        if not is_success:
+            error = ErrorMessageModalPopup(self.builder, error_message)
+            self.set_support_information_linkbutton_visible(True)
+            self.set_patreon_call_to_action_visible(False)
+        else:
+            self.set_mounted_state(True)
+            self.set_support_information_linkbutton_visible(False)
+            self.set_patreon_call_to_action_visible(True)

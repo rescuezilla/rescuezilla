@@ -178,30 +178,40 @@ class REMatcher(object):
 
 
 class Utility:
+    # Background: The Rescuezilla frontend uses PolKit to elevate from the standard user to root user, as is required to
+    # access harddrive block devices. To open graphical tools from an application running as root as a non-privileged
+    # user requires this wrapper.
+    @staticmethod
+    def open_app_as_target_user(target_user, process_list):
+        current_user = pwd.getpwuid(os.getuid()).pw_name
+        print("Current user is '" + current_user + "'. As user '" + target_user + "' launching: " + str(process_list))
+        try:
+            pwd.getpwnam(target_user)
+            does_target_user_exists = True
+        except KeyError:
+            print("Launching app " + str(process_list) + " as non-root user failed. Target user: " + target_user + " does not not exist.")
+            return
+
+        if does_target_user_exists:
+            # Launch detached subprocess as target user
+            sudo_process_list = ["sudo", "-u", target_user] + process_list
+            subprocess.Popen(sudo_process_list)
+        return
 
     # Opens URL in web browser using non-root user, for users that need to click on a link within the Rescuezilla
     # frontend (eg, to access the Rescuezilla forum to receive support).
-    #
-    # Background: The Rescuezilla frontend uses PolKit to elevate from the standard user to root user, as is required to
-    # access harddrive block devices. Clicking on a URL within Rescuezilla using a GTK LinkButton attempts to open a web
+    # Clicking on a URL within Rescuezilla using a GTK LinkButton attempts to open a web
     # browser as root user (which modern web browsers do not allow). Fortunately most end-users will be running the X
     # Windowing System session as a non-root user,
     @staticmethod
     def open_url_as_non_root(target_user, url):
-        current_user = pwd.getpwuid(os.getuid()).pw_name
-        print("Current user is '" + current_user + "'. As user '" + target_user + "' opening URL: " + url)
-        try:
-            pwd.getpwnam(target_user)
-            does_ubuntu_user_exists = True
-        except KeyError:
-            print("Launching web browser as non-root user failed. Target user: " + target_user + " does not not exist.")
-            return
+        # Default web browser symlink as configured by the Debian Alternatives System configured web browser.
+        Utility.open_app_as_target_user(target_user, ["x-www-browser", url])
 
-        if does_ubuntu_user_exists:
-            # Launch detached subprocess as user 'ubuntu', launching the default web browser symlink as configured by
-            # the Debian Alternatives System configured web browser.
-            subprocess.Popen(["sudo", "-u", target_user, "x-www-browser", url])
-        return
+    @staticmethod
+    def open_path_in_filemanager_as_non_root(target_user, path):
+        # TODO: Handle file managers other than pcmanfm
+        Utility.open_app_as_target_user(target_user, ["pcmanfm", path])
 
     @staticmethod
     def read_file_into_string(file_path):

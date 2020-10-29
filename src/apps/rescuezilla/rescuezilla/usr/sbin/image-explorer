@@ -1,0 +1,110 @@
+#!/bin/sh
+# Launcher wrapper script. Unlike main Rescuezilla executable, no need for
+# GParted mutual exclusion with the image explorer function.
+# "Write each command to standard error (preceded by a ‘+ ’) before it is executed.  Useful for debugging"
+set -x
+#     Name:  image-explorer
+#  Purpose:  Perform appropriate startup of Rescuezilla image explorer executable.
+#
+#            The purpose of these startup methods is to prevent
+#            devices from being automounted, and to ensure only one
+#            instance of Rescuezilla is running.  File system problems can
+#            occur if devices are mounted prior to the completion of
+#            Rescuezilla's operations, or if multiple partition editing
+#            tools are in use concurrently.
+#
+# Copyright (C) 2008, 2009, 2010, 2013, 2015 Curtis Gedak
+# Copyright (C) 2020 Rescuezilla.com <rescuezilla@gmail.com>
+#
+#  This file has been imported from the GParted project as it happens to be
+#  perfectly suited for the Rescuezilla project
+#
+#  GParted is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  GParted is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with GParted.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+# Helper function to run systemd as 'ubuntu' user, useful to mask out certain problematic systemd mount units.
+# Mask the systemd mounts.To prevent "Failed to connect to bus: No such file or directory", adapted env variable from [1]
+# [1]  https://askubuntu.com/a/1121053/394984
+# FIXME: Re-evaluate this entire approach. It's currently sufficient for Rescuezilla's live environment, but definitely
+# won't apply to all environments which Rescuezilla may run on.
+run_systemctl_as_ubuntu() {
+    CMD=$1
+    UBUNTU_USER_XDG_RUNTIME_DIR="/run/user/999"
+    UBUNTU_USER_DBUS_SESSION_BUS_ADDRESS="unix:path=${XDG_RUNTIME_DIR}/bus"
+    XDG_RUNTIME_DIR="$UBUNTU_USER_XDG_RUNTIME_DIR" DBUS_SESSION_BUS_ADDRESS="$UBUNTU_USER_DBUS_SESSION_BUS_ADDRESS" su ubuntu -c "$CMD"
+}
+
+
+#
+#  For non-root users try to get authorisation to run Rescuezilla as root.
+#
+if test "x`id -u`" != "x0"; then
+    #
+    # Interim workaround to allow Rescuezilla run by root access to the
+    # X11 display server under Wayland.  If configured with
+    # './configure --enable-xhost-root', the xhost command is
+    # available and root has not been granted access to the X11
+    # display via xhost, then grant access.
+    #
+    ENABLE_XHOST_ROOT=@enable_xhost_root@
+    GRANTED_XHOST_ROOT=no
+    if test "x$ENABLE_XHOST_ROOT" = 'xyes' && xhost 1> /dev/null 2>&1; then
+        if ! xhost | grep -qi 'SI:localuser:root$'; then
+            xhost +SI:localuser:root
+            GRANTED_XHOST_ROOT=yes
+        fi
+    fi
+
+    #
+    # Run rescuezilla as root.
+    #
+    pkexec --disable-internal-agent '/usr/sbin/image-explorer' "$@"
+    status=$?
+    exit $status
+
+    #
+    #  If there is no configured SU program run image-explorer as
+    #  non-root to display the graphical error about needing root
+    #  privileges.
+    #
+    if test "xpkexec --disable-internal-agent" = "x"; then
+        echo "Root privileges are required for running image-explorer."
+        exit 1
+    fi
+fi
+
+#
+# Interim workaround to allow Rescuezilla run by root access to the
+# X11 display server under Wayland.  If configured with
+# './configure --enable-xhost-root', the xhost command is
+# available and root has not been granted access to the X11
+# display via xhost, then grant access.
+#
+ENABLE_XHOST_ROOT=@enable_xhost_root@
+GRANTED_XHOST_ROOT=no
+if test "x$ENABLE_XHOST_ROOT" = 'xyes' && xhost 1> /dev/null 2>&1; then
+    if ! xhost | grep -qi 'SI:localuser:root$'; then
+        xhost +SI:localuser:root
+        GRANTED_XHOST_ROOT=yes
+    fi
+fi
+/usr/sbin/image_explorerpy $*
+
+#
+# Revoke root access to the X11 display, only if we granted it.
+#
+if test "x$GRANTED_XHOST_ROOT" = 'xyes'; then
+    xhost -SI:localuser:root
+fi
+exit $status

@@ -20,6 +20,7 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
+import argparse
 import gettext
 import os
 
@@ -36,7 +37,7 @@ def is_root():
     return os.geteuid() == 0
 
 
-def main():
+def main(is_image_explorer_mode=False):
     if not is_root():
         print("Rescuezilla must run as root.")
         exit(0)
@@ -53,7 +54,7 @@ def main():
     # directly a text editor, because Glade occasionally has some user-interface limitations.
     builder.add_from_file("/usr/share/rescuezilla/rescuezilla.glade")
 
-    handler = Handler(builder)
+    handler = Handler(builder, is_image_explorer_mode)
     # Connect the handler object for the GUI callbacks. This handler manages the entire application state.
     builder.connect_signals(handler)
 
