@@ -14,7 +14,7 @@ ARCH="${ARCH:-INVALID}"
 # Directory containing this build script
 BASEDIR=$(dirname $(readlink -f "$0"))
 
-RESCUEZILLA_ISO_FILENAME=rescuezilla.$ARCH.iso
+RESCUEZILLA_ISO_FILENAME=rescuezilla.$ARCH.$CODENAME.iso
 # The build directory is "build/", unless overridden by an environment variable
 BUILD_DIRECTORY=${BUILD_DIRECTORY:-build/${CODENAME}.${ARCH}}
 mkdir -p "$BUILD_DIRECTORY/chroot"
@@ -130,7 +130,7 @@ done
 cp "$BASEDIR/chroot.steps.part.1.sh" "$BASEDIR/chroot.steps.part.2.sh" chroot
 # Launch first stage chroot. In other words, run commands within the root filesystem
 # that is being constructed using binaries from within that root filesystem.
-chroot chroot/ /bin/bash -c "ARCH=$ARCH /chroot.steps.part.1.sh"
+chroot chroot/ /bin/bash -c "ARCH=$ARCH CODENAME=$CODENAME /chroot.steps.part.1.sh"
 if [[ $? -ne 0 ]]; then
     echo "Error: Failed to execute chroot steps part 1."
     exit 1

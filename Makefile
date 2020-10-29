@@ -1,16 +1,27 @@
 .DEFAULT_GOAL := amd64
-.PHONY: all amd64 i386 deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 clean-build-dir clean clean-all
+.PHONY: all amd64 groovy i386 deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 clean-build-dir clean clean-all
 
-all: amd64 i386
+all: amd64 groovy i386
 
 buildscripts = build.sh chroot.steps.part.1.sh chroot.steps.part.2.sh
 
+# ISO image based on Ubuntu 20.04 Focal LTS (Long Term Support) 64bit
 amd64: ARCH=amd64
 amd64: CODENAME=focal
 export ARCH CODENAME
 amd64: deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 $(buildscripts)
 	./build.sh
 
+# ISO image based on Ubuntu 20.10 Groovy 64bit as a temporary measure to provide a newer Linux kernel for better support for
+# recent hardware because Ubuntu 20.04 Focal doesn't offer a Hardware Enablement / LTS Enablement Linux kernel for 20.04
+# based on the Ubuntu 20.10 kernel (but will for 21.04, 21.10 etc)
+groovy: ARCH=amd64
+groovy: CODENAME=groovy
+export ARCH CODENAME
+groovy: deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 $(buildscripts)
+	./build.sh
+
+# ISO image based on Ubuntu 18.04 Bionic LTS (Long Term Support) 32bit (the last 32bit/i386 Ubuntu LTS release)
 i386: ARCH=i386
 i386: CODENAME=bionic
 export ARCH CODENAME
@@ -31,7 +42,7 @@ deb:
 # [1] For full details, see: https://github.com/rescuezilla/rescuezilla/issues/77
 
 sfdisk.v2.20.1.amd64: SRC_DIR=$(shell pwd)/src/third-party/util-linux
-sfdisk.v2.20.1.amd64: AMD64_BUILD_DIR=$(shell pwd)/build/focal.amd64
+sfdisk.v2.20.1.amd64: AMD64_BUILD_DIR=$(shell pwd)/build/$(CODENAME).$(ARCH)
 sfdisk.v2.20.1.amd64: UTIL_LINUX_BUILD_DIR=$(AMD64_BUILD_DIR)/util-linux
 sfdisk.v2.20.1.amd64:
 	mkdir --parents $(UTIL_LINUX_BUILD_DIR) $(AMD64_BUILD_DIR)/chroot/usr/sbin/
@@ -41,7 +52,7 @@ sfdisk.v2.20.1.amd64:
 	mv $(UTIL_LINUX_BUILD_DIR)/fdisk/sfdisk $(AMD64_BUILD_DIR)/chroot/usr/sbin/sfdisk.v2.20.1.64bit
 
 partclone.restore.v0.2.43.amd64: SRC_DIR=$(shell pwd)/src/third-party/partclone
-partclone.restore.v0.2.43.amd64: AMD64_BUILD_DIR=$(shell pwd)/build/focal.amd64
+partclone.restore.v0.2.43.amd64: AMD64_BUILD_DIR=$(shell pwd)/$(CODENAME).$(ARCH)
 partclone.restore.v0.2.43.amd64: PARTCLONE_BUILD_DIR=$(AMD64_BUILD_DIR)/partclone
 partclone.restore.v0.2.43.amd64:
 	mkdir --parents $(PARTCLONE_BUILD_DIR) $(AMD64_BUILD_DIR)/chroot/usr/sbin/
