@@ -51,13 +51,15 @@ script:
 # When a new tag is pushed, upload the ISO image as a draft release on GitHub
 
 before_deploy:
-  - sudo mv build/rescuezilla.amd64.iso build/rescuezilla-$TRAVIS_TAG-64bit.iso
+  - sudo mv build/rescuezilla.amd64.focal.iso build/rescuezilla-$TRAVIS_TAG-64bit.iso
+  - sudo mv build/rescuezilla.amd64.groovy.iso build/rescuezilla-$TRAVIS_TAG-64bit.groovy.iso
 
 deploy:
   provider: releases
   token: $GITHUB_TOKEN
   file:
     - build/rescuezilla-$TRAVIS_TAG-64bit.iso
+    - build/rescuezilla-$TRAVIS_TAG-64bit.groovy.iso
     - build/rescuezilla_$TRAVIS_TAG_all.deb
   draft: true
   cleanup: false
