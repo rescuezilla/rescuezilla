@@ -981,7 +981,6 @@
                                                     <child>
                                                       <object class="GtkButton" id="backup_dest_search">
                                                         <property name="label" translatable="yes">Search network</property>
-                                                        <property name="visible">True</property>
                                                         <property name="can_focus">True</property>
                                                         <property name="receives_default">True</property>
                                                         <signal name="clicked" handler="find_network_share" swapped="no"/>
@@ -2388,7 +2387,6 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                         <child>
                                                           <object class="GtkButton" id="restore_source_search">
                                                             <property name="label" translatable="yes">Search network</property>
-                                                            <property name="visible">True</property>
                                                             <property name="can_focus">True</property>
                                                             <property name="receives_default">True</property>
                                                             <signal name="clicked" handler="find_network_share" swapped="no"/>
