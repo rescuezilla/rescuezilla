@@ -33,9 +33,9 @@ from utility import Utility, ErrorMessageModalPopup, _, PleaseWaitModalPopup
 
 # FIXME: The LVM handling in this class could be vastly improved.
 class PartitionsToRestore:
-    def __init__(self, builder, restore_image_partition_list):
+    def __init__(self, builder, restore_partition_selection_list):
         self.builder = builder
-        self.restore_partition_selection_list = restore_image_partition_list
+        self.restore_partition_selection_list = restore_partition_selection_list
         self.destination_partition_combobox_list = self.builder.get_object("destination_partition_combobox_list")
         self.restore_partition_treeview = self.builder.get_object("restore_step4_image_partition_treeview")
 

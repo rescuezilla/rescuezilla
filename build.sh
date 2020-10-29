@@ -148,6 +148,8 @@ if [[ $? -ne 0 ]]; then
 fi
 # Create desktop icon shortcuts
 ln -s /usr/share/applications/rescuezilla.desktop "$BUILD_DIRECTORY/chroot/home/ubuntu/Desktop/rescuezilla.desktop"
+# Rescuezilla's Image Explorer not ready for wide usage
+#ln -s /usr/share/applications/image-explorer.desktop "$BUILD_DIRECTORY/chroot/home/ubuntu/Desktop/image-explorer.desktop"
 ln -s /usr/share/applications/mousepad.desktop "$BUILD_DIRECTORY/chroot/home/ubuntu/Desktop/mousepad.desktop"
 ln -s /usr/share/applications/gparted.desktop "$BUILD_DIRECTORY/chroot/home/ubuntu/Desktop/gparted.desktop"
 

@@ -1,3 +1,8 @@
+#!/usr/bin/python3
+# ----------------------------------------------------------------------
+#   Rescuezilla Image Explorer
+#   A simple GUI interface to explorer backup images
+#   https://www.patreon.com/join/rescuezilla
 # ----------------------------------------------------------------------
 #   Copyright (C) 2012 RedoBackup.org
 #   Copyright (C) 2019-2020 Rescuezilla.com <rescuezilla@gmail.com>
@@ -15,34 +20,14 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
-
-from enum import Enum
-
-MOUNT_DIR = "/mnt/backup"
-IMAGE_EXPLORER_DIR = "/tmp/rescuezilla.image.explorer/"
-IMAGE_EXPLORER_IMG_PATH = "/tmp/rescuezilla.image.explorer.loop.img"
-
-class Mode(Enum):
-    BACKUP = 1
-    RESTORE = 2
-    IMAGE_EXPLORER = 3
+import rescuezilla
 
 
-class Page(Enum):
-    WELCOME = 1
-    BACKUP_SOURCE_DRIVE_SELECTION = 2
-    BACKUP_SOURCE_PARTITION_SELECTION = 3
-    BACKUP_DESTINATION_LOCATION_SELECTION = 4
-    BACKUP_DESTINATION_FOLDER = 5
-    BACKUP_IMAGE_NAME_SELECTION = 6
-    BACKUP_CONFIRM_CONFIGURATION = 7
-    BACKUP_PROGRESS = 8
-    BACKUP_SUMMARY_SCREEN = 9
-    RESTORE_SOURCE_LOCATION_SELECTION = 10
-    RESTORE_SOURCE_IMAGE_SELECTION = 11
-    RESTORE_DESTINATION_DRIVE_SELECTION = 12
-    RESTORE_DESTINATION_PARTITION_SELECTION = 13
-    RESTORE_CONFIRM_CONFIGURATION = 14
-    RESTORE_PROGRESS = 15
-    RESTORE_SUMMARY_SCREEN = 16
-    IMAGE_EXPLORER_SCREEN = 17
+# Wrapper function to launch Rescuezilla Image Explorer GUI. The different process name allows GParted
+# or standard Rescuezilla GUI to run alongside Image Explorer without triggering mutual exclusion.
+def main():
+    rescuezilla.main(is_image_explorer_mode=True)
+
+
+if __name__ == "__main__":
+    main()

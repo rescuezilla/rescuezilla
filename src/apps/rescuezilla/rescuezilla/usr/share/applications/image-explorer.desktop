@@ -1,0 +1,12 @@
+#!/usr/bin/env xdg-open
+
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Name[en_US]=Image Explorer
+Exec=image-explorer
+Comment[en_US]=Mount and explore backup images
+Name=Image Explorer
+Comment=Mount and explore backup images
+Icon=image_explorer

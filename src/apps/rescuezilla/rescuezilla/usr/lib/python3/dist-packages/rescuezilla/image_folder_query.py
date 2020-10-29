@@ -53,6 +53,7 @@ class ImageFolderQuery:
         }
         self.backup_label = self.builder.get_object("backup_folder_label")
         self.restore_label = self.builder.get_object("restore_folder_label")
+        self.image_explorer_folder_label = self.builder.get_object("image_explorer_folder_label")
         self.query_path = MOUNT_DIR
 
     def query_folder(self, path):
@@ -61,6 +62,7 @@ class ImageFolderQuery:
         print("Starting scan of provided path " + self.query_path)
         self.backup_label.set_text(self.query_path)
         self.restore_label.set_text(self.query_path)
+        self.image_explorer_folder_label.set_text(self.query_path)
         self.image_list_store.clear()
         self.failed_to_read_image_dict.clear()
         self.win.set_sensitive(False)
