@@ -2,7 +2,7 @@
 # "Write each command to standard error (preceded by a ‘+ ’) before it is executed.  Useful for debugging"
 set -x
 #     Name:  rescuezilla
-#  Purpose:  Perform appropriate startup of Rescuezilla executable gparted.py.
+#  Purpose:  Perform appropriate startup of Rescuezilla executable rescuezillapy.
 #
 #            The purpose of these startup methods is to prevent
 #            devices from being automounted, and to ensure only one
@@ -93,7 +93,7 @@ if test "x`id -u`" != "x0"; then
     #  privileges.
     #
         if test "xpkexec --disable-internal-agent" = "x"; then
-        echo "Root privileges are required for running gparted."
+        echo "Root privileges are required for running Rescuezilla."
         $BASE_CMD
         exit 1
     fi
@@ -114,11 +114,11 @@ if test "x`id -u`" != "x0"; then
         fi
     fi
 
-        #
-        # Run rescuezilla as root.
-        #
-        pkexec --disable-internal-agent '/usr/sbin/rescuezilla' "$@"
-        status=$?
+    #
+    # Run rescuezilla as root.
+    #
+    pkexec --disable-internal-agent '/usr/sbin/rescuezilla' "$@"
+    status=$?
 
     #
     # Revoke root access to the X11 display, only if we granted it.
