@@ -30,6 +30,8 @@ from restore_manager import RestoreManager
 
 import gi
 
+from verify_manager import VerifyManager
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, GObject
 
@@ -100,16 +102,21 @@ class Handler:
 
         self.backup_manager = BackupManager(builder, self.human_readable_version)
         self.restore_manager = RestoreManager(builder)
+        self.verify_manager = VerifyManager(builder)
 
         # Network
         self.frame_local_dict = {Mode.BACKUP: self.builder.get_object("backup_frame_local"),
-                       Mode.RESTORE: self.builder.get_object("restore_frame_local")}
+                       Mode.RESTORE: self.builder.get_object("restore_frame_local"),
+                       Mode.VERIFY: self.builder.get_object("verify_frame_local")}
         self.frame_network_dict = {Mode.BACKUP: self.builder.get_object("backup_frame_network"),
-                         Mode.RESTORE: self.builder.get_object("restore_frame_network")}
+                         Mode.RESTORE: self.builder.get_object("restore_frame_network"),
+                         Mode.VERIFY: self.builder.get_object("verify_frame_network")}
         self.use_local_radiobutton_dict = {Mode.BACKUP: self.builder.get_object("backup_network_use_local_radiobutton"),
-                                 Mode.RESTORE: self.builder.get_object("restore_network_use_local_radiobutton")}
+                                 Mode.RESTORE: self.builder.get_object("restore_network_use_local_radiobutton"),
+                                 Mode.VERIFY: self.builder.get_object("verify_network_use_local_radiobutton")}
         self.mount_partition_selection_treeselection_id_dict = {Mode.BACKUP: "backup_mount_partition_selection_treeselection",
-                                                                Mode.RESTORE: "source_mount_partition_selection_treeselection"}
+                                                                Mode.RESTORE: "source_mount_partition_selection_treeselection",
+                                                                Mode.VERIFY: "verify_mount_partition_selection_treeselection"}
 
         if is_image_explorer_mode:
             self.display_image_explorer_wizard()
@@ -119,6 +126,7 @@ class Handler:
         self.builder.get_object("welcome_support_linkbutton").set_visible(is_visible)
         self.builder.get_object("backup_step8_support_linkbutton").set_visible(is_visible)
         self.builder.get_object("restore_step7_support_linkbutton").set_visible(is_visible)
+        self.builder.get_object("verify_step4_support_linkbutton").set_visible(is_visible)
         self.builder.get_object("image_explorer_support_linkbutton").set_visible(is_visible)
 
     # Ask users to contribute on the crowdfunding website Patreon.
@@ -126,6 +134,7 @@ class Handler:
         self.builder.get_object("welcome_patreon_linkbutton").set_visible(is_visible)
         self.builder.get_object("backup_step8_patreon_linkbutton").set_visible(is_visible)
         self.builder.get_object("restore_step7_patreon_linkbutton").set_visible(is_visible)
+        self.builder.get_object("verify_step4_patreon_linkbutton").set_visible(is_visible)
         self.builder.get_object("image_explorer_patreon_linkbutton").set_visible(is_visible)
 
     def display_welcome_page(self):
@@ -167,6 +176,19 @@ class Handler:
         # Remove access to any summary pages from prior operations
         self.has_prior_summary_page = False
 
+    def display_verify_wizard(self, button):
+        self.mode = Mode.VERIFY
+        self.drive_query.start_query()
+        self.main_statusbar.pop(self.main_statusbar.get_context_id("version"))
+        self.current_page = Page.VERIFY_SOURCE_LOCATION_SELECTION
+        self.builder.get_object("mode_tabs").set_current_page(3)
+        self.builder.get_object("verify_tabs").set_current_page(0)
+        # Re-enable the forward/previous navigation buttons
+        self.builder.get_object("button_back").set_sensitive(True)
+        self.builder.get_object("button_next").set_sensitive(True)
+        # Remove access to any summary pages from prior operations
+        self.has_prior_summary_page = False
+
     def launch_image_explorer_app(self, button):
         subprocess.Popen(["/usr/sbin/image-explorer"])
 
@@ -174,7 +196,7 @@ class Handler:
         self.mode = Mode.IMAGE_EXPLORER
         self.main_statusbar.pop(self.main_statusbar.get_context_id("version"))
         self.current_page = Page.RESTORE_SOURCE_LOCATION_SELECTION
-        self.builder.get_object("mode_tabs").set_current_page(3)
+        self.builder.get_object("mode_tabs").set_current_page(4)
         # Enable the back navigation button, disable the next (because only 1 page in this mode)
         self.builder.get_object("button_back").set_sensitive(True)
         self.builder.get_object("button_next").set_sensitive(False)
@@ -369,6 +391,41 @@ class Handler:
                     self.display_welcome_page()
                 else:
                     print("Unexpected page " + str(self.current_page))
+            elif self.mode == Mode.VERIFY:
+                if self.current_page == Page.VERIFY_SOURCE_LOCATION_SELECTION:
+                    image_source_partition_key, description = self.handle_mount_local_or_remote()
+                elif self.current_page == Page.VERIFY_SOURCE_IMAGE_SELECTION:
+                    list_store, iter = self.get_row("verify_image_selection_treeselection")
+                    if iter is None:
+                        error = ErrorMessageModalPopup(self.builder, "No image selected")
+                    else:
+                        self.selected_image_absolute_path = list_store.get(iter, 0)[0]
+                        print("User image: " + self.selected_image_absolute_path)
+                        image = self.image_folder_query.image_dict[self.selected_image_absolute_path]
+                        if image.is_needs_decryption:
+                            error = ErrorMessageModalPopup(self.builder,
+                                                           "Ecryptfs encrypted images are not supported by current version of Rescuezilla.\n\nSupport for ecryptfs will be improved in a future version.\n\nHowever, as a temporary workaround, it is possible to carefully use the mount command line utility to decrypt the image, and then point Rescuezilla to this ecryptfs mount point and then use Rescuezilla to restore the image as normal.")
+                        else:
+                            if len(image.short_device_node_disk_list) > 1:
+                                # Unlike Rescuezilla, Clonezilla is able to backup multiple devices at the same time into
+                                # a single image. The Rescuezilla user-interface doesn't yet support this, so the first
+                                # disk is always selected.
+                                error = ErrorMessageModalPopup(self.builder, _("IMPORTANT: Only selecting FIRST disk in Clonezilla image containing MULTIPLE DISKS.") + "\n\n" + "Multidisk Clonezilla images are not fully supported by the current version of Rescuezilla.\n\nOnly the FIRST disk in the multidisk image has been selected.\n\nBefore proceeding, please double-check if this is suitable.")
+                            self.current_page = Page.VERIFY_PROGRESS
+                            self.builder.get_object("verify_tabs").set_current_page(2)
+                            self.builder.get_object("button_back").set_sensitive(False)
+                            self.builder.get_object("button_next").set_sensitive(False)
+                            self.verify_manager.start_verify(image, self._on_operation_completed_callback)
+                elif self.current_page == Page.VERIFY_PROGRESS:
+                    self.current_page = Page.VERIFY_SUMMARY_SCREEN
+                    self.builder.get_object("verify_tabs").set_current_page(3)
+                    self.builder.get_object("button_back").set_sensitive(True)
+                    self.builder.get_object("button_next").set_sensitive(True)
+                elif self.current_page == Page.VERIFY_SUMMARY_SCREEN:
+                    self.has_prior_summary_page = True
+                    self.display_welcome_page()
+                else:
+                    print("Unexpected page " + str(self.current_page))
             else:
                 print("Unexpected mode " + str(self.mode))
             print(" Moving to mode=" + str(self.mode) + " on page " + str(self.current_page))
@@ -447,6 +504,28 @@ class Handler:
                     self.builder.get_object("restore_tabs").set_current_page(5)
                 else:
                     print("Unexpected page " + str(self.current_page))
+            elif self.mode == Mode.VERIFY:
+                if self.current_page == Page.WELCOME:
+                    print("Previous verify summary page")
+                    self.builder.get_object("mode_tabs").set_current_page(3)
+                    self.current_page = Page.VERIFY_SUMMARY_SCREEN
+                    self.builder.get_object("verify_tabs").set_current_page(3)
+                    self.builder.get_object("button_back").set_sensitive(True)
+                    self.builder.get_object("button_next").set_sensitive(True)
+                elif self.current_page == Page.VERIFY_SOURCE_LOCATION_SELECTION:
+                    self.current_page = Page.WELCOME
+                    self.display_welcome_page()
+                elif self.current_page == Page.VERIFY_SOURCE_IMAGE_SELECTION:
+                    self.current_page = Page.VERIFY_SOURCE_LOCATION_SELECTION
+                    self.builder.get_object("verify_tabs").set_current_page(0)
+                elif self.current_page == Page.VERIFY_PROGRESS:
+                    self.current_page = Page.VERIFY_SOURCE_IMAGE_SELECTION
+                    self.builder.get_object("verify_tabs").set_current_page(1)
+                elif self.current_page == Page.VERIFY_SUMMARY_SCREEN:
+                    self.current_page = Page.VERIFY_SOURCE_IMAGE_SELECTION
+                    self.builder.get_object("verify_tabs").set_current_page(1)
+                else:
+                    print("Unexpected page " + str(self.current_page))
             elif self.mode == Mode.IMAGE_EXPLORER:
                 self.current_page = Page.WELCOME
                 self.display_welcome_page()
@@ -466,9 +545,13 @@ class Handler:
                 self.current_page = Page.BACKUP_DESTINATION_FOLDER
                 self.builder.get_object("backup_tabs").set_current_page(3)
                 self.selected_image_folder(mounted_path, False)
-            else:
+            elif self.mode == Mode.RESTORE:
                 self.current_page = Page.RESTORE_SOURCE_IMAGE_SELECTION
                 self.builder.get_object("restore_tabs").set_current_page(1)
+                self.selected_image_folder(mounted_path, True)
+            elif self.mode == Mode.VERIFY:
+                self.current_page = Page.VERIFY_SOURCE_IMAGE_SELECTION
+                self.builder.get_object("verify_tabs").set_current_page(1)
                 self.selected_image_folder(mounted_path, True)
 
     # Called via AreYouSure prompt
@@ -525,6 +608,8 @@ class Handler:
                 self.restore_manager.cancel_restore()
             if self.backup_manager.is_backup_in_progress():
                 self.backup_manager.cancel_backup()
+            if self.verify_manager.is_verify_in_progress():
+                self.verify_manager.cancel_verify()
 
     # Main window receives close signal
     def main_window_delete_event(self, widget, event):
@@ -551,10 +636,13 @@ class Handler:
     def restore_network_network_changed(self):
         return
 
+    def verify_network_network_changed(self):
+        return
+
     # GtkToggleButton handler for switching the image location selection between local folder, and network share.
     def image_location_toggle(self, toggle_button):
         is_local_active = self.use_local_radiobutton_dict[self.mode].get_active()
-        modes = [Mode.BACKUP, Mode.RESTORE]
+        modes = [Mode.BACKUP, Mode.RESTORE, Mode.VERIFY]
         for mode in modes:
             self.frame_local_dict[mode].set_visible(is_local_active)
             self.frame_network_dict[mode].set_visible(not is_local_active)

@@ -31,7 +31,7 @@ from utility import PleaseWaitModalPopup, Utility, _
 
 class MountNetworkPath:
     def __init__(self, builder, callback, mode, destination_path):
-        # Lowercase mode (eg "backup", "restore")
+        # Lowercase mode (eg "backup", "restore", "verify")
         mode_prefix = mode.name.lower()
         settings = {
             'server': builder.get_object(mode_prefix + "_network_server").get_text(),
