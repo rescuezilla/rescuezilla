@@ -58,14 +58,14 @@ def main(is_image_explorer_mode=False):
     # Connect the handler object for the GUI callbacks. This handler manages the entire application state.
     builder.connect_signals(handler)
 
-    # Do not show the GTKNotebook tab menu. For each mode (mode selection, backup and restore), the pages of the
-    # wizard are achieved through a GTKNotebook, which is a tabbed container that provides a function to switch
-    # between pages in the wizard. The tab menu itself is useful when viewing and editing the GUI with Glade,
-    # but should not be displayed to end-users because the application design relies on users not being able to skip
-    # steps.
+    # Do not show the GTKNotebook tab menu. For each mode (including mode selection), the pages of the # wizard are
+    # achieved through a GTKNotebook, which is a tabbed container that provides a function to switch between pages in
+    # the wizard. The tab menu itself is useful when viewing and editing the GUI with Glade, but should not be
+    # displayed to end-users because the application design relies on users not being able to skip steps.
     builder.get_object("mode_tabs").set_show_tabs(False)
     builder.get_object("backup_tabs").set_show_tabs(False)
     builder.get_object("restore_tabs").set_show_tabs(False)
+    builder.get_object("verify_tabs").set_show_tabs(False)
 
     # Display the main GTK window
     win = builder.get_object("main_window")
