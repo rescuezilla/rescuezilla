@@ -310,7 +310,7 @@ class Handler:
                         image = self.image_folder_query.image_dict[self.selected_image_absolute_path]
                         if image.is_needs_decryption:
                             error = ErrorMessageModalPopup(self.builder,
-                                                           "Ecryptfs encrypted images are not supported by current version of Rescuezilla.\n\nSupport for ecryptfs will be improved in a future version.\n\nHowever, as a temporary workaround, it is possible to carefully use the ecryptfs command line utility to mount and decrypt the image, and then point Rescuezilla to this ecryptfs mount point and then use Rescuezilla to restore the image as normal.")
+                                                           "Ecryptfs encrypted images are not supported by current version of Rescuezilla.\n\nSupport for ecryptfs will be improved in a future version.\n\nHowever, as a temporary workaround, it is possible to carefully use the mount command line utility to decrypt the image, and then point Rescuezilla to this ecryptfs mount point and then use Rescuezilla to restore the image as normal.")
                         else:
                             if len(image.short_device_node_disk_list) > 1:
                                 # Unlike Rescuezilla, Clonezilla is able to backup multiple devices at the same time into
@@ -760,7 +760,7 @@ class Handler:
             image = self.image_folder_query.image_dict[selected_image_absolute_path]
             if image.is_needs_decryption:
                 error = ErrorMessageModalPopup(self.builder,
-                                               "Ecryptfs encrypted images are not supported by current version of Rescuezilla.\n\nSupport for ecryptfs will be improved in a future version.\n\nHowever, as a temporary workaround, it is possible to carefully use the ecryptfs command line utility to mount and decrypt the image, and then point Rescuezilla to this ecryptfs mount point and then use Rescuezilla to restore the image as normal.")
+                                               "Ecryptfs encrypted images are not supported by current version of Rescuezilla.\n\nSupport for ecryptfs will be improved in a future version.\n\nHowever, as a temporary workaround, it is possible to carefully use the mount command line utility to decrypt the image, and then point Rescuezilla to this ecryptfs mount point and then use Rescuezilla to restore the image as normal.")
             else:
                 if len(image.short_device_node_disk_list) > 1:
                     # Unlike Rescuezilla, Clonezilla is able to backup multiple devices at the same time into
