@@ -37,7 +37,7 @@ def is_root():
     return os.geteuid() == 0
 
 
-def main(is_image_explorer_mode=False):
+def main():
     if not is_root():
         print("Rescuezilla must run as root.")
         exit(0)
@@ -54,11 +54,11 @@ def main(is_image_explorer_mode=False):
     # directly a text editor, because Glade occasionally has some user-interface limitations.
     builder.add_from_file("/usr/share/rescuezilla/rescuezilla.glade")
 
-    handler = Handler(builder, is_image_explorer_mode)
+    handler = Handler(builder)
     # Connect the handler object for the GUI callbacks. This handler manages the entire application state.
     builder.connect_signals(handler)
 
-    # Do not show the GTKNotebook tab menu. For each mode (including mode selection), the pages of the # wizard are
+    # Do not show the GTKNotebook tab menu. For each mode (including mode selection), the pages of the wizard are
     # achieved through a GTKNotebook, which is a tabbed container that provides a function to switch between pages in
     # the wizard. The tab menu itself is useful when viewing and editing the GUI with Glade, but should not be
     # displayed to end-users because the application design relies on users not being able to skip steps.
@@ -66,6 +66,7 @@ def main(is_image_explorer_mode=False):
     builder.get_object("backup_tabs").set_show_tabs(False)
     builder.get_object("restore_tabs").set_show_tabs(False)
     builder.get_object("verify_tabs").set_show_tabs(False)
+    builder.get_object("image_explorer_tabs").set_show_tabs(False)
 
     # Display the main GTK window
     win = builder.get_object("main_window")
