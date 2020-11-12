@@ -326,14 +326,14 @@
                             </child>
                             <child>
                               <object class="GtkButton" id="welcome_button_image_explorer">
-                                <property name="label" translatable="yes">Image Explorer
-  (exploratory alpha)</property>
+                                <property name="label" translatable="yes">Image Explorer</property>
+                                <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="focus_on_click">False</property>
                                 <property name="receives_default">False</property>
                                 <property name="image">image_explorer_mode_button</property>
                                 <property name="image_position">top</property>
-                                <signal name="clicked" handler="launch_image_explorer_app" swapped="no"/>
+                                <signal name="clicked" handler="display_image_explorer_wizard" swapped="no"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -5002,55 +5002,31 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
               <object class="GtkVBox" id="image_explorer_vbox">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="margin_left">30</property>
-                <property name="margin_right">30</property>
-                <property name="margin_bottom">15</property>
                 <child>
-                  <object class="GtkLabel" id="image_explorer_mode_title">
+                  <object class="GtkNotebook" id="image_explorer_tabs">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="ypad">5</property>
-                    <property name="label" translatable="yes">Image Explorer (exploratory alpha)</property>
-                    <property name="xalign">0</property>
-                    <attributes>
-                      <attribute name="weight" value="bold"/>
-                      <attribute name="stretch" value="ultra-condensed"/>
-                      <attribute name="foreground" value="#999999999999"/>
-                      <attribute name="scale" value="2.5"/>
-                    </attributes>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkFrame" id="image_explorer_frame">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="margin_left">30</property>
-                    <property name="margin_right">30</property>
-                    <property name="margin_bottom">15</property>
-                    <property name="label_xalign">0.0099999997764825821</property>
+                    <property name="can_focus">True</property>
+                    <property name="show_border">False</property>
                     <child>
-                      <object class="GtkVBox" id="image_explorer_content_vbox">
+                      <object class="GtkVBox" id="image_explorer_step1_vbox">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="margin_left">30</property>
                         <property name="margin_right">30</property>
                         <property name="margin_bottom">15</property>
                         <child>
-                          <object class="GtkLabel" id="image_explorer_browse_folder_label">
+                          <object class="GtkLabel" id="image_explorer_step1_mode_title">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="ypad">20</property>
-                            <property name="label" translatable="yes">Click the box below to select the folder containing image files.</property>
-                            <property name="use_markup">True</property>
-                            <property name="justify">center</property>
-                            <property name="wrap">True</property>
-                            <property name="selectable">True</property>
-                            <property name="yalign">1</property>
+                            <property name="ypad">5</property>
+                            <property name="label" translatable="yes">Image Explorer</property>
+                            <property name="xalign">0</property>
+                            <attributes>
+                              <attribute name="weight" value="bold"/>
+                              <attribute name="stretch" value="ultra-condensed"/>
+                              <attribute name="foreground" value="#999999999999"/>
+                              <attribute name="scale" value="2.5"/>
+                            </attributes>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -5059,27 +5035,434 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkBox" id="image_explorer_thickness_box">
+                          <object class="GtkFrame" id="image_explorer_step1_frame">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="orientation">vertical</property>
+                            <property name="margin_left">30</property>
+                            <property name="margin_right">30</property>
+                            <property name="margin_bottom">15</property>
+                            <property name="label_xalign">0</property>
                             <child>
-                              <object class="GtkHBox" id="image_explorer_folder_hbox">
+                              <object class="GtkVBox" id="image_explorer_step1_content_vbox">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
+                                <property name="margin_left">30</property>
+                                <property name="margin_right">30</property>
+                                <property name="margin_top">15</property>
+                                <property name="margin_bottom">15</property>
+                                <property name="spacing">10</property>
                                 <child>
-                                  <object class="GtkScrolledWindow">
+                                  <object class="GtkFrame" id="image_explorer_step1_inner_frame">
                                     <property name="visible">True</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="shadow_type">in</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="label_xalign">0</property>
+                                    <property name="shadow_type">none</property>
                                     <child>
-                                      <object class="GtkViewport">
+                                      <object class="GtkVBox" id="vbox10">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <child>
-                                          <object class="GtkLabel" id="image_explorer_folder_label">
+                                          <object class="GtkRadioButton" id="image_explorer_network_use_local_radiobutton">
+                                            <property name="label" translatable="yes">Connected directly to my computer</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="receives_default">False</property>
+                                            <property name="active">True</property>
+                                            <property name="draw_indicator">True</property>
+                                            <signal name="toggled" handler="image_location_toggle" swapped="no"/>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">True</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkRadioButton" id="image_explorer_network_use_network_radiobutton">
+                                            <property name="label" translatable="yes">Shared over a network</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="receives_default">False</property>
+                                            <property name="draw_indicator">True</property>
+                                            <property name="group">image_explorer_network_use_local_radiobutton</property>
+                                            <signal name="toggled" handler="image_location_toggle" swapped="no"/>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">True</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                      </object>
+                                    </child>
+                                    <child type="label">
+                                      <object class="GtkLabel" id="frame_top_label4">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="label" translatable="yes">Where is the source drive?</property>
+                                        <property name="use_markup">True</property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkScrolledWindow" id="image_explorer_step1_scrolledwindow">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="hscrollbar_policy">never</property>
+                                    <child>
+                                      <object class="GtkViewport" id="viewport4">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="resize_mode">queue</property>
+                                        <child>
+                                          <object class="GtkVBox" id="vbox11">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
+                                            <child>
+                                              <object class="GtkFrame" id="image_explorer_frame_local">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">False</property>
+                                                <property name="label_xalign">0</property>
+                                                <property name="shadow_type">none</property>
+                                                <child>
+                                                  <object class="GtkBox">
+                                                    <property name="visible">True</property>
+                                                    <property name="can_focus">False</property>
+                                                    <property name="orientation">vertical</property>
+                                                    <child>
+                                                      <object class="GtkScrolledWindow">
+                                                        <property name="visible">True</property>
+                                                        <property name="can_focus">True</property>
+                                                        <property name="margin_left">30</property>
+                                                        <property name="margin_right">30</property>
+                                                        <property name="margin_bottom">15</property>
+                                                        <property name="shadow_type">in</property>
+                                                        <child>
+                                                          <object class="GtkTreeView" id="image_explorer_step3_mount_partition_selection_treeview">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="hexpand">True</property>
+                                                            <property name="vexpand">True</property>
+                                                            <property name="model">mount_partition_list</property>
+                                                            <property name="search_column">0</property>
+                                                            <property name="enable_grid_lines">both</property>
+                                                            <signal name="row-activated" handler="row_activated_next_tab" swapped="no"/>
+                                                            <child internal-child="selection">
+                                                            <object class="GtkTreeSelection" id="image_explorer_mount_partition_selection_treeselection"/>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkTreeViewColumn">
+                                                            <property name="visible">False</property>
+                                                            <property name="title">partition_shortdevnode</property>
+                                                            <child>
+                                                            <object class="GtkCellRendererText"/>
+                                                            <attributes>
+                                                            <attribute name="text">0</attribute>
+                                                            </attributes>
+                                                            </child>
+                                                            </object>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkTreeViewColumn">
+                                                            <property name="resizable">True</property>
+                                                            <property name="title" translatable="yes">Partition</property>
+                                                            <child>
+                                                            <object class="GtkCellRendererText"/>
+                                                            <attributes>
+                                                            <attribute name="text">1</attribute>
+                                                            </attributes>
+                                                            </child>
+                                                            </object>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkTreeViewColumn">
+                                                            <property name="resizable">True</property>
+                                                            <property name="title" translatable="yes">Size</property>
+                                                            <child>
+                                                            <object class="GtkCellRendererText"/>
+                                                            <attributes>
+                                                            <attribute name="text">2</attribute>
+                                                            </attributes>
+                                                            </child>
+                                                            </object>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkTreeViewColumn">
+                                                            <property name="resizable">True</property>
+                                                            <property name="title" translatable="yes">Description</property>
+                                                            <child>
+                                                            <object class="GtkCellRendererText"/>
+                                                            <attributes>
+                                                            <attribute name="text">3</attribute>
+                                                            </attributes>
+                                                            </child>
+                                                            </object>
+                                                            </child>
+                                                          </object>
+                                                        </child>
+                                                      </object>
+                                                      <packing>
+                                                        <property name="expand">False</property>
+                                                        <property name="fill">True</property>
+                                                        <property name="position">0</property>
+                                                      </packing>
+                                                    </child>
+                                                    <child>
+                                                      <object class="GtkCheckButton" id="image_explorer_step1_show_hidden_devices">
+                                                        <property name="label" translatable="yes">Show hidden devices (for advanced users)</property>
+                                                        <property name="visible">True</property>
+                                                        <property name="can_focus">True</property>
+                                                        <property name="receives_default">False</property>
+                                                        <property name="halign">center</property>
+                                                        <property name="draw_indicator">True</property>
+                                                        <signal name="toggled" handler="show_hidden_devices_toggle" swapped="no"/>
+                                                      </object>
+                                                      <packing>
+                                                        <property name="expand">False</property>
+                                                        <property name="fill">False</property>
+                                                        <property name="position">1</property>
+                                                      </packing>
+                                                    </child>
+                                                  </object>
+                                                </child>
+                                                <child type="label">
+                                                  <object class="GtkLabel" id="image_explorer_frame_local_label">
+                                                    <property name="visible">True</property>
+                                                    <property name="can_focus">False</property>
+                                                    <property name="xpad">0</property>
+                                                    <property name="label" translatable="yes">Select source drive:</property>
+                                                    <property name="use_markup">True</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">True</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">0</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkFrame" id="image_explorer_frame_network">
+                                                <property name="can_focus">False</property>
+                                                <property name="label_xalign">0</property>
+                                                <property name="shadow_type">none</property>
+                                                <child>
+                                                  <object class="GtkVBox" id="vbox12">
+                                                    <property name="visible">True</property>
+                                                    <property name="can_focus">False</property>
+                                                    <property name="margin_left">30</property>
+                                                    <property name="margin_right">30</property>
+                                                    <property name="margin_bottom">15</property>
+                                                    <child>
+                                                      <object class="GtkHBox" id="hbox4">
+                                                        <property name="visible">True</property>
+                                                        <property name="can_focus">False</property>
+                                                        <property name="spacing">5</property>
+                                                        <child>
+                                                          <object class="GtkComboBox" id="image_explorer_network_network">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">False</property>
+                                                            <property name="model">network_share_protocol_list</property>
+                                                            <signal name="changed" handler="image_explorer_network_network_changed" swapped="no"/>
+                                                            <child>
+                                                            <object class="GtkCellRendererText" id="image_explorer_network_cellrenderertext4"/>
+                                                            <attributes>
+                                                            <attribute name="text">1</attribute>
+                                                            </attributes>
+                                                            </child>
+                                                          </object>
+                                                          <packing>
+                                                            <property name="expand">True</property>
+                                                            <property name="fill">True</property>
+                                                            <property name="position">0</property>
+                                                          </packing>
+                                                        </child>
+                                                        <child>
+                                                          <object class="GtkButton" id="image_explorer_network_search">
+                                                            <property name="label" translatable="yes">Search network</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="receives_default">True</property>
+                                                            <signal name="clicked" handler="find_network_share" swapped="no"/>
+                                                          </object>
+                                                          <packing>
+                                                            <property name="expand">False</property>
+                                                            <property name="fill">True</property>
+                                                            <property name="position">1</property>
+                                                          </packing>
+                                                        </child>
+                                                      </object>
+                                                      <packing>
+                                                        <property name="expand">True</property>
+                                                        <property name="fill">True</property>
+                                                        <property name="position">0</property>
+                                                      </packing>
+                                                    </child>
+                                                    <child>
+                                                      <object class="GtkTable" id="image_explorer_network_entries">
+                                                        <property name="visible">True</property>
+                                                        <property name="can_focus">False</property>
+                                                        <property name="n_rows">5</property>
+                                                        <property name="n_columns">2</property>
+                                                        <property name="column_spacing">5</property>
+                                                        <property name="row_spacing">5</property>
+                                                        <child>
+                                                          <object class="GtkLabel" id="image_explorer_network_server_label">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">False</property>
+                                                            <property name="label" translatable="yes">Server or share location:</property>
+                                                            <property name="xalign">1</property>
+                                                          </object>
+                                                          <packing>
+                                                            <property name="x_options">GTK_FILL</property>
+                                                          </packing>
+                                                        </child>
+                                                        <child>
+                                                          <object class="GtkEntry" id="image_explorer_network_server">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="invisible_char">●</property>
+                                                          </object>
+                                                          <packing>
+                                                            <property name="left_attach">1</property>
+                                                            <property name="right_attach">2</property>
+                                                          </packing>
+                                                        </child>
+                                                        <child>
+                                                          <object class="GtkLabel" id="image_explorer_network_username_label">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">False</property>
+                                                            <property name="label" translatable="yes">Username (Optional):</property>
+                                                            <property name="xalign">1</property>
+                                                          </object>
+                                                          <packing>
+                                                            <property name="top_attach">1</property>
+                                                            <property name="bottom_attach">2</property>
+                                                            <property name="x_options">GTK_FILL</property>
+                                                          </packing>
+                                                        </child>
+                                                        <child>
+                                                          <object class="GtkEntry" id="image_explorer_network_username">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="invisible_char">●</property>
+                                                          </object>
+                                                          <packing>
+                                                            <property name="left_attach">1</property>
+                                                            <property name="right_attach">2</property>
+                                                            <property name="top_attach">1</property>
+                                                            <property name="bottom_attach">2</property>
+                                                          </packing>
+                                                        </child>
+                                                        <child>
+                                                          <object class="GtkLabel" id="image_explorer_network_password_label">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">False</property>
+                                                            <property name="label" translatable="yes">Password (Optional):</property>
+                                                            <property name="xalign">1</property>
+                                                          </object>
+                                                          <packing>
+                                                            <property name="top_attach">2</property>
+                                                            <property name="bottom_attach">3</property>
+                                                            <property name="x_options">GTK_FILL</property>
+                                                          </packing>
+                                                        </child>
+                                                        <child>
+                                                          <object class="GtkEntry" id="image_explorer_network_password">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="visibility">False</property>
+                                                            <property name="invisible_char">●</property>
+                                                          </object>
+                                                          <packing>
+                                                            <property name="left_attach">1</property>
+                                                            <property name="right_attach">2</property>
+                                                            <property name="top_attach">2</property>
+                                                            <property name="bottom_attach">3</property>
+                                                          </packing>
+                                                        </child>
+                                                        <child>
+                                                          <object class="GtkLabel" id="image_explorer_network_domain_label">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">False</property>
+                                                            <property name="label" translatable="yes">Domain (Optional):</property>
+                                                            <property name="xalign">1</property>
+                                                          </object>
+                                                          <packing>
+                                                            <property name="top_attach">3</property>
+                                                            <property name="bottom_attach">4</property>
+                                                            <property name="x_options">GTK_FILL</property>
+                                                          </packing>
+                                                        </child>
+                                                        <child>
+                                                          <object class="GtkEntry" id="image_explorer_network_domain">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="invisible_char">●</property>
+                                                          </object>
+                                                          <packing>
+                                                            <property name="left_attach">1</property>
+                                                            <property name="right_attach">2</property>
+                                                            <property name="top_attach">3</property>
+                                                            <property name="bottom_attach">4</property>
+                                                          </packing>
+                                                        </child>
+                                                        <child>
+                                                          <object class="GtkLabel" id="image_explorer_network_version_label">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">False</property>
+                                                            <property name="label" translatable="yes">Version (Optional):</property>
+                                                            <property name="xalign">1</property>
+                                                          </object>
+                                                          <packing>
+                                                            <property name="top_attach">4</property>
+                                                            <property name="bottom_attach">5</property>
+                                                            <property name="x_options">GTK_FILL</property>
+                                                          </packing>
+                                                        </child>
+                                                        <child>
+                                                          <object class="GtkEntry" id="image_explorer_network_version">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="invisible_char">●</property>
+                                                          </object>
+                                                          <packing>
+                                                            <property name="left_attach">1</property>
+                                                            <property name="right_attach">2</property>
+                                                            <property name="top_attach">4</property>
+                                                            <property name="bottom_attach">5</property>
+                                                          </packing>
+                                                        </child>
+                                                      </object>
+                                                      <packing>
+                                                        <property name="expand">True</property>
+                                                        <property name="fill">True</property>
+                                                        <property name="position">1</property>
+                                                      </packing>
+                                                    </child>
+                                                  </object>
+                                                </child>
+                                                <child type="label">
+                                                  <object class="GtkLabel" id="image_explorer_frame_network_label">
+                                                    <property name="visible">True</property>
+                                                    <property name="can_focus">False</property>
+                                                    <property name="xpad">0</property>
+                                                    <property name="label" translatable="yes">Select network-shared storage location:</property>
+                                                    <property name="use_markup">True</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">1</property>
+                                              </packing>
+                                            </child>
                                           </object>
                                         </child>
                                       </object>
@@ -5088,367 +5471,585 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                   <packing>
                                     <property name="expand">True</property>
                                     <property name="fill">True</property>
-                                    <property name="position">0</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkButton" id="image_explorer_folder_browse">
-                                    <property name="label" translatable="yes">Browse...</property>
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="receives_default">True</property>
-                                    <signal name="clicked" handler="select_image_explorer_image_folder" swapped="no"/>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">True</property>
-                                    <property name="padding">2</property>
                                     <property name="position">1</property>
                                   </packing>
                                 </child>
                               </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">0</property>
-                              </packing>
+                            </child>
+                            <child type="label">
+                              <object class="GtkLabel" id="image_explorer_step1_subtitle">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">Step 1: Select Image Location</property>
+                                <attributes>
+                                  <attribute name="weight" value="bold"/>
+                                  <attribute name="scale" value="1.5"/>
+                                </attributes>
+                              </object>
                             </child>
                           </object>
                           <packing>
-                            <property name="expand">False</property>
+                            <property name="expand">True</property>
                             <property name="fill">True</property>
                             <property name="position">1</property>
                           </packing>
                         </child>
-                        <child>
-                          <object class="GtkLabel" id="image_explorer_select_image_label">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="ypad">20</property>
-                            <property name="label" translatable="yes">Select a backup image.</property>
-                            <property name="use_markup">True</property>
-                            <property name="wrap">True</property>
-                            <property name="selectable">True</property>
-                            <property name="yalign">1</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">2</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkScrolledWindow">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="margin_bottom">15</property>
-                            <property name="shadow_type">in</property>
-                            <child>
-                              <object class="GtkTreeView" id="image_explorer_destination_folder_image_files_treeview">
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="model">image_list</property>
-                                <property name="search_column">0</property>
-                                <property name="enable_grid_lines">both</property>
-                                <child internal-child="selection">
-                                  <object class="GtkTreeSelection" id="image_explorer_destination_folder_image_files_treeselection">
-                                    <signal name="changed" handler="selection_changed_populate_partitions" swapped="no"/>
-                                  </object>
-                                </child>
-                                <child>
-                                  <object class="GtkTreeViewColumn">
-                                    <property name="resizable">True</property>
-                                    <child>
-                                      <object class="GtkCellRendererPixbuf"/>
-                                      <attributes>
-                                        <attribute name="pixbuf">2</attribute>
-                                      </attributes>
-                                    </child>
-                                  </object>
-                                </child>
-                                <child>
-                                  <object class="GtkTreeViewColumn">
-                                    <child>
-                                      <object class="GtkCellRendererPixbuf"/>
-                                      <attributes>
-                                        <attribute name="pixbuf">3</attribute>
-                                      </attributes>
-                                    </child>
-                                  </object>
-                                </child>
-                                <child>
-                                  <object class="GtkTreeViewColumn">
-                                    <property name="resizable">True</property>
-                                    <property name="title" translatable="yes">Filename</property>
-                                    <child>
-                                      <object class="GtkCellRendererText"/>
-                                      <attributes>
-                                        <attribute name="text">4</attribute>
-                                      </attributes>
-                                    </child>
-                                  </object>
-                                </child>
-                                <child>
-                                  <object class="GtkTreeViewColumn">
-                                    <property name="resizable">True</property>
-                                    <property name="title" translatable="yes">Size</property>
-                                    <child>
-                                      <object class="GtkCellRendererText"/>
-                                      <attributes>
-                                        <attribute name="text">5</attribute>
-                                      </attributes>
-                                    </child>
-                                  </object>
-                                </child>
-                                <child>
-                                  <object class="GtkTreeViewColumn">
-                                    <property name="resizable">True</property>
-                                    <property name="title" translatable="yes">Last modified</property>
-                                    <child>
-                                      <object class="GtkCellRendererText"/>
-                                      <attributes>
-                                        <attribute name="text">6</attribute>
-                                      </attributes>
-                                    </child>
-                                  </object>
-                                </child>
-                                <child>
-                                  <object class="GtkTreeViewColumn">
-                                    <property name="resizable">True</property>
-                                    <property name="title" translatable="yes">Partitions</property>
-                                    <child>
-                                      <object class="GtkCellRendererText"/>
-                                      <attributes>
-                                        <attribute name="text">7</attribute>
-                                      </attributes>
-                                    </child>
-                                  </object>
-                                </child>
-                              </object>
-                            </child>
-                          </object>
-                          <packing>
-                            <property name="expand">True</property>
-                            <property name="fill">True</property>
-                            <property name="position">3</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkLabel" id="image_explorer_partition_selection_label">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="ypad">20</property>
-                            <property name="label" translatable="yes">Select the partition to mount.</property>
-                            <property name="use_markup">True</property>
-                            <property name="justify">center</property>
-                            <property name="wrap">True</property>
-                            <property name="selectable">True</property>
-                            <property name="yalign">1</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">4</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkScrolledWindow">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="margin_bottom">15</property>
-                            <property name="shadow_type">in</property>
-                            <child>
-                              <object class="GtkTreeView" id="image_explorer_image_partition_treeview">
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="model">image_explorer_partition_selection_list</property>
-                                <property name="search_column">0</property>
-                                <property name="enable_grid_lines">both</property>
-                                <signal name="row-activated" handler="row_activated_partition_selected" swapped="no"/>
-                                <child internal-child="selection">
-                                  <object class="GtkTreeSelection" id="image_explorer_image_partition_treeselection">
-                                    <signal name="changed" handler="partition_selection_changed" swapped="no"/>
-                                  </object>
-                                </child>
-                                <child>
-                                  <object class="GtkTreeViewColumn">
-                                    <property name="title">Partition</property>
-                                    <child>
-                                      <object class="GtkCellRendererText"/>
-                                      <attributes>
-                                        <attribute name="text">1</attribute>
-                                      </attributes>
-                                    </child>
-                                  </object>
-                                </child>
-                                <child>
-                                  <object class="GtkTreeViewColumn">
-                                    <property name="resizable">True</property>
-                                    <property name="title" translatable="yes">Description</property>
-                                    <property name="expand">True</property>
-                                    <child>
-                                      <object class="GtkCellRendererText"/>
-                                      <attributes>
-                                        <attribute name="text">2</attribute>
-                                      </attributes>
-                                    </child>
-                                  </object>
-                                </child>
-                              </object>
-                            </child>
-                          </object>
-                          <packing>
-                            <property name="expand">True</property>
-                            <property name="fill">True</property>
-                            <property name="position">5</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkLabel" id="image_explorer_mount_label">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="ypad">20</property>
-                            <property name="label" translatable="yes">Click &lt;b&gt;Mount&lt;/b&gt; to restore your backup &lt;b&gt;to a temporary file in &lt;i&gt;main memory&lt;/i&gt;&lt;/b&gt;.
-
-&lt;b&gt;Depending on the amount of RAM in your computer, larger backups will &lt;i&gt;not&lt;/i&gt; be able to be explored.&lt;/b&gt;</property>
-                            <property name="use_markup">True</property>
-                            <property name="justify">center</property>
-                            <property name="wrap">True</property>
-                            <property name="selectable">True</property>
-                            <property name="yalign">1</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">6</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkHButtonBox" id="buttonbox1">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="margin_top">10</property>
-                            <property name="margin_bottom">10</property>
-                            <property name="spacing">10</property>
-                            <property name="layout_style">center</property>
-                            <child>
-                              <object class="GtkButton" id="button_mount">
-                                <property name="label" translatable="yes">Mount</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">True</property>
-                                <signal name="clicked" handler="mount_partition" swapped="no"/>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">False</property>
-                                <property name="position">1</property>
-                              </packing>
-                            </child>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">7</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkLabel" id="image_explorer_open_in_file_manager_label">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="ypad">20</property>
-                            <property name="label" translatable="yes">When the partition has been mounted, click &lt;b&gt;Open in file manager&lt;/b&gt; to explore your image.</property>
-                            <property name="use_markup">True</property>
-                            <property name="justify">center</property>
-                            <property name="wrap">True</property>
-                            <property name="selectable">True</property>
-                            <property name="yalign">1</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">8</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkHButtonBox" id="buttonbox2">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="margin_top">10</property>
-                            <property name="margin_bottom">10</property>
-                            <property name="spacing">10</property>
-                            <property name="layout_style">center</property>
-                            <child>
-                              <object class="GtkButton" id="button_open_file_manager">
-                                <property name="label" translatable="yes">Open in file manager</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">True</property>
-                                <signal name="clicked" handler="open_file_manager" swapped="no"/>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">False</property>
-                                <property name="position">1</property>
-                              </packing>
-                            </child>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">9</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkLinkButton" id="image_explorer_patreon_linkbutton">
-                            <property name="label" translatable="yes">Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed.</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">True</property>
-                            <property name="halign">center</property>
-                            <property name="relief">none</property>
-                            <property name="uri">https://www.patreon.com/join/rescuezilla</property>
-                            <signal name="activate-link" handler="open_url_as_non_root" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">False</property>
-                            <property name="position">10</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkLinkButton" id="image_explorer_support_linkbutton">
-                            <property name="label" translatable="yes">Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum.</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">True</property>
-                            <property name="halign">center</property>
-                            <property name="relief">none</property>
-                            <property name="uri">https://rescuezilla.com/help.html</property>
-                            <signal name="activate-link" handler="open_url_as_non_root" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="position">11</property>
-                          </packing>
-                        </child>
                       </object>
                     </child>
-                    <child type="label">
-                      <object class="GtkLabel" id="image_explorer_subtitle">
+                    <child type="tab">
+                      <object class="GtkLabel" id="image_explorer_step1_tab_label">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">View and extract individual files from (small) backup images</property>
-                        <attributes>
-                          <attribute name="weight" value="bold"/>
-                          <attribute name="scale" value="1.5"/>
-                        </attributes>
+                        <property name="label" translatable="yes">Step 1</property>
                       </object>
+                      <packing>
+                        <property name="tab_fill">False</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkVBox" id="image_explorer_step2_vbox1">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="margin_left">30</property>
+                        <property name="margin_right">30</property>
+                        <property name="margin_bottom">15</property>
+                        <child>
+                          <object class="GtkLabel" id="image_explorer_step2_mode_title">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="ypad">5</property>
+                            <property name="label" translatable="yes">Image Explorer</property>
+                            <property name="xalign">0</property>
+                            <attributes>
+                              <attribute name="weight" value="bold"/>
+                              <attribute name="stretch" value="ultra-condensed"/>
+                              <attribute name="foreground" value="#999999999999"/>
+                              <attribute name="scale" value="2.5"/>
+                            </attributes>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkFrame" id="image_explorer_step2_frame">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="margin_left">30</property>
+                            <property name="margin_right">30</property>
+                            <property name="margin_bottom">15</property>
+                            <property name="label_xalign">0</property>
+                            <child>
+                              <object class="GtkVBox" id="image_explorer_step2_content_vbox">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="margin_left">30</property>
+                                <property name="margin_right">30</property>
+                                <property name="margin_top">15</property>
+                                <property name="margin_bottom">15</property>
+                                <child>
+                                  <object class="GtkLabel" id="image_explorer_step2_text">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="ypad">20</property>
+                                    <property name="label" translatable="yes">Click the box below to select the folder containing image files.</property>
+                                    <property name="wrap">True</property>
+                                    <property name="yalign">1</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkBox" id="image_explorer_step2_thickness_box">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="orientation">vertical</property>
+                                    <child>
+                                      <object class="GtkHBox" id="image_explorer_step2_folder_hbox">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <child>
+                                          <object class="GtkScrolledWindow">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="shadow_type">in</property>
+                                            <child>
+                                              <object class="GtkViewport">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">False</property>
+                                                <child>
+                                                  <object class="GtkLabel" id="image_explorer_folder_label">
+                                                    <property name="visible">True</property>
+                                                    <property name="can_focus">False</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">True</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkButton" id="image_explorer_image_browse">
+                                            <property name="label" translatable="yes">Browse...</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="receives_default">True</property>
+                                            <signal name="clicked" handler="select_image_folder" swapped="no"/>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="padding">2</property>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">True</property>
+                                        <property name="position">0</property>
+                                      </packing>
+                                    </child>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel" id="image_explorer_step2_text1">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="ypad">20</property>
+                                    <property name="label" translatable="yes">Select the image file to image_explorer</property>
+                                    <property name="wrap">True</property>
+                                    <property name="yalign">1</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                    <property name="position">2</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkScrolledWindow" id="image_explorer_step2_scrolledwindow">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="margin_left">30</property>
+                                    <property name="margin_right">30</property>
+                                    <property name="margin_bottom">15</property>
+                                    <property name="shadow_type">in</property>
+                                    <child>
+                                      <object class="GtkTreeView" id="image_explorer_image_selection_treeview">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">True</property>
+                                        <property name="model">image_list</property>
+                                        <property name="search_column">0</property>
+                                        <property name="enable_grid_lines">both</property>
+                                        <signal name="row-activated" handler="row_activated_next_tab" swapped="no"/>
+                                        <child internal-child="selection">
+                                          <object class="GtkTreeSelection" id="image_explorer_image_selection_treeselection"/>
+                                        </child>
+                                        <child>
+                                          <object class="GtkTreeViewColumn">
+                                            <child>
+                                              <object class="GtkCellRendererPixbuf"/>
+                                              <attributes>
+                                                <attribute name="pixbuf">2</attribute>
+                                              </attributes>
+                                            </child>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="GtkTreeViewColumn">
+                                            <child>
+                                              <object class="GtkCellRendererPixbuf"/>
+                                              <attributes>
+                                                <attribute name="pixbuf">3</attribute>
+                                              </attributes>
+                                            </child>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="GtkTreeViewColumn">
+                                            <property name="resizable">True</property>
+                                            <property name="title" translatable="yes">Filename</property>
+                                            <child>
+                                              <object class="GtkCellRendererText"/>
+                                              <attributes>
+                                                <attribute name="text">4</attribute>
+                                              </attributes>
+                                            </child>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="GtkTreeViewColumn">
+                                            <property name="resizable">True</property>
+                                            <property name="title" translatable="yes">Size</property>
+                                            <child>
+                                              <object class="GtkCellRendererText"/>
+                                              <attributes>
+                                                <attribute name="text">5</attribute>
+                                              </attributes>
+                                            </child>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="GtkTreeViewColumn">
+                                            <property name="resizable">True</property>
+                                            <property name="title" translatable="yes">Date created</property>
+                                            <child>
+                                              <object class="GtkCellRendererText"/>
+                                              <attributes>
+                                                <attribute name="text">6</attribute>
+                                              </attributes>
+                                            </child>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="GtkTreeViewColumn">
+                                            <property name="resizable">True</property>
+                                            <property name="title" translatable="yes">Partitions</property>
+                                            <child>
+                                              <object class="GtkCellRendererText"/>
+                                              <attributes>
+                                                <attribute name="text">7</attribute>
+                                              </attributes>
+                                            </child>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">True</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">3</property>
+                                  </packing>
+                                </child>
+                              </object>
+                            </child>
+                            <child type="label">
+                              <object class="GtkLabel" id="image_explorer_step2_subtitle">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">Step 2: Select Backup Image</property>
+                                <attributes>
+                                  <attribute name="weight" value="bold"/>
+                                  <attribute name="scale" value="1.5"/>
+                                </attributes>
+                              </object>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child type="tab">
+                      <object class="GtkLabel" id="image_explorer_step2_tab_label">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Step 2</property>
+                      </object>
+                      <packing>
+                        <property name="position">1</property>
+                        <property name="tab_fill">False</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkVBox" id="image_explorer_step3_vbox">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="margin_left">30</property>
+                        <property name="margin_right">30</property>
+                        <property name="margin_bottom">15</property>
+                        <child>
+                          <object class="GtkLabel" id="image_explorer_step3_mode_title">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="ypad">5</property>
+                            <property name="label" translatable="yes">Image Explorer</property>
+                            <property name="xalign">0</property>
+                            <attributes>
+                              <attribute name="weight" value="bold"/>
+                              <attribute name="stretch" value="ultra-condensed"/>
+                              <attribute name="foreground" value="#999999999999"/>
+                              <attribute name="scale" value="2.5"/>
+                            </attributes>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkFrame" id="image_explorer_step3_frame">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="margin_left">30</property>
+                            <property name="margin_right">30</property>
+                            <property name="margin_bottom">15</property>
+                            <property name="label_xalign">0</property>
+                            <child>
+                              <object class="GtkVBox" id="image_explorer_step3_content_vbox">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="margin_left">30</property>
+                                <property name="margin_right">30</property>
+                                <property name="margin_top">15</property>
+                                <property name="margin_bottom">15</property>
+                                <child>
+                                  <object class="GtkLabel" id="image_explorer_step3_text">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="ypad">20</property>
+                                    <property name="label" translatable="yes">Select the partition to mount.</property>
+                                    <property name="use_markup">True</property>
+                                    <property name="wrap">True</property>
+                                    <property name="yalign">1</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkScrolledWindow" id="image_explorer_step3_scrolledwindow">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="shadow_type">in</property>
+                                    <child>
+                                      <object class="GtkTreeView" id="image_explorer_image_partition_treeview">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">True</property>
+                                        <property name="model">image_explorer_partition_selection_list</property>
+                                        <property name="search_column">0</property>
+                                        <property name="enable_grid_lines">both</property>
+                                        <signal name="row-activated" handler="row_activated_partition_selected" swapped="no"/>
+                                        <child internal-child="selection">
+                                          <object class="GtkTreeSelection" id="image_explorer_image_partition_treeselection">
+                                            <signal name="changed" handler="partition_selection_changed" swapped="no"/>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="GtkTreeViewColumn">
+                                            <property name="title">Partition</property>
+                                            <child>
+                                              <object class="GtkCellRendererText"/>
+                                              <attributes>
+                                                <attribute name="text">1</attribute>
+                                              </attributes>
+                                            </child>
+                                          </object>
+                                        </child>
+                                        <child>
+                                          <object class="GtkTreeViewColumn">
+                                            <property name="resizable">True</property>
+                                            <property name="title" translatable="yes">Description</property>
+                                            <property name="expand">True</property>
+                                            <child>
+                                              <object class="GtkCellRendererText"/>
+                                              <attributes>
+                                                <attribute name="text">2</attribute>
+                                              </attributes>
+                                            </child>
+                                          </object>
+                                        </child>
+                                      </object>
+                                    </child>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">True</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel" id="image_explorer_mount_label">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="ypad">20</property>
+                                    <property name="label" translatable="yes">Click &lt;b&gt;Mount&lt;/b&gt; to restore your backup &lt;b&gt;to a temporary file in &lt;i&gt;main memory&lt;/i&gt;&lt;/b&gt;.
+
+&lt;b&gt;Depending on the amount of RAM in your computer, larger backups will &lt;i&gt;not&lt;/i&gt; be able to be explored.&lt;/b&gt;</property>
+                                    <property name="use_markup">True</property>
+                                    <property name="justify">center</property>
+                                    <property name="wrap">True</property>
+                                    <property name="selectable">True</property>
+                                    <property name="yalign">1</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">2</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkHButtonBox" id="buttonbox1">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="margin_top">10</property>
+                                    <property name="margin_bottom">10</property>
+                                    <property name="spacing">10</property>
+                                    <property name="layout_style">center</property>
+                                    <child>
+                                      <object class="GtkButton" id="button_mount">
+                                        <property name="label" translatable="yes">Mount</property>
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">True</property>
+                                        <property name="receives_default">True</property>
+                                        <signal name="clicked" handler="mount_partition" swapped="no"/>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">False</property>
+                                        <property name="position">1</property>
+                                      </packing>
+                                    </child>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">3</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel" id="image_explorer_open_in_file_manager_label">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="ypad">20</property>
+                                    <property name="label" translatable="yes">When the partition has been mounted, click &lt;b&gt;Open in file manager&lt;/b&gt; to explore your image.</property>
+                                    <property name="use_markup">True</property>
+                                    <property name="justify">center</property>
+                                    <property name="wrap">True</property>
+                                    <property name="selectable">True</property>
+                                    <property name="yalign">1</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">4</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkHButtonBox" id="buttonbox2">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="margin_top">10</property>
+                                    <property name="margin_bottom">10</property>
+                                    <property name="spacing">10</property>
+                                    <property name="layout_style">center</property>
+                                    <child>
+                                      <object class="GtkButton" id="button_open_file_manager">
+                                        <property name="label" translatable="yes">Open in file manager</property>
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">True</property>
+                                        <property name="receives_default">True</property>
+                                        <signal name="clicked" handler="open_file_manager" swapped="no"/>
+                                      </object>
+                                      <packing>
+                                        <property name="expand">False</property>
+                                        <property name="fill">False</property>
+                                        <property name="position">1</property>
+                                      </packing>
+                                    </child>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">5</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkLinkButton" id="image_explorer_step3_patreon_linkbutton">
+                                    <property name="label" translatable="yes">Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed.</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="receives_default">True</property>
+                                    <property name="halign">center</property>
+                                    <property name="relief">none</property>
+                                    <property name="uri">https://www.patreon.com/join/rescuezilla</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">6</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkLinkButton" id="image_explorer_step3_support_linkbutton">
+                                    <property name="label" translatable="yes">Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum.</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="receives_default">True</property>
+                                    <property name="halign">center</property>
+                                    <property name="relief">none</property>
+                                    <property name="uri">https://rescuezilla.com/help.html</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">7</property>
+                                  </packing>
+                                </child>
+                              </object>
+                            </child>
+                            <child type="label">
+                              <object class="GtkLabel" id="image_explorer_step3_subtitle">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">Step 3: Select Partition to Explore</property>
+                                <attributes>
+                                  <attribute name="weight" value="bold"/>
+                                  <attribute name="scale" value="1.5"/>
+                                </attributes>
+                              </object>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="expand">True</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
+                    <child type="tab">
+                      <object class="GtkLabel" id="image_explorer_step3_tab_label">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="label" translatable="yes">Step 3</property>
+                      </object>
+                      <packing>
+                        <property name="position">2</property>
+                        <property name="tab_fill">False</property>
+                      </packing>
                     </child>
                   </object>
                   <packing>
                     <property name="expand">True</property>
                     <property name="fill">True</property>
-                    <property name="position">1</property>
+                    <property name="position">0</property>
                   </packing>
                 </child>
               </object>
