@@ -29,6 +29,7 @@ from mount_network_path import MountNetworkPath
 from restore_manager import RestoreManager
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk, GObject
 
@@ -94,11 +95,22 @@ class Handler:
         # Initialize network share options
         self.network_share_protocol_list = self.builder.get_object("network_share_protocol_list")
         self.network_share_protocol_list.append(["SMB", _("SMB/CIFS shared folder specified below")])
-        self.builder.get_object("restore_source_network").set_active(0)
-        self.builder.get_object("backup_dest_network").set_active(0)
+        self.builder.get_object("restore_network_network").set_active(0)
+        self.builder.get_object("backup_network_network").set_active(0)
 
         self.backup_manager = BackupManager(builder, self.human_readable_version)
         self.restore_manager = RestoreManager(builder)
+
+        # Network
+        self.frame_local_dict = {Mode.BACKUP: self.builder.get_object("backup_frame_local"),
+                       Mode.RESTORE: self.builder.get_object("restore_frame_local")}
+        self.frame_network_dict = {Mode.BACKUP: self.builder.get_object("backup_frame_network"),
+                         Mode.RESTORE: self.builder.get_object("restore_frame_network")}
+        self.use_local_radiobutton_dict = {Mode.BACKUP: self.builder.get_object("backup_network_use_local_radiobutton"),
+                                 Mode.RESTORE: self.builder.get_object("restore_network_use_local_radiobutton")}
+        self.mount_partition_selection_treeselection_id_dict = {Mode.BACKUP: "backup_mount_partition_selection_treeselection",
+                                                                Mode.RESTORE: "source_mount_partition_selection_treeselection"}
+
         if is_image_explorer_mode:
             self.display_image_explorer_wizard()
 
@@ -188,9 +200,7 @@ class Handler:
         try:
             print("Currently mode=" + str(self.mode) + " on page " + str(self.current_page))
             if self.mode == Mode.BACKUP:
-                if self.current_page == Page.WELCOME:
-                    print("Unexpected")
-                elif self.current_page == Page.BACKUP_SOURCE_DRIVE_SELECTION:
+                if self.current_page == Page.BACKUP_SOURCE_DRIVE_SELECTION:
                     list_store, iter = self.get_row("backup_drive_selection_treeselection")
                     if iter is None:
                         error = ErrorMessageModalPopup(self.builder, "No source drive selected. Please select source "
@@ -229,22 +239,7 @@ class Handler:
                         self.current_page = Page.BACKUP_DESTINATION_LOCATION_SELECTION
                         self.builder.get_object("backup_tabs").set_current_page(2)
                 elif self.current_page == Page.BACKUP_DESTINATION_LOCATION_SELECTION:
-                    backup_dest_use_local_radiobutton = self.builder.get_object("backup_dest_use_local_radiobutton")
-                    if backup_dest_use_local_radiobutton.get_active():
-                        list_store, iter = self.get_row("backup_destination_partition_selection_treeselection")
-                        if iter is None:
-                            error = ErrorMessageModalPopup(self.builder, "Please select destination drive to mount")
-                        else:
-                            # Get first column (which is hidden/invisible) containing the drive shortdevname (eg, 'sda')
-                            selected_partition_key = list_store.get(iter, 0)[0]
-                            self.destination_partition_description = list_store.get(iter, 3)[0]
-                            print("User selected partition: " + selected_partition_key)
-                            # Callback determines whether wizard proceeds
-                            MountLocalPath(self.builder, self._post_mount_callback, selected_partition_key,
-                                           MOUNT_DIR)
-                    else:
-                        self.destination_partition_description = "network share"
-                        MountNetworkPath(self.builder, self._post_mount_callback, "backup_dest", MOUNT_DIR)
+                    selected_partition_key, self.destination_partition_description = self.handle_mount_local_or_remote()
                 elif self.current_page == Page.BACKUP_DESTINATION_FOLDER:
                     enduser_date = datetime.today().strftime('%Y-%m-%d-%H%M') + "-img-rescuezilla"
                     self.builder.get_object("backup_name").set_text(enduser_date)
@@ -261,7 +256,7 @@ class Handler:
                 elif self.current_page == Page.BACKUP_CONFIRM_CONFIGURATION:
                     self.current_page = Page.BACKUP_PROGRESS
                     self.builder.get_object("backup_tabs").set_current_page(6)
-                    self.backup_manager.start_backup(self.selected_drive_key, self.partitions_to_backup, self.drive_query.drive_state, self.dest_dir, self._on_backup_restore_operation_completed_callback)
+                    self.backup_manager.start_backup(self.selected_drive_key, self.partitions_to_backup, self.drive_query.drive_state, self.dest_dir, self._on_operation_completed_callback)
                     # Disable back/next button until the restore completes
                     self.builder.get_object("button_next").set_sensitive(False)
                     self.builder.get_object("button_back").set_sensitive(False)
@@ -279,29 +274,13 @@ class Handler:
                     self.has_prior_summary_page = True
                     self.display_welcome_page()
                 else:
-                    print("Unexpected")
+                    print("Unexpected page " + str(self.current_page))
             elif self.mode == Mode.RESTORE:
-                if self.current_page == Page.WELCOME:
-                    print("Unexpected")
-                elif self.current_page == Page.RESTORE_SOURCE_LOCATION_SELECTION:
-                    restore_source_use_local_radiobutton = self.builder.get_object("restore_source_use_local_radiobutton")
-                    if restore_source_use_local_radiobutton.get_active():
-                        list_store, iter = self.get_row("source_partition_selection_treeselection")
-                        if iter is None:
-                            error = ErrorMessageModalPopup(self.builder, "Please select drive to mount")
-                        else:
-                            # Get first column (which is hidden/invisible) containing the drive shortdevname (eg, 'sda')
-                            self.image_source_partition_key = list_store.get(iter, 0)[0]
-                            print("User selected partition: " + self.image_source_partition_key)
-                            # Callback determines whether wizard proceeds
-                            MountLocalPath(self.builder, self._post_mount_callback, self.image_source_partition_key,
-                                           MOUNT_DIR)
-                    else:
-                        # In network mode, there is no partition key for the source drive
-                        self.image_source_partition_key = None
-                        MountNetworkPath(self.builder, self._post_mount_callback, "restore_source", MOUNT_DIR)
+                if self.current_page == Page.RESTORE_SOURCE_LOCATION_SELECTION:
+                    self.image_source_partition_key, description = self.handle_mount_local_or_remote()
                 elif self.current_page == Page.RESTORE_SOURCE_IMAGE_SELECTION:
-                    list_store, iter = self.get_row("restore_partition_selection_treeselection")
+
+                    list_store, iter = self.get_row("restore_image_selection_treeselection")
                     if iter is None:
                         error = ErrorMessageModalPopup(self.builder, "No image selected")
                     else:
@@ -389,9 +368,9 @@ class Handler:
                     self.has_prior_summary_page = True
                     self.display_welcome_page()
                 else:
-                    print("Unexpected")
+                    print("Unexpected page " + str(self.current_page))
             else:
-                print("Unexpected")
+                print("Unexpected mode " + str(self.mode))
             print(" Moving to mode=" + str(self.mode) + " on page " + str(self.current_page))
         except Exception as e:
             tb = traceback.format_exc()
@@ -434,7 +413,7 @@ class Handler:
                     self.current_page = Page.BACKUP_PROGRESS
                     self.builder.get_object("backup_tabs").set_current_page(6)
                 else:
-                    print("Unexpected")
+                    print("Unexpected page " + str(self.current_page))
             elif self.mode == Mode.RESTORE:
                 if self.current_page == Page.WELCOME:
                     print("Previous restore summary page")
@@ -467,12 +446,12 @@ class Handler:
                     self.current_page = Page.RESTORE_PROGRESS
                     self.builder.get_object("restore_tabs").set_current_page(5)
                 else:
-                    print("Unexpected")
+                    print("Unexpected page " + str(self.current_page))
             elif self.mode == Mode.IMAGE_EXPLORER:
                 self.current_page = Page.WELCOME
                 self.display_welcome_page()
             else:
-                print("Unexpected")
+                print("Unexpected mode " + str(self.mode))
             print("Moving to mode=" + str(self.mode) + " on page " + str(self.current_page))
         except Exception as e:
             tb = traceback.format_exc()
@@ -499,14 +478,14 @@ class Handler:
             self.builder.get_object("restore_tabs").set_current_page(5)
             self.restore_manager.start_restore(self.selected_image, self.restore_destination_drive,
                                                self.partitions_to_restore, self.is_overwriting_partition_table,
-                                               self._on_backup_restore_operation_completed_callback)
+                                               self._on_operation_completed_callback)
             # Display the Patreon call-to-action.
             self.set_patreon_call_to_action_visible(True)
         else:
             self.builder.get_object("button_back").set_sensitive(True)
             self.builder.get_object("button_next").set_sensitive(True)
 
-    def _on_backup_restore_operation_completed_callback(self, is_success):
+    def _on_operation_completed_callback(self, is_success):
         if is_success:
             self.set_support_information_linkbutton_visible(False)
             self.set_patreon_call_to_action_visible(True)
@@ -566,45 +545,40 @@ class Handler:
     def restore_scan_network(self):
         return
 
-    def restore_source_network_changed(self):
+    def backup_network_network_changed(self, toggle_button):
         return
 
-    def backup_destination_location_toggle(self, toggle_button):
-        backup_frame_local = self.builder.get_object("backup_frame_local")
-        backup_frame_network = self.builder.get_object("backup_frame_network")
-
-        use_local_radiobutton = self.builder.get_object("backup_dest_use_local_radiobutton")
-        use_network_radiobutton = self.builder.get_object("backup_dest_use_network_radiobutton")
-
-        if toggle_button.get_active():
-            if toggle_button == use_local_radiobutton:
-                backup_frame_network.set_visible(False)
-                backup_frame_local.set_visible(True)
-                print("toggle 1")
-            elif toggle_button == use_network_radiobutton:
-                backup_frame_network.set_visible(True)
-                backup_frame_local.set_visible(False)
-                print("toggle 2")
+    def restore_network_network_changed(self):
         return
 
-    def restore_source_location_toggle(self, toggle_button):
-        restore_frame_local = self.builder.get_object("restore_frame_local")
-        restore_frame_network = self.builder.get_object("restore_frame_network")
-
-        use_local_radiobutton = self.builder.get_object("restore_source_use_local_radiobutton")
-        use_network_radiobutton = self.builder.get_object("restore_source_use_network_radiobutton")
-
-        print("restore changed")
-        if toggle_button.get_active():
-            if toggle_button == use_local_radiobutton:
-                restore_frame_network.set_visible(False)
-                restore_frame_local.set_visible(True)
-                print("toggle 1")
-            elif toggle_button == use_network_radiobutton:
-                restore_frame_network.set_visible(True)
-                restore_frame_local.set_visible(False)
-                print("toggle 2")
+    # GtkToggleButton handler for switching the image location selection between local folder, and network share.
+    def image_location_toggle(self, toggle_button):
+        is_local_active = self.use_local_radiobutton_dict[self.mode].get_active()
+        modes = [Mode.BACKUP, Mode.RESTORE]
+        for mode in modes:
+            self.frame_local_dict[mode].set_visible(is_local_active)
+            self.frame_network_dict[mode].set_visible(not is_local_active)
         return
+
+    def handle_mount_local_or_remote(self):
+        selected_partition_key = None
+        partition_description = None
+        if self.use_local_radiobutton_dict[self.mode].get_active():
+            list_store, iter = self.get_row(self.mount_partition_selection_treeselection_id_dict[self.mode])
+            if iter is None:
+                error = ErrorMessageModalPopup(self.builder, "Please select drive to mount")
+            else:
+                # Get first column (which is hidden/invisible) containing the drive shortdevname (eg, 'sda')
+                selected_partition_key = list_store.get(iter, 0)[0]
+                partition_description = list_store.get(iter, 3)[0]
+                print("User selected partition: " + selected_partition_key)
+                # Callback determines whether wizard proceeds
+                MountLocalPath(self.builder, self._post_mount_callback, selected_partition_key,
+                               MOUNT_DIR)
+        else:
+            partition_description = "network share"
+            MountNetworkPath(self.builder, self._post_mount_callback, self.mode, MOUNT_DIR)
+        return selected_partition_key, partition_description
 
     def restore_partition_toggled(self, cell_render_toggle, path):
         iter = self.restore_partition_selection_list.get_iter(path)
@@ -665,11 +639,6 @@ class Handler:
     def backup_scan_network(self):
         return
 
-    def backup_dest_network_changed(self, toggle_button):
-        return
-
-    def backup_dest_changed(self, toggle_button):
-        return
 
     def confirm_backup_configuration(self):
         number = GObject.markup_escape_text(self.selected_drive_enduser_friendly_drive_number)
