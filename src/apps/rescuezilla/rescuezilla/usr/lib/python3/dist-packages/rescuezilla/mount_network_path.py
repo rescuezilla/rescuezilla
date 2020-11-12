@@ -30,16 +30,18 @@ from utility import PleaseWaitModalPopup, Utility, _
 
 
 class MountNetworkPath:
-    def __init__(self, builder, callback, prefix, destination_path):
+    def __init__(self, builder, callback, mode, destination_path):
+        # Lowercase mode (eg "backup", "restore")
+        mode_prefix = mode.name.lower()
         settings = {
-            'server': builder.get_object(prefix + "_server").get_text(),
-            'username': builder.get_object(prefix + "_username").get_text(),
-            'password': builder.get_object(prefix + "_password").get_text(),
-            'domain': builder.get_object(prefix + "_domain").get_text(),
-            'version': builder.get_object(prefix + "_version").get_text(),
+            'server': builder.get_object(mode_prefix + "_network_server").get_text(),
+            'username': builder.get_object(mode_prefix + "_network_username").get_text(),
+            'password': builder.get_object(mode_prefix + "_network_password").get_text(),
+            'domain': builder.get_object(mode_prefix + "_network_domain").get_text(),
+            'version': builder.get_object(mode_prefix + "_network_version").get_text(),
             'destination_path': destination_path}
 
-        # restore_source_version
+        # restore_network_version
         self.callback = callback
         self.please_wait_popup = PleaseWaitModalPopup(builder, title=_("Please wait..."), message=_("Mounting..."))
         self.please_wait_popup.show()

@@ -100,7 +100,7 @@ class ImageFolderQuery:
 
         # Highlight first image if there is only 1 image.
         if len(self.image_dict.keys()) == 1:
-            self.builder.get_object("restore_partition_selection_treeselection").select_path(0)
+            self.builder.get_object("restore_image_selection_treeselection").select_path(0)
 
         if len(self.failed_to_read_image_dict.keys()) > 0:
             for key in self.failed_to_read_image_dict.keys():

@@ -41,7 +41,8 @@ class Logger:
 
     def write(self, message):
         with self.logger_lock:
-            self.stdout.write(message)
+            if self.stdout is not None:
+                self.stdout.write(message)
             try:
                 self.file.write(message)
             except:
