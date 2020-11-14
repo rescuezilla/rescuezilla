@@ -83,6 +83,8 @@ pkgs_specific_to_ubuntu2004_focal=("linux-generic-hwe-18.04"
                        "grub-efi-amd64-signed"
                        "grub-efi-amd64-bin"
                        "grub-efi-ia32-bin"
+                       # Dependency for partclone-utils' imagemount
+                       "nbdkit"
 )
 
 pkgs_specific_to_ubuntu2010_groovy=(
@@ -97,6 +99,8 @@ pkgs_specific_to_ubuntu2010_groovy=(
                        "grub-efi-amd64-signed"
                        "grub-efi-amd64-bin"
                        "grub-efi-ia32-bin"
+                       # Dependency for partclone-utils' imagemount
+                       "nbdkit"
 )
 
 # Packages common to both  32-bit and 64-bit build
