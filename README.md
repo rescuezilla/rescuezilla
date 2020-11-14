@@ -32,6 +32,7 @@ Rescuezilla has been translated into the following languages:
 * Deutsch (de-DE)
 * Español (es-ES)
 * Português brasileiro (pt-BR) (coming in [Rescuezilla v2.1](https://github.com/rescuezilla/rescuezilla/issues/128))
+* Polski (pl-PL) (coming in [Rescuezilla v2.1](https://github.com/rescuezilla/rescuezilla/issues/135))
 
 **Rescuezilla is now officially open for translations! See [Translations HOWTO](https://github.com/rescuezilla/rescuezilla/wiki/Translations-HOWTO) to submit a translation.**
 
