@@ -52,7 +52,7 @@ sfdisk.v2.20.1.amd64:
 	mv $(UTIL_LINUX_BUILD_DIR)/fdisk/sfdisk $(AMD64_BUILD_DIR)/chroot/usr/sbin/sfdisk.v2.20.1.64bit
 
 partclone.restore.v0.2.43.amd64: SRC_DIR=$(shell pwd)/src/third-party/partclone
-partclone.restore.v0.2.43.amd64: AMD64_BUILD_DIR=$(shell pwd)/$(CODENAME).$(ARCH)
+partclone.restore.v0.2.43.amd64: AMD64_BUILD_DIR=$(shell pwd)/build/$(CODENAME).$(ARCH)
 partclone.restore.v0.2.43.amd64: PARTCLONE_BUILD_DIR=$(AMD64_BUILD_DIR)/partclone
 partclone.restore.v0.2.43.amd64:
 	mkdir --parents $(PARTCLONE_BUILD_DIR) $(AMD64_BUILD_DIR)/chroot/usr/sbin/
