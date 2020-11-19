@@ -768,7 +768,7 @@ class Handler:
         return
 
     def select_image_folder(self, button):
-        folder_selection_popup = FolderSelectionPopup(self.builder, callback=self.selected_image_folder, default_directory=MOUNT_DIR, is_allow_selecting_folder_outside_mount=False)
+        folder_selection_popup = FolderSelectionPopup(self.builder, callback=self.selected_image_folder, default_directory=MOUNT_DIR, is_allow_selecting_folder_outside_mount=True)
         return
 
     def select_image_explorer_image_folder(self, button):

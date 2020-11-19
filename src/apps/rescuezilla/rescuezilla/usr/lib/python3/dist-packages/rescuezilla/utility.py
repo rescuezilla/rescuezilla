@@ -21,6 +21,8 @@ import os
 import pwd
 import re
 import subprocess
+from queue import Queue
+from threading import Thread
 from time import sleep
 
 import gi
@@ -463,7 +465,8 @@ class Utility:
                 # timeout expired
                 continue
 
-        stdout_data, stderr_data = process.communicate(timeout=1)
+        # This communicate should return immediately.
+        stdout_data, stderr_data = process.communicate()
         logging_output = short_description + ": " + flat_command_string + " returned " + str(
             process.returncode) + ": " + stdout_data + "\n"
         print(logging_output)
@@ -505,3 +508,22 @@ class Utility:
     @staticmethod
     def calculate_progress_ratio(current_partition_percentage, image_number, total_partitions):
         return current_partition_percentage / total_partitions + (image_number - 1) / total_partitions
+
+    # Useful for non-blocking IO (see below)
+    @staticmethod
+    def enqueue_stream(stream, queue):
+        for line in iter(stream.readline, b''):
+            queue.put(line)
+        stream.close()
+
+    # Adapted from: https://stackoverflow.com/a/4896288/4745097
+    @staticmethod
+    def nonblocking_subprocess_pipe_queue(process):
+        queue = Queue()
+        t = Thread(target=Utility.enqueue_stream, args=(process.stdout, queue))
+        t.daemon = True  # thread dies with the program
+        t.start()
+        t2 = Thread(target=Utility.enqueue_stream, args=(process.stderr, queue))
+        t2.daemon = True  # thread dies with the program
+        t2.start()
+        return queue
