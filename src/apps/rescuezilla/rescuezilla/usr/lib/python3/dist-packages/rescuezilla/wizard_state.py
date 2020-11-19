@@ -19,8 +19,10 @@
 from enum import Enum
 
 MOUNT_DIR = "/mnt/backup"
-IMAGE_EXPLORER_DIR = "/tmp/rescuezilla.image.explorer/"
-IMAGE_EXPLORER_IMG_PATH = "/tmp/rescuezilla.image.explorer.loop.img"
+IMAGE_EXPLORER_DIR = "/mnt/rescuezilla.image.explorer/"
+JOINED_FILES_NBD_DEVICE = "/dev/nbd0"
+DECOMPRESSED_NBD_DEVICE = "/dev/nbd1"
+MOUNTABLE_NBD_DEVICE = "/dev/nbd2"
 
 class Mode(Enum):
     BACKUP = 1

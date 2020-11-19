@@ -85,8 +85,6 @@ class MountNetworkPath:
                     smb_arguments += ","
                 smb_arguments += "version=" + settings['version']
 
-
-
             with open(tmp.name, 'w') as f:
                 f.write(credentials_string)
                 f.flush()

@@ -30,6 +30,7 @@ from datetime import datetime
 import gi
 from hurry.filesize import size, alternative
 
+from image_explorer_manager import ImageExplorerManager
 from parser.blkid import Blkid
 from parser.combined_drive_state import CombinedDriveState
 from parser.os_prober import OsProber
@@ -38,6 +39,9 @@ from parser.sfdisk import Sfdisk
 from utility import PleaseWaitModalPopup, Utility, _, ErrorMessageModalPopup
 
 import gi
+
+from wizard_state import IMAGE_EXPLORER_DIR
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import GLib
 
@@ -179,6 +183,12 @@ class DriveQuery:
         env_C_locale = Utility.get_env_C_locale()
 
         drive_query_start_time = datetime.now()
+
+        returncode, failed_message = ImageExplorerManager._do_unmount(IMAGE_EXPLORER_DIR)
+        if not returncode:
+            print(failed_message)
+            raise Exception("Unable to shutdown Rescuezilla Image Explorer:\n\n" + failed_message)
+
         lsblk_cmd_list = ["lsblk", "-o", "KNAME,NAME,SIZE,TYPE,FSTYPE,MOUNTPOINT,MODEL", "--paths", "--bytes", "--json"]
         blkid_cmd_list = ["blkid"]
         os_prober_cmd_list = ["os-prober"]

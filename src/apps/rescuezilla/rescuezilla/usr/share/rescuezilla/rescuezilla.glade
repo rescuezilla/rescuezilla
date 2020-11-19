@@ -326,7 +326,8 @@
                             </child>
                             <child>
                               <object class="GtkButton" id="welcome_button_image_explorer">
-                                <property name="label" translatable="yes">Image Explorer</property>
+                                <property name="label" translatable="yes">Image Explorer
+      (beta)</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="focus_on_click">False</property>
@@ -5019,7 +5020,7 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="ypad">5</property>
-                            <property name="label" translatable="yes">Image Explorer</property>
+                            <property name="label" translatable="yes">Image Explorer (beta)</property>
                             <property name="xalign">0</property>
                             <attributes>
                               <attribute name="weight" value="bold"/>
@@ -5518,7 +5519,7 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="ypad">5</property>
-                            <property name="label" translatable="yes">Image Explorer</property>
+                            <property name="label" translatable="yes">Image Explorer (beta)</property>
                             <property name="xalign">0</property>
                             <attributes>
                               <attribute name="weight" value="bold"/>
@@ -5631,7 +5632,7 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="ypad">20</property>
-                                    <property name="label" translatable="yes">Select the image file to image_explorer</property>
+                                    <property name="label" translatable="yes">Select the image file to explore</property>
                                     <property name="wrap">True</property>
                                     <property name="yalign">1</property>
                                   </object>
@@ -5785,7 +5786,7 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="ypad">5</property>
-                            <property name="label" translatable="yes">Image Explorer</property>
+                            <property name="label" translatable="yes">Image Explorer (beta)</property>
                             <property name="xalign">0</property>
                             <attributes>
                               <attribute name="weight" value="bold"/>
@@ -5821,9 +5822,10 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="ypad">20</property>
-                                    <property name="label" translatable="yes">Select the partition to mount.</property>
+                                    <property name="label" translatable="yes">Select the partition to access files from.</property>
                                     <property name="use_markup">True</property>
                                     <property name="wrap">True</property>
+                                    <property name="selectable">True</property>
                                     <property name="yalign">1</property>
                                   </object>
                                   <packing>
@@ -5833,10 +5835,30 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                   </packing>
                                 </child>
                                 <child>
+                                  <object class="GtkLabel" id="image_explorer_supported_formats_label">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="label" translatable="yes">Image Explorer (beta) currently only supports "partclone" images using the following compression formats: gzip, xz and uncompressed.</property>
+                                    <property name="use_markup">True</property>
+                                    <property name="justify">center</property>
+                                    <property name="wrap">True</property>
+                                    <property name="selectable">True</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">False</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                                <child>
                                   <object class="GtkScrolledWindow" id="image_explorer_step3_scrolledwindow">
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
+                                    <property name="margin_left">30</property>
+                                    <property name="margin_right">30</property>
                                     <property name="shadow_type">in</property>
+                                    <property name="propagate_natural_width">True</property>
+                                    <property name="propagate_natural_height">True</property>
                                     <child>
                                       <object class="GtkTreeView" id="image_explorer_image_partition_treeview">
                                         <property name="visible">True</property>
@@ -5880,118 +5902,144 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                   <packing>
                                     <property name="expand">True</property>
                                     <property name="fill">True</property>
-                                    <property name="position">1</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkLabel" id="image_explorer_mount_label">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="ypad">20</property>
-                                    <property name="label" translatable="yes">Click &lt;b&gt;Mount&lt;/b&gt; to restore your backup &lt;b&gt;to a temporary file in &lt;i&gt;main memory&lt;/i&gt;&lt;/b&gt;.
-
-&lt;b&gt;Depending on the amount of RAM in your computer, larger backups will &lt;i&gt;not&lt;/i&gt; be able to be explored.&lt;/b&gt;</property>
-                                    <property name="use_markup">True</property>
-                                    <property name="justify">center</property>
-                                    <property name="wrap">True</property>
-                                    <property name="selectable">True</property>
-                                    <property name="yalign">1</property>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">True</property>
                                     <property name="position">2</property>
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkHButtonBox" id="buttonbox1">
+                                  <object class="GtkScrolledWindow">
                                     <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="margin_top">10</property>
-                                    <property name="margin_bottom">10</property>
-                                    <property name="spacing">10</property>
-                                    <property name="layout_style">center</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="propagate_natural_width">True</property>
+                                    <property name="propagate_natural_height">True</property>
                                     <child>
-                                      <object class="GtkButton" id="button_mount">
-                                        <property name="label" translatable="yes">Mount</property>
+                                      <object class="GtkViewport">
                                         <property name="visible">True</property>
-                                        <property name="can_focus">True</property>
-                                        <property name="receives_default">True</property>
-                                        <signal name="clicked" handler="mount_partition" swapped="no"/>
+                                        <property name="can_focus">False</property>
+                                        <child>
+                                          <object class="GtkVBox" id="image_explorer_step3_scroll_vbox">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">False</property>
+                                            <child>
+                                              <object class="GtkLabel" id="image_explorer_mount_label">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">False</property>
+                                                <property name="ypad">20</property>
+                                                <property name="label" translatable="yes">Click &lt;b&gt;Mount&lt;/b&gt; to mount the backup image (as read-only).
+
+This operation is near-instantaneous for backups without compression or using xz-compression. Unfortunately Rescuezilla and Clonezilla currently both use 'gzip' compression by default which means before files within the image can start being accessed much more data gets decompressed to a temporary file. For 50+ gigabyte gzip-compressed backups this decompression is &lt;i&gt;very&lt;/i&gt; slow and may take &lt;b&gt;TENS OF MINUTES&lt;/b&gt; depending on the speed of your computer.
+
+In the short-term, advanced users who expect to regularly explore 100+ gigabyte images are suggested to create &lt;b&gt;uncompressed&lt;/b&gt; backups using Clonezilla Expert Mode (because creating 'xz' archives is too slow). To provide near-instantaneous image mount for large images whilst retaining good compression ratios &lt;i&gt;and&lt;/i&gt; fast backup and restore speeds, Rescuezilla may switch the default compression once archive mounting support for more formats have been added to Image Explorer.</property>
+                                                <property name="use_markup">True</property>
+                                                <property name="justify">center</property>
+                                                <property name="wrap">True</property>
+                                                <property name="selectable">True</property>
+                                                <property name="yalign">1</property>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">0</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkHButtonBox" id="buttonbox3">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">False</property>
+                                                <property name="margin_top">10</property>
+                                                <property name="margin_bottom">10</property>
+                                                <property name="spacing">10</property>
+                                                <property name="layout_style">center</property>
+                                                <child>
+                                                  <object class="GtkButton" id="button_mount">
+                                                    <property name="label" translatable="yes">Mount</property>
+                                                    <property name="visible">True</property>
+                                                    <property name="can_focus">True</property>
+                                                    <property name="receives_default">True</property>
+                                                    <signal name="clicked" handler="mount_partition" swapped="no"/>
+                                                  </object>
+                                                  <packing>
+                                                    <property name="expand">False</property>
+                                                    <property name="fill">False</property>
+                                                    <property name="position">1</property>
+                                                  </packing>
+                                                </child>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">1</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkLabel" id="image_explorer_operation_duration_label">
+                                                <property name="can_focus">False</property>
+                                                <property name="use_markup">True</property>
+                                                <property name="justify">center</property>
+                                                <property name="wrap">True</property>
+                                                <property name="selectable">True</property>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">2</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkLabel" id="image_explorer_open_in_file_manager_label">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">False</property>
+                                                <property name="ypad">20</property>
+                                                <property name="label" translatable="yes">Once the partition has been mounted, click &lt;b&gt;Open in file manager&lt;/b&gt; to access your files.</property>
+                                                <property name="use_markup">True</property>
+                                                <property name="justify">center</property>
+                                                <property name="wrap">True</property>
+                                                <property name="selectable">True</property>
+                                                <property name="yalign">1</property>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">3</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkHButtonBox" id="buttonbox4">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">False</property>
+                                                <property name="margin_top">10</property>
+                                                <property name="margin_bottom">10</property>
+                                                <property name="spacing">10</property>
+                                                <property name="layout_style">center</property>
+                                                <child>
+                                                  <object class="GtkButton" id="button_open_file_manager">
+                                                    <property name="label" translatable="yes">Open in file manager</property>
+                                                    <property name="visible">True</property>
+                                                    <property name="can_focus">True</property>
+                                                    <property name="receives_default">True</property>
+                                                    <signal name="clicked" handler="open_file_manager" swapped="no"/>
+                                                  </object>
+                                                  <packing>
+                                                    <property name="expand">False</property>
+                                                    <property name="fill">False</property>
+                                                    <property name="position">1</property>
+                                                  </packing>
+                                                </child>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">4</property>
+                                              </packing>
+                                            </child>
+                                          </object>
+                                        </child>
                                       </object>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="fill">False</property>
-                                        <property name="position">1</property>
-                                      </packing>
                                     </child>
                                   </object>
                                   <packing>
-                                    <property name="expand">False</property>
+                                    <property name="expand">True</property>
                                     <property name="fill">True</property>
                                     <property name="position">3</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkLabel" id="image_explorer_open_in_file_manager_label">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="ypad">20</property>
-                                    <property name="label" translatable="yes">When the partition has been mounted, click &lt;b&gt;Open in file manager&lt;/b&gt; to explore your image.</property>
-                                    <property name="use_markup">True</property>
-                                    <property name="justify">center</property>
-                                    <property name="wrap">True</property>
-                                    <property name="selectable">True</property>
-                                    <property name="yalign">1</property>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">True</property>
-                                    <property name="position">4</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkHButtonBox" id="buttonbox2">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="margin_top">10</property>
-                                    <property name="margin_bottom">10</property>
-                                    <property name="spacing">10</property>
-                                    <property name="layout_style">center</property>
-                                    <child>
-                                      <object class="GtkButton" id="button_open_file_manager">
-                                        <property name="label" translatable="yes">Open in file manager</property>
-                                        <property name="visible">True</property>
-                                        <property name="can_focus">True</property>
-                                        <property name="receives_default">True</property>
-                                        <signal name="clicked" handler="open_file_manager" swapped="no"/>
-                                      </object>
-                                      <packing>
-                                        <property name="expand">False</property>
-                                        <property name="fill">False</property>
-                                        <property name="position">1</property>
-                                      </packing>
-                                    </child>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">True</property>
-                                    <property name="position">5</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkLinkButton" id="image_explorer_step3_patreon_linkbutton">
-                                    <property name="label" translatable="yes">Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed.</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="receives_default">True</property>
-                                    <property name="halign">center</property>
-                                    <property name="relief">none</property>
-                                    <property name="uri">https://www.patreon.com/join/rescuezilla</property>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">True</property>
-                                    <property name="position">6</property>
                                   </packing>
                                 </child>
                                 <child>
@@ -6006,7 +6054,22 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                   <packing>
                                     <property name="expand">False</property>
                                     <property name="fill">True</property>
-                                    <property name="position">7</property>
+                                    <property name="position">4</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkLinkButton" id="image_explorer_step3_patreon_linkbutton">
+                                    <property name="label" translatable="yes">Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed.</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="receives_default">True</property>
+                                    <property name="halign">center</property>
+                                    <property name="relief">none</property>
+                                    <property name="uri">https://www.patreon.com/join/rescuezilla</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">5</property>
                                   </packing>
                                 </child>
                               </object>
