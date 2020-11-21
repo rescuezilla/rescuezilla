@@ -16,7 +16,7 @@ sudo apt-get update
 # recent version of debootstrap (from the backports repository) to bootstrap a Focal environment.
 sudo apt-get install git-lfs git make sudo \
                      rsync debootstrap gettext squashfs-tools dosfstools mtools xorriso \
-                     memtest86+ devscripts debhelper checkinstall \
+                     memtest86+ devscripts debhelper checkinstall cmake \
                      # GRUB bootloader and support modules for booting both MBR and EFI boot
                      # across CPU architectures. Notably the AMD64 image *legacy boot* uses
                      # the same 32-bit bootloader as the i386 image.

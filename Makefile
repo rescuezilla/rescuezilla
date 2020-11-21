@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := amd64
-.PHONY: all amd64 groovy i386 deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-utils clean-build-dir clean clean-all
+.PHONY: all amd64 groovy i386 deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-utils partclone-nbd clean-build-dir clean clean-all
 
 all: amd64 groovy i386
 
@@ -9,7 +9,7 @@ buildscripts = build.sh chroot.steps.part.1.sh chroot.steps.part.2.sh
 amd64: ARCH=amd64
 amd64: CODENAME=focal
 export ARCH CODENAME
-amd64: deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-utils $(buildscripts)
+amd64: deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-utils partclone-nbd $(buildscripts)
 	./build.sh
 
 # ISO image based on Ubuntu 20.10 Groovy 64bit as a temporary measure to provide a newer Linux kernel for better support for
@@ -18,7 +18,7 @@ amd64: deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-utils 
 groovy: ARCH=amd64
 groovy: CODENAME=groovy
 export ARCH CODENAME
-groovy: deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-utils $(buildscripts)
+groovy: deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-utils partclone-nbd $(buildscripts)
 	./build.sh
 
 # ISO image based on Ubuntu 18.04 Bionic LTS (Long Term Support) 32bit (the last 32bit/i386 Ubuntu LTS release)
@@ -91,6 +91,17 @@ partclone-utils:
 	# Create deb package from a standard Makefile's `make install` using the checkinstall tool (for cleaner uninstall)
 	cd $(PARTCLONE_UTILS_BUILD_DIR) && checkinstall --install=no --pkgname partclone-utils --pkgversion 0.4.2 --pkgrelease 1 --maintainer 'rescuezilla@gmail.com' -D --default  make install
 	mv $(PARTCLONE_UTILS_BUILD_DIR)/partclone-utils_0.4.2-1_amd64.deb $(AMD64_BUILD_DIR)/chroot/
+
+# Builds partclone-nbd, a competitor project to partclone-utils that's also able to mount partclone images.
+partclone-nbd: SRC_DIR=$(shell pwd)/src/third-party/partclone-nbd
+partclone-nbd: AMD64_BUILD_DIR=$(shell pwd)/build/$(CODENAME).$(ARCH)
+partclone-nbd: PARTCLONE_NBD_BUILD_DIR=$(AMD64_BUILD_DIR)/partclone-nbd
+partclone-nbd:
+	mkdir --parents $(PARTCLONE_NBD_BUILD_DIR)
+	cd $(PARTCLONE_NBD_BUILD_DIR) && cmake ${SRC_DIR}
+	# Create deb package from a standard Makefile's `make install` using the checkinstall tool (for cleaner uninstall)
+	cd $(PARTCLONE_NBD_BUILD_DIR) && checkinstall --install=no --pkgname partclone-nbd --pkgversion 0.0.3 --pkgrelease 1 --maintainer 'rescuezilla@gmail.com' -D --default  make install
+	mv $(PARTCLONE_NBD_BUILD_DIR)/partclone-nbd_0.0.3-1_amd64.deb $(AMD64_BUILD_DIR)/chroot/
 
 clean-build-dir:
 	$(info * Unmounting chroot bind mounts)
