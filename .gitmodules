@@ -7,3 +7,6 @@
 [submodule "src/third-party/partclone-utils"]
 	path = src/third-party/partclone-utils
 	url = https://github.com/rescuezilla/partclone-utils
+[submodule "src/third-party/partclone-nbd"]
+	path = src/third-party/partclone-nbd
+	url = https://github.com/rescuezilla/partclone-nbd
