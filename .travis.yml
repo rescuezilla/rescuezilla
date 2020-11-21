@@ -26,7 +26,7 @@ before_install:
   # first delete old build artifacts, and also to fix permissions on the pkg
   # caches by running: 
   # sudo make clean && sudo chown -R $(id -u):$(id -g) pkg.cache/
-- docker build --tag builder.image .
+- docker build --no-cache=true --tag builder.image .
   # Construct a (mutable) docker container from the docker image, give it
   # extended privileges (required for the chroot bind mount), label it with a
   # meaningful name, execute the application /bin/cat, so the container doesn't
