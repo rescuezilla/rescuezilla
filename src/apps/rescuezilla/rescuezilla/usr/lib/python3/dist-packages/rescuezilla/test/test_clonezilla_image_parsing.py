@@ -21,19 +21,6 @@ from parser.clonezilla_image import ClonezillaImage
 
 
 class ClonezillaImageParsingTest(unittest.TestCase):
-    def test_clonezilla_image(self):
-        image = ClonezillaImage("/mnt/backup/clonezilla.focal/2020-08-30-15-img_mbr_many_different_fs/clonezilla-img")
-        # assert_true("message", False)
-        # assert_false("message", True)
-        image = ClonezillaImage("/mnt/backup/clonezilla.focal/2020-09-02-07-img_ntfsclone_partimage/clonezilla-img")
-
-        # sdf2.aa : Partimage
-        # sdf6.ntfs-img.aa : NTFS Clone
-        # sdf13.ext4-ptcl-img.gz.aa : Partclone ext4
-        # sdf13.dd-ptcl-img.gz.aa : Partclone dd (same as regular dd data, it would appear)
-        print("looking at " + str(image.dev_fs_dict))
-
-
     def test_dev_fs_list_parsing(self):
         dev_fs_list_string = """# This is a comment line
 # Another comment line
@@ -41,7 +28,17 @@ class ClonezillaImageParsingTest(unittest.TestCase):
 /dev/sda7 ext4
 """
         dev_fs_dict = ClonezillaImage.parse_dev_fs_list_output(dev_fs_list_string)
-        expected_dict = {"/dev/sda3": "ntfs", "/dev/sda7": "ext4"}
+        expected_dict = {'/dev/sda3': {'filesystem': "ntfs"}, '/dev/sda7': {'filesystem': "ext4"}}
+        self.assertEqual(dev_fs_dict, expected_dict)
+
+    # New dev-fs.list format since October 2020: https://github.com/rescuezilla/rescuezilla/issues/139
+    def test_new_dev_fs_list_parsing(self):
+        dev_fs_list_string = """# <Device name>   <File system>   <Size>
+# File system is got from ocs-get-part-info. It might be different from that of blkid or parted.
+/dev/sda1 vfat 512M
+/dev/sda3 swap 15.9G"""
+        dev_fs_dict = ClonezillaImage.parse_dev_fs_list_output(dev_fs_list_string)
+        expected_dict = {'/dev/sda1': {'filesystem': "vfat", 'size': "512M"}, '/dev/sda3': {'filesystem': "swap", 'size': "15.9G"}}
         self.assertEqual(dev_fs_dict, expected_dict)
 
     def test_compression_detection(self):
