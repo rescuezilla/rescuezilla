@@ -304,7 +304,7 @@ class ClonezillaImage:
                     # Annotate have filesystem information from dev-fs.list file. This case is expected when during a
                     # backup Clonezilla or Rescuezilla failed to successfully image the filesystem, but may have
                     # succeeded for other filesystems.
-                    fs = self.dev_fs_dict[long_partition_key]
+                    fs = self.dev_fs_dict[long_partition_key]['filesystem']
                     self.image_format_dict_dict[short_partition_device_node]['filesystem'] = fs
                     # TODO: Consider removing warning_dict as image_format_dict is sufficient.
                     self.warning_dict[short_partition_device_node] = fs
@@ -502,8 +502,13 @@ class ClonezillaImage:
         for line in dev_fs_list_string.splitlines():
             # Ignore comment lines (lines starting with hash symbol)
             if not re.match(r'^#', line):
-                long_dev_node, fs = line.split(" ")
-                dev_fs_dict[long_dev_node] = fs
+                split_line = line.split(" ")
+                if len(split_line) > 0:
+                    long_dev_node = split_line[0]
+                    if len(split_line) > 1:
+                        dev_fs_dict[long_dev_node] = {"filesystem": split_line[1]}
+                    if len(split_line) > 2:
+                        dev_fs_dict[long_dev_node]['size'] = split_line[2]
         return dev_fs_dict
 
     def get_enduser_friendly_partition_description(self):
@@ -551,7 +556,7 @@ class ClonezillaImage:
             long_partition_key = "/dev/" + re.sub("-", "/", partition_short_device_node)
             if long_partition_key in self.dev_fs_dict.keys():
                 # TODO: Consider raising exception?
-                flat_string += "NOT FOUND: " + self.dev_fs_dict[long_partition_key]
+                flat_string += "NOT FOUND: " + self.dev_fs_dict[long_partition_key]['filesystem']
             else:
                 flat_string += "NOT FOUND: " + long_partition_key
 
