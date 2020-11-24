@@ -81,6 +81,8 @@ class MountNetworkPath:
                     smb_arguments += ",guest"
 
             if settings['version'] != "":
+                if smb_arguments != "":
+                    smb_arguments += ","
                 smb_arguments += "version=" + settings['version']
 
 
