@@ -377,18 +377,20 @@ class BackupManager:
 
         process, flat_command_string, failed_message = Utility.run("Retreiving disk geometry with sfdisk ", ["sfdisk", "--show-geometry", self.selected_drive_key], use_c_locale=True, logger=self.logger)
         if process.returncode != 0:
+            self.logger.write(failed_message)
             with self.summary_message_lock:
-                self.summary_message += failed_message
-            GLib.idle_add(self.completed_backup, False, failed_message)
-            return
-
-        geometry_dict = Sfdisk.parse_sfdisk_show_geometry(process.stdout)
-        filepath = os.path.join(self.dest_dir, short_selected_device_node + "-chs.sf")
-        with open(filepath, 'w') as filehandle:
-            for key in geometry_dict.keys():
-                output = key + "=" + str(geometry_dict[key])
-                self.logger.write(output)
-                filehandle.write('%s\n' % output)
+                self.summary_message += "Failed to retrieve disk geometry for " + self.selected_drive_key + "."
+            # Failure to retrieve disk geometry no longer considered fatal error, to avoid spurious failure affecting
+            # some users [1]. TODO: Understand why sfdisk fails on such disks and fix the bug in sfdisk.
+            # [1] https://github.com/rescuezilla/rescuezilla/issues/122
+        else:
+            geometry_dict = Sfdisk.parse_sfdisk_show_geometry(process.stdout)
+            filepath = os.path.join(self.dest_dir, short_selected_device_node + "-chs.sf")
+            with open(filepath, 'w') as filehandle:
+                for key in geometry_dict.keys():
+                    output = key + "=" + str(geometry_dict[key])
+                    self.logger.write(output)
+                    filehandle.write('%s\n' % output)
 
 
         # Query all Physical Volumes (PV), Volume Group (VG) and Logical Volume (LV). See unit test for a worked example.
