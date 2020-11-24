@@ -532,7 +532,8 @@ class BackupManager:
                     filehandle.write('UUID="%s"\n' % uuid)
                     filehandle.write('LABEL="%s"\n' % label)
                     with self.summary_message_lock:
-                        self.summary_message += _("Successful backup of swap partition {partition_name}").format(partition_name=partition_key) + "\n"
+                        self.summary_message += _("Successful backup of swap partition {partition_name}").format(
+                            partition_name=partition_key) + "\n"
                 continue
 
             # Clonezilla uses -q2 priority by default (partclone > partimage > dd).
@@ -566,20 +567,20 @@ class BackupManager:
             GLib.idle_add(self.update_main_statusbar, filesystem_backup_message)
             self.logger.write(filesystem_backup_message)
 
-            gzip_cmd_list = ["gzip", "--stdout"]
+            compression_cmd_list = ["pigz", "--stdout"]
             self.proc['partclone_backup_' + partition_key] = subprocess.Popen(partclone_cmd_list,
                                                                               stdout=subprocess.PIPE,
                                                                               stderr=subprocess.PIPE, env=env,
                                                                               encoding='utf-8')
 
-            self.proc['gzip_' + partition_key] = subprocess.Popen(gzip_cmd_list,
+            self.proc['compression_' + partition_key] = subprocess.Popen(compression_cmd_list,
                                                                   stdin=self.proc[
                                                                       'partclone_backup_' + partition_key].stdout,
                                                                   stdout=subprocess.PIPE, env=env, encoding='utf-8')
 
             self.proc['split_' + partition_key] = subprocess.Popen(split_cmd_list,
                                                                    stdin=self.proc[
-                                                                       'gzip_' + partition_key].stdout,
+                                                                       'compression_' + partition_key].stdout,
                                                                    stdout=subprocess.PIPE, env=env, encoding='utf-8')
 
             # Process partclone output. Partclone outputs an update every 3 seconds, so processing the data
@@ -602,7 +603,7 @@ class BackupManager:
             rc = self.proc['partclone_backup_' + partition_key].poll()
 
             self.proc['partclone_backup_' + partition_key].stdout.close()  # Allow p1 to receive a SIGPIPE if p2 exits.
-            self.proc['gzip_' + partition_key].stdout.close()  # Allow p2 to receive a SIGPIPE if p3 exits.
+            self.proc['compression_' + partition_key].stdout.close()  # Allow p2 to receive a SIGPIPE if p3 exits.
             output, err = self.proc['partclone_backup_' + partition_key].communicate()
             self.logger.write("Exit output " + str(output) + "stderr " + str(err))
             if self.proc['partclone_backup_' + partition_key].returncode != 0:
@@ -613,9 +614,9 @@ class BackupManager:
                 proc_stdout = self.proc['partclone_backup_' + partition_key].stdout
                 proc_stderr = self.proc['partclone_backup_' + partition_key].stderr
                 extra_info = "\nThe command used internally was:\n\n" + flat_command_string + "\n\n" + "The output of the command was: " + str(proc_stdout) + "\n\n" + str(proc_stderr)
-                compression_stderr = self.proc['gzip_' + partition_key].stderr
+                compression_stderr = self.proc['compression_' + partition_key].stderr
                 if compression_stderr is not None and compression_stderr != "":
-                    extra_info += "\n\n" + str(gzip_cmd_list) + " stderr: " + compression_stderr
+                    extra_info += "\n\n" + str(compression_cmd_list) + " stderr: " + compression_stderr
 
                 # TODO: Try to backup again, but using partclone.dd
                 GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
