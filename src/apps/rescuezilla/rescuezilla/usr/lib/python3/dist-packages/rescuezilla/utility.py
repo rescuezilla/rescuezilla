@@ -195,7 +195,7 @@ class Utility:
         if does_target_user_exists:
             # Launch detached subprocess as target user
             sudo_process_list = ["sudo", "-u", target_user] + process_list
-            subprocess.Popen(sudo_process_list)
+            subprocess.Popen(sudo_process_list, start_new_session=True)
         return
 
     # Opens URL in web browser using non-root user, for users that need to click on a link within the Rescuezilla
