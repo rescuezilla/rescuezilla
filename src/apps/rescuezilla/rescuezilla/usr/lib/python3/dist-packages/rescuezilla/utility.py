@@ -37,7 +37,7 @@ def _(string):
 
 
 class PleaseWaitModalPopup:
-    def __init__(self, builder, title, message):
+    def __init__(self, builder, title, message, on_close_callback=None):
         self._main_window = builder.get_object("main_window")
         self._dialog = Gtk.Dialog(title, self._main_window, Gtk.DialogFlags.MODAL)
         self._dialog.vbox.set_halign(Gtk.Align.CENTER)
@@ -47,11 +47,19 @@ class PleaseWaitModalPopup:
         self._dialog.vbox.set_margin_top(0)
         self._dialog.vbox.set_margin_bottom(15)
 
+        self._dialog.connect("response", self._response)
         label = Gtk.Label(label=message, xalign=0)
         label.set_halign(Gtk.Align.CENTER)
         label.set_padding(xpad=0, ypad=10)
         label.show()
         self._dialog.vbox.pack_start(label, expand=True, fill=True, padding=0)
+
+        self.secondary_label = Gtk.Label("", xalign=0)
+        self.secondary_label.set_halign(Gtk.Align.CENTER)
+        self.secondary_label.set_padding(xpad=0, ypad=10)
+        self.secondary_label.show()
+        self.secondary_label.set_visible(False)
+        self._dialog.vbox.pack_start(self.secondary_label, expand=True, fill=True, padding=0)
 
         self._progress_bar = Gtk.ProgressBar()
         self._progress_bar.show()
@@ -59,15 +67,26 @@ class PleaseWaitModalPopup:
 
         self.timeout_tag = GLib.timeout_add(50, self.pulse)
 
+        self._on_close_callback = on_close_callback
+
     def show(self):
         self._main_window.set_sensitive(False)
         self._dialog.set_keep_above(True)
         self._dialog.show()
 
+    def _response(self, response_id, user_param1):
+        print("User has closed the please wait popup.")
+        if self._on_close_callback is not None:
+            GLib.idle_add(self._on_close_callback)
+
     def destroy(self):
         self._main_window.set_sensitive(True)
         GLib.source_remove(self.timeout_tag)
         self._dialog.destroy()
+
+    def set_secondary_label_text(self, message):
+        self.secondary_label.set_visible(True)
+        self.secondary_label.set_text(message)
 
     """ Pulse progress progress bar """
 
