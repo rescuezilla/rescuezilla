@@ -21,7 +21,7 @@ import os
 import pwd
 import re
 import subprocess
-
+from time import sleep
 
 import gi
 
@@ -415,6 +415,41 @@ class Utility:
                 filehandle.flush()
 
         fail_description = _("Failed to run command: ") + flat_command_string + "\n\n" + process.stdout + "\n" + process.stderr + "\n\n"
+        return process, flat_command_string, fail_description
+
+    # Similar to run above, but checks whether the is_shutdown() function has triggered.
+    # TODO: Combine this function with the above -- see [1] for a discussion.
+    # [1] https://eli.thegreenplace.net/2017/interacting-with-a-long-running-child-process-in-python/
+    @staticmethod
+    def interruptable_run(short_description, cmd_list, use_c_locale, is_shutdown_fn):
+        if use_c_locale:
+            env = Utility.get_env_C_locale()
+        else:
+            env = os.environ.copy()
+        flat_command_string = Utility.print_cli_friendly(short_description, [cmd_list])
+        process = subprocess.Popen(cmd_list, encoding='utf-8', stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                                   env=env)
+        while True:
+            # This loop only ends if the Popen process has completed.
+            if process.poll() is not None:
+                break
+            if is_shutdown_fn():
+                process.terminate()
+                sleep(1)
+                process.kill()
+                continue
+            try:
+                process.wait(timeout=1)
+            except subprocess.TimeoutExpired:
+                # timeout expired
+                continue
+
+        stdout_data, stderr_data = process.communicate(timeout=1)
+        logging_output = short_description + ": " + flat_command_string + " returned " + str(
+            process.returncode) + ": " + stdout_data + "\n"
+        print(logging_output)
+
+        fail_description = _("Failed to run command: ") + flat_command_string + "\n\n" + stdout_data + "\n\n"
         return process, flat_command_string, fail_description
 
     @staticmethod
