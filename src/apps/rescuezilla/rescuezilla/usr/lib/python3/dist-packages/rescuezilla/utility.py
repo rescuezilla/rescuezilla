@@ -396,15 +396,12 @@ class Utility:
 
     @staticmethod
     def run(short_description, cmd_list, use_c_locale, output_filepath=None, logger=None):
-        env = Utility.get_env_C_locale()
-        flat_command_string = Utility.print_cli_friendly(short_description, [cmd_list])
         if use_c_locale:
-            process = subprocess.run(cmd_list, encoding='utf-8',
-                                     capture_output=True, env=env)
+            env = Utility.get_env_C_locale()
         else:
-            process = subprocess.run(cmd_list, encoding='utf-8',
-                                     capture_output=True, env=env)
-
+            env = os.environ.copy()
+        flat_command_string = Utility.print_cli_friendly(short_description, [cmd_list])
+        process = subprocess.run(cmd_list, encoding='utf-8', capture_output=True, env=env)
         logging_output = short_description + ": " + flat_command_string + " returned " + str(process.returncode) + ": " + process.stdout + " " + process.stderr + "\n"
         if logger is None:
             print(logging_output)
