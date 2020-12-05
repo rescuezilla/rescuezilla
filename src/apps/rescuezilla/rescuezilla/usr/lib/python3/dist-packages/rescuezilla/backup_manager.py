@@ -210,7 +210,7 @@ class BackupManager:
         filepath = os.path.join(self.dest_dir, "Info-packages.txt")
         # Save Debian package informtion
         if shutil.which("dpkg") is not None:
-            rescuezilla_package_list = ["rescuezilla", "util-linux", "gdisk"]
+            rescuezilla_package_list = ["rescuezilla", "partclone", "util-linux", "gdisk"]
             with open(filepath, 'w') as filehandle:
                 filehandle.write("Image was saved by these Rescuezilla-related packages:\n ")
                 for pkg in rescuezilla_package_list:
