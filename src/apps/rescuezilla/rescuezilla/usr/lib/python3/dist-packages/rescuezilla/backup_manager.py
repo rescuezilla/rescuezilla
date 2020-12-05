@@ -538,6 +538,24 @@ class BackupManager:
                             partition_name=partition_key) + "\n"
                 continue
 
+            if filesystem == "ntfs":
+                # Create Clonezilla's NTFS boot reserved partition "sda1.info"
+                tmp_mount = "/tmp/rescuezilla.ntfs.mount"
+                if self.is_partition_windows_boot_reserved(partition_key, tmp_mount):
+                    partition_info_filepath = os.path.join(self.dest_dir, short_device_node + ".info")
+                    self.logger.write("Detected partition " + partition_key + " is a Windows NTFS boot reserved partition. Writing " + partition_info_filepath)
+                    with open(partition_info_filepath, 'w') as filehandle:
+                        try:
+                            output = "PARTITION_TYPE=Win_boot_reserved\n"
+                            filehandle.write(output)
+                        except:
+                            tb = traceback.format_exc()
+                            traceback.print_exc()
+                            error_message = _(
+                                "Failed to write NTFS boot reserve file. Please confirm it is valid to create the provided file path, and try again.") + "\n\n" + tb
+                            GLib.idle_add(self.completed_backup, False, error_message)
+                            return
+
             # Clonezilla uses -q2 priority by default (partclone > partimage > dd).
             # PartImage does not appear to be maintained software, so for simplicity, Rescuezilla is using a
             # partclone > partclone.dd priority
@@ -674,6 +692,38 @@ class BackupManager:
         # IMG_ID=$(LC_ALL=C sha512sum $img_dir/clonezilla-img | awk -F" " '{print $1}')" >> $img_dir/Info-img-id.txt
 
         GLib.idle_add(self.completed_backup, True, "")
+
+    # Implementation of Clonezilla "check_if_windows_boot_reserve_part" function
+    def is_partition_windows_boot_reserved(self, partition_key, mount_point):
+        is_windows_reserved = False
+        if not os.path.exists(mount_point) and not os.path.isdir(mount_point):
+            os.mkdir(mount_point, 0o755)
+        process, flat_command_string, failed_message = Utility.run(
+            "Mounting NTFS filesystem " + partition_key + " to check whether filesystem is NTFS boot reserved",
+            ["mount", "-o", "ro", partition_key, mount_point],
+            use_c_locale=True, output_filepath=None,
+            logger=self.logger)
+        if process.returncode != 0:
+            # Not being able to mount the NTFS partition to check if it's NTFS boot reserved is NOT fatal in Clonezilla.
+            GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, failed_message)
+            print("Unable to mount NTFS filesystem, assuming *not* Windows boot reserved")
+            return is_windows_reserved
+
+        boot_dir_path = os.path.join(mount_point, "Boot")
+        bootmgr_path = os.path.join(mount_point, "bootmgr")
+        bootsect_bak_path = os.path.join(mount_point, "BOOTSECT.BAK")
+
+        if os.path.isdir(boot_dir_path) and os.path.exists(bootmgr_path) and os.path.exists(bootsect_bak_path):
+            is_windows_reserved = True
+
+        is_unmounted, message = Utility.umount_warn_on_busy(partition_key)
+        if not is_unmounted:
+            # Being unable to unmount the partition that was just mounted is considered fatal.
+            self.logger.write(message)
+            with self.summary_message_lock:
+                self.summary_message += message + "\n"
+            GLib.idle_add(self.completed_backup, False, message)
+        return is_windows_reserved
 
     # Intended to be called via event thread
     def update_main_statusbar(self, message):
