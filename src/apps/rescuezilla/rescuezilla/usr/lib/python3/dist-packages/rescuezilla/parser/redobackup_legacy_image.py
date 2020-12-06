@@ -100,7 +100,7 @@ class RedoBackupLegacyImage:
             # than English and German is not required. Full details in:
             # https://github.com/rescuezilla/rescuezilla/wiki/Bugs-in-unofficial-Redo-Backup-updates#bugs-in
             # -chcatzsfs-ubuntu-1310-and-1404-releases-german-language-only
-            self.warning_dict[absolute_path] = _("The backup's bootloader data is shorter than expected. This happens with backups created by an unofficial Redo Backup update. If the backup contained certain bootloaders like GRUB, the restored hard drive will not boot correctly without a manual fix. All data is still fully recoverable but manual intervention may required to restore the bootloader. Please consult {url} for information and assistance. The destination drive has not yet been modified. Do you wish to continue with the restore?").format(url=truncated_bootloader_bug_url)
+            self.warning_dict[enduser_filename] = _("The backup's bootloader data is shorter than expected. This happens with backups created by an unofficial Redo Backup update. If the backup contained certain bootloaders like GRUB, the restored hard drive will not boot correctly without a manual fix. All data is still fully recoverable but manual intervention may required to restore the bootloader. Please consult {url} for information and assistance. The destination drive has not yet been modified. Do you wish to continue with the restore?").format(url=truncated_bootloader_bug_url)
 
         self.sfdisk_absolute_path = os.path.join(dirname, prefix + ".sfdisk")
         sfdisk_string = Utility.read_file_into_string(self.sfdisk_absolute_path).strip()
@@ -114,7 +114,7 @@ class RedoBackupLegacyImage:
             # Context for translators: The two popular unofficial updates of Redo Backup v1.0.4 by Sourceforge user louvetch have a major bug.
             # This major bug affected both the English language and French language versions of this unofficial update. All data can be restored with careful
             # manual intervention. Given the popularity of those unofficial updates, translating this error message is still important.
-            self.warning_dict[absolute_path] = _("The backup's extended partition information is empty or missing. This happens with incomplete backups created by an unofficial Redo Backup update. If the backup contains extended partitions, these will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore the extended partitions. Please consult {url} for information and assistance. The destination drive has not yet been modified. Do you wish to continue with the restore?").format(url=empty_sfdisk_bug_url)
+            self.warning_dict[enduser_filename] = _("The backup's extended partition information is empty or missing. This happens with incomplete backups created by an unofficial Redo Backup update. If the backup contains extended partitions, these will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore the extended partitions. Please consult {url} for information and assistance. The destination drive has not yet been modified. Do you wish to continue with the restore?").format(url=empty_sfdisk_bug_url)
         else:
             self.sfdisk_dict = Sfdisk.parse_sfdisk_dump_output(sfdisk_string)
 
@@ -152,8 +152,10 @@ class RedoBackupLegacyImage:
             # of "1, 10, 2, 3" issues)
             abs_partclone_image_list.sort()
             if len(abs_partclone_image_list) == 0:
-                raise Exception("Unable to match any partclone images associated with " + short_device_node + ": " + image_match_string)
-
+                # The legacy Redo Backup and Recovery format cannot distinguish between failed partclone backup and a
+                # user who chose not to backup a partition
+                self.warning_dict[short_device_node] = _("Cannot find partition's associated partclone image")
+                continue
             self.partition_restore_command_dict[partition_number] = {'abs_image_glob': abs_partclone_image_list}
 
             command = "partclone"
@@ -216,7 +218,8 @@ class RedoBackupLegacyImage:
             # Otherwise, the value detected by partclone.info must be used (which is known to be unreliable).
             flat_string += self.partclone_info_dict[partition_number]['filesystem'] + " "
         else:
-            raise Exception(self.absolute_path + ": Unable to use " + str(partition_number) + " from " + short_device_node + " in " + str(self.partclone_info_dict) + " or " + str(self.partclone_info_dict))
+            print(self.absolute_path + ": Unable to use " + str(partition_number) + " from " + short_device_node + " in " + str(self.partclone_info_dict) + " or " + str(self.partclone_info_dict))
+            flat_string = "NOT_FOUND "
 
         # Convert short device node to long device node by prepending "/dev/" (this simply approach is only correct for
         # Rescuezilla 1.0.5 and Redo Backup and Recovery images, as the format never supported multipath device nodes.
@@ -228,5 +231,6 @@ class RedoBackupLegacyImage:
             # Otherwise, use the filesystem size from partclone.info
             flat_string += size(int(self.partclone_info_dict[partition_number]['size']['bytes']), system=alternative)
         else:
-            raise Exception(self.absolute_path + ": Unable to use " + str(partition_number) + " from " + short_device_node + " in " + str(self.sfdisk_dict) + " or " + str(self.partclone_info_dict))
+            print(self.absolute_path + ": Unable to use " + str(partition_number) + " from " + short_device_node + " in " + str(self.sfdisk_dict) + " or " + str(self.partclone_info_dict))
+            flat_string = "NOT_FOUND "
         return flat_string

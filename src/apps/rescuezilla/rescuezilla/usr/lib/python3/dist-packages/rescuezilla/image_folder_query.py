@@ -122,21 +122,24 @@ class ImageFolderQuery:
                 # "dev-fs.list" because these files were not created by in earlier Clonezilla versions. Cannot use
                 # "disk" as Clonezilla's 'saveparts' function does not create it. But both 'savedisk' and 'saveparts'
                 # always creates a file named 'parts' across every version of Clonezilla tested.
+                error_suffix = ""
+                is_image = False
                 if absolute_path.endswith("parts"):
                     print("Found Clonezilla image " + filename)
                     image = ClonezillaImage(absolute_path, enduser_filename)
+                    error_suffix = _("This can happen when loading images which Clonezilla was unable to completely backup. Any other filesystems within the image should be restorable as normal.")
+                    is_image = True
+                elif absolute_path.endswith(".backup"):
+                    print("Found a legacy Redo Backup / Rescuezilla v1.0.5 image " + filename)
+                    image = RedoBackupLegacyImage(absolute_path, enduser_filename, filename)
+                    error_suffix = _("Any other filesystems within the image should be restorable as normal.")
+                    is_image = True
+                if is_image:
                     image_warning_message = ""
                     for short_partition_key in image.warning_dict.keys():
                         image_warning_message += "    " + short_partition_key + ": " + image.warning_dict[short_partition_key] + "\n"
                     if len(image_warning_message) > 0:
-                        self.failed_to_read_image_dict[
-                            enduser_filename] = _("Unable to fully process the image associated with the following partitions:") + "\n" + image_warning_message + _("This can happen when loading images which Clonezilla was unable to completely backup. Any other filesystems within the image should be restorable as normal.")
-                elif absolute_path.endswith(".backup"):
-                    print("Found a Rescuezilla image " + filename)
-                    # It is a Rescuezilla v1.0.5 or Redo Backup and Recovery
-                    image = RedoBackupLegacyImage(absolute_path, enduser_filename, filename)
-                    if len(image.warning_dict.keys()) > 0:
-                        self.failed_to_read_image_dict[absolute_path] = _("Unable to fully process the following image:") + "\n" + image.warning_dict[image.absolute_path]
+                        self.failed_to_read_image_dict[absolute_path] = _("Unable to fully process the image associated with the following partitions:") + "\n" + image_warning_message + error_suffix
             if image is not None:
                 self.image_dict[image.absolute_path] = image
         except Exception as e:
