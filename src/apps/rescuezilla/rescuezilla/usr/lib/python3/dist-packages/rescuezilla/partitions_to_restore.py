@@ -269,6 +269,11 @@ class PartitionsToRestore:
         elif isinstance(self.selected_image, RedoBackupLegacyImage):
             for short_device_node in self.selected_image.short_device_node_partition_list:
                 image_base_device_node, image_partition_number = Utility.split_device_string(short_device_node)
+
+                if not image_partition_number in self.selected_image.partition_restore_command_dict.keys():
+                    # No partclone image assosciated with partition
+                    continue
+
                 # Combine image partition number with destination device node base
                 dest_partition = Utility.join_device_string(self.dest_drive_node, image_partition_number)
                 # FIXME: Ensure the assertion that the key being used is valid for the dictionary is true.
@@ -325,6 +330,9 @@ class PartitionsToRestore:
             partitions = self.selected_image.short_device_node_partition_list
             for image_format_dict_key in partitions:
                 image_base_device_node, image_partition_number = Utility.split_device_string(image_format_dict_key)
+                if not image_partition_number in self.selected_image.partition_restore_command_dict.keys():
+                    # No partclone image assosciated with partition
+                    continue
                 flat_image_part_description = "Partition " + str(
                 image_partition_number) + ": " + self.selected_image.flatten_partition_string(image_format_dict_key)
                 self.restore_partition_selection_list.append(
