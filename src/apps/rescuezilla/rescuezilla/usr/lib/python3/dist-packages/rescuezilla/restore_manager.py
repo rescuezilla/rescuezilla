@@ -1099,7 +1099,7 @@ class RestoreManager:
     # Expected to run on GTK event thread
     def completed_restore(self, succeeded, message):
         restore_timeend = datetime.now()
-        duration_minutes = (restore_timeend - self.restore_timestart).total_seconds() / 60.0
+        duration_minutes = Utility.get_human_readable_minutes_seconds((restore_timeend - self.restore_timestart).total_seconds())
 
         self.main_statusbar.remove_all(self.main_statusbar.get_context_id("restore"))
         self.restore_in_progress = False

@@ -17,7 +17,6 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
 import collections
-import math
 import os
 import queue
 import shutil
@@ -616,12 +615,9 @@ class ImageExplorerManager:
                 return
 
             backup_timeend = datetime.now()
-            duration_minutes, duration_seconds = divmod((backup_timeend - backup_timestart).total_seconds(), 60)
-            frac, whole = math.modf(duration_minutes / 60)
-            # 1 decimal place (55.3 minutes)
-            human_readable_minutes_seconds = "{:.1f}".format(duration_minutes + frac)
+            duration_minutes = Utility.get_human_readable_minutes_seconds((backup_timeend - backup_timestart).total_seconds())
             duration_message = _("Mounting partition took {num_minutes} minutes.").format(
-                num_minutes=human_readable_minutes_seconds)
+                num_minutes=duration_minutes)
             GLib.idle_add(callback, True, duration_message)
             GLib.idle_add(please_wait_popup.destroy)
         except Exception as e:

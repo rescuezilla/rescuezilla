@@ -17,6 +17,7 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
 import gettext
+import math
 import os
 import pwd
 import re
@@ -417,6 +418,13 @@ class Utility:
         # Print newline to flush the buffer
         print(flat_command_string)
         return flat_command_string
+
+    @staticmethod
+    def get_human_readable_minutes_seconds(seconds):
+        duration_minutes, duration_seconds = divmod(seconds, 60)
+        frac, whole = math.modf(duration_minutes / 60)
+        # 1 decimal place (55.3 minutes)
+        return "{:.1f}".format(duration_minutes + frac)
 
     @staticmethod
     def run(short_description, cmd_list, use_c_locale, output_filepath=None, logger=None):
