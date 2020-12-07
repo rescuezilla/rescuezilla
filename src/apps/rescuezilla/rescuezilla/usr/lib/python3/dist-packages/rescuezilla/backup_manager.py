@@ -760,7 +760,7 @@ class BackupManager:
 
     def completed_backup(self, succeeded, message):
         backup_timeend = datetime.now()
-        duration_minutes = (backup_timeend - self.backup_timestart).total_seconds() / 60.0
+        duration_minutes = Utility.get_human_readable_minutes_seconds((backup_timeend - self.backup_timestart).total_seconds())
         duration_message = _("Operation took {num_minutes} minutes.").format(num_minutes=duration_minutes)
         self.main_statusbar.remove_all(self.main_statusbar.get_context_id("backup"))
 
