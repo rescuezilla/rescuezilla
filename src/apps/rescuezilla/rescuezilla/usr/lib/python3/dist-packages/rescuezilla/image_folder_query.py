@@ -56,8 +56,25 @@ class ImageFolderQuery:
         self.verify_label = self.builder.get_object("verify_folder_label")
         self.image_explorer_folder_label = self.builder.get_object("image_explorer_folder_label")
         self.query_path = MOUNT_DIR
+        self.requested_stop_lock = threading.Lock()
+        self.requested_stop = False
+        self.image_folder_query_in_progress = False
+
+    def is_stop_requested(self):
+        with self.requested_stop_lock:
+            return self.requested_stop
+
+    def is_image_folder_query_in_progress(self):
+        return self.image_folder_query_in_progress
+
+    def cancel_image_folder_query(self):
+        with self.requested_stop_lock:
+            self.requested_stop = True
+        return
 
     def query_folder(self, path):
+        with self.requested_stop_lock:
+            self.requested_stop = False
         self.query_path = path
         self.image_list_store.clear()
         print("Starting scan of provided path " + self.query_path)
@@ -68,7 +85,7 @@ class ImageFolderQuery:
         self.image_list_store.clear()
         self.failed_to_read_image_dict.clear()
         self.win.set_sensitive(False)
-        self.please_wait_popup = PleaseWaitModalPopup(self.builder, title=_("Please wait..."), message=_("Scanning folder for backup images..."))
+        self.please_wait_popup = PleaseWaitModalPopup(self.builder, title=_("Please wait..."), message=_("Scanning folder for backup images...") + "\n\n" + _("Close this popup to cancel scanning the selected folder and subfolders."), on_close_callback=self.cancel_image_folder_query)
         self.please_wait_popup.show()
         thread = threading.Thread(target=self.scan_image_directory)
         thread.daemon = True
@@ -115,6 +132,7 @@ class ImageFolderQuery:
 
     def scan_file(self, absolute_path, filename, enduser_filename):
         print("Scan file " + absolute_path)
+        is_image = False
         try:
             image = None
             if isfile(absolute_path):
@@ -123,7 +141,6 @@ class ImageFolderQuery:
                 # "disk" as Clonezilla's 'saveparts' function does not create it. But both 'savedisk' and 'saveparts'
                 # always creates a file named 'parts' across every version of Clonezilla tested.
                 error_suffix = ""
-                is_image = False
                 if absolute_path.endswith("parts"):
                     print("Found Clonezilla image " + filename)
                     image = ClonezillaImage(absolute_path, enduser_filename)
@@ -147,6 +164,7 @@ class ImageFolderQuery:
             tb = traceback.format_exc()
             self.failed_to_read_image_dict[enduser_filename] = tb
             traceback.print_exc()
+        return is_image
 
     def scan_image_directory(self):
         self.image_dict.clear()
@@ -154,19 +172,27 @@ class ImageFolderQuery:
         try:
             # list files and directories
             for filename in os.listdir(self.query_path):
+                if self.is_stop_requested():
+                    break
                 abs_base_scan_path = os.path.abspath(join(self.query_path, filename))
                 print("Scanning " + abs_base_scan_path)
                 if isfile(abs_base_scan_path):
                     print("Scanning file " + abs_base_scan_path)
-                    self.scan_file(abs_base_scan_path, filename, filename)
+                    is_image = self.scan_file(abs_base_scan_path, filename, filename)
+                    if is_image:
+                        GLib.idle_add(self.please_wait_popup.set_secondary_label_text,_("Scanned: {filename}").format(filename=filename))
                 elif isdir(abs_base_scan_path):
                     # List the subdirectory (1 level deep)
                     for subdir_filename in os.listdir(abs_base_scan_path):
+                        if self.is_stop_requested():
+                            break
                         absolute_path = join(abs_base_scan_path, subdir_filename)
                         enduser_filename = os.path.join(filename, subdir_filename)
                         if isfile(absolute_path):
                             print("Scanning subdir file " + absolute_path)
-                            self.scan_file(absolute_path, subdir_filename, enduser_filename)
+                            is_image = self.scan_file(absolute_path, subdir_filename, enduser_filename)
+                            if is_image:
+                                GLib.idle_add(self.please_wait_popup.set_secondary_label_text,_("Scanned: {filename}").format(filename=enduser_filename))
         except Exception as e:
             tb = traceback.format_exc()
             GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
