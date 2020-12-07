@@ -53,6 +53,8 @@ class PleaseWaitModalPopup:
         label = Gtk.Label(label=message, xalign=0)
         label.set_halign(Gtk.Align.CENTER)
         label.set_padding(xpad=0, ypad=10)
+        # Allow users to highlight and copy the label (eg, to machine translate untranslated strings)
+        label.set_selectable(True)
         label.show()
         self._dialog.vbox.pack_start(label, expand=True, fill=True, padding=0)
 
@@ -60,6 +62,7 @@ class PleaseWaitModalPopup:
         self.secondary_label.set_halign(Gtk.Align.CENTER)
         self.secondary_label.set_padding(xpad=0, ypad=10)
         self.secondary_label.show()
+        self.secondary_label.set_selectable(True)
         self.secondary_label.set_visible(False)
         self._dialog.vbox.pack_start(self.secondary_label, expand=True, fill=True, padding=0)
 
