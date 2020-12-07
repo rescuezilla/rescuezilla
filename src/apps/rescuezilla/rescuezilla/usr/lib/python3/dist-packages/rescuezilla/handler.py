@@ -659,6 +659,8 @@ class Handler:
     def _cancel_current_operations(self, is_affirmative):
         if is_affirmative:
             print("Cancelling current operations.")
+            if self.image_folder_query.is_image_folder_query_in_progress():
+                self.image_folder_query.cancel_image_folder_query()
             if self.restore_manager.is_restore_in_progress():
                 self.restore_manager.cancel_restore()
             if self.backup_manager.is_backup_in_progress():
