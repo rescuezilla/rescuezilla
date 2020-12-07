@@ -48,27 +48,27 @@ class MountLocalPath:
 
             is_unmounted, message = Utility.umount_warn_on_busy(destination_path)
             if not is_unmounted:
-                GLib.idle_add(self.callback, False, message)
                 GLib.idle_add(self.please_wait_popup.destroy)
+                GLib.idle_add(self.callback, False, message)
                 return
 
             is_unmounted, message = Utility.umount_warn_on_busy(source_path)
             if not is_unmounted:
                 GLib.idle_add(self.please_wait_popup.destroy)
-                GLib.idle_add(self.please_wait_popup.destroy)
+                GLib.idle_add(self.callback, False, message)
                 return
 
             mount_cmd_list = ['mount', source_path, destination_path]
             process, flat_command_string, failed_message = Utility.run("Mounting selected partition: ", mount_cmd_list, use_c_locale=False)
             if process.returncode != 0:
-                GLib.idle_add(self.callback, False, failed_message)
                 GLib.idle_add(self.please_wait_popup.destroy)
+                GLib.idle_add(self.callback, False, failed_message)
                 return
             else:
-                GLib.idle_add(self.callback, True, "", destination_path)
                 GLib.idle_add(self.please_wait_popup.destroy)
+                GLib.idle_add(self.callback, True, "", destination_path)
         except Exception as e:
             tb = traceback.format_exc()
             print(tb)
-            GLib.idle_add(self.callback, False, "Error mounting folder: " + tb)
             GLib.idle_add(self.please_wait_popup.destroy)
+            GLib.idle_add(self.callback, False, "Error mounting folder: " + tb)

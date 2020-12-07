@@ -58,7 +58,7 @@ class MountNetworkPath:
             is_unmounted, message = Utility.umount_warn_on_busy(destination_path)
             if not is_unmounted:
                 GLib.idle_add(self.please_wait_popup.destroy)
-                GLib.idle_add(self.please_wait_popup.destroy)
+                GLib.idle_add(self.callback, False, message)
                 return
 
             smb_arguments = ""
@@ -94,20 +94,20 @@ class MountNetworkPath:
             shred_cmd_list = ['shred', "-u", tmp.name]
             shred_process, shred_flat_command_string, failed_message = Utility.run("Shredding credentials temp file: ", shred_cmd_list, use_c_locale=False)
             if shred_process.returncode != 0:
-                GLib.idle_add(self.callback, False, failed_message)
                 GLib.idle_add(self.please_wait_popup.destroy)
+                GLib.idle_add(self.callback, False, failed_message)
                 return
 
             if mount_process.returncode != 0:
                 check_password_msg = _("Please ensure the username, password and other fields provided are correct, and try again.")
-                GLib.idle_add(self.callback, False, mount_failed_message + "\n\n" + check_password_msg)
                 GLib.idle_add(self.please_wait_popup.destroy)
+                GLib.idle_add(self.callback, False, mount_failed_message + "\n\n" + check_password_msg)
                 return
             else:
-                GLib.idle_add(self.callback, True, "", destination_path)
                 GLib.idle_add(self.please_wait_popup.destroy)
+                GLib.idle_add(self.callback, True, "", destination_path)
         except Exception as e:
             tb = traceback.format_exc()
             print(tb)
-            GLib.idle_add(self.callback, False, "Error mounting folder: " + tb)
             GLib.idle_add(self.please_wait_popup.destroy)
+            GLib.idle_add(self.callback, False, "Error mounting folder: " + tb)
