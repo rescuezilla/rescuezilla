@@ -56,6 +56,14 @@ mv /var/lib/apt/lists /var.lib.apt.lists
 # and /var/cache/apt/archives/partial/."
 apt-get clean
 
+# Disable systemd's built-in NTP time synchronization service by manually masking it (`systemctl mask`)
+# using a symlink. This timesyncd service always modifies the hardware clock, and there
+# does not appear to be a way to prevent this service from modifying the hardware clock.
+# See [1] for more discussion.
+# [1] https://github.com/rescuezilla/rescuezilla/issues/107
+rm /etc/systemd/system/systemd-timesyncd.service
+ln -s /dev/null /etc/systemd/system/systemd-timesyncd.service
+
 rm -rf /tmp/*
 rm /etc/resolv.conf
 rm -rf /var/lib/apt/lists/????????*
