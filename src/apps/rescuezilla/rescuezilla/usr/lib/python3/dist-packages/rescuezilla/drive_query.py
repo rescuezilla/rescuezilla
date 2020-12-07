@@ -184,6 +184,7 @@ class DriveQuery:
 
         drive_query_start_time = datetime.now()
 
+        GLib.idle_add(self.please_wait_popup.set_secondary_label_text, "Unmounting: " + IMAGE_EXPLORER_DIR)
         returncode, failed_message = ImageExplorerManager._do_unmount(IMAGE_EXPLORER_DIR)
         if not returncode:
             print(failed_message)
@@ -210,11 +211,14 @@ class DriveQuery:
         mode = "sequential-drive-query"
         if mode == "sequential-drive-query":
             print("Running drive query in sequential mode")
+            GLib.idle_add(self.please_wait_popup.set_secondary_label_text, "Running: lsblk")
             lsblk_stdout, lsblk_stderr, lsblk_return_code = Utility.run_external_command(lsblk_cmd_list, self.temp_callback, env_C_locale)
             lsblk_json_dict = json.loads(lsblk_stdout)
+            GLib.idle_add(self.please_wait_popup.set_secondary_label_text, "Running: blkid")
             blkid_stdout, blkid_stderr, blkid_return_code = Utility.run_external_command(blkid_cmd_list, self.temp_callback, env_C_locale)
             blkid_dict = Blkid.parse_blkid_output(blkid_stdout)
 
+            GLib.idle_add(self.please_wait_popup.set_secondary_label_text, "Running: os-prober")
             # Use os-prober to get OS information (running WITH original locale information
             os_prober_stdout, os_prober_stderr, os_prober_return_code = Utility.run_external_command(os_prober_cmd_list, self.temp_callback, os.environ.copy())
             os_prober_dict = OsProber.parse_os_prober_output(os_prober_stdout)
@@ -223,11 +227,13 @@ class DriveQuery:
                 partition_longdevname = lsblk_dict['name']
                 print("Going to run parted and sfdisk on " + partition_longdevname)
                 try:
+                    GLib.idle_add(self.please_wait_popup.set_secondary_label_text, "Running: parted on " + partition_longdevname)
                     parted_stdout, parted_stderr, parted_return_code = Utility.run_external_command(self._get_parted_cmd_list(partition_longdevname), self.temp_callback, env_C_locale)
                     if "unrecognized disk label" not in parted_stderr:
                         parted_dict_dict[partition_longdevname] = Parted.parse_parted_output(parted_stdout)
                     else:
                         print("Parted says " + parted_stderr)
+                    GLib.idle_add(self.please_wait_popup.set_secondary_label_text, "Running: sfdisk on " + partition_longdevname)
                     sfdisk_stdout, sfdisk_stderr, sfdisk_return_code = Utility.run_external_command(self._get_sfdisk_cmd_list(partition_longdevname), self.temp_callback, env_C_locale)
                     sfdisk_dict_dict[partition_longdevname] = Sfdisk.parse_sfdisk_dump_output(sfdisk_stdout)
                 except Exception:
