@@ -262,11 +262,3 @@ rm /usr/share/icons/*/icon-theme.cache
 rm -rf /usr/share/doc
 rm -rf /usr/share/man
 rm -rf /etc/network/if-up.d/ntpdate
-
-# Disable systemd's built-in NTP time synchronization service by manually masking it (`systemctl mask`)
-# using a symlink. This timesyncd service always modifies the hardware clock, and there
-# does not appear to be a way to prevent this service from modifying the hardware clock.
-# See [1] for more discussion.
-# [1] https://github.com/rescuezilla/rescuezilla/issues/107
-rm /etc/systemd/system/systemd-timesyncd.service
-ln -s /dev/null /etc/systemd/system/systemd-timesyncd.service
