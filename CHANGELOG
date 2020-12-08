@@ -1,4 +1,31 @@
 -------------------------------------------------------------------------------
+  Version 2.1 (2020-12-12) 
+-------------------------------------------------------------------------------
+
+* Added ‘Image Explorer’ (beta) to easily mount partclone images and extract files (#20)
+  Currently based on partclone-nbd. Feature is extremely fast for uncompressed images.
+  Both Clonezilla and Rescuezilla currently default to gzip compression which requires
+  decompressing a lot of data so mounting and exploring images over 50GB is relatively slow.
+* Added build based on Ubuntu 20.10 (Groovy) for improved NVidia graphics card support (#115)
+* Fixed slow backup speed after mistakenly switching away from pigz multithreaded compression (#125)
+* Fixed scan issue on some Redo Backup v0.9.8-v1.0.4, Rescuezilla v1.0.5-v1.0.6.1 images (#127)
+* Added ability to cancel the image scan by closing the progress bar popup (#126)
+* Displayed more progress details during drive query and image scan (#126)
+* Ensured that (unlike Clonezilla), disks with >1024MB still have 1MB post-MBR gap backup (#131)
+* Ensured all post-MBR gap always restored (whether 1MB or 1024MB), not just the first 256KB (#131)
+* Fixed post-MBR gap backup being one 512-byte sector too large (#131)
+* Fixed ability to specify the SMB/CIFS network share version field (#140)
+* Fixed “dev-fs.list” image scanning errors with recent Clonezilla “testing” releases (#139)
+* Ignored “sector-size” line in sfdisk partition table to maximize forward compatibility (#147)
+* Considered failure to query optional drive geometry information as non-fatal error (#122)
+* Ensured .info gets created for Microsoft Reserved Partitions to better match Clonezilla (#144)
+* Fixed rounding error for drive/partition sizes, and removed python hurry.filesize library (#148)
+* Improved handling of read-only destination drives during backup
+* Added partclone-nbd v0.0.3 and partclone-utils v0.4.2 applications (#20)
+* Added Brazilian Portuguese/Português brasileiro (pt-BR) translation by vinicioslc (obrigado!) (#128)
+* Added Polish/Polski (pl-PL) translation by zeit439  (dzięki!) (#135) 
+
+-------------------------------------------------------------------------------
   Version 2.0 (2020-10-14) 
 -------------------------------------------------------------------------------
 

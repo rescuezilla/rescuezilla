@@ -1,3 +1,12 @@
+rescuezilla (2.1) unstable; urgency=low
+
+  * New upstream version.
+  * Added ability to mount partclone images using partclone-nbd
+  * Many bug fixes and performance improvements
+  * See the upstream CHANGELOG for full details
+
+ -- Shasheen Ediriweera <rescuezilla@gmail.com>  Sat, 12 Dec 2020 12:00:00 +0930
+
 rescuezilla (2.0) unstable; urgency=low
 
   * New upstream version.
