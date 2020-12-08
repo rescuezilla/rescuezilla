@@ -16,6 +16,7 @@ Rescuezilla is an fork of _Redo Backup and Recovery_ (now called _Redo Rescue_) 
 
 * Simple graphical environment anyone can use
 * Fully interoperable with industry-standard Clonezilla
+* Ability to the access files within Clonezilla backup images (beta)
 * Boots from Live CD or a USB drive on any PC or Mac
 * Full system backup, bare metal recovery, partition editing, data protection, web browsing, and more
 * Extra tools for hard drive partitioning, factory reset, undeleting files
@@ -31,8 +32,8 @@ Rescuezilla has been translated into the following languages:
 * Français (fr-FR)
 * Deutsch (de-DE)
 * Español (es-ES)
-* Português brasileiro (pt-BR) (coming in [Rescuezilla v2.1](https://github.com/rescuezilla/rescuezilla/issues/128))
-* Polski (pl-PL) (coming in [Rescuezilla v2.1](https://github.com/rescuezilla/rescuezilla/issues/135))
+* Português brasileiro (pt-BR)
+* Polski (pl-PL)
 
 **Rescuezilla is now officially open for translations! See [Translations HOWTO](https://github.com/rescuezilla/rescuezilla/wiki/Translations-HOWTO) to submit a translation.**
 
@@ -44,6 +45,8 @@ Rescuezilla has been translated into the following languages:
 <a href="https://raw.githubusercontent.com/rescuezilla/rescuezilla.github.io/master/media/screenshots/7.png"><img width=308 height=229 src="https://raw.githubusercontent.com/rescuezilla/rescuezilla.github.io/master/media/screenshots/7.png"  alt="Provides browser access even if you can't log into your PC"></a>
 <a href="https://raw.githubusercontent.com/rescuezilla/rescuezilla.github.io/master/media/screenshots/4.png"><img width=308 height=229 src="https://raw.githubusercontent.com/rescuezilla/rescuezilla.github.io/master/media/screenshots/4.png" alt="Save to hard drive, network shared folder, or FTP server"></a>
 <a href="https://raw.githubusercontent.com/rescuezilla/rescuezilla.github.io/master/media/screenshots/1.png"><img width=308 height=229 src="https://raw.githubusercontent.com/rescuezilla/rescuezilla.github.io/master/media/screenshots/1.png" alt="Select video mode, check CD integrity, or test RAM at boot"></a>
+<a href="https://raw.githubusercontent.com/rescuezilla/rescuezilla.github.io/master/media/screenshots/9.png"><img width=308 height=229 src="https://raw.githubusercontent.com/rescuezilla/rescuezilla.github.io/master/media/screenshots/9.png" alt="Easily mount Clonezilla images"></a>
+<a href="https://raw.githubusercontent.com/rescuezilla/rescuezilla.github.io/master/media/screenshots/10.png"><img width=308 height=229 src="https://raw.githubusercontent.com/rescuezilla/rescuezilla.github.io/master/media/screenshots/10.png" alt="Extract individual files from Clonezilla images"></a>
 
 ## History
 
@@ -51,7 +54,8 @@ Below table shows an abridged history of Rescuezilla. For more information, see 
 
 | Release             | Release Date | Operating System | Notes |
 | ------------------- | ---------- | ---------------- | ---------------------------------- |
-| Rescuezilla 2.0     | 2020-10-14 | Ubuntu 20.04     | Adds Clonezilla support. [Download page](https://github.com/rescuezilla/rescuezilla/releases/latest)
+| Rescuezilla 2.1     | 2020-12-12 | Ubuntu 20.10     | Adds Image Explorer (beta). [Download page](https://github.com/rescuezilla/rescuezilla/releases/latest)
+| Rescuezilla 2.0     | 2020-10-14 | Ubuntu 20.04     | Added Clonezilla support
 | Rescuezilla 1.0.6   | 2020-06-17 | Ubuntu 20.04     |
 | Redo Rescue 2.0.0   | 2020-06-12 | Debian 9 Stretch | Original author [resurfaces](https://sourceforge.net/p/redobackup/discussion/general/thread/d0e37c4750/) after 7.5 year absence
 | Rescuezilla 1.0.5.1 | 2020-03-24 | Ubuntu 18.04.4   |
