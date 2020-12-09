@@ -198,6 +198,7 @@ class ClonezillaImage:
         self.parted_dict_dict = {}
         self.sfdisk_dict_dict = {}
         self.mbr_dict_dict = {}
+        self.post_mbr_gap_dict_dict = {}
         self.ebr_dict_dict = {}
         self.size_bytes = 0
         self.enduser_readable_size = "unknown"
@@ -237,13 +238,27 @@ class ClonezillaImage:
                     # as `sfdisk --dump` fails for disks without a partition table.
                     print("Unable to locate " + sfdisk_filepath + " or file is encrypted")
 
-            # There is a maximum of 1 MBR per drive (there can be many drives). Master Boot Record (EBR) is never
+            # There is a maximum of 1 MBR per drive (there can be many drives). Master Boot Record (MBR) is never
             # listed in 'parts' list.
             mbr_glob_list = glob.glob(os.path.join(dir, short_disk_device_node) + "*-mbr")
             for absolute_mbr_filepath in mbr_glob_list:
                 short_mbr_device_node = basename(absolute_mbr_filepath).split("-mbr")[0]
                 self.mbr_dict_dict[short_disk_device_node] = {'short_device_node': short_mbr_device_node,
                                                               'absolute_path': absolute_mbr_filepath}
+
+            # There is a maximum of 1 post-MBR gap per drive (there can be many drives). The post MBR gap is never
+            # listed in 'parts' list. Note the asterisk wildcard in the glob, to get the notes.txt file (see below)
+            post_mbr_gap_glob_list = glob.glob(os.path.join(dir, short_disk_device_node) + "-hidden-data-after-mbr.*")
+            for absolute_post_mbr_gap_filepath in post_mbr_gap_glob_list:
+                short_post_mbr_gap_device_node = basename(absolute_post_mbr_gap_filepath).split("-hidden-data-after-mbr")[0]
+                if absolute_post_mbr_gap_filepath.endswith(".notes.txt") and not isfile(os.path.join(dir, short_disk_device_node) + "-hidden-data-after-mbr"):
+                    # When the post-MBR gap is not created by Clonezilla due to >1024 MB gap between MBR and first partition
+                    # there is a "notes.txt" file created which explains this. To maximize compatibility, in this
+                    # situation Rescuezilla v2.1+ creates a 1MB post-MBR  gap backup *and* a notes.txt file.
+                    self.warning_dict[short_post_mbr_gap_device_node] = "Backup is missing the \"post-MBR gap\" backup, most likely due to Clonezilla detecting a >1024MB gap between the MBR partition table and the first partition. Any GRUB bootloaders present will not restore correctly. In order to boot after restoring this backup, Clonezilla happens to workaround this situation by automatically re-installing GRUB, but current version of Rescuezilla does not implement this (but will in a future version). Clonezilla is available from within the Rescuezilla live environment by running `clonezilla` in a Terminal. See the following link for more information: https://github.com/rescuezilla/rescuezilla/issues/146"
+                else:
+                    self.post_mbr_gap_dict_dict[short_disk_device_node] = {'short_device_node': short_post_mbr_gap_device_node,
+                                                                           'absolute_path': absolute_post_mbr_gap_filepath}
 
             # There is a maximum of 1 EBR per drive (there can be many drives). Extended Boot Record (EBR) is never
             # listed in 'parts' list.
@@ -252,6 +267,7 @@ class ClonezillaImage:
                 short_ebr_device_node = basename(absolute_ebr_filepath).split("-ebr")[0]
                 self.ebr_dict_dict[short_disk_device_node] = {'short_device_node': short_ebr_device_node,
                                                               'absolute_path': absolute_ebr_filepath}
+
 
         self.image_format_dict_dict = collections.OrderedDict([])
         # Loops over the partitions listed in the 'parts' file

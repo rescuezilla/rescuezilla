@@ -400,25 +400,25 @@ class RestoreManager:
                     GLib.idle_add(self.completed_restore, False, "Requested stop")
                     return
 
-                # Overwrite the post-MBR gap.
-                # TODO: Calculate this based on first partition offset.
-                # first_partition_key, first_partition_offset_bytes = CombinedDriveState.get_first_partition(
-                #    self.partitions_to_restore)
-                # Maximum hidden data to backup is 1024MB
-                # hidden_data_after_mbr_limit = 1024 * 1024 * 1024
-                # if first_partition_offset_bytes > hidden_data_after_mbr_limit:
-                #     print("Calculated very large hidden data after MBR size. Skipping")
-                # else:
-                hidden_data_num_sectors = 512  # int(first_partition_offset_bytes / 512)
-                filepath = os.path.join(image_dir, short_selected_image_drive_node + "-hidden-data-after-mbr")
-                if os.path.isfile(filepath):
+                # Overwrite the post-MBR gap (if it exists). This file is typically 1 megabyte but may be a maximum
+                # of 1024 megabytes. For the post-MBR gap to be overwritten the user has requested the destination
+                # disk partition table to be overwritten. Rescuezilla's user interface makes the implications of this
+                # clear. Note: this operation means writing to disk the entirety of the (even 1024MB) post-MBR gap
+                # backup.
+                #
+                # The nature of accepting a partition table overwrite means there's no risk of overwriting data that
+                # the user didn't intend on overwriting: all partitions are coming from a backup image so eg,
+                # calculating offsets to the first partition and comparing it to the post-MBR gap file size prevent
+                # accidentally overwriting it is NOT required here.
+
+                # There is a maximum of 1 post-MBR gap per drive (but there can be many drives)
+                post_mbr_gap_list = [i for i in self.image.post_mbr_gap_dict_dict.keys() if i.startswith(short_selected_image_drive_node)]
+                if len(post_mbr_gap_list) == 1:
                     process, flat_command_string, failed_message = Utility.run("Restore post mbr gap",
-                                                                               ["dd", "if=" + filepath,
+                                                                               ["dd", "if=" + post_mbr_gap_list[0]['absolute_path'],
                                                                                 "of=" + self.restore_destination_drive,
                                                                                 "seek=1",
-                                                                                "bs=512",
-                                                                                "count=" + str(
-                                                                                    hidden_data_num_sectors)],
+                                                                                "bs=512"],
                                                                                use_c_locale=False, logger=self.logger)
                     if process.returncode != 0:
                         with self.summary_message_lock:

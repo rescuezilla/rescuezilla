@@ -352,11 +352,11 @@ class BackupManager:
                 # FIXME: Rescuezilla doesn't yet match Clonezilla's ability to re-install GRUB, so it makes sense to
                 # FIXME: continue to backup a post-mbr gap until full parity with Clonezilla is achieved.
                 post_mbr_gap_sector_count = 2047
-                self.logger.write("Calculated very large hidden data after MBR size, so not copying post-MBR gap")
+                self.logger.write("Calculated very large hidden data after MBR size, so copying minimal post-MBR gap")
                 not_creating_hidden_data_info_filepath = os.path.join(self.dest_dir, short_selected_device_node + "-hidden-data-after-mbr.notes.txt")
                 with open(not_creating_hidden_data_info_filepath, 'w') as filehandle:
                     try:
-                        output = "The hidden data space size (" + str(first_partition_offset_bytes) + " bytes) is larger than the " + str(hidden_data_after_mbr_limit) + " byte limit. .\n"
+                        output = "The hidden data space size (" + str(first_partition_offset_bytes) + " bytes) is larger than the " + str(hidden_data_after_mbr_limit) + " byte limit. Copying minimal post-MBR gap.\n"
                         filehandle.write(output)
                     except:
                         tb = traceback.format_exc()
