@@ -777,6 +777,7 @@ class BackupManager:
     # Intended to be called via event thread
     def update_main_statusbar(self, message):
         context_id = self.main_statusbar.get_context_id("backup")
+        self.main_statusbar.pop(context_id)
         self.main_statusbar.push(context_id, message)
 
     # Intended to be called via event thread
