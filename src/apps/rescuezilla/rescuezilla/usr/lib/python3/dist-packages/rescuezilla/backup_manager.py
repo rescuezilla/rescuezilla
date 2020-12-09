@@ -207,6 +207,36 @@ class BackupManager:
         # FIXME: Improve this.
         process, flat_command_string, failed_message = Utility.run("Saving Info-smart.txt", ["smartctl", "--all", self.selected_drive_key], use_c_locale=True, output_filepath=info_smart_filepath, logger=self.logger)
 
+        info_os_prober_filepath = os.path.join(self.dest_dir, "Info-OS-prober.txt")
+        with open(info_os_prober_filepath, 'w') as filehandle:
+            filehandle.write("This OS-related info was saved from this machine with os-prober at " + enduser_date + "\n")
+            filehandle.flush()
+        process, flat_command_string, failed_message = Utility.run("Running os-prober and appending output to Info-OS-prober.txt",
+                                                                       ["os-prober"],
+                                                                       use_c_locale=True,
+                                                                       output_filepath=info_os_prober_filepath,
+                                                                       logger=self.logger)
+        if process.returncode != 0:
+            self.logger.write(failed_message)
+            # Not considering os-prober exit code to match Clonezilla's behavior
+            return
+
+        with open(info_os_prober_filepath, 'a+') as filehandle:
+            filehandle.write(msg_delimiter_star_line + "\n")
+            filehandle.write("This Linux boot related info was saved from this machine with linux-boot-prober at " + enduser_date + "\n")
+            filehandle.flush()
+
+        for partition_key in self.partitions_to_backup:
+            process, flat_command_string, failed_message = Utility.run("Running linux-boot-prober for " + partition_key,
+                                                                       ["linux-boot-prober", partition_key],
+                                                                       use_c_locale=True,
+                                                                       output_filepath=info_os_prober_filepath,
+                                                                       logger=self.logger)
+            if process.returncode != 0:
+                self.logger.write(failed_message)
+                # Not considering os-prober exit code to match Clonezilla's behavior
+                return
+
         filepath = os.path.join(self.dest_dir, "Info-packages.txt")
         # Save Debian package informtion
         if shutil.which("dpkg") is not None:
