@@ -849,7 +849,7 @@ class BackupManager:
             split = sha512sum_output.split("  ")
             if len(split) == 2:
                 with open(info_img_id_filepath, 'w') as filehandle:
-                    filehandle.write("# This checksum is only for identifying the image.\n")
+                    filehandle.write("# This checksum is only for identifying the image. Created by the command: sha512sum clonezilla-img\n")
                     filehandle.write('IMG_ID=%s' % split[0])
                     filehandle.flush()
             else:
