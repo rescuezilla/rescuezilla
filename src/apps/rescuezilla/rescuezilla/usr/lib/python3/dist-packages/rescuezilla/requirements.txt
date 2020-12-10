@@ -1,5 +1,4 @@
 Babel==2.8.0
-hurry.filesize==0.9
 pkg-resources==0.0.0
 pycairo==1.20.0
 PyGObject==3.38.0

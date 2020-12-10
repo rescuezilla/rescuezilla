@@ -26,7 +26,6 @@ from os.path import isfile, basename
 from pathlib import Path
 
 from babel.dates import format_datetime
-from hurry.filesize import size, alternative
 
 import utility
 from parser.blkid import Blkid
@@ -225,7 +224,7 @@ class ClonezillaImage:
                 self.enduser_readable_size = self.ecryptfs_info_dict['size'].strip("_")
             else:
                 # Covert size in bytes to KB/MB/GB/TB as relevant
-                self.enduser_readable_size = size(int(self.size_bytes), system=alternative)
+                self.enduser_readable_size = Utility.human_readable_filesize(int(self.size_bytes))
                 sfdisk_filepath = os.path.join(dir, short_disk_device_node + "-pt.sf")
                 if isfile(sfdisk_filepath) and not self.is_needs_decryption:
                     sfdisk_string = Utility.read_file_into_string(sfdisk_filepath)
@@ -585,7 +584,7 @@ class ClonezillaImage:
                 self.parted_dict_dict[short_disk_key]['partitions'].keys():
             size_in_bytes = self.parted_dict_dict[short_disk_key]['partitions'][image_partition_number]['size'] * \
                             self.parted_dict_dict[short_disk_key]['logical_sector_size']
-            flat_string += " " + str(size(int(size_in_bytes), system=alternative))
+            flat_string += " " + str(Utility.human_readable_filesize(int(size_in_bytes)))
 
         return flat_string
 

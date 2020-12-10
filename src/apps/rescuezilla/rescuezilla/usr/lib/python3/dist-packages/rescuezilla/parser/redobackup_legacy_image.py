@@ -23,8 +23,6 @@ import re
 import subprocess
 import time
 
-from hurry.filesize import size, alternative
-
 from parser.partclone import Partclone
 from parser.sfdisk import Sfdisk
 from utility import Utility, _
@@ -80,7 +78,7 @@ class RedoBackupLegacyImage:
         self.size_bytes = int(Utility.read_file_into_string(os.path.join(dirname, prefix + ".size").strip()))
         print("Size: " + str(self.size_bytes))
         # Covert size in bytes to KB/MB/GB/TB as relevant
-        self.enduser_readable_size = size(int(self.size_bytes), system=alternative)
+        self.enduser_readable_size = Utility.human_readable_filesize(int(self.size_bytes))
 
         self.mbr_absolute_path = os.path.join(dirname, prefix + ".mbr")
         # Get the size of the MBR image because a Sourceforge user named chcatzsf released two unofficial
@@ -226,10 +224,10 @@ class RedoBackupLegacyImage:
         long_device_node = "/dev/" + short_device_node
         if 'partitions' in self.sfdisk_dict.keys() and long_device_node in self.sfdisk_dict['partitions'].keys():
             # Get the partition size from sfdisk partition table
-            flat_string += size(int(self.sfdisk_dict['partitions'][long_device_node]['size']) * 512, system=alternative)
+            flat_string += Utility.human_readable_filesize(int(self.sfdisk_dict['partitions'][long_device_node]['size']) * 512)
         elif partition_number in self.partclone_info_dict.keys() and 'size' in self.partclone_info_dict[partition_number].keys():
             # Otherwise, use the filesystem size from partclone.info
-            flat_string += size(int(self.partclone_info_dict[partition_number]['size']['bytes']), system=alternative)
+            flat_string += Utility.human_readable_filesize(int(self.partclone_info_dict[partition_number]['size']['bytes']))
         else:
             print(self.absolute_path + ": Unable to use " + str(partition_number) + " from " + short_device_node + " in " + str(self.sfdisk_dict) + " or " + str(self.partclone_info_dict))
             flat_string = "NOT_FOUND "

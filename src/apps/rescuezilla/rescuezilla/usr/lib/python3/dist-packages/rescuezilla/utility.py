@@ -538,3 +538,14 @@ class Utility:
         t2.daemon = True  # thread dies with the program
         t2.start()
         return queue
+
+    # Adapted from: https://stackoverflow.com/a/14996816/4745097
+    @staticmethod
+    def human_readable_filesize(num_bytes):
+        suffixes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
+        i = 0
+        while num_bytes >= 1024 and i < len(suffixes) - 1:
+            num_bytes /= 1024.
+            i += 1
+        f = ('%.1f' % num_bytes).rstrip('0').rstrip('.')
+        return '%s%s' % (f, suffixes[i])
