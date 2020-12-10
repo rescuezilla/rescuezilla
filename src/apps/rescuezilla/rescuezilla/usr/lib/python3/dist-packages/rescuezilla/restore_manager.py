@@ -349,8 +349,8 @@ class RestoreManager:
                         with self.summary_message_lock:
                             self.summary_message += message + "\n"
                     else:
-                        gpt_corrected_sfdisk_path = self.do_sfdisk_gpt_correctition(self.image.sfdisk_dict_dict[short_selected_image_drive_node]['absolute_path'])
-                        cat_cmd_list = ["cat", gpt_corrected_sfdisk_path]
+                        corrected_sfdisk_path = self.do_sfdisk_corrections(self.image.sfdisk_dict_dict[short_selected_image_drive_node]['absolute_path'])
+                        cat_cmd_list = ["cat", corrected_sfdisk_path]
                         sfdisk_cmd_list = ["sfdisk", "-f", self.restore_destination_drive]
                         Utility.print_cli_friendly("sfdisk ", [cat_cmd_list, sfdisk_cmd_list])
                         self.proc['cat_sfdisk'] = subprocess.Popen(cat_cmd_list, stdout=subprocess.PIPE, env=env,
@@ -368,7 +368,7 @@ class RestoreManager:
                         else:
                             with self.summary_message_lock:
                                 self.summary_message += _("Successfully restored partition table.") + "\n"
-                            os.remove(gpt_corrected_sfdisk_path)
+                            os.remove(corrected_sfdisk_path)
 
                         # Sync drives / flush buffers to avoid "Device or resource busy"
                         process, flat_command_string, failed_message = Utility.run("Sync drives", ["sync"],
@@ -889,8 +889,8 @@ class RestoreManager:
                     GLib.idle_add(self.completed_restore, False, "Requested stop")
                     return
 
-                gpt_corrected_sfdisk_path = self.do_sfdisk_gpt_correctition(self.image.sfdisk_absolute_path)
-                cat_cmd_list = ["cat", gpt_corrected_sfdisk_path]
+                corrected_sfdisk_path = self.do_sfdisk_corrections(self.image.sfdisk_absolute_path)
+                cat_cmd_list = ["cat", corrected_sfdisk_path]
 
                 sfdisk_cmd_list = []
                 if self.image.image_format != "RESCUEZILLA_1.5_FORMAT":
@@ -1057,26 +1057,31 @@ class RestoreManager:
                     return
         GLib.idle_add(self.completed_restore, True, "")
 
-    def do_sfdisk_gpt_correctition(self, input_sfdisk_absolute_path):
-        # Delete the last-lba line to fix ensure secondary GPT gets written to the correct place even
-        # when destination disk differs in size [1].
-        # [1] https://sourceforge.net/p/clonezilla/bugs/342/
+    def do_sfdisk_corrections(self, input_sfdisk_absolute_path):
+        # Delete the last-lba line to fix ensure secondary GPT gets written to the correct place even when
+        # destination disk differs in size [1]. Also deletes the sector-size row to maximize compatibility with
+        # sfdisk backups made with util-linux-2.35.1-1 [2] (from eg more recent versions of Clonezilla) until
+        # Rescuezilla has updated util-linux.
         #
-        # TODO: Simplify the Python code below make this happen (which was based on based [2] [3]).
-        # [2] https://stackoverflow.com/a/17222971/4745097
-        # [3] https://stackoverflow.com/a/6587648/4745097
+        # [1] https://sourceforge.net/p/clonezilla/bugs/342/
+        # [2] https://github.com/karelzak/util-linux/issues/949
+        #
+        # TODO: Simplify the Python code below make this happen (which was based on based [3] [4]).
+        # [3] https://stackoverflow.com/a/17222971/4745097
+        # [4] https://stackoverflow.com/a/6587648/4745097
         temp_dir = tempfile.gettempdir()
-        gpt_corrected_sfdisk_path = os.path.join(temp_dir, 'secondary.gpt.corrected.sfdisk.sf')
+        corrected_sfdisk_path = os.path.join(temp_dir, 'secondary.gpt.sector.size.corrected.sfdisk.sf')
         shutil.copy2(input_sfdisk_absolute_path,
-                     gpt_corrected_sfdisk_path)
+                     corrected_sfdisk_path)
         # Fix the secondary GPT partition location if the destination disk is different to the source
-        matched = re.compile("^last-lba.*").search
-        with fileinput.FileInput(gpt_corrected_sfdisk_path, inplace=True) as file:
+        last_lba_matched = re.compile("^last-lba.*").search
+        sector_size_matched = re.compile("^sector-size.*").search
+        with fileinput.FileInput(corrected_sfdisk_path, inplace=True) as file:
             for line in file:
-                if not matched(line):
+                if not last_lba_matched(line) and not sector_size_matched(line):
                     # Write line to file
                     print(line, end='')
-        return gpt_corrected_sfdisk_path
+        return corrected_sfdisk_path
 
     def check_all_target_block_devices_exist(self):
         partition_table_message = ""
