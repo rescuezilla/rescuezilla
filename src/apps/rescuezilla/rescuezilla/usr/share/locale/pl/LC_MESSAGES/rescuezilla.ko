@@ -85,7 +85,7 @@ msgid "Description"
 msgstr "Opis"
 
 msgid "Drive {drive_number}, Partition {partition_number}"
-msgstr "Dysk {drive_numer},Partycja {partition_number}"
+msgstr "Dysk {drive_number},Partycja {partition_number}"
 
 msgid "Drive {drive_number}"
 msgstr "Dysk {drive_number}"
@@ -181,7 +181,7 @@ msgstr "Kliknij <b>Przeglądaj</b>, aby wybrać folder na dysku docelowym, w kt�
 "Folder, w którym zapisywana jest kopia zapasowa, to zazwyczaj opis komputera, np. <b>biuro1</b> lub <b>zack-laptop</b>."
 
 msgid "You must select a folder inside {location}"
-msgstr "Musisz wybrać folder wewnątrz {lokalizacja}"
+msgstr "Musisz wybrać folder wewnątrz {location}"
 
 msgid "Please select a different folder."
 msgstr "Proszę wybrać inny folder."
@@ -224,7 +224,7 @@ msgid "Backing up the following partition"
 msgstr "Tworzenie kopii zapasowej następującej partycji"
 
 msgid "The backup image will be written into folder {dest_dir} on {description}"
-msgstr "Kopia zapasowa obrazu zostanie zapisana w folderze {dest_dir} na {opisie}."
+msgstr "Kopia zapasowa obrazu zostanie zapisana w folderze {dest_dir} na {description}."
 
 msgid "Confirm the following backup configuration."
 msgstr "Potwierdzić następującą konfigurację kopii zapasowej."
@@ -242,7 +242,7 @@ msgid "Time Elapsed / Remaining: "
 msgstr "Czas, który upłynął / pozostałość: "
 
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
-msgstr "Kopia {partycja_name} zawierająca system plików {filesystem} do {destination}"
+msgstr "Kopia {partition_name} zawierająca system plików {filesystem} do {destination}"
 
 msgid "Summary of Backup"
 msgstr "Podsumowanie tworzenia kopii zapasowej"
@@ -281,7 +281,7 @@ msgid "Backup operation failed:"
 msgstr "Operacja backapu nie powiodła się:"
 
 msgid "Operation took {num_minutes} minutes."
-msgstr "Operacja trwała {num_minuty} minuty."
+msgstr "Operacja trwała {num_minutes} minuty."
 
 msgid "To start a new session, click <b>Next</b>"
 msgstr "Aby rozpocząć nową sesję, kliknij <b>Następny</b>"
@@ -386,7 +386,7 @@ msgid "Refreshing partition table"
 msgstr "Odświeżenie tabeli partycji"
 
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
-msgstr "Przywrócenie {opisu} do {destination_partition} ({destination_description})"
+msgstr "Przywrócenie {description} do {destination_partition} ({destination_description})"
 
 msgid "Restore cancelled by user."
 msgstr "Przywrócenie anulowane przez użytkownika."
@@ -404,7 +404,7 @@ msgid "Failed to refresh the devices' partition table. This can happen if anothe
 msgstr "Nie udało się odświeżyć tabeli partycji urządzeń. Może to nastąpić, jeśli inny proces ma dostęp do tabeli partycji"
 
 msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
-msgstr "Nie można przywrócić partycji {destination_partition}, ponieważ nie jest z nią powiązany żaden zapisany obraz: {opis}."
+msgstr "Nie można przywrócić partycji {destination_partition}, ponieważ nie jest z nią powiązany żaden zapisany obraz: {description}."
 
 msgid "This may occur if Clonezilla was originally unable to backup this partition."
 msgstr "Może to nastąpić, jeśli Clonezilla nie była w stanie wykonać kopii zapasowej tej partycji."
@@ -413,7 +413,7 @@ msgid "Error restoring partition {image_key} to {destination_partition}."
 msgstr "Błąd przywracania partycji {image_key} do {destination_partition}."
 
 msgid "Successfully restored image partition {image} to {destination_partition}"
-msgstr "Pomyślnie przywrócona partycja obrazu {obraz} do {przeznaczenie_partycji}."
+msgstr "Pomyślnie przywrócona partycja obrazu {image} do {destination_partition}."
 
 msgid "Summary of Restore"
 msgstr "Podsumowanie przywracania"
