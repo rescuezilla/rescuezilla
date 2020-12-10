@@ -27,7 +27,7 @@ class BlkidTest(unittest.TestCase):
         # to what is used by the Clonezilla format in the unit test below:
         #
         # --json provides data in JSON, which is trivially and reliably parsable in Python dict.
-        # --bytes provides the exact size in bytes (convertible to KiB/MiB/GiB/etc in using hurry.filesize library)
+        # --bytes provides the exact size in bytes
         # --paths provides absolute device node paths for 'kname' and 'name' fields, useful for device mapper nodes.
         input_lsblk_json_string = """{
        "blockdevices": [

@@ -28,7 +28,6 @@ import traceback
 from datetime import datetime
 
 import gi
-from hurry.filesize import size, alternative
 
 from image_explorer_manager import ImageExplorerManager
 from parser.blkid import Blkid
@@ -37,9 +36,6 @@ from parser.os_prober import OsProber
 from parser.parted import Parted
 from parser.sfdisk import Sfdisk
 from utility import PleaseWaitModalPopup, Utility, _, ErrorMessageModalPopup
-
-import gi
-
 from wizard_state import IMAGE_EXPLORER_DIR
 
 gi.require_version("Gtk", "3.0")
@@ -96,7 +92,7 @@ class DriveQuery:
 
                 flattened_partition_list = CombinedDriveState.flatten_partition_list(drive)
                 print("For key " + drive_key + ", flattened partition list is " + flattened_partition_list)
-                enduser_readable_capacity = size(int(drive['capacity']), system=alternative)
+                enduser_readable_capacity = Utility.human_readable_filesize(int(drive['capacity']))
                 self.drive_list_store.append([drive_key, human_friendly_drive_name, enduser_readable_capacity, drive['model'], flattened_partition_list])
                 index = index + 1
             except Exception as e:
@@ -157,7 +153,7 @@ class DriveQuery:
                         flattened_partition_description = CombinedDriveState.flatten_partition_description(self.drive_state, drive_key, partition_key)
                     if 'size' in self.drive_state[drive_key]['partitions'][partition_key].keys():
                         size_in_bytes = self.drive_state[drive_key]['partitions'][partition_key]['size']
-                        enduser_readable_size = size(int(size_in_bytes), system=alternative)
+                        enduser_readable_size = Utility.human_readable_filesize(int(size_in_bytes))
                     else:
                         enduser_readable_size = "unknown_size"
                     self.mount_partition_list_store.append([partition_key, human_friendly_partition_name, enduser_readable_size, flattened_partition_description])

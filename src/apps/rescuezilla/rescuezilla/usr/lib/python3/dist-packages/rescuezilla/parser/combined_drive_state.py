@@ -19,8 +19,6 @@
 import collections
 import copy
 
-from hurry.filesize import size, alternative
-
 from utility import Utility, _
 
 
@@ -188,7 +186,7 @@ class CombinedDriveState:
                     label = str(partition['label'])
                     flat_string += label + ", "
                 size_in_bytes = partition['size']
-                enduser_readable_size = size(int(size_in_bytes), system=alternative)
+                enduser_readable_size = Utility.human_readable_filesize(int(size_in_bytes))
                 flat_string += enduser_readable_size + ", "
                 fs = partition['filesystem']
                 if fs != "":
@@ -238,7 +236,7 @@ class CombinedDriveState:
         flat_string = ""
         if 'size' in part_dict.keys():
             size_in_bytes = part_dict['size']
-            enduser_readable_size = size(int(size_in_bytes), system=alternative)
+            enduser_readable_size = Utility.human_readable_filesize(int(size_in_bytes))
             flat_string += enduser_readable_size + " "
         if 'filesystem' in part_dict.keys():
             flat_string += part_dict['filesystem'] + " "

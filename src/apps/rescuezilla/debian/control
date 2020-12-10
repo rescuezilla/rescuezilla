@@ -10,7 +10,7 @@ Vcs-Git: https://github.com/rescuezilla/rescuezilla.git
 
 Package: rescuezilla
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, smbclient, fsarchiver, partclone, pv, pigz, nmap, os-prober, gvfs, cifs-utils, smbclient, fsarchiver, file, libnotify-bin, lshw, pciutils, yad, hdparm, pbzip2, lzop, pixz, plzip, lrzip, zstd, archivemount, nbd-server, nbd-client, python3-hurry.filesize, python3-whichcraft, python3-babel
+Depends: ${shlibs:Depends}, ${misc:Depends}, smbclient, fsarchiver, partclone, pv, pigz, nmap, os-prober, gvfs, cifs-utils, smbclient, fsarchiver, file, libnotify-bin, lshw, pciutils, yad, hdparm, pbzip2, lzop, pixz, plzip, lrzip, zstd, archivemount, nbd-server, nbd-client, python3-whichcraft, python3-babel
 Recommends: partimage, ecryptfs-utils
 Description: Graphical hard drive backup and restore
  Rescuezilla is an extremely easy-to-use graphical environment for hard drive
