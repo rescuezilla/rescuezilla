@@ -1065,7 +1065,7 @@ class RestoreManager:
             for line in file:
                 if not matched(line):
                     # Write line to file
-                    print(line)
+                    print(line, end='')
         return gpt_corrected_sfdisk_path
 
     def check_all_target_block_devices_exist(self):
