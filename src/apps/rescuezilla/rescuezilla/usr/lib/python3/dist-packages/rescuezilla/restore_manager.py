@@ -356,14 +356,14 @@ class RestoreManager:
                         self.proc['cat_sfdisk'] = subprocess.Popen(cat_cmd_list, stdout=subprocess.PIPE, env=env,
                                                                    encoding='utf-8')
                         self.proc['sfdisk'] = subprocess.Popen(sfdisk_cmd_list, stdin=self.proc['cat_sfdisk'].stdout,
-                                                               stdout=subprocess.PIPE, env=env, encoding='utf-8')
+                                                               stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env=env, encoding='utf-8')
                         self.proc['cat_sfdisk'].stdout.close()  # Allow p1 to receive a SIGPIPE if p2 exits.
                         output, err = self.proc['sfdisk'].communicate()
                         rc = self.proc['sfdisk'].returncode
-                        self.logger.write("sfdisk Exit output " + str(rc) + ": " + str(output) + "stderr " + str(err))
+                        self.logger.write("sfdisk Exit output " + str(rc) + ": " + str(output))
                         if self.proc['sfdisk'].returncode != 0:
-                            self.logger.write("error restoring sfdisk: " + str(err))
-                            GLib.idle_add(self.completed_restore, False, "Error restoring sfdisk: " + str(err))
+                            self.logger.write("Error restoring sfdisk: " + str(output))
+                            GLib.idle_add(self.completed_restore, False, "Error restoring sfdisk: " + str(output))
                             return
                         else:
                             with self.summary_message_lock:
@@ -919,11 +919,21 @@ class RestoreManager:
                 self.proc['cat_sfdisk'] = subprocess.Popen(cat_cmd_list, stdout=subprocess.PIPE, env=env,
                                                            encoding='utf-8')
                 self.proc['sfdisk'] = subprocess.Popen(sfdisk_cmd_list, stdin=self.proc['cat_sfdisk'].stdout,
-                                                       stdout=subprocess.PIPE, env=env, encoding='utf-8')
+                                                       stdout=subprocess.PIPE,  stderr=subprocess.STDOUT, env=env, encoding='utf-8')
                 self.proc['cat_sfdisk'].stdout.close()  # Allow p1 to receive a SIGPIPE if p2 exits.
                 output, err = self.proc['sfdisk'].communicate()
                 rc = self.proc['sfdisk'].returncode
-                self.logger.write("sfdisk Exit output " + str(rc) + ": " + str(output) + "stderr " + str(err))
+                self.logger.write("sfdisk Exit output " + str(rc) + ": " + str(output))
+                if self.proc['sfdisk'].returncode != 0:
+                    # Failed sfdisk restore not considered fatal to maximizing compatibility with louvetch's images
+                    # https://github.com/rescuezilla/rescuezilla/wiki/Bugs-in-unofficial-Redo-Backup-updates#bugs-in-louvetchs-ubuntu-1604-releases
+                    self.logger.write("Error restoring sfdisk: " + str(output))
+                    GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, "Error restoring sfdisk " + str(output))
+                    with self.summary_message_lock:
+                        self.summary_message += _("Error restoring sfdisk partition table (see log).") + "\n"
+                else:
+                    with self.summary_message_lock:
+                        self.summary_message += _("Successfully restored partition table.") + "\n"
 
                 if not self.update_kernel_partition_table(wait_for_partition=False):
                     GLib.idle_add(self.completed_restore, False,
