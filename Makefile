@@ -1,15 +1,15 @@
-.DEFAULT_GOAL := amd64
-.PHONY: all amd64 groovy i386 deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-utils partclone-nbd clean-build-dir clean clean-all
+.DEFAULT_GOAL := focal
+.PHONY: all focal groovy i386 deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-utils partclone-nbd clean-build-dir clean clean-all
 
-all: amd64 groovy i386
+all: focal groovy i386
 
 buildscripts = build.sh chroot.steps.part.1.sh chroot.steps.part.2.sh
 
 # ISO image based on Ubuntu 20.04 Focal LTS (Long Term Support) 64bit
-amd64: ARCH=amd64
-amd64: CODENAME=focal
+focal: ARCH=amd64
+focal: CODENAME=focal
 export ARCH CODENAME
-amd64: deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-utils partclone-nbd $(buildscripts)
+focal: deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-utils partclone-nbd $(buildscripts)
 	./build.sh
 
 # ISO image based on Ubuntu 20.10 Groovy 64bit as a temporary measure to provide a newer Linux kernel for better support for
