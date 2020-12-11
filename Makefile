@@ -1,7 +1,14 @@
 .DEFAULT_GOAL := focal
 .PHONY: all focal groovy i386 deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-utils partclone-nbd clean-build-dir clean clean-all
 
-all: focal groovy i386
+# FIXME: Properly specify the build artifacts to allow the GNU make to actually be smart about what gets built and when.
+# FIXME: This lack of specifying dependency graph means requires eg, `make focal` and `make groovy` has to be done as separate invocations
+#        and things get recompiled when they don't need to be etc.
+# TODO:  Read the GNU make manual: https://www.gnu.org/software/make/manual/html_node/index.html and update this Makefile accordingly.
+#
+# FIXME: Somewhat related -- Improve build environment's ability to compile software (https://github.com/rescuezilla/rescuezilla/issues/150)
+
+all: focal
 
 buildscripts = build.sh chroot.steps.part.1.sh chroot.steps.part.2.sh
 
