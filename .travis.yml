@@ -39,28 +39,30 @@ script:
 - git reset --hard HEAD
   # List any working directory files to help debug any unclean working directory issues
 - docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make status
-  # Execute the Makefile's install target within the docker container. This step
+  # Execute the Makefile's groovy target within the docker container. This step
   # may take some time. Hundreds of megabytes of packages are downloaded from the
   # Ubuntu mirror during a build.
-- docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make amd64
+- docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make groovy
   # List any working directory files to help debug any unclean working directory issues
 - docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make status
+  # Build focal target
+- docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make focal
   # List any working directory files to help debug any unclean working directory issues
 - docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make status
 
 # When a new tag is pushed, upload the ISO image as a draft release on GitHub
 
 before_deploy:
-  - sudo mv build/rescuezilla.amd64.focal.iso build/rescuezilla-$TRAVIS_TAG-64bit.iso
+  - sudo mv build/rescuezilla.amd64.focal.iso build/rescuezilla-$TRAVIS_TAG-64bit.focal.iso
   - sudo mv build/rescuezilla.amd64.groovy.iso build/rescuezilla-$TRAVIS_TAG-64bit.groovy.iso
 
 deploy:
   provider: releases
   token: $GITHUB_TOKEN
   file:
-    - build/rescuezilla-$TRAVIS_TAG-64bit.iso
-    - build/rescuezilla-$TRAVIS_TAG-64bit.groovy.iso
-    - build/rescuezilla_$TRAVIS_TAG_all.deb
+    - build/rescuezilla-${TRAVIS_TAG}-64bit.focal.iso
+    - build/rescuezilla-${TRAVIS_TAG}-64bit.groovy.iso
+    - build/rescuezilla_${TRAVIS_TAG}_all.deb
   draft: true
   cleanup: false
   on:
