@@ -19,6 +19,7 @@
 import collections
 import os
 import subprocess
+import threading
 import traceback
 from datetime import datetime
 
@@ -121,6 +122,8 @@ class Handler:
                                                                 Mode.RESTORE: "source_mount_partition_selection_treeselection",
                                                                 Mode.VERIFY: "verify_mount_partition_selection_treeselection",
                                                                 Mode.IMAGE_EXPLORER: "image_explorer_mount_partition_selection_treeselection"}
+        self.requested_shutdown_lock = threading.Lock()
+        self.requested_shutdown = False
 
     # Suggest the user read the frequently asked questions, then potentially proceed to the support forum.
     def set_support_information_linkbutton_visible(self, is_visible):
@@ -658,6 +661,8 @@ class Handler:
 
     def _cancel_current_operations(self, is_affirmative):
         if is_affirmative:
+            with self.requested_shutdown_lock:
+                self.requested_shutdown = True
             print("Cancelling current operations.")
             if self.image_folder_query.is_image_folder_query_in_progress():
                 self.image_folder_query.cancel_image_folder_query()
@@ -673,7 +678,11 @@ class Handler:
     # Main window receives close signal
     def main_window_delete_event(self, widget, event):
         print("Received Rescuezilla shutdown request")
-        if self.backup_manager.is_backup_in_progress() or self.restore_manager.is_restore_in_progress():
+        has_already_requested_shutdown = False
+        with self.requested_shutdown_lock:
+            has_already_requested_shutdown = self.requested_shutdown
+
+        if not has_already_requested_shutdown and (self.backup_manager.is_backup_in_progress() or self.restore_manager.is_restore_in_progress()):
             print("An operation is in progress. Do you wish to cancel?")
             AreYouSureModalPopup(self.builder, "An operation is in progress. Do you wish to cancel?",
                                  self._cancel_current_operations)
