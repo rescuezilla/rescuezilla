@@ -108,6 +108,7 @@ class BackupManager:
         self.proc.clear()
         self.summary_message_lock = threading.Lock()
         self.summary_message = ""
+        self.logger = None
 
         env = Utility.get_env_C_locale()
 
@@ -839,33 +840,41 @@ class BackupManager:
         # It doesn't seem that useful, but because Clonezilla does this, Rescuezilla does this too.
         clonezilla_img_filepath = os.path.join(self.dest_dir, "clonezilla-img")
         info_img_id_filepath = os.path.join(self.dest_dir, "Info-img-id.txt")
-        self.logger.write("Closing the logfile " + clonezilla_img_filepath + " and generating a tag file for this image: " + info_img_id_filepath)
-        self.logger.close()
-        process, flat_command_string, failed_message = Utility.run("Checksumming clonezilla-img file", ["sha512sum", clonezilla_img_filepath], use_c_locale=True, output_filepath=None, logger=None)
-        if process.returncode != 0:
-            GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, failed_message)
-        else:
-            sha512sum_output = process.stdout
-            split = sha512sum_output.split("  ")
-            if len(split) == 2:
-                with open(info_img_id_filepath, 'w') as filehandle:
-                    filehandle.write("# This checksum is only for identifying the image. Created by the command: sha512sum clonezilla-img\n")
-                    filehandle.write('IMG_ID=%s' % split[0])
-                    filehandle.flush()
+        if self.logger is not None:
+            self.logger.write("Closing the logfile " + clonezilla_img_filepath + " and generating a tag file for this image: " + info_img_id_filepath)
+            self.logger.close()
+        if os.path.isfile(clonezilla_img_filepath):
+            process, flat_command_string, failed_message = Utility.run("Checksumming clonezilla-img file", ["sha512sum", clonezilla_img_filepath], use_c_locale=True, output_filepath=None, logger=None)
+            if process.returncode != 0:
+                GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, failed_message)
             else:
-                GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, "Failed to output checksum file Info-img-id.txt: " + process.stdout + "\n\n" + process.stderr)
+                sha512sum_output = process.stdout
+                split = sha512sum_output.split("  ")
+                if len(split) == 2:
+                    with open(info_img_id_filepath, 'w') as filehandle:
+                        filehandle.write("# This checksum is only for identifying the image. Created by the command: sha512sum clonezilla-img\n")
+                        filehandle.write('IMG_ID=%s' % split[0])
+                        filehandle.flush()
+                else:
+                    GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, "Failed to output checksum file Info-img-id.txt: " + process.stdout + "\n\n" + process.stderr)
 
         self.backup_in_progress = False
         is_unmounted, umount_message = Utility.umount_warn_on_busy("/mnt/backup", is_lazy_umount=True)
         if not is_unmounted:
-            self.logger.write(umount_message)
+            if self.logger is not None:
+                self.logger.write(umount_message)
+            else:
+                print(umount_message)
             with self.summary_message_lock:
                 self.summary_message += umount_message + "\n"
         self.completed_backup_callback(succeeded)
 
     def populate_summary_page(self):
         with self.summary_message_lock:
-            self.logger.write("Populating summary page with:\n\n" + self.summary_message)
+            if self.logger is not None:
+                self.logger.write("Populating summary page with:\n\n" + self.summary_message)
+            else:
+                print(self.summary_message)
             text_to_display = """<b>{heading}</b>
 
 {message}""".format(heading=_("Backup Summary"), message=GObject.markup_escape_text(self.summary_message))
