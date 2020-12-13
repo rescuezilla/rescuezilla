@@ -1,0 +1,428 @@
+# Italian translation of Rescuezilla
+# Copyright (C) 2020
+# This file is distributed under the same license as the PACKAGE package.
+# AlexTux87
+# Submitted at: https://github.com/rescuezilla/rescuezilla/issues/154
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-10-25 20:36+1030\n"
+"PO-Revision-Date: 2020-12-12 00:00+0000\n"
+"Last-Translator: AlexTux87\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Welcome"
+msgstr "Benvenuto"
+
+msgid "Select an Option"
+msgstr "Selezionare un opzione"
+
+msgid "Easily create a backup image of your computer, or completely restore from one.  Click an option to begin:"
+msgstr "Crea facilmente un'immagine di backup del tuo computer, o effettua da un'immagine il ripristino completo. Fai click su un'opzione per iniziare:"
+
+msgid "Backup"
+msgstr "Backup"
+
+msgid "Restore"
+msgstr "Ripristino"
+
+msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
+msgstr "Serve aiuto? Parti dal controllare le domande frequenti su\nRescuezilla, poi procedi sul forum di Rescuezilla."
+
+msgid "Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed."
+msgstr "Considera di contribuire con $1/mese sul sito di crowdfunding\nPatreon così che Rescuezilla possa continuare ad essere sviluppato."
+
+msgid "Back"
+msgstr "Indietro"
+
+msgid "Next >"
+msgstr "Avanti >"
+
+msgid "Please wait..."
+msgstr "Per favore attendi..."
+
+msgid "Identifying disk drives..." 
+msgstr "Identificazione delle unità disco..."
+
+msgid "Step 1: Select Drive To Backup"
+msgstr "Fase 1: Seleziona l'unità di cui eseguire il backup"
+
+msgid "Select the source drive that you would like to create a backup image from."
+msgstr "Seleziona l'unità di origine da cui desideri creare un'immagine di backup."
+
+msgid "Drive"
+msgstr "Unità"
+
+msgid "Capacity"
+msgstr "Capacità"
+
+msgid "Drive Model"
+msgstr "Tipo di unità"
+
+msgid "Partitions"
+msgstr "Partizioni"
+
+msgid "Show hidden devices (for advanced users)"
+msgstr "Mostra dispositivi nascosti (per utenti esperti)"
+
+msgid "Step 2: Select Partitions to Save"
+msgstr "Fase 2: Seleziona le partizioni da salvare"
+
+msgid "Select which partitions to create a backup of.  Leave all partitions selected if you are unsure."
+msgstr "Seleziona le partizioni di cui creare un backup. Lascia tutte le partizioni selezionate se non sei sicuro."
+
+msgid "Save"
+msgstr "Salva"
+
+msgid "Description"
+msgstr "Descrizione"
+
+msgid "Drive {drive_number}, Partition {partition_number}"
+msgstr "Unità {drive_number}, partizione {partition_number}"
+
+msgid "Drive {drive_number}"
+msgstr "Unità {drive_number}"
+
+msgid "Step 3: Select Destination Drive"
+msgstr "Fase 3: Seleziona l'unità di destinazione"
+
+msgid "Click on the box below to select the source drive that you would like to create a backup image from."
+msgstr "Fare clic sulla casella sottostante per selezionare l'unità di origine da cui si desidera creare un'immagine di backup."
+
+msgid "Connected directly to my computer"
+msgstr "Collegato direttamente al mio computer"
+
+msgid "Shared over a network"
+msgstr "Condiviso su una rete"
+
+msgid "Where is the destination drive?"
+msgstr "Dov'è l'unità di destinazione?"
+
+msgid "SMB/CIFS shared folder specified below"
+msgstr "SMB/CIFS cartella condivisa specificata di seguito"
+
+msgid "Search network"
+msgstr "Ricerca della rete"
+
+msgid "Server or share location:"
+msgstr "Server o posizione condivisa:"
+
+msgid "Username (Optional):"
+msgstr "Nome utente (Facoltativo):"
+
+msgid "Password (Optional):"
+msgstr "Password (Facoltativo):"
+
+msgid "Domain (Optional):"
+msgstr "Dominio (Facoltativo):"
+
+msgid "Version (Optional):"
+msgstr "Versione (Facoltativo):"
+
+msgid "Select network-shared storage location:"
+msgstr "Seleziona la posizione di archiviazione condivisa in rete: "
+
+msgid "Select destination drive:"
+msgstr "Seleziona unità di destinazione:"
+
+msgid "Partition"
+msgstr "Partizione"
+
+msgid "Mounting..."
+msgstr "Montando..."
+
+msgid "Please ensure the username, password and other fields provided are correct, and try again."
+msgstr "Assicurati che il nome utente, la password e gli altri campi forniti siano corretti e riprova."
+
+msgid "Scanning folder for backup images..."
+msgstr "Scansione cartella per immagini di backup ..."
+
+msgid "Error processing the following images:"
+msgstr "Errore durante l'elaborazione delle seguenti immagini:"
+
+msgid "Unable to fully process the image associated with the following partitions:"
+msgstr "Impossibile elaborare completamente l'immagine associata alle seguenti partizioni:"
+
+msgid "Unable to fully process the following image:"
+msgstr "Impossibile elaborare completamente la seguente immagine:"
+
+msgid "This can happen when loading images which Clonezilla was unable to completely backup. Any other filesystems within the image should be restorable as normal."
+msgstr "Ciò può accadere durante il caricamento di immagini di cui Clonezilla non è stato in grado di eseguire il backup completo. Qualsiasi altro filesystem all'interno dell'immagine dovrebbe essere ripristinabile normalmente."
+
+msgid "Needs decryption"
+msgstr "Necessita di decrittazione"
+
+msgid "Unknown filesystem"
+msgstr "Filesystem sconosciuto"
+
+# No need to translate this message into your language -- it's only relevant for an old unofficial French version.
+msgid "The backup's extended partition information is empty or missing. This happens with incomplete backups created by an unofficial Redo Backup update. If the backup contains extended partitions, these will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore the extended partitions. Please consult {url} for information and assistance. The destination drive has not yet been modified. Do you wish to continue with the restore?"
+msgstr ""
+
+# No need to translate this message into your language -- it's only relevant for an old unofficial German version.
+msgid "The backup's bootloader data is shorter than expected. This happens with backups created by an unofficial Redo Backup update. If the backup contained certain bootloaders like GRUB, the restored hard drive will not boot correctly without a manual fix. All data is still fully recoverable but manual intervention may required to restore the bootloader. Please consult {url} for information and assistance. The destination drive has not yet been modified. Do you wish to continue with the restore?"
+msgstr "Die Bootloader-Daten des Backups sind weniger als erwartet. Dies kommt bei Sicherungen vor, die durch ein inoffizielles Redo-Backup-Update erstellt wurden. Wenn das Backup bestimmte Bootloader wie GRUB enthielt, lässt sich die wiederhergestellte Festplatte ohne manuelle Fehlerbehebung nicht ordnungsgemäß starten. Alle Daten können vollständig wiederhergestellt werden, womöglich ist jedoch ein manueller Eingriff erforderlich, um den Bootloader wiederherzustellen. Informationen und Unterstützung erhalten Sie unter %1 Das Ziellaufwerk wurde noch nicht geändert. Möchten Sie mit der Wiederherstellung fortfahren?"
+
+msgid "Step 4: Select Destination Folder"
+msgstr "Fase 4: Seleziona la cartella di destinazione"
+
+msgid "Click <b>Browse</b> to select the folder on the destination drive where your new backup image will be saved.\n"
+"\n"
+"The folder a backup is saved in is usually a description of the computer, e.g. <b>office1</b> or <b>zack-laptop</b>."
+msgstr "Fare clic su <b>Sfoglia</b> per selezionare la cartella nell'unità di destinazione in cui verrà salvata la nuova immagine di backup.\n"
+"\n"
+"La cartella in cui viene salvato un backup è solitamente una descrizione del computer, ad es. <b>office1</b> o <b>zack-laptop</b>."
+
+msgid "You must select a folder inside {location}"
+msgstr "Devi selezionare una cartella contenuta in {location}"
+
+msgid "Please select a different folder."
+msgstr "Per favore seleziona una cartella differente."
+
+msgid "The table below lists the backup images that already in this folder (if any)."
+msgstr "La tabella seguente elenca le immagini di backup già presenti in questa cartella (se presenti)."
+
+msgid "Browse..."
+msgstr "Naviga..."
+
+msgid "Filename"
+msgstr "Nome del file"
+
+msgid "Size"
+msgstr "Dimensione"
+
+msgid "Last modified"
+msgstr "Ultima modifica"
+
+msgid "When you are happy with the destination folder, click <b>Next</b>."
+msgstr "Quando sei soddisfatto della cartella di destinazione, fai clic su <b>Avanti</b>."
+
+msgid "Step 5: Name Your Backup"
+msgstr "Fase 5: Dai un nome al tuo backup"
+
+msgid "Provide a unique name for this backup image, such as the date.  Today's date is automatically entered for you below.\n"
+"\n"
+"You may only use letters, numbers, and dashes in your backup name."
+msgstr "Fornisci un nome univoco per questa immagine di backup, ad esempio la data. La data odierna viene inserita automaticamente di seguito.\n"
+"\n"
+"Puoi utilizzare solo lettere, numeri e trattini nel nome del backup."
+
+msgid "Step 6: Confirm Backup Configuration"
+msgstr "Fase 6: Conferma le configurazioni del backup"
+
+msgid "Source drive"
+msgstr "Unità di origine"
+
+msgid "Backing up the following partition"
+msgstr "Backup della seguente partizione"
+
+msgid "The backup image will be written into folder {dest_dir} on {description}"
+msgstr "L'immagine di backup verrà scritta nella cartella {dest_dir} su {description}."
+
+msgid "Confirm the following backup configuration."
+msgstr "Conferma la seguente configurazione di backup."
+
+msgid "To start the backup, click <b>Next</b>."
+msgstr "Per avviare il backup, fai click su <b>Avanti</b>."
+
+msgid "Step 7: Creating Backup Image"
+msgstr "Fase 7: Creazione dell'immagine di backup"
+
+msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
+msgstr "Backup del sistema nella posizione selezionata. Questa operazione potrebbe richiedere un'ora o più a seconda della velocità del computer e della quantità di dati."
+
+msgid "Time Elapsed / Remaining: "
+msgstr "Tempo trascorso / rimanente: "
+
+msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
+msgstr "Backup {partition_name} contenente il filesystem {filesystem} su {destination}"
+
+msgid "Summary of Backup"
+msgstr "Riepilogo del backup"
+
+msgid "Confirm the backup summary."
+msgstr "Conferma il riepilogo del backup."
+
+msgid "Backup Summary"
+msgstr "Riepilogo del backup"
+
+msgid "Backup cancelled by user."
+msgstr "Backup cancellato dall'utente."
+
+msgid "Error creating backup: "
+msgstr "Errore nella creazione del backup:"
+
+msgid "Failed to write destination file. Please confirm it is valid to create the provided file path, and try again."
+msgstr "Impossibile scrivere il file di destinazione. Conferma che è valido per creare il percorso file fornito e riprova."
+
+msgid "Successful backup of swap partition {partition_name}"
+msgstr "Backup riuscito della partizione di swap {partition_name}"
+
+msgid "<b>Failed to backup partition</b> {partition_name}"
+msgstr "<b>Impossibile eseguire il backup della partizione</b> {partition_name}"
+
+msgid "Successful backup of partition {partition_name}"
+msgstr "Backup riuscito della partizione {partition_name}"
+
+msgid "Backup saved successfully."
+msgstr "Backup salvato con successo."
+
+msgid "Backup succeeded with some errors:"
+msgstr "Il backup è riuscito con alcuni errori:"
+
+msgid "Backup operation failed:"
+msgstr "Operazione di backup non riuscita:"
+
+msgid "Operation took {num_minutes} minutes."
+msgstr "L'operazione ha richiesto {num_minutes} minuti."
+
+msgid "To start a new session, click <b>Next</b>"
+msgstr "Per avviare una nuova sessione, fare clic su <b>Avanti</b>"
+
+msgid "Step 1: Select Image Location"
+msgstr "Fase 1: Seleziona Posizione immagine"
+
+msgid "Where is the source drive?"
+msgstr "Dov'è l'unità di origine?"
+
+msgid "Select source drive:"
+msgstr "Seleziona unità di origine:"
+
+msgid "Step 2: Select Backup Image"
+msgstr "Fase 2: Seleziona Immagine di backup"
+
+msgid "Click the box below to select the folder containing image files."
+msgstr "Fare clic sulla casella sottostante per selezionare la cartella contenente i file di immagine."
+
+msgid "Select the image file to restore"
+msgstr "Seleziona il file immagine da ripristinare"
+
+msgid "Date created"
+msgstr "Data di creazione"
+
+msgid "Step 3: Select Drive To Restore"
+msgstr "Fase 3: Seleziona l'unità da ripristinare"
+
+msgid "Select the destination drive you wish to overwrite and restore the selected image to."
+msgstr "Selezionare l'unità di destinazione in cui si desidera sovrascrivere e ripristinare l'immagine selezionata."
+
+msgid "Step 4: Select Partitions To Restore"
+msgstr "Fase 4: Seleziona Partizioni da ripristinare"
+
+msgid "Select which partitions from the backup to restore, and whether to overwrite the partition table. Leave everything selected to completely restore the destination drive."
+msgstr "Selezionare le partizioni del backup da ripristinare e se sovrascrivere la tabella delle partizioni. Lascia tutto selezionato per ripristinare completamente l'unità di destinazione."
+
+msgid "Selected image"
+msgstr "Immagine selezionata"
+
+msgid "Destination device"
+msgstr "Dispositivo di destinazione"
+
+msgid "IMPORTANT: Only selecting FIRST disk in Clonezilla image containing MULTIPLE DISKS."
+msgstr "IMPORTANTE: selezionando solo il PRIMO disco nell'immagine Clonezilla contenente MULTIPLI DISCHI."
+
+msgid "Destination partition"
+msgstr "Partizione di destinazione"
+
+msgid "Overwrite partition table"
+msgstr "Sovrascrivi la tabella delle partizioni"
+
+msgid "You will be overwriting the partition table."
+msgstr "Dovrai sovrascrivere la tabella delle partizioni."
+
+msgid "The \"destination partition\" column has been updated using the information stored within the backup image.\n\n<b>If partitions have been resized, new partitions added, or additional operating systems installed <i>since the backup image was created</i>, then the destination drive's partition table will not match the backup image, and overwriting the destination drive's partition table will render these resized and additional partitions permanently inaccessible.</b> If you have not modified the partition table in such a way since creating this backup then overwriting the partition table is completely safe and will have no negative effects."
+msgstr "La colonna \"partizione di destinazione\" è stata aggiornata utilizzando le informazioni archiviate nell'immagine di backup.\n\n<b>Se le partizioni sono state ridimensionate, sono state aggiunte nuove partizioni o sono stati installati sistemi operativi aggiuntivi <i>da quando l'immagine di backup è stata creato</i>, la tabella delle partizioni dell'unità di destinazione non corrisponderà all'immagine di backup e la sovrascrittura della tabella delle partizioni dell'unità di destinazione renderà queste partizioni ridimensionate e aggiuntive permanentemente inaccessibili.</b> Se non hai modificato la tabella delle partizioni in tale modo dalla creazione di questo backup, allora sovrascrivere la tabella delle partizioni è completamente sicuro e non avrà effetti negativi."
+
+msgid "You will <b>not</b> be overwriting the partition table."
+msgstr "<b>Non</b> sovrascriverete la tabella delle partizioni."
+
+msgid "The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table."
+msgstr "La colonna \"partizione di destinazione\" è stata aggiornata con le informazioni sulla tabella delle partizioni esistenti dell'unità di destinazione.\n\n <b>La colonna della partizione di destinazione può essere modificata come menù a discesa. Una mappatura errata delle partizioni di destinazione potrebbe causare il mancato avvio dei sistemi operativi.</b> Se non sei sicuro della mappatura, valuta se è più adatto invece sovrascrivere la tabella delle partizioni."
+
+msgid "No destination partition selected. Use the destination partition drop-down menu to select the destination"
+msgstr "Nessuna partizione di destinazione selezionata. Utilizzare il menù a discesa della partizione di destinazione per selezionare la destinazione"
+
+msgid "Step 5: Confirm Restore Configuration"
+msgstr "Fase 5: Conferma la configurazione di ripristino"
+
+msgid "Confirm the restore configuration."
+msgstr "Conferma la configurazione di ripristino."
+
+msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite the data on this drive!"
+msgstr "Sei sicuro di voler ripristinare il backup su {destination_drive}? In questo modo verranno sovrascritti in modo permanente i dati su questa unità!"
+
+msgid "Source image"
+msgstr "Immagine di origine"
+
+msgid "Destination drive"
+msgstr "Unità di destinazione"
+
+msgid "Restoring the following partitions"
+msgstr "Ripristino delle seguenti partizioni"
+
+msgid "WILL BE OVERWRITING PARTITION TABLE"
+msgstr "SARÀ SOVRASCRITTA LA TABELLA DELLE PARTIZIONI"
+
+msgid "Will <b>NOT</b> be overwriting partition table"
+msgstr "<b>NON</b> sovrascriverà la tabella delle partizioni"
+
+msgid "To start the restore, click <b>Next</b>."
+msgstr "Per avviare il ripristino, fare clic su <b>Avanti</b>."
+
+msgid "Restoring From Backup"
+msgstr "Ripristino da backup"
+
+msgid "Restoring your system from the image you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
+msgstr "Ripristino del sistema dall'immagine selezionata. Questa operazione potrebbe richiedere un'ora o più a seconda della velocità del computer e della quantità di dati."
+
+msgid "Refreshing partition table"
+msgstr "Aggiornamento della tabella delle partizioni"
+
+msgid "Restoring {description} to {destination_partition} ({destination_description})"
+msgstr "Ripristino di {description} in {destination_partition} ({destination_description})"
+
+msgid "Restore cancelled by user."
+msgstr "Ripristino annullato dall'utente."
+
+msgid "Error restoring image: "
+msgstr "Errore durante il ripristino dell'immagine:"
+
+msgid "Could not restore sfdisk partition table as file has zero length: "
+msgstr "Impossibile ripristinare la tabella delle partizioni sfdisk poiché il file ha lunghezza zero:"
+
+msgid "Successfully restored partition table."
+msgstr "Tabella delle partizioni ripristinata con successo."
+
+msgid "Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."
+msgstr "Impossibile aggiornare la tabella delle partizioni dei dispositivi. Ciò può accadere se un altro processo accede alla tabella delle partizioni."
+
+msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
+msgstr "Impossibile ripristinare la partizione {destination_partition} perché non sono presenti immagini salvate associate a: {description}."
+
+msgid "This may occur if Clonezilla was originally unable to backup this partition."
+msgstr "Ciò può verificarsi se Clonezilla originariamente non era in grado di eseguire il backup di questa partizione."
+
+msgid "Error restoring partition {image_key} to {destination_partition}."
+msgstr "Errore durante il ripristino della partizione {image_key} su {destination_partition}."
+
+msgid "Successfully restored image partition {image} to {destination_partition}"
+msgstr "Partizione dell'immagine ripristinata correttamente {image} su {destination_partition}"
+
+msgid "Summary of Restore"
+msgstr "Riepilogo del ripristino"
+
+msgid "Restore Summary"
+msgstr "Riepilogo del ripristino"
+
+msgid "Confirm the restore summary."
+msgstr "Conferma il riepilogo del ripristino."
+
+msgid "Backup restored successfully."
+msgstr "Backup ripristinato con successo." 
