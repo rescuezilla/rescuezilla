@@ -1,4 +1,15 @@
 -------------------------------------------------------------------------------
+  Version 2.1.1 (2020-12-14) 
+-------------------------------------------------------------------------------
+
+* Fixed restore of dual-boot GRUB bootloader on MBR systems after v2.0 regression bug (#155)
+* Fixed error message display when partclone backup fails (#122)
+* Skipped making second backup of Extended Boot Record using partclone to better match Clonezilla
+* Removed partclone images on backup failure to better match Clonezilla's behavior
+* Added "Are You Sure" prompt to Image Explorer (beta) so users understand the limitations
+* Added Italian/Italiano (it-IT) translation by AlexTux87  (Grazie!) (#154) 
+
+-------------------------------------------------------------------------------
   Version 2.1 (2020-12-12) 
 -------------------------------------------------------------------------------
 
