@@ -875,7 +875,15 @@ class Handler:
     def row_activated_partition_selected(self, treeview, path, view_column):
         self.mount_partition(button=None)
 
+    # Called via AreYouSure prompt
+    def _mount_partition_confirmation_callback(self, is_affirmative):
+        if is_affirmative:
+            list_store, iter = self.get_row("image_explorer_image_partition_treeselection")
+            selected_partition_key = list_store.get(iter, 0)[0]
+            self.image_explorer_manager.mount_partition(selected_partition_key)
+
     def mount_partition(self, button):
-        list_store, iter = self.get_row("image_explorer_image_partition_treeselection")
-        selected_partition_key = list_store.get(iter, 0)[0]
-        self.image_explorer_manager.mount_partition(selected_partition_key)
+        AreYouSureModalPopup(self.builder,
+                             _(
+                                 "Reminder: Mounting large gzipped-compressed images WILL be UNUSABLY slow.\n\ngzip-compression is the standard format used by Clonezilla and Rescuezilla. If Rescuezilla doesn't cleanly unmount the image being explored a reboot may be required.\n\nIf you want a good experience with this BETA feature, it is highly recommeded users try images WITHOUT COMPRESSION (created by Clonezilla's Expert Mode).\n\nAre you sure you want to continue?"),
+                             self._mount_partition_confirmation_callback)
