@@ -17,6 +17,7 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
 import collections
+import glob
 import os
 import shutil
 import subprocess
@@ -722,6 +723,15 @@ class BackupManager:
                 # TODO: Try to backup again, but using partclone.dd
                 GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
                               partition_summary + extra_info)
+                # Delete failed partclone files
+                failed_partclone_img_path_list = glob.glob(filepath + "*")
+                for file_path in failed_partclone_img_path_list:
+                    try:
+                        os.remove(file_path)
+                    except OSError:
+                        self.logger.write("Unable to remove: " + file_path)
+                        with self.summary_message_lock:
+                            self.summary_message += "Unable to remove: " + file_path
 
             else:
                 with self.summary_message_lock:
