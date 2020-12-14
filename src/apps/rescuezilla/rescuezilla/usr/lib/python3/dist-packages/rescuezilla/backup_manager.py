@@ -663,6 +663,8 @@ class BackupManager:
             self.logger.write(filesystem_backup_message)
 
             compression_cmd_list = ["pigz", "--stdout"]
+
+            flat_command_string = Utility.print_cli_friendly("Running ", [partclone_cmd_list, compression_cmd_list, split_cmd_list])
             self.proc['partclone_backup_' + partition_key] = subprocess.Popen(partclone_cmd_list,
                                                                               stdout=subprocess.PIPE,
                                                                               stderr=subprocess.PIPE, env=env,
@@ -678,6 +680,7 @@ class BackupManager:
                                                                        'compression_' + partition_key].stdout,
                                                                    stdout=subprocess.PIPE, env=env, encoding='utf-8')
 
+            partclone_stderr = ""
             # Process partclone output. Partclone outputs an update every 3 seconds, so processing the data
             # on the current thread, for simplicity.
             # Poll process.stdout to show stdout live
@@ -689,6 +692,7 @@ class BackupManager:
                 if self.proc['partclone_backup_' + partition_key].poll() is not None:
                     break
                 if output:
+                    partclone_stderr += output
                     temp_dict = Partclone.parse_partclone_output(output)
                     if 'completed' in temp_dict.keys():
                         total_progress_float = Utility.calculate_progress_ratio(temp_dict['completed'] / 100.0, partition_number, len(self.partitions_to_backup.keys()))
@@ -708,7 +712,7 @@ class BackupManager:
                 self.at_least_one_non_fatal_error = True
                 proc_stdout = self.proc['partclone_backup_' + partition_key].stdout
                 proc_stderr = self.proc['partclone_backup_' + partition_key].stderr
-                extra_info = "\nThe command used internally was:\n\n" + flat_command_string + "\n\n" + "The output of the command was: " + str(proc_stdout) + "\n\n" + str(proc_stderr)
+                extra_info = "\nThe command used internally was:\n\n" + flat_command_string + "\n\n" + "The output of the command was: " + partclone_stderr
                 compression_stderr = self.proc['compression_' + partition_key].stderr
                 if compression_stderr is not None and compression_stderr != "":
                     extra_info += "\n\n" + str(compression_cmd_list) + " stderr: " + compression_stderr
