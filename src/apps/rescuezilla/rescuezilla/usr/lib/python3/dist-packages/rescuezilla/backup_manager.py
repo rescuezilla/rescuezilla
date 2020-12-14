@@ -589,6 +589,8 @@ class BackupManager:
                 process, flat_command_string, failed_message = Utility.run("Saving " + filepath,
                                                            ["dd", "if=" + partition_key, "of=" + filepath, "bs=512",
                                                             "count=1"], use_c_locale=False, logger=self.logger)
+                continue
+
             if process.returncode != 0:
                 with self.summary_message_lock:
                     self.summary_message += failed_message
