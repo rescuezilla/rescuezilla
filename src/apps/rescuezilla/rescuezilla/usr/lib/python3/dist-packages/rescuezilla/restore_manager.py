@@ -412,10 +412,13 @@ class RestoreManager:
                 # accidentally overwriting it is NOT required here.
 
                 # There is a maximum of 1 post-MBR gap per drive (but there can be many drives)
-                post_mbr_gap_list = [i for i in self.image.post_mbr_gap_dict_dict.keys() if i.startswith(short_selected_image_drive_node)]
-                if len(post_mbr_gap_list) == 1:
+                post_mbr_gap_dict = None
+                for key in self.image.post_mbr_gap_dict_dict.keys():
+                    if key.startswith(short_selected_image_drive_node):
+                        post_mbr_gap_dict = self.image.post_mbr_gap_dict_dict[key]
+                if post_mbr_gap_dict is not None:
                     process, flat_command_string, failed_message = Utility.run("Restore post mbr gap",
-                                                                               ["dd", "if=" + post_mbr_gap_list[0]['absolute_path'],
+                                                                               ["dd", "if=" + post_mbr_gap_dict['absolute_path'],
                                                                                 "of=" + self.restore_destination_drive,
                                                                                 "seek=1",
                                                                                 "bs=512"],

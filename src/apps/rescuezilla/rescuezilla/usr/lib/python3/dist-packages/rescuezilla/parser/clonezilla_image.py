@@ -247,7 +247,7 @@ class ClonezillaImage:
 
             # There is a maximum of 1 post-MBR gap per drive (there can be many drives). The post MBR gap is never
             # listed in 'parts' list. Note the asterisk wildcard in the glob, to get the notes.txt file (see below)
-            post_mbr_gap_glob_list = glob.glob(os.path.join(dir, short_disk_device_node) + "-hidden-data-after-mbr.*")
+            post_mbr_gap_glob_list = glob.glob(os.path.join(dir, short_disk_device_node) + "-hidden-data-after-mbr*")
             for absolute_post_mbr_gap_filepath in post_mbr_gap_glob_list:
                 short_post_mbr_gap_device_node = basename(absolute_post_mbr_gap_filepath).split("-hidden-data-after-mbr")[0]
                 if absolute_post_mbr_gap_filepath.endswith(".notes.txt") and not isfile(os.path.join(dir, short_disk_device_node) + "-hidden-data-after-mbr"):
