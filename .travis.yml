@@ -62,7 +62,7 @@ deploy:
   file:
     - build/rescuezilla-${TRAVIS_TAG}-64bit.focal.iso
     - build/rescuezilla-${TRAVIS_TAG}-64bit.groovy.iso
-    - build/rescuezilla_${TRAVIS_TAG}_all.deb
+    - build/rescuezilla_${TRAVIS_TAG}-1_all.deb
   draft: true
   cleanup: false
   on:
