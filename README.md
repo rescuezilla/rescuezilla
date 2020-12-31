@@ -55,7 +55,8 @@ Below table shows an abridged history of Rescuezilla. For more information, see 
 
 | Release             | Release Date | Operating System | Notes |
 | ------------------- | ---------- | ---------------- | ---------------------------------- |
-| Rescuezilla 2.1.1   | 2020-12-14 | Ubuntu 20.10     | Adds Image Explorer (beta). [Download page](https://github.com/rescuezilla/rescuezilla/releases/latest)
+| Rescuezilla 2.1.2   | 2021-01-01 | Ubuntu 20.10     | [Download page](https://github.com/rescuezilla/rescuezilla/releases/latest)
+| Rescuezilla 2.1     | 2020-12-12 | Ubuntu 20.10     | Added Image Explorer (beta)
 | Rescuezilla 2.0     | 2020-10-14 | Ubuntu 20.04     | Added Clonezilla support
 | Rescuezilla 1.0.6   | 2020-06-17 | Ubuntu 20.04     |
 | Redo Rescue 2.0.0   | 2020-06-12 | Debian 9 Stretch | Original author [resurfaces](https://sourceforge.net/p/redobackup/discussion/general/thread/d0e37c4750/) after 7.5 year absence
