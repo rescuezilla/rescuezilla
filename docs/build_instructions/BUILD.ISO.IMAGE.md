@@ -17,18 +17,8 @@ sudo apt-get update
 sudo apt-get install git-lfs git make sudo \
                      rsync debootstrap gettext squashfs-tools dosfstools mtools xorriso \
                      memtest86+ devscripts debhelper checkinstall cmake \
-                     # GRUB bootloader and support modules for booting both MBR and EFI boot
-                     # across CPU architectures. Notably the AMD64 image *legacy boot* uses
-                     # the same 32-bit bootloader as the i386 image.
                      grub-efi-amd64-bin grub-efi-ia32-bin grub-pc-bin \
-                     # For Secure Boot, the GRUB binaries need to trust Canonical
-                     # signatures, not Debian signatures, as GRUB needs to verify the
-                     # Canonical-signed Linux kernel (see "EFI Secure Boot" section below).
                      shim-signed grub-efi-amd64-signed \
-                     # To provide backwards compatibility of Redo Backup v1.0.4 backups on
-                     # AMD64 systems, install the dependencies required to build some very
-                     # old versions of "sfdisk" and "partclone.restore". More recent
-                     # versions of sfdisk and partclone are used for all other operations.
                      libtool-bin gawk pkg-config comerr-dev docbook-xsl e2fslibs-dev fuse \
                      libaal-dev libblkid-dev libbsd-dev libext2fs-dev libncurses5-dev \
                      libncursesw5-dev libntfs-3g88 libreadline-gplv2-dev libreadline5 \
@@ -43,12 +33,12 @@ git submodule init
 git submodule update --recursive
 # Optional: Build only the standalone deb packages without bothering with the live environment
 make deb
-# Build the amd64 ISO image, the i386 ISO image, and the deb files.
+# Build the amd64 ISO image based on Ubuntu 20.04 (Focal), and the deb files.
 # This should work on Ubuntu or Ubuntu-derived distributions, but is _not_ recommended
 # Debian or Debian-derived environments (see "EFI Secure Boot" section below).
 #
 # sudo privileges required for the chroot bind mount
-sudo make amd64 i386
+sudo make focal
 
 # Test the generated ISO image in a virtual machine. (see suggested workflow section below)
 sudo apt-get install virtualbox
