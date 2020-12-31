@@ -883,7 +883,11 @@ class Handler:
             self.image_explorer_manager.mount_partition(selected_partition_key)
 
     def mount_partition(self, button):
-        AreYouSureModalPopup(self.builder,
+        if not self.image_explorer_manager.get_mounted_state():
+            AreYouSureModalPopup(self.builder,
                              _(
-                                 "Reminder: Mounting large gzipped-compressed images WILL be UNUSABLY slow.\n\ngzip-compression is the standard format used by Clonezilla and Rescuezilla. If Rescuezilla doesn't cleanly unmount the image being explored a reboot may be required.\n\nIf you want a good experience with this BETA feature, it is highly recommeded users try images WITHOUT COMPRESSION (created by Clonezilla's Expert Mode).\n\nAre you sure you want to continue?"),
+                                 "Reminder: Mounting large gzipped-compressed images WILL be UNUSABLY slow.\n\ngzip is the default compression format used by Clonezilla and Rescuezilla. If Rescuezilla doesn't cleanly unmount the image being explored a reboot may be required.\n\nIf you want a good experience with this BETA feature, it is highly recommeded you try an image WITHOUT COMPRESSION (created by Clonezilla's Expert Mode).\n\nAre you sure you want to continue?"),
                              self._mount_partition_confirmation_callback)
+        else:
+            # Unmounting doesn't need an AreYouSure popup.
+            self._mount_partition_confirmation_callback(True)

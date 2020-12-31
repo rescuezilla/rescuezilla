@@ -138,6 +138,9 @@ class ImageExplorerManager:
         self.builder.get_object("button_back").set_sensitive(is_sensitive)
         self.builder.get_object("button_next").set_sensitive(is_sensitive)
 
+    def get_mounted_state(self):
+        return self.is_partition_mounted
+
     def set_mounted_state(self, is_mounted):
         if is_mounted:
             self.is_partition_mounted = True
