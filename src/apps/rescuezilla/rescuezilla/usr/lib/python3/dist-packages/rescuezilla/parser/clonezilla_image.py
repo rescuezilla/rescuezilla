@@ -239,7 +239,7 @@ class ClonezillaImage:
 
             # There is a maximum of 1 MBR per drive (there can be many drives). Master Boot Record (MBR) is never
             # listed in 'parts' list.
-            mbr_glob_list = glob.glob(os.path.join(dir, short_disk_device_node) + "*-mbr")
+            mbr_glob_list = glob.glob(os.path.join(dir, short_disk_device_node) + "-mbr")
             for absolute_mbr_filepath in mbr_glob_list:
                 short_mbr_device_node = basename(absolute_mbr_filepath).split("-mbr")[0]
                 self.mbr_dict_dict[short_disk_device_node] = {'short_device_node': short_mbr_device_node,
@@ -260,7 +260,8 @@ class ClonezillaImage:
                                                                            'absolute_path': absolute_post_mbr_gap_filepath}
 
             # There is a maximum of 1 EBR per drive (there can be many drives). Extended Boot Record (EBR) is never
-            # listed in 'parts' list.
+            # listed in 'parts' list. The asterisk is needed here because unlike the MBR case, the ebr file is eg,
+            # sda4-ebr. In otherwords the EBR is associated with a partition not the base device node.
             ebr_glob_list = glob.glob(os.path.join(dir, short_disk_device_node) + "*-ebr")
             for absolute_ebr_filepath in ebr_glob_list:
                 short_ebr_device_node = basename(absolute_ebr_filepath).split("-ebr")[0]
