@@ -1,0 +1,428 @@
+# Greek translation of Rescuezilla
+# Copyright (C) 2021
+# This file is distributed under the same license as the PACKAGE package.
+# tkatsageorgis
+# Submitted at: https://github.com/rescuezilla/rescuezilla/issues/171
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-10-25 20:36+1030\n"
+"PO-Revision-Date: 2021-01-22 00:00+0000\n"
+"Last-Translator: tkatsageorgis\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: el\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Welcome"
+msgstr "Καλωσήρθατε"
+
+msgid "Select an Option"
+msgstr "Επιλέξτε"
+
+msgid "Easily create a backup image of your computer, or completely restore from one.  Click an option to begin:"
+msgstr "Δημιουργήστε εύκολα αντίγραφο ασφαλείας του υπολογιστή σας ή κάντε πλήρη επαναφορά από ένα ήδη υπάρχον. Κάντε μια επιλογή για να ξεκινήσετε:"
+
+msgid "Backup"
+msgstr "Αντίγραφο Ασφαλείας"
+
+msgid "Restore"
+msgstr "Επαναφορά"
+
+msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
+msgstr "Χρειάζεστε βοήθεια; Ελέγξτε πρώτα τις συνήθεις ερωτήσεις\nκαι στη συνέχεια προχωρήστε στο φόρουμ."
+
+msgid "Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed."
+msgstr "Εξετάστε το ενδεχόμενο να συνεισφέρετε $1/μήνα\nστον ιστότοπο του Patreon, ώστε το Rescuezilla να μπορεί να συνεχίσει να αναπτύσσεται."
+
+msgid "Back"
+msgstr "Πίσω"
+
+msgid "Next >"
+msgstr "Επόμενο >"
+
+msgid "Please wait..."
+msgstr "Παρακαλώ περιμένετε..."
+
+msgid "Identifying disk drives..." 
+msgstr "Αναγνώριση μονάδων δίσκου..."
+
+msgid "Step 1: Select Drive To Backup"
+msgstr "Βήμα 1: Επιλέξτε Μονάδα Δίσκου Για Αντίγραφο Ασφαλείας"
+
+msgid "Select the source drive that you would like to create a backup image from."
+msgstr "Επιλέξτε τη μονάδα προέλευσης από την οποία θα δημιουργήσετε ένα είδωλο αντιγράφου ασφαλείας."
+
+msgid "Drive"
+msgstr "Μονάδα Δίσκου"
+
+msgid "Capacity"
+msgstr "Χωρητικότητα"
+
+msgid "Drive Model"
+msgstr "Μοντέλο Μονάδας Δίσκου"
+
+msgid "Partitions"
+msgstr "Διαμερίσματα"
+
+msgid "Show hidden devices (for advanced users)"
+msgstr "Εμφάνιση κρυφών συσκευών (για προχωρημένους)"
+
+msgid "Step 2: Select Partitions to Save"
+msgstr "-Βήμα 2: Επιλέξτε Διαμερίσματα για Αποθήκευση"
+
+msgid "Select which partitions to create a backup of.  Leave all partitions selected if you are unsure."
+msgstr "Επιλέξτε για ποια διαμερίσματα θα δημιουργήσετε αντίγραφο ασφαλείας. Αφήστε όλα τα διαμερίσματα επιλεγμένα εάν δεν είστε σίγουροι."
+
+msgid "Save"
+msgstr "Αποθήκευση"
+
+msgid "Description"
+msgstr "Περιγραφή"
+
+msgid "Drive {drive_number}, Partition {partition_number}"
+msgstr "Μονάδα Δίσκου {drive_number}, Διαμέρισμα {partition_number}"
+
+msgid "Drive {drive_number}"
+msgstr "Μονάδα Δίσκου {drive_number}"
+
+msgid "Step 3: Select Destination Drive"
+msgstr "Βήμα 3: Επιλέξτε Μονάδα Προορισμού"
+
+msgid "Click on the box below to select the source drive that you would like to create a backup image from."
+msgstr "Κάντε κλικ στο ακόλουθο πλαίσιο για να επιλέξετε τη μονάδα προέλευσης από την οποία θέλετε να δημιουργήσετε αντίγραφο ασφαλείας."
+
+msgid "Connected directly to my computer"
+msgstr "Συνδεδεμένο απευθείας στον υπολογιστή μου"
+
+msgid "Shared over a network"
+msgstr "Κοινόχρηστο μέσω δικτύου"
+
+msgid "Where is the destination drive?"
+msgstr "Πού βρίσκεται η μονάδα προορισμού;"
+
+msgid "SMB/CIFS shared folder specified below"
+msgstr "SMB/CIFS κοινόχρηστος φάκελος καθορίζεται παρακάτω"
+
+msgid "Search network"
+msgstr "Αναζήτηση δικτύου"
+
+msgid "Server or share location:"
+msgstr "Διακομιστής ή τοποθεσία κοινής χρήσης:"
+
+msgid "Username (Optional):"
+msgstr "Όνομα Χρήστη (Προαιρετικό):"
+
+msgid "Password (Optional):"
+msgstr "κωδικός Πρόσβασης (Προαιρετικό):"
+
+msgid "Domain (Optional):"
+msgstr "Domain (Προαιρετικό):"
+
+msgid "Version (Optional):"
+msgstr "Έκδοση (Προαιρετικό):"
+
+msgid "Select network-shared storage location:"
+msgstr "Επιλέξτε την δικτυακή κοινόχρηστη τοποθεσία αποθήκευσης:"
+
+msgid "Select destination drive:"
+msgstr "Επιλέξτε μονάδα προορισμού:"
+
+msgid "Partition"
+msgstr "Διαμέρισμα"
+
+msgid "Mounting..."
+msgstr "Δημιουγία Φακέλων και Αρχείων..."
+
+msgid "Please ensure the username, password and other fields provided are correct, and try again."
+msgstr "Βεβαιωθείτε ότι το όνομα χρήστη, ο κωδικός πρόσβασης και όλα τα πεδία που παρέχονται είναι σωστά και δοκιμάστε ξανά.!"
+
+msgid "Scanning folder for backup images..."
+msgstr "Σάρωση φακέλου για είδωλα αντιγράφων ασφαλείας..."
+
+msgid "Error processing the following images:"
+msgstr "Παρουσιάστηκε σφάλμα κατά την επεξεργασία των ακόλουθων ειδώλων:"
+
+msgid "Unable to fully process the image associated with the following partitions:"
+msgstr "Δεν είναι δυνατή η πλήρης επεξεργασία του ειδώλου που σχετίζεται με τα ακόλουθα διαμερίσματα:"
+
+msgid "Unable to fully process the following image:"
+msgstr "Δεν είναι δυνατή η πλήρης επεξεργασία του ακόλουθου ειδώλου:"
+
+msgid "This can happen when loading images which Clonezilla was unable to completely backup. Any other filesystems within the image should be restorable as normal."
+msgstr "Αυτό μπορεί να συμβεί κατά τη φόρτωση ειδώλων για τις οποίες το Clonezilla δεν ολοκλήρωσε επιτυχώς τη διαδικασία των αντιγράφων ασφαλείας. Οποιαδήποτε άλλα συστήματα αρχείων μέσα στο είδωλο θα πρέπει να είναι δυνατό να αποκατασταθούν κανονικά."
+
+msgid "Needs decryption"
+msgstr "Απαιτείται αποκρυπτογράφηση"
+
+msgid "Unknown filesystem"
+msgstr "Άγνωστο Σύστημα Αρχείων"
+
+# No need to translate this message into your language -- it's only relevant for an old unofficial French version.
+msgid "The backup's extended partition information is empty or missing. This happens with incomplete backups created by an unofficial Redo Backup update. If the backup contains extended partitions, these will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore the extended partitions. Please consult {url} for information and assistance. The destination drive has not yet been modified. Do you wish to continue with the restore?"
+msgstr ""
+
+# No need to translate this message into your language -- it's only relevant for an old unofficial German version.
+msgid "The backup's bootloader data is shorter than expected. This happens with backups created by an unofficial Redo Backup update. If the backup contained certain bootloaders like GRUB, the restored hard drive will not boot correctly without a manual fix. All data is still fully recoverable but manual intervention may required to restore the bootloader. Please consult {url} for information and assistance. The destination drive has not yet been modified. Do you wish to continue with the restore?"
+msgstr "Die Bootloader-Daten des Backups sind weniger als erwartet. Dies kommt bei Sicherungen vor, die durch ein inoffizielles Redo-Backup-Update erstellt wurden. Wenn das Backup bestimmte Bootloader wie GRUB enthielt, lässt sich die wiederhergestellte Festplatte ohne manuelle Fehlerbehebung nicht ordnungsgemäß starten. Alle Daten können vollständig wiederhergestellt werden, womöglich ist jedoch ein manueller Eingriff erforderlich, um den Bootloader wiederherzustellen. Informationen und Unterstützung erhalten Sie unter %1 Das Ziellaufwerk wurde noch nicht geändert. Möchten Sie mit der Wiederherstellung fortfahren?"
+
+msgid "Step 4: Select Destination Folder"
+msgstr "Βήμα 4: Επιλέξτε Φάκελο Προορισμού"
+
+msgid "Click <b>Browse</b> to select the folder on the destination drive where your new backup image will be saved.\n"
+"\n"
+"The folder a backup is saved in is usually a description of the computer, e.g. <b>office1</b> or <b>zack-laptop</b>."
+msgstr "Κάντε κλικ στο κουμπί <b>Αναζήτηση</b> για να επιλέξετε το φάκελο στη μονάδα δίσκου προορισμού όπου θα αποθηκευτεί το νέο είδωλο αντιγράφου ασφαλείας.\n"
+"\n"
+"Ο φάκελος στον οποίο αποθηκεύεται είναι συνήθως μια περιγραφή του υπολογιστή, πχ. <b>office1</b> or <b>zack-laptop</b>."
+
+msgid "You must select a folder inside {location}"
+msgstr "Πρέπει να επιλέξετε ένα φάκελο μέσα στη {location}"
+
+msgid "Please select a different folder."
+msgstr "Παρακαλώ επιλέξτε διαφορετικό φάκελο."
+
+msgid "The table below lists the backup images that already in this folder (if any)."
+msgstr "Ο ακόλουθος πίνακας εμφανίζει τα είδωλα των αντιγράφων ασφαλείας που βρίσκονται ήδη σε αυτόν το φάκελο (εάν υπάρχουν)."
+
+msgid "Browse..."
+msgstr "Αναζήτηση..."
+
+msgid "Filename"
+msgstr "Όνομα Αρχείου"
+
+msgid "Size"
+msgstr "Μέγεθος"
+
+msgid "Last modified"
+msgstr "Τελευταία τροποίηση"
+
+msgid "When you are happy with the destination folder, click <b>Next</b>."
+msgstr "Εάν συμφωνείτε με το φάκελο προορισμού, κάντε κλικ στο κουμπί <b>Επόμενο</b>."
+
+msgid "Step 5: Name Your Backup"
+msgstr "Βήμα 5: Δώστε όνομα στο αντίγραφο ασφαλείας σας"
+
+msgid "Provide a unique name for this backup image, such as the date.  Today's date is automatically entered for you below.\n"
+"\n"
+"You may only use letters, numbers, and dashes in your backup name."
+msgstr "Δώστε στο είδωλο αντιγράφου ασφαλείας ένα μοναδικό όνομα, όπως η ημερομηνία. Η σημερινή ημερομηνία εισάγεται αυτόματα.\n"
+"\n"
+"Μπορείτε να χρησιμοποιήσετε μόνο γράμματα, αριθμούς και παύλες στο όνομα των αντιγράφων ασφαλείας."
+
+msgid "Step 6: Confirm Backup Configuration"
+msgstr "Βήμα 6: Επιβεβαιώστε τη ρύθμιση παραμέτρων των αντιγράφων ασφαλείας"
+
+msgid "Source drive"
+msgstr "Μονάδα δίσκου προέλευσης"
+
+msgid "Backing up the following partition"
+msgstr "Δημιουργία αντιγράφου ασφαλείας για το ακόλουθο διαμέρισμα"
+
+msgid "The backup image will be written into folder {dest_dir} on {description}"
+msgstr "Το είδωλο αντιγράφου ασφαλείας θα εγγραφεί στο φάκελο {dest_dir} σε {description}."
+
+msgid "Confirm the following backup configuration."
+msgstr "Επιβεβαιώστε την ακόλουθη ρύθμιση παραμέτρων των αντιγράφων ασφαλείας."
+
+msgid "To start the backup, click <b>Next</b>."
+msgstr "Για την εκκίνηση της δημιουργίας αντιγράφου ασφαλείας, επιλέξτε <b>Επόμενο</b>."
+
+msgid "Step 7: Creating Backup Image"
+msgstr "Βήμα 7: Δημιουργία Ειδώλου Αντιγράφου Ασφαλείας"
+
+msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
+msgstr "Δημιουργία των αντιγράφων ασφαλείας του συστήματός σας στη θέση που επιλέξατε. Αυτό μπορεί να διαρκέσει μια ώρα ή περισσότερο, ανάλογα με την ταχύτητα του υπολογιστή σας και το μέγεθος των δεδομένων."
+
+msgid "Time Elapsed / Remaining: "
+msgstr "Χρόνος που πέρασε / Υπόλοιπο: "
+
+msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
+msgstr "Αντίγραφο Ασφαλείας {partition_name} περιέχει αρχείο συστήματος {filesystem} σε {destination}"
+
+msgid "Summary of Backup"
+msgstr "Σύνοψη Δημιουργίας Αντιγράφου Ασφαλείας"
+
+msgid "Confirm the backup summary."
+msgstr "Επιβεβαιώστε τη Σύνοψη Αντιγράφου Ασφαλείας."
+
+msgid "Backup Summary"
+msgstr "Σύνοψη Αντιγράφου Ασφαλείας"
+
+msgid "Backup cancelled by user."
+msgstr "Η διαδικασία των Αντιγράφου Ασφαλείας ακυρώθηκε από τον χρήστη."
+
+msgid "Error creating backup: "
+msgstr "Παρουσιάστηκε σφάλμα κατά τη δημιουργία αντιγράφου ασφαλείας:"
+
+msgid "Failed to write destination file. Please confirm it is valid to create the provided file path, and try again."
+msgstr "Απέτυχε η εγγραφή του αρχείου προορισμού. Επιβεβαιώστε ότι είναι δυνατή η δημιουργία της παρεχόμενης διαδρομής αρχείου και προσπαθήστε ξανά."
+
+msgid "Successful backup of swap partition {partition_name}"
+msgstr "Επιτυχής δημιουργία αντιγράφου ασφαλείας του διαμερίσματος ανταλλαγής {partition_name}"
+
+msgid "<b>Failed to backup partition</b> {partition_name}"
+msgstr "<b>Ανεπιτυχής δημιουργία αντιγράφου ασφαλείας του διαμερίσματος</b> {partition_name}"
+
+msgid "Successful backup of partition {partition_name}"
+msgstr "Επιτυχής δημιουργία αντιγράφου ασφαλείας του διαμερίσματος {partition_name}"
+
+msgid "Backup saved successfully."
+msgstr "Το Αντίγραφο Ασφαλείας αποθηκεύτηκε."
+
+msgid "Backup succeeded with some errors:"
+msgstr "Η δημιουργία αντιγράφων ασφαλείας ολοκληρώθηκε με ορισμένα σφάλματα:"
+
+msgid "Backup operation failed:"
+msgstr "Η διαδικασία δημιουργίας αντιγράφου ασφαλείας απέτυχε:"
+
+msgid "Operation took {num_minutes} minutes."
+msgstr "Η διαδικασία ολοκληρώθηκε σε {num_minutes} λεπτά."
+
+msgid "To start a new session, click <b>Next</b>"
+msgstr "Για να ξεκινήσετε μια νέα περίοδο λειτουργίας, κάντε κλικ στο <b>Επόμενο</b>."
+
+msgid "Step 1: Select Image Location"
+msgstr "Βήμα 1: Επιλογή Τοποθεσίας Ειδώλου"
+
+msgid "Where is the source drive?"
+msgstr "Πού είναι η μονάδα προέλευσης;"
+
+msgid "Select source drive:"
+msgstr "Επιλέξτε μονάδα προέλευσης:"
+
+msgid "Step 2: Select Backup Image"
+msgstr "Βήμα 2: Επιλέξτε Είδωλο Αντιγράφου Ασφαλείας"
+
+msgid "Click the box below to select the folder containing image files."
+msgstr "Κάντε κλικ στο ακόλουθο πλαίσιο για να επιλέξετε το φάκελο που περιέχει τα αρχεία ειδώλων."
+
+msgid "Select the image file to restore"
+msgstr "Επιλέξτε το αρχείο ειδώλου για επαναφορά."
+
+msgid "Date created"
+msgstr "Ημερομηνία δημιουργίας"
+
+msgid "Step 3: Select Drive To Restore"
+msgstr "Βήμα 3: Επιλέξτε Μονάδα Δίσκου Για Επαναφορά"
+
+msgid "Select the destination drive you wish to overwrite and restore the selected image to."
+msgstr "Επιλέξτε τη μονάδα δίσκου προορισμού στην οποία θέλετε να αντικαταστήσετε και να επαναφέρετε το επιλεγμένο είδωλο."
+
+msgid "Step 4: Select Partitions To Restore"
+msgstr "Βήμα 4: Επιλέξτε τα Διαμερίσματα Προς Επαναφορά"
+
+msgid "Select which partitions from the backup to restore, and whether to overwrite the partition table. Leave everything selected to completely restore the destination drive."
+msgstr "Επιλέξτε ποια διαμερίσματα από το αντίγραφο ασφαλείας θα επαναφέρετε και εάν θα αντικαταστήσετε τον πίνακα διαμερισμάτων. Αφήστε τα όλα επιλεγμένα για να επαναφέρετε πλήρως τη μονάδα δίσκου προορισμού."
+
+msgid "Selected image"
+msgstr "Επιλεγμένο είδωλο"
+
+msgid "Destination device"
+msgstr "Συσκευή προορισμού"
+
+msgid "IMPORTANT: Only selecting FIRST disk in Clonezilla image containing MULTIPLE DISKS."
+msgstr "ΣΗΜΑΝΤΙΚΟ: Επιλέξτε μόνο το ΠΡΩΤΟ δίσκο στο είδωλο Clonezilla που περιέχει ΠΟΛΛΑΠΛΟΥΣ ΔΙΣΚΟΥΣ."
+
+msgid "Destination partition"
+msgstr "Διαμέρισμα προορισμού"
+
+msgid "Overwrite partition table"
+msgstr "Αντικατάσταση πίνακα διαμερισμάτων"
+
+msgid "You will be overwriting the partition table."
+msgstr "Θα αντικαταστήσετε τον πίνακα διαμερισμάτων."
+
+msgid "The \"destination partition\" column has been updated using the information stored within the backup image.\n\n<b>If partitions have been resized, new partitions added, or additional operating systems installed <i>since the backup image was created</i>, then the destination drive's partition table will not match the backup image, and overwriting the destination drive's partition table will render these resized and additional partitions permanently inaccessible.</b> If you have not modified the partition table in such a way since creating this backup then overwriting the partition table is completely safe and will have no negative effects."
+msgstr "Η στήλη \"διαμέρισμα προορισμού\" ενημερώθηκε χρησιμοποιώντας τις πληροφορίες που είναι αποθηκευμένες στο είδωλο αντιγράφου ασφαλείας.\n\n<b>Εάν έχει αλλάξει το μέγεθος των διαμερισμάτων, έχουν προστεθεί νέα διαμερίσματα ή εγκατασταθεί νέα λειτουργικά συστήματα <i>από τη δημιουργία ειδώλου</i>,  τότε ο πίνακας διαμερισμάτων της μονάδας δίσκου προορισμού δεν θα ταιριάζει με το είδωλο αντιγράφου ασφαλείας, και η αντικατάσταση του πίνακα διαμερισμάτων της μονάδας δίσκου προορισμού θα καταστήσει μη προσβάσιμα μόνιμα αυτά τα πρόσθετα και με διαφορετικό μέγεθος διαμερίσματα.</b>Εάν δεν έχετε τροποποιήσει τον πίνακα διαμερισμάτων με τέτοιο τρόπο από τη δημιουργία αυτού του αντιγράφου ασφαλείας, στη συνέχεια, η αντικατάσταση του πίνακα διαμερισμάτων είναι απολύτως ασφαλής και δεν θα έχει αρνητικές επιπτώσεις."
+
+msgid "You will <b>not</b> be overwriting the partition table."
+msgstr "<b>Δεν</b> θα αντικαταστήσετε τον πίνακα διαμερισμάτων."
+
+msgid "The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table."
+msgstr "Η στήλη \"διαμέρισμα προορισμού\" έχει ενημερωθεί με τις υπάρχουσες πληροφορίες πίνακα διαμερισμάτων της μονάδας δίσκου προορισμού.\n\n<b>Η στήλη διαμερίσματος προορισμού μπορεί να τροποποιηθεί ως αναπτυσσόμενο μενού. Η εσφαλμένη αντιστοίχιση των διαμερισμάτων προορισμού ενδέχεται να προκαλέσει τη μη εκκίνηση.</b> Εάν δεν είστε βέβαιοι για την αντιστοίχιση, εξετάστε εάν είναι πιο κατάλληλο να αντικαταστήσετε τον πίνακα διαμερισμάτων."
+
+msgid "No destination partition selected. Use the destination partition drop-down menu to select the destination"
+msgstr "Δεν έχει επιλεγεί διαμέρισμα προορισμού. Χρησιμοποιήστε το αναπτυσσόμενο μενού διαμερίσματος προορισμού για να επιλέξετε τον προορισμό"
+
+msgid "Step 5: Confirm Restore Configuration"
+msgstr "Βήμα 5: Επιβεβαίωση Ρύθμισης Παραμέτρων Επαναφοράς"
+
+msgid "Confirm the restore configuration."
+msgstr "Επιβεβαιώστε τη ρύθμιση παραμέτρων επαναφοράς."
+
+msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite the data on this drive!"
+msgstr "Είστε βέβαιοι ότι επιθυμείτε την επαναφορά του αντιγράφου ασφαλείας στο {destination_drive}; Με αυτόν τον τρόπο θα αντικατασταθούν οριστικά τα δεδομένα σε αυτήν τη μονάδα δίσκου!"
+
+msgid "Source image"
+msgstr "Είδωλο προέλευσης"
+
+msgid "Destination drive"
+msgstr "Μονάδα δίσκου προορισμού"
+
+msgid "Restoring the following partitions"
+msgstr "Επαναφορά των ακόλουθων διαμερισμάτων"
+
+msgid "WILL BE OVERWRITING PARTITION TABLE"
+msgstr "ΘΑ ΑΝΤΙΚΑΤΑΣΤΑΘΕΙ Ο ΠΙΝΑΚΑΣ ΔΙΑΜΕΡΙΣΜΆΤΩΝ"
+
+msgid "Will <b>NOT</b> be overwriting partition table"
+msgstr "<b>Δεν</b> θα αντικατασταθεί ο πίνακας διαμερισμάτων"
+
+msgid "To start the restore, click <b>Next</b>."
+msgstr "Για να ξεκινήσετε την επαναφορά, κάντε κλικ στο <b>Επόμενο</b>."
+
+msgid "Restoring From Backup"
+msgstr "Επαναφορά Από Αντίγραφο Ασφαλείας"
+
+msgid "Restoring your system from the image you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
+msgstr "Γίνεται επαναφορά του συστήματός σας από το επιλεγμένο είδωλο. Αυτό μπορεί να διαρκέσει μια ώρα ή περισσότερο, ανάλογα με την ταχύτητα του υπολογιστή σας και το μέγεθος των δεδομένων."
+
+msgid "Refreshing partition table"
+msgstr "Ανανέωση πίνακα διαμερισμάτων"
+
+msgid "Restoring {description} to {destination_partition} ({destination_description})"
+msgstr "Επαναφορά {description} στο {destination_partition} ({destination_description})"
+
+msgid "Restore cancelled by user."
+msgstr "Η επαναφορά ακυρώθηκε από τον χρήστη."
+
+msgid "Error restoring image: "
+msgstr "Παρουσιάστηκε σφάλμα κατά την επαναφορά του ειδώλου: "
+
+msgid "Could not restore sfdisk partition table as file has zero length: "
+msgstr "Δεν ήταν δυνατή η επαναφορά του πίνακα διαμερισμάτων sfdisk, επειδή το αρχείο έχει μηδενικό μήκος: "
+
+msgid "Successfully restored partition table."
+msgstr "Η επαναφορά του πίνακα διαμερισμάτων ολοκληρώθηκε με επιτυχία."
+
+msgid "Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."
+msgstr "Η ανανέωση του πίνακα διαμερισμάτων των συσκευών απέτυχε. Αυτό μπορεί να συμβεί εάν μια άλλη διεργασία έχει πρόσβαση στον πίνακα διαμερισμάτων."
+
+msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
+msgstr "Δεν είναι δυνατή η επαναφορά του διαμερίσματος {destination_partition}, επειδή δεν υπάρχει αποθηκευμένο είδωλο συσχετισμένο με: {description}."
+
+msgid "This may occur if Clonezilla was originally unable to backup this partition."
+msgstr "Αυτό μπορεί να συμβεί εάν το Clonezilla αρχικά απέτυχε να δημιουργήσει αντίγραφο ασφαλείας αυτού του διαμερίσματος."
+
+msgid "Error restoring partition {image_key} to {destination_partition}."
+msgstr "Παρουσιάστηκε σφάλμα κατά την επαναφορά του διαμερίσματος {image_key} στο {destination_partition}."
+
+msgid "Successfully restored image partition {image} to {destination_partition}"
+msgstr "Η επαναφορά του διαμερίσματος ειδώλου {image} ολοκληρώθηκε με επιτυχία στο {destination_partition}"
+
+msgid "Summary of Restore"
+msgstr "Σύνοψη της Επαναφοράς"
+
+msgid "Restore Summary"
+msgstr "Σύνοψη Επαναφοράς"
+
+msgid "Confirm the restore summary."
+msgstr "Επιβεβαιώστε τη σύνοψη επαναφοράς."
+
+msgid "Backup restored successfully."
+msgstr "Η επαναφορά του αντιγράφου ασφαλείας ολοκληρώθηκε με επιτυχία." 

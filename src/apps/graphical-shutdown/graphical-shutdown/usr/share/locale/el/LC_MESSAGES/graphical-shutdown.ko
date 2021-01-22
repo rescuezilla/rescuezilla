@@ -1,0 +1,20 @@
+msgid ""
+msgstr ""
+"Language: el\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "End Session"
+msgstr "Τερματισμός Περιόδου Λειτουργίας"
+
+msgid "Cancel"
+msgstr "Ακύρωση"
+
+msgid "Shutdown"
+msgstr "Τερματισμός"
+
+msgid "Reboot"
+msgstr "Επανεκκίνηση"
+
+msgid "Choose action."
+msgstr "Επιλογή ενέργειας"
