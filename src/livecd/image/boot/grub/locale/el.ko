@@ -25,7 +25,7 @@ msgid "If boot fails, reboot and try selecting Graphical fallback instead"
 msgstr "Εάν η εκκίνηση αποτύχει, κάντε επανεκκίνηση και δοκιμάστε Λειτουργία εναλλακτικής λύσης γραφικών"
 
 msgid "Graphical fallback mode"
-msgstr "Λειτουργία εναλλακτικής λύσης γραφικών"
+msgstr "Εναλλακτική λύση γραφικών"
 
 msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
 msgstr "Χρήση προγράμματος οδήγησης εναλλακτικής γραφικών χαμηλής ανάλυσης, εάν η τυπική λειτουργία δεν λειτουργεί για το υλικό σας"
@@ -37,7 +37,7 @@ msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after
 msgstr "Φορτώνει το Rescuezilla στη μνήμη επιτρέποντας στο μέσο εκκίνησης να εκτιναχθεί μετά την εκκίνηση"
 
 msgid "Check USB for defects"
-msgstr "Ελέγξτε για ελαττωματικές θύρες USB"
+msgstr "Έλεγχος ελαττωματικών USB"
 
 msgid "Verify integrity of USB drive"
 msgstr "Επαλήθευση ακεραιότητας της μονάδας USB."
