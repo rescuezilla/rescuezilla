@@ -1,0 +1,55 @@
+# Japanese translation of Rescuezilla
+# Copyright (C) 2021
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Submitted at: https://github.com/rescuezilla/rescuezilla/issues/176
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-05-27 14:12+0930\n"
+"PO-Revision-Date: 2021-01-24 00:00+0000\n"
+"Last-Translator: AE720 <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Start Rescuezilla"
+msgstr "Rescuezillaを起動する"
+
+msgid "If boot fails, reboot and try selecting Graphical fallback instead"
+msgstr "起動が失敗した場合は グラフィカルなフォールバックモードを選択してみてください"
+
+msgid "Graphical fallback mode"
+msgstr "グラフィカルなフォールバックモード"
+
+msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
+msgstr "ハードウェアで標準モードが機能しない場合はグラフィカルなフォールバックモードを使用する"
+
+msgid "Load USB into RAM"
+msgstr "USBをRAMにロードする"
+
+msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
+msgstr "Rescuezillaをメモリにロードし、起動後に起動メディアを排出できるようにします"
+
+msgid "Check USB for defects"
+msgstr "欠陥のためにUSBをチェックする"
+
+msgid "Verify integrity of USB drive"
+msgstr "USBドライブの整合性を確認"
+
+msgid "Enter BIOS Setup"
+msgstr "BIOSセットアップに入る"
+
+msgid "Configure machine's firmware, boot options etc"
+msgstr "マシンのファームウェア、ブートオプションを構成などコンフィグする"
+
+msgid "Memory test"
+msgstr "メモリテスト"
+
+msgid "Check computer memory for errors"
+msgstr "コンピュータのメモリにエラーがないかチェックする"
