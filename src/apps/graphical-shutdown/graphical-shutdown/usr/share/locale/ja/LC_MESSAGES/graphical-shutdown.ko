@@ -1,0 +1,20 @@
+msgid ""
+msgstr ""
+"Language: ja\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "End Session"
+msgstr "セッションを終了する"
+
+msgid "Cancel"
+msgstr "キャンセル"
+
+msgid "Shutdown"
+msgstr "シャットダウン"
+
+msgid "Reboot"
+msgstr "リブート"
+
+msgid "Choose action."
+msgstr "アクションを選択してください"
