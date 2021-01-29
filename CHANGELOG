@@ -1,4 +1,13 @@
 -------------------------------------------------------------------------------
+  Version 2.1.3 (2021-01-29) 
+-------------------------------------------------------------------------------
+
+* Added scrollbars to improve usability on low-resolution displays (#164)
+* Fixed automatic maximization of the Python-based Rescuezilla frontend window (#164)
+* Added Greek/Ελληνικά (el-GR) translation by tkatsageorgis (ευχαριστώ!) (#171) 
+* Added Japanese/日本語 (ja-JP) translation by AE720 (ありがとう！) (#176) 
+
+-------------------------------------------------------------------------------
   Version 2.1.2 (2021-01-01) 
 -------------------------------------------------------------------------------
 
