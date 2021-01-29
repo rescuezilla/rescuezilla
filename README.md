@@ -35,8 +35,8 @@ Rescuezilla has been translated into the following languages:
 * Português brasileiro (pt-BR)
 * Polski (pl-PL)
 * Italiano (it-IT)
-* Ελληνικά (el-GR) ([Translation complete](https://github.com/rescuezilla/rescuezilla/issues/171))
-* 日本語 (ja-JP) ([Translation complete (needs review)](https://github.com/rescuezilla/rescuezilla/issues/176))
+* Ελληνικά (el-GR)
+* 日本語 (ja-JP)
 
 **Rescuezilla is now officially open for translations! See [Translations HOWTO](https://github.com/rescuezilla/rescuezilla/wiki/Translations-HOWTO) to submit a translation.**
 
@@ -57,7 +57,7 @@ Below table shows an abridged history of Rescuezilla. For more information, see 
 
 | Release             | Release Date | Operating System | Notes |
 | ------------------- | ---------- | ---------------- | ---------------------------------- |
-| Rescuezilla 2.1.2   | 2021-01-01 | Ubuntu 20.10     | [Download page](https://github.com/rescuezilla/rescuezilla/releases/latest)
+| Rescuezilla 2.1.3   | 2021-01-29 | Ubuntu 20.10     | [Download page](https://github.com/rescuezilla/rescuezilla/releases/latest)
 | Rescuezilla 2.1     | 2020-12-12 | Ubuntu 20.10     | Added Image Explorer (beta)
 | Rescuezilla 2.0     | 2020-10-14 | Ubuntu 20.04     | Added Clonezilla support
 | Rescuezilla 1.0.6   | 2020-06-17 | Ubuntu 20.04     |
