@@ -787,7 +787,7 @@
 
            [1] http://openbox.org/wiki/Help:Applications#Example_of_per-app_settings
       -->
-      <application name="Rescuezilla">
+      <application name="rescuezillapy" title="Rescuezilla" type="normal">
           <maximized>true</maximized>
       </application>
   </applications>
