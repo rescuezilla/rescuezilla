@@ -1,0 +1,428 @@
+# Swedish translation of Rescuezilla
+# Copyright (C) 2021
+# This file is distributed under the same license as the PACKAGE package.
+# AliensInc, 2021
+# Submitted at: https://github.com/rescuezilla/rescuezilla/issues/186
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-10-25 20:36+1030\n"
+"PO-Revision-Date: 2021-01-24 00:00+0000\n"
+"Last-Translator: AliensInc\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: sv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Welcome"
+msgstr "Välkommen"
+
+msgid "Select an Option"
+msgstr "Välj ett alternativ"
+
+msgid "Easily create a backup image of your computer, or completely restore from one.  Click an option to begin:"
+msgstr "Skapa enkelt en säkerhetskopia av din dator eller återställ helt från en.\n\n Klicka på ett alternativ för att börja:"
+
+msgid "Backup"
+msgstr "Säkerhetskopiering"
+
+msgid "Restore"
+msgstr "Återställ"
+
+msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
+msgstr "Behövs hjälp? Börja med att kontrollera Rescuezilla\nFAQ och fortsätt sedan till Rescuezilla forumet."
+
+msgid "Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed."
+msgstr "Överväg att bidra med 10Kr/månad på crowdfunding-webbplatsen\nPatreon så att Rescuezilla kan fortsätta utvecklas."
+
+msgid "Back"
+msgstr "Tillbaka"
+
+msgid "Next >"
+msgstr "Nästa >"
+
+msgid "Please wait..."
+msgstr "Vad god vänta..."
+
+msgid "Identifying disk drives..." 
+msgstr "Identifiera hårddiskar..."
+
+msgid "Step 1: Select Drive To Backup"
+msgstr "Steg 1: Välj Disk till säkerhetskopia"
+
+msgid "Select the source drive that you would like to create a backup image from."
+msgstr "Välj disken som du vill skapa en säkerhetskopia av."
+
+msgid "Drive"
+msgstr "Disk"
+
+msgid "Capacity"
+msgstr "Kapacitet"
+
+msgid "Drive Model"
+msgstr "Diskmodell"
+
+msgid "Partitions"
+msgstr "Partitioner"
+
+msgid "Show hidden devices (for advanced users)"
+msgstr "Visa gömda enheter (advancerat)"
+
+msgid "Step 2: Select Partitions to Save"
+msgstr "Steg 2: Välj partitioner att kopiera"
+
+msgid "Select which partitions to create a backup of.  Leave all partitions selected if you are unsure."
+msgstr "Välj vilka partitioner du vill skapa en säkerhetskopia av. Lämna alla partitioner markerade om du är osäker."
+
+msgid "Save"
+msgstr "Spara"
+
+msgid "Description"
+msgstr "Beskrivning"
+
+msgid "Drive {drive_number}, Partition {partition_number}"
+msgstr "Disk {drive_number}, Partition {partition_number}"
+
+msgid "Drive {drive_number}"
+msgstr "Disk {drive_number}"
+
+msgid "Step 3: Select Destination Drive"
+msgstr "Steg 3: Välj destinationsdisk"
+
+msgid "Click on the box below to select the source drive that you would like to create a backup image from."
+msgstr "Klicka i rutan nedan för att välja källenhet som du vill skapa en säkerhetskopia av."
+
+msgid "Connected directly to my computer"
+msgstr "Ansluten direkt till min dator"
+
+msgid "Shared over a network"
+msgstr "Delas över ett nätverk"
+
+msgid "Where is the destination drive?"
+msgstr "Var är målenheten?"
+
+msgid "SMB/CIFS shared folder specified below"
+msgstr "SMB/CIFS-delad mapp som anges nedan"
+
+msgid "Search network"
+msgstr "Sök nätverk"
+
+msgid "Server or share location:"
+msgstr "Server eller utdelad lagringsplats:"
+
+msgid "Username (Optional):"
+msgstr "Användarnamn (valfritt):"
+
+msgid "Password (Optional):"
+msgstr "Lösenord (valfritt):"
+
+msgid "Domain (Optional):"
+msgstr "Domän (valfritt):"
+
+msgid "Version (Optional):"
+msgstr "Version (valfritt):"
+
+msgid "Select network-shared storage location:"
+msgstr "Välj nätverksdelad lagringsplats:"
+
+msgid "Select destination drive:"
+msgstr "Välj destinationsdisk:"
+
+msgid "Partition"
+msgstr "Partition"
+
+msgid "Mounting..."
+msgstr "Monterar..."
+
+msgid "Please ensure the username, password and other fields provided are correct, and try again."
+msgstr "Se till att användarnamnet, lösenordet och andra angivna fält är korrekta och försök igen."
+
+msgid "Scanning folder for backup images..."
+msgstr "Skannar mapp för säkerhetskopierade filer..."
+
+msgid "Error processing the following images:"
+msgstr "Fel vid bearbetning av följande filer:"
+
+msgid "Unable to fully process the image associated with the following partitions:"
+msgstr "Det går inte att bearbeta filen som är associerad med följande partitioner:"
+
+msgid "Unable to fully process the following image:"
+msgstr "Det går inte att bearbeta följande fil helt:"
+
+msgid "This can happen when loading images which Clonezilla was unable to completely backup. Any other filesystems within the image should be restorable as normal."
+msgstr "Detta kan hända när filer laddas som Clonezilla inte kunde säkerhetskopiera helt. Alla andra filsystem i filen  ska kunna återställas som vanligt."
+
+msgid "Needs decryption"
+msgstr "Behöver dekryptering"
+
+msgid "Unknown filesystem"
+msgstr "Okänt filsystem"
+
+# No need to translate this message into your language -- it's only relevant for an old unofficial French version.
+msgid "The backup's extended partition information is empty or missing. This happens with incomplete backups created by an unofficial Redo Backup update. If the backup contains extended partitions, these will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore the extended partitions. Please consult {url} for information and assistance. The destination drive has not yet been modified. Do you wish to continue with the restore?"
+msgstr ""
+
+# No need to translate this message into your language -- it's only relevant for an old unofficial German version.
+msgid "The backup's bootloader data is shorter than expected. This happens with backups created by an unofficial Redo Backup update. If the backup contained certain bootloaders like GRUB, the restored hard drive will not boot correctly without a manual fix. All data is still fully recoverable but manual intervention may required to restore the bootloader. Please consult {url} for information and assistance. The destination drive has not yet been modified. Do you wish to continue with the restore?"
+msgstr "Die Bootloader-Daten des Backups sind weniger als erwartet. Dies kommt bei Sicherungen vor, die durch ein inoffizielles Redo-Backup-Update erstellt wurden. Wenn das Backup bestimmte Bootloader wie GRUB enthielt, lässt sich die wiederhergestellte Festplatte ohne manuelle Fehlerbehebung nicht ordnungsgemäß starten. Alle Daten können vollständig wiederhergestellt werden, womöglich ist jedoch ein manueller Eingriff erforderlich, um den Bootloader wiederherzustellen. Informationen und Unterstützung erhalten Sie unter %1 Das Ziellaufwerk wurde noch nicht geändert. Möchten Sie mit der Wiederherstellung fortfahren?"
+
+msgid "Step 4: Select Destination Folder"
+msgstr "Steg 4: Välj destinationskatalog"
+
+msgid "Click <b>Browse</b> to select the folder on the destination drive where your new backup image will be saved.\n"
+"\n"
+"The folder a backup is saved in is usually a description of the computer, e.g. <b>office1</b> or <b>zack-laptop</b>."
+msgstr "Klicka på <b>Bläddra</b> för att välja mappen på målenheten där din nya säkerhetskopia ska sparas.\n"
+"\n"
+"Den mapp som en säkerhetskopia sparas i är vanligtvis en beskrivning av datorn, t.ex. <b> office1 </b> eller <b> pers-laptop </b>."
+
+msgid "You must select a folder inside {location}"
+msgstr "Du måste välja en mapp inuti {location}"
+
+msgid "Please select a different folder."
+msgstr "Välj en annan mapp."
+
+msgid "The table below lists the backup images that already in this folder (if any)."
+msgstr "Tabellen nedan visar de säkerhetskopierade filer som redan finns i den här mappen (om någon)."
+
+msgid "Browse..."
+msgstr "Bläddra..."
+
+msgid "Filename"
+msgstr "Filnamn"
+
+msgid "Size"
+msgstr "Storlek"
+
+msgid "Last modified"
+msgstr "Senast ändrad"
+
+msgid "When you are happy with the destination folder, click <b>Next</b>."
+msgstr "När du är nöjd med målmappen klickar du på <b>Nästa</b>."
+
+msgid "Step 5: Name Your Backup"
+msgstr "Steg 5: Namnge din säkerhetskopia"
+
+msgid "Provide a unique name for this backup image, such as the date.  Today's date is automatically entered for you below.\n"
+"\n"
+"You may only use letters, numbers, and dashes in your backup name."
+msgstr "Ange ett unikt namn för den här filen, till exempel datumet. Dagens datum anges automatiskt för dig nedan.\n"
+"\n"
+"Du får endast använda bokstäver, siffror och bindestreck i ditt filnamn."
+
+msgid "Step 6: Confirm Backup Configuration"
+msgstr "Steg 6: Bekräfta konfigurationen"
+
+msgid "Source drive"
+msgstr "Källenhet"
+
+msgid "Backing up the following partition"
+msgstr "Säkerhetskopiera följande partition"
+
+msgid "The backup image will be written into folder {dest_dir} on {description}"
+msgstr "Die Sicherungskopie wird im Ordner {dest_dir} auf {description} gespeichert."
+
+msgid "Confirm the following backup configuration."
+msgstr "Bekräfta följande säkerhetskopiering."
+
+msgid "To start the backup, click <b>Next</b>."
+msgstr "Klicka på <b>Nästa</b> för att starta säkerhetskopian."
+
+msgid "Step 7: Creating Backup Image"
+msgstr "Steg 7: Skapar säkerhetskopia..."
+
+msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
+msgstr "Säkerhetskopierar ditt system till den plats du valt. Det kan ta en timme eller mer beroende på datorns hastighet och datamängden."
+
+msgid "Time Elapsed / Remaining: "
+msgstr "Tid / Återstående: "
+
+msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
+msgstr "{partition_name} med filsystem {filesystem} till {destination}"
+
+msgid "Summary of Backup"
+msgstr "Sammanfattning av säkerhetskopiering"
+
+msgid "Confirm the backup summary."
+msgstr "Bekräfta resultatet."
+
+msgid "Backup Summary"
+msgstr "Sammanställning av säkerhetskopiering"
+
+msgid "Backup cancelled by user."
+msgstr "Säkerhetskopieringen avbröts av användaren."
+
+msgid "Error creating backup: "
+msgstr "Fel vid säkerhetskopiering: "
+
+msgid "Failed to write destination file. Please confirm it is valid to create the provided file path, and try again."
+msgstr "Det gick inte att skriva målfilen. Bekräfta att det är giltigt att skapa den angivna filvägen och försök igen."
+
+msgid "Successful backup of swap partition {partition_name}"
+msgstr "Framgångsrik säkerhetskopiering av swap-partition {partition_name}"
+
+msgid "<b>Failed to backup partition</b> {partition_name}"
+msgstr "<b>Det gick inte att säkerhetskopiera partitionen</b> {partition_name}"
+
+msgid "Successful backup of partition {partition_name}"
+msgstr "Framgångsrik säkerhetskopiering av partitionen {partition_name}"
+
+msgid "Backup saved successfully."
+msgstr "Säkerhetskopian sparades."
+
+msgid "Backup succeeded with some errors:"
+msgstr "Säkerhetskopieringen lyckades med några fel:"
+
+msgid "Backup operation failed:"
+msgstr "Säkerhetskopieringen misslyckades:"
+
+msgid "Operation took {num_minutes} minutes."
+msgstr "Operationen tog {num_minutes} minuter."
+
+msgid "To start a new session, click <b>Next</b>"
+msgstr "Klicka på <b>Nästa</b> för att starta en ny session"
+
+msgid "Step 1: Select Image Location"
+msgstr "Steg 1: Välj plats där säkerhetskopian ligger"
+
+msgid "Where is the source drive?"
+msgstr "Var är källenheten?"
+
+msgid "Select source drive:"
+msgstr "Välj källenhet:"
+
+msgid "Step 2: Select Backup Image"
+msgstr "Steg 2: Välj säkerhetskopia"
+
+msgid "Click the box below to select the folder containing image files."
+msgstr "Klicka i rutan nedan för att välja den mapp som innehåller filerna."
+
+msgid "Select the image file to restore"
+msgstr "Välj den fil som ska återställas"
+
+msgid "Date created"
+msgstr "Skapat datum"
+
+msgid "Step 3: Select Drive To Restore"
+msgstr "Steg 3: Välj disk att återställa"
+
+msgid "Select the destination drive you wish to overwrite and restore the selected image to."
+msgstr "Välj den målenhet du vill skriva över och återställ den valda filen till."
+
+msgid "Step 4: Select Partitions To Restore"
+msgstr "Steg 4: Välj partitioner att återställa"
+
+msgid "Select which partitions from the backup to restore, and whether to overwrite the partition table. Leave everything selected to completely restore the destination drive."
+msgstr "Välj vilka partitioner från säkerhetskopian som ska återställas och om partitionstabellen ska skrivas över. Lämna allt valt för att helt återställa målenheten."
+
+msgid "Selected image"
+msgstr "Välj säkerhetskopia"
+
+msgid "Destination device"
+msgstr "Destinationsenhet"
+
+msgid "IMPORTANT: Only selecting FIRST disk in Clonezilla image containing MULTIPLE DISKS."
+msgstr "VIKTIGT: Välj bara FÖRSTA skivan i Clonezilla-bilden som innehåller FLERA SKIVOR."
+
+msgid "Destination partition"
+msgstr "Destinationspartition"
+
+msgid "Overwrite partition table"
+msgstr "Skriv över partitionstabellen"
+
+msgid "You will be overwriting the partition table."
+msgstr "Du kommer att skriva över partitionstabellen."
+
+msgid "The \"destination partition\" column has been updated using the information stored within the backup image.\n\n<b>If partitions have been resized, new partitions added, or additional operating systems installed <i>since the backup image was created</i>, then the destination drive's partition table will not match the backup image, and overwriting the destination drive's partition table will render these resized and additional partitions permanently inaccessible.</b> If you have not modified the partition table in such a way since creating this backup then overwriting the partition table is completely safe and will have no negative effects."
+msgstr "Kolumnen \"destinationspartition\" har uppdaterats med den information som lagras i säkerhetskopieringsbilden.\n \n <b>Om partitioner har ändrats, nya partitioner lagts till eller ytterligare operativsystem installerats <i>sedan säkerhetskopieringen skapats</i>, då matchar inte partitionstabellen kopian och överskrivning av destinationsenhetens partitionstabell gör att dessa storleksändrade och ytterligare partitioner blir permanent oåtkomliga. </b>Om du inte har ändrat partitionstabellen på ett sätt efter det att denna säkerhetskopia skapats är det säkert att skriva över partitionstabellen och det kommer inte att ha några negativa effekter."
+
+msgid "You will <b>not</b> be overwriting the partition table."
+msgstr "Du <b>kommer inte</b> att skriva över partitionstabellen."
+
+msgid "The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table."
+msgstr "Kolumnen \"destinationspartition\" har uppdaterats med destinationsfilens befintliga partitionstabellinformation.\n\n <b>Målpartitionskolumnen kan ändras som en rullgardinsmeny. Felaktig mappning av destinationspartitionerna kan leda till att operativsystem inte längre startas.</b> Om du är osäker, överväg då om det är lämpligare att istället skriva över partitionstabellen."
+
+msgid "No destination partition selected. Use the destination partition drop-down menu to select the destination"
+msgstr "Ingen destinationspartition vald. Använd menyn för att välja destination"
+
+msgid "Step 5: Confirm Restore Configuration"
+msgstr "Steg 5: Bekräfta återställningen"
+
+msgid "Confirm the restore configuration."
+msgstr "Bekräfta återställningen."
+
+msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite the data on this drive!"
+msgstr "Är du säker på att du vill återställa säkerhetskopian till {destination_drive}? Om du gör det kommer informationen på den här enheten permanent att skrivas över!"
+
+msgid "Source image"
+msgstr "Källfil"
+
+msgid "Destination drive"
+msgstr "Destinationsenhet"
+
+msgid "Restoring the following partitions"
+msgstr "Återställer följande partitioner"
+
+msgid "WILL BE OVERWRITING PARTITION TABLE"
+msgstr "KOMMER ATT SKRIVA ÖVER PARTITIONSTABELL"
+
+msgid "Will <b>NOT</b> be overwriting partition table"
+msgstr "Kommer <b>INTE</b> att skriva över partitionstabellen"
+
+msgid "To start the restore, click <b>Next</b>."
+msgstr "Klicka på <b>Nästa</b> för att starta återställningen."
+
+msgid "Restoring From Backup"
+msgstr "Återställer från säkerhetskopia"
+
+msgid "Restoring your system from the image you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
+msgstr "Återställer ditt system från den fil du valt. Det kan ta en timme eller mer beroende på datorns hastighet och datamängden."
+
+msgid "Refreshing partition table"
+msgstr "Uppdaterar partitionstabellen"
+
+msgid "Restoring {description} to {destination_partition} ({destination_description})"
+msgstr "Återskapar {description} till {destination_partition} ({destination_description})"
+
+msgid "Restore cancelled by user."
+msgstr "Återställningen avbröts av användaren."
+
+msgid "Error restoring image: "
+msgstr "Fel vid återställning av kopian:"
+
+msgid "Could not restore disk partition table as file has zero length: "
+msgstr "Det gick inte att återställa disk partitionstabell eftersom vald fil är tom: "
+
+msgid "Successfully restored partition table."
+msgstr "Partitionstabellen har återställts."
+
+msgid "Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."
+msgstr "Det gick inte att uppdatera enhetens partitionstabell. Detta kan hända om en annan process använder  partitionstabellen."
+
+msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
+msgstr "Det gick inte att återställa partitionen {destination_partition} eftersom det inte finns någon sparad kopia  tillhörande: {description}."
+
+msgid "This may occur if Clonezilla was originally unable to backup this partition."
+msgstr "Detta kan inträffa om Clonezilla ursprungligen inte kunde säkerhetskopiera denna partition."
+
+msgid "Error restoring partition {image_key} to {destination_partition}."
+msgstr "Fel vid återställning av partition {image_key} till {destination_partition}."
+
+msgid "Successfully restored image partition {image} to {destination_partition}"
+msgstr "Partitionen {image} har återställts till {destination_partition}"
+
+msgid "Summary of Restore"
+msgstr "Sammanfattning"
+
+msgid "Restore Summary"
+msgstr "Sammanfattning"
+
+msgid "Confirm the restore summary."
+msgstr "Bekräfta sammanfattningen."
+
+msgid "Backup restored successfully."
+msgstr "Säkerhetskopian har återställts." 

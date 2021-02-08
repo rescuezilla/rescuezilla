@@ -1,0 +1,20 @@
+msgid ""
+msgstr ""
+"Language: sv\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "End Session"
+msgstr "Avsluta Rescuezilla session"
+
+msgid "Cancel"
+msgstr "Abryt"
+
+msgid "Shutdown"
+msgstr "Stäng av"
+
+msgid "Reboot"
+msgstr "Starta om"
+
+msgid "Choose action."
+msgstr "Välj åtgärd"
