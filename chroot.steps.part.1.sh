@@ -135,6 +135,7 @@ common_pkgs=("discover"
              "firefox-locale-it"
              "firefox-locale-el"
              "firefox-locale-ja"
+             "firefox-locale-sv"
              "fonts-takao-mincho"
              "ibus-anthy"
              "breeze-gtk-theme"
@@ -205,6 +206,7 @@ common_pkgs=("discover"
              "language-pack-gnome-it-base"
              "language-pack-gnome-el-base"
              "language-pack-gnome-ja-base"
+             "language-pack-gnome-sv-base"
 )
 
 if  [ "$ARCH" == "i386" ]; then
