@@ -3,14 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-27 14:12+0930\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2021-02-10 17:39-0500\n"
+"Last-Translator: Carlos Luna <caralu74@protonmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -22,21 +21,21 @@ msgstr "Iniciar Rescuezilla"
 #      "----------MAX-LENGTH----------"
 
 msgid "If boot fails, reboot and try selecting Graphical fallback instead"
-msgstr ""
+msgstr "Si el arranque falla, reinicie y pruebe a seleccionar otra opción o resolución gráfica en su lugar"
 
 msgid "Graphical fallback mode"
-msgstr "Modo de recuperación de gráficos"
+msgstr "Modo gráfico de seguridad"
 #      "----------MAX-LENGTH----------"
 
 msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
-msgstr ""
+msgstr "Utilice una resolución grafica inferior si el modo estándar no funciona para su hardware"
 
 msgid "Load USB into RAM"
 msgstr "Cargar USB en memoria RAM"
 #      "----------MAX-LENGTH----------"
 
 msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
-msgstr "" 
+msgstr "Carga Rescuezilla en la memoria permitiendo que el medio de arranque sea expulsado después del arranque"
 
 msgid "Check USB for defects"
 msgstr "Comprobar si hay defectos en la USB"
@@ -46,10 +45,10 @@ msgid "Verify integrity of USB drive"
 msgstr "Compruebe si hay errores en la memoria del computador"
 
 msgid "Enter BIOS Setup"
-msgstr ""
+msgstr "Entrar en la configuración de la BIOS"
 
 msgid "Configure machine's firmware, boot options etc"
-msgstr ""
+msgstr "Configurar el firmware de la máquina, las opciones de arranque, etc."
 
 msgid "Memory test"
 msgstr "Prueba de memoria"
@@ -57,3 +56,4 @@ msgstr "Prueba de memoria"
 
 msgid "Check computer memory for errors"
 msgstr "Compruebe si hay errores en la memoria del computador"
+
