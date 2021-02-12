@@ -20,24 +20,28 @@ msgstr ""
 
 msgid "Start Rescuezilla"
 msgstr "Εκκίνηση Rescuezilla"
+#      "----------MAX-LENGTH----------"
 
 msgid "If boot fails, reboot and try selecting Graphical fallback instead"
 msgstr "Εάν η εκκίνηση αποτύχει, κάντε επανεκκίνηση και δοκιμάστε Λειτουργία εναλλακτικής λύσης γραφικών"
 
 msgid "Graphical fallback mode"
 msgstr "Εναλλακτική λύση γραφικών"
+#      "----------MAX-LENGTH----------"
 
 msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
 msgstr "Χρήση προγράμματος οδήγησης εναλλακτικής γραφικών χαμηλής ανάλυσης, εάν η τυπική λειτουργία δεν λειτουργεί για το υλικό σας"
 
 msgid "Load USB into RAM"
 msgstr "Φόρτωση USB στη RAM"
+#      "----------MAX-LENGTH----------"
 
 msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
 msgstr "Φορτώνει το Rescuezilla στη μνήμη επιτρέποντας στο μέσο εκκίνησης να εκτιναχθεί μετά την εκκίνηση"
 
 msgid "Check USB for defects"
 msgstr "Έλεγχος ελαττωματικών USB"
+#      "----------MAX-LENGTH----------"
 
 msgid "Verify integrity of USB drive"
 msgstr "Επαλήθευση ακεραιότητας της μονάδας USB."
@@ -50,6 +54,7 @@ msgstr "Ρυθμίστε το υλικολογισμικό του μηχανήμ
 
 msgid "Memory test"
 msgstr "Έλεγχος μνήμης"
+#      "----------MAX-LENGTH----------"
 
 msgid "Check computer memory for errors"
 msgstr "Έλεγχος μνήμης υπολογιστή για λάθη"
