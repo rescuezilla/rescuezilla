@@ -167,7 +167,7 @@ LANG_CODES=(
 pushd "$BUILD_DIRECTORY/image/boot/grub/locale/"
 for lang in "${LANG_CODES[@]}"; do
         if [[ ! -f "$lang.ko" ]]; then
-                echo "Warning: $long.ko translation does not exist. Skipping."
+                echo "Warning: $lang.ko translation does not exist. Skipping."
         else
                 echo "Converting language translation file: $BUILD_DIRECTORY/image/boot/grub/locale/$lang.ko" 
                 msgfmt --output-file="$lang.mo" "$lang.ko"
