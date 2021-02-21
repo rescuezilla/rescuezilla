@@ -38,7 +38,7 @@ msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after
 msgstr "Carga Rescuezilla en la memoria permitiendo que el medio de arranque sea expulsado después del arranque"
 
 msgid "Check USB for defects"
-msgstr "Comprobar si hay defectos en la USB"
+msgstr "Probar USB por defectos"
 #      "----------MAX-LENGTH----------"
 
 msgid "Verify integrity of USB drive"
