@@ -136,8 +136,13 @@ common_pkgs=("discover"
              "firefox-locale-el"
              "firefox-locale-ja"
              "firefox-locale-sv"
+             # Simplified Chinese is 'hanz' package, TODO: Add taditional is 'hant' once translation submitted.
+             "firefox-locale-zh-hans"
+              # Japanese font
              "fonts-takao-mincho"
              "ibus-anthy"
+             # Chinese font
+             "fonts-wqy-zenhei"
              "breeze-gtk-theme"
              "gtk3-engines-breeze"
              "gnome-icon-theme"
@@ -207,6 +212,8 @@ common_pkgs=("discover"
              "language-pack-gnome-el-base"
              "language-pack-gnome-ja-base"
              "language-pack-gnome-sv-base"
+             # Simplified Chinese language pack, TODO: add Traditional (hant) once translation submitted.
+             "language-pack-gnome-zh-hans"
 )
 
 if  [ "$ARCH" == "i386" ]; then

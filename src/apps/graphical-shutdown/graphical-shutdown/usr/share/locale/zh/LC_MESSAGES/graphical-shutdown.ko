@@ -1,0 +1,20 @@
+msgid ""
+msgstr ""
+"Language: zh\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "End Session"
+msgstr "退出任务"
+
+msgid "Cancel"
+msgstr "取消"
+
+msgid "Shutdown"
+msgstr "关机"
+
+msgid "Reboot"
+msgstr "重启"
+
+msgid "Choose action."
+msgstr "选择一个选项"
