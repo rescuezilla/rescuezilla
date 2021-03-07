@@ -216,6 +216,7 @@ common_pkgs=("discover"
              "language-pack-gnome-sv-base"
              # Simplified Chinese language pack, TODO: add Traditional (hant) once translation submitted.
              "language-pack-gnome-zh-hans"
+             "qemu-utils"
 )
 
 if  [ "$ARCH" == "i386" ]; then

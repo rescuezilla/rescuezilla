@@ -249,7 +249,7 @@ class Handler:
                     partition_list_store = self.builder.get_object("save_partition_list")
                     if 'partitions' not in self.drive_query.drive_state[self.selected_drive_key].keys():
                         error = ErrorMessageModalPopup(self.builder,
-                                                       "Backup of drives without a partition table not yet supported by current version of Rescuezilla.\n\nSupport for this will be added in a future version.\n\nHowever, as a temporary workaround, it is possible to use Clonezilla's 'savedisk' option to backup the drive, and then use Rescuezilla to restore that image.")
+                                                       "Backup of drives without a partition table not yet supported by current version of Rescuezilla.\nSupport for this will be added in a future version.\n\nHowever, as a temporary workaround, it is possible to use Clonezilla's 'savedisk' option to backup the drive, and then use Rescuezilla to restore that image.")
                         return
                     self.partitions_to_backup = collections.OrderedDict()
                     has_atleast_one = False
@@ -317,6 +317,9 @@ class Handler:
                         if image.is_needs_decryption:
                             error = ErrorMessageModalPopup(self.builder,
                                                            "Ecryptfs encrypted images are not supported by current version of Rescuezilla.\n\nSupport for ecryptfs will be improved in a future version.\n\nHowever, as a temporary workaround, it is possible to carefully use the mount command line utility to decrypt the image, and then point Rescuezilla to this ecryptfs mount point and then use Rescuezilla to restore the image as normal.")
+                        elif image.image_format == "QEMU_FORMAT":
+                            error = ErrorMessageModalPopup(self.builder,
+                                                           "Virtual Machine images and raw disk images can be mounted and explored by the current version of Rescuezilla, but not restored.\n\nSupport for restoring such images will be added in a future version.")
                         else:
                             if len(image.short_device_node_disk_list) > 1:
                                 # Unlike Rescuezilla, Clonezilla is able to backup multiple devices at the same time into

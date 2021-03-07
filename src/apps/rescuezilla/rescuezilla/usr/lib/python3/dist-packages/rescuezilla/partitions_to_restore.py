@@ -25,6 +25,7 @@ import gi
 from parser.fogproject_image import FogProjectImage
 from parser.foxclone_image import FoxcloneImage
 from parser.fsarchiver_image import FsArchiverImage
+from parser.qemu_image import QemuImage
 from parser.redorescue_image import RedoRescueImage
 
 gi.require_version("Gtk", "3.0")
@@ -353,6 +354,19 @@ class PartitionsToRestore:
                 self.restore_partition_selection_list.append(
                     [fs_key, True, flat_description, dest_partition, flat_description, dest_partition,
                      flat_description])
+        elif isinstance(self.selected_image, FogProjectImage):
+            for long_device_node in self.selected_image.sfdisk_dict['partitions'].keys():
+                image_base_device_node, image_partition_number = Utility.split_device_string(long_device_node)
+                # Combine image partition number with destination device node base
+                dest_partition = Utility.join_device_string(self.dest_drive_node, image_partition_number)
+                # FIXME: Ensure the assertion that the key being used is valid for the dictionary is true.
+                flat_description = "Partition " + str(
+                    image_partition_number) + " (" + dest_partition + "): " + self.selected_image.flatten_partition_string(
+                    long_device_node)
+                self.destination_partition_combobox_list.append([dest_partition, flat_description])
+                self.restore_partition_selection_list.append(
+                    [long_device_node, True, flat_description, dest_partition, flat_description, dest_partition,
+                     flat_description])
 
         self.builder.get_object("destination_partition_combobox_cell_renderer").set_sensitive(False)
 
@@ -454,6 +468,16 @@ class PartitionsToRestore:
                 fs_key) + ": " + self.selected_image.flatten_partition_string(fs_key)
                 self.restore_partition_selection_list.append(
                     [fs_key, is_restoring_partition, flat_image_part_description, dest_partition_key,
+                     flattened_part_description,
+                     dest_partition_key, flattened_part_description])
+                num_destination_partitions += 1
+        elif isinstance(self.selected_image, QemuImage):
+            for long_device_key in self.selected_image.sfdisk_dict['partitions'].keys():
+                image_base_device_node, image_partition_number = Utility.split_device_string(long_device_key)
+                flat_image_part_description = "Partition " + str(
+                    image_partition_number) + ": " + self.selected_image.flatten_partition_string(long_device_key)
+                self.restore_partition_selection_list.append(
+                    [long_device_key, is_restoring_partition, flat_image_part_description, dest_partition_key,
                      flattened_part_description,
                      dest_partition_key, flattened_part_description])
                 num_destination_partitions += 1

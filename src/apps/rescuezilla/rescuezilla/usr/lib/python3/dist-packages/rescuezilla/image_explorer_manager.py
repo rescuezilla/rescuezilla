@@ -34,8 +34,10 @@ import utility
 from parser.fogproject_image import FogProjectImage
 from parser.foxclone_image import FoxcloneImage
 from parser.fsarchiver_image import FsArchiverImage
+from parser.qemu_image import QemuImage
 from parser.redorescue_image import RedoRescueImage
-from wizard_state import IMAGE_EXPLORER_DIR, MOUNTABLE_NBD_DEVICE, DECOMPRESSED_NBD_DEVICE, JOINED_FILES_NBD_DEVICE
+from wizard_state import IMAGE_EXPLORER_DIR, MOUNTABLE_NBD_DEVICE, DECOMPRESSED_NBD_DEVICE, JOINED_FILES_NBD_DEVICE, \
+    QEMU_NBD_NBD_DEVICE
 
 gi.require_version("Gtk", "3.0")
 
@@ -80,6 +82,7 @@ class ImageExplorerManager:
         self.requested_stop_lock = threading.Lock()
         self.requested_stop = False
         self.image_explorer_in_progress = False
+        self.qemu_nbd_process_queue = Queue()
         # The mount and unmount calls may take place on different threads due to GTK button press events, so communicate
         # the pid via a queue.
         self.partclone_nbd_process_queue = Queue()
@@ -167,6 +170,14 @@ class ImageExplorerManager:
                     fs_key)
                 self.image_explorer_partition_selection_list.append(
                     [fs_key, human_friendly_partition_name, flat_description])
+        elif isinstance(self.selected_image, QemuImage):
+            for long_device_node in self.selected_image.sfdisk_dict['partitions'].keys():
+                image_base_device_node, image_partition_number = Utility.split_device_string(long_device_node)
+                human_friendly_partition_name = "#" + str(image_partition_number) + " (" + long_device_node + ")"
+                flat_description = str(image_partition_number) + ": " + self.selected_image.flatten_partition_string(
+                    long_device_node)
+                self.image_explorer_partition_selection_list.append(
+                    [long_device_node, human_friendly_partition_name, flat_description])
 
     # Sets sensitivity of all elements on the Image Explorer page
     def set_parts_of_image_explorer_page_sensitive(self, is_sensitive):
@@ -260,6 +271,10 @@ class ImageExplorerManager:
         # Unmount and cleanup in case a previous invocation of Rescuezilla didn't cleanup.
         is_unmounted, message = Utility.umount_warn_on_busy(destination_path)
         if not is_unmounted:
+            return False, message
+
+        is_success, message = QemuImage.deassociate_nbd(QEMU_NBD_NBD_DEVICE)
+        if not is_success:
             return False, message
 
         is_success, message = ImageExplorerManager.pop_and_kill("partclone-nbd", partclone_nbd_process_queue,
@@ -411,6 +426,7 @@ class ImageExplorerManager:
                 GLib.idle_add(please_wait_popup.destroy)
                 return
 
+            mount_device = MOUNTABLE_NBD_DEVICE
             compression = ""
             image_file_list = []
             if isinstance(image, ClonezillaImage):
@@ -465,213 +481,213 @@ class ImageExplorerManager:
                 image_file_list = image.foxclone_dict['partitions'][partition_key]['abs_image_glob']
                 # Foxclone format only used gzip compression
                 compression = "gzip"
-            elif isinstance(image, FoxcloneImage):
+            elif isinstance(image, QemuImage):
+                image.associate_nbd(QEMU_NBD_NBD_DEVICE)
                 base_device_node, partition_number = Utility.split_device_string(partition_key)
-                #image_file_list = image.foxclone_dict['partitions'][partition_key]['abs_image_glob']
-                # FIXME: set compression
-                compression = "uncompressed"
+                mount_device = Utility.join_device_string(QEMU_NBD_NBD_DEVICE, partition_number)
 
-            # Concatenate the split partclone images into a virtual block device using nbdkit. This step is fast
-            # because it's just logical mapping within the nbdkit process. In other words "lazy-evaulation: no
-            # concatenation is actually occurring.
-            #
-            # nbdkit's "--filter=" arguments can be used to decompress requested blocks on-the-fly in a single nbdkit
-            # invokation. However for flexibility with the older nbdkit version in Ubuntu 20.04 (see below),
-            # and the limited number of compression filters even in recent nbdkit versions, Rescuezilla does this in
-            # two steps: joining the files is a different step to decompressing the files. This approach provides
-            # greater flexibility for alternative decompression utilities such as perhaps `archivemount` or AVFS.
+            if not isinstance(image, QemuImage):
+                # Concatenate the split partclone images into a virtual block device using nbdkit. This step is fast
+                # because it's just logical mapping within the nbdkit process. In other words "lazy-evaulation: no
+                # concatenation is actually occurring.
+                #
+                # nbdkit's "--filter=" arguments can be used to decompress requested blocks on-the-fly in a single nbdkit
+                # invokation. However for flexibility with the older nbdkit version in Ubuntu 20.04 (see below),
+                # and the limited number of compression filters even in recent nbdkit versions, Rescuezilla does this in
+                # two steps: joining the files is a different step to decompressing the files. This approach provides
+                # greater flexibility for alternative decompression utilities such as perhaps `archivemount` or AVFS.
 
-            # Launches nbdkit using the 'split' plugin (`man nbdkit-split-plugin`) to concatenate the files.
-            # The concatenated compressed image file is almost certainly not aligned to a 512-byte or 4096-byte block
-            # boundary. To force the partially-filled final block to always be served up, using the truncate filter
-            # (`man nbdkit-truncate-filter`) with the "round-up" parameter to pad that final block with zeroes.
-            nbdkit_join_cmd_list = ["nbdkit", "--no-fork", "--readonly", "--filter=truncate",
-                                    "split"] + image_file_list + [
-                                       "round-up=512"]
-            flat_command_string = Utility.print_cli_friendly(
-                "Create nbd server using nbdkit to dynamically concatenate (possibly hundreds) of 4 gigabyte pieces (and zero-pad the final partially-filled block to the 512-byte block boundary)",
-                [nbdkit_join_cmd_list])
-            GLib.idle_add(please_wait_popup.set_secondary_label_text,
-                          "Joining all the split image files (this may take a while) (step 2/5")
-            # Launch the server (long-lived process so PID/exit code/stdout/stderr management is especially important)
-            nbdkit_join_process = subprocess.Popen(nbdkit_join_cmd_list,
-                                                   stdout=subprocess.PIPE,
-                                                   env=env,
-                                                   encoding='utf-8')
-            print("Adding join process with pid " + str(nbdkit_join_process.pid) + " to queue")
-            self.nbdkit_join_process_queue.put(nbdkit_join_process)
-            # Connect the /dev/nbdN device node to the NBD server launched earlier.
-            nbdclient_connect_cmd_list = ["nbd-client", "-block-size", "512", "localhost", JOINED_FILES_NBD_DEVICE]
+                # Launches nbdkit using the 'split' plugin (`man nbdkit-split-plugin`) to concatenate the files.
+                # The concatenated compressed image file is almost certainly not aligned to a 512-byte or 4096-byte block
+                # boundary. To force the partially-filled final block to always be served up, using the truncate filter
+                # (`man nbdkit-truncate-filter`) with the "round-up" parameter to pad that final block with zeroes.
+                nbdkit_join_cmd_list = ["nbdkit", "--no-fork", "--readonly", "--filter=truncate",
+                                        "split"] + image_file_list + [
+                                           "round-up=512"]
+                flat_command_string = Utility.print_cli_friendly(
+                    "Create nbd server using nbdkit to dynamically concatenate (possibly hundreds) of 4 gigabyte pieces (and zero-pad the final partially-filled block to the 512-byte block boundary)",
+                    [nbdkit_join_cmd_list])
+                GLib.idle_add(please_wait_popup.set_secondary_label_text,
+                              "Joining all the split image files (this may take a while) (step 2/5")
+                # Launch the server (long-lived process so PID/exit code/stdout/stderr management is especially important)
+                nbdkit_join_process = subprocess.Popen(nbdkit_join_cmd_list,
+                                                       stdout=subprocess.PIPE,
+                                                       env=env,
+                                                       encoding='utf-8')
+                print("Adding join process with pid " + str(nbdkit_join_process.pid) + " to queue")
+                self.nbdkit_join_process_queue.put(nbdkit_join_process)
+                # Connect the /dev/nbdN device node to the NBD server launched earlier.
+                nbdclient_connect_cmd_list = ["nbd-client", "-block-size", "512", "localhost", JOINED_FILES_NBD_DEVICE]
 
-            if self._check_stop_and_cleanup(please_wait_popup, callback, destination_path):
-                return
-
-            process, flat_command_string, failed_message = Utility.interruptable_run(
-                "Associating the nbdkit server process being used for dynamic CONCATENATION with the nbd device node: " + JOINED_FILES_NBD_DEVICE,
-                nbdclient_connect_cmd_list, use_c_locale=False, is_shutdown_fn=self.is_stop_requested)
-            if process.returncode != 0:
-                is_unmount_success, unmount_failed_message = self._do_unmount(destination_path,
-                                                                              self.nbdkit_join_process_queue,
-                                                                              self.nbdkit_decompress_process_queue,
-                                                                              self.partclone_nbd_process_queue)
-                if not is_unmount_success:
-                    failed_message += "\n\n" + unmount_failed_message
-                GLib.idle_add(callback, False, failed_message)
-                GLib.idle_add(please_wait_popup.destroy)
-                return
-
-            if self._check_stop_and_cleanup(please_wait_popup, callback, destination_path):
-                return
-
-            nbd_compression_filter_and_plugin = []
-            if "xz" == compression:
-                # In the xz case, use the file plugin and the xz filter
-                nbd_compression_filter_and_plugin = ["--filter=xz", "file"]
-            elif "gzip" == compression:
-                # In the gzip case, use the gzip plugin. This is because Ubuntu 20.04 (Focal) still use nbdkit v1.16
-                # which had not yet removed the gzip plugin and replaced it with a gzip filter [1] [2]
-                # [1] https://bugs.launchpad.net/ubuntu/+source/nbdkit/+bug/1904554
-                # [2] https://packages.ubuntu.com/focal/nbdkit
-                nbd_compression_filter_and_plugin = ["gzip"]
-            elif "uncompressed" == compression:
-                # In the uncompressed case, use the file plugin without any compression filters (passthrough). This
-                # unnecessary extra layer for uncompressed data is inefficient in theory (and possibly in practice) but
-                # this approach makes the code simpler and the uncompressed case is still way faster than compressed.
-                nbd_compression_filter_and_plugin = ["file"]
-            else:
-                # Clonezilla still has more compression formats: bzip2 lzo lzma lzip lrzip lz4 zstd
-                # TODO: This codepath shouldn't ever be hit currently due to being dealt with earlier.
-                # TODO: Use the FUSE-based tools archivemount and/or AVFS to provide at least some basic/slow fallback
-                # TODO: support for these compression formats widely used by Expert Mode Clonezilla users.
-                # During testing there was a 'permission denied' error using archivemount with nbd block devices,
-                # even after settings the correct configuration in /etc/fuse.conf and using `-o allow_root`.
-                is_unmount_success, unmount_failed_message = self._do_unmount(destination_path,
-                                                                              self.nbdkit_join_process_queue,
-                                                                              self.nbdkit_decompress_process_queue,
-                                                                              self.partclone_nbd_process_queue)
-                if not is_unmount_success:
-                    failed_message += "\n\n" + unmount_failed_message
-                failed_message = "Image Explorer (beta) doesn't yet support image compression: " + compression
-                GLib.idle_add(callback, False, failed_message)
-                GLib.idle_add(please_wait_popup.destroy)
-                return
-
-            # Launches nbdkit using eg, the 'file' plugin (`man nbdkit-file-plugin`) with a specific decompression
-            # filter (eg, --filter=xz) to dynamically decompress the concatenated image being served on an /dev/nbdN
-            # device node. Again using the truncate filter to zero pad to the nearest 512-byte block boundary.
-            # Uses a non-standard port to avoid conflicting with earlier nbdkit usage.
-            port = "10810"
-            nbdkit_decompress_cmd_list = ["nbdkit", "--no-fork", "--readonly", "--port", "10810",
-                                          "--filter=truncate"] + nbd_compression_filter_and_plugin + [
-                                             "file=" + JOINED_FILES_NBD_DEVICE, "round-up=512"]
-            flat_command_string = Utility.print_cli_friendly(
-                "Create nbd server using nbdkit to dynamically decompress the concatenated image (and zero-pad the final partially-filled block to the 512-byte block boundary)",
-                [nbdkit_decompress_cmd_list])
-            GLib.idle_add(please_wait_popup.set_secondary_label_text,
-                          "Decompressing the combined partclone image file (this may take while) (step 3/5)")
-            nbdkit_decompress_process = subprocess.Popen(nbdkit_decompress_cmd_list,
-                                                         stdout=subprocess.PIPE,
-                                                         env=env,
-                                                         encoding='utf-8')
-
-            if self._check_stop_and_cleanup(please_wait_popup, callback, destination_path):
-                return
-            print("Adding decompress process with pid " + str(nbdkit_decompress_process.pid) + " to queue")
-            self.nbdkit_decompress_process_queue.put(nbdkit_decompress_process)
-            nbdclient_connect_cmd_list = ["nbd-client", "-block-size", "512", "localhost", port,
-                                          DECOMPRESSED_NBD_DEVICE]
-            process, flat_command_string, failed_message = Utility.interruptable_run(
-                "Associating the nbdkit server process being used for dynamic DECOMPRESSION with the nbd device node. For gzip data this may take a while (as it effectively decompresses entire archive): " + DECOMPRESSED_NBD_DEVICE,
-                nbdclient_connect_cmd_list, use_c_locale=False, is_shutdown_fn=self.is_stop_requested)
-            if process.returncode != 0:
-                is_unmount_success, unmount_failed_message = self._do_unmount(destination_path,
-                                                                              self.nbdkit_join_process_queue,
-                                                                              self.nbdkit_decompress_process_queue,
-                                                                              self.partclone_nbd_process_queue)
-                if not is_unmount_success:
-                    failed_message += "\n\n" + unmount_failed_message
-                GLib.idle_add(callback, False, failed_message)
-                GLib.idle_add(please_wait_popup.destroy)
-                return
-
-            if self._check_stop_and_cleanup(please_wait_popup, callback, destination_path):
-                return
-
-            # TODO: Handle ntfsclone via partclone-utils' imagemount
-            # TODO: Some dd images may be accessible using standard `mount` cal)l
-            partclone_nbd_mount_cmd_list = ["partclone-nbd", "-d", MOUNTABLE_NBD_DEVICE, "-c", DECOMPRESSED_NBD_DEVICE]
-            partclone_nbd_flat_command_string = Utility.print_cli_friendly(
-                "Processing partclone image with partclone-nbd:",
-                [partclone_nbd_mount_cmd_list])
-
-            GLib.idle_add(please_wait_popup.set_secondary_label_text,
-                          "Processing image with partclone-nbd (this may take a while) (step 4/5)")
-            partclone_nbd_process = subprocess.Popen(partclone_nbd_mount_cmd_list,
-                                                     stdout=subprocess.PIPE,
-                                                     stderr=subprocess.PIPE,
-                                                     env=env)
-
-            print("Adding partclone-nbd process with pid " + str(partclone_nbd_process.pid) + " to queue")
-            self.partclone_nbd_process_queue.put(partclone_nbd_process)
-            # Sentinal value for successful partclone-nbd mount. partclone-nbd is launched with C locale env, so this
-            # string will match even for non-English locales.
-            partclone_nbd_ready_msg = "[ INF ] Waiting for requests ..."
-
-            # Poll the partclone-nbd stdout until the ready message has been received.
-            # This relies on partclone-nbd exiting immediately if an error is generated, if not, an infinite loop will
-            # result until the timeout is hit.
-            # TODO: A future translation of partclone-nbd may break this on non-English languages
-            mounted_successfully = False
-            queue = Utility.nonblocking_subprocess_pipe_queue(partclone_nbd_process)
-            partclone_nbd_output_list = []
-            while True:
-                if self.is_stop_requested():
-                    partclone_nbd_process.terminate()
-                    # FIXME: Might need longer sleep?
-                    sleep(1)
-                    partclone_nbd_process.kill()
-                    self._check_stop_and_cleanup(please_wait_popup, callback, destination_path)
+                if self._check_stop_and_cleanup(please_wait_popup, callback, destination_path):
                     return
-                try:
-                    line = queue.get(timeout=0.1)
-                except Empty:
-                    continue
+
+                process, flat_command_string, failed_message = Utility.interruptable_run(
+                    "Associating the nbdkit server process being used for dynamic CONCATENATION with the nbd device node: " + JOINED_FILES_NBD_DEVICE,
+                    nbdclient_connect_cmd_list, use_c_locale=False, is_shutdown_fn=self.is_stop_requested)
+                if process.returncode != 0:
+                    is_unmount_success, unmount_failed_message = self._do_unmount(destination_path,
+                                                                                  self.nbdkit_join_process_queue,
+                                                                                  self.nbdkit_decompress_process_queue,
+                                                                                  self.partclone_nbd_process_queue)
+                    if not is_unmount_success:
+                        failed_message += "\n\n" + unmount_failed_message
+                    GLib.idle_add(callback, False, failed_message)
+                    GLib.idle_add(please_wait_popup.destroy)
+                    return
+
+                if self._check_stop_and_cleanup(please_wait_popup, callback, destination_path):
+                    return
+
+                nbd_compression_filter_and_plugin = []
+                if "xz" == compression:
+                    # In the xz case, use the file plugin and the xz filter
+                    nbd_compression_filter_and_plugin = ["--filter=xz", "file"]
+                elif "gzip" == compression:
+                    # In the gzip case, use the gzip plugin. This is because Ubuntu 20.04 (Focal) still use nbdkit v1.16
+                    # which had not yet removed the gzip plugin and replaced it with a gzip filter [1] [2]
+                    # [1] https://bugs.launchpad.net/ubuntu/+source/nbdkit/+bug/1904554
+                    # [2] https://packages.ubuntu.com/focal/nbdkit
+                    nbd_compression_filter_and_plugin = ["gzip"]
+                elif "uncompressed" == compression:
+                    # In the uncompressed case, use the file plugin without any compression filters (passthrough). This
+                    # unnecessary extra layer for uncompressed data is inefficient in theory (and possibly in practice) but
+                    # this approach makes the code simpler and the uncompressed case is still way faster than compressed.
+                    nbd_compression_filter_and_plugin = ["file"]
                 else:
-                    print(line)
-                    line = line.decode("utf-8")
-                    partclone_nbd_output_list += [line]
-                    line = line.strip()
-                    m = utility.REMatcher(line)
-                    if m.match(r".*Waiting for requests.*"):
-                        print("Detected partclone-nbd mount is ready!")
-                        mounted_successfully = True
+                    # Clonezilla still has more compression formats: bzip2 lzo lzma lzip lrzip lz4 zstd
+                    # TODO: This codepath shouldn't ever be hit currently due to being dealt with earlier.
+                    # TODO: Use the FUSE-based tools archivemount and/or AVFS to provide at least some basic/slow fallback
+                    # TODO: support for these compression formats widely used by Expert Mode Clonezilla users.
+                    # During testing there was a 'permission denied' error using archivemount with nbd block devices,
+                    # even after settings the correct configuration in /etc/fuse.conf and using `-o allow_root`.
+                    is_unmount_success, unmount_failed_message = self._do_unmount(destination_path,
+                                                                                  self.nbdkit_join_process_queue,
+                                                                                  self.nbdkit_decompress_process_queue,
+                                                                                  self.partclone_nbd_process_queue)
+                    if not is_unmount_success:
+                        failed_message += "\n\n" + unmount_failed_message
+                    failed_message = "Image Explorer (beta) doesn't yet support image compression: " + compression
+                    GLib.idle_add(callback, False, failed_message)
+                    GLib.idle_add(please_wait_popup.destroy)
+                    return
+
+                # Launches nbdkit using eg, the 'file' plugin (`man nbdkit-file-plugin`) with a specific decompression
+                # filter (eg, --filter=xz) to dynamically decompress the concatenated image being served on an /dev/nbdN
+                # device node. Again using the truncate filter to zero pad to the nearest 512-byte block boundary.
+                # Uses a non-standard port to avoid conflicting with earlier nbdkit usage.
+                port = "10810"
+                nbdkit_decompress_cmd_list = ["nbdkit", "--no-fork", "--readonly", "--port", "10810",
+                                              "--filter=truncate"] + nbd_compression_filter_and_plugin + [
+                                                 "file=" + JOINED_FILES_NBD_DEVICE, "round-up=512"]
+                flat_command_string = Utility.print_cli_friendly(
+                    "Create nbd server using nbdkit to dynamically decompress the concatenated image (and zero-pad the final partially-filled block to the 512-byte block boundary)",
+                    [nbdkit_decompress_cmd_list])
+                GLib.idle_add(please_wait_popup.set_secondary_label_text,
+                              "Decompressing the combined partclone image file (this may take while) (step 3/5)")
+                nbdkit_decompress_process = subprocess.Popen(nbdkit_decompress_cmd_list,
+                                                             stdout=subprocess.PIPE,
+                                                             env=env,
+                                                             encoding='utf-8')
+
+                if self._check_stop_and_cleanup(please_wait_popup, callback, destination_path):
+                    return
+                print("Adding decompress process with pid " + str(nbdkit_decompress_process.pid) + " to queue")
+                self.nbdkit_decompress_process_queue.put(nbdkit_decompress_process)
+                nbdclient_connect_cmd_list = ["nbd-client", "-block-size", "512", "localhost", port,
+                                              DECOMPRESSED_NBD_DEVICE]
+                process, flat_command_string, failed_message = Utility.interruptable_run(
+                    "Associating the nbdkit server process being used for dynamic DECOMPRESSION with the nbd device node. For gzip data this may take a while (as it effectively decompresses entire archive): " + DECOMPRESSED_NBD_DEVICE,
+                    nbdclient_connect_cmd_list, use_c_locale=False, is_shutdown_fn=self.is_stop_requested)
+                if process.returncode != 0:
+                    is_unmount_success, unmount_failed_message = self._do_unmount(destination_path,
+                                                                                  self.nbdkit_join_process_queue,
+                                                                                  self.nbdkit_decompress_process_queue,
+                                                                                  self.partclone_nbd_process_queue)
+                    if not is_unmount_success:
+                        failed_message += "\n\n" + unmount_failed_message
+                    GLib.idle_add(callback, False, failed_message)
+                    GLib.idle_add(please_wait_popup.destroy)
+                    return
+
+                if self._check_stop_and_cleanup(please_wait_popup, callback, destination_path):
+                    return
+
+                # TODO: Handle ntfsclone via partclone-utils' imagemount
+                # TODO: Some dd images may be accessible using standard `mount` cal)l
+                partclone_nbd_mount_cmd_list = ["partclone-nbd", "-d", MOUNTABLE_NBD_DEVICE, "-c", DECOMPRESSED_NBD_DEVICE]
+                partclone_nbd_flat_command_string = Utility.print_cli_friendly(
+                    "Processing partclone image with partclone-nbd:",
+                    [partclone_nbd_mount_cmd_list])
+
+                GLib.idle_add(please_wait_popup.set_secondary_label_text,
+                              "Processing image with partclone-nbd (this may take a while) (step 4/5)")
+                partclone_nbd_process = subprocess.Popen(partclone_nbd_mount_cmd_list,
+                                                         stdout=subprocess.PIPE,
+                                                         stderr=subprocess.PIPE,
+                                                         env=env)
+
+                print("Adding partclone-nbd process with pid " + str(partclone_nbd_process.pid) + " to queue")
+                self.partclone_nbd_process_queue.put(partclone_nbd_process)
+                # Sentinal value for successful partclone-nbd mount. partclone-nbd is launched with C locale env, so this
+                # string will match even for non-English locales.
+                partclone_nbd_ready_msg = "[ INF ] Waiting for requests ..."
+
+                # Poll the partclone-nbd stdout until the ready message has been received.
+                # This relies on partclone-nbd exiting immediately if an error is generated, if not, an infinite loop will
+                # result until the timeout is hit.
+                # TODO: A future translation of partclone-nbd may break this on non-English languages
+                mounted_successfully = False
+                queue = Utility.nonblocking_subprocess_pipe_queue(partclone_nbd_process)
+                partclone_nbd_output_list = []
+                while True:
+                    if self.is_stop_requested():
+                        partclone_nbd_process.terminate()
+                        # FIXME: Might need longer sleep?
+                        sleep(1)
+                        partclone_nbd_process.kill()
+                        self._check_stop_and_cleanup(please_wait_popup, callback, destination_path)
+                        return
+                    try:
+                        line = queue.get(timeout=0.1)
+                    except Empty:
+                        continue
+                    else:
+                        print(line)
+                        line = line.decode("utf-8")
+                        partclone_nbd_output_list += [line]
+                        line = line.strip()
+                        m = utility.REMatcher(line)
+                        if m.match(r".*Waiting for requests.*"):
+                            print("Detected partclone-nbd mount is ready!")
+                            mounted_successfully = True
+                            break
+                    rc = partclone_nbd_process.poll()
+                    if rc is not None:
                         break
-                rc = partclone_nbd_process.poll()
-                if rc is not None:
-                    break
 
-            if not mounted_successfully:
-                partclone_nbd_flat_command_string = ""
-                for line in partclone_nbd_output_list:
-                    partclone_nbd_flat_command_string += line
-                failed_message = "Unable to process image using partclone-nbd:\n\n" + partclone_nbd_flat_command_string + "\n\n"
-                if self.is_stop_requested():
-                    self._do_unmount_wrapper(please_wait_popup, callback, destination_path)
-                    failed_message += "\n" + "User requested operation to stop."
-                is_unmount_success, unmount_failed_message = self._do_unmount(destination_path,
-                                                                              self.nbdkit_join_process_queue,
-                                                                              self.nbdkit_decompress_process_queue,
-                                                                              self.partclone_nbd_process_queue)
-                if not is_unmount_success:
-                    failed_message += "\n\n" + unmount_failed_message
-                GLib.idle_add(callback, False, failed_message)
-                GLib.idle_add(please_wait_popup.destroy)
-                return
+                if not mounted_successfully:
+                    partclone_nbd_flat_command_string = ""
+                    for line in partclone_nbd_output_list:
+                        partclone_nbd_flat_command_string += line
+                    failed_message = "Unable to process image using partclone-nbd:\n\n" + partclone_nbd_flat_command_string + "\n\n"
+                    if self.is_stop_requested():
+                        self._do_unmount_wrapper(please_wait_popup, callback, destination_path)
+                        failed_message += "\n" + "User requested operation to stop."
+                    is_unmount_success, unmount_failed_message = self._do_unmount(destination_path,
+                                                                                  self.nbdkit_join_process_queue,
+                                                                                  self.nbdkit_decompress_process_queue,
+                                                                                  self.partclone_nbd_process_queue)
+                    if not is_unmount_success:
+                        failed_message += "\n\n" + unmount_failed_message
+                    GLib.idle_add(callback, False, failed_message)
+                    GLib.idle_add(please_wait_popup.destroy)
+                    return
 
-            if self._check_stop_and_cleanup(please_wait_popup, callback, destination_path):
-                return
+                if self._check_stop_and_cleanup(please_wait_popup, callback, destination_path):
+                    return
 
-            mount_cmd_list = ["mount", "-o", "ro", MOUNTABLE_NBD_DEVICE, destination_path]
+            mount_cmd_list = ["mount", "-o", "ro", mount_device, destination_path]
             GLib.idle_add(please_wait_popup.set_secondary_label_text,
                           "Mounting image (this may take a while) (step 5/5)")
             process, flat_command_string, failed_message = Utility.interruptable_run("Mount ", mount_cmd_list,

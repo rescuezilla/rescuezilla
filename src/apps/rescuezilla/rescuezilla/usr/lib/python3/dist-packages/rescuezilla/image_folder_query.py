@@ -28,6 +28,7 @@ from parser.fogproject_image import FogProjectImage
 from parser.foxclone_image import FoxcloneImage
 from parser.fsarchiver_image import FsArchiverImage
 from parser.redorescue_image import RedoRescueImage
+from parser.qemu_image import QemuImage
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import GdkPixbuf, GLib
@@ -228,6 +229,15 @@ class ImageFolderQuery:
                                   _("Scanning: {filename}").format(filename=absolute_path))
                     image = FsArchiverImage(absolute_path, enduser_filename, filename)
                     error_suffix = ""
+                    is_image = True
+                elif QemuImage.is_supported_extension(filename):
+                    print("Found an extension that should be compatible with qemu-nbd: " + filename)
+                    print("Skipping: " + filename)
+                    timeout_seconds = 10
+                    GLib.idle_add(self.please_wait_popup.set_secondary_label_text,
+                                  _(f"Scanning: {filename} ({timeout_seconds} second timeout)").format(filename=absolute_path, timeout_seconds=timeout_seconds))
+                    image = QemuImage(absolute_path, enduser_filename, timeout_seconds)
+                    error_suffix = _("Support for virtual machine images is still experimental.")
                     is_image = True
                 if is_image:
                     image_warning_message = ""

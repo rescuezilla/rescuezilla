@@ -32,10 +32,13 @@ from time import sleep
 
 import gi
 
+from image_explorer_manager import ImageExplorerManager
 from parser.fogproject_image import FogProjectImage
 from parser.foxclone_image import FoxcloneImage
 from parser.fsarchiver_image import FsArchiverImage
+from parser.qemu_image import QemuImage
 from parser.redorescue_image import RedoRescueImage
+from wizard_state import IMAGE_EXPLORER_DIR
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import GObject, GLib
@@ -272,6 +275,13 @@ class RestoreManager:
 
         with self.summary_message_lock:
             self.summary_message += self.image.absolute_path + "\n"
+
+        returncode, failed_message = ImageExplorerManager._do_unmount(IMAGE_EXPLORER_DIR)
+        if not returncode:
+            with self.summary_message_lock:
+                self.summary_message += failed_message + "\n"
+            GLib.idle_add(self.completed_restore, False, failed_message)
+            return
 
         is_successfully_shutdown, message = self._shutdown_lvm()
         if not is_successfully_shutdown:
@@ -1353,6 +1363,8 @@ class RestoreManager:
                 if self.requested_stop:
                     GLib.idle_add(self.completed_restore, False, "Requested stop")
                     return
+        elif isinstance(self.image, QemuImage):
+            GLib.idle_add(self.restore_destination_drive, False, "QemuImage restore not yet implemented.")
 
         GLib.idle_add(self.completed_restore, True, "")
 
