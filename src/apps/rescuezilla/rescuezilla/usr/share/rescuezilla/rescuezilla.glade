@@ -105,16 +105,47 @@
       <column type="gchararray"/>
     </columns>
   </object>
-  <object class="GtkImage" id="redobackup_icon">
+  <object class="GtkImage" id="redobackup_v092_icon">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="pixbuf">redobackup_icon.png</property>
+    <property name="pixbuf">redobackup_v092_icon.png</property>
+  </object>
+  <object class="GtkImage" id="redobackup_v093_to_v104_icon">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixbuf">redobackup_v093_to_v104_icon.png</property>
   </object>
   <object class="GtkImage" id="rescuezilla_icon">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="pixbuf">icon.png</property>
   </object>
+  <object class="GtkImage" id="qemu_nbd_placeholder_icon">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixbuf">qemu_nbd_placeholder_icon.png</property>
+  </object>
+  <object class="GtkImage" id="fogproject_icon">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixbuf">fogproject_icon.png</property>
+  </object>
+  <object class="GtkImage" id="redorescue_placeholder_icon">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixbuf">redorescue_placeholder_icon.png</property>
+  </object>
+  <object class="GtkImage" id="foxclone_icon">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixbuf">foxclone_icon.png</property>
+  </object>
+  <object class="GtkImage" id="fsarchiver_placeholder_icon">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixbuf">fsarchiver_placeholder_icon.png</property>
+  </object>
+ 
   <object class="GtkFileFilter" id="restore_filefilter"/>
   <object class="GtkImage" id="restore_mode_button">
     <property name="visible">True</property>
