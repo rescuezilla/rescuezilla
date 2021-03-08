@@ -32,7 +32,7 @@ from parser.blkid import Blkid
 from parser.ecryptfs import Ecryptfs
 from parser.lvm import Lvm
 from parser.parted import Parted
-from parser.sfdisk import Sfdisk
+from parser.sfdisk import Sfdisk, EMPTY_SFDISK_MSG
 from parser.swappt import Swappt
 from utility import Utility, _
 
@@ -230,6 +230,8 @@ class ClonezillaImage:
                                                                      'sfdisk_dict': Sfdisk.parse_sfdisk_dump_output(sfdisk_string),
                                                                      'sfdisk_file_length': len(sfdisk_string)
                                                                      }
+                    if self.sfdisk_dict_dict[short_disk_device_node]['sfdisk_file_length'] == 0:
+                        self.warning_dict[enduser_filename] = EMPTY_SFDISK_MSG
                 else:
                     # Do not raise exception because sfdisk partition table is often missing using Clonezilla image format,
                     # as `sfdisk --dump` fails for disks without a partition table.

@@ -23,8 +23,9 @@ import re
 import subprocess
 import time
 
+from parser import sfdisk
 from parser.partclone import Partclone
-from parser.sfdisk import Sfdisk
+from parser.sfdisk import Sfdisk, EMPTY_SFDISK_MSG
 from utility import Utility, _
 
 
@@ -108,11 +109,7 @@ class RedoBackupLegacyImage:
         # sfdisk partition table file for both MBR and GPT disks. More information [1]
         # [1] https://github.com/rescuezilla/rescuezilla/wiki/Bugs-in-unofficial-Redo-Backup-updates#bugs-in-louvetchs-ubuntu-1604-releases
         if sfdisk_string == "":
-            empty_sfdisk_bug_url = "https://github.com/rescuezilla/rescuezilla/wiki/Bugs-in-unofficial-Redo-Backup-updates#bugs-in-louvetchs-ubuntu-1604-releases"
-            # Context for translators: The two popular unofficial updates of Redo Backup v1.0.4 by Sourceforge user louvetch have a major bug.
-            # This major bug affected both the English language and French language versions of this unofficial update. All data can be restored with careful
-            # manual intervention. Given the popularity of those unofficial updates, translating this error message is still important.
-            self.warning_dict[enduser_filename] = _("The backup's extended partition information is empty or missing. This happens with incomplete backups created by an unofficial Redo Backup update. If the backup contains extended partitions, these will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore the extended partitions. Please consult {url} for information and assistance. The destination drive has not yet been modified. Do you wish to continue with the restore?").format(url=empty_sfdisk_bug_url)
+            self.warning_dict[enduser_filename] = EMPTY_SFDISK_MSG
         else:
             self.sfdisk_dict = Sfdisk.parse_sfdisk_dump_output(sfdisk_string)
 

@@ -23,6 +23,12 @@ from os.path import join, isfile, isdir
 
 
 import gi
+
+from parser.fogproject_image import FogProjectImage
+from parser.foxclone_image import FoxcloneImage
+from parser.fsarchiver_image import FsArchiverImage
+from parser.redorescue_image import RedoRescueImage
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import GdkPixbuf, GLib
 
@@ -170,10 +176,40 @@ class ImageFolderQuery:
                     error_suffix = _("This can happen when loading images which Clonezilla was unable to completely backup. Any other filesystems within the image should be restorable as normal.")
                     is_image = True
                 elif absolute_path.endswith(".backup"):
-                    print("Found a legacy Redo Backup / Rescuezilla v1.0.5 image " + filename)
-                    GLib.idle_add(self.please_wait_popup.set_secondary_label_text, _("Scanning: {filename}").format(filename=absolute_path))
-                    image = RedoBackupLegacyImage(absolute_path, enduser_filename, filename)
+                    # The legacy Redo Backup and Recovery format was adapted and extended Foxclone, so care is taken
+                    # here to delineate the image formats by a simple heuristic: the existence of Foxclone's MBR backup.
+                    foxclone_mbr = absolute_path.split(".backup")[0] + ".grub"
+                    if os.path.exists(foxclone_mbr):
+                        print("Found a Foxclone image " + filename)
+                        GLib.idle_add(self.please_wait_popup.set_secondary_label_text, _("Scanning: {filename}").format(filename=absolute_path))
+                        image = FoxcloneImage(absolute_path, enduser_filename, filename)
+                        error_suffix = _("Any other filesystems within the image should be restorable as normal.")
+                        is_image = True
+                    else:
+                        print("Found a legacy Redo Backup / Rescuezilla v1.0.5 image " + filename)
+                        GLib.idle_add(self.please_wait_popup.set_secondary_label_text, _("Scanning: {filename}").format(filename=absolute_path))
+                        image = RedoBackupLegacyImage(absolute_path, enduser_filename, filename)
+                        error_suffix = _("Any other filesystems within the image should be restorable as normal.")
+                        is_image = True
+                elif absolute_path.endswith(".partitions") and not absolute_path.endswith(".minimum.partitions"):
+                    print("Found FOG Project image " + filename)
+                    GLib.idle_add(self.please_wait_popup.set_secondary_label_text,
+                                  _("Scanning: {filename}").format(filename=absolute_path))
+                    image = FogProjectImage(absolute_path, enduser_filename, filename)
                     error_suffix = _("Any other filesystems within the image should be restorable as normal.")
+                    is_image = True
+                elif absolute_path.endswith(".redo"):
+                    print("Found Redo Rescue image " + filename)
+                    GLib.idle_add(self.please_wait_popup.set_secondary_label_text, _("Scanning: {filename}").format(filename=absolute_path))
+                    image = RedoRescueImage(absolute_path, enduser_filename, filename)
+                    error_suffix = _("Any other filesystems within the image should be restorable as normal.")
+                    is_image = True
+                elif absolute_path.endswith(".fsa"):
+                    print("Found FSArchiver image " + filename)
+                    GLib.idle_add(self.please_wait_popup.set_secondary_label_text,
+                                  _("Scanning: {filename}").format(filename=absolute_path))
+                    image = FsArchiverImage(absolute_path, enduser_filename, filename)
+                    error_suffix = ""
                     is_image = True
                 if is_image:
                     image_warning_message = ""
@@ -201,6 +237,7 @@ class ImageFolderQuery:
                 abs_base_scan_path = os.path.abspath(join(self.query_path, filename))
                 print("Scanning " + abs_base_scan_path)
                 if isfile(abs_base_scan_path):
+                    print("Scanning file " + abs_base_scan_path)
                     self.scan_file(abs_base_scan_path, filename, filename)
                 elif isdir(abs_base_scan_path):
                     # List the subdirectory (1 level deep)

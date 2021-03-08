@@ -22,6 +22,11 @@ import traceback
 
 import gi
 
+from parser.fogproject_image import FogProjectImage
+from parser.foxclone_image import FoxcloneImage
+from parser.fsarchiver_image import FsArchiverImage
+from parser.redorescue_image import RedoRescueImage
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import GObject, GLib
 
@@ -284,6 +289,70 @@ class PartitionsToRestore:
                 self.restore_partition_selection_list.append(
                     [short_device_node, True, flat_description, dest_partition, flat_description, dest_partition,
                      flat_description])
+        elif isinstance(self.selected_image, FogProjectImage):
+            for long_device_node in self.selected_image.partitions.keys():
+                image_base_device_node, image_partition_number = Utility.split_device_string(long_device_node)
+                if 'abs_image_glob' not in self.selected_image.partitions[long_device_node]:
+                    # No partclone image associated with partition
+                    continue
+                # Combine image partition number with destination device node base
+                dest_partition = Utility.join_device_string(self.dest_drive_node, image_partition_number)
+                # FIXME: Ensure the assertion that the key being used is valid for the dictionary is true.
+                flat_description = "Partition " + str(
+                    image_partition_number) + " (" + dest_partition + "): " + self.selected_image.flatten_partition_string(
+                    long_device_node)
+                self.destination_partition_combobox_list.append([dest_partition, flat_description])
+                self.restore_partition_selection_list.append(
+                    [long_device_node, True, flat_description, dest_partition, flat_description, dest_partition,
+                     flat_description])
+        elif isinstance(self.selected_image, RedoRescueImage):
+            for short_device_node in self.selected_image.redo_dict['parts'].keys():
+                image_base_device_node, image_partition_number = Utility.split_device_string(short_device_node)
+                if 'abs_image_glob' not in self.selected_image.redo_dict['parts'][short_device_node]:
+                    # No partclone image associated with partition
+                    continue
+                # Combine image partition number with destination device node base
+                dest_partition = Utility.join_device_string(self.dest_drive_node, image_partition_number)
+                # FIXME: Ensure the assertion that the key being used is valid for the dictionary is true.
+                flat_description = "Partition " + str(
+                    image_partition_number) + " (" + dest_partition + "): " + self.selected_image.flatten_partition_string(
+                    short_device_node)
+                self.destination_partition_combobox_list.append([dest_partition, flat_description])
+                self.restore_partition_selection_list.append(
+                    [short_device_node, True, flat_description, dest_partition, flat_description, dest_partition,
+                     flat_description])
+        elif isinstance(self.selected_image, FoxcloneImage):
+            for short_device_node in self.selected_image.foxclone_dict['partitions'].keys():
+                image_base_device_node, image_partition_number = Utility.split_device_string(short_device_node)
+                if 'abs_image_glob' not in self.selected_image.foxclone_dict['partitions'][short_device_node]:
+                    # No partclone image associated with partition
+                    continue
+                # Combine image partition number with destination device node base
+                dest_partition = Utility.join_device_string(self.dest_drive_node, image_partition_number)
+                # FIXME: Ensure the assertion that the key being used is valid for the dictionary is true.
+                flat_description = "Partition " + str(
+                    image_partition_number) + " (" + dest_partition + "): " + self.selected_image.flatten_partition_string(
+                    short_device_node)
+                self.destination_partition_combobox_list.append([dest_partition, flat_description])
+                self.restore_partition_selection_list.append(
+                    [short_device_node, True, flat_description, dest_partition, flat_description, dest_partition,
+                     flat_description])
+        elif isinstance(self.selected_image, FsArchiverImage):
+            # Doesn't appear that FsArchiver images ever have an partition table backup associated with it. But
+            # keeping this section for reference, especially if a frontend like qt-fsarchiver adds partition table
+            # backups.
+            for fs_key in self.selected_image.fsa_dict['filesystems'].keys():
+                long_device_node = self.selected_image.fsa_dict['filesystems'][fs_key]['original_long_device_node']
+                image_base_device_node, image_partition_number = Utility.split_device_string(long_device_node)
+                # Combine image partition number with destination device node base
+                dest_partition = Utility.join_device_string(self.dest_drive_node, image_partition_number)
+                flat_description = "Partition " + str(
+                    image_partition_number) + " (" + dest_partition + "): " + self.selected_image.flatten_partition_string(
+                    fs_key)
+                self.destination_partition_combobox_list.append([dest_partition, flat_description])
+                self.restore_partition_selection_list.append(
+                    [fs_key, True, flat_description, dest_partition, flat_description, dest_partition,
+                     flat_description])
 
         self.builder.get_object("destination_partition_combobox_cell_renderer").set_sensitive(False)
 
@@ -331,12 +400,60 @@ class PartitionsToRestore:
             for image_format_dict_key in partitions:
                 image_base_device_node, image_partition_number = Utility.split_device_string(image_format_dict_key)
                 if not image_partition_number in self.selected_image.partition_restore_command_dict.keys():
-                    # No partclone image assosciated with partition
+                    # No partclone image associated with partition
                     continue
                 flat_image_part_description = "Partition " + str(
                 image_partition_number) + ": " + self.selected_image.flatten_partition_string(image_format_dict_key)
                 self.restore_partition_selection_list.append(
                     [image_format_dict_key, is_restoring_partition, flat_image_part_description, dest_partition_key,
+                     flattened_part_description,
+                     dest_partition_key, flattened_part_description])
+                num_destination_partitions += 1
+        elif isinstance(self.selected_image, FogProjectImage):
+            for long_device_key in self.selected_image.partitions.keys():
+                image_base_device_node, image_partition_number = Utility.split_device_string(long_device_key)
+                if 'abs_image_glob' not in self.selected_image.partitions[long_device_key]:
+                    # No partclone image associated with partition
+                    continue
+                flat_image_part_description = "Partition " + str(
+                    image_partition_number) + ": " + self.selected_image.flatten_partition_string(long_device_key)
+                self.restore_partition_selection_list.append(
+                    [long_device_key, is_restoring_partition, flat_image_part_description, dest_partition_key,
+                     flattened_part_description,
+                     dest_partition_key, flattened_part_description])
+                num_destination_partitions += 1
+        elif isinstance(self.selected_image, RedoRescueImage):
+            for image_format_dict_key in self.selected_image.redo_dict['parts'].keys():
+                image_base_device_node, image_partition_number = Utility.split_device_string(image_format_dict_key)
+                if 'abs_image_glob' not in self.selected_image.redo_dict['parts'][image_format_dict_key]:
+                    # No partclone image associated with partition
+                    continue
+                flat_image_part_description = "Partition " + str(
+                image_partition_number) + ": " + self.selected_image.flatten_partition_string(image_format_dict_key)
+                self.restore_partition_selection_list.append(
+                    [image_format_dict_key, is_restoring_partition, flat_image_part_description, dest_partition_key,
+                     flattened_part_description,
+                     dest_partition_key, flattened_part_description])
+                num_destination_partitions += 1
+        elif isinstance(self.selected_image, FoxcloneImage):
+            for image_format_dict_key in self.selected_image.foxclone_dict['partitions'].keys():
+                image_base_device_node, image_partition_number = Utility.split_device_string(image_format_dict_key)
+                if 'abs_image_glob' not in self.selected_image.foxclone_dict['partitions'][image_format_dict_key]:
+                    # No partclone image associated with partition
+                    continue
+                flat_image_part_description = "Partition " + str(
+                image_partition_number) + ": " + self.selected_image.flatten_partition_string(image_format_dict_key)
+                self.restore_partition_selection_list.append(
+                    [image_format_dict_key, is_restoring_partition, flat_image_part_description, dest_partition_key,
+                     flattened_part_description,
+                     dest_partition_key, flattened_part_description])
+                num_destination_partitions += 1
+        elif isinstance(self.selected_image, FsArchiverImage):
+            for fs_key in self.selected_image.fsa_dict['filesystems'].keys():
+                flat_image_part_description = "Filesystem " + str(
+                fs_key) + ": " + self.selected_image.flatten_partition_string(fs_key)
+                self.restore_partition_selection_list.append(
+                    [fs_key, is_restoring_partition, flat_image_part_description, dest_partition_key,
                      flattened_part_description,
                      dest_partition_key, flattened_part_description])
                 num_destination_partitions += 1

@@ -31,6 +31,10 @@ from time import sleep
 import gi
 
 import utility
+from parser.fogproject_image import FogProjectImage
+from parser.foxclone_image import FoxcloneImage
+from parser.fsarchiver_image import FsArchiverImage
+from parser.redorescue_image import RedoRescueImage
 from wizard_state import IMAGE_EXPLORER_DIR, MOUNTABLE_NBD_DEVICE, DECOMPRESSED_NBD_DEVICE, JOINED_FILES_NBD_DEVICE
 
 gi.require_version("Gtk", "3.0")
@@ -131,6 +135,38 @@ class ImageExplorerManager:
                     short_device_node)
                 self.image_explorer_partition_selection_list.append(
                     [short_device_node, human_friendly_partition_name, flat_description])
+        elif isinstance(self.selected_image, FogProjectImage):
+            for long_device_node in self.selected_image.sfdisk_dict['partitions'].keys():
+                image_base_device_node, image_partition_number = Utility.split_device_string(long_device_node)
+                human_friendly_partition_name = "#" + str(image_partition_number) + " (" + long_device_node + ")"
+                flat_description = str(image_partition_number) + ": " + self.selected_image.flatten_partition_string(
+                    long_device_node)
+                self.image_explorer_partition_selection_list.append(
+                    [long_device_node, human_friendly_partition_name, flat_description])
+        elif isinstance(self.selected_image, RedoRescueImage):
+            for short_device_node in self.selected_image.redo_dict['parts'].keys():
+                image_base_device_node, image_partition_number = Utility.split_device_string(short_device_node)
+                human_friendly_partition_name = "#" + str(image_partition_number) + " (" + short_device_node + ")"
+                flat_description = str(image_partition_number) + ": " + self.selected_image.flatten_partition_string(
+                    short_device_node)
+                self.image_explorer_partition_selection_list.append(
+                    [short_device_node, human_friendly_partition_name, flat_description])
+        elif isinstance(self.selected_image, FoxcloneImage):
+            for short_device_node in self.selected_image.foxclone_dict['partitions'].keys():
+                image_base_device_node, image_partition_number = Utility.split_device_string(short_device_node)
+                human_friendly_partition_name = "#" + str(image_partition_number) + " (" + short_device_node + ")"
+                flat_description = str(image_partition_number) + ": " + self.selected_image.flatten_partition_string(
+                    short_device_node)
+                self.image_explorer_partition_selection_list.append(
+                    [short_device_node, human_friendly_partition_name, flat_description])
+        elif isinstance(self.selected_image, FsArchiverImage):
+            for fs_key in self.selected_image.fsa_dict['filesystems'].keys():
+                long_device_node = self.selected_image.fsa_dict['filesystems'][fs_key]['original_long_device_node']
+                human_friendly_partition_name = "#" + str(fs_key) + " (" + long_device_node + ")"
+                flat_description = str(fs_key) + ": " + self.selected_image.flatten_partition_string(
+                    fs_key)
+                self.image_explorer_partition_selection_list.append(
+                    [fs_key, human_friendly_partition_name, flat_description])
 
     # Sets sensitivity of all elements on the Image Explorer page
     def set_parts_of_image_explorer_page_sensitive(self, is_sensitive):
@@ -404,6 +440,35 @@ class ImageExplorerManager:
                 image_file_list = image.partition_restore_command_dict[partition_number]['abs_image_glob']
                 # Redo Backup Legacy format only used gzip compression
                 compression = "gzip"
+            elif isinstance(image, FogProjectImage):
+                base_device_node, partition_number = Utility.split_device_string(partition_key)
+                image_file_list = image.partitions[partition_key]['abs_image_glob']
+                incompatible_image_message = ""
+                # FIXME: compression
+                compression = "gzip"
+                if compression != "gzip":
+                    incompatible_image_message = "Currently only supports gzip, xz and uncompressed images, not: " + compression
+                    incompatible_image_message += "\nSupport for more compression types coming in a future release."
+                if incompatible_image_message != "":
+                    GLib.idle_add(callback, False,
+                                  "Image Explorer (beta) failed to mount image:\n\n" + incompatible_image_message)
+                    GLib.idle_add(please_wait_popup.destroy)
+                    return
+            elif isinstance(image, RedoRescueImage):
+                base_device_node, partition_number = Utility.split_device_string(partition_key)
+                image_file_list = image.redo_dict['parts'][partition_key]['abs_image_glob']
+                # Redo Rescue format only used gzip compression
+                compression = "gzip"
+            elif isinstance(image, FoxcloneImage):
+                base_device_node, partition_number = Utility.split_device_string(partition_key)
+                image_file_list = image.foxclone_dict['partitions'][partition_key]['abs_image_glob']
+                # Foxclone format only used gzip compression
+                compression = "gzip"
+            elif isinstance(image, FoxcloneImage):
+                base_device_node, partition_number = Utility.split_device_string(partition_key)
+                #image_file_list = image.foxclone_dict['partitions'][partition_key]['abs_image_glob']
+                # FIXME: set compression
+                compression = "uncompressed"
 
             # Concatenate the split partclone images into a virtual block device using nbdkit. This step is fast
             # because it's just logical mapping within the nbdkit process. In other words "lazy-evaulation: no

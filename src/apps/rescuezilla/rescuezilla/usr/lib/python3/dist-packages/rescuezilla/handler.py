@@ -442,7 +442,10 @@ class Handler:
                         self.selected_image_absolute_path = list_store.get(iter, 0)[0]
                         print("User image: " + self.selected_image_absolute_path)
                         image = self.image_folder_query.image_dict[self.selected_image_absolute_path]
-                        if image.is_needs_decryption:
+                        if image.image_format == "FSARCHIVER_FORMAT":
+                            error = ErrorMessageModalPopup(self.builder,
+                                                           "FSArchiver images cannot be mounted with Image Explorer with the current version of Rescuezilla. But FSArchiver images CAN be restored with the current version of Rescuezilla.\n\nSupport for exploring FSArchiver images may be added in a future version.")
+                        elif image.is_needs_decryption:
                             error = ErrorMessageModalPopup(self.builder,
                                                            "Ecryptfs encrypted images are not supported by current version of Rescuezilla.\n\nSupport for ecryptfs will be improved in a future version.\n\nHowever, as a temporary workaround, it is possible to carefully use the mount command line utility to decrypt the image, and then point Rescuezilla to this ecryptfs mount point and then use Rescuezilla to access the image as normal.")
                         else:

@@ -30,6 +30,11 @@ import utility
 
 """
 
+empty_sfdisk_bug_url = "https://github.com/rescuezilla/rescuezilla/wiki/Bugs-in-unofficial-Redo-Backup-updates#bugs-in-louvetchs-ubuntu-1604-releases"
+EMPTY_SFDISK_MSG = utility._(
+    "The backup's extended partition information is empty. If the backup contains extended partitions, these will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore any extended partitions. Please consult {url} for information and assistance. The destination drive has not yet been modified. Do you wish to continue with the restore?").format(
+    url=empty_sfdisk_bug_url)
+
 
 class Sfdisk:
     @staticmethod
@@ -96,3 +101,18 @@ class Sfdisk:
         else:
             print("Could not process: " + line)
             return temp_dict
+
+    # The Foxclone image format doesn't keep track of the disk capacity, and neither does the sfdisk file.
+    # However it has each partition's start offset and size, so finding the largest provides an estimate
+    # of drive capacity.
+    # Adapted from CombinedDriveState's get_first_partition
+    # TODO: Make more pythonic and more efficient
+    @staticmethod
+    def get_drive_capacity_estimate(partition_list):
+        temp_tuple_list = []
+        block_size = 512
+        for key in partition_list.keys():
+            temp_tuple_list.append((key, partition_list[key]['start']*block_size + partition_list[key]['size']*block_size))
+        temp_tuple_list.sort(key=lambda x: x[1], reverse=True)
+        print("highest " + str(temp_tuple_list))
+        return temp_tuple_list[0]
