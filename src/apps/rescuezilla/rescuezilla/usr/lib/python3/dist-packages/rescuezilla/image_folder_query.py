@@ -143,11 +143,13 @@ class ImageFolderQuery:
                 error_suffix = ""
                 if absolute_path.endswith("parts"):
                     print("Found Clonezilla image " + filename)
+                    GLib.idle_add(self.please_wait_popup.set_secondary_label_text, _("Scanning: {filename}").format(filename=absolute_path))
                     image = ClonezillaImage(absolute_path, enduser_filename)
                     error_suffix = _("This can happen when loading images which Clonezilla was unable to completely backup. Any other filesystems within the image should be restorable as normal.")
                     is_image = True
                 elif absolute_path.endswith(".backup"):
                     print("Found a legacy Redo Backup / Rescuezilla v1.0.5 image " + filename)
+                    GLib.idle_add(self.please_wait_popup.set_secondary_label_text, _("Scanning: {filename}").format(filename=absolute_path))
                     image = RedoBackupLegacyImage(absolute_path, enduser_filename, filename)
                     error_suffix = _("Any other filesystems within the image should be restorable as normal.")
                     is_image = True
@@ -177,10 +179,7 @@ class ImageFolderQuery:
                 abs_base_scan_path = os.path.abspath(join(self.query_path, filename))
                 print("Scanning " + abs_base_scan_path)
                 if isfile(abs_base_scan_path):
-                    print("Scanning file " + abs_base_scan_path)
-                    is_image = self.scan_file(abs_base_scan_path, filename, filename)
-                    if is_image:
-                        GLib.idle_add(self.please_wait_popup.set_secondary_label_text,_("Scanned: {filename}").format(filename=filename))
+                    self.scan_file(abs_base_scan_path, filename, filename)
                 elif isdir(abs_base_scan_path):
                     # List the subdirectory (1 level deep)
                     for subdir_filename in os.listdir(abs_base_scan_path):
@@ -190,9 +189,7 @@ class ImageFolderQuery:
                         enduser_filename = os.path.join(filename, subdir_filename)
                         if isfile(absolute_path):
                             print("Scanning subdir file " + absolute_path)
-                            is_image = self.scan_file(absolute_path, subdir_filename, enduser_filename)
-                            if is_image:
-                                GLib.idle_add(self.please_wait_popup.set_secondary_label_text,_("Scanned: {filename}").format(filename=enduser_filename))
+                            self.scan_file(absolute_path, subdir_filename, enduser_filename)
         except Exception as e:
             tb = traceback.format_exc()
             GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
