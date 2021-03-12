@@ -273,7 +273,7 @@ class DriveQuery:
                         elif key[0] == "parted" and retcode == 0 and proc.stdout is not None:
                             if proc.stderr is not None:
                                 stderr = proc.stderr.read()
-                                print("parted with key " + key + " had stderr " + stderr)
+                                print("parted with key " + str(key) + " had stderr " + stderr)
                                 if "unrecognized disk label" not in stderr:
                                     parted_dict_dict[key[1]] = Parted.parse_parted_output(proc.stdout.read())
                         else:
