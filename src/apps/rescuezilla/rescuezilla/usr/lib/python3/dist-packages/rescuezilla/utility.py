@@ -486,18 +486,6 @@ class Utility:
         return process, flat_command_string, fail_description
 
     @staticmethod
-    def run_external_command(cmd_list, fail_callback, env):
-        Utility.print_cli_friendly(cmd_list[0], [cmd_list, ])
-        process = subprocess.run(cmd_list, encoding='utf-8', capture_output=True, env=env)
-        if process.returncode != 0:
-            error_message = "Error running " + cmd_list[0]
-            print(error_message)
-            GLib.idle_add(fail_callback, False, error_message + ": " + process.stderr)
-            return
-        print("stdout: " + process.stdout + " stderr " + process.stderr)
-        return process.stdout, process.stderr, process.returncode
-
-    @staticmethod
     def umount_warn_on_busy(mount_point, is_lazy_umount=False):
         if is_lazy_umount:
             umount_cmd = ['umount', "--lazy", mount_point]
