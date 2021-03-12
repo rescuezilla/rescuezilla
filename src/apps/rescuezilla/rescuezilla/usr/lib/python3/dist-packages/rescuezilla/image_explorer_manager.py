@@ -214,6 +214,13 @@ class ImageExplorerManager:
     @staticmethod
     def _do_unmount(destination_path, join_process_queue=None, decompress_process_queue=None,
                     partclone_nbd_process_queue=None):
+        # Ensure nbd-kernel module loaded (required for nbd-client -disconnect)
+        process, flat_command_string, failed_message = Utility.run("Loading NBD kernel module",
+                                                                   ["modprobe", "nbd"],
+                                                                   use_c_locale=True)
+        if process.returncode != 0:
+            return False, failed_message
+
         # Unmount and cleanup in case a previous invocation of Rescuezilla didn't cleanup.
         is_unmounted, message = Utility.umount_warn_on_busy(destination_path)
         if not is_unmounted:
