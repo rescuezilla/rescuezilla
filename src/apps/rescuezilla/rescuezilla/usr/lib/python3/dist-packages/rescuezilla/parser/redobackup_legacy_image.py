@@ -164,31 +164,35 @@ class RedoBackupLegacyImage:
                 print(str(short_device_node) + ": " + command)
                 self.partition_restore_command_dict[partition_number]['restore_binary'] = command
 
-            # Get partclone.info
-            cat_cmd_list = ["cat"] + abs_partclone_image_list
-            pigz_cmd_list = ["pigz", "--decompress", "--stdout"]
-            partclone_info_cmd_list = ["partclone.info", "--source", "-"]
-            Utility.print_cli_friendly("partclone ", [cat_cmd_list, pigz_cmd_list, partclone_info_cmd_list])
-            self.proc['cat_partclone' + short_device_node] = subprocess.Popen(cat_cmd_list, stdout=subprocess.PIPE, env=env,
-                                                                      encoding='utf-8')
-            self.proc['pigz' + short_device_node] = subprocess.Popen(pigz_cmd_list,
-                                                             stdin=self.proc['cat_partclone' + short_device_node].stdout,
-                                                             stdout=subprocess.PIPE, env=env, encoding='utf-8')
-            self.proc['partclone_info' + short_device_node] = subprocess.Popen(partclone_info_cmd_list,
-                                                                           stdin=self.proc['pigz' + short_device_node].stdout,
-                                                                           stdout=subprocess.PIPE,
-                                                                           stderr=subprocess.PIPE, env=env,
-                                                                           encoding='utf-8')
-            self.proc['cat_partclone' + short_device_node].stdout.close()  # Allow p1 to receive a SIGPIPE if p2 exits.
-            self.proc['pigz' + short_device_node].stdout.close()  # Allow p1 to receive a SIGPIPE if p2 exits.
-            output, err = self.proc['partclone_info' + short_device_node].communicate()
-            print("partclone_info: Exit output " + str(output) + "stderr " + str(err))
-            self.partclone_info_dict[partition_number] = Partclone.parse_partclone_info_output(err)
-            if len(self.partclone_info_dict[partition_number]) == 0:
-                # If unable to read the partclone.info output, treat this as a dd image (see unit test for
-                # partclone.info example output for this case).
-                print(self.absolute_path + ": Could not read partclone info dict for " + short_device_node + ". Treating it as a dd image.")
-                self.partclone_info_dict[partition_number] = {'filesystem': "dd"}
+            # Use partclone.info to extract filesystem and size information from the image files. This is a time
+            # consuming operation but Redo 0.9.8-1.0.4 images benefit from this.
+            # Rescuezilla 1.5 format has a backup of the filesystem (from the restore_command files), and the size (
+            # from sfdisk)
+            if self.image_format == "REDOBACKUP_0.9.8_1.0.4_FORMAT":
+                cat_cmd_list = ["cat"] + abs_partclone_image_list
+                pigz_cmd_list = ["pigz", "--decompress", "--stdout"]
+                partclone_info_cmd_list = ["partclone.info", "--source", "-"]
+                Utility.print_cli_friendly("partclone ", [cat_cmd_list, pigz_cmd_list, partclone_info_cmd_list])
+                self.proc['cat_partclone' + short_device_node] = subprocess.Popen(cat_cmd_list, stdout=subprocess.PIPE, env=env,
+                                                                          encoding='utf-8')
+                self.proc['pigz' + short_device_node] = subprocess.Popen(pigz_cmd_list,
+                                                                 stdin=self.proc['cat_partclone' + short_device_node].stdout,
+                                                                 stdout=subprocess.PIPE, env=env, encoding='utf-8')
+                self.proc['partclone_info' + short_device_node] = subprocess.Popen(partclone_info_cmd_list,
+                                                                               stdin=self.proc['pigz' + short_device_node].stdout,
+                                                                               stdout=subprocess.PIPE,
+                                                                               stderr=subprocess.PIPE, env=env,
+                                                                               encoding='utf-8')
+                self.proc['cat_partclone' + short_device_node].stdout.close()  # Allow p1 to receive a SIGPIPE if p2 exits.
+                self.proc['pigz' + short_device_node].stdout.close()  # Allow p1 to receive a SIGPIPE if p2 exits.
+                output, err = self.proc['partclone_info' + short_device_node].communicate()
+                print("partclone_info: Exit output " + str(output) + "stderr " + str(err))
+                self.partclone_info_dict[partition_number] = Partclone.parse_partclone_info_output(err)
+                if len(self.partclone_info_dict[partition_number]) == 0:
+                    # If unable to read the partclone.info output, treat this as a dd image (see unit test for
+                    # partclone.info example output for this case).
+                    print(self.absolute_path + ": Could not read partclone info dict for " + short_device_node + ". Treating it as a dd image.")
+                    self.partclone_info_dict[partition_number] = {'filesystem': "dd"}
 
     def has_partition_table(self):
         # All Redo Backup legacy images have at least the MBR file, even if the sfdisk file is empty or the MBR itself
@@ -207,9 +211,10 @@ class RedoBackupLegacyImage:
     def flatten_partition_string(self, short_device_node):
         flat_string = ""
         base_device_node, partition_number = Utility.split_device_string(short_device_node)
-        if partition_number in self.partition_restore_command_dict.keys() and 'command' in self.partition_restore_command_dict[partition_number].keys():
+        if partition_number in self.partition_restore_command_dict.keys() and 'restore_binary' in \
+                self.partition_restore_command_dict[partition_number].keys():
             # On the Rescuezilla v1.0.5 image format, the partition restore command is easily accessible.
-            command = self.partition_restore_command_dict[partition_number]['command']
+            command = self.partition_restore_command_dict[partition_number]['restore_binary']
             filesystem = re.sub('partclone.', '', command)
             flat_string += filesystem + " "
         elif partition_number in self.partclone_info_dict.keys() and 'filesystem' in self.partclone_info_dict[partition_number].keys():
