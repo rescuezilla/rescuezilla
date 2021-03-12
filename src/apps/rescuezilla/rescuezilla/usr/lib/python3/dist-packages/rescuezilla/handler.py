@@ -156,7 +156,7 @@ class Handler:
 
     def display_backup_wizard(self, button):
         self.mode = Mode.BACKUP
-        self.drive_query.start_query()
+        self.drive_query.start_query(self._display_error_message_callback)
         self.main_statusbar.pop(self.main_statusbar.get_context_id("version"))
         self.current_page = Page.BACKUP_SOURCE_DRIVE_SELECTION
         self.builder.get_object("mode_tabs").set_current_page(1)
@@ -169,7 +169,7 @@ class Handler:
 
     def display_restore_wizard(self, button):
         self.mode = Mode.RESTORE
-        self.drive_query.start_query()
+        self.drive_query.start_query(self._display_error_message_callback)
         self.main_statusbar.pop(self.main_statusbar.get_context_id("version"))
         self.current_page = Page.RESTORE_SOURCE_LOCATION_SELECTION
         self.builder.get_object("mode_tabs").set_current_page(2)
@@ -182,7 +182,7 @@ class Handler:
 
     def display_verify_wizard(self, button):
         self.mode = Mode.VERIFY
-        self.drive_query.start_query()
+        self.drive_query.start_query(self._display_error_message_callback)
         self.main_statusbar.pop(self.main_statusbar.get_context_id("version"))
         self.current_page = Page.VERIFY_SOURCE_LOCATION_SELECTION
         self.builder.get_object("mode_tabs").set_current_page(3)
@@ -195,7 +195,7 @@ class Handler:
 
     def display_image_explorer_wizard(self, button):
         self.mode = Mode.IMAGE_EXPLORER
-        self.drive_query.start_query()
+        self.drive_query.start_query(self._display_error_message_callback)
         self.main_statusbar.pop(self.main_statusbar.get_context_id("version"))
         self.builder.get_object("mode_tabs").set_current_page(4)
         self.builder.get_object("image_explorer_tabs").set_current_page(0)
@@ -205,11 +205,15 @@ class Handler:
         self.builder.get_object("button_next").set_sensitive(True)
         # Remove access to any summary pages from prior operations
         self.has_prior_summary_page = False
-        # TODO: Move to manager
         self.builder.get_object("button_mount").set_sensitive(False)
         self.builder.get_object("button_open_file_manager").set_sensitive(False)
         self.image_explorer_manager.set_parts_of_image_explorer_page_sensitive(True)
         self.is_partition_mounted = False
+
+    def _display_error_message_callback(self, is_success, message):
+        if not is_success:
+            error = ErrorMessageModalPopup(self.builder, message)
+            self.display_welcome_page()
 
     def get_row(self, id):
         treeselection = self.builder.get_object(id)

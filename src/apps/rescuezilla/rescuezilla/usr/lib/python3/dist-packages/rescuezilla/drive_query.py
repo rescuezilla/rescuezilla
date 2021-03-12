@@ -52,12 +52,14 @@ class DriveQuery:
         self._is_displaying_advanced_information_lock = threading.Lock()
         self._is_displaying_advanced_information = False
 
-    def start_query(self):
+    def start_query(self, error_message_callback):
         print("Starting drive query...")
         self.win.set_sensitive(False)
         self.please_wait_popup = PleaseWaitModalPopup(self.builder, title=_("Please wait..."), message=_("Identifying disk drives..."))
         self.please_wait_popup.show()
-        thread = threading.Thread(target=self._do_drive_query)
+        self.error_message_callback = error_message_callback
+
+        thread = threading.Thread(target=self._do_drive_query_wrapper)
         thread.daemon = True
         thread.start()
 
@@ -172,6 +174,15 @@ class DriveQuery:
     def _get_sfdisk_cmd_list(self, partition_longdevname):
         return ["sfdisk", "--dump", partition_longdevname]
 
+    def _do_drive_query_wrapper(self):
+        try:
+            self._do_drive_query()
+        except Exception as exception:
+            tb = traceback.format_exc()
+            traceback.print_exc()
+            GLib.idle_add(self.error_message_callback, False, _("Error querying drives: ") + tb)
+            return
+
     def _do_drive_query(self):
         env_C_locale = Utility.get_env_C_locale()
 
@@ -180,8 +191,9 @@ class DriveQuery:
         GLib.idle_add(self.please_wait_popup.set_secondary_label_text, "Unmounting: " + IMAGE_EXPLORER_DIR)
         returncode, failed_message = ImageExplorerManager._do_unmount(IMAGE_EXPLORER_DIR)
         if not returncode:
-            print(failed_message)
-            raise Exception("Unable to shutdown Rescuezilla Image Explorer:\n\n" + failed_message)
+            GLib.idle_add(self.error_message_callback, False, "Unable to shutdown Image Explorer \n\n" + failed_message)
+            GLib.idle_add(self.please_wait_popup.destroy)
+            return
 
         lsblk_cmd_list = ["lsblk", "-o", "KNAME,NAME,SIZE,TYPE,FSTYPE,MOUNTPOINT,MODEL", "--paths", "--bytes", "--json"]
         blkid_cmd_list = ["blkid"]
