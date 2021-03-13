@@ -25,7 +25,7 @@ msgid "Select an Option"
 msgstr "オプションを選択してください"
 
 msgid "Easily create a backup image of your computer, or completely restore from one.  Click an option to begin:"
-msgstr "コンピュータのバックアップイメージを簡単に作成し、1つから完全にレストアします.\n\n オプションをクリックして開始します:"
+msgstr "コンピュータのバックアップイメージを簡単に作成したり、イメージから完全にレストアできます。\n\n オプションをクリックして開始します。:"
 
 msgid "Backup"
 msgstr "バックアップ"
@@ -34,10 +34,10 @@ msgid "Restore"
 msgstr "レストア"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
-msgstr "ヘルプが必要ですか? Rescuezillaのよくある質問を\n確認することから始め、次にRescuezillaフォーラムに進みます。"
+msgstr "ヘルプが必要ですか? まずはRescuezillaのよくある質問を\n確認し、その後、Rescuezillaフォーラムに進んでください。"
 
 msgid "Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed."
-msgstr "Rescuezillaを開発し続けることができるように、\nクラウドファンディングサイトPatreonの$ 1 /月の貢献を検討してください。"
+msgstr "Rescuezillaを開発し続けることができるように、\nクラウドファンディングサイトPatreonでの$ 1 /月の貢献を検討してください。"
 
 msgid "Back"
 msgstr "戻る"
@@ -55,7 +55,7 @@ msgid "Step 1: Select Drive To Backup"
 msgstr "ステップ1: バックアップするディスクドライブを選択してください"
 
 msgid "Select the source drive that you would like to create a backup image from."
-msgstr "バックアップイメージをソースドライブを選択します。"
+msgstr "作成するバックアップイメージのソースとなるドライブを選択します。"
 
 msgid "Drive"
 msgstr "ディスクドライブ"
@@ -73,16 +73,16 @@ msgid "Show hidden devices (for advanced users)"
 msgstr "非表示のドライブを表示する (上級ユーザー向け)"
 
 msgid "Step 2: Select Partitions to Save"
-msgstr "ステップ2: 保存するパーティションたちを選択してください"
+msgstr "ステップ2: 保存するパーティションを選択してください"
 
 msgid "Select which partitions to create a backup of.  Leave all partitions selected if you are unsure."
-msgstr "バックアップを作成するパーティションたちを選択します。 不明な場合は、すべてのパーティションを選択したままにします。"
+msgstr "バックアップを作成するパーティションを選択します。よく分からない場合は、すべてのパーティションを選択したままにしてください。"
 
 msgid "Save"
 msgstr "保存する"
 
 msgid "Description"
-msgstr "デスクリプション"
+msgstr "説明"
 
 msgid "Drive {drive_number}, Partition {partition_number}"
 msgstr "ドライブ {drive_number}, パーティション {partition_number}"
@@ -91,10 +91,10 @@ msgid "Drive {drive_number}"
 msgstr "ドライブ {drive_number}"
 
 msgid "Step 3: Select Destination Drive"
-msgstr "ステップ3: 保存先ドライブを選択します"
+msgstr "ステップ3: 宛先ドライブを選択します"
 
 msgid "Click on the box below to select the source drive that you would like to create a backup image from."
-msgstr "下のボックスをクリックして、バックアップイメージのソースドライブを選択します。"
+msgstr "下のボックスをクリックして、作成するバックアップイメージのソースとなるドライブを選択します。"
 
 msgid "Connected directly to my computer"
 msgstr "コンピューターに直接接続する"
@@ -103,58 +103,58 @@ msgid "Shared over a network"
 msgstr "ネットワーク経由で共有する"
 
 msgid "Where is the destination drive?"
-msgstr "保存先ドライブはどこですか？"
+msgstr "宛先ドライブはどこですか？"
 
 msgid "SMB/CIFS shared folder specified below"
 msgstr "以下に指定されているSMB / CIFS共有フォルダー"
 
 msgid "Search network"
-msgstr "検索ネットワーク"
+msgstr "ネットワークを検索"
 
 msgid "Server or share location:"
-msgstr "サーバーか共有フォルダーへアクセス:"
+msgstr "サーバーもしくは共有フォルダーの場所:"
 
 msgid "Username (Optional):"
-msgstr "ユーザー名 (任意信号):"
+msgstr "ユーザー名 (任意):"
 
 msgid "Password (Optional):"
-msgstr "パスワード (任意信号):"
+msgstr "パスワード (任意):"
 
 msgid "Domain (Optional):"
-msgstr "ドメイン (任意信号):"
+msgstr "ドメイン (任意):"
 
 msgid "Version (Optional):"
-msgstr "バージョン (任意信号):"
+msgstr "バージョン (任意):"
 
 msgid "Select network-shared storage location:"
-msgstr "共有フォルダーへアクセスを選択します:"
+msgstr "ネットワーク共有フォルダーの場所を選択します:"
 
 msgid "Select destination drive:"
-msgstr "保存先ディスクを選択します:"
+msgstr "宛先ドライブを選択します:"
 
 msgid "Partition"
 msgstr "パーティション"
 
 msgid "Mounting..."
-msgstr "マウント処理。。。"
+msgstr "マウント処理中..."
 
 msgid "Please ensure the username, password and other fields provided are correct, and try again."
-msgstr "パスワードと他のフィールドが正しく、もう一度試してください。"
+msgstr "パスワードや他の項目が正しいか確認し、再試行してください。"
 
 msgid "Scanning folder for backup images..."
-msgstr "バックアップイメージのフォルダを検索しています。。。"
+msgstr "バックアップイメージのフォルダを検索しています..."
 
 msgid "Error processing the following images:"
-msgstr "次のイメージにエラーが情報処理しました:"
+msgstr "次のイメージにエラーが発生しました:"
 
 msgid "Unable to fully process the image associated with the following partitions:"
-msgstr "次のパーティションたちに関連付けられているイメージを完全に処理できません:"
+msgstr "次のパーティションに関連付けられているイメージを完全に処理できません:"
 
 msgid "Unable to fully process the following image:"
 msgstr "次のイメージを完全に処理できません："
 
 msgid "This can happen when loading images which Clonezilla was unable to completely backup. Any other filesystems within the image should be restorable as normal."
-msgstr "これは、Clonezillaが完全にバックアップできなかったイメージをロードするときに発生する可能性があります。イメージ内の他のファイルシステムは、通常どおりレストア可能である必要があります。"
+msgstr "これは、Clonezillaが完全にバックアップできなかったイメージをロードしたために発生した可能性があります。イメージ内の他のファイルシステムは、通常通りレストア可能と思われます。"
 
 msgid "Needs decryption"
 msgstr "復号化が必要"
@@ -168,29 +168,29 @@ msgstr ""
 
 # No need to translate this message into your language -- it's only relevant for an old unofficial German version.
 msgid "The backup's bootloader data is shorter than expected. This happens with backups created by an unofficial Redo Backup update. If the backup contained certain bootloaders like GRUB, the restored hard drive will not boot correctly without a manual fix. All data is still fully recoverable but manual intervention may required to restore the bootloader. Please consult {url} for information and assistance. The destination drive has not yet been modified. Do you wish to continue with the restore?"
-msgstr "Die Bootloader-Daten des Backups sind weniger als erwartet. Dies kommt bei Sicherungen vor, die durch ein inoffizielles Redo-Backup-Update erstellt wurden. Wenn das Backup bestimmte Bootloader wie GRUB enthielt, lässt sich die wiederhergestellte Festplatte ohne manuelle Fehlerbehebung nicht ordnungsgemäß starten. Alle Daten können vollständig wiederhergestellt werden, womöglich ist jedoch ein manueller Eingriff erforderlich, um den Bootloader wiederherzustellen. Informationen und Unterstützung erhalten Sie unter %1 Das Ziellaufwerk wurde noch nicht geändert. Möchten Sie mit der Wiederherstellung fortfahren?"
+msgstr ""
 
 msgid "Step 4: Select Destination Folder"
-msgstr "ステップ4: 保存先フォルダを選択します"
+msgstr "ステップ4: 宛先フォルダを選択します"
 
 msgid "Click <b>Browse</b> to select the folder on the destination drive where your new backup image will be saved.\n"
 "\n"
 "The folder a backup is saved in is usually a description of the computer, e.g. <b>office1</b> or <b>zack-laptop</b>."
-msgstr "[バロース]をクリックして、新しいバックアップイメージがレストアされる宛先ドライブ上のフォルダーを選択します。 "
+msgstr "[参照]をクリックして、バックアップイメージを保存するドライブのフォルダを選択します。 "
 "\n"
-"バックアップがレストアされるフォルダは通常、コンピュータの説明です 例えば <b>office1</b> または <b>zack-laptop</b>。"
+"バックアップを保存するフォルダ名は通常、コンピュータの説明文にします。 例えば <b>office1</b> や <b>zack-laptop</b>など。"
 
 msgid "You must select a folder inside {location}"
-msgstr "{場所}のフォルダを選択する必要があります"
+msgstr "{location}のフォルダを選択する必要があります"
 
 msgid "Please select a different folder."
 msgstr "別のフォルダを選択してください。"
 
 msgid "The table below lists the backup images that already in this folder (if any)."
-msgstr "次の表に、このフォルダにすでにあるバックアップイメージを示します (もしあれば)。"
+msgstr "このフォルダに既にに存在するバックアップイメージが下のテーブルに表示されます (存在する場合)。"
 
 msgid "Browse..."
-msgstr "ブラウズ。。"
+msgstr "参照..."
 
 msgid "Filename"
 msgstr "ファイル名"
@@ -202,7 +202,7 @@ msgid "Last modified"
 msgstr "最終更新日"
 
 msgid "When you are happy with the destination folder, click <b>Next</b>."
-msgstr "保存先フォルダを選択したら、[次へ]をクリックします。"
+msgstr "宛先フォルダを選択したら、[次へ]をクリックします。"
 
 msgid "Step 5: Name Your Backup"
 msgstr "ステップ 5: バックアップに名前を付ける"
@@ -210,12 +210,12 @@ msgstr "ステップ 5: バックアップに名前を付ける"
 msgid "Provide a unique name for this backup image, such as the date.  Today's date is automatically entered for you below.\n"
 "\n"
 "You may only use letters, numbers, and dashes in your backup name."
-msgstr "日付など、このバックアップイメージの一意の名前を指定します。今日の日付は以下に自動的に入力されます。"
+msgstr "日付など、このバックアップイメージの一意の名前を指定します。今日の日付が自動的に入力されています。"
 "\n"
-"バックアップ名には、文字、数字、ダッシュのみを使用できます。"
+"バックアップ名には、半角英数とダッシュ(\"-\")のみを使用できます。"
 
 msgid "Step 6: Confirm Backup Configuration"
-msgstr "ステップ 6: バックアップ構成を確認する"
+msgstr "ステップ 6: バックアップの構成を確認する"
 
 msgid "Source drive"
 msgstr "ソースドライブ"
@@ -227,7 +227,7 @@ msgid "The backup image will be written into folder {dest_dir} on {description}"
 msgstr "バックアップイメージは、{description}のフォルダ{dest_dir}に書き込まれます。."
 
 msgid "Confirm the following backup configuration."
-msgstr "次のバックアップ構成を確認してください。"
+msgstr "バックアップの構成を確認してください。"
 
 msgid "To start the backup, click <b>Next</b>."
 msgstr "バックアップを開始するには、[<b>次へ</b>]をクリックします。"
@@ -236,7 +236,7 @@ msgid "Step 7: Creating Backup Image"
 msgstr "ステップ 7: バックアップイメージの作成をしています。。。"
 
 msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
-msgstr "選択した場所にシステムをバックアップしています。 コンピュータの速度とデータの量によっては、これに1時間以上かかる場合があります。"
+msgstr "選択した場所にシステムをバックアップしています。 コンピュータのスペックやデータ量によっては、1時間以上かかる場合があります。"
 
 msgid "Time Elapsed / Remaining: "
 msgstr "経過時間/残り時間: "
@@ -260,7 +260,7 @@ msgid "Error creating backup: "
 msgstr "バックアップの作成中にエラーが発生しました。"
 
 msgid "Failed to write destination file. Please confirm it is valid to create the provided file path, and try again."
-msgstr "保存先ファイルの書き込みに失敗しました。 ファイルが有効であることを確認して、再試行してください。"
+msgstr "宛先ファイルの書き込みに失敗しました。 ファイルパスが有効であることを確認して、再試行してください。"
 
 msgid "Successful backup of swap partition {partition_name}"
 msgstr "スワップパーティションのバックアップは成功しました。 {partition_name}"
@@ -275,13 +275,13 @@ msgid "Backup saved successfully."
 msgstr "バックアップが正常に保存されました"
 
 msgid "Backup succeeded with some errors:"
-msgstr "バックアップはいくつかのエラーで成功しました：:"
+msgstr "バックアップは成功しましたが、エラーが発生しています：:"
 
 msgid "Backup operation failed:"
-msgstr "バックアップ論理演算に失敗しました:"
+msgstr "バックアップ作業に失敗しました:"
 
 msgid "Operation took {num_minutes} minutes."
-msgstr "演算時間は{num_minutes}分かかりました。"
+msgstr "作業時間は{num_minutes}分かかりました。"
 
 msgid "To start a new session, click <b>Next</b>"
 msgstr "新しいセッションを開始するには、[<b>次へ</b>]をクリックします。"
@@ -296,7 +296,7 @@ msgid "Select source drive:"
 msgstr "ソースドライブを選択します。:"
 
 msgid "Step 2: Select Backup Image"
-msgstr "ステップ 2: バックアップドライブを選択します。"
+msgstr "ステップ 2: バックアップイメージを選択します。"
 
 msgid "Click the box below to select the folder containing image files."
 msgstr "下のボックスをクリックして、イメージファイルを含むフォルダを選択します。"
@@ -308,28 +308,28 @@ msgid "Date created"
 msgstr "作成日時"
 
 msgid "Step 3: Select Drive To Restore"
-msgstr "ステップ 3: ドライブを選択してレストアします"
+msgstr "ステップ 3: レストアするドライブを選択します"
 
 msgid "Select the destination drive you wish to overwrite and restore the selected image to."
-msgstr "書きする望んだデスティネーションドライブを選択し、選択したイメージをレストアします。"
+msgstr "選択したイメージで上書きし、レストアする宛先ドライブを選択します。"
 
 msgid "Step 4: Select Partitions To Restore"
-msgstr "ステップ 4: レストアするパーティションたちを選択します"
+msgstr "ステップ 4: レストアするパーティションを選択します"
 
 msgid "Select which partitions from the backup to restore, and whether to overwrite the partition table. Leave everything selected to completely restore the destination drive."
-msgstr "レストアするバックアップからパーティションたちを選択して, 書きするかどうかをパーティションテーブルを決める。 デスティネーションドライブを完全にレストアするにはすべてを選択したままにする。"
+msgstr "バックアップ元からどのパーティションをレストアするか、パーティションテーブルを上書きするかを選択します。すべてを選択したままにすれば、宛先ドライブに完全にレストアされます。"
 
 msgid "Selected image"
 msgstr "選択したイメージ"
 
 msgid "Destination device"
-msgstr "保存先バイス"
+msgstr "宛先ドライブ"
 
 msgid "IMPORTANT: Only selecting FIRST disk in Clonezilla image containing MULTIPLE DISKS."
-msgstr "警告: <b>複数のディスク</b>を含むclonezillaイメージの<b>最初</b>のディスクのみを選択します。"
+msgstr "重要: <b>複数のディスク</b>を含むClonezillaイメージは、<b>最初のディスク</b>のみを選択します。"
 
 msgid "Destination partition"
-msgstr "デスティネーションデスティネーション"
+msgstr "宛先パーティション"
 
 msgid "Overwrite partition table"
 msgstr "パーティションテーブルを上書きします"
@@ -338,34 +338,34 @@ msgid "You will be overwriting the partition table."
 msgstr "パーティションテーブルを上書きします。"
 
 msgid "The \"destination partition\" column has been updated using the information stored within the backup image.\n\n<b>If partitions have been resized, new partitions added, or additional operating systems installed <i>since the backup image was created</i>, then the destination drive's partition table will not match the backup image, and overwriting the destination drive's partition table will render these resized and additional partitions permanently inaccessible.</b> If you have not modified the partition table in such a way since creating this backup then overwriting the partition table is completely safe and will have no negative effects."
-msgstr "「デスティネーションデスティネーション」列は、バックアップイメージ内にレストアされている情報を使用して更新されました。\n\n<b>バックアップイメージの<i>作成日時に<i>パーティションのサイズが変更されたり、新しいパーティションたちが追加されたり、オペレーティングシステムが追加されたりした場合は、デスティネーションドライブのパーティションテーブルがバックアップイメージと一致しなくて, デスティネーションドライブのパーティションテーブルを書きすると、これらのサイズ変更された追加のパーティションたちに永続的にアクセスできなくなります。このバックアップを作成してからそのような方法でパーティションテーブルを変更していない場合、パーティションテーブルを書きしても完全に安全です。"
+msgstr "「宛先パーティション」列が、バックアップイメージ内に保存されている情報を元に更新されました。\n\n<b><i>バックアップイメージを作成した後に</i>パーティションのサイズを変更したり、新しいパーティションを追加したり、オペレーティングシステムを追加した場合、宛先ドライブのパーティションテーブルがバックアップイメージと一致せず、そのままパーティションテーブルを書きすると、これらの追加やサイズ変更されたパーティションに永久にアクセスできなくなります。バックアップを作成してからそのような方法でパーティションテーブルを変更していない場合は、パーティションテーブルを書きしても完全に安全であり、悪影響はありません。"
 
 msgid "You will <b>not</b> be overwriting the partition table."
-msgstr "パーティションテーブルを上書きすることはありません。"
+msgstr "パーティションテーブルを上書き<b>しません。</b>"
 
 msgid "The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table."
-msgstr "「デスティネーションパーティション 」列が、デスティネーションドライブの既存のパーティションテーブル情報で更新されました。\n\n<b>デスティネーションパーティション 列は、ドロップダウンメニューとして変更できます。 宛先パーティションを誤ってマッピングすると、オペレーティングシステムが起動しなくなる可能性があります。</b> よくわからない場合は、代わりにパーティションテーブルを上書きする方が適切かどうかを検討してください。"
+msgstr "「宛先パーティション」列が、宛先ドライブの既存のパーティションテーブル情報を元に更新されました。\n\n<b>宛先パーティション列は、ドロップダウンメニューから変更できます。 宛先パーティションを誤ってマッピングすると、オペレーティングシステムが起動しなくなる可能性があります。</b> よく分からない場合は、パーティションテーブルの上書きを検討してください。"
 
 msgid "No destination partition selected. Use the destination partition drop-down menu to select the destination"
-msgstr "デスティネーションパーティションが選択されていません。ドロップダウンメニューを使用して、保存先を選択します。"
+msgstr "宛先パーティションが選択されていません。ドロップダウンメニューを使用して、宛先を選択します。"
 
 msgid "Step 5: Confirm Restore Configuration"
-msgstr "ステップ 5: レストアのコンフィギュレーションを確認します。"
+msgstr "ステップ 5: レストアの構成を確認します。"
 
 msgid "Confirm the restore configuration."
-msgstr "レストアのコンフィギュレーションを確認してください。"
+msgstr "レストアの構成を確認してください。"
 
 msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite the data on this drive!"
-msgstr "バックアップを{destination_drive}にレストアしてもよろしいですか？ これを行うと、このドライブのデータが完全に上書きされます。"
+msgstr "バックアップを{destination_drive}にレストアしてもよろしいですか？ この操作を行うと、このドライブのデータは完全に上書きされます！"
 
 msgid "Source image"
 msgstr "ソースイメージ"
 
 msgid "Destination drive"
-msgstr "デスティネーションドライブ"
+msgstr "宛先ドライブ"
 
 msgid "Restoring the following partitions"
-msgstr "次のパーティションをレストアしっています"
+msgstr "次のパーティションをレストアしています"
 
 msgid "WILL BE OVERWRITING PARTITION TABLE"
 msgstr "パーティションテーブルを上書きします"
@@ -374,22 +374,22 @@ msgid "Will <b>NOT</b> be overwriting partition table"
 msgstr "パーティションテーブルを上書きすることは<b>ありません</b>"
 
 msgid "To start the restore, click <b>Next</b>."
-msgstr "レストアを開始するには、[次へ]をクリックします."
+msgstr "レストアを開始するには、[次へ]をクリックします。"
 
 msgid "Restoring From Backup"
-msgstr "バックアップからのレストアをしています。。。"
+msgstr "バックアップからレストアをしています"
 
 msgid "Restoring your system from the image you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
-msgstr "選択したイメージからシステムをレストアをしています。 パソコンの速度やデータ量によっては、1時間以上かかる場合があります。"
+msgstr "選択したイメージからシステムをレストアをしています。 コンピューターのスペックやデータ量によっては、1時間以上かかる場合があります。"
 
 msgid "Refreshing partition table"
-msgstr "パーティションテーブルをリフレッシュしています。"
+msgstr "パーティションテーブルを更新しています"
 
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
 msgstr "{description}を{destination_partition}にレストアします ({destination_description})"
 
 msgid "Restore cancelled by user."
-msgstr "ユーザーによってキャンセルされたレストア。"
+msgstr "ユーザーによってレストアがキャンセルされました。"
 
 msgid "Error restoring image: "
 msgstr "イメージのレストア中にエラーが発生しました:"
@@ -398,10 +398,10 @@ msgid "Could not restore sfdisk partition table as file has zero length: "
 msgstr "ファイルの長さがゼロであるため、sfdiskパーティションテーブルをレストアできませんでした:"
 
 msgid "Successfully restored partition table."
-msgstr "パーティションテーブルのレストアは成功しました。"
+msgstr "パーティションテーブルのレストアに成功しました。"
 
 msgid "Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."
-msgstr "デバイスのパーティションテーブルの更新に失敗しました。 別のプロセスがパーティションテーブルにアクセスしている場合に発生します。"
+msgstr "ドライブのパーティションテーブルの更新に失敗しました。 別のプロセスがパーティションテーブルにアクセスしている可能性があります。"
 
 msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
 msgstr "{description}に関連付けられた保存済みイメージがないため、パーティション{destination_partition}をレストアできません。"
@@ -413,7 +413,7 @@ msgid "Error restoring partition {image_key} to {destination_partition}."
 msgstr "パーティション{image_key}を{destination_partition}にレストア中にエラーが発生しました。"
 
 msgid "Successfully restored image partition {image} to {destination_partition}"
-msgstr "イメージパーティション{image}は{destination_partition}に成功しました"
+msgstr "{destination_partition}に対するイメージパーティション{image}のレストアに成功しました"
 
 msgid "Summary of Restore"
 msgstr "レストアの概要"
