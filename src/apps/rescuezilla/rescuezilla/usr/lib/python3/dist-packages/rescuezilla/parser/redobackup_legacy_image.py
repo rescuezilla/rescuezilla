@@ -60,7 +60,7 @@ class RedoBackupLegacyImage:
 
         rescuezilla_version_abs_path = os.path.join(dirname, prefix + ".rescuezilla.backup_version")
         if not os.path.exists(rescuezilla_version_abs_path):
-            self.image_format = "REDOBACKUP_0.9.8_1.0.4_FORMAT"
+            self.image_format = "REDOBACKUP_0.9.3_1.0.4_FORMAT"
         else:
             self.image_format = "RESCUEZILLA_1.5_FORMAT"
             self.rescuezilla_version = Utility.read_file_into_string(rescuezilla_version_abs_path).strip()
@@ -165,10 +165,10 @@ class RedoBackupLegacyImage:
                 self.partition_restore_command_dict[partition_number]['restore_binary'] = command
 
             # Use partclone.info to extract filesystem and size information from the image files. This is a time
-            # consuming operation but Redo 0.9.8-1.0.4 images benefit from this.
+            # consuming operation but Redo 0.9.3-1.0.4 images benefit from this.
             # Rescuezilla 1.5 format has a backup of the filesystem (from the restore_command files), and the size (
             # from sfdisk)
-            if self.image_format == "REDOBACKUP_0.9.8_1.0.4_FORMAT":
+            if self.image_format == "REDOBACKUP_0.9.3_1.0.4_FORMAT":
                 cat_cmd_list = ["cat"] + abs_partclone_image_list
                 pigz_cmd_list = ["pigz", "--decompress", "--stdout"]
                 partclone_info_cmd_list = ["partclone.info", "--source", "-"]
