@@ -18,6 +18,7 @@
 
 import collections
 import glob
+import json
 import os
 import re
 import subprocess
@@ -44,7 +45,6 @@ class RedoBackupLegacyImage:
     def __init__(self, absolute_path, enduser_filename, filename):
         # Redo Backup images never need decryption
         self.is_needs_decryption = False
-        # Path to ".backup" file
         self.absolute_path = absolute_path
         self.enduser_filename = enduser_filename
         self.proc = collections.OrderedDict()
@@ -53,28 +53,30 @@ class RedoBackupLegacyImage:
         dirname = os.path.dirname(absolute_path)
         self.warning_dict = {}
 
-        if filename.endswith(".backup"):
+        self.compression = "gzip"
+        if filename.endswith(".redo"):
+            prefix = filename.split(".redo")[0]
+            print("prefix: " + prefix)
+            self.compression = "uncompressed"
+            self.image_format = "REDOBACKUP_0.9.2_FORMAT"
+        elif filename.endswith(".backup"):
             prefix = filename.split(".backup")[0]
             print("prefix: " + prefix)
+            rescuezilla_version_abs_path = os.path.join(dirname, prefix + ".rescuezilla.backup_version")
+            if not os.path.exists(rescuezilla_version_abs_path):
+                self.image_format = "REDOBACKUP_0.9.3_1.0.4_FORMAT"
+            else:
+                self.image_format = "RESCUEZILLA_1.0.5_FORMAT"
+                self.rescuezilla_version = Utility.read_file_into_string(rescuezilla_version_abs_path).strip()
+                print("Backup originally created with Rescuezilla version: " + self.rescuezilla_version)
         else:
             raise ValueError("Expected Rescuezilla backup to end with .backup: " + absolute_path)
-
-        rescuezilla_version_abs_path = os.path.join(dirname, prefix + ".rescuezilla.backup_version")
-        if not os.path.exists(rescuezilla_version_abs_path):
-            self.image_format = "REDOBACKUP_0.9.3_1.0.4_FORMAT"
-        else:
-            self.image_format = "RESCUEZILLA_1.0.5_FORMAT"
-            self.rescuezilla_version = Utility.read_file_into_string(rescuezilla_version_abs_path).strip()
-            print("Backup originally created with Rescuezilla version: " + self.rescuezilla_version)
 
         self.last_modified_timestamp = str(time.ctime(os.stat(absolute_path).st_mtime))
         print("Last modified timestamp " + self.last_modified_timestamp)
 
         self.short_device_node_partition_list = Utility.read_linebreak_delimited_file_into_list(absolute_path)
         print("Source_partitions: " + str(self.short_device_node_partition_list))
-
-        self.backup_version = Utility.read_file_into_string(absolute_path).strip()
-        print("Backup version: " + str(self.backup_version))
 
         self.size_bytes = int(Utility.read_file_into_string(os.path.join(dirname, prefix + ".size").strip()))
         print("Size: " + str(self.size_bytes))
@@ -140,7 +142,15 @@ class RedoBackupLegacyImage:
         self.partclone_info_dict = collections.OrderedDict([])
         for short_device_node in self.short_device_node_partition_list:
             base_device_node, partition_number = Utility.split_device_string(short_device_node)
-            image_match_string = os.path.join(dirname, prefix + "_part" + str(partition_number) + ".*")
+            if self.image_format == "REDOBACKUP_0.9.2_FORMAT":
+                # Redo Backup v0.9.2 are *not* split
+                image_match_string = os.path.join(dirname, prefix + "_part" + str(partition_number))
+            else:
+                # Redo Backup v0.9.3-v1.0.4 and Rescuezilla v1.0.5 images are split up, eg "20200901_part2.000".
+                # However need to be careful because Rescuezilla's backup directory contains a log files
+                # eg, "20200901_part2_partclone.log", so the dot character before the asterisk is important. It prevents
+                # the underscore from matching.
+                image_match_string = os.path.join(dirname, prefix + "_part" + str(partition_number) + ".*")
             # Get absolute path partition images. Eg, [/path/to/20200813_part3.000, /path/to/20200813_part3.001 etc]
             abs_partclone_image_list = glob.glob(image_match_string)
             # Sort by alphabetical sort. Lexical sort not required here because fixed number of digits (so no risk
@@ -165,23 +175,28 @@ class RedoBackupLegacyImage:
             # consuming operation but Redo 0.9.3-1.0.4 images benefit from this.
             # Rescuezilla 1.0.5 format has a backup of the filesystem (from the restore_command files), and the size (
             # from sfdisk)
-            if self.image_format == "REDOBACKUP_0.9.3_1.0.4_FORMAT":
+            if self.image_format == "REDOBACKUP_0.9.3_1.0.4_FORMAT" or self.image_format == "REDOBACKUP_0.9.2_FORMAT":
                 cat_cmd_list = ["cat"] + abs_partclone_image_list
-                pigz_cmd_list = ["pigz", "--decompress", "--stdout"]
+                if self.compression == "uncompressed":
+                    # For uncompressed data, use `cat` utility to pass stdin through to stdout without processing.
+                    decompression_cmd_list = ["cat", "-"]
+                else:
+                    # Otherwise use pigz multithreaded gzip
+                    decompression_cmd_list = ["pigz", "--decompress", "--stdout"]
                 partclone_info_cmd_list = ["partclone.info", "--source", "-"]
-                Utility.print_cli_friendly("partclone ", [cat_cmd_list, pigz_cmd_list, partclone_info_cmd_list])
+                Utility.print_cli_friendly("partclone ", [cat_cmd_list, decompression_cmd_list, partclone_info_cmd_list])
                 self.proc['cat_partclone' + short_device_node] = subprocess.Popen(cat_cmd_list, stdout=subprocess.PIPE, env=env,
                                                                           encoding='utf-8')
-                self.proc['pigz' + short_device_node] = subprocess.Popen(pigz_cmd_list,
+                self.proc['decompression' + short_device_node] = subprocess.Popen(decompression_cmd_list,
                                                                  stdin=self.proc['cat_partclone' + short_device_node].stdout,
                                                                  stdout=subprocess.PIPE, env=env, encoding='utf-8')
                 self.proc['partclone_info' + short_device_node] = subprocess.Popen(partclone_info_cmd_list,
-                                                                               stdin=self.proc['pigz' + short_device_node].stdout,
+                                                                               stdin=self.proc['decompression' + short_device_node].stdout,
                                                                                stdout=subprocess.PIPE,
                                                                                stderr=subprocess.PIPE, env=env,
                                                                                encoding='utf-8')
                 self.proc['cat_partclone' + short_device_node].stdout.close()  # Allow p1 to receive a SIGPIPE if p2 exits.
-                self.proc['pigz' + short_device_node].stdout.close()  # Allow p1 to receive a SIGPIPE if p2 exits.
+                self.proc['decompression' + short_device_node].stdout.close()  # Allow p1 to receive a SIGPIPE if p2 exits.
                 output, err = self.proc['partclone_info' + short_device_node].communicate()
                 print("partclone_info: Exit output " + str(output) + "stderr " + str(err))
                 self.partclone_info_dict[partition_number] = Partclone.parse_partclone_info_output(err)
@@ -198,6 +213,9 @@ class RedoBackupLegacyImage:
     def has_partition_table(self):
         # All Redo Backup legacy images have at least the MBR file, even if the sfdisk file is empty or the MBR itself
         # is truncated to 512 bytes.
+        #
+        # For completeness it's noted creating a backup of a filesystem directly on a disk using Redo Backup v0.9.2
+        # creates some files, including the MBR and .redo file (but no populatd filesystem images).
         return True
 
     def get_enduser_friendly_partition_description(self):

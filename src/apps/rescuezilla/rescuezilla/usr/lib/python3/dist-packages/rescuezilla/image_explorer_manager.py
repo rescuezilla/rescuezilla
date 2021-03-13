@@ -438,8 +438,9 @@ class ImageExplorerManager:
             elif isinstance(image, RedoBackupLegacyImage):
                 base_device_node, partition_number = Utility.split_device_string(partition_key)
                 image_file_list = image.partition_restore_command_dict[partition_number]['abs_image_glob']
-                # Redo Backup Legacy format only used gzip compression
-                compression = "gzip"
+                # Redo Backup v0.9.2 uses uncompressed images, Redo Backup v0.9.3-v1.0.4 and Rescuezilla v1.0.5 uses
+                # gzip compression.
+                compression = image.compression
             elif isinstance(image, FogProjectImage):
                 base_device_node, partition_number = Utility.split_device_string(partition_key)
                 image_file_list = image.partitions[partition_key]['abs_image_glob']

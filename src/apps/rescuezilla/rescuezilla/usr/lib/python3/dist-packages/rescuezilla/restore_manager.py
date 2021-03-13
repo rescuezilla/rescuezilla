@@ -991,7 +991,13 @@ class RestoreManager:
                 dest_partition = self.restore_mapping_dict[image_key]['dest_key']
 
                 cat_cmd_list = ["cat"] + abs_image_list
-                pigz_cmd_list = ["pigz", "--decompress", "--stdout"]
+
+                if self.image.compression == "uncompressed":
+                    # For uncompressed data, use `cat` utility to pass stdin through to stdout without processing.
+                    decompression_cmd_list = ["cat", "-"]
+                else:
+                    # Otherwise use pigz multithreaded gzip
+                    decompression_cmd_list = ["pigz", "--decompress", "--stdout"]
 
                 if self.image.image_format == "RESCUEZILLA_1.0.5_FORMAT":
                     restore_command = self.image.partition_restore_command_dict[partition_number]['restore_binary']
@@ -1020,14 +1026,14 @@ class RestoreManager:
                     return
 
                 flat_command_string = Utility.print_cli_friendly("partclone ",
-                                           [cat_cmd_list, pigz_cmd_list, partclone_cmd_list])
+                                           [cat_cmd_list, decompression_cmd_list, partclone_cmd_list])
                 self.proc['cat_partclone' + image_key] = subprocess.Popen(cat_cmd_list, stdout=subprocess.PIPE, env=env,
                                                                           encoding='utf-8')
-                self.proc['pigz' + image_key] = subprocess.Popen(pigz_cmd_list,
+                self.proc['decompression' + image_key] = subprocess.Popen(decompression_cmd_list,
                                                                  stdin=self.proc['cat_partclone' + image_key].stdout,
                                                                  stdout=subprocess.PIPE, env=env, encoding='utf-8')
                 self.proc['partclone_restore_' + image_key] = subprocess.Popen(partclone_cmd_list,
-                                                                               stdin=self.proc['pigz' + image_key].stdout,
+                                                                               stdin=self.proc['decompression' + image_key].stdout,
                                                                                stdout=subprocess.PIPE,
                                                                                stderr=subprocess.PIPE, env=env,
                                                                                encoding='utf-8')
@@ -1063,7 +1069,7 @@ class RestoreManager:
 
                 # ( cat $quoted_src_partition_prefix.* | pigz -d -c | $tool -F -L /partclone.log -O '/dev/$dest_partition_node' ) 2>&1 |
                 self.proc['cat_partclone' + image_key].stdout.close()  # Allow p1 to receive a SIGPIPE if p2 exits.
-                self.proc['pigz' + image_key].stdout.close()  # Allow p2 to receive a SIGPIPE if p3 exits.
+                self.proc['decompression' + image_key].stdout.close()  # Allow p2 to receive a SIGPIPE if p3 exits.
                 stdout, stderr = self.proc['partclone_restore_' + image_key].communicate()
                 proc_stdout += stdout
                 proc_stderr += stderr
@@ -1075,9 +1081,9 @@ class RestoreManager:
                         destination_partition=self.restore_mapping_dict[image_key]['dest_key']) + "\n"
                     extra_info = "\nThe command used internally was:\n\n" + flat_command_string + "\n\n" + "The output of the command was: " + str(
                         output) + "\n\n" + str(proc_stderr)
-                    decompression_stderr = self.proc['pigz' + image_key].stderr
+                    decompression_stderr = self.proc['decompression' + image_key].stderr
                     if decompression_stderr is not None and decompression_stderr != "":
-                        extra_info += "\n\n" + pigz_cmd_list[0] + " stderr: " + decompression_stderr
+                        extra_info += "\n\n" + decompression_cmd_list[0] + " stderr: " + decompression_stderr
                     GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
                                   partition_summary + extra_info)
                     with self.summary_message_lock:

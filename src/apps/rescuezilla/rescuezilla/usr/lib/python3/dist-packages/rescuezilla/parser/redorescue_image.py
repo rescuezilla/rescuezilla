@@ -79,7 +79,8 @@ class RedoRescueImage:
             # of "1, 10, 2, 3" issues)
             abs_partclone_image_list.sort()
             if len(abs_partclone_image_list) == 0:
-                self.warning_dict[short_device_node] = _("Cannot find partition's associated partclone image") + "\n        " + image_match_string
+                self.warning_dict[short_device_node] = _(
+                    "Cannot find partition's associated partclone image") + "\n        " + image_match_string
                 continue
             # Not ideal to modifying the parsed dictionary by adding a new key/value pair, but very convenient
             self.redo_dict['parts'][short_device_node]['abs_image_glob'] = abs_partclone_image_list
@@ -113,3 +114,17 @@ class RedoRescueImage:
             flat_string += " " + str(
                 Utility.human_readable_filesize(self.redo_dict['parts'][short_device_node]['bytes']))
         return flat_string
+
+    # Redo Rescue's metadata is a JSON file ending in .redo. Unfortunately this conflicts with the format of Redo
+    # Backup and Recovery 0.9.2, which also uses a metadata file ending in .redo (this was changed to .backup for
+    # v0.9.3-v1.0.4).
+    #
+    # The best way to delineate this situation is to try reading the JSON file, if it succeeds then it's a Redo Rescue
+    # image.
+    @staticmethod
+    def is_valid_json(absolute_path):
+        try:
+            json.loads(Utility.read_file_into_string(absolute_path))
+            return True
+        except ValueError:
+            return False
