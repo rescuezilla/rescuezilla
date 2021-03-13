@@ -193,6 +193,7 @@ class RedoBackupLegacyImage:
                     # partclone.info example output for this case).
                     print(self.absolute_path + ": Could not read partclone info dict for " + short_device_node + ". Treating it as a dd image.")
                     self.partclone_info_dict[partition_number] = {'filesystem': "dd"}
+                print(str(self.partclone_info_dict))
 
     def has_partition_table(self):
         # All Redo Backup legacy images have at least the MBR file, even if the sfdisk file is empty or the MBR itself
@@ -209,31 +210,42 @@ class RedoBackupLegacyImage:
         return flat_string
 
     def flatten_partition_string(self, short_device_node):
-        flat_string = ""
+        flat_string = self.get_human_readable_filesystem(short_device_node) + " "
+
+        partition_size_bytes = self.get_partition_size_bytes(short_device_node)
+        if partition_size_bytes == -1:
+            base_device_node, partition_number = Utility.split_device_string(short_device_node)
+            print(self.absolute_path + ": Unable to use " + str(partition_number) + " from " + short_device_node + " in " + str(self.sfdisk_dict) + " or " + str(self.partclone_info_dict))
+            flat_string = "NOT_FOUND "
+        else:
+            flat_string += Utility.human_readable_filesize(partition_size_bytes)
+        return flat_string
+
+    def get_human_readable_filesystem(self, short_device_node):
         base_device_node, partition_number = Utility.split_device_string(short_device_node)
         if partition_number in self.partition_restore_command_dict.keys() and 'restore_binary' in \
                 self.partition_restore_command_dict[partition_number].keys():
             # On the Rescuezilla v1.0.5 image format, the partition restore command is easily accessible.
             command = self.partition_restore_command_dict[partition_number]['restore_binary']
-            filesystem = re.sub('partclone.', '', command)
-            flat_string += filesystem + " "
+            return re.sub('partclone.', '', command)
         elif partition_number in self.partclone_info_dict.keys() and 'filesystem' in self.partclone_info_dict[partition_number].keys():
             # Otherwise, the value detected by partclone.info must be used (which is known to be unreliable).
-            flat_string += self.partclone_info_dict[partition_number]['filesystem'] + " "
+            return self.partclone_info_dict[partition_number]['filesystem']
         else:
             print(self.absolute_path + ": Unable to use " + str(partition_number) + " from " + short_device_node + " in " + str(self.partclone_info_dict) + " or " + str(self.partclone_info_dict))
-            flat_string = "NOT_FOUND "
+            return "NOT_FOUND "
 
+    def get_partition_size_bytes(self, short_device_node):
+        base_device_node, partition_number = Utility.split_device_string(short_device_node)
         # Convert short device node to long device node by prepending "/dev/" (this simply approach is only correct for
         # Rescuezilla 1.0.5 and Redo Backup and Recovery images, as the format never supported multipath device nodes.
         long_device_node = "/dev/" + short_device_node
-        if 'partitions' in self.sfdisk_dict.keys() and long_device_node in self.sfdisk_dict['partitions'].keys():
-            # Get the partition size from sfdisk partition table
-            flat_string += Utility.human_readable_filesize(int(self.sfdisk_dict['partitions'][long_device_node]['size']) * 512)
-        elif partition_number in self.partclone_info_dict.keys() and 'size' in self.partclone_info_dict[partition_number].keys():
-            # Otherwise, use the filesystem size from partclone.info
-            flat_string += Utility.human_readable_filesize(int(self.partclone_info_dict[partition_number]['size']['bytes']))
+        # Use the filesystem size from partclone.info, when available:
+        if partition_number in self.partclone_info_dict.keys() and 'size' in self.partclone_info_dict[
+            partition_number].keys():
+                return self.partclone_info_dict[partition_number]['size']['bytes']
+        elif 'partitions' in self.sfdisk_dict.keys() and long_device_node in self.sfdisk_dict['partitions'].keys():
+            # Otherwise, get the partition size from sfdisk partition table.
+            return self.sfdisk_dict['partitions'][long_device_node]['size'] * 512
         else:
-            print(self.absolute_path + ": Unable to use " + str(partition_number) + " from " + short_device_node + " in " + str(self.sfdisk_dict) + " or " + str(self.partclone_info_dict))
-            flat_string = "NOT_FOUND "
-        return flat_string
+            return Utility.estimate_uncompressed_size(self.partition_restore_command_dict[partition_number]['abs_image_glob'], "gzip")

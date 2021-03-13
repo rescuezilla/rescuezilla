@@ -539,6 +539,20 @@ class Utility:
         t2.start()
         return queue
 
+    # Many image formats use "partclone.dd" to create raw sector-by-sector images. These images are often compressed,
+    # typically with gzip. Unfortunately, partclone.info can't read dd images, and gzip compression doesn't provide
+    # an accurate file size without decompression the entire archive (see `man gunzip` for documentation on the
+    # limitations of its --list parameter).
+    #
+    # Instead, simply counting the compressed file size provides a rough estimate. And for other compression formats
+    # this function may be expanded to extract more accurate numbers.
+    @staticmethod
+    def estimate_uncompressed_size(split_file_array, compression):
+        total_bytes = 0
+        for file_path in split_file_array:
+            total_bytes += os.path.getsize(file_path)
+        return total_bytes
+
     # Adapted from: https://stackoverflow.com/a/14996816/4745097
     @staticmethod
     def human_readable_filesize(num_bytes):
