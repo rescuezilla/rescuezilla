@@ -896,7 +896,7 @@ class RestoreManager:
                 cat_cmd_list = ["cat", corrected_sfdisk_path]
 
                 sfdisk_cmd_list = []
-                if self.image.image_format != "RESCUEZILLA_1.5_FORMAT":
+                if self.image.image_format != "RESCUEZILLA_1.0.5_FORMAT":
                     # To maximize backwards compatibility, use old version of sfdisk to restore partition table (if available)
                     # This is important as the sfdisk output format changed between 2012 and 2016.
                     old_sfdisk_binary = "sfdisk" + "." + "v2.20.1." + Utility.get_memory_bus_width()
@@ -908,7 +908,7 @@ class RestoreManager:
                             self.summary_message += message + "\n"
                         GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, message)
 
-                if self.image.image_format == "RESCUEZILLA_1.5_FORMAT" or len(sfdisk_cmd_list) == 0:
+                if self.image.image_format == "RESCUEZILLA_1.0.5_FORMAT" or len(sfdisk_cmd_list) == 0:
                     sfdisk_binary = "sfdisk"
                     sfdisk_cmd_list = [sfdisk_binary, "-f", self.restore_destination_drive]
                     if shutil.which(sfdisk_binary) is None:
@@ -959,7 +959,7 @@ class RestoreManager:
                 cat_cmd_list = ["cat"] + abs_image_list
                 pigz_cmd_list = ["pigz", "--decompress", "--stdout"]
 
-                if self.image.image_format == "RESCUEZILLA_1.5_FORMAT":
+                if self.image.image_format == "RESCUEZILLA_1.0.5_FORMAT":
                     restore_command = self.image.partition_restore_command_dict[partition_number]['restore_binary']
                     partclone_cmd_list = [restore_command, "--restore", "--logfile",
                                           "/tmp/rescuezilla_logfile.txt", "--overwrite", dest_partition]

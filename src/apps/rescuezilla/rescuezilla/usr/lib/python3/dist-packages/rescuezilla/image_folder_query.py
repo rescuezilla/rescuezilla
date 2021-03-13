@@ -41,7 +41,7 @@ class ImageFolderQuery:
         self.image_list_store = image_list_store
         self.win = self.builder.get_object("main_window")
         self.icon_pixbufs = {
-            "RESCUEZILLA_1.5_FORMAT": self.builder.get_object("rescuezilla_icon").get_pixbuf().scale_simple(32, 32,
+            "RESCUEZILLA_1.0.5_FORMAT": self.builder.get_object("rescuezilla_icon").get_pixbuf().scale_simple(32, 32,
                                                                                                             GdkPixbuf.InterpType.BILINEAR),
             "REDOBACKUP_0.9.2_FORMAT": self.builder.get_object("redobackup_v092_icon").get_pixbuf().scale_simple(32,
                                                                                                                   32,
