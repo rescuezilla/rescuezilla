@@ -46,7 +46,7 @@ class ImageFolderQuery:
             "REDOBACKUP_0.9.2_FORMAT": self.builder.get_object("redobackup_v092_icon").get_pixbuf().scale_simple(32,
                                                                                                                   32,
                                                                                                                   GdkPixbuf.InterpType.BILINEAR),
-            "REDOBACKUP_0.9.8_1.0.4_FORMAT": self.builder.get_object("redobackup_v093_to_v104_icon").get_pixbuf().scale_simple(32,
+            "REDOBACKUP_0.9.3_1.0.4_FORMAT": self.builder.get_object("redobackup_v093_to_v104_icon").get_pixbuf().scale_simple(32,
                                                                                                                   32,
                                                                                                                   GdkPixbuf.InterpType.BILINEAR),
             "CLONEZILLA_FORMAT": self.builder.get_object("clonezilla_icon").get_pixbuf().scale_simple(32, 32,
