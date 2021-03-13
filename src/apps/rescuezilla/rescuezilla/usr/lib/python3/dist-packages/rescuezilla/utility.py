@@ -532,10 +532,15 @@ class Utility:
     # an accurate file size without decompression the entire archive (see `man gunzip` for documentation on the
     # limitations of its --list parameter).
     #
+    # A reasonably accurate estimate is important to eg, ensure that during restore operation the progress bar
+    # represents the amount of data that has actually been restored.
+    #
     # Instead, simply counting the compressed file size provides a rough estimate. And for other compression formats
     # this function may be expanded to extract more accurate numbers.
     @staticmethod
-    def estimate_uncompressed_size(split_file_array, compression):
+    def count_total_size_of_files_on_disk(split_file_array, compression):
+        # For gzip compression, could apply a reasonable eg, 40% compression ratio on to get a more accurate
+        # uncompressed estimate, but this seems bit unnecessary.
         total_bytes = 0
         for file_path in split_file_array:
             total_bytes += os.path.getsize(file_path)

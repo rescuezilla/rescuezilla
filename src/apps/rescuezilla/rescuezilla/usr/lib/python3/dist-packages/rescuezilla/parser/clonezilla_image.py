@@ -223,8 +223,6 @@ class ClonezillaImage:
             if self.ecryptfs_info_dict is not None and 'size' in self.ecryptfs_info_dict.keys():
                 self.enduser_readable_size = self.ecryptfs_info_dict['size'].strip("_")
             else:
-                # Covert size in bytes to KB/MB/GB/TB as relevant
-                self.enduser_readable_size = Utility.human_readable_filesize(int(self.size_bytes))
                 sfdisk_filepath = os.path.join(dir, short_disk_device_node + "-pt.sf")
                 if isfile(sfdisk_filepath) and not self.is_needs_decryption:
                     sfdisk_string = Utility.read_file_into_string(sfdisk_filepath)
@@ -346,6 +344,29 @@ class ClonezillaImage:
                 self.image_format_dict_dict[key]['type'] = "swap"
                 self.image_format_dict_dict[key]['prefix'] = key
                 self.image_format_dict_dict[key]['is_lvm_logical_volume'] = False
+
+        total_size_estimate = 0
+        # Now we have all the images, compute the partition size estimates, and save it to avoid recomputing.
+        for image_format_dict_key in self.image_format_dict_dict.keys():
+            # Try to find the short_disk_key for the image. This key is used to access the parted and sfdisk
+            # partition table backups. It's not guaranteed there is a direct association between the backup image and
+            # the partition table (for example, Logical Volume Manager logical volumes).
+            associated_short_disk_key = ""
+            for short_disk_key in self.short_device_node_disk_list:
+                if image_format_dict_key.startswith(short_disk_key):
+                    associated_short_disk_key = short_disk_key
+            estimated_size_bytes = self._compute_partition_size_byte_estimate(associated_short_disk_key, image_format_dict_key)
+            self.image_format_dict_dict[image_format_dict_key]['estimated_size_bytes'] = estimated_size_bytes
+            total_size_estimate += estimated_size_bytes
+
+        if self.size_bytes == 0:
+            # For md RAID devices, Clonezilla doesn't have a parted of sfdisk partition table containing the hard drive
+            # size, so in that situation, summing the image sizes provides some kind of size estimate.
+            self.size_bytes = total_size_estimate
+
+        # Covert size in bytes to KB/MB/GB/TB as relevant
+        self.enduser_readable_size = Utility.human_readable_filesize(int(self.size_bytes))
+
         pp = pprint.PrettyPrinter(indent=4)
         pp.pprint(self.image_format_dict_dict)
 
@@ -554,39 +575,9 @@ class ClonezillaImage:
         return flat_string
 
     def flatten_partition_string(self, short_disk_key, partition_short_device_node):
-        flat_string = ""
-
-        if 'filesystem' in self.image_format_dict_dict[partition_short_device_node].keys():
-            flat_string += self.image_format_dict_dict[partition_short_device_node]['filesystem']
-        elif 'type' in self.image_format_dict_dict[partition_short_device_node].keys():
-            if self.image_format_dict_dict[partition_short_device_node]['type'] == "ntfsclone":
-                flat_string += "ntfsclone"
-            elif self.image_format_dict_dict[partition_short_device_node]['type'] == "partimage":
-                flat_string += "partimage"
-            elif self.image_format_dict_dict[partition_short_device_node]['type'] == "dd":
-                flat_string += "dd-img"
-            elif self.image_format_dict_dict[partition_short_device_node]['type'] == "swap":
-                flat_string += "swap"
-        else:
-            # TODO: Improve conversion between /dev/ nodes to short dev node.
-            long_partition_key = "/dev/" + re.sub("-", "/", partition_short_device_node)
-            if long_partition_key in self.dev_fs_dict.keys():
-                # TODO: Consider raising exception?
-                flat_string += "NOT FOUND: " + self.dev_fs_dict[long_partition_key]['filesystem']
-            else:
-                flat_string += "NOT FOUND: " + long_partition_key
-
-        if 'is_lvm_logical_volume' in self.image_format_dict_dict[partition_short_device_node].keys() and \
-                self.image_format_dict_dict[partition_short_device_node]['is_lvm_logical_volume']:
-            return flat_string
-
-        image_base_device_node, image_partition_number = Utility.split_device_string(partition_short_device_node)
-        if short_disk_key in self.parted_dict_dict.keys() and image_partition_number in \
-                self.parted_dict_dict[short_disk_key]['partitions'].keys():
-            size_in_bytes = self.parted_dict_dict[short_disk_key]['partitions'][image_partition_number]['size'] * \
-                            self.parted_dict_dict[short_disk_key]['logical_sector_size']
-            flat_string += " " + str(Utility.human_readable_filesize(int(size_in_bytes)))
-
+        flat_string = self._get_human_readable_filesystem(partition_short_device_node)
+        partition_byte_estimate = self.image_format_dict_dict[partition_short_device_node]['estimated_size_bytes']
+        flat_string += " " + str(Utility.human_readable_filesize(partition_byte_estimate))
         return flat_string
 
     # Multidisk helper
@@ -608,3 +599,46 @@ class ClonezillaImage:
             return False
         else:
             return len(self.mbr_dict_dict[short_selected_image_drive_node]) != 0
+
+    def _get_human_readable_filesystem(self, partition_short_device_node):
+        if 'filesystem' in self.image_format_dict_dict[partition_short_device_node].keys():
+            human_readable_filesystem = self.image_format_dict_dict[partition_short_device_node]['filesystem']
+        elif 'type' in self.image_format_dict_dict[partition_short_device_node].keys():
+            human_readable_filesystem = self.image_format_dict_dict[partition_short_device_node]['type']
+        else:
+            # TODO: Improve conversion between /dev/ nodes to short dev node.
+            long_partition_key = "/dev/" + re.sub("-", "/", partition_short_device_node)
+            if long_partition_key in self.dev_fs_dict.keys():
+                # TODO: Consider raising exception?
+                human_readable_filesystem = "NOT FOUND: " + self.dev_fs_dict[long_partition_key]['filesystem']
+            else:
+                human_readable_filesystem = "NOT FOUND: " + long_partition_key
+        return human_readable_filesystem
+
+    # Estimates size of each filesystem image, ideally based on the partition table, but otherwise by querying the total
+    # number of bytes used by the image files. Does NOT use partclone.info, which too slow to run on every image.
+    def _compute_partition_size_byte_estimate(self, short_disk_key, partition_short_device_node):
+        estimated_size = 0
+
+        is_lvm_logical_volume = 'is_lvm_logical_volume' in self.image_format_dict_dict[partition_short_device_node].keys() and \
+                self.image_format_dict_dict[partition_short_device_node]['is_lvm_logical_volume']
+        if not is_lvm_logical_volume:
+            # Prefer estimated size from parted partition table backup, but this requires splitting the device node
+            image_base_device_node, image_partition_number = Utility.split_device_string(partition_short_device_node)
+            if short_disk_key in self.parted_dict_dict.keys() and image_partition_number in \
+                self.parted_dict_dict[short_disk_key]['partitions'].keys():
+                estimated_size = self.parted_dict_dict[short_disk_key]['partitions'][image_partition_number]['size'] * \
+                            self.parted_dict_dict[short_disk_key]['logical_sector_size']
+
+        if estimated_size == 0:
+            # If the information wasn't in the parted backup, try the sfdisk partition table backup
+            if short_disk_key in self.sfdisk_dict_dict.keys() and '/dev/' + short_disk_key in self.sfdisk_dict_dict[short_disk_key]['sfdisk_dict']['partitions'].keys():
+                estimated_size = self.sfdisk_dict_dict[short_disk_key]['sfdisk_dict']['partitions']['/dev/' + short_disk_key] * 512
+            # Worst cast, count up the file size on disk (which is much faster compared to querying partclone.info).
+            # This is expected for Clonezilla Logical Volume Manager (LVM) Logical Volume (LVs) images, which do not
+            # have size estimates metadata.
+            elif 'absolute_filename_glob_list' in self.image_format_dict_dict[partition_short_device_node].keys():
+                glob_list = self.image_format_dict_dict[partition_short_device_node]['absolute_filename_glob_list']
+                compression = self.image_format_dict_dict[partition_short_device_node]['compression']
+                estimated_size = Utility.count_total_size_of_files_on_disk(glob_list, compression)
+        return estimated_size
