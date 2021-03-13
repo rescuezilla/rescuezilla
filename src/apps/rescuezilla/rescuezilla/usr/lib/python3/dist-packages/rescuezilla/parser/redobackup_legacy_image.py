@@ -35,7 +35,7 @@ from utility import Utility, _
 # To unify all the Redo Backup and Recovery forks under the Rescuezilla banner, and provide the best end-user
 # experience, all Redo Backup and Recovery formats are supported as far as practical.
 #
-# Redo Backup and Recovery only supported /dev/sdX device nodes, and Rescuezilla 1.5 images supported /dev/sdX and
+# Redo Backup and Recovery only supported /dev/sdX device nodes, and Rescuezilla 1.0.5 images supported /dev/sdX and
 # /dev/nvmeAnBp3 nodes
 #
 # [1] https://github.com/rescuezilla/rescuezilla/wiki/Bugs-in-unofficial-Redo-Backup-updates#identifying-redo-backup-versions
@@ -62,7 +62,7 @@ class RedoBackupLegacyImage:
         if not os.path.exists(rescuezilla_version_abs_path):
             self.image_format = "REDOBACKUP_0.9.3_1.0.4_FORMAT"
         else:
-            self.image_format = "RESCUEZILLA_1.5_FORMAT"
+            self.image_format = "RESCUEZILLA_1.0.5_FORMAT"
             self.rescuezilla_version = Utility.read_file_into_string(rescuezilla_version_abs_path).strip()
             print("Backup originally created with Rescuezilla version: " + self.rescuezilla_version)
 
@@ -166,7 +166,7 @@ class RedoBackupLegacyImage:
 
             # Use partclone.info to extract filesystem and size information from the image files. This is a time
             # consuming operation but Redo 0.9.3-1.0.4 images benefit from this.
-            # Rescuezilla 1.5 format has a backup of the filesystem (from the restore_command files), and the size (
+            # Rescuezilla 1.0.5 format has a backup of the filesystem (from the restore_command files), and the size (
             # from sfdisk)
             if self.image_format == "REDOBACKUP_0.9.3_1.0.4_FORMAT":
                 cat_cmd_list = ["cat"] + abs_partclone_image_list
