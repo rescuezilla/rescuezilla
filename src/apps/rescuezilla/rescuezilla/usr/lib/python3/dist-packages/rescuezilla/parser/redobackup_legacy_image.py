@@ -195,6 +195,9 @@ class RedoBackupLegacyImage:
                     self.partclone_info_dict[partition_number] = {'filesystem': "dd"}
                 print(str(self.partclone_info_dict))
 
+            # Compute the partition size estimate, and save it to avoid recomputing.
+            self.partition_restore_command_dict[partition_number]['estimated_size_bytes'] = self._compute_partition_size_byte_estimate(short_device_node)
+
     def has_partition_table(self):
         # All Redo Backup legacy images have at least the MBR file, even if the sfdisk file is empty or the MBR itself
         # is truncated to 512 bytes.
@@ -210,18 +213,13 @@ class RedoBackupLegacyImage:
         return flat_string
 
     def flatten_partition_string(self, short_device_node):
-        flat_string = self.get_human_readable_filesystem(short_device_node) + " "
-
-        partition_size_bytes = self.get_partition_size_bytes(short_device_node)
-        if partition_size_bytes == -1:
-            base_device_node, partition_number = Utility.split_device_string(short_device_node)
-            print(self.absolute_path + ": Unable to use " + str(partition_number) + " from " + short_device_node + " in " + str(self.sfdisk_dict) + " or " + str(self.partclone_info_dict))
-            flat_string = "NOT_FOUND "
-        else:
-            flat_string += Utility.human_readable_filesize(partition_size_bytes)
+        flat_string = self._get_human_readable_filesystem(short_device_node) + " "
+        base_device_node, partition_number = Utility.split_device_string(short_device_node)
+        partition_size_bytes = self.partition_restore_command_dict[partition_number]['estimated_size_bytes']
+        flat_string += Utility.human_readable_filesize(partition_size_bytes)
         return flat_string
 
-    def get_human_readable_filesystem(self, short_device_node):
+    def _get_human_readable_filesystem(self, short_device_node):
         base_device_node, partition_number = Utility.split_device_string(short_device_node)
         if partition_number in self.partition_restore_command_dict.keys() and 'restore_binary' in \
                 self.partition_restore_command_dict[partition_number].keys():
@@ -235,17 +233,28 @@ class RedoBackupLegacyImage:
             print(self.absolute_path + ": Unable to use " + str(partition_number) + " from " + short_device_node + " in " + str(self.partclone_info_dict) + " or " + str(self.partclone_info_dict))
             return "NOT_FOUND "
 
-    def get_partition_size_bytes(self, short_device_node):
+    # Estimates size of each filesystem image, ideally based on the partition table, but otherwise by querying the total
+    # number of bytes used by the image files. Does NOT use partclone.info, which too slow to run on every image.
+    def _compute_partition_size_byte_estimate(self, short_device_node):
+        estimated_size = 0
         base_device_node, partition_number = Utility.split_device_string(short_device_node)
         # Convert short device node to long device node by prepending "/dev/" (this simply approach is only correct for
         # Rescuezilla 1.0.5 and Redo Backup and Recovery images, as the format never supported multipath device nodes.
         long_device_node = "/dev/" + short_device_node
-        # Use the filesystem size from partclone.info, when available:
+        # Not all images can have partclone.info run on them (eg. dd images), nor would we want to because scanning is
+        # slow. But use the filesystem size from partclone.info, when available:
         if partition_number in self.partclone_info_dict.keys() and 'size' in self.partclone_info_dict[
             partition_number].keys():
-                return self.partclone_info_dict[partition_number]['size']['bytes']
+            estimated_size = self.partclone_info_dict[partition_number]['size']['bytes']
+        # Not all legacy Redo Backup images are guaranteed to have partition table.
         elif 'partitions' in self.sfdisk_dict.keys() and long_device_node in self.sfdisk_dict['partitions'].keys():
             # Otherwise, get the partition size from sfdisk partition table.
-            return self.sfdisk_dict['partitions'][long_device_node]['size'] * 512
-        else:
-            return Utility.estimate_uncompressed_size(self.partition_restore_command_dict[partition_number]['abs_image_glob'], "gzip")
+            estimated_size = self.sfdisk_dict['partitions'][long_device_node]['size'] * 512
+
+        # Some older sfdisk partition table backups incorrectly have size of 0.
+        if estimated_size == 0:
+            # Not all compressed images can be queried for uncompressed size (eg, gzip). So worst-case get the size
+            # from the compressed split image size (which is 0 bytes if the file is missing).
+            return Utility.count_total_size_of_files_on_disk(self.partition_restore_command_dict[partition_number]['abs_image_glob'], "gzip")
+
+        return estimated_size
