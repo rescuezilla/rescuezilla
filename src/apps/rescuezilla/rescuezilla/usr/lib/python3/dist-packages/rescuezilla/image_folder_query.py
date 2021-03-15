@@ -63,6 +63,8 @@ class ImageFolderQuery:
             "FSARCHIVER_FORMAT": self.builder.get_object("fsarchiver_placeholder_icon").get_pixbuf().scale_simple(32, 32,
                                                                                                           GdkPixbuf.InterpType.BILINEAR),
             "warning": self.builder.get_object("warning_icon").get_pixbuf().scale_simple(32, 32,
+                                                                                         GdkPixbuf.InterpType.BILINEAR),
+            "padlock": self.builder.get_object("padlock_icon").get_pixbuf().scale_simple(32, 32,
                                                                                          GdkPixbuf.InterpType.BILINEAR)
         }
         self.backup_label = self.builder.get_object("backup_folder_label")
@@ -113,14 +115,20 @@ class ImageFolderQuery:
             try:
                 image = self.image_dict[key]
                 format = image.image_format
+
                 if len(image.warning_dict.keys()) > 0:
                     warning_icon = self.icon_pixbufs['warning']
                 else:
                     warning_icon = None
 
+                if image.is_needs_decryption:
+                    lock_icon = self.icon_pixbufs['padlock']
+                else:
+                    lock_icon = None
                 self.image_list_store.append([key,
                                               format,
                                               warning_icon,
+                                              lock_icon,
                                               self.icon_pixbufs[format],
                                               image.enduser_filename,
                                               image.enduser_readable_size,
