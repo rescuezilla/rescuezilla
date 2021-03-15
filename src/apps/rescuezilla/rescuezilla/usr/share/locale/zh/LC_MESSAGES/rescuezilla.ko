@@ -25,7 +25,7 @@ msgid "Select an Option"
 msgstr "请选择一个选项"
 
 msgid "Easily create a backup image of your computer, or completely restore from one.  Click an option to begin:"
-msgstr "轻松创建系统备份镜像和还原系统。点击一个选项开始："
+msgstr "轻松创建系统镜像/系统还原。点击一个选项开始："
 
 msgid "Backup"
 msgstr "备份"
@@ -34,10 +34,10 @@ msgid "Restore"
 msgstr "还原"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
-msgstr "需要帮助吗？先查阅Rescuezilla常见问题（FAQ），然后转到Rescuezilla论坛。"
+msgstr "如需帮助，请先查阅Rescuezilla常见问题（FAQ），或进入Rescuezilla论坛寻找帮助。"
 
 msgid "Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed."
-msgstr "在众筹网站Patreon上每月捐赠1美元，以便支持Rescuezilla继续发展。"
+msgstr "在众筹网站Patreon上每月捐赠1美元，以便支持Rescuezilla持续发展。"
 
 msgid "Back"
 msgstr "返回"
@@ -82,7 +82,7 @@ msgid "Save"
 msgstr "保存"
 
 msgid "Description"
-msgstr "说明"
+msgstr "信息"
 
 msgid "Drive {drive_number}, Partition {partition_number}"
 msgstr "磁盘 {drive_number}, 分区 {partition_number}"
@@ -91,19 +91,19 @@ msgid "Drive {drive_number}"
 msgstr "磁盘 {drive_number}"
 
 msgid "Step 3: Select Destination Drive"
-msgstr "步骤 3: 选择目标磁盘"
+msgstr "步骤 3: 选择镜像要保存的磁盘"
 
 msgid "Click on the box below to select the source drive that you would like to create a backup image from."
 msgstr "在下边选项中，选择要备份为镜像的磁盘（源磁盘）"
 
 msgid "Connected directly to my computer"
-msgstr "直接连接到我的计算机"
+msgstr "本机及外挂磁盘"
 
 msgid "Shared over a network"
-msgstr "通过网络连接"
+msgstr "通过网络共享"
 
 msgid "Where is the destination drive?"
-msgstr "目标驱动器在哪里？"
+msgstr "请选择目标驱动器位置："
 
 msgid "SMB/CIFS shared folder specified below"
 msgstr "SMB/CIFS共享方式请参见下文"
@@ -112,7 +112,7 @@ msgid "Search network"
 msgstr "搜索网络"
 
 msgid "Server or share location:"
-msgstr "服务器或共享位置:"
+msgstr "服务器或共享地址:"
 
 msgid "Username (Optional):"
 msgstr "用户名 (可选):"
@@ -154,7 +154,7 @@ msgid "Unable to fully process the following image:"
 msgstr "以下镜像无法完全处理:"
 
 msgid "This can happen when loading images which Clonezilla was unable to completely backup. Any other filesystems within the image should be restorable as normal."
-msgstr "在加载Clonezilla不完整的备份镜像时，则会发生这种情况。备份镜像中所有其他文件系统都应能够正常还原。"
+msgstr "在加载Clonezilla不完整的备份镜像时，则会发生这种情况。备份镜像中其他文件系统都应能够正常还原。"
 
 msgid "Needs decryption"
 msgstr "需要解密"
@@ -168,10 +168,10 @@ msgstr ""
 
 # No need to translate this message into your language -- it's only relevant for an old unofficial German version.
 msgid "The backup's bootloader data is shorter than expected. This happens with backups created by an unofficial Redo Backup update. If the backup contained certain bootloaders like GRUB, the restored hard drive will not boot correctly without a manual fix. All data is still fully recoverable but manual intervention may required to restore the bootloader. Please consult {url} for information and assistance. The destination drive has not yet been modified. Do you wish to continue with the restore?"
-msgstr "Die Bootloader-Daten des Backups sind weniger als erwartet. Dies kommt bei Sicherungen vor, die durch ein inoffizielles Redo-Backup-Update erstellt wurden. Wenn das Backup bestimmte Bootloader wie GRUB enthielt, lässt sich die wiederhergestellte Festplatte ohne manuelle Fehlerbehebung nicht ordnungsgemäß starten. Alle Daten können vollständig wiederhergestellt werden, womöglich ist jedoch ein manueller Eingriff erforderlich, um den Bootloader wiederherzustellen. Informationen und Unterstützung erhalten Sie unter %1 Das Ziellaufwerk wurde noch nicht geändert. Möchten Sie mit der Wiederherstellung fortfahren?"
+msgstr ""
 
 msgid "Step 4: Select Destination Folder"
-msgstr "步骤 4: 选择目标文件夹"
+msgstr "步骤 4: 选择镜像要保存的文件夹"
 
 msgid "Click <b>Browse</b> to select the folder on the destination drive where your new backup image will be saved.\n"
 "\n"
@@ -210,9 +210,9 @@ msgstr "步骤 5: 命名备份文件"
 msgid "Provide a unique name for this backup image, such as the date.  Today's date is automatically entered for you below.\n"
 "\n"
 "You may only use letters, numbers, and dashes in your backup name."
-msgstr "为备份文件起一个唯一的名称 ，当前日期将自动输入在下面\n"
+msgstr "为备份文件起一个唯一的名称 ，当前日期将自动显示在下面\n"
 "\n"
-"您只能在备份名称中使用字母和数字!"
+"注意：您只能在备份名称中使用字母、数字和-!"
 
 msgid "Step 6: Confirm Backup Configuration"
 msgstr "步骤 6: 确认备份配置"
@@ -245,13 +245,13 @@ msgid "Backup {partition_name} containing filesystem {filesystem} to {destinatio
 msgstr "将包含文件系统 {filesystem} 的 {partition_name} 备份到 {destination}"
 
 msgid "Summary of Backup"
-msgstr "备份摘要信息"
+msgstr "备份的摘要信息"
 
 msgid "Confirm the backup summary."
-msgstr "确认备份摘要信息。"
+msgstr "确认备份信息。"
 
 msgid "Backup Summary"
-msgstr "备份摘要信息"
+msgstr "备份信息"
 
 msgid "Backup cancelled by user."
 msgstr "备份已被用户取消。"
@@ -287,19 +287,19 @@ msgid "To start a new session, click <b>Next</b>"
 msgstr "单击 <b>下一步</b> 开始新的任务。"
 
 msgid "Step 1: Select Image Location"
-msgstr "步骤 1: 选择镜像位置"
+msgstr "步骤 1: 选择要还原的镜像位置"
 
 msgid "Where is the source drive?"
-msgstr "源磁盘在哪里？"
+msgstr "选择源镜像所在位置"
 
 msgid "Select source drive:"
 msgstr "选择源磁盘:"
 
 msgid "Step 2: Select Backup Image"
-msgstr "步骤 2: 选择备份镜像"
+msgstr "步骤 2: 选择要还原的镜像"
 
 msgid "Click the box below to select the folder containing image files."
-msgstr "在下边选项中选择包含镜像的文件夹"
+msgstr "点击<b>浏览</b>选择包含镜像的文件夹"
 
 msgid "Select the image file to restore"
 msgstr "选择要还原的镜像文件"
@@ -380,7 +380,7 @@ msgid "Restoring From Backup"
 msgstr "从备份镜像还原..."
 
 msgid "Restoring your system from the image you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
-msgstr "从选定的映像还原系统,这可能需要一个小时或更长时间这可能需要一个小时或更长时间，具体取决于计算机的速度和数据量。"
+msgstr "从选定的映像还原系统，这可能需要一个小时或更长时间，具体取决于计算机的速度和数据量。"
 
 msgid "Refreshing partition table"
 msgstr "更新分区表"
@@ -416,13 +416,13 @@ msgid "Successfully restored image partition {image} to {destination_partition}"
 msgstr "已成功将映像分区 {image} 还原到 {destination_partition}"
 
 msgid "Summary of Restore"
-msgstr "还原摘要信息"
+msgstr "还原的摘要信息"
 
 msgid "Restore Summary"
-msgstr "还原摘要信息"
+msgstr "还原信息"
 
 msgid "Confirm the restore summary."
-msgstr "确认还原摘要信息。"
+msgstr "确认还原信息。"
 
 msgid "Backup restored successfully."
 msgstr "还原成功。" 

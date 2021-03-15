@@ -26,18 +26,18 @@ msgid "If boot fails, reboot and try selecting Graphical fallback instead"
 msgstr "如果启动失败，请选择图形模式重试"
 
 msgid "Graphical fallback mode"
-msgstr "图形模式"
+msgstr "图形应急模式"
 #      "----------MAX-LENGTH----------"
 
 msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
-msgstr "当标准模式不能在硬件上工作时，使用低分辨率的图形模式"
+msgstr "如果标准模式不适用于您的硬件时，请使用低分辨率的图形模式"
 
 msgid "Load USB into RAM"
-msgstr "将USB加载到RAM上"
+msgstr "USB设备启动"
 #      "----------MAX-LENGTH----------"
 
 msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
-msgstr ""
+msgstr "将Rescuezilla加载到内存中启动"
 
 msgid "Check USB for defects"
 msgstr "检测USB设备"
