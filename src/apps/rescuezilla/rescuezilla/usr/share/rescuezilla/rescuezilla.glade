@@ -73,6 +73,8 @@
       <column type="gchararray"/>
       <!-- column-name warning_icon_gtkpixbuf -->
       <column type="GdkPixbuf"/>
+      <!-- column-name padlock_icon_gtkpixbuf -->
+      <column type="GdkPixbuf"/>
       <!-- column-name disk_image_format_icon_gtkpixbuf -->
       <column type="GdkPixbuf"/>
       <!-- column-name enduser_filename -->
@@ -1503,12 +1505,10 @@ The folder a backup is saved in is usually a description of the computer, e.g. &
                                                 </child>
                                                 <child>
                                                   <object class="GtkTreeViewColumn">
-                                                    <property name="resizable">True</property>
-                                                    <property name="title" translatable="yes">Filename</property>
                                                     <child>
-                                                      <object class="GtkCellRendererText"/>
+                                                      <object class="GtkCellRendererPixbuf"/>
                                                       <attributes>
-                                                        <attribute name="text">4</attribute>
+                                                        <attribute name="pixbuf">4</attribute>
                                                       </attributes>
                                                     </child>
                                                   </object>
@@ -1516,7 +1516,7 @@ The folder a backup is saved in is usually a description of the computer, e.g. &
                                                 <child>
                                                   <object class="GtkTreeViewColumn">
                                                     <property name="resizable">True</property>
-                                                    <property name="title" translatable="yes">Size</property>
+                                                    <property name="title" translatable="yes">Filename</property>
                                                     <child>
                                                       <object class="GtkCellRendererText"/>
                                                       <attributes>
@@ -1528,7 +1528,7 @@ The folder a backup is saved in is usually a description of the computer, e.g. &
                                                 <child>
                                                   <object class="GtkTreeViewColumn">
                                                     <property name="resizable">True</property>
-                                                    <property name="title" translatable="yes">Last modified</property>
+                                                    <property name="title" translatable="yes">Size</property>
                                                     <child>
                                                       <object class="GtkCellRendererText"/>
                                                       <attributes>
@@ -1540,11 +1540,23 @@ The folder a backup is saved in is usually a description of the computer, e.g. &
                                                 <child>
                                                   <object class="GtkTreeViewColumn">
                                                     <property name="resizable">True</property>
-                                                    <property name="title" translatable="yes">Partitions</property>
+                                                    <property name="title" translatable="yes">Last modified</property>
                                                     <child>
                                                       <object class="GtkCellRendererText"/>
                                                       <attributes>
                                                         <attribute name="text">7</attribute>
+                                                      </attributes>
+                                                    </child>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkTreeViewColumn">
+                                                    <property name="resizable">True</property>
+                                                    <property name="title" translatable="yes">Partitions</property>
+                                                    <child>
+                                                      <object class="GtkCellRendererText"/>
+                                                      <attributes>
+                                                        <attribute name="text">8</attribute>
                                                       </attributes>
                                                     </child>
                                                   </object>
@@ -2898,12 +2910,10 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                     </child>
                                                     <child>
                                                       <object class="GtkTreeViewColumn">
-                                                        <property name="resizable">True</property>
-                                                        <property name="title" translatable="yes">Filename</property>
                                                         <child>
-                                                          <object class="GtkCellRendererText"/>
+                                                          <object class="GtkCellRendererPixbuf"/>
                                                           <attributes>
-                                                            <attribute name="text">4</attribute>
+                                                            <attribute name="pixbuf">4</attribute>
                                                           </attributes>
                                                         </child>
                                                       </object>
@@ -2911,7 +2921,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                     <child>
                                                       <object class="GtkTreeViewColumn">
                                                         <property name="resizable">True</property>
-                                                        <property name="title" translatable="yes">Size</property>
+                                                        <property name="title" translatable="yes">Filename</property>
                                                         <child>
                                                           <object class="GtkCellRendererText"/>
                                                           <attributes>
@@ -2923,7 +2933,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                     <child>
                                                       <object class="GtkTreeViewColumn">
                                                         <property name="resizable">True</property>
-                                                        <property name="title" translatable="yes">Date created</property>
+                                                        <property name="title" translatable="yes">Size</property>
                                                         <child>
                                                           <object class="GtkCellRendererText"/>
                                                           <attributes>
@@ -2935,11 +2945,23 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                     <child>
                                                       <object class="GtkTreeViewColumn">
                                                         <property name="resizable">True</property>
-                                                        <property name="title" translatable="yes">Partitions</property>
+                                                        <property name="title" translatable="yes">Date created</property>
                                                         <child>
                                                           <object class="GtkCellRendererText"/>
                                                           <attributes>
                                                             <attribute name="text">7</attribute>
+                                                          </attributes>
+                                                        </child>
+                                                      </object>
+                                                    </child>
+                                                    <child>
+                                                      <object class="GtkTreeViewColumn">
+                                                        <property name="resizable">True</property>
+                                                        <property name="title" translatable="yes">Partitions</property>
+                                                        <child>
+                                                          <object class="GtkCellRendererText"/>
+                                                          <attributes>
+                                                            <attribute name="text">8</attribute>
                                                           </attributes>
                                                         </child>
                                                       </object>
@@ -4599,12 +4621,10 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                     </child>
                                                     <child>
                                                       <object class="GtkTreeViewColumn">
-                                                        <property name="resizable">True</property>
-                                                        <property name="title" translatable="yes">Filename</property>
                                                         <child>
-                                                          <object class="GtkCellRendererText"/>
+                                                          <object class="GtkCellRendererPixbuf"/>
                                                           <attributes>
-                                                            <attribute name="text">4</attribute>
+                                                            <attribute name="pixbuf">4</attribute>
                                                           </attributes>
                                                         </child>
                                                       </object>
@@ -4612,7 +4632,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                     <child>
                                                       <object class="GtkTreeViewColumn">
                                                         <property name="resizable">True</property>
-                                                        <property name="title" translatable="yes">Size</property>
+                                                        <property name="title" translatable="yes">Filename</property>
                                                         <child>
                                                           <object class="GtkCellRendererText"/>
                                                           <attributes>
@@ -4624,7 +4644,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                     <child>
                                                       <object class="GtkTreeViewColumn">
                                                         <property name="resizable">True</property>
-                                                        <property name="title" translatable="yes">Date created</property>
+                                                        <property name="title" translatable="yes">Size</property>
                                                         <child>
                                                           <object class="GtkCellRendererText"/>
                                                           <attributes>
@@ -4636,11 +4656,23 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                     <child>
                                                       <object class="GtkTreeViewColumn">
                                                         <property name="resizable">True</property>
-                                                        <property name="title" translatable="yes">Partitions</property>
+                                                        <property name="title" translatable="yes">Date created</property>
                                                         <child>
                                                           <object class="GtkCellRendererText"/>
                                                           <attributes>
                                                             <attribute name="text">7</attribute>
+                                                          </attributes>
+                                                        </child>
+                                                      </object>
+                                                    </child>
+                                                    <child>
+                                                      <object class="GtkTreeViewColumn">
+                                                        <property name="resizable">True</property>
+                                                        <property name="title" translatable="yes">Partitions</property>
+                                                        <child>
+                                                          <object class="GtkCellRendererText"/>
+                                                          <attributes>
+                                                            <attribute name="text">8</attribute>
                                                           </attributes>
                                                         </child>
                                                       </object>
@@ -5724,12 +5756,10 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                     </child>
                                                     <child>
                                                       <object class="GtkTreeViewColumn">
-                                                        <property name="resizable">True</property>
-                                                        <property name="title" translatable="yes">Filename</property>
                                                         <child>
-                                                          <object class="GtkCellRendererText"/>
+                                                          <object class="GtkCellRendererPixbuf"/>
                                                           <attributes>
-                                                            <attribute name="text">4</attribute>
+                                                            <attribute name="pixbuf">4</attribute>
                                                           </attributes>
                                                         </child>
                                                       </object>
@@ -5737,7 +5767,7 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                     <child>
                                                       <object class="GtkTreeViewColumn">
                                                         <property name="resizable">True</property>
-                                                        <property name="title" translatable="yes">Size</property>
+                                                        <property name="title" translatable="yes">Filename</property>
                                                         <child>
                                                           <object class="GtkCellRendererText"/>
                                                           <attributes>
@@ -5749,7 +5779,7 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                     <child>
                                                       <object class="GtkTreeViewColumn">
                                                         <property name="resizable">True</property>
-                                                        <property name="title" translatable="yes">Date created</property>
+                                                        <property name="title" translatable="yes">Size</property>
                                                         <child>
                                                           <object class="GtkCellRendererText"/>
                                                           <attributes>
@@ -5761,11 +5791,23 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                     <child>
                                                       <object class="GtkTreeViewColumn">
                                                         <property name="resizable">True</property>
-                                                        <property name="title" translatable="yes">Partitions</property>
+                                                        <property name="title" translatable="yes">Date created</property>
                                                         <child>
                                                           <object class="GtkCellRendererText"/>
                                                           <attributes>
                                                             <attribute name="text">7</attribute>
+                                                          </attributes>
+                                                        </child>
+                                                      </object>
+                                                    </child>
+                                                    <child>
+                                                      <object class="GtkTreeViewColumn">
+                                                        <property name="resizable">True</property>
+                                                        <property name="title" translatable="yes">Partitions</property>
+                                                        <child>
+                                                          <object class="GtkCellRendererText"/>
+                                                          <attributes>
+                                                            <attribute name="text">8</attribute>
                                                           </attributes>
                                                         </child>
                                                       </object>
@@ -6252,5 +6294,10 @@ In the short-term, advanced users who expect to regularly explore 100+ gigabyte 
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="pixbuf">warning_icon.png</property>
+  </object>
+  <object class="GtkImage" id="padlock_icon">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixbuf">padlock_icon.png</property>
   </object>
 </interface>
