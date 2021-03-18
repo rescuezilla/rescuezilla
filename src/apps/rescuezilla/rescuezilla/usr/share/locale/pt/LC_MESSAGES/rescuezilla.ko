@@ -313,7 +313,7 @@ msgstr "Passo 3: Selecione o Drive para Restaurar"
 msgid "Select the destination drive you wish to overwrite and restore the selected image to."
 msgstr "Selecione o drive de destino você deseja sobrescrever e restaurar com a imagem selecionada"
 
-msgid "Step 4: Select Partitions To Restore"
+msgid "Step 4: Select Partitions to Restore"
 msgstr "Passo 4: Selecione Partições para Restaurar"
 
 msgid "Select which partitions from the backup to restore, and whether to overwrite the partition table. Leave everything selected to completely restore the destination drive."

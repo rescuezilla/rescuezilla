@@ -313,7 +313,7 @@ msgstr "ステップ 3: レストアするドライブを選択します"
 msgid "Select the destination drive you wish to overwrite and restore the selected image to."
 msgstr "選択したイメージで上書きし、レストアする宛先ドライブを選択します。"
 
-msgid "Step 4: Select Partitions To Restore"
+msgid "Step 4: Select Partitions to Restore"
 msgstr "ステップ 4: レストアするパーティションを選択します"
 
 msgid "Select which partitions from the backup to restore, and whether to overwrite the partition table. Leave everything selected to completely restore the destination drive."

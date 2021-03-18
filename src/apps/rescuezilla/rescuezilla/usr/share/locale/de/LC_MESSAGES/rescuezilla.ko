@@ -314,7 +314,7 @@ msgstr "Schritt 3: Ziel - Laufwerk wählen"
 msgid "Select the destination drive you wish to overwrite and restore the selected image to."
 msgstr "Wählen Sie das Ziel- Laufwerk, welches mit Hilfe der ausgewählte Backup- Image Datei, wieder hergestellt werden soll. Alle evtl. vorhandenen Daten des Ziel- Laufwerkes werden hierbei gelöscht!"
 
-msgid "Step 4: Select Partitions To Restore"
+msgid "Step 4: Select Partitions to Restore"
 msgstr "Schritt 4: Partitionen zum Wiederherstellen auswählen"
 
 msgid "Select which partitions from the backup to restore, and whether to overwrite the partition table. Leave everything selected to completely restore the destination drive."

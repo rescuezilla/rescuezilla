@@ -313,7 +313,7 @@ msgstr "Βήμα 3: Επιλέξτε Μονάδα Δίσκου Για Επανα
 msgid "Select the destination drive you wish to overwrite and restore the selected image to."
 msgstr "Επιλέξτε τη μονάδα δίσκου προορισμού στην οποία θέλετε να αντικαταστήσετε και να επαναφέρετε το επιλεγμένο είδωλο."
 
-msgid "Step 4: Select Partitions To Restore"
+msgid "Step 4: Select Partitions to Restore"
 msgstr "Βήμα 4: Επιλέξτε τα Διαμερίσματα Προς Επαναφορά"
 
 msgid "Select which partitions from the backup to restore, and whether to overwrite the partition table. Leave everything selected to completely restore the destination drive."
