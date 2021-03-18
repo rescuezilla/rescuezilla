@@ -313,7 +313,7 @@ msgstr "Steg 3: Välj disk att återställa"
 msgid "Select the destination drive you wish to overwrite and restore the selected image to."
 msgstr "Välj den målenhet du vill skriva över och återställ den valda filen till."
 
-msgid "Step 4: Select Partitions To Restore"
+msgid "Step 4: Select Partitions to Restore"
 msgstr "Steg 4: Välj partitioner att återställa"
 
 msgid "Select which partitions from the backup to restore, and whether to overwrite the partition table. Leave everything selected to completely restore the destination drive."

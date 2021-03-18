@@ -313,7 +313,7 @@ msgstr "步骤 3: 选择要还原的镜像"
 msgid "Select the destination drive you wish to overwrite and restore the selected image to."
 msgstr "选择要覆盖的目标磁盘并将所选映像还原到该驱动器，目标磁盘中现有的数据将被删除！"
 
-msgid "Step 4: Select Partitions To Restore"
+msgid "Step 4: Select Partitions to Restore"
 msgstr "步骤 4: 选择要还原的分区"
 
 msgid "Select which partitions from the backup to restore, and whether to overwrite the partition table. Leave everything selected to completely restore the destination drive."

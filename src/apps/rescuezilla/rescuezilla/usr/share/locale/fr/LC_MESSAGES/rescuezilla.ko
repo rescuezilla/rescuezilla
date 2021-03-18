@@ -314,7 +314,7 @@ msgstr "Étape 3 : Sélectionnez le disque à restaurer"
 msgid "Select the destination drive you wish to overwrite and restore the selected image to."
 msgstr "Choisissez le disque de destination que vous souhaitez écraser et sur lequel restaurer l'image sélectionnée."
 
-msgid "Step 4: Select Partitions To Restore"
+msgid "Step 4: Select Partitions to Restore"
 msgstr "Étape 4 : sélectionnez les partitions à restaurer"
 
 msgid "Select which partitions from the backup to restore, and whether to overwrite the partition table. Leave everything selected to completely restore the destination drive."

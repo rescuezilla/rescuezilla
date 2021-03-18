@@ -313,7 +313,7 @@ msgstr "Krok 3: Wybierz opcję Przywróć Kopię"
 msgid "Select the destination drive you wish to overwrite and restore the selected image to."
 msgstr "Wybierz dysk docelowy, który chcesz nadpisać i przywrócić wybrany obraz do"
 
-msgid "Step 4: Select Partitions To Restore"
+msgid "Step 4: Select Partitions to Restore"
 msgstr "Krok 4: Wybierz partycje, które chcesz przywrócić"
 
 msgid "Select which partitions from the backup to restore, and whether to overwrite the partition table. Leave everything selected to completely restore the destination drive."
