@@ -94,6 +94,10 @@ class RestoreManager:
         self.restore_in_progress = False
         self.completed_restore(False, _("Restore cancelled by user."))
 
+    def display_status(self, msg1, msg2):
+        GLib.idle_add(self.update_restore_progress_status, msg1 + "\n" + msg2)
+        GLib.idle_add(self.update_main_statusbar, msg1 + ": " + msg2)
+
     # Refresh partition table using partprobe, kpartx and `blockdev --rereadpt` based on Clonezilla's
     # inform_kernel_partition_table_changed function.
     #
@@ -111,11 +115,11 @@ class RestoreManager:
     #
     # [1] https://serverfault.com/questions/36038/reread-partition-table-without-rebooting
     def update_kernel_partition_table(self, wait_for_partition):
-        GLib.idle_add(self.update_restore_progress_status, _("Refreshing partition table"))
-        GLib.idle_add(self.update_main_statusbar, _("Refreshing partition table"))
-
+        refresh_msg = _("Refreshing partition table")
+        self.display_status(refresh_msg, _("Unmounting..."))
         Utility.umount_warn_on_busy(self.restore_destination_drive)
 
+        self.display_status(refresh_msg, _("Synchronizing disks..."))
         # Sync drives / flush buffers to avoid "Device or resource busy"
         process, flat_command_string, failed_message = Utility.run("Sync drives", ["sync"], use_c_locale=False,
                                                                    logger=self.logger)
@@ -126,43 +130,53 @@ class RestoreManager:
         sleep(1.0)
 
         if shutil.which("partx") is not None:
+            msg = _("Probing {device} with {app}").format(device=self.restore_destination_drive, app="partx")
             kpartx_rereadpt_cmd_list = ["partx", "--update", self.restore_destination_drive]
-            process, flat_command_string, failed_message = Utility.run(
-                "Probing " + self.restore_destination_drive + " with partx...", kpartx_rereadpt_cmd_list,
+            self.display_status(refresh_msg, msg)
+            process, flat_command_string, failed_message = Utility.run(msg
+                , kpartx_rereadpt_cmd_list,
                 use_c_locale=False, logger=self.logger)
             if process.returncode != 0:
                 self.logger.write(failed_message)
 
         sleep(1.0)
+        msg = _("Probing {device} with {app}").format(device=self.restore_destination_drive, app="hdparm")
         hdparm_rereadpt_cmd_list = ["hdparm", "-z", self.restore_destination_drive]
+        self.display_status(refresh_msg, msg)
         process, flat_command_string, failed_message = Utility.run(
-            "Probing " + self.restore_destination_drive + " with hdparm...",
+            msg,
             hdparm_rereadpt_cmd_list, use_c_locale=False, logger=self.logger)
         if process.returncode != 0:
             self.logger.write(failed_message)
 
         sleep(1.0)
+        msg = _("Probing {device} with {app}").format(device=self.restore_destination_drive, app="partprobe")
         partprobe_rereadpt_cmd_list = ["partprobe", self.restore_destination_drive]
+        self.display_status(refresh_msg, msg)
         process, flat_command_string, failed_message = Utility.run(
-            "Probing " + self.restore_destination_drive + " with partprobe...",
+            msg,
             partprobe_rereadpt_cmd_list, use_c_locale=False, logger=self.logger)
         if process.returncode != 0:
             self.logger.write(failed_message)
 
         sleep(1.0)
         if shutil.which("kpartx") is not None:
+            msg = _("Probing {device} with {app}").format(device=self.restore_destination_drive, app="kpartx")
             kpartx_rereadpt_cmd_list = ["kpartx", self.restore_destination_drive]
+            self.display_status(refresh_msg, msg)
             process, flat_command_string, failed_message = Utility.run(
-                "Probing " + self.restore_destination_drive + " with kpartx...", kpartx_rereadpt_cmd_list,
+                msg, kpartx_rereadpt_cmd_list,
                 use_c_locale=False, logger=self.logger)
             if process.returncode != 0:
                 self.logger.write(failed_message)
 
         sleep(1.0)
         message = ""
+        status_msg = _("Probing {device} with {app}").format(device=self.restore_destination_drive, app="blockdev")
         blockdev_rereadpt_cmd_list = ["blockdev", "--rereadpt", self.restore_destination_drive]
+        self.display_status(refresh_msg, status_msg)
         process, flat_command_string, failed_message = Utility.run(
-            "Probing " + self.restore_destination_drive + " with blockdev...",
+            status_msg,
             blockdev_rereadpt_cmd_list, use_c_locale=False, logger=self.logger)
         if process.returncode != 0:
             message = failed_message
@@ -183,8 +197,7 @@ class RestoreManager:
             GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
                           _("Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table.") + "\n\n" + message)
 
-        GLib.idle_add(self.update_restore_progress_status, "")
-        GLib.idle_add(self.update_main_statusbar, "")
+        self.display_status("", "")
         return True,
 
     def clean_filesystem_header_in_partition(self, long_device_node):
@@ -206,6 +219,7 @@ class RestoreManager:
 
 
     def _shutdown_lvm(self):
+        self.display_status("Shutting down the Logical Volume Manager (LVM)", "")
         # Stop the Logical Volume Manager (LVM)
         failed_logical_volume_list, failed_volume_group_list = Lvm.shutdown_lvm2(self.builder, self.logger)
         for failed_volume_group in failed_volume_group_list:
@@ -516,10 +530,17 @@ class RestoreManager:
                 # "Thanks to Jerome Delamarche (jd@inodes-fr.com)"
                 for volume_group_key in self.image.lvm_vg_dev_dict.keys():
                     # Extract the device node associated with the physical volume of the image
-                    # This device is NOT relevant during the restore, so it must be mapped to the destination drive.
+                    # This original device must be mapped to the destination drive.
                     image_pv_long_device_node = self.image.lvm_vg_dev_dict[volume_group_key]['device_node']
                     image_pv_base_device_node, image_pv_partition_number = Utility.split_device_string(
                         image_pv_long_device_node)
+                    # TODO: Might need to make this logic better
+                    image_long_disk_device_node = "/dev/" + self.image.short_disk_device_node
+                    if not image_pv_long_device_node.startswith(image_long_disk_device_node):
+                        print("Not restoring LVM PV " + image_pv_long_device_node + " as device is " + image_long_disk_device_node)
+                        continue
+                    else:
+                        print("Restoring LVM PV " + image_pv_long_device_node + " as device is " + image_long_disk_device_node)
                     # Generate a device node to write the physical volume to.
                     destination_pv_long_device_node = Utility.join_device_string(self.restore_destination_drive,
                                                                                  image_pv_partition_number)
