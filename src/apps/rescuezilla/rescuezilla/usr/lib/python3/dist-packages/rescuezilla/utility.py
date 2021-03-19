@@ -405,8 +405,7 @@ class Utility:
             raise Exception(failed_message)
 
     @staticmethod
-    def print_cli_friendly(message, cmd_list_list):
-        print(message + ". Running: ", end="")
+    def get_cli_friendly(cmd_list_list):
         flat_command_string = ""
         i = 0
         for cmd_list in cmd_list_list:
@@ -415,6 +414,13 @@ class Utility:
             i += 1
             if i < len(cmd_list_list):
                 flat_command_string += "| "
+        return flat_command_string
+
+
+    @staticmethod
+    def print_cli_friendly(message, cmd_list_list):
+        print(message + ". Running: ", end="")
+        flat_command_string = Utility.get_cli_friendly(cmd_list_list)
         # Print newline to flush the buffer
         print(flat_command_string)
         return flat_command_string
