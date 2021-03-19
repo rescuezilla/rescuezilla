@@ -113,21 +113,18 @@ class ImageExplorerManager:
         if isinstance(self.selected_image, ClonezillaImage):
             for image_format_dict_key in self.selected_image.image_format_dict_dict.keys():
                 print("ClonezillaImage contains partition " + image_format_dict_key)
-                # TODO: Support Clonezilla multidisk
-                short_device_key = self.selected_image.short_device_node_disk_list[0]
-                if self.selected_image.does_image_key_belong_to_device(image_format_dict_key, short_device_key):
+                if self.selected_image.does_image_key_belong_to_device(image_format_dict_key):
                     if self.selected_image.image_format_dict_dict[image_format_dict_key]['is_lvm_logical_volume']:
                         human_friendly_partition_name = image_format_dict_key
-                        flat_description = "Logical Volume " + image_format_dict_key + ": " + self.selected_image.flatten_partition_string(
-                            short_device_key, image_format_dict_key)
+                        flat_description = "Logical Volume " + image_format_dict_key + ": "\
+                                           + self.selected_image.flatten_partition_string(image_format_dict_key)
                     else:
                         image_base_device_node, image_partition_number = Utility.split_device_string(
                             image_format_dict_key)
                         human_friendly_partition_name = "#" + str(
                             image_partition_number) + " (" + image_format_dict_key + ")"
                         flat_description = str(
-                            image_partition_number) + ": " + self.selected_image.flatten_partition_string(
-                            short_device_key, image_format_dict_key)
+                            image_partition_number) + ": " + self.selected_image.flatten_partition_string(image_format_dict_key)
                     self.image_explorer_partition_selection_list.append(
                         [image_format_dict_key, human_friendly_partition_name, flat_description])
         elif isinstance(self.selected_image, RedoBackupLegacyImage):

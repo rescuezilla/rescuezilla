@@ -76,10 +76,6 @@ class PartitionsToRestore:
         self._use_image_partition_table()
 
         info_string = "<b>" + _("Selected image") + "</b> " + GObject.markup_escape_text(self.selected_image.absolute_path) + "\n" + "<b>" + _("Destination device") + "</b> " + GObject.markup_escape_text(self.dest_drive_desc)
-        if isinstance(self.selected_image, ClonezillaImage) and len(
-                self.selected_image.short_device_node_disk_list) > 1:
-            # FIXME: Support Clonezilla multidisk images with subdisk selection combobox
-            info_string += "\n" + "<b>" + _("IMPORTANT: Only selecting FIRST disk in Clonezilla image containing MULTIPLE DISKS.") + "</b>"
         self.builder.get_object("restore_step4_selected_image_text").set_markup(info_string)
 
         print("Have selected image " + str(self.selected_image))
@@ -251,13 +247,12 @@ class PartitionsToRestore:
                 print("ClonezillaImage contains partition " + image_format_dict_key)
                 # TODO: Support Clonezilla multidisk
                 short_device_key = self.selected_image.short_device_node_disk_list[0]
-                if self.selected_image.does_image_key_belong_to_device(image_format_dict_key, short_device_key):
+                if self.selected_image.does_image_key_belong_to_device(image_format_dict_key):
                     if self.selected_image.image_format_dict_dict[image_format_dict_key]['is_lvm_logical_volume']:
                         # The destination of an LVM logical volume within a partition (eg /dev/cl/root) is unchanged
                         dest_partition = self.selected_image.image_format_dict_dict[image_format_dict_key][
                             'logical_volume_long_device_node']
-                        flat_description = "Logical Volume " + image_format_dict_key + ": " + self.selected_image.flatten_partition_string(
-                            short_device_key, image_format_dict_key)
+                        flat_description = "Logical Volume " + image_format_dict_key + ": " + self.selected_image.flatten_partition_string(image_format_dict_key)
                     else:
                         # The destination partition of a regular partition in the image (eg, /dev/sda4) is dependent on
                         # the destination drive node (eg /dev/sdb) so we need to split and join the device so the
@@ -266,8 +261,7 @@ class PartitionsToRestore:
                         # Combine image partition number with destination device node base
                         dest_partition = Utility.join_device_string(self.dest_drive_node, image_partition_number)
                         flat_description = "Partition " + str(
-                            image_partition_number) + ": " + self.selected_image.flatten_partition_string(
-                            short_device_key, image_format_dict_key)
+                            image_partition_number) + ": " + self.selected_image.flatten_partition_string(image_format_dict_key)
                     self.destination_partition_combobox_list.append([dest_partition, flat_description])
                     self.restore_partition_selection_list.append(
                         [image_format_dict_key, True, flat_description, dest_partition, flat_description,
@@ -394,16 +388,15 @@ class PartitionsToRestore:
         if isinstance(self.selected_image, ClonezillaImage):
             for image_format_dict_key in self.selected_image.image_format_dict_dict.keys():
                 # TODO: Support Clonezilla multidisk
-                short_device_key = self.selected_image.short_device_node_disk_list[0]
-                if self.selected_image.does_image_key_belong_to_device(image_format_dict_key, short_device_key):
+                if self.selected_image.does_image_key_belong_to_device(image_format_dict_key):
                     if self.selected_image.image_format_dict_dict[image_format_dict_key]['is_lvm_logical_volume']:
-                        flat_image_part_description = "Logical Volume " + image_format_dict_key + ": " + self.selected_image.flatten_partition_string(
-                            short_device_key, image_format_dict_key)
+                        flat_image_part_description = "Logical Volume " + image_format_dict_key + ": "\
+                                                      + self.selected_image.flatten_partition_string(image_format_dict_key)
                     else:
                         image_base_device_node, image_partition_number = Utility.split_device_string(image_format_dict_key)
                         flat_image_part_description = "Partition " + str(
-                            image_partition_number) + ": " + self.selected_image.flatten_partition_string(short_device_key,
-                                                                                                          image_format_dict_key)
+                            image_partition_number) + ": "\
+                                                      + self.selected_image.flatten_partition_string(image_format_dict_key)
                     self.restore_partition_selection_list.append(
                         [image_format_dict_key, is_restoring_partition, flat_image_part_description, dest_partition_key,
                          flattened_part_description,
