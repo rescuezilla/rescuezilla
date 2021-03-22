@@ -15,6 +15,7 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
 import os
+import tempfile
 import time
 from datetime import datetime
 from email.utils import format_datetime
@@ -63,7 +64,21 @@ class QemuImage:
         self.image_format = "QEMU_FORMAT"
         self.absolute_path = absolute_qemu_img_path
         self.enduser_filename = enduser_filename
+        self.normalized_sfdisk_dict = {'absolute_path': None, 'sfdisk_dict': {'partitions': {}}, 'file_length': 0}
         self.warning_dict = {}
+
+        # Clonezilla format
+        self.ebr_dict = {}
+        self.short_device_node_partition_list = []
+        self.short_device_node_disk_list = []
+        self.lvm_vg_dev_dict = {}
+        self.lvm_logical_volume_dict = {}
+        self.dev_fs_dict = {}
+        self.size_bytes = 0
+        self.enduser_readable_size = ""
+        self.is_needs_decryption = False
+        self.parted_dict = {'partitions': {}}
+        self.post_mbr_gap_absolute_path = {}
 
         statbuf = os.stat(self.absolute_path)
         self.last_modified_timestamp = format_datetime(datetime.fromtimestamp(statbuf.st_mtime))
@@ -73,16 +88,8 @@ class QemuImage:
         dir = Path(absolute_qemu_img_path).parent.as_posix()
         print("Qemu directory : " + dir)
 
-        self.short_device_node_partition_list = []
-        self.short_device_node_disk_list = []
-        self.lvm_vg_dev_dict = {}
-        self.lvm_logical_volume_dict = {}
-        self.dev_fs_dict = {}
-        self.size_bytes = 0
-        self.enduser_readable_size = ""
-        self.is_needs_decryption = False
-        self.sfdisk_dict = {'partitions': {}}
-        self.parted_dict = {'partitions': {}}
+
+
 
         qemu_img_cmd_list = ["qemu-img", "info", absolute_qemu_img_path]
         process, flat_command_string, fail_description = Utility.run("qemu-img info", qemu_img_cmd_list, use_c_locale=True)
@@ -97,13 +104,17 @@ class QemuImage:
             self.warning_dict[flat_command_string] = "Could not associate: " + failed_message
             return
 
+        self.normalized_sfdisk_dict = {'absolute_path': None, 'sfdisk_dict': {'partitions': {}}, 'file_length': 0}
         process, flat_command_string, failed_message = Utility.run("Get partition table", ["sfdisk", "--dump", QEMU_NBD_NBD_DEVICE], use_c_locale=True)
         if process.returncode != 0:
             self.warning_dict[flat_command_string] = "Could not extract partition table: " + process.stderr
             # Not returning here so can disconnect.
         else:
-            # TOOD: Could use sfdisk's JSON output here.
-            self.sfdisk_dict = Sfdisk.parse_sfdisk_dump_output(process.stdout)
+            sfdisk_string = process.stdout
+            f = tempfile.NamedTemporaryFile(mode='w', delete=False)
+            f.write(sfdisk_string)
+            f.close()
+            self.normalized_sfdisk_dict = Sfdisk.generate_normalized_sfdisk_dict(f.name, self)
 
         parted_process, flat_command_string, failed_message = Utility.run("Get filesystem information",
                                                           ["parted", "--script", QEMU_NBD_NBD_DEVICE, "unit", "s",
@@ -171,7 +182,7 @@ class QemuImage:
     def get_enduser_friendly_partition_description(self):
         flat_string = ""
         index = 0
-        for long_device_node in self.sfdisk_dict['partitions'].keys():
+        for long_device_node in self.normalized_sfdisk_dict['sfdisk_dict']['partitions'].keys():
             base_device_node, partition_number = Utility.split_device_string(long_device_node)
             flat_string += "(" + str(partition_number) + ": " + self.flatten_partition_string(long_device_node) + ") "
             index += 1
@@ -181,12 +192,15 @@ class QemuImage:
         # Temp
         return True
 
+    def get_absolute_mbr_path(self):
+        return None
+
     def flatten_partition_string(self, long_device_node):
         flat_string = ""
         fs = self._get_human_readable_filesystem(long_device_node)
-        if fs != "":
+        if fs != "" and fs is not None:
             flat_string = fs + " "
-        partition_size_bytes = self.sfdisk_dict['partitions'][long_device_node]['size'] * 512
+        partition_size_bytes = self.normalized_sfdisk_dict['sfdisk_dict']['partitions'][long_device_node]['size'] * 512
         flat_string += Utility.human_readable_filesize(partition_size_bytes)
         return flat_string
 

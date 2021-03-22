@@ -20,7 +20,6 @@ import glob
 import os
 import pprint
 import re
-import subprocess
 from datetime import datetime
 from os.path import isfile, basename
 from pathlib import Path
@@ -32,7 +31,7 @@ from parser.blkid import Blkid
 from parser.ecryptfs import Ecryptfs
 from parser.lvm import Lvm
 from parser.parted import Parted
-from parser.sfdisk import Sfdisk, EMPTY_SFDISK_MSG
+from parser.sfdisk import Sfdisk
 from parser.swappt import Swappt
 from utility import Utility, _
 
@@ -185,6 +184,7 @@ class ClonezillaImage:
 
         self.short_device_node_partition_list = short_device_node_partition_list
         self.short_device_node_disk_list = [short_disk_device_node]
+        self.ebr_dict = {}
         self.lvm_vg_dev_dict = {}
         self.lvm_logical_volume_dict = {}
         self.dev_fs_dict = {}
@@ -234,10 +234,8 @@ class ClonezillaImage:
                 print("No LVM logical volume file detected in image")
 
         self.parted_dict = {}
-        self.sfdisk_dict = {'sfdisk_dict': {'partitions': {}}}
-        self.mbr_absolute_path = {}
+        self._mbr_absolute_path = {}
         self.post_mbr_gap_absolute_path = {}
-        self.ebr_dict = {}
         self.size_bytes = 0
         self.enduser_readable_size = "unknown"
         self.size_bytes = 0
@@ -260,27 +258,18 @@ class ClonezillaImage:
 
         if self.ecryptfs_info_dict is not None and 'size' in self.ecryptfs_info_dict.keys():
             self.enduser_readable_size = self.ecryptfs_info_dict['size'].strip("_")
-        else:
-            sfdisk_filepath = os.path.join(dir, short_disk_device_node + "-pt.sf")
-            if isfile(sfdisk_filepath) and not self.is_needs_decryption:
-                sfdisk_string = Utility.read_file_into_string(sfdisk_filepath)
-                self.sfdisk_dict = {'absolute_path': sfdisk_filepath,
-                                                                 'sfdisk_dict': Sfdisk.parse_sfdisk_dump_output(sfdisk_string),
-                                                                 'sfdisk_file_length': len(sfdisk_string)
-                                                            }
-                if self.sfdisk_dict['sfdisk_file_length'] == 0:
-                    self.warning_dict[enduser_filename] = EMPTY_SFDISK_MSG
-            else:
-                # Do not raise exception because sfdisk partition table is often missing using Clonezilla image format,
-                # as `sfdisk --dump` fails for disks without a partition table.
-                print("Unable to locate " + sfdisk_filepath + " or file is encrypted")
+
+        self.normalized_sfdisk_dict = {'absolute_path': None, 'sfdisk_dict': {'partitions': {}}, 'file_length': 0}
+        if not is_needs_decryption:
+            sfdisk_absolute_path = os.path.join(dir, short_disk_device_node + "-pt.sf")
+            self.normalized_sfdisk_dict = Sfdisk.generate_normalized_sfdisk_dict(sfdisk_absolute_path, self)
 
         # There is a maximum of 1 MBR per drive (there can be many drives). Master Boot Record (MBR) is never
         # listed in 'parts' list.
-        self.mbr_absolute_path = None
+        self._mbr_absolute_path = None
         mbr_glob_list = glob.glob(os.path.join(dir, short_disk_device_node) + "-mbr")
         for absolute_mbr_filepath in mbr_glob_list:
-            self.mbr_absolute_path = absolute_mbr_filepath
+            self._mbr_absolute_path = absolute_mbr_filepath
 
         # There is a maximum of 1 post-MBR gap per drive (there can be many drives). The post MBR gap is never
         # listed in 'parts' list. Note the asterisk wildcard in the glob, to get the notes.txt file (see below)
@@ -420,24 +409,6 @@ class ClonezillaImage:
         return glob_list
 
     @staticmethod
-    def detect_compression(abs_path_glob_list):
-        env = Utility.get_env_C_locale()
-        cat_cmd_list = ["cat"] + abs_path_glob_list
-        file_cmd_list = ["file", "--dereference", "--special-files", "-"]
-        flat_command_string = Utility.print_cli_friendly("File compression detection ", [cat_cmd_list, file_cmd_list])
-        cat_image_process = subprocess.Popen(cat_cmd_list, stdout=subprocess.PIPE,
-                                             env=env,
-                                             encoding='utf-8')
-        file_utility_process = subprocess.Popen(file_cmd_list, stdin=cat_image_process.stdout,
-                                                stdout=subprocess.PIPE, env=env,
-                                                encoding='utf-8')
-        cat_image_process.stdout.close()  # Allow p1 to receive a SIGPIPE if p2 exits.
-        stdout, stderr = file_utility_process.communicate()
-        if file_utility_process.returncode != 0:
-            raise Exception("File utility process had error " + flat_command_string + "\n\n" + str(stderr))
-        return ClonezillaImage.extract_image_compression_from_file_utility(str(stdout))
-
-    @staticmethod
     def scan_backup_image(dir, prefix, is_needs_decryption):
         image_format_dict = {}
         dd_image_abs_path_glob_list = ClonezillaImage._get_glob_list_of_split_images(
@@ -453,7 +424,7 @@ class ClonezillaImage:
         if len(dd_image_abs_path_glob_list) > 0:
             image_format_dict = {'type': "dd",
                                  'absolute_filename_glob_list': dd_image_abs_path_glob_list,
-                                 'compression': ClonezillaImage.detect_compression(dd_image_abs_path_glob_list),
+                                 'compression': Utility.detect_compression(dd_image_abs_path_glob_list),
                                  'binary': "partclone.dd",
                                  "prefix": prefix,
                                  'is_lvm_logical_volume': False}
@@ -461,7 +432,7 @@ class ClonezillaImage:
         elif len(ntfsclone_image_abs_path_glob_list) > 0:
             image_format_dict = {'type': "ntfsclone",
                                  'absolute_filename_glob_list': ntfsclone_image_abs_path_glob_list,
-                                 'compression': ClonezillaImage.detect_compression(ntfsclone_image_abs_path_glob_list),
+                                 'compression': Utility.detect_compression(ntfsclone_image_abs_path_glob_list),
                                  'binary': "ntfsclone",
                                  "prefix": prefix,
                                  'is_lvm_logical_volume': False}
@@ -474,8 +445,7 @@ class ClonezillaImage:
                 filesystem = m.group(1)
                 image_format_dict = {'type': "partclone",
                                      'absolute_filename_glob_list': partclone_image_abs_path_glob_list,
-                                     'compression': ClonezillaImage.detect_compression(
-                                         partclone_image_abs_path_glob_list),
+                                     'compression': Utility.detect_compression(partclone_image_abs_path_glob_list),
                                      'filesystem': filesystem,
                                      'binary': "partclone." + filesystem,
                                      "prefix": prefix,
@@ -484,7 +454,7 @@ class ClonezillaImage:
         elif len(partimage_image_abs_path_glob_list) > 0:
             image_format_dict = {'type': "partimage",
                                  'absolute_filename_glob_list': partimage_image_abs_path_glob_list,
-                                 'compression': ClonezillaImage.detect_compression(partimage_image_abs_path_glob_list),
+                                 'compression': Utility.detect_compression(partimage_image_abs_path_glob_list),
                                  'binary': 'partimage',
                                  "prefix": prefix,
                                  'is_lvm_logical_volume': False}
@@ -498,76 +468,6 @@ class ClonezillaImage:
         else:
             print("Unable to find associated image for " + prefix)
         return image_format_dict
-
-    # Clonezilla's image has to be detected. The filename only contains the compression for partclone images, but not
-    # for the other formats.
-    @staticmethod
-    def extract_image_compression_from_file_utility(output_of_file_utility_string):
-        initial_split = output_of_file_utility_string.split(" ", maxsplit=1)
-        if len(initial_split) == 0:
-            raise Exception("Unable to detect file compression: " + output_of_file_utility_string)
-        elif len(initial_split) == 1:
-            raise Exception("Unable to detect file compression: " + output_of_file_utility_string)
-        elif len(initial_split) == 2:
-            file_output = initial_split[1]
-            if file_output.startswith("gzip"):
-                # Clonezilla -z1 image compression
-                return "gzip"
-            elif file_output.startswith("bzip2"):
-                # Clonezilla -z2 image compression
-                return "bzip2"
-            elif file_output.startswith("lzop"):
-                # Clonezilla -z3 image compression
-                return "lzo"
-            elif file_output.startswith("LZMA"):
-                # Clonezilla -z4 image compression
-                return "lzma"
-            elif file_output.startswith("XZ"):
-                # Clonezilla -z5 image compression
-                return "xz"
-            elif file_output.startswith("lzip"):
-                # Clonezilla -z6 image compression
-                return "lzip"
-            elif file_output.startswith("LRZIP"):
-                # Clonezilla -z7 image compression
-                return "lrzip"
-            elif file_output.startswith("LZ4"):
-                # Clonezilla -z8 image compression
-                return "lz4"
-            elif file_output.startswith("Zstandard"):
-                # Clonezilla -z9 image compression
-                return "zstd"
-            elif file_output.startswith("data"):
-                # Clonezilla -z0 image (no compression)
-                return "uncompressed"
-        else:
-            raise Exception("Unable to detect file compression: " + output_of_file_utility_string)
-
-    @staticmethod
-    def get_decompression_command_list(compression_type):
-        if compression_type == "gzip":
-            return ["pigz", "--decompress", "--stdout"]
-        elif compression_type == "bzip2":
-            return ["pbzip2", "--decompress", "--stdout"]
-        elif compression_type == "lzo":
-            return ["lzop", "--decompress", "--stdout"]
-        elif compression_type == "lzma":
-            return ["unlzma", "--decompress", "--stdout"]
-        elif compression_type == "xz":
-            return ["unxz", "--stdout"]
-        elif compression_type == "lzip":
-            return ["plzip", "--decompress", "--stdout"]
-        elif compression_type == "lrzip":
-            return ["lrzip", "--quiet", "--decompress", "--outfile", "-"]
-        elif compression_type == "lz4":
-            return ["unlz4", "-d", "-"]
-        elif compression_type == "zstd":
-            return ["zstd", "--decompress", "--stdout"]
-        elif compression_type == "uncompressed":
-            # For the uncompressed case, use `cat` utility to pass stdin through to stdout without processing.
-            return ["cat", "-"]
-        else:
-            raise Exception("Unexpected compression: " + compression_type)
 
     @staticmethod
     def parse_dev_fs_list_output(dev_fs_list_string):
@@ -621,10 +521,13 @@ class ClonezillaImage:
     def has_partition_table(self):
         short_selected_image_drive_node = self.short_device_node_disk_list[0]
         # Using MBR over sfdisk, as sometimes Clonezilla sfdisk file is empty but a valid MBR file still present.
-        if not self.mbr_absolute_path:
+        if not self._mbr_absolute_path:
             return False
         else:
             return True
+
+    def get_absolute_mbr_path(self):
+        return self._mbr_absolute_path
 
     def is_volume_group_in_pv(self, volume_group_key):
         # Extract the device node associated with the physical volume of the image
@@ -669,8 +572,8 @@ class ClonezillaImage:
 
         if estimated_size == 0:
             # If the information wasn't in the parted backup, try the sfdisk partition table backup
-            if '/dev/' + short_disk_key in self.sfdisk_dict['sfdisk_dict']['partitions'].keys():
-                estimated_size = self.sfdisk_dict['sfdisk_dict']['partitions']['/dev/' + short_disk_key] * 512
+            if '/dev/' + short_disk_key in self.normalized_sfdisk_dict['sfdisk_dict']['partitions'].keys():
+                estimated_size = self.normalized_sfdisk_dict['sfdisk_dict']['partitions']['/dev/' + short_disk_key] * 512
             # Worst cast, count up the file size on disk (which is much faster compared to querying partclone.info).
             # This is expected for Clonezilla Logical Volume Manager (LVM) Logical Volume (LVs) images, which do not
             # have size estimates metadata.

@@ -39,6 +39,20 @@ class FsArchiverImage:
         self.user_notes = ""
         self.warning_dict = {}
 
+        # Clonezilla format
+        self.ebr_dict = {}
+        self.short_device_node_partition_list = []
+        self.short_device_node_disk_list = []
+        self.lvm_vg_dev_dict = {}
+        self.lvm_logical_volume_dict = {}
+        self.dev_fs_dict = {}
+        self.size_bytes = 0
+        self.enduser_readable_size = ""
+        self.is_needs_decryption = False
+        self.normalized_sfdisk_dict = {'absolute_path': None, 'sfdisk_dict': {'partitions': {}}, 'file_length': 0}
+        self.parted_dict = {'partitions': {}}
+        self.post_mbr_gap_absolute_path = {}
+
         # TODO: Remove the need for this
         self.short_device_node_disk_list = ["unknown"]
 
@@ -93,6 +107,9 @@ class FsArchiverImage:
     def has_partition_table(self):
         # Some FSArchiver images have a PBR backup, but there's no consistent MBR backup.
         return False
+
+    def get_absolute_mbr_path(self):
+        return None
 
     def get_enduser_friendly_partition_description(self):
         flat_string = ""

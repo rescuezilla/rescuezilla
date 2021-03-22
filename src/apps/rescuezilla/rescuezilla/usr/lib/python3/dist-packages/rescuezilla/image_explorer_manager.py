@@ -110,7 +110,9 @@ class ImageExplorerManager:
         self.builder.get_object("button_mount").set_sensitive(False)
 
         self.selected_image = selected_image
-        if isinstance(self.selected_image, ClonezillaImage):
+        if isinstance(self.selected_image, ClonezillaImage) or isinstance(self.selected_image, RedoBackupLegacyImage)\
+                or isinstance(self.selected_image, FogProjectImage) or isinstance(self.selected_image, RedoRescueImage)\
+                or isinstance(self.selected_image, FoxcloneImage):
             for image_format_dict_key in self.selected_image.image_format_dict_dict.keys():
                 print("ClonezillaImage contains partition " + image_format_dict_key)
                 if self.selected_image.does_image_key_belong_to_device(image_format_dict_key):
@@ -127,38 +129,6 @@ class ImageExplorerManager:
                             image_partition_number) + ": " + self.selected_image.flatten_partition_string(image_format_dict_key)
                     self.image_explorer_partition_selection_list.append(
                         [image_format_dict_key, human_friendly_partition_name, flat_description])
-        elif isinstance(self.selected_image, RedoBackupLegacyImage):
-            for short_device_node in self.selected_image.short_device_node_partition_list:
-                image_base_device_node, image_partition_number = Utility.split_device_string(short_device_node)
-                human_friendly_partition_name = "#" + str(image_partition_number) + " (" + short_device_node + ")"
-                flat_description = str(image_partition_number) + ": " + self.selected_image.flatten_partition_string(
-                    short_device_node)
-                self.image_explorer_partition_selection_list.append(
-                    [short_device_node, human_friendly_partition_name, flat_description])
-        elif isinstance(self.selected_image, FogProjectImage):
-            for long_device_node in self.selected_image.sfdisk_dict['partitions'].keys():
-                image_base_device_node, image_partition_number = Utility.split_device_string(long_device_node)
-                human_friendly_partition_name = "#" + str(image_partition_number) + " (" + long_device_node + ")"
-                flat_description = str(image_partition_number) + ": " + self.selected_image.flatten_partition_string(
-                    long_device_node)
-                self.image_explorer_partition_selection_list.append(
-                    [long_device_node, human_friendly_partition_name, flat_description])
-        elif isinstance(self.selected_image, RedoRescueImage):
-            for short_device_node in self.selected_image.redo_dict['parts'].keys():
-                image_base_device_node, image_partition_number = Utility.split_device_string(short_device_node)
-                human_friendly_partition_name = "#" + str(image_partition_number) + " (" + short_device_node + ")"
-                flat_description = str(image_partition_number) + ": " + self.selected_image.flatten_partition_string(
-                    short_device_node)
-                self.image_explorer_partition_selection_list.append(
-                    [short_device_node, human_friendly_partition_name, flat_description])
-        elif isinstance(self.selected_image, FoxcloneImage):
-            for short_device_node in self.selected_image.foxclone_dict['partitions'].keys():
-                image_base_device_node, image_partition_number = Utility.split_device_string(short_device_node)
-                human_friendly_partition_name = "#" + str(image_partition_number) + " (" + short_device_node + ")"
-                flat_description = str(image_partition_number) + ": " + self.selected_image.flatten_partition_string(
-                    short_device_node)
-                self.image_explorer_partition_selection_list.append(
-                    [short_device_node, human_friendly_partition_name, flat_description])
         elif isinstance(self.selected_image, FsArchiverImage):
             for fs_key in self.selected_image.fsa_dict['filesystems'].keys():
                 long_device_node = self.selected_image.fsa_dict['filesystems'][fs_key]['original_long_device_node']
@@ -168,7 +138,7 @@ class ImageExplorerManager:
                 self.image_explorer_partition_selection_list.append(
                     [fs_key, human_friendly_partition_name, flat_description])
         elif isinstance(self.selected_image, QemuImage):
-            for long_device_node in self.selected_image.sfdisk_dict['partitions'].keys():
+            for long_device_node in self.selected_image.normalized_sfdisk_dict['sfdisk_dict']['partitions'].keys():
                 image_base_device_node, image_partition_number = Utility.split_device_string(long_device_node)
                 human_friendly_partition_name = "#" + str(image_partition_number) + " (" + long_device_node + ")"
                 flat_description = str(image_partition_number) + ": " + self.selected_image.flatten_partition_string(
@@ -426,7 +396,9 @@ class ImageExplorerManager:
             mount_device = MOUNTABLE_NBD_DEVICE
             compression = ""
             image_file_list = []
-            if isinstance(image, ClonezillaImage):
+            if isinstance(self.selected_image, ClonezillaImage) or isinstance(self.selected_image, RedoBackupLegacyImage) \
+                    or isinstance(self.selected_image, FogProjectImage) or isinstance(self.selected_image, RedoRescueImage) \
+                    or isinstance(self.selected_image, FoxcloneImage):
                 # Clonezilla images support gzip bzip2 lzo lzma xz lzip lrzip lz4 zstd and uncompressed.
                 if 'absolute_filename_glob_list' not in image.image_format_dict_dict[partition_key].keys():
                     GLib.idle_add(callback, False, "No associated image files found")
@@ -448,41 +420,10 @@ class ImageExplorerManager:
                                   "Image Explorer (beta) failed to mount image:\n\n" + incompatible_image_message)
                     GLib.idle_add(please_wait_popup.destroy)
                     return
-            elif isinstance(image, RedoBackupLegacyImage):
-                base_device_node, partition_number = Utility.split_device_string(partition_key)
-                image_file_list = image.partition_restore_command_dict[partition_number]['abs_image_glob']
-                # Redo Backup v0.9.2 uses uncompressed images, Redo Backup v0.9.3-v1.0.4 and Rescuezilla v1.0.5 uses
-                # gzip compression.
-                compression = image.compression
-            elif isinstance(image, FogProjectImage):
-                base_device_node, partition_number = Utility.split_device_string(partition_key)
-                image_file_list = image.partitions[partition_key]['abs_image_glob']
-                incompatible_image_message = ""
-                # FIXME: compression
-                compression = "gzip"
-                if compression != "gzip":
-                    incompatible_image_message = "Currently only supports gzip, xz and uncompressed images, not: " + compression
-                    incompatible_image_message += "\nSupport for more compression types coming in a future release."
-                if incompatible_image_message != "":
-                    GLib.idle_add(callback, False,
-                                  "Image Explorer (beta) failed to mount image:\n\n" + incompatible_image_message)
-                    GLib.idle_add(please_wait_popup.destroy)
-                    return
-            elif isinstance(image, RedoRescueImage):
-                base_device_node, partition_number = Utility.split_device_string(partition_key)
-                image_file_list = image.redo_dict['parts'][partition_key]['abs_image_glob']
-                # Redo Rescue format only used gzip compression
-                compression = "gzip"
-            elif isinstance(image, FoxcloneImage):
-                base_device_node, partition_number = Utility.split_device_string(partition_key)
-                image_file_list = image.foxclone_dict['partitions'][partition_key]['abs_image_glob']
-                # Foxclone format only used gzip compression
-                compression = "gzip"
             elif isinstance(image, QemuImage):
                 image.associate_nbd(QEMU_NBD_NBD_DEVICE)
                 base_device_node, partition_number = Utility.split_device_string(partition_key)
                 mount_device = Utility.join_device_string(QEMU_NBD_NBD_DEVICE, partition_number)
-
             if not isinstance(image, QemuImage):
                 # Concatenate the split partclone images into a virtual block device using nbdkit. This step is fast
                 # because it's just logical mapping within the nbdkit process. In other words "lazy-evaulation: no

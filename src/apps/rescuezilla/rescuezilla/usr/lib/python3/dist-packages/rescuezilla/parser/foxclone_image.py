@@ -22,12 +22,9 @@ import time
 from datetime import datetime
 from pathlib import Path
 
-from babel.dates import format_datetime
-
-
 # The handling of Foxclone images is not derived from the Foxclone source code, but has been implemented purely based
 # on examining the images generated from using that program. Any errors in parsing here are Rescuezilla's own.
-from parser.sfdisk import Sfdisk, EMPTY_SFDISK_MSG
+from parser.sfdisk import Sfdisk
 from utility import Utility, _
 
 
@@ -38,6 +35,20 @@ class FoxcloneImage:
         self.enduser_filename = enduser_filename
         self.user_notes = ""
         self.warning_dict = {}
+
+        # Clonezilla format
+        self.ebr_dict = {}
+        self.short_device_node_partition_list = []
+        self.short_device_node_disk_list = []
+        self.lvm_vg_dev_dict = {}
+        self.lvm_logical_volume_dict = {}
+        self.dev_fs_dict = {}
+        self.size_bytes = 0
+        self.enduser_readable_size = ""
+        self.is_needs_decryption = False
+        self.normalized_sfdisk_dict = {'absolute_path': None, 'sfdisk_dict': {'partitions': {}}, 'file_length': 0}
+        self.parted_dict = {'partitions': {}}
+        self.post_mbr_gap_absolute_path = {}
 
         if filename.endswith(".backup"):
             prefix = filename.split(".backup")[0]
@@ -56,31 +67,30 @@ class FoxcloneImage:
         dir = Path(absolute_foxclone_img_path).parent.as_posix()
         print("Foxclone directory : " + dir)
 
-        self.sfdisk_absolute_path = os.path.join(dirname, prefix + ".sfdisk")
-        sfdisk_string = Utility.read_file_into_string(self.sfdisk_absolute_path).strip()
-        if sfdisk_string == "":
-            self.warning_dict[enduser_filename] = EMPTY_SFDISK_MSG
-        else:
-            print("sfdisk: " + str(sfdisk_string))
-            self.sfdisk_dict = Sfdisk.parse_sfdisk_dump_output(sfdisk_string)
+        sfdisk_absolute_path = os.path.join(dirname, prefix + ".sfdisk")
+        self.normalized_sfdisk_dict = Sfdisk.generate_normalized_sfdisk_dict(sfdisk_absolute_path, self)
 
-        if 'device' in self.sfdisk_dict.keys():
-            self.short_device_node_disk_list = [self.sfdisk_dict['device']]
+        if 'device' in self.normalized_sfdisk_dict['sfdisk_dict'].keys():
+            self.short_device_node_disk_list = [self.normalized_sfdisk_dict['sfdisk_dict']['device']]
 
-        self.mbr_absolute_path = None
+        self._mbr_absolute_path = None
         mbr_path_string = os.path.join(dirname, prefix + ".grub")
         if os.path.exists(mbr_path_string):
-            self.mbr_absolute_path = mbr_path_string
+            self._mbr_absolute_path = mbr_path_string
         else:
             self.warning_dict[self.short_device_node_disk_list] = "Missing MBR"
 
         # Foxclone doesn't keep track of the drive capacity, so estimate it from sfdisk partition table backup
-        last_partition_key, last_partition_final_byte = Sfdisk.get_drive_capacity_estimate(self.sfdisk_dict['partitions'])
+        last_partition_key, last_partition_final_byte = Sfdisk.get_drive_capacity_estimate(
+            self.normalized_sfdisk_dict['sfdisk_dict']['partitions'])
 
+        self.image_format_dict_dict = collections.OrderedDict([])
         for short_device_node in self.foxclone_dict['partitions'].keys():
-            if self.foxclone_dict['partitions'][short_device_node]['type'] == "extended":
+            type = self.foxclone_dict['partitions'][short_device_node]['type']
+            if type == "extended":
                 # Foxclone never has a partition associated with the extended partition.
                 continue
+            filesystem = self.foxclone_dict['partitions'][short_device_node]['fs']
             base_device_node, partition_number = Utility.split_device_string(short_device_node)
             # The partclone image Foxclone creates can be compressed, and can be split into multiple files, depending
             # on the settings the user configures. The compression and split settings are saved in the metadata file,
@@ -107,10 +117,34 @@ class FoxcloneImage:
             # above)
             abs_partclone_image_list.sort()
             if len(abs_partclone_image_list) == 0:
-                self.warning_dict[short_device_node] = _("Cannot find partition's associated partclone image") + "\n        " + image_match_string
+                self.warning_dict[short_device_node] = _(
+                    "Cannot find partition's associated partclone image") + "\n        " + image_match_string
                 continue
-            # Not ideal to modifying the parsed dictionary by adding a new key/value pair, but very convenient
-            self.foxclone_dict['partitions'][short_device_node]['abs_image_glob'] = abs_partclone_image_list
+            # Foxclone only supports gzip as of writing, but this presumably may change in future.
+            detected_compression = Utility.detect_compression(abs_partclone_image_list)
+            if filesystem != "<unknown>":
+                self.image_format_dict_dict[short_device_node] = {'type': "partclone",
+                                                                  'absolute_filename_glob_list': abs_partclone_image_list,
+                                                                  'compression': detected_compression,
+                                                                  'filesystem': filesystem,
+                                                                  # Assumption that binary is valid.
+                                                                  'binary': "partclone." + filesystem,
+                                                                  "prefix": prefix,
+                                                                  'is_lvm_logical_volume': False}
+            else:
+                self.image_format_dict_dict[short_device_node] = {'type': "dd",
+                                                                  'absolute_filename_glob_list': abs_partclone_image_list,
+                                                                  'compression': detected_compression,
+                                                                  'binary': "partclone.dd",
+                                                                  "prefix": prefix,
+                                                                  'is_lvm_logical_volume': False}
+
+            if type == "swap":
+                self.image_format_dict_dict[short_device_node] = {'type': "swap",
+                                                                  'uuid':  self.foxclone_dict['partitions'][short_device_node]['third_field'],
+                                                                  'label': "",
+                                                                  "prefix": prefix,
+                                                                  'is_lvm_logical_volume': False}
 
         notes_abs_path = os.path.join(dirname, prefix + ".note.txt")
         if os.path.exists(notes_abs_path):
@@ -146,13 +180,20 @@ class FoxcloneImage:
 
             # It's unclear what the Foxclone .backup file's blocksize is referring to, so use the sfdisk partition
             # size in blocks (which assumes 512 byte block size)
-            num_bytes = 512 * self.sfdisk_dict['partitions']['/dev/' + short_device_node]['size']
+            num_bytes = 512 * self.normalized_sfdisk_dict['sfdisk_dict']['partitions']['/dev/' + short_device_node][
+                'size']
             flat_string += " " + str(Utility.human_readable_filesize(num_bytes))
             return flat_string
+
+    def does_image_key_belong_to_device(self, image_format_dict_key):
+        return True
 
     def has_partition_table(self):
         # All Foxclone images have partition tables.
         return True
+
+    def get_absolute_mbr_path(self):
+        return self._mbr_absolute_path
 
     @staticmethod
     def string_to_boolean(value):

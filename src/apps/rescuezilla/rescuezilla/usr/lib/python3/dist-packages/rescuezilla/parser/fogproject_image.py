@@ -17,8 +17,6 @@
 import collections
 import glob
 import os
-import re
-import time
 from datetime import datetime
 from os.path import isfile
 from pathlib import Path
@@ -27,7 +25,8 @@ from babel.dates import format_datetime
 
 # The handling of FOG Project images is not derived from the FOG Project source code, but has been implemented purely
 # based on examining the images generated from using that program. Any errors in parsing here are Rescuezilla's own.
-from parser.sfdisk import Sfdisk, EMPTY_SFDISK_MSG
+from parser.partclone import Partclone
+from parser.sfdisk import Sfdisk
 from utility import Utility, _
 
 
@@ -42,8 +41,21 @@ class FogProjectImage:
         self.image_format = "FOGPROJECT_FORMAT"
         self.absolute_path = absolute_fogproject_img_path
         self.enduser_filename = enduser_filename
-        self.sfdisk_dict = {'sfdisk_dict': {'partitions': {}}}
         self.warning_dict = {}
+
+        # Clonezilla format
+        self.ebr_dict = {}
+        self.short_device_node_partition_list = []
+        self.short_device_node_disk_list = []
+        self.lvm_vg_dev_dict = {}
+        self.lvm_logical_volume_dict = {}
+        self.dev_fs_dict = {}
+        self.size_bytes = 0
+        self.enduser_readable_size = ""
+        self.is_needs_decryption = False
+        self.normalized_sfdisk_dict = {'absolute_path': None, 'sfdisk_dict': {'partitions': {}}, 'file_length': 0}
+        self.parted_dict = {'partitions': {}}
+        self.post_mbr_gap_absolute_path = {}
 
         if filename.endswith(".partitions") and not filename.endswith(".minimum.partitions"):
             prefix = filename.split(".partitions")[0]
@@ -68,17 +80,11 @@ class FogProjectImage:
         # [1] https://github.com/rescuezilla/rescuezilla/issues/18
         minimum_partitions_sfdisk_path = os.path.join(dir, prefix + ".minimum.partitions")
         if os.path.exists(minimum_partitions_sfdisk_path):
-            sfdisk_string = Utility.read_file_into_string(minimum_partitions_sfdisk_path).strip()
-            self.sfdisk_absolute_path = minimum_partitions_sfdisk_path
+            sfdisk_absolute_path = minimum_partitions_sfdisk_path
         else:
-            sfdisk_string = Utility.read_file_into_string(absolute_fogproject_img_path).strip()
-            self.sfdisk_absolute_path = absolute_fogproject_img_path
+            sfdisk_absolute_path = absolute_fogproject_img_path
 
-        if sfdisk_string == "":
-            self.warning_dict[enduser_filename] = EMPTY_SFDISK_MSG
-        else:
-            print("sfdisk: " + str(sfdisk_string))
-            self.sfdisk_dict = Sfdisk.parse_sfdisk_dump_output(sfdisk_string)
+        self.normalized_sfdisk_dict = Sfdisk.generate_normalized_sfdisk_dict(sfdisk_absolute_path, self)
 
         # FOG Project images sometimes contains a file named eg, "d1.original.fstypes" which contains the association
         # between partition numbers with filesystems considered resizable, and their associated device nodes.
@@ -106,8 +112,8 @@ class FogProjectImage:
             self.original_swapuuids_dict = FogProjectImage.parse_original_swapuuids_output(
                 Utility.read_file_into_string(original_swapuuids_filepath))
 
-        if 'device' in self.sfdisk_dict.keys():
-            self.long_device_node_disk_list = [self.sfdisk_dict['device']]
+        if 'device' in self.normalized_sfdisk_dict['sfdisk_dict'].keys():
+            self.long_device_node_disk_list = [self.normalized_sfdisk_dict['sfdisk_dict']['device']]
 
         # FOG Project images sometimes has a file named eg, ".size" that contains the drive size in bytes.
         size_path = os.path.join(dir, prefix + ".size")
@@ -120,32 +126,36 @@ class FogProjectImage:
         else:
             # When the file doesn't exist, estimate drive capacity from sfdisk partition table backup
             last_partition_key, last_partition_final_byte = Sfdisk.get_drive_capacity_estimate(
-                self.sfdisk_dict['partitions'])
+                self.normalized_sfdisk_dict['sfdisk_dict']['partitions'])
             self.size_bytes = last_partition_final_byte
         # Covert size in bytes to KB/MB/GB/TB as relevant
         self.enduser_readable_size = Utility.human_readable_filesize(int(self.size_bytes))
 
-        self.mbr_absolute_path = None
+        self._mbr_absolute_path = None
         mbr_path_string = os.path.join(dirname, prefix + ".mbr")
         if os.path.exists(mbr_path_string):
-            self.mbr_absolute_path = mbr_path_string
+            self._mbr_absolute_path = mbr_path_string
         else:
-            self.warning_dict[self.sfdisk_dict['device']] = "Missing MBR"
+            self.warning_dict[self.normalized_sfdisk_dict['sfdisk_dict']['device']] = "Missing MBR"
 
         self.has_grub = False
         has_grub_path_string = os.path.join(dirname, prefix + "has_grub")
         if os.path.exists(has_grub_path_string):
             self.has_grub = True
 
-        if 'device' in self.sfdisk_dict.keys():
-            self.short_device_node_disk_list = [self.sfdisk_dict['device']]
+        if 'device' in self.normalized_sfdisk_dict['sfdisk_dict'].keys():
+            self.short_device_node_disk_list = [self.normalized_sfdisk_dict['sfdisk_dict']['device']]
 
-        self.partitions = collections.OrderedDict()
-        for long_device_node in self.sfdisk_dict['partitions'].keys():
-            if self.sfdisk_dict['partitions'][long_device_node]['type'] == "27":
+        self.partclone_info_dict_dict = collections.OrderedDict([])
+        self.image_format_dict_dict = collections.OrderedDict([])
+        for long_device_node in self.normalized_sfdisk_dict['sfdisk_dict']['partitions'].keys():
+            if self.normalized_sfdisk_dict['sfdisk_dict']['partitions'][long_device_node]['type'] == "27":
                 # TODO populate
                 continue
             base_device_node, partition_number = Utility.split_device_string(long_device_node)
+            if partition_number in self.original_swapuuids_dict.keys():
+                # Swap handled below
+                continue
             # The partclone image FOG Project creates can be compressed as either gzip or zstd, can be split
             # into multiple files, depending on the settings the user configures. The compression format is not encoded
             # in the filename.
@@ -156,31 +166,69 @@ class FogProjectImage:
             image_match_path_string = os.path.join(dirname, image_match_string)
             print(image_match_path_string)
             # Get absolute path partition images. Eg, [/path/to/dlp3.img.001, /path/to/dlp3.img.002 etc]
-            abs_partclone_image_list = glob.glob(image_match_path_string)
+            abs_image_list = glob.glob(image_match_path_string)
             # Sort by alphabetical sort. Lexical sort not required here because fixed number of digits (so no risk of
             # "1, 10, 2, 3" issues), and partclone manages this when the number of digits is no longer fixed (see
             # above)
-            abs_partclone_image_list.sort()
-            if len(abs_partclone_image_list) == 0:
+            abs_image_list.sort()
+            if len(abs_image_list) == 0:
                 self.warning_dict[long_device_node] = _(
                     "Cannot find partition's associated partclone image") + "\n        " + image_match_string
                 continue
-            # Not ideal to modifying the parsed dictionary by adding a new key/value pair, but very convenient
-            self.partitions[long_device_node] = {'abs_image_glob': abs_partclone_image_list}
+
+            detected_compression = Utility.detect_compression(abs_image_list)
+            # May be PartImage image.
+            self.partclone_info_dict_dict[long_device_node] = Partclone.get_partclone_info_dict(abs_image_list, long_device_node, detected_compression)
+            filesystem = self.partclone_info_dict_dict[long_device_node]['filesystem'].lower()
+            print(str(self.partclone_info_dict_dict))
+
+            if filesystem != "<unknown>" and filesystem != "raw":
+                self.image_format_dict_dict[long_device_node] = {'type': "partclone",
+                                 'absolute_filename_glob_list': abs_image_list,
+                                 'compression': detected_compression,
+                                 'filesystem': filesystem,
+                                 'binary': "partclone." + filesystem,
+                                 "prefix": prefix,
+                                 'is_lvm_logical_volume': False}
+            else:
+                self.image_format_dict_dict[long_device_node] = {'type': "dd",
+                                     'absolute_filename_glob_list': abs_image_list,
+                                     'compression': detected_compression,
+                                     'filesystem': filesystem,
+                                     'binary': "partclone.dd",
+                                     "prefix": prefix,
+                                     'is_lvm_logical_volume': False}
+
+        for swapuuid_key in self.original_swapuuids_dict.keys():
+            # The key to the Swap UUID is the partition number, but long_device_node is much more convenient
+            long_device_node = Utility.join_device_string(self.short_device_node_disk_list[0], swapuuid_key)
+            print("Converting swap partition number " + str(swapuuid_key) + " to key " + long_device_node)
+            self.image_format_dict_dict[long_device_node] = {'type': "swap",
+                                                             'uuid': self.original_swapuuids_dict[swapuuid_key],
+                                                             'label': "",
+                                                             'filesystem': "swap",
+                                                             "prefix": prefix,
+                                                             'is_lvm_logical_volume': False}
         self.is_needs_decryption = False
 
     def get_enduser_friendly_partition_description(self):
         flat_string = ""
         index = 0
-        for long_device_node in self.partitions.keys():
+        for long_device_node in self.image_format_dict_dict.keys():
             base_device_node, partition_number = Utility.split_device_string(long_device_node)
             flat_string += "(" + str(partition_number) + ": " + self.flatten_partition_string(long_device_node) + ") "
             index += 1
         return flat_string
 
+    def does_image_key_belong_to_device(self, image_format_dict_key):
+        return True
+
     def has_partition_table(self):
         # All FOG Project images have partition tables.
         return True
+
+    def get_absolute_mbr_path(self):
+        return self._mbr_absolute_path
 
     def flatten_partition_string(self, long_device_node):
         flat_string = ""
@@ -192,9 +240,8 @@ class FogProjectImage:
         return flat_string
 
     def _get_human_readable_filesystem(self, long_device_node):
-        type = self.sfdisk_dict['partitions'][long_device_node]['type']
-        if type == "27":
-            return type
+        if long_device_node in self.image_format_dict_dict.keys():
+            return self.image_format_dict_dict[long_device_node]['filesystem']
         else:
             if long_device_node in self.original_fstypes_dict.keys():
                 return self.original_fstypes_dict[long_device_node]['filesystem']
@@ -206,7 +253,7 @@ class FogProjectImage:
     def _compute_partition_size_byte_estimate(self, long_device_node):
         # It's unclear what the FOG Project .backup file's blocksize is referring to, so use the sfdisk partition
         # size in blocks (which assumes 512 byte block size)
-        return 512 * self.sfdisk_dict['partitions'][long_device_node]['size']
+        return 512 * self.normalized_sfdisk_dict['sfdisk_dict']['partitions'][long_device_node]['size']
 
     @staticmethod
     def parse_original_fstypes_output(original_fstypes_string):
