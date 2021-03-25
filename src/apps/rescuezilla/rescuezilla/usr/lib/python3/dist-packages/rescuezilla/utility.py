@@ -562,3 +562,91 @@ class Utility:
             i += 1
         f = ('%.1f' % num_bytes).rstrip('0').rstrip('.')
         return '%s%s' % (f, suffixes[i])
+
+    @staticmethod
+    def detect_compression(abs_path_glob_list):
+        env = Utility.get_env_C_locale()
+        cat_cmd_list = ["cat"] + abs_path_glob_list
+        file_cmd_list = ["file", "--dereference", "--special-files", "-"]
+        flat_command_string = Utility.print_cli_friendly("File compression detection ", [cat_cmd_list, file_cmd_list])
+        cat_image_process = subprocess.Popen(cat_cmd_list, stdout=subprocess.PIPE,
+                                             env=env,
+                                             encoding='utf-8')
+        file_utility_process = subprocess.Popen(file_cmd_list, stdin=cat_image_process.stdout,
+                                                stdout=subprocess.PIPE, env=env,
+                                                encoding='utf-8')
+        cat_image_process.stdout.close()  # Allow p1 to receive a SIGPIPE if p2 exits.
+        stdout, stderr = file_utility_process.communicate()
+        if file_utility_process.returncode != 0:
+            raise Exception("File utility process had error " + flat_command_string + "\n\n" + str(stderr))
+        return Utility.extract_image_compression_from_file_utility(str(stdout))
+
+    # Clonezilla's image has to be detected. The filename only contains the compression for partclone images, but not
+    # for the other formats.
+    @staticmethod
+    def extract_image_compression_from_file_utility(output_of_file_utility_string):
+        initial_split = output_of_file_utility_string.split(" ", maxsplit=1)
+        if len(initial_split) == 0:
+            raise Exception("Unable to detect file compression: " + output_of_file_utility_string)
+        elif len(initial_split) == 1:
+            raise Exception("Unable to detect file compression: " + output_of_file_utility_string)
+        elif len(initial_split) == 2:
+            file_output = initial_split[1]
+            if file_output.startswith("gzip"):
+                # Clonezilla -z1 image compression
+                return "gzip"
+            elif file_output.startswith("bzip2"):
+                # Clonezilla -z2 image compression
+                return "bzip2"
+            elif file_output.startswith("lzop"):
+                # Clonezilla -z3 image compression
+                return "lzo"
+            elif file_output.startswith("LZMA"):
+                # Clonezilla -z4 image compression
+                return "lzma"
+            elif file_output.startswith("XZ"):
+                # Clonezilla -z5 image compression
+                return "xz"
+            elif file_output.startswith("lzip"):
+                # Clonezilla -z6 image compression
+                return "lzip"
+            elif file_output.startswith("LRZIP"):
+                # Clonezilla -z7 image compression
+                return "lrzip"
+            elif file_output.startswith("LZ4"):
+                # Clonezilla -z8 image compression
+                return "lz4"
+            elif file_output.startswith("Zstandard"):
+                # Clonezilla -z9 image compression
+                return "zstd"
+            elif file_output.startswith("data"):
+                # Clonezilla -z0 image (no compression)
+                return "uncompressed"
+        else:
+            raise Exception("Unable to detect file compression: " + output_of_file_utility_string)
+
+    @staticmethod
+    def get_decompression_command_list(compression_type):
+        if compression_type == "gzip":
+            return ["pigz", "--decompress", "--stdout"]
+        elif compression_type == "bzip2":
+            return ["pbzip2", "--decompress", "--stdout"]
+        elif compression_type == "lzo":
+            return ["lzop", "--decompress", "--stdout"]
+        elif compression_type == "lzma":
+            return ["unlzma", "--decompress", "--stdout"]
+        elif compression_type == "xz":
+            return ["unxz", "--stdout"]
+        elif compression_type == "lzip":
+            return ["plzip", "--decompress", "--stdout"]
+        elif compression_type == "lrzip":
+            return ["lrzip", "--quiet", "--decompress", "--outfile", "-"]
+        elif compression_type == "lz4":
+            return ["unlz4", "-d", "-"]
+        elif compression_type == "zstd":
+            return ["zstd", "--decompress", "--stdout"]
+        elif compression_type == "uncompressed":
+            # For the uncompressed case, use `cat` utility to pass stdin through to stdout without processing.
+            return ["cat", "-"]
+        else:
+            raise Exception("Unexpected compression: " + compression_type)

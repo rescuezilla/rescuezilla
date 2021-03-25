@@ -16,6 +16,7 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
+import base64
 import collections
 import fileinput
 import os
@@ -30,6 +31,15 @@ from datetime import datetime
 from time import sleep
 
 import gi
+
+from image_explorer_manager import ImageExplorerManager
+from parser.fogproject_image import FogProjectImage
+from parser.foxclone_image import FoxcloneImage
+from parser.fsarchiver_image import FsArchiverImage
+from parser.qemu_image import QemuImage
+from parser.redorescue_image import RedoRescueImage
+from parser.sfdisk import Sfdisk
+from wizard_state import IMAGE_EXPLORER_DIR
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import GObject, GLib
@@ -267,15 +277,28 @@ class RestoreManager:
         with self.summary_message_lock:
             self.summary_message += self.image.absolute_path + "\n"
 
+        returncode, failed_message = ImageExplorerManager._do_unmount(IMAGE_EXPLORER_DIR)
+        if not returncode:
+            with self.summary_message_lock:
+                self.summary_message += failed_message + "\n"
+            GLib.idle_add(self.completed_restore, False, failed_message)
+            return
+
         is_successfully_shutdown, message = self._shutdown_lvm()
         if not is_successfully_shutdown:
             GLib.idle_add(self.completed_restore, False, message)
             return
 
-        if isinstance(self.image, ClonezillaImage):
-            self.logger.write("Detected ClonezillaImage")
+        # TODO: The following section handles images from each of the supported backup formats SEPARATELY.
+        # TODO: This produces a MASSIVE amount of duplication, and makes it easier for lesser used code paths to
+        # TODO: contain bugs. The logic from the original Clonezilla (ported to Python below) is by far the most robust
+        # TODO: and well tested. Given the amount of special cases for eg, handling Redo Backup and Recovery images
+        # TODO: it has not yet been feasible to combine the logic into a single function, but this is the long term
+        # TODO: goal. It will allow future advancements like restoring to disks smaller than original to improve all
+        # TODO: supported image formats.
+        if not isinstance(self.image, FsArchiverImage):
+            self.logger.write("Detected ClonezillaImage/FogProjectImage/RedoRescueImage/FoxcloneImage/QemuImage")
             image_dir = os.path.dirname(self.image.absolute_path)
-            # TODO: Handle multidisk Clonezilla images
             short_selected_image_drive_node = self.image.short_device_node_disk_list[0]
 
             # Clonezilla does this, but it should only effect legacy IDE drives and has no effect on newer drives.
@@ -320,13 +343,12 @@ class RestoreManager:
                     GLib.idle_add(self.completed_restore, False, message)
                     return
 
-                # There is a maximum of 1 MBR per drive (but there can be many drives)
-                mbr_list = [i for i in self.image.mbr_dict_dict.keys() if i.startswith(short_selected_image_drive_node)]
-                if len(mbr_list) == 1:
+                mbr_absolute_path = self.image.get_absolute_mbr_path()
+                if mbr_absolute_path:
+                    # FIXME: The description here doesn't match what the code is doing
                     process, flat_command_string, failed_message = Utility.run("Restoring the first 446 bytes of MBR data (executable code area) for " + self.restore_destination_drive,
                                                                                ["dd", "if=" +
-                                                                                self.image.mbr_dict_dict[mbr_list[0]][
-                                                                                    'absolute_path'],
+                                                                                mbr_absolute_path,
                                                                                 "of=" + self.restore_destination_drive, "bs=446"],
                                                                                use_c_locale=False, logger=self.logger)
                     if process.returncode != 0:
@@ -347,68 +369,77 @@ class RestoreManager:
                         GLib.idle_add(self.completed_restore, False, message)
                         return
                 else:
-                    GLib.idle_add(self.completed_restore, False,
-                                  "Wrong MBR for " + short_selected_image_drive_node + " " + str(mbr_list))
-                    return
+                    print("No MBR associated with " + short_selected_image_drive_node)
 
                 if self.requested_stop:
                     GLib.idle_add(self.completed_restore, False, "Requested stop")
                     return
 
-                if short_selected_image_drive_node in self.image.sfdisk_dict_dict.keys():
-                    if self.image.sfdisk_dict_dict[short_selected_image_drive_node]['sfdisk_file_length'] == 0:
-                        message = _("Could not restore sfdisk partition table as file has zero length: ") + \
-                                  self.image.sfdisk_dict_dict[short_selected_image_drive_node]['absolute_path']
-                        GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, message)
+                if self.image.normalized_sfdisk_dict['file_length'] == 0:
+                    message = _("Could not restore sfdisk partition table as file has zero length: ") + \
+                              str(self.image.normalized_sfdisk_dict['absolute_path'])
+                    GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, message)
+                    with self.summary_message_lock:
+                        self.summary_message += message + "\n"
+                else:
+                    corrected_sfdisk_path = self.do_sfdisk_corrections(self.image.normalized_sfdisk_dict['absolute_path'])
+                    cat_cmd_list = ["cat", corrected_sfdisk_path]
+
+                    prefer_old_sfdisk_binary = False
+                    if 'prefer_old_sfdisk_binary' in self.image.normalized_sfdisk_dict.keys():
+                        prefer_old_sfdisk_binary = self.image.normalized_sfdisk_dict['prefer_old_sfdisk_binary']
+                    sfdisk_cmd_list, warning_message = Sfdisk.get_sfdisk_cmd_list(self.restore_destination_drive,
+                                                                                  prefer_old_sfdisk_binary)
+                    if warning_message != "":
                         with self.summary_message_lock:
                             self.summary_message += message + "\n"
+                        GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, message)
+                    if sfdisk_cmd_list is None:
+                        return
+
+                    Utility.print_cli_friendly("sfdisk ", [cat_cmd_list, sfdisk_cmd_list])
+                    self.proc['cat_sfdisk'] = subprocess.Popen(cat_cmd_list, stdout=subprocess.PIPE, env=env,
+                                                               encoding='utf-8')
+                    self.proc['sfdisk'] = subprocess.Popen(sfdisk_cmd_list, stdin=self.proc['cat_sfdisk'].stdout,
+                                                           stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env=env, encoding='utf-8')
+                    self.proc['cat_sfdisk'].stdout.close()  # Allow p1 to receive a SIGPIPE if p2 exits.
+                    output, err = self.proc['sfdisk'].communicate()
+                    rc = self.proc['sfdisk'].returncode
+                    self.logger.write("sfdisk Exit output " + str(rc) + ": " + str(output))
+                    if self.proc['sfdisk'].returncode != 0:
+                        self.logger.write("Error restoring sfdisk: " + str(output))
+                        GLib.idle_add(self.completed_restore, False, "Error restoring sfdisk: " + str(output))
+                        return
                     else:
-                        corrected_sfdisk_path = self.do_sfdisk_corrections(self.image.sfdisk_dict_dict[short_selected_image_drive_node]['absolute_path'])
-                        cat_cmd_list = ["cat", corrected_sfdisk_path]
-                        sfdisk_cmd_list = ["sfdisk", "-f", self.restore_destination_drive]
-                        Utility.print_cli_friendly("sfdisk ", [cat_cmd_list, sfdisk_cmd_list])
-                        self.proc['cat_sfdisk'] = subprocess.Popen(cat_cmd_list, stdout=subprocess.PIPE, env=env,
-                                                                   encoding='utf-8')
-                        self.proc['sfdisk'] = subprocess.Popen(sfdisk_cmd_list, stdin=self.proc['cat_sfdisk'].stdout,
-                                                               stdout=subprocess.PIPE, stderr=subprocess.STDOUT, env=env, encoding='utf-8')
-                        self.proc['cat_sfdisk'].stdout.close()  # Allow p1 to receive a SIGPIPE if p2 exits.
-                        output, err = self.proc['sfdisk'].communicate()
-                        rc = self.proc['sfdisk'].returncode
-                        self.logger.write("sfdisk Exit output " + str(rc) + ": " + str(output))
-                        if self.proc['sfdisk'].returncode != 0:
-                            self.logger.write("Error restoring sfdisk: " + str(output))
-                            GLib.idle_add(self.completed_restore, False, "Error restoring sfdisk: " + str(output))
-                            return
-                        else:
-                            with self.summary_message_lock:
-                                self.summary_message += _("Successfully restored partition table.") + "\n"
-                            os.remove(corrected_sfdisk_path)
+                        with self.summary_message_lock:
+                            self.summary_message += _("Successfully restored partition table.") + "\n"
+                        os.remove(corrected_sfdisk_path)
 
-                        # Sync drives / flush buffers to avoid "Device or resource busy"
-                        process, flat_command_string, failed_message = Utility.run("Sync drives", ["sync"],
-                                                                                   use_c_locale=False,
-                                                                                   logger=self.logger)
-                        if process.returncode != 0:
-                            with self.summary_message_lock:
-                                self.summary_message += failed_message
-                            GLib.idle_add(self.completed_restore, False, failed_message)
-                            return
-
-                    if self.requested_stop:
-                        GLib.idle_add(self.completed_restore, False, "Requested stop")
+                    # Sync drives / flush buffers to avoid "Device or resource busy"
+                    process, flat_command_string, failed_message = Utility.run("Sync drives", ["sync"],
+                                                                               use_c_locale=False,
+                                                                               logger=self.logger)
+                    if process.returncode != 0:
+                        with self.summary_message_lock:
+                            self.summary_message += failed_message
+                        GLib.idle_add(self.completed_restore, False, failed_message)
                         return
 
-                    # Shutdown the Logical Volume Manager (LVM) again -- it seems the volume groups re-activate after partition table restored for some reason.
-                    # FIXME: Look into this.
-                    is_successfully_shutdown, message = self._shutdown_lvm()
-                    if not is_successfully_shutdown:
-                        GLib.idle_add(self.completed_restore, False, message)
-                        return
+                if self.requested_stop:
+                    GLib.idle_add(self.completed_restore, False, "Requested stop")
+                    return
 
-                    if not self.update_kernel_partition_table(wait_for_partition=True):
-                        GLib.idle_add(self.completed_restore, False,
-                                      "Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table.")
-                        return
+                # Shutdown the Logical Volume Manager (LVM) again -- it seems the volume groups re-activate after partition table restored for some reason.
+                # FIXME: Look into this.
+                is_successfully_shutdown, message = self._shutdown_lvm()
+                if not is_successfully_shutdown:
+                    GLib.idle_add(self.completed_restore, False, message)
+                    return
+
+                if not self.update_kernel_partition_table(wait_for_partition=True):
+                    GLib.idle_add(self.completed_restore, False,
+                                  "Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table.")
+                    return
 
                 if self.requested_stop:
                     GLib.idle_add(self.completed_restore, False, "Requested stop")
@@ -427,9 +458,9 @@ class RestoreManager:
 
                 # There is a maximum of 1 post-MBR gap per drive (but there can be many drives)
                 post_mbr_gap_dict = None
-                for key in self.image.post_mbr_gap_dict_dict.keys():
+                for key in self.image.post_mbr_gap_absolute_path.keys():
                     if key.startswith(short_selected_image_drive_node):
-                        post_mbr_gap_dict = self.image.post_mbr_gap_dict_dict[key]
+                        post_mbr_gap_dict = self.image.post_mbr_gap_absolute_path[key]
                 if post_mbr_gap_dict is not None:
                     process, flat_command_string, failed_message = Utility.run("Restore post mbr gap",
                                                                                ["dd", "if=" + post_mbr_gap_dict['absolute_path'],
@@ -471,7 +502,7 @@ class RestoreManager:
                 #
                 # TODO: If this reasoning stands up to scrutiny, the code below can be deleted.
                 # There is a maximum of 1 EBR per drive (but there can be many drives)
-                relevant_ebr_list = [image_number for image_number in self.image.ebr_dict_dict.keys() if
+                relevant_ebr_list = [image_number for image_number in self.image.ebr_dict.keys() if
                                      image_number.startswith(short_selected_image_drive_node)]
                 if len(relevant_ebr_list) > 1:
                     GLib.idle_add(self.completed_restore, False,
@@ -481,11 +512,11 @@ class RestoreManager:
                 elif len(relevant_ebr_list) == 1:
                     # Restore EBR.
                     base_image_device, image_partition_number = Utility.split_device_string(
-                        self.image.ebr_dict_dict[short_selected_image_drive_node]['short_device_node'])
+                        self.image.ebr_dict[short_selected_image_drive_node]['short_device_node'])
                     dest_ebr_short_device_node = Utility.join_device_string(self.restore_destination_drive,
                                                                             image_partition_number)
                     process, flat_command_string, failed_message = Utility.run("Restoring the first 446 bytes of EBR (Extended boot Record) data for extended partition " + dest_ebr_short_device_node + " by",
-                                                                               ["dd", "if=" + self.image.ebr_dict_dict[short_selected_image_drive_node]['absolute_path'], "of=" + dest_ebr_short_device_node, "bs=446", "count=1"],
+                                                                               ["dd", "if=" + self.image.ebr_dict[short_selected_image_drive_node]['absolute_path'], "of=" + dest_ebr_short_device_node, "bs=446", "count=1"],
                                                                                use_c_locale=False, logger=self.logger)
 
                     if process.returncode != 0:
@@ -529,18 +560,12 @@ class RestoreManager:
                 # "Part of these codes are from http://www.trickytools.com/php/clonesys.php"
                 # "Thanks to Jerome Delamarche (jd@inodes-fr.com)"
                 for volume_group_key in self.image.lvm_vg_dev_dict.keys():
-                    # Extract the device node associated with the physical volume of the image
-                    # This original device must be mapped to the destination drive.
-                    image_pv_long_device_node = self.image.lvm_vg_dev_dict[volume_group_key]['device_node']
-                    image_pv_base_device_node, image_pv_partition_number = Utility.split_device_string(
-                        image_pv_long_device_node)
-                    # TODO: Might need to make this logic better
-                    image_long_disk_device_node = "/dev/" + self.image.short_disk_device_node
-                    if not image_pv_long_device_node.startswith(image_long_disk_device_node):
-                        print("Not restoring LVM PV " + image_pv_long_device_node + " as device is " + image_long_disk_device_node)
+                    # Handle multiple disk case
+                    if not self.image.is_volume_group_in_pv(volume_group_key):
+                        print("Volume group key" + volume_group_key + " not in current device's physical volume list")
                         continue
-                    else:
-                        print("Restoring LVM PV " + image_pv_long_device_node + " as device is " + image_long_disk_device_node)
+                    image_pv_base_device_node, image_pv_partition_number = Utility.split_device_string(
+                        self.image.lvm_vg_dev_dict[volume_group_key]['device_node'])
                     # Generate a device node to write the physical volume to.
                     destination_pv_long_device_node = Utility.join_device_string(self.restore_destination_drive,
                                                                                  image_pv_partition_number)
@@ -580,6 +605,10 @@ class RestoreManager:
                             os.remove(lvm_vg_conf_filepath_tmp_copy)
 
                 for volume_group_key in self.image.lvm_vg_dev_dict.keys():
+                    # Handle multiple disk case
+                    if not self.image.is_volume_group_in_pv(volume_group_key):
+                        print("Volume group key" + volume_group_key + " not in current device's physical volume list")
+                        continue
                     lvm_vg_conf_filepath = os.path.join(image_dir, "lvm_" + volume_group_key + ".conf")
                     # Clonezilla codebase suggests remote disks may not be able to mmap the file, so make a temp copy.
                     lvm_vg_conf_filepath_tmp_copy = RestoreManager.create_temporary_copy(lvm_vg_conf_filepath,
@@ -637,30 +666,7 @@ class RestoreManager:
                     GLib.idle_add(self.completed_restore, False, "Requested stop")
                     return
 
-                self.logger.write("Considering " + image_key + "\n")
-                if image_key in self.image.image_format_dict_dict.keys():
-                    if 'type' in self.image.image_format_dict_dict[image_key].keys() and 'swap' == \
-                            self.image.image_format_dict_dict[image_key]['type']:
-                        # Restore swap. Clonezilla reads from sfdisk for MBR and from parted for GPT.
-                        process, flat_command_string, failed_message = Utility.run("Recreate swap partition",
-                                                                                   ["mkswap", "--label=" +
-                                                                                    self.image.image_format_dict_dict[
-                                                                                        image_key][
-                                                                                        'label'],
-                                                                                    "--uuid=" +
-                                                                                    self.image.image_format_dict_dict[
-                                                                                        image_key][
-                                                                                        'uuid'],
-                                                                                    dest_part['dest_key']],
-                                                                                   use_c_locale=False,
-                                                                                   logger=self.logger)
-                        if process.returncode != 0:
-                            with self.summary_message_lock:
-                                self.summary_message += failed_message
-                            GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
-                                          failed_message)
-                            GLib.idle_add(self.completed_restore, False, failed_message)
-                            continue
+
 
                 # Unlike Clonezilla, for simplicitly Rescuezilla always removes the dirty flag.
                 """process, flat_command_string = Utility.run("Fix NTFS volume dirty flag", ["ntfsfix", "--clear-dirty", dest_part['dest_key']])
@@ -711,14 +717,31 @@ class RestoreManager:
                 if 'type' in self.image.image_format_dict_dict[image_key].keys():
                     image_type = self.image.image_format_dict_dict[image_key]['type']
                     if image_type == 'swap':
-                        # Already handled swap earlier
+                        self.logger.write("Considering " + image_key + "\n")
+                        swap_cmd_list = ["mkswap"]
+                        if self.image.image_format_dict_dict[image_key]['label'] != "":
+                            swap_cmd_list.append("--label=" + self.image.image_format_dict_dict[image_key]['label'])
+                        if self.image.image_format_dict_dict[image_key]['uuid'] != "":
+                            swap_cmd_list.append("--uuid=" + self.image.image_format_dict_dict[image_key]['uuid'])
+                        swap_cmd_list.append(dest_part['dest_key'])
+                        # Restore swap. Clonezilla reads from sfdisk for MBR and from parted for GPT.
+                        process, flat_command_string, failed_message = Utility.run("Recreate swap partition",
+                                                                                   swap_cmd_list,
+                                                                                   use_c_locale=False,
+                                                                                   logger=self.logger)
+                        if process.returncode != 0:
+                            with self.summary_message_lock:
+                                self.summary_message += failed_message
+                            GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
+                                          failed_message)
+                            GLib.idle_add(self.completed_restore, False, failed_message)
+                            continue
                         continue
                     if image_type == 'missing':
                         image_base_device_node, image_partition_number = Utility.split_device_string(image_key)
                         # FIXME: Ensure the assertion that the key being used is valid for the dictionary is true.
                         flat_description = "Partition " + str(
-                            image_partition_number) + ": " + self.image.flatten_partition_string(
-                            short_selected_image_drive_node, image_key)
+                            image_partition_number) + ": " + self.image.flatten_partition_string(image_key)
                         partition_summary = "<b>" + _("Unable to restore partition {destination_partition} because there is no saved image associated with: {description}.").format(
                             destination_partition=dest_part['dest_key'], description=flat_description) + "</b>\n\n" + _(
                             "This may occur if Clonezilla was originally unable to backup this partition.") + "\n"
@@ -728,10 +751,24 @@ class RestoreManager:
                                       partition_summary)
                         continue
                     cat_cmd_list = ["cat"] + self.image.image_format_dict_dict[image_key]['absolute_filename_glob_list']
-                    decompression_cmd_list = ClonezillaImage.get_decompression_command_list(
+                    decompression_cmd_list = Utility.get_decompression_command_list(
                         self.image.image_format_dict_dict[image_key]['compression'])
 
                     restore_binary = self.image.image_format_dict_dict[image_key]['binary']
+                    use_old_partclone = False
+                    if 'use_old_partclone' in self.image.image_format_dict_dict[image_key].keys():
+                        use_old_partclone = self.image.image_format_dict_dict[image_key]['use_old_partclone']
+                        if use_old_partclone:
+                            memory_bus_width = Utility.get_memory_bus_width()
+                            old_partclone_ver = "v0.2.43." + memory_bus_width
+                            restore_binary = "partclone.restore" + "." + old_partclone_ver
+                            if shutil.which(restore_binary) is None:
+                                message = "Could not find old partclone binary to maximize backwards compatibility: " + restore_binary + ". Will fallback to modern partclone version." + "\n"
+                                with self.summary_message_lock:
+                                    self.summary_message += message + "\n"
+                                restore_binary = self.image.image_format_dict_dict[image_key]['binary']
+                                use_old_partclone = False
+
                     if shutil.which(restore_binary) is None:
                         message = "Cannot restore " + dest_part[
                             'dest_key'] + ": " + restore_binary + ": Not found\n\nPartition " + image_key + " cannot be restored unless this utility is installed."
@@ -746,9 +783,13 @@ class RestoreManager:
                         env.pop('TERM')
 
                     if 'partclone' == image_type:
-                        # TODO: $PARTCLONE_RESTORE_OPT
-                        restore_command_list = [restore_binary, "--logfile", log_filepath, "--source",
-                                                "-", "--restore", "--overwrite", dest_part['dest_key']]
+                        if use_old_partclone:
+                            restore_command_list = [restore_binary, "--logfile", log_filepath,
+                                                    "--overwrite", dest_part['dest_key']]
+                        else:
+                            # TODO: $PARTCLONE_RESTORE_OPT
+                            restore_command_list = [restore_binary, "--logfile", log_filepath, "--source",
+                                                    "-", "--restore", "--overwrite", dest_part['dest_key']]
                     elif 'partimage' == image_type:
                         # TODO: partimage will put header in 2nd and later volumes, so we have to uncompress it, then strip it before pipe them to partimage
                         restore_command_list = [restore_binary, "--batch", "--finish=3", "--overwrite", "--nodesc",
@@ -868,101 +909,15 @@ class RestoreManager:
                     with self.summary_message_lock:
                         self.summary_message += message + "\n"
                     continue
-        elif isinstance(self.image, RedoBackupLegacyImage):
-            self.logger.write("Detected RedoBackupLegacyImage")
+        elif isinstance(self.image, FsArchiverImage):
+            self.logger.write("Detected FsArchiverImage")
             self.logger.write(str(self.restore_mapping_dict))
-            self.logger.write(str(self.image.partition_restore_command_dict))
-            # TODO ensure unmounted
-            if self.is_overwriting_partition_table:
-                process, flat_command_string, failed_message = Utility.run(
-                    "Delete any existing the MBR and GPT partition table on the destination disk: " + self.restore_destination_drive,
-                    ["sgdisk", "--zap-all", self.restore_destination_drive], use_c_locale=False, logger=self.logger)
-                if process.returncode != 0:
-                    with self.summary_message_lock:
-                        self.summary_message += failed_message
-                    GLib.idle_add(self.completed_restore, False, failed_message)
-                    return
 
-                if not self.update_kernel_partition_table(wait_for_partition=False):
-                    GLib.idle_add(self.completed_restore, False,
-                                  _("Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."))
-                    return
-
-                # Shutdown the Logical Volume Manager (LVM) again -- it seems the volume groups re-activate after partition table restored for some reason.
-                is_successfully_shutdown, message = self._shutdown_lvm()
-                if not is_successfully_shutdown:
-                    GLib.idle_add(self.completed_restore, False, message)
-                    return
-
-                if self.requested_stop:
-                    GLib.idle_add(self.completed_restore, False, "Requested stop")
-                    return
-
-                self.mbr_restore_cmd_list = ["dd", "if=" + self.image.mbr_absolute_path,
-                                             "of=" + self.restore_destination_drive]
-                Utility.print_cli_friendly("Restore MBR command list ", list(self.mbr_restore_cmd_list))
-                restore_mbr_process = subprocess.run(self.mbr_restore_cmd_list, encoding='utf-8', capture_output=True,
-                                                     env=env)
-                if restore_mbr_process.returncode != 0:
-                    self.logger.write("error restoring mbr")
-                    GLib.idle_add(self.completed_restore, False, "Error restoring mbr " + restore_mbr_process.stderr)
-                    return
-                self.logger.write("dd wipe: " + restore_mbr_process.stdout + " " + restore_mbr_process.stderr)
-
-                if self.requested_stop:
-                    GLib.idle_add(self.completed_restore, False, "Requested stop")
-                    return
-
-                corrected_sfdisk_path = self.do_sfdisk_corrections(self.image.sfdisk_absolute_path)
-                cat_cmd_list = ["cat", corrected_sfdisk_path]
-
-                sfdisk_cmd_list = []
-                if self.image.image_format != "RESCUEZILLA_1.0.5_FORMAT":
-                    # To maximize backwards compatibility, use old version of sfdisk to restore partition table (if available)
-                    # This is important as the sfdisk output format changed between 2012 and 2016.
-                    old_sfdisk_binary = "sfdisk" + "." + "v2.20.1." + Utility.get_memory_bus_width()
-                    if shutil.which(old_sfdisk_binary) is not None:
-                        sfdisk_cmd_list = [old_sfdisk_binary, "-fx", self.restore_destination_drive]
-                    else:
-                        message = "Could not find old sfdisk binary to maximize backwards compatibility: " + str(old_sfdisk_binary) + ". Will fallback to modern sfdisk version.\n"
-                        with self.summary_message_lock:
-                            self.summary_message += message + "\n"
-                        GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, message)
-
-                if self.image.image_format == "RESCUEZILLA_1.0.5_FORMAT" or len(sfdisk_cmd_list) == 0:
-                    sfdisk_binary = "sfdisk"
-                    sfdisk_cmd_list = [sfdisk_binary, "-f", self.restore_destination_drive]
-                    if shutil.which(sfdisk_binary) is None:
-                        message = "Could not find binary: " + str(sfdisk_cmd_list) + "\n\n"
-                        with self.summary_message_lock:
-                            self.summary_message += message + "\n"
-                        GLib.idle_add(self.completed_restore, False, message)
-                        return
-
-                Utility.print_cli_friendly("sfdisk ", [cat_cmd_list, sfdisk_cmd_list])
-                self.proc['cat_sfdisk'] = subprocess.Popen(cat_cmd_list, stdout=subprocess.PIPE, env=env,
-                                                           encoding='utf-8')
-                self.proc['sfdisk'] = subprocess.Popen(sfdisk_cmd_list, stdin=self.proc['cat_sfdisk'].stdout,
-                                                       stdout=subprocess.PIPE,  stderr=subprocess.STDOUT, env=env, encoding='utf-8')
-                self.proc['cat_sfdisk'].stdout.close()  # Allow p1 to receive a SIGPIPE if p2 exits.
-                output, err = self.proc['sfdisk'].communicate()
-                rc = self.proc['sfdisk'].returncode
-                self.logger.write("sfdisk Exit output " + str(rc) + ": " + str(output))
-                if self.proc['sfdisk'].returncode != 0:
-                    # Failed sfdisk restore not considered fatal to maximizing compatibility with louvetch's images
-                    # https://github.com/rescuezilla/rescuezilla/wiki/Bugs-in-unofficial-Redo-Backup-updates#bugs-in-louvetchs-ubuntu-1604-releases
-                    self.logger.write("Error restoring sfdisk: " + str(output))
-                    GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, "Error restoring sfdisk " + str(output))
-                    with self.summary_message_lock:
-                        self.summary_message += _("Error restoring sfdisk partition table (see log).") + "\n"
-                else:
-                    with self.summary_message_lock:
-                        self.summary_message += _("Successfully restored partition table.") + "\n"
-
-                if not self.update_kernel_partition_table(wait_for_partition=False):
-                    GLib.idle_add(self.completed_restore, False,
-                                  _("Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."))
-                    return
+            is_unmounted, message = Utility.umount_warn_on_busy(self.restore_destination_drive)
+            if not is_unmounted:
+                with self.summary_message_lock:
+                    self.summary_message += message + "\n"
+                GLib.idle_add(self.restore_destination_drive, False, message)
 
             if self.requested_stop:
                 GLib.idle_add(self.completed_restore, False, "Requested stop")
@@ -970,54 +925,21 @@ class RestoreManager:
 
             image_number = 0
             for image_key in self.restore_mapping_dict.keys():
+                dest_partition = self.restore_mapping_dict[image_key]['dest_key']
+                is_unmounted, message = Utility.umount_warn_on_busy(dest_partition)
+                if not is_unmounted:
+                    self.logger.write(message)
+                    with self.summary_message_lock:
+                        self.summary_message += message + "\n"
+                    GLib.idle_add(self.restore_destination_drive, False, message)
+
                 image_number += 1
                 self.logger.write("Going to restore " + image_key + " of image to " + self.restore_mapping_dict[image_key][
                     'dest_key'] + "\n")
-                base_device_node, partition_number = Utility.split_device_string(image_key)
-                abs_image_list = self.image.partition_restore_command_dict[partition_number]['abs_image_glob']
-                dest_partition = self.restore_mapping_dict[image_key]['dest_key']
 
-                cat_cmd_list = ["cat"] + abs_image_list
-                pigz_cmd_list = ["pigz", "--decompress", "--stdout"]
-
-                if self.image.image_format == "RESCUEZILLA_1.0.5_FORMAT":
-                    restore_command = self.image.partition_restore_command_dict[partition_number]['restore_binary']
-                    partclone_cmd_list = [restore_command, "--restore", "--logfile",
-                                          "/tmp/rescuezilla_logfile.txt", "--overwrite", dest_partition]
-                else:
-                    memory_bus_width = Utility.get_memory_bus_width()
-                    old_partclone_ver = "v0.2.43." + memory_bus_width
-                    old_partclone_binary = "partclone.restore" + "." + old_partclone_ver
-                    if shutil.which(old_partclone_binary) is not None:
-                        partclone_cmd_list = [old_partclone_binary, "--logfile", "/tmp/rescuezilla_logfile.txt",
-                                          "--overwrite", dest_partition]
-                    else:
-                        message = "Could not find old partclone binary to maximize backwards compatibility: " + old_partclone_binary + ". Will fallback to modern partclone version." + "\n"
-                        with self.summary_message_lock:
-                            self.summary_message += message + "\n"
-                        partclone_cmd_list = ["partclone.restore", "--restore", "--logfile",
-                                              "/tmp/rescuezilla_logfile.txt",
-                                              "--overwrite", dest_partition]
-
-                if shutil.which(partclone_cmd_list[0]) is None:
-                    message = "Could not find binary: " + str(partclone_cmd_list[0]) + "\n\n"
-                    with self.summary_message_lock:
-                        self.summary_message += message + "\n"
-                    GLib.idle_add(self.completed_restore, False, message)
-                    return
-
-                flat_command_string = Utility.print_cli_friendly("partclone ",
-                                           [cat_cmd_list, pigz_cmd_list, partclone_cmd_list])
-                self.proc['cat_partclone' + image_key] = subprocess.Popen(cat_cmd_list, stdout=subprocess.PIPE, env=env,
-                                                                          encoding='utf-8')
-                self.proc['pigz' + image_key] = subprocess.Popen(pigz_cmd_list,
-                                                                 stdin=self.proc['cat_partclone' + image_key].stdout,
-                                                                 stdout=subprocess.PIPE, env=env, encoding='utf-8')
-                self.proc['partclone_restore_' + image_key] = subprocess.Popen(partclone_cmd_list,
-                                                                               stdin=self.proc['pigz' + image_key].stdout,
-                                                                               stdout=subprocess.PIPE,
-                                                                               stderr=subprocess.PIPE, env=env,
-                                                                               encoding='utf-8')
+                fsarchiver_restfs_cmd_list = ["fsarchiver", "restfs", self.image.absolute_path, "id="+image_key + ",dest=" + dest_partition]
+                flat_command_string = Utility.print_cli_friendly(image_key + " command ", [fsarchiver_restfs_cmd_list])
+                self.proc['fsarchiver_restfs_' + image_key] = subprocess.Popen(fsarchiver_restfs_cmd_list, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=env, encoding='utf-8')
 
                 # Process partclone output. Partclone outputs an update every 3 seconds, so processing the data
                 # on the current thread, for simplicity.
@@ -1029,12 +951,13 @@ class RestoreManager:
                         GLib.idle_add(self.completed_restore, False, "Requested stop")
                         return
 
-                    output = self.proc['partclone_restore_' + image_key].stderr.readline()
+                    output = self.proc['fsarchiver_restfs_' + image_key].stderr.readline()
                     proc_stderr += output
                     self.logger.write(output)
-                    if self.proc['partclone_restore_' + image_key].poll() is not None:
+                    if self.proc['fsarchiver_restfs_' + image_key].poll() is not None:
                         break
                     if output:
+                        # TODO: Update progress bar
                         temp_dict = Partclone.parse_partclone_output(output)
                         if 'completed' in temp_dict.keys():
                             GLib.idle_add(self.update_progress_bar, temp_dict['completed'] / 100.0)
@@ -1046,25 +969,19 @@ class RestoreManager:
                         if 'remaining' in temp_dict.keys():
                             GLib.idle_add(self.update_restore_progress_status, output)
 
-                rc = self.proc['partclone_restore_' + image_key].poll()
+                rc = self.proc['fsarchiver_restfs_' + image_key].poll()
 
-                # ( cat $quoted_src_partition_prefix.* | pigz -d -c | $tool -F -L /partclone.log -O '/dev/$dest_partition_node' ) 2>&1 |
-                self.proc['cat_partclone' + image_key].stdout.close()  # Allow p1 to receive a SIGPIPE if p2 exits.
-                self.proc['pigz' + image_key].stdout.close()  # Allow p2 to receive a SIGPIPE if p3 exits.
-                stdout, stderr = self.proc['partclone_restore_' + image_key].communicate()
+                stdout, stderr = self.proc['fsarchiver_restfs_' + image_key].communicate()
                 proc_stdout += stdout
                 proc_stderr += stderr
-                rc = self.proc['partclone_restore_' + image_key].returncode
+                rc = self.proc['fsarchiver_restfs_' + image_key].returncode
                 self.logger.write("Exit output " + str(rc) + ": " + str(proc_stdout) + "stderr " + str(proc_stderr))
-                if self.proc['partclone_restore_' + image_key].returncode != 0:
+                if self.proc['fsarchiver_restfs_' + image_key].returncode != 0:
                     partition_summary = _("Error restoring partition {image_key} to {destination_partition}.").format(
                         image_key=image_key,
                         destination_partition=self.restore_mapping_dict[image_key]['dest_key']) + "\n"
                     extra_info = "\nThe command used internally was:\n\n" + flat_command_string + "\n\n" + "The output of the command was: " + str(
                         output) + "\n\n" + str(proc_stderr)
-                    decompression_stderr = self.proc['pigz' + image_key].stderr
-                    if decompression_stderr is not None and decompression_stderr != "":
-                        extra_info += "\n\n" + pigz_cmd_list[0] + " stderr: " + decompression_stderr
                     GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
                                   partition_summary + extra_info)
                     with self.summary_message_lock:
@@ -1079,6 +996,9 @@ class RestoreManager:
                 if self.requested_stop:
                     GLib.idle_add(self.completed_restore, False, "Requested stop")
                     return
+        elif isinstance(self.image, QemuImage):
+            GLib.idle_add(self.restore_destination_drive, False, "QemuImage restore not yet implemented.")
+
         GLib.idle_add(self.completed_restore, True, "")
 
     def do_sfdisk_corrections(self, input_sfdisk_absolute_path):

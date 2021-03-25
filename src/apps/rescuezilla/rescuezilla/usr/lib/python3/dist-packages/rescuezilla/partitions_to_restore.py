@@ -22,6 +22,12 @@ import traceback
 
 import gi
 
+from parser.fogproject_image import FogProjectImage
+from parser.foxclone_image import FoxcloneImage
+from parser.fsarchiver_image import FsArchiverImage
+from parser.qemu_image import QemuImage
+from parser.redorescue_image import RedoRescueImage
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import GObject, GLib
 
@@ -66,14 +72,10 @@ class PartitionsToRestore:
         if isinstance(self.selected_image, ClonezillaImage):
             print("Got selected Clonezilla image: " + str(selected_image.image_format_dict_dict))
         elif isinstance(self.selected_image, RedoBackupLegacyImage):
-            print("Got selected RedoBackupLegacy image: " + str(selected_image.sfdisk_dict))
+            print("Got selected RedoBackupLegacy image: " + str(selected_image.normalized_sfdisk_dict))
         self._use_image_partition_table()
 
         info_string = "<b>" + _("Selected image") + "</b> " + GObject.markup_escape_text(self.selected_image.absolute_path) + "\n" + "<b>" + _("Destination device") + "</b> " + GObject.markup_escape_text(self.dest_drive_desc)
-        if isinstance(self.selected_image, ClonezillaImage) and len(
-                self.selected_image.short_device_node_disk_list) > 1:
-            # FIXME: Support Clonezilla multidisk images with subdisk selection combobox
-            info_string += "\n" + "<b>" + _("IMPORTANT: Only selecting FIRST disk in Clonezilla image containing MULTIPLE DISKS.") + "</b>"
         self.builder.get_object("restore_step4_selected_image_text").set_markup(info_string)
 
         print("Have selected image " + str(self.selected_image))
@@ -240,18 +242,17 @@ class PartitionsToRestore:
         # Populate image partition list
         self.destination_partition_combobox_list.clear()
         self.restore_partition_selection_list.clear()
-        if isinstance(self.selected_image, ClonezillaImage):
+        if isinstance(self.selected_image, ClonezillaImage) or isinstance(self.selected_image, RedoBackupLegacyImage) or \
+                isinstance(self.selected_image, FogProjectImage) or isinstance(self.selected_image, RedoRescueImage) or \
+                isinstance(self.selected_image, FoxcloneImage):
             for image_format_dict_key in self.selected_image.image_format_dict_dict.keys():
                 print("ClonezillaImage contains partition " + image_format_dict_key)
-                # TODO: Support Clonezilla multidisk
-                short_device_key = self.selected_image.short_device_node_disk_list[0]
-                if self.selected_image.does_image_key_belong_to_device(image_format_dict_key, short_device_key):
+                if self.selected_image.does_image_key_belong_to_device(image_format_dict_key):
                     if self.selected_image.image_format_dict_dict[image_format_dict_key]['is_lvm_logical_volume']:
                         # The destination of an LVM logical volume within a partition (eg /dev/cl/root) is unchanged
                         dest_partition = self.selected_image.image_format_dict_dict[image_format_dict_key][
                             'logical_volume_long_device_node']
-                        flat_description = "Logical Volume " + image_format_dict_key + ": " + self.selected_image.flatten_partition_string(
-                            short_device_key, image_format_dict_key)
+                        flat_description = "Logical Volume " + image_format_dict_key + ": " + self.selected_image.flatten_partition_string(image_format_dict_key)
                     else:
                         # The destination partition of a regular partition in the image (eg, /dev/sda4) is dependent on
                         # the destination drive node (eg /dev/sdb) so we need to split and join the device so the
@@ -260,29 +261,26 @@ class PartitionsToRestore:
                         # Combine image partition number with destination device node base
                         dest_partition = Utility.join_device_string(self.dest_drive_node, image_partition_number)
                         flat_description = "Partition " + str(
-                            image_partition_number) + ": " + self.selected_image.flatten_partition_string(
-                            short_device_key, image_format_dict_key)
+                            image_partition_number) + ": " + self.selected_image.flatten_partition_string(image_format_dict_key)
                     self.destination_partition_combobox_list.append([dest_partition, flat_description])
                     self.restore_partition_selection_list.append(
                         [image_format_dict_key, True, flat_description, dest_partition, flat_description,
                          dest_partition, flat_description])
-        elif isinstance(self.selected_image, RedoBackupLegacyImage):
-            for short_device_node in self.selected_image.short_device_node_partition_list:
-                image_base_device_node, image_partition_number = Utility.split_device_string(short_device_node)
-
-                if not image_partition_number in self.selected_image.partition_restore_command_dict.keys():
-                    # No partclone image assosciated with partition
-                    continue
-
+        elif isinstance(self.selected_image, FsArchiverImage):
+            # Doesn't appear that FsArchiver images ever have an partition table backup associated with it. But
+            # keeping this section for reference, especially if a frontend like qt-fsarchiver adds partition table
+            # backups.
+            for fs_key in self.selected_image.fsa_dict['filesystems'].keys():
+                long_device_node = self.selected_image.fsa_dict['filesystems'][fs_key]['original_long_device_node']
+                image_base_device_node, image_partition_number = Utility.split_device_string(long_device_node)
                 # Combine image partition number with destination device node base
                 dest_partition = Utility.join_device_string(self.dest_drive_node, image_partition_number)
-                # FIXME: Ensure the assertion that the key being used is valid for the dictionary is true.
                 flat_description = "Partition " + str(
                     image_partition_number) + " (" + dest_partition + "): " + self.selected_image.flatten_partition_string(
-                    short_device_node)
+                    fs_key)
                 self.destination_partition_combobox_list.append([dest_partition, flat_description])
                 self.restore_partition_selection_list.append(
-                    [short_device_node, True, flat_description, dest_partition, flat_description, dest_partition,
+                    [fs_key, True, flat_description, dest_partition, flat_description, dest_partition,
                      flat_description])
 
         self.builder.get_object("destination_partition_combobox_cell_renderer").set_sensitive(False)
@@ -308,35 +306,40 @@ class PartitionsToRestore:
         is_restoring_partition = False
 
         # Populate image partition selection list (left-hand side column)
-        if isinstance(self.selected_image, ClonezillaImage):
+        if isinstance(self.selected_image, ClonezillaImage) or isinstance(self.selected_image, RedoBackupLegacyImage) or \
+                isinstance(self.selected_image, FogProjectImage) or isinstance(self.selected_image, RedoRescueImage) or \
+                isinstance(self.selected_image, FoxcloneImage):
             for image_format_dict_key in self.selected_image.image_format_dict_dict.keys():
-                # TODO: Support Clonezilla multidisk
-                short_device_key = self.selected_image.short_device_node_disk_list[0]
-                if self.selected_image.does_image_key_belong_to_device(image_format_dict_key, short_device_key):
+                if self.selected_image.does_image_key_belong_to_device(image_format_dict_key):
                     if self.selected_image.image_format_dict_dict[image_format_dict_key]['is_lvm_logical_volume']:
-                        flat_image_part_description = "Logical Volume " + image_format_dict_key + ": " + self.selected_image.flatten_partition_string(
-                            short_device_key, image_format_dict_key)
+                        flat_image_part_description = "Logical Volume " + image_format_dict_key + ": "\
+                                                      + self.selected_image.flatten_partition_string(image_format_dict_key)
                     else:
                         image_base_device_node, image_partition_number = Utility.split_device_string(image_format_dict_key)
                         flat_image_part_description = "Partition " + str(
-                            image_partition_number) + ": " + self.selected_image.flatten_partition_string(short_device_key,
-                                                                                                          image_format_dict_key)
+                            image_partition_number) + ": "\
+                                                      + self.selected_image.flatten_partition_string(image_format_dict_key)
                     self.restore_partition_selection_list.append(
                         [image_format_dict_key, is_restoring_partition, flat_image_part_description, dest_partition_key,
                          flattened_part_description,
                          dest_partition_key, flattened_part_description])
                     num_destination_partitions += 1
-        elif isinstance(self.selected_image, RedoBackupLegacyImage):
-            partitions = self.selected_image.short_device_node_partition_list
-            for image_format_dict_key in partitions:
-                image_base_device_node, image_partition_number = Utility.split_device_string(image_format_dict_key)
-                if not image_partition_number in self.selected_image.partition_restore_command_dict.keys():
-                    # No partclone image assosciated with partition
-                    continue
-                flat_image_part_description = "Partition " + str(
-                image_partition_number) + ": " + self.selected_image.flatten_partition_string(image_format_dict_key)
+        elif isinstance(self.selected_image, FsArchiverImage):
+            for fs_key in self.selected_image.fsa_dict['filesystems'].keys():
+                flat_image_part_description = "Filesystem " + str(
+                fs_key) + ": " + self.selected_image.flatten_partition_string(fs_key)
                 self.restore_partition_selection_list.append(
-                    [image_format_dict_key, is_restoring_partition, flat_image_part_description, dest_partition_key,
+                    [fs_key, is_restoring_partition, flat_image_part_description, dest_partition_key,
+                     flattened_part_description,
+                     dest_partition_key, flattened_part_description])
+                num_destination_partitions += 1
+        elif isinstance(self.selected_image, QemuImage):
+            for long_device_key in self.selected_image.sfdisk_dict['partitions'].keys():
+                image_base_device_node, image_partition_number = Utility.split_device_string(long_device_key)
+                flat_image_part_description = "Partition " + str(
+                    image_partition_number) + ": " + self.selected_image.flatten_partition_string(long_device_key)
+                self.restore_partition_selection_list.append(
+                    [long_device_key, is_restoring_partition, flat_image_part_description, dest_partition_key,
                      flattened_part_description,
                      dest_partition_key, flattened_part_description])
                 num_destination_partitions += 1

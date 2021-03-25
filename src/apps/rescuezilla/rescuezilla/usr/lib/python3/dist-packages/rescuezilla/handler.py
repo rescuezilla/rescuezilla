@@ -249,7 +249,7 @@ class Handler:
                     partition_list_store = self.builder.get_object("save_partition_list")
                     if 'partitions' not in self.drive_query.drive_state[self.selected_drive_key].keys():
                         error = ErrorMessageModalPopup(self.builder,
-                                                       "Backup of drives without a partition table not yet supported by current version of Rescuezilla.\n\nSupport for this will be added in a future version.\n\nHowever, as a temporary workaround, it is possible to use Clonezilla's 'savedisk' option to backup the drive, and then use Rescuezilla to restore that image.")
+                                                       "Backup of drives without a partition table not yet supported by current version of Rescuezilla.\nSupport for this will be added in a future version.\n\nHowever, as a temporary workaround, it is possible to use Clonezilla's 'savedisk' option to backup the drive, and then use Rescuezilla to restore that image.")
                         return
                     self.partitions_to_backup = collections.OrderedDict()
                     has_atleast_one = False
@@ -317,12 +317,10 @@ class Handler:
                         if image.is_needs_decryption:
                             error = ErrorMessageModalPopup(self.builder,
                                                            "Ecryptfs encrypted images are not supported by current version of Rescuezilla.\n\nSupport for ecryptfs will be improved in a future version.\n\nHowever, as a temporary workaround, it is possible to carefully use the mount command line utility to decrypt the image, and then point Rescuezilla to this ecryptfs mount point and then use Rescuezilla to restore the image as normal.")
+                        elif image.image_format == "QEMU_FORMAT":
+                            error = ErrorMessageModalPopup(self.builder,
+                                                           "Virtual Machine images and raw disk images can be mounted and explored by the current version of Rescuezilla, but not restored.\n\nSupport for restoring such images will be added in a future version.")
                         else:
-                            if len(image.short_device_node_disk_list) > 1:
-                                # Unlike Rescuezilla, Clonezilla is able to backup multiple devices at the same time into
-                                # a single image. The Rescuezilla user-interface doesn't yet support this, so the first
-                                # disk is always selected.
-                                error = ErrorMessageModalPopup(self.builder, _("IMPORTANT: Only selecting FIRST disk in Clonezilla image containing MULTIPLE DISKS.") + "\n\n" + "Multidisk Clonezilla images are not fully supported by the current version of Rescuezilla.\n\nOnly the FIRST disk in the multidisk image has been selected.\n\nBefore proceeding, please double-check if this is suitable.")
                             self.current_page = Page.RESTORE_DESTINATION_DRIVE_SELECTION
                             self.builder.get_object("restore_tabs").set_current_page(2)
                 elif self.current_page == Page.RESTORE_DESTINATION_DRIVE_SELECTION:
@@ -411,11 +409,6 @@ class Handler:
                             error = ErrorMessageModalPopup(self.builder,
                                                            "Ecryptfs encrypted images are not supported by current version of Rescuezilla.\n\nSupport for ecryptfs will be improved in a future version.\n\nHowever, as a temporary workaround, it is possible to carefully use the mount command line utility to decrypt the image, and then point Rescuezilla to this ecryptfs mount point and then use Rescuezilla to restore the image as normal.")
                         else:
-                            if len(image.short_device_node_disk_list) > 1:
-                                # Unlike Rescuezilla, Clonezilla is able to backup multiple devices at the same time into
-                                # a single image. The Rescuezilla user-interface doesn't yet support this, so the first
-                                # disk is always selected.
-                                error = ErrorMessageModalPopup(self.builder, _("IMPORTANT: Only selecting FIRST disk in Clonezilla image containing MULTIPLE DISKS.") + "\n\n" + "Multidisk Clonezilla images are not fully supported by the current version of Rescuezilla.\n\nOnly the FIRST disk in the multidisk image has been selected.\n\nBefore proceeding, please double-check if this is suitable.")
                             self.current_page = Page.VERIFY_PROGRESS
                             self.builder.get_object("verify_tabs").set_current_page(2)
                             self.builder.get_object("button_back").set_sensitive(False)
@@ -442,16 +435,13 @@ class Handler:
                         self.selected_image_absolute_path = list_store.get(iter, 0)[0]
                         print("User image: " + self.selected_image_absolute_path)
                         image = self.image_folder_query.image_dict[self.selected_image_absolute_path]
-                        if image.is_needs_decryption:
+                        if image.image_format == "FSARCHIVER_FORMAT":
+                            error = ErrorMessageModalPopup(self.builder,
+                                                           "FSArchiver images cannot be mounted with Image Explorer with the current version of Rescuezilla. But FSArchiver images CAN be restored with the current version of Rescuezilla.\n\nSupport for exploring FSArchiver images may be added in a future version.")
+                        elif image.is_needs_decryption:
                             error = ErrorMessageModalPopup(self.builder,
                                                            "Ecryptfs encrypted images are not supported by current version of Rescuezilla.\n\nSupport for ecryptfs will be improved in a future version.\n\nHowever, as a temporary workaround, it is possible to carefully use the mount command line utility to decrypt the image, and then point Rescuezilla to this ecryptfs mount point and then use Rescuezilla to access the image as normal.")
                         else:
-                            if len(image.short_device_node_disk_list) > 1:
-                                # Unlike Rescuezilla, Clonezilla is able to backup multiple devices at the same time into
-                                # a single image. The Rescuezilla user-interface doesn't yet support this, so the first
-                                # disk is always selected.
-                                error = ErrorMessageModalPopup(self.builder, _(
-                                    "IMPORTANT: Only selecting FIRST disk in Clonezilla image containing MULTIPLE DISKS.") + "\n\n" + "Multidisk Clonezilla images are not fully supported by the current version of Rescuezilla.\n\nOnly the FIRST disk in the multidisk image has been selected.\n\nBefore proceeding, please double-check if this is suitable.")
                             self.current_page = Page.IMAGE_EXPLORER_PARTITION_MOUNT
                             self.builder.get_object("image_explorer_tabs").set_current_page(2)
                             # Temporarily disable the next button until the user has successfully mounted a partition.

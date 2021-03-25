@@ -23,6 +23,13 @@ from os.path import join, isfile, isdir
 
 
 import gi
+
+from parser.fogproject_image import FogProjectImage
+from parser.foxclone_image import FoxcloneImage
+from parser.fsarchiver_image import FsArchiverImage
+from parser.redorescue_image import RedoRescueImage
+from parser.qemu_image import QemuImage
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import GdkPixbuf, GLib
 
@@ -156,7 +163,7 @@ class ImageFolderQuery:
         print("Scan file " + absolute_path)
         is_image = False
         try:
-            image = None
+            temp_image_dict = {}
             if isfile(absolute_path):
                 # Identify Clonezilla images by presence of a file named "parts". Cannot use "clonezilla-img" or
                 # "dev-fs.list" because these files were not created by in earlier Clonezilla versions. Cannot use
@@ -165,24 +172,84 @@ class ImageFolderQuery:
                 error_suffix = ""
                 if absolute_path.endswith("parts"):
                     print("Found Clonezilla image " + filename)
-                    GLib.idle_add(self.please_wait_popup.set_secondary_label_text, _("Scanning: {filename}").format(filename=absolute_path))
-                    image = ClonezillaImage(absolute_path, enduser_filename)
-                    error_suffix = _("This can happen when loading images which Clonezilla was unable to completely backup. Any other filesystems within the image should be restorable as normal.")
+                    GLib.idle_add(self.please_wait_popup.set_secondary_label_text,
+                                  _("Scanning: {filename}").format(filename=absolute_path))
+                    temp_image_dict = ClonezillaImage.get_clonezilla_image_dict(absolute_path, enduser_filename)
+                    error_suffix = _(
+                        "This can happen when loading images which Clonezilla was unable to completely backup. Any other filesystems within the image should be restorable as normal.")
                     is_image = True
                 elif absolute_path.endswith(".backup"):
-                    print("Found a legacy Redo Backup / Rescuezilla v1.0.5 image " + filename)
-                    GLib.idle_add(self.please_wait_popup.set_secondary_label_text, _("Scanning: {filename}").format(filename=absolute_path))
-                    image = RedoBackupLegacyImage(absolute_path, enduser_filename, filename)
+                    # The legacy Redo Backup and Recovery v0.9.3-v1.0.4 format was adapted and extended Foxclone, so
+                    # care is taken here to delineate the image formats by a simple heuristic: the existence of Foxclone's MBR backup.
+                    foxclone_mbr = absolute_path.split(".backup")[0] + ".grub"
+                    if os.path.exists(foxclone_mbr):
+                        print("Found a Foxclone image " + filename)
+                        GLib.idle_add(self.please_wait_popup.set_secondary_label_text,
+                                      _("Scanning: {filename}").format(filename=absolute_path))
+                        temp_image_dict = {absolute_path: FoxcloneImage(absolute_path, enduser_filename, filename)}
+                        error_suffix = _("Any other filesystems within the image should be restorable as normal.")
+                        is_image = True
+                    else:
+                        print("Found a legacy Redo Backup / Rescuezilla v1.0.5 image " + filename)
+                        GLib.idle_add(self.please_wait_popup.set_secondary_label_text,
+                                      _("Scanning: {filename}").format(filename=absolute_path))
+                        temp_image_dict = {absolute_path: RedoBackupLegacyImage(absolute_path, enduser_filename, filename)}
+                        error_suffix = _("Any other filesystems within the image should be restorable as normal.")
+                        is_image = True
+                elif absolute_path.endswith(".redo"):
+                    # The Redo Rescue format's metadata is a JSON file ending in .redo. Unfortunately this conflicts
+                    # with the legacy Redo Backup and Recovery 0.9.2 format, which also uses a metadata file ending in
+                    # .redo, so care is taken here to delineate the image formats by a simple heuristic: whether or not
+                    # the file is valid JSON.
+                    if RedoRescueImage.is_valid_json(absolute_path):
+                        # ".redo" is used for Redo Rescue format and Redo Backup and Recovery 0.9.2 format
+                        print("Found Redo Rescue image " + filename)
+                        GLib.idle_add(self.please_wait_popup.set_secondary_label_text,
+                                      _("Scanning: {filename}").format(filename=absolute_path))
+                        temp_image_dict = {absolute_path: RedoRescueImage(absolute_path, enduser_filename, filename)}
+                        error_suffix = _("Any other filesystems within the image should be restorable as normal.")
+                        is_image = True
+                    else:
+                        print("Found a legacy Redo Backup and Recovery v0.9.2 image " + filename)
+                        GLib.idle_add(self.please_wait_popup.set_secondary_label_text,
+                                      _("Scanning: {filename}").format(filename=absolute_path))
+                        temp_image_dict = {absolute_path: RedoBackupLegacyImage(absolute_path, enduser_filename, filename)}
+                        error_suffix = _("Any other filesystems within the image should be restorable as normal.")
+                        is_image = True
+                elif absolute_path.endswith(".partitions") and not absolute_path.endswith(".minimum.partitions"):
+                    print("Found FOG Project image " + filename)
+                    GLib.idle_add(self.please_wait_popup.set_secondary_label_text,
+                                  _("Scanning: {filename}").format(filename=absolute_path))
+                    temp_image_dict = {absolute_path: FogProjectImage(absolute_path, enduser_filename, filename)}
                     error_suffix = _("Any other filesystems within the image should be restorable as normal.")
+                    is_image = True
+                elif absolute_path.endswith(".fsa"):
+                    print("Found FSArchiver image " + filename)
+                    GLib.idle_add(self.please_wait_popup.set_secondary_label_text,
+                                  _("Scanning: {filename}").format(filename=absolute_path))
+                    temp_image_dict = {absolute_path: FsArchiverImage(absolute_path, enduser_filename, filename)}
+                    error_suffix = ""
+                    is_image = True
+                elif QemuImage.is_supported_extension(filename):
+                    print("Found an extension that should be compatible with qemu-nbd: " + filename)
+                    print("Skipping: " + filename)
+                    timeout_seconds = 10
+                    GLib.idle_add(self.please_wait_popup.set_secondary_label_text,
+                                  _(f"Scanning: {filename} ({timeout_seconds} second timeout)").format(filename=absolute_path, timeout_seconds=timeout_seconds))
+                    temp_image_dict = {absolute_path: QemuImage(absolute_path, enduser_filename, timeout_seconds)}
+                    error_suffix = _("Support for virtual machine images is still experimental.")
                     is_image = True
                 if is_image:
                     image_warning_message = ""
-                    for short_partition_key in image.warning_dict.keys():
-                        image_warning_message += "    " + short_partition_key + ": " + image.warning_dict[short_partition_key] + "\n"
+                    for key in temp_image_dict.keys():
+                        for warning_dict_key in temp_image_dict[key].warning_dict.keys():
+                            image_warning_message += "    " + warning_dict_key + ": "\
+                                                     + temp_image_dict[key].warning_dict[warning_dict_key] + "\n"
                     if len(image_warning_message) > 0:
-                        self.failed_to_read_image_dict[absolute_path] = _("Unable to fully process the image associated with the following partitions:") + "\n" + image_warning_message + error_suffix
-            if image is not None:
-                self.image_dict[image.absolute_path] = image
+                        self.failed_to_read_image_dict[absolute_path] = _(
+                                    "Unable to fully process the image associated with the following partitions:") + "\n" + image_warning_message + error_suffix
+                for key in temp_image_dict.keys():
+                    self.image_dict[key] = temp_image_dict[key]
         except Exception as e:
             print("Failed to read: " + absolute_path)
             tb = traceback.format_exc()
@@ -201,6 +268,7 @@ class ImageFolderQuery:
                 abs_base_scan_path = os.path.abspath(join(self.query_path, filename))
                 print("Scanning " + abs_base_scan_path)
                 if isfile(abs_base_scan_path):
+                    print("Scanning file " + abs_base_scan_path)
                     self.scan_file(abs_base_scan_path, filename, filename)
                 elif isdir(abs_base_scan_path):
                     # List the subdirectory (1 level deep)
@@ -216,5 +284,5 @@ class ImageFolderQuery:
             tb = traceback.format_exc()
             GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
                           "Failed to scan for images: " + tb)
-        # Relying on CPython GIL to access the self.image_list
+        # Relying on CPython GIL to access the self.image_dict
         GLib.idle_add(self._populate_image_list_table)

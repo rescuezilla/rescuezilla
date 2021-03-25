@@ -17,6 +17,7 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
 import collections
+import subprocess
 
 import utility
 
@@ -119,4 +120,36 @@ class Partclone:
                 partclone_info_dict['free_space']['bytes'] = bs * partclone_info_dict['free_space']['blocks']
             if 'used_space' in partclone_info_dict.keys():
                 partclone_info_dict['used_space']['bytes'] = bs * partclone_info_dict['used_space']['blocks']
+        return partclone_info_dict
+
+    @staticmethod
+    def get_partclone_info_dict(abs_partclone_image_list, image_key, compression):
+        env = utility.Utility.get_env_C_locale()
+        proc = collections.OrderedDict()
+        cat_cmd_list = ["cat"] + abs_partclone_image_list
+        decompression_cmd_list = utility.Utility.get_decompression_command_list(compression)
+        partclone_info_cmd_list = ["partclone.info", "--source", "-"]
+        utility.Utility.print_cli_friendly("partclone ", [cat_cmd_list, decompression_cmd_list, partclone_info_cmd_list])
+        proc['cat_partclone' + image_key] = subprocess.Popen(cat_cmd_list, stdout=subprocess.PIPE, env=env,
+                                                                          encoding='utf-8')
+        proc['decompression' + image_key] = subprocess.Popen(decompression_cmd_list,
+                                                                          stdin=proc[
+                                                                              'cat_partclone' + image_key].stdout,
+                                                                          stdout=subprocess.PIPE, env=env, encoding='utf-8')
+        proc['partclone_info' + image_key] = subprocess.Popen(partclone_info_cmd_list,
+                                                                           stdin=proc[
+                                                                               'decompression' + image_key].stdout,
+                                                                           stdout=subprocess.PIPE,
+                                                                           stderr=subprocess.PIPE, env=env,
+                                                                           encoding='utf-8')
+        proc['cat_partclone' + image_key].stdout.close()  # Allow p1 to receive a SIGPIPE if p2 exits.
+        proc['decompression' + image_key].stdout.close()  # Allow p1 to receive a SIGPIPE if p2 exits.
+        output, err = proc['partclone_info' + image_key].communicate()
+        print("partclone_info: Exit output " + str(output) + "stderr " + str(err))
+        partclone_info_dict = Partclone.parse_partclone_info_output(err)
+        if len(partclone_info_dict) == 0:
+            # If unable to read the partclone.info output, treat this as a dd image (see unit test for
+            # partclone.info example output for this case).
+            print(abs_partclone_image_list[0] + ": Could not read partclone info dict for " + image_key + ". Treating it as a dd image.")
+            partclone_info_dict['filesystem'] = "<unknown>"
         return partclone_info_dict

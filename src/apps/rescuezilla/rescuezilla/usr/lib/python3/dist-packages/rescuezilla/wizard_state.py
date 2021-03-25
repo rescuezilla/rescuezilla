@@ -23,6 +23,8 @@ IMAGE_EXPLORER_DIR = "/mnt/rescuezilla.image.explorer/"
 JOINED_FILES_NBD_DEVICE = "/dev/nbd0"
 DECOMPRESSED_NBD_DEVICE = "/dev/nbd1"
 MOUNTABLE_NBD_DEVICE = "/dev/nbd2"
+# qemu-nbd device should be able to safely use the same nbd device as the joined/compressed/mountable above.
+QEMU_NBD_NBD_DEVICE = "/dev/nbd4"
 
 class Mode(Enum):
     BACKUP = 1
