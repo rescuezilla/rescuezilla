@@ -217,6 +217,7 @@ common_pkgs=("discover"
              # Simplified Chinese language pack, TODO: add Traditional (hant) once translation submitted.
              "language-pack-gnome-zh-hans"
              "qemu-utils"
+             "xfce4-screenshooter"
 )
 
 if  [ "$ARCH" == "i386" ]; then
