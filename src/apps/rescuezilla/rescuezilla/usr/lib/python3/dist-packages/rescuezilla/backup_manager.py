@@ -566,10 +566,22 @@ class BackupManager:
                 filesystem = self.partitions_to_backup[partition_key]['filesystem']
                 filehandle.write('%s %s\n' % (partition_key, filesystem))
 
+        # Determine the size of each partition, and the total size. This is used for the weighted progress bar
+        total_size = 0
+        for partition_key in self.partitions_to_backup.keys():
+            size = self.partitions_to_backup[partition_key]['size']
+            self.partitions_to_backup[partition_key]['cumulative_bytes'] = total_size
+            total_size += size
+
         partition_number = 0
         for partition_key in self.partitions_to_backup.keys():
             partition_number += 1
-            total_progress_float = Utility.calculate_progress_ratio(0, partition_number, len(self.partitions_to_backup.keys()))
+            total_progress_float = Utility.calculate_progress_ratio(current_partition_completed_percentage=0,
+                                                                    current_partition_bytes=self.partitions_to_backup[partition_key]['size'],
+                                                                    cumulative_bytes=self.partitions_to_backup[partition_key]['cumulative_bytes'],
+                                                                    total_bytes=total_size,
+                                                                    image_number=partition_number,
+                                                                    num_partitions=len(self.partitions_to_backup))
             GLib.idle_add(self.update_backup_progress_bar, total_progress_float)
             is_unmounted, message = Utility.umount_warn_on_busy(partition_key)
             if not is_unmounted:
@@ -698,7 +710,13 @@ class BackupManager:
                     partclone_stderr += output
                     temp_dict = Partclone.parse_partclone_output(output)
                     if 'completed' in temp_dict.keys():
-                        total_progress_float = Utility.calculate_progress_ratio(temp_dict['completed'] / 100.0, partition_number, len(self.partitions_to_backup.keys()))
+                        total_progress_float = Utility.calculate_progress_ratio(
+                            current_partition_completed_percentage=temp_dict['completed'] / 100.0,
+                            current_partition_bytes=self.partitions_to_backup[partition_key]['size'],
+                            cumulative_bytes=self.partitions_to_backup[partition_key]['cumulative_bytes'],
+                            total_bytes=total_size,
+                            image_number=partition_number,
+                            num_partitions=len(self.partitions_to_backup))
                         GLib.idle_add(self.update_backup_progress_bar, total_progress_float)
                     if 'remaining' in temp_dict.keys():
                         GLib.idle_add(self.update_backup_progress_status, filesystem_backup_message + "\n\n" + output)
@@ -741,10 +759,7 @@ class BackupManager:
         if self.requested_stop:
             return
 
-        progress_ratio = i / len(self.partitions_to_backup.keys())
         i += 1
-        # Display 100% progress for user
-        GLib.idle_add(self.update_backup_progress_bar, progress_ratio)
         sleep(1.0)
 
         """

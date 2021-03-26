@@ -289,6 +289,20 @@ class RestoreManager:
             GLib.idle_add(self.completed_restore, False, message)
             return
 
+        # Determine the size of each partition, and the total size. This is used for the weighted progress bar
+        total_size_estimate = 0
+        for image_key in self.restore_mapping_dict.keys():
+            if 'estimated_size_bytes' in self.image.image_format_dict_dict[image_key].keys():
+                # If the value took effort to compute it will be cached, so use the cached value.
+                estimated_size_bytes = self.image.image_format_dict_dict[image_key]['estimated_size_bytes']
+            else:
+                # Otherwise, access the value
+                estimated_size_bytes = self.image._compute_partition_size_byte_estimate(image_key)
+            self.restore_mapping_dict[image_key]['cumulative_bytes'] = total_size_estimate
+            total_size_estimate += estimated_size_bytes
+            # Save the value for easy access.
+            self.restore_mapping_dict[image_key]['estimated_size_bytes'] = estimated_size_bytes
+
         # TODO: The following section handles images from each of the supported backup formats SEPARATELY.
         # TODO: This produces a MASSIVE amount of duplication, and makes it easier for lesser used code paths to
         # TODO: contain bugs. The logic from the original Clonezilla (ported to Python below) is by far the most robust
@@ -643,8 +657,12 @@ class RestoreManager:
             image_number = 0
             for image_key in self.restore_mapping_dict.keys():
                 image_number += 1
-                total_progress_float = Utility.calculate_progress_ratio(0, image_number,
-                                                                        len(self.restore_mapping_dict.keys()))
+                total_progress_float = Utility.calculate_progress_ratio(current_partition_completed_percentage=0,
+                                 current_partition_bytes=self.restore_mapping_dict[image_key]['estimated_size_bytes'],
+                                 cumulative_bytes=self.restore_mapping_dict[image_key]['cumulative_bytes'],
+                                 total_bytes=total_size_estimate,
+                                 image_number=image_number,
+                                 num_partitions=len(self.restore_mapping_dict.keys()))
                 GLib.idle_add(self.update_progress_bar, total_progress_float)
 
                 dest_part = self.restore_mapping_dict[image_key]
@@ -858,9 +876,14 @@ class RestoreManager:
                         if output and ("partclone" == image_type or "dd" == image_type):
                             temp_dict = Partclone.parse_partclone_output(output)
                             if 'completed' in temp_dict.keys():
-                                total_progress_float = Utility.calculate_progress_ratio(temp_dict['completed'] / 100.0,
-                                                                                        image_number, len(
-                                        self.restore_mapping_dict.keys()))
+                                total_progress_float = Utility.calculate_progress_ratio(
+                                    current_partition_completed_percentage=temp_dict['completed'] / 100.0,
+                                    current_partition_bytes=self.restore_mapping_dict[image_key][
+                                        'estimated_size_bytes'],
+                                    cumulative_bytes=self.restore_mapping_dict[image_key]['cumulative_bytes'],
+                                    total_bytes=total_size_estimate,
+                                    image_number=image_number,
+                                    num_partitions=len(self.restore_mapping_dict.keys()))
                                 GLib.idle_add(self.update_progress_bar, total_progress_float)
                             if 'remaining' in temp_dict.keys():
                                 GLib.idle_add(self.update_restore_progress_status,
@@ -957,14 +980,17 @@ class RestoreManager:
                     if self.proc['fsarchiver_restfs_' + image_key].poll() is not None:
                         break
                     if output:
-                        # TODO: Update progress bar
                         temp_dict = Partclone.parse_partclone_output(output)
                         if 'completed' in temp_dict.keys():
                             GLib.idle_add(self.update_progress_bar, temp_dict['completed'] / 100.0)
-                            total_progress_float = Utility.calculate_progress_ratio(temp_dict['completed'] / 100.0,
-                                                                                    image_number,
-                                                                                    len(
-                                                                                        self.restore_mapping_dict.keys()))
+                            total_progress_float = Utility.calculate_progress_ratio(
+                                current_partition_completed_percentage=temp_dict['completed'] / 100.0,
+                                current_partition_bytes=self.restore_mapping_dict[image_key][
+                                    'estimated_size_bytes'],
+                                cumulative_bytes=self.restore_mapping_dict[image_key]['cumulative_bytes'],
+                                total_bytes=total_size_estimate,
+                                image_number=image_number,
+                                num_partitions=len(self.restore_mapping_dict.keys()))
                             GLib.idle_add(self.update_progress_bar, total_progress_float)
                         if 'remaining' in temp_dict.keys():
                             GLib.idle_add(self.update_restore_progress_status, output)
