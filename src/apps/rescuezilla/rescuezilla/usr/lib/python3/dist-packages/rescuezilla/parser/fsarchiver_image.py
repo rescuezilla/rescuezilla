@@ -122,9 +122,12 @@ class FsArchiverImage:
     def flatten_partition_string(self, fs_key):
         flat_string = ""
         fs = self.fsa_dict['filesystems'][fs_key]['filesystem_format']
-        size_bytes = self.fsa_dict['filesystems'][fs_key]['size_bytes']
+        size_bytes = self._compute_partition_size_byte_estimate(fs_key)
         flat_string += str(fs) + " " + Utility.human_readable_filesize(size_bytes)
         return flat_string
+
+    def _compute_partition_size_byte_estimate(self, fs_key):
+        return self.fsa_dict['filesystems'][fs_key]['size_bytes']
 
     # FSArchiver images are usually just one file.
     #

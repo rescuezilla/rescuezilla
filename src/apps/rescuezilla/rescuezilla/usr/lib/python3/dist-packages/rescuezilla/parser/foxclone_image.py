@@ -178,12 +178,16 @@ class FoxcloneImage:
             elif fs != "":
                 flat_string += self.foxclone_dict['partitions'][short_device_node]['fs'] + " "
 
-            # It's unclear what the Foxclone .backup file's blocksize is referring to, so use the sfdisk partition
-            # size in blocks (which assumes 512 byte block size)
-            num_bytes = 512 * self.normalized_sfdisk_dict['sfdisk_dict']['partitions']['/dev/' + short_device_node][
-                'size']
+            num_bytes = self._compute_partition_size_byte_estimate(short_device_node)
             flat_string += " " + str(Utility.human_readable_filesize(num_bytes))
             return flat_string
+
+    def _compute_partition_size_byte_estimate(self, short_device_node):
+        # It's unclear what the Foxclone .backup file's blocksize is referring to, so use the sfdisk partition
+        # size in blocks (which assumes 512 byte block size)
+        num_bytes = 512 * self.normalized_sfdisk_dict['sfdisk_dict']['partitions']['/dev/' + short_device_node][
+            'size']
+        return num_bytes
 
     def does_image_key_belong_to_device(self, image_format_dict_key):
         return True

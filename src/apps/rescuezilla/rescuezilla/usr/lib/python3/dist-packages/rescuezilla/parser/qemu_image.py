@@ -200,9 +200,12 @@ class QemuImage:
         fs = self._get_human_readable_filesystem(long_device_node)
         if fs != "" and fs is not None:
             flat_string = fs + " "
-        partition_size_bytes = self.normalized_sfdisk_dict['sfdisk_dict']['partitions'][long_device_node]['size'] * 512
+        partition_size_bytes = self._compute_partition_size_byte_estimate(long_device_node)
         flat_string += Utility.human_readable_filesize(partition_size_bytes)
         return flat_string
+
+    def _compute_partition_size_byte_estimate(self, long_device_node):
+        return self.normalized_sfdisk_dict['sfdisk_dict']['partitions'][long_device_node]['size'] * 512
 
     def _get_human_readable_filesystem(self, long_device_node):
         # Prefer estimated size from parted partition table backup, but this requires splitting the device node
