@@ -167,10 +167,12 @@ class RedoRescueImage:
             flat_string += "unknown"
         elif fs != "":
             flat_string += self.redo_dict['parts'][short_device_node]['fs'] + " "
-        if self.redo_dict['parts'][short_device_node]['bytes'] != "":
-            flat_string += " " + str(
-                Utility.human_readable_filesize(self.redo_dict['parts'][short_device_node]['bytes']))
+        num_bytes = self._compute_partition_size_byte_estimate(short_device_node)
+        flat_string += " " + str(Utility.human_readable_filesize(num_bytes))
         return flat_string
+
+    def _compute_partition_size_byte_estimate(self, short_device_node):
+        return self.redo_dict['parts'][short_device_node]['bytes']
 
     # Redo Rescue's metadata is a JSON file ending in .redo. Unfortunately this conflicts with the format of Redo
     # Backup and Recovery 0.9.2, which also uses a metadata file ending in .redo (this was changed to .backup for
