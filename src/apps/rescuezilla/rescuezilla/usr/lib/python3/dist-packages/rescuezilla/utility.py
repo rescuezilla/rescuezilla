@@ -508,11 +508,20 @@ class Utility:
         else:
             return True, ""
 
-    # Simple method to get the total percentage progress ratio.
-    # TODO: Use the partition total bytes, rather than simply the number of partitions
+    # Calculate total percentage progress ratio. Ideally use the number of bytes in each partition, but
+    # use the number of partitions if this information is not available.
     @staticmethod
-    def calculate_progress_ratio(current_partition_percentage, image_number, total_partitions):
-        return current_partition_percentage / total_partitions + (image_number - 1) / total_partitions
+    def calculate_progress_ratio(current_partition_completed_percentage,
+                                 current_partition_bytes,
+                                 cumulative_bytes,
+                                 total_bytes,
+                                 image_number,
+                                 num_partitions):
+        if total_bytes != 0:
+            return (current_partition_bytes * current_partition_completed_percentage + cumulative_bytes) / total_bytes
+        else:
+            # Fallback to counting partitions if total bytes happen to be zero.
+            return current_partition_completed_percentage / num_partitions + (image_number - 1) / num_partitions
 
     # Useful for non-blocking IO (see below)
     @staticmethod
