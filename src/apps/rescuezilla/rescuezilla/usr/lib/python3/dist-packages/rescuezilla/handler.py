@@ -97,6 +97,8 @@ class Handler:
         self.network_share_protocol_list.append(["SMB", _("SMB/CIFS shared folder specified below")])
         self.builder.get_object("restore_network_network").set_active(0)
         self.builder.get_object("backup_network_network").set_active(0)
+        self.builder.get_object("image_explorer_network_network").set_active(0)
+        self.builder.get_object("verify_network_network").set_active(0)
 
         self.backup_manager = BackupManager(builder, self.human_readable_version)
         self.restore_manager = RestoreManager(builder)
@@ -688,9 +690,6 @@ class Handler:
 
     def restore_file_changed(self):
         print("test")
-
-    def restore_scan_network(self):
-        return
 
     def backup_network_network_changed(self, toggle_button):
         return
