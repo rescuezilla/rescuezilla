@@ -217,7 +217,37 @@ msgstr "Ange ett unikt namn för den här filen, till exempel datumet. Dagens da
 msgid "Optional: Provide a short description."
 msgstr ""
 
-msgid "Step 6: Confirm Backup Configuration"
+msgid "Step 6: Customize Compression Settings"
+msgstr ""
+
+msgid "Customize image compression settings. Don't make any changes if you are unsure."
+msgstr ""
+
+msgid "Compression format: "
+msgstr ""
+
+msgid "gzip (default)"
+msgstr ""
+
+msgid "zstandard"
+msgstr ""
+
+msgid "Uncompressed (Suitable for use with Image Explorer)"
+msgstr ""
+
+msgid "Compression level: "
+msgstr ""
+
+msgid "Fastest"
+msgstr ""
+
+msgid "Best"
+msgstr ""
+
+msgid "When you are happy with the compression settings, click <b>Next</b>."
+msgstr ""
+
+msgid "Step 7: Confirm Backup Configuration"
 msgstr "Steg 6: Bekräfta konfigurationen"
 
 msgid "Source drive"
@@ -247,7 +277,7 @@ msgstr "Starta om"
 msgid "To start the backup, click <b>Next</b>."
 msgstr "Klicka på <b>Nästa</b> för att starta säkerhetskopian."
 
-msgid "Step 7: Creating Backup Image"
+msgid "Step 8: Creating Backup Image"
 msgstr "Steg 7: Skapar säkerhetskopia..."
 
 msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."

@@ -218,7 +218,37 @@ msgstr "Proporcione un nombre único para esta imagen de copia de seguridad, com
 msgid "Optional: Provide a short description."
 msgstr ""
 
-msgid "Step 6: Confirm Backup Configuration"
+msgid "Step 6: Customize Compression Settings"
+msgstr ""
+
+msgid "Customize image compression settings. Don't make any changes if you are unsure."
+msgstr ""
+
+msgid "Compression format: "
+msgstr ""
+
+msgid "gzip (default)"
+msgstr ""
+
+msgid "zstandard"
+msgstr ""
+
+msgid "Uncompressed (Suitable for use with Image Explorer)"
+msgstr ""
+
+msgid "Compression level: "
+msgstr ""
+
+msgid "Fastest"
+msgstr ""
+
+msgid "Best"
+msgstr ""
+
+msgid "When you are happy with the compression settings, click <b>Next</b>."
+msgstr ""
+
+msgid "Step 7: Confirm Backup Configuration"
 msgstr "Paso 6: confirma la copia de seguridad de la configuración"
 
 msgid "Source drive"
@@ -248,7 +278,7 @@ msgstr "Reiniciar"
 msgid "To start the backup, click <b>Next</b>."
 msgstr "Para iniciar la copia de seguridad, haz clic en <b>Siguiente</b>."
 
-msgid "Step 7: Creating Backup Image"
+msgid "Step 8: Creating Backup Image"
 msgstr "Paso 7: Creando copia de respaldo/seguridad"
 
 msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."

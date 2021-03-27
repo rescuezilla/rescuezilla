@@ -217,7 +217,37 @@ msgstr "为备份文件起一个唯一的名称 ，当前日期将自动显示�
 msgid "Optional: Provide a short description."
 msgstr ""
 
-msgid "Step 6: Confirm Backup Configuration"
+msgid "Step 6: Customize Compression Settings"
+msgstr ""
+
+msgid "Customize image compression settings. Don't make any changes if you are unsure."
+msgstr ""
+
+msgid "Compression format: "
+msgstr ""
+
+msgid "gzip (default)"
+msgstr ""
+
+msgid "zstandard"
+msgstr ""
+
+msgid "Uncompressed (Suitable for use with Image Explorer)"
+msgstr ""
+
+msgid "Compression level: "
+msgstr ""
+
+msgid "Fastest"
+msgstr ""
+
+msgid "Best"
+msgstr ""
+
+msgid "When you are happy with the compression settings, click <b>Next</b>."
+msgstr ""
+
+msgid "Step 7: Confirm Backup Configuration"
 msgstr "步骤 6: 确认备份配置"
 
 msgid "Source drive"
@@ -247,7 +277,7 @@ msgstr "重启"
 msgid "To start the backup, click <b>Next</b>."
 msgstr "单击 <b>下一步</b> 开始备份。"
 
-msgid "Step 7: Creating Backup Image"
+msgid "Step 8: Creating Backup Image"
 msgstr "步骤 7: 创建备份镜像中 ..."
 
 msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."

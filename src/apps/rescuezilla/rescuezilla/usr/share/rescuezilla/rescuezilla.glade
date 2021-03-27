@@ -25,6 +25,14 @@
     <property name="can_focus">False</property>
     <property name="pixbuf">clonezilla_icon.png</property>
   </object>
+  <object class="GtkListStore" id="compression_tool_list">
+    <columns>
+      <!-- column-name compression_tool_key -->
+      <column type="gchararray"/>
+      <!-- column-name enduser_friendly_compression_tool_description -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
   <object class="GtkListStore" id="destination_partition_combobox_list">
     <columns>
       <!-- column-name drive_short_device_node -->
@@ -1785,7 +1793,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkVBox" id="backup_step6_vbox">
+                              <object class="GtkVBox" id="backup_step7_vbox1">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="margin_left">30</property>
@@ -1812,7 +1820,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkFrame" id="backup_step6_frame">
+                                  <object class="GtkFrame" id="backup_step7_frame1">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="margin_left">30</property>
@@ -1820,18 +1828,18 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                     <property name="margin_bottom">15</property>
                                     <property name="label_xalign">0.0099999997764825821</property>
                                     <child>
-                                      <object class="GtkVBox" id="backup_step6_content_vbox">
+                                      <object class="GtkVBox" id="backup_step7_content_vbox2">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="margin_left">30</property>
                                         <property name="margin_right">30</property>
                                         <property name="margin_bottom">15</property>
                                         <child>
-                                          <object class="GtkLabel" id="restore_step5_text4">
+                                          <object class="GtkLabel" id="backup_step7_text4">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="ypad">20</property>
-                                            <property name="label" translatable="yes">Confirm the following backup configuration.</property>
+                                            <property name="label" translatable="yes">Customize image compression settings. Don't make any changes if you are unsure.</property>
                                             <property name="wrap">True</property>
                                             <property name="yalign">1</property>
                                           </object>
@@ -1842,79 +1850,97 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkScrolledWindow">
-                                            <property name="visible">True</property>
-                                            <property name="can_focus">True</property>
-                                            <property name="margin_left">30</property>
-                                            <property name="margin_right">30</property>
-                                            <property name="margin_bottom">15</property>
-                                            <property name="shadow_type">in</property>
-                                            <child>
-                                              <object class="GtkViewport">
-                                                <property name="visible">True</property>
-                                                <property name="can_focus">False</property>
-                                                <child>
-                                                  <object class="GtkLabel" id="backup_step6_confirm_config_program_defined_text">
-                                                    <property name="visible">True</property>
-                                                    <property name="can_focus">False</property>
-                                                    <property name="margin_bottom">15</property>
-                                                    <property name="ypad">20</property>
-                                                    <property name="use_markup">True</property>
-                                                    <property name="wrap">True</property>
-                                                    <property name="selectable">True</property>
-                                                    <property name="yalign">0.5</property>
-                                                  </object>
-                                                </child>
-                                              </object>
-                                            </child>
-                                          </object>
-                                          <packing>
-                                            <property name="expand">True</property>
-                                            <property name="fill">True</property>
-                                            <property name="position">1</property>
-                                          </packing>
-                                        </child>
-                                        <child>
                                           <object class="GtkBox">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
+                                            <property name="orientation">vertical</property>
                                             <child>
-                                              <object class="GtkLabel" id="backup_step6_perform_action_label">
+                                              <object class="GtkBox" id="backup_step6_compression_format_selection_box">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
-                                                <property name="label" translatable="yes">On successful completion of the task, perform the following action: </property>
-                                                <property name="use_markup">True</property>
-                                                <property name="wrap">True</property>
+                                                <child>
+                                                  <object class="GtkLabel" id="backup_step6_compression_tool_label">
+                                                    <property name="visible">True</property>
+                                                    <property name="can_focus">False</property>
+                                                    <property name="label" translatable="yes">Compression format: </property>
+                                                    <property name="use_markup">True</property>
+                                                    <property name="wrap">True</property>
+                                                  </object>
+                                                  <packing>
+                                                    <property name="expand">False</property>
+                                                    <property name="fill">False</property>
+                                                    <property name="position">0</property>
+                                                  </packing>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkComboBox" id="backup_step6_compression_format_combobox">
+                                                    <property name="visible">True</property>
+                                                    <property name="can_focus">False</property>
+                                                    <property name="model">compression_tool_list</property>
+                                                    <signal name="changed" handler="compression_tool_changed" swapped="no"/>
+                                                    <child>
+                                                      <object class="GtkCellRendererText" id="backup_network_cellrenderertext4"/>
+                                                      <attributes>
+                                                        <attribute name="text">1</attribute>
+                                                      </attributes>
+                                                    </child>
+                                                  </object>
+                                                  <packing>
+                                                    <property name="expand">True</property>
+                                                    <property name="fill">True</property>
+                                                    <property name="position">1</property>
+                                                  </packing>
+                                                </child>
                                               </object>
                                               <packing>
                                                 <property name="expand">False</property>
-                                                <property name="fill">False</property>
+                                                <property name="fill">True</property>
                                                 <property name="position">0</property>
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkComboBox" id="backup_step6_perform_action_combobox">
+                                              <object class="GtkBox" id="backup_step6_compression_level_selection_box">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
-                                                <property name="model">post_operation_action_list</property>
                                                 <child>
-                                                  <object class="GtkCellRendererText" id="backup_network_cellrenderertext1"/>
-                                                  <attributes>
-                                                    <attribute name="text">1</attribute>
-                                                  </attributes>
+                                                  <object class="GtkLabel" id="backup_step6_compression_scale_label">
+                                                    <property name="visible">True</property>
+                                                    <property name="can_focus">False</property>
+                                                    <property name="label" translatable="yes">Compression level: </property>
+                                                    <property name="use_markup">True</property>
+                                                    <property name="wrap">True</property>
+                                                  </object>
+                                                  <packing>
+                                                    <property name="expand">False</property>
+                                                    <property name="fill">False</property>
+                                                    <property name="position">0</property>
+                                                  </packing>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkScale" id="backup_step6_compression_level_scale">
+                                                    <property name="visible">True</property>
+                                                    <property name="can_focus">True</property>
+                                                    <property name="round_digits">1</property>
+                                                    <property name="digits">0</property>
+                                                  </object>
+                                                  <packing>
+                                                    <property name="expand">True</property>
+                                                    <property name="fill">True</property>
+                                                    <property name="position">1</property>
+                                                  </packing>
                                                 </child>
                                               </object>
                                               <packing>
-                                                <property name="expand">True</property>
-                                                <property name="fill">True</property>
+                                                <property name="expand">False</property>
+                                                <property name="fill">False</property>
                                                 <property name="position">1</property>
                                               </packing>
                                             </child>
                                           </object>
                                           <packing>
-                                            <property name="expand">False</property>
+                                            <property name="expand">True</property>
                                             <property name="fill">False</property>
-                                            <property name="position">2</property>
+                                            <property name="position">1</property>
                                           </packing>
                                         </child>
                                         <child>
@@ -1922,7 +1948,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="ypad">20</property>
-                                            <property name="label" translatable="yes">To start the backup, click &lt;b&gt;Next&lt;/b&gt;.</property>
+                                            <property name="label" translatable="yes">When you are happy with the compression settings, click &lt;b&gt;Next&lt;/b&gt;.</property>
                                             <property name="use_markup">True</property>
                                             <property name="wrap">True</property>
                                             <property name="yalign">1</property>
@@ -1930,7 +1956,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                           <packing>
                                             <property name="expand">False</property>
                                             <property name="fill">True</property>
-                                            <property name="position">3</property>
+                                            <property name="position">2</property>
                                           </packing>
                                         </child>
                                       </object>
@@ -1939,7 +1965,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                       <object class="GtkLabel" id="backup_step6_subtitle">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">Step 6: Confirm Backup Configuration</property>
+                                        <property name="label" translatable="yes">Step 6: Customize Compression Settings</property>
                                         <attributes>
                                           <attribute name="weight" value="bold"/>
                                           <attribute name="scale" value="1.5"/>
@@ -2012,52 +2038,45 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                         <property name="margin_right">30</property>
                                         <property name="margin_bottom">15</property>
                                         <child>
-                                          <object class="GtkLabel" id="backup_step7_text">
+                                          <object class="GtkLabel" id="backup_step7_text2">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="ypad">20</property>
-                                            <property name="label" translatable="yes">Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data.</property>
+                                            <property name="label" translatable="yes">Confirm the following backup configuration.</property>
                                             <property name="wrap">True</property>
                                             <property name="yalign">1</property>
                                           </object>
                                           <packing>
-                                            <property name="expand">True</property>
-                                            <property name="fill">True</property>
+                                            <property name="expand">False</property>
+                                            <property name="fill">False</property>
                                             <property name="position">0</property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkVBox" id="backup_step7_progressbar_vbox">
+                                          <object class="GtkScrolledWindow">
                                             <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="margin_left">30</property>
+                                            <property name="margin_right">30</property>
+                                            <property name="margin_bottom">15</property>
+                                            <property name="shadow_type">in</property>
                                             <child>
-                                              <object class="GtkProgressBar" id="backup_progress">
+                                              <object class="GtkViewport">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
-                                                <property name="margin_left">30</property>
-                                                <property name="margin_right">30</property>
-                                                <property name="show_text">True</property>
+                                                <child>
+                                                  <object class="GtkLabel" id="backup_step7_confirm_config_program_defined_text">
+                                                    <property name="visible">True</property>
+                                                    <property name="can_focus">False</property>
+                                                    <property name="margin_bottom">15</property>
+                                                    <property name="ypad">20</property>
+                                                    <property name="use_markup">True</property>
+                                                    <property name="wrap">True</property>
+                                                    <property name="selectable">True</property>
+                                                    <property name="yalign">0.5</property>
+                                                  </object>
+                                                </child>
                                               </object>
-                                              <packing>
-                                                <property name="expand">True</property>
-                                                <property name="fill">True</property>
-                                                <property name="position">0</property>
-                                              </packing>
-                                            </child>
-                                            <child>
-                                              <object class="GtkLabel" id="backup_progress_status">
-                                                <property name="visible">True</property>
-                                                <property name="can_focus">False</property>
-                                                <property name="ypad">10</property>
-                                                <property name="label" translatable="yes">Time Elapsed / Remaining: </property>
-                                                <property name="wrap">True</property>
-                                                <property name="selectable">True</property>
-                                              </object>
-                                              <packing>
-                                                <property name="expand">True</property>
-                                                <property name="fill">True</property>
-                                                <property name="position">1</property>
-                                              </packing>
                                             </child>
                                           </object>
                                           <packing>
@@ -2067,20 +2086,62 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkLinkButton" id="backup_step7_patreon_linkbutton">
-                                            <property name="label" translatable="yes">Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed.</property>
+                                          <object class="GtkBox">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
-                                            <property name="receives_default">True</property>
-                                            <property name="halign">center</property>
-                                            <property name="relief">none</property>
-                                            <property name="uri">https://www.patreon.com/join/rescuezilla</property>
-                                            <signal name="pressed" handler="open_url_as_non_root" swapped="no"/>
+                                            <child>
+                                              <object class="GtkLabel" id="backup_step7_perform_action_label">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">False</property>
+                                                <property name="label" translatable="yes">On successful completion of the task, perform the following action: </property>
+                                                <property name="use_markup">True</property>
+                                                <property name="wrap">True</property>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">False</property>
+                                                <property name="position">0</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkComboBox" id="backup_step7_perform_action_combobox">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">False</property>
+                                                <property name="model">post_operation_action_list</property>
+                                                <child>
+                                                  <object class="GtkCellRendererText" id="backup_network_cellrenderertext1"/>
+                                                  <attributes>
+                                                    <attribute name="text">1</attribute>
+                                                  </attributes>
+                                                </child>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">True</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">1</property>
+                                              </packing>
+                                            </child>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">False</property>
+                                            <property name="position">2</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkLabel" id="backup_step7_text">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">False</property>
+                                            <property name="ypad">20</property>
+                                            <property name="label" translatable="yes">To start the backup, click &lt;b&gt;Next&lt;/b&gt;.</property>
+                                            <property name="use_markup">True</property>
+                                            <property name="wrap">True</property>
+                                            <property name="yalign">1</property>
                                           </object>
                                           <packing>
                                             <property name="expand">False</property>
                                             <property name="fill">True</property>
-                                            <property name="position">2</property>
+                                            <property name="position">3</property>
                                           </packing>
                                         </child>
                                       </object>
@@ -2089,7 +2150,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                       <object class="GtkLabel" id="backup_step7_subtitle">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">Step 7: Creating Backup Image</property>
+                                        <property name="label" translatable="yes">Step 7: Confirm Backup Configuration</property>
                                         <attributes>
                                           <attribute name="weight" value="bold"/>
                                           <attribute name="scale" value="1.5"/>
@@ -2166,42 +2227,48 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="ypad">20</property>
-                                            <property name="label" translatable="yes">Confirm the backup summary.</property>
+                                            <property name="label" translatable="yes">Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data.</property>
                                             <property name="wrap">True</property>
                                             <property name="yalign">1</property>
                                           </object>
                                           <packing>
-                                            <property name="expand">False</property>
-                                            <property name="fill">False</property>
+                                            <property name="expand">True</property>
+                                            <property name="fill">True</property>
                                             <property name="position">0</property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkScrolledWindow">
+                                          <object class="GtkVBox" id="backup_step8_progressbar_vbox">
                                             <property name="visible">True</property>
-                                            <property name="can_focus">True</property>
-                                            <property name="margin_left">30</property>
-                                            <property name="margin_right">30</property>
-                                            <property name="margin_bottom">15</property>
-                                            <property name="shadow_type">in</property>
+                                            <property name="can_focus">False</property>
                                             <child>
-                                              <object class="GtkViewport">
+                                              <object class="GtkProgressBar" id="backup_progress">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
-                                                <child>
-                                                  <object class="GtkLabel" id="backup_step8_summary_program_defined_text">
-                                                    <property name="visible">True</property>
-                                                    <property name="can_focus">False</property>
-                                                    <property name="margin_bottom">15</property>
-                                                    <property name="ypad">0</property>
-                                                    <property name="use_markup">True</property>
-                                                    <property name="wrap">True</property>
-                                                    <property name="selectable">True</property>
-                                                    <property name="track_visited_links">False</property>
-                                                    <property name="yalign">0.5</property>
-                                                  </object>
-                                                </child>
+                                                <property name="margin_left">30</property>
+                                                <property name="margin_right">30</property>
+                                                <property name="show_text">True</property>
                                               </object>
+                                              <packing>
+                                                <property name="expand">True</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">0</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkLabel" id="backup_progress_status">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">False</property>
+                                                <property name="ypad">10</property>
+                                                <property name="label" translatable="yes">Time Elapsed / Remaining: </property>
+                                                <property name="wrap">True</property>
+                                                <property name="selectable">True</property>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">True</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">1</property>
+                                              </packing>
                                             </child>
                                           </object>
                                           <packing>
@@ -2211,24 +2278,9 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkLabel" id="backup_step8_new_session_text">
-                                            <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
-                                            <property name="ypad">10</property>
-                                            <property name="label" translatable="yes">To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
-                                            <property name="use_markup">True</property>
-                                            <property name="wrap">True</property>
-                                            <property name="yalign">1</property>
-                                          </object>
-                                          <packing>
-                                            <property name="expand">False</property>
-                                            <property name="fill">True</property>
-                                            <property name="position">2</property>
-                                          </packing>
-                                        </child>
-                                        <child>
                                           <object class="GtkLinkButton" id="backup_step8_patreon_linkbutton">
                                             <property name="label" translatable="yes">Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed.</property>
+                                            <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="receives_default">True</property>
                                             <property name="halign">center</property>
@@ -2239,23 +2291,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                           <packing>
                                             <property name="expand">False</property>
                                             <property name="fill">True</property>
-                                            <property name="position">3</property>
-                                          </packing>
-                                        </child>
-                                        <child>
-                                          <object class="GtkLinkButton" id="backup_step8_support_linkbutton">
-                                            <property name="label" translatable="yes">Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum.</property>
-                                            <property name="can_focus">False</property>
-                                            <property name="receives_default">True</property>
-                                            <property name="halign">center</property>
-                                            <property name="relief">none</property>
-                                            <property name="uri">https://rescuezilla.com/help.html</property>
-                                            <signal name="pressed" handler="open_url_as_non_root" swapped="no"/>
-                                          </object>
-                                          <packing>
-                                            <property name="expand">False</property>
-                                            <property name="fill">True</property>
-                                            <property name="position">4</property>
+                                            <property name="position">2</property>
                                           </packing>
                                         </child>
                                       </object>
@@ -2264,7 +2300,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                       <object class="GtkLabel" id="backup_step8_subtitle">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="label" translatable="yes">Summary of Backup</property>
+                                        <property name="label" translatable="yes">Step 8: Creating Backup Image</property>
                                         <attributes>
                                           <attribute name="weight" value="bold"/>
                                           <attribute name="scale" value="1.5"/>
@@ -2291,6 +2327,181 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                               </object>
                               <packing>
                                 <property name="position">7</property>
+                                <property name="tab_fill">False</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkVBox" id="backup_step9_vbox">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="margin_left">30</property>
+                                <property name="margin_right">30</property>
+                                <property name="margin_bottom">15</property>
+                                <child>
+                                  <object class="GtkLabel" id="backup_step9_mode_title">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="ypad">5</property>
+                                    <property name="label" translatable="yes">Backup</property>
+                                    <property name="xalign">0</property>
+                                    <attributes>
+                                      <attribute name="weight" value="bold"/>
+                                      <attribute name="stretch" value="ultra-condensed"/>
+                                      <attribute name="foreground" value="#999999999999"/>
+                                      <attribute name="scale" value="2.5"/>
+                                    </attributes>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkFrame" id="backup_step9_frame">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <property name="margin_left">30</property>
+                                    <property name="margin_right">30</property>
+                                    <property name="margin_bottom">15</property>
+                                    <property name="label_xalign">0.0099999997764825821</property>
+                                    <child>
+                                      <object class="GtkVBox" id="backup_step9_content_vbox">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="margin_left">30</property>
+                                        <property name="margin_right">30</property>
+                                        <property name="margin_bottom">15</property>
+                                        <child>
+                                          <object class="GtkLabel" id="backup_step9_text">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">False</property>
+                                            <property name="ypad">20</property>
+                                            <property name="label" translatable="yes">Confirm the backup summary.</property>
+                                            <property name="wrap">True</property>
+                                            <property name="yalign">1</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">False</property>
+                                            <property name="position">0</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkScrolledWindow">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="margin_left">30</property>
+                                            <property name="margin_right">30</property>
+                                            <property name="margin_bottom">15</property>
+                                            <property name="shadow_type">in</property>
+                                            <child>
+                                              <object class="GtkViewport">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">False</property>
+                                                <child>
+                                                  <object class="GtkLabel" id="backup_step9_summary_program_defined_text">
+                                                    <property name="visible">True</property>
+                                                    <property name="can_focus">False</property>
+                                                    <property name="margin_bottom">15</property>
+                                                    <property name="ypad">0</property>
+                                                    <property name="use_markup">True</property>
+                                                    <property name="wrap">True</property>
+                                                    <property name="selectable">True</property>
+                                                    <property name="track_visited_links">False</property>
+                                                    <property name="yalign">0.5</property>
+                                                  </object>
+                                                </child>
+                                              </object>
+                                            </child>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">True</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkLabel" id="backup_step9_new_session_text">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">False</property>
+                                            <property name="ypad">10</property>
+                                            <property name="label" translatable="yes">To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
+                                            <property name="use_markup">True</property>
+                                            <property name="wrap">True</property>
+                                            <property name="yalign">1</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">2</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkLinkButton" id="backup_step9_patreon_linkbutton">
+                                            <property name="label" translatable="yes">Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed.</property>
+                                            <property name="can_focus">False</property>
+                                            <property name="receives_default">True</property>
+                                            <property name="halign">center</property>
+                                            <property name="relief">none</property>
+                                            <property name="uri">https://www.patreon.com/join/rescuezilla</property>
+                                            <signal name="pressed" handler="open_url_as_non_root" swapped="no"/>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">3</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkLinkButton" id="backup_step9_support_linkbutton">
+                                            <property name="label" translatable="yes">Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum.</property>
+                                            <property name="can_focus">False</property>
+                                            <property name="receives_default">True</property>
+                                            <property name="halign">center</property>
+                                            <property name="relief">none</property>
+                                            <property name="uri">https://rescuezilla.com/help.html</property>
+                                            <signal name="pressed" handler="open_url_as_non_root" swapped="no"/>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">4</property>
+                                          </packing>
+                                        </child>
+                                      </object>
+                                    </child>
+                                    <child type="label">
+                                      <object class="GtkLabel" id="backup_step9_subtitle">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="label" translatable="yes">Summary of Backup</property>
+                                        <attributes>
+                                          <attribute name="weight" value="bold"/>
+                                          <attribute name="scale" value="1.5"/>
+                                        </attributes>
+                                      </object>
+                                    </child>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">True</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="position">8</property>
+                              </packing>
+                            </child>
+                            <child type="tab">
+                              <object class="GtkLabel" id="backup_step9_tab_label">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">Step 9</property>
+                              </object>
+                              <packing>
+                                <property name="position">8</property>
                                 <property name="tab_fill">False</property>
                               </packing>
                             </child>
