@@ -215,6 +215,9 @@ msgstr "Fournissez un nom unique pour cette sauvegarde, tel que la date. La date
 "\n"
 "Vous pouvez utiliser que des lettres, des chiffres et des tirets dans le nom de la sauvegarde."
 
+msgid "Optional: Provide a short description."
+msgstr ""
+
 msgid "Step 6: Confirm Backup Configuration"
 msgstr "Étape 6 : confirmez la configuration de sauvegarde"
 

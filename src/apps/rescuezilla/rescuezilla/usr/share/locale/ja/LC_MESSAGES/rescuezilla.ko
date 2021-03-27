@@ -214,6 +214,9 @@ msgstr "日付など、このバックアップイメージの一意の名前を
 "\n"
 "バックアップ名には、半角英数とダッシュ(\"-\")のみを使用できます。"
 
+msgid "Optional: Provide a short description."
+msgstr ""
+
 msgid "Step 6: Confirm Backup Configuration"
 msgstr "ステップ 6: バックアップの構成を確認します"
 

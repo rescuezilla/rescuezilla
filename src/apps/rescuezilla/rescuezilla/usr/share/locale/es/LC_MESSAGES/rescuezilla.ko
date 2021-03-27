@@ -215,6 +215,9 @@ msgstr "Proporcione un nombre único para esta imagen de copia de seguridad, com
 "\n"
 "Sólo puedes usar letras, números y guiones en el nombre de la copia de seguridad."
 
+msgid "Optional: Provide a short description."
+msgstr ""
+
 msgid "Step 6: Confirm Backup Configuration"
 msgstr "Paso 6: confirma la copia de seguridad de la configuración"
 

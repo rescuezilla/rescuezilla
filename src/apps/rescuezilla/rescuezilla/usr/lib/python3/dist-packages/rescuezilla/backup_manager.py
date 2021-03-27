@@ -57,11 +57,12 @@ class BackupManager:
     def is_backup_in_progress(self):
         return self.backup_in_progress
 
-    def start_backup(self, selected_drive_key, partitions_to_backup, drive_state, dest_dir, completed_backup_callback):
+    def start_backup(self, selected_drive_key, partitions_to_backup, drive_state, dest_dir, backup_notes, completed_backup_callback):
         self.backup_timestart = datetime.now()
         self.completed_backup_callback = completed_backup_callback
         self.selected_drive_key = selected_drive_key
         self.dest_dir = dest_dir
+        self.backup_notes = backup_notes
         self.partitions_to_backup = partitions_to_backup
         # Entire machine's drive state
         # TODO: This is a crutch that ideally will be removed. It's very bad from an abstraction perspective, and
@@ -132,6 +133,15 @@ class BackupManager:
 
         self.logger = Logger(clonezilla_img_filepath)
         GLib.idle_add(self.update_backup_progress_bar, 0)
+
+        backup_notes_filepath = os.path.join(self.dest_dir, "rescuezilla.description.txt")
+        if self.backup_notes.strip() != "":
+            self.logger.write("Writing backup description file to " + backup_notes_filepath)
+            GLib.idle_add(self.update_main_statusbar, "Saving " + backup_notes_filepath)
+            with open(backup_notes_filepath, 'w') as filehandle:
+                filehandle.write(self.backup_notes)
+                filehandle.flush()
+
         blkdev_list_filepath = os.path.join(self.dest_dir, "blkdev.list")
         GLib.idle_add(self.update_main_statusbar, "Saving " + blkdev_list_filepath)
         process, flat_command_string, failed_message = Utility.run("Saving blkdev.list", ["lsblk", "-oKNAME,NAME,SIZE,TYPE,FSTYPE,MOUNTPOINT,MODEL", self.selected_drive_key], use_c_locale=True, output_filepath=blkdev_list_filepath, logger=self.logger)

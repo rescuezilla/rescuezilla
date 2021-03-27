@@ -215,6 +215,9 @@ msgstr "Geben Sie einen eindeutigen Namen für das Backup- Image ein. (z.B. , wi
 "\n"
 "Sie dürfen nur Buchstaben, Zahlen und Bindestriche in Ihrem Backup- Namen verwenden!"
 
+msgid "Optional: Provide a short description."
+msgstr ""
+
 msgid "Step 6: Confirm Backup Configuration"
 msgstr "Schritt 6: Sicherungskonfiguration bestätigen"
 
