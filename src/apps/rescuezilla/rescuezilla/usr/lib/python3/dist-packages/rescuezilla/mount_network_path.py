@@ -91,8 +91,10 @@ class MountNetworkPath:
                 mount_cmd_list = ['mount.cifs', settings['server'], settings['destination_path'], "-o", smb_arguments]
                 mount_process, mount_flat_command_string, mount_failed_message = Utility.run("Mounting network shared folder: ", mount_cmd_list, use_c_locale=False)
 
-            shred_cmd_list = ['shred', "-u", tmp.name]
+            shred_cmd_list = ['shred', tmp.name]
             shred_process, shred_flat_command_string, failed_message = Utility.run("Shredding credentials temp file: ", shred_cmd_list, use_c_locale=False)
+            # Delete temp file
+            tmp.close()
             if shred_process.returncode != 0:
                 GLib.idle_add(self.please_wait_popup.destroy)
                 GLib.idle_add(self.callback, False, failed_message)
