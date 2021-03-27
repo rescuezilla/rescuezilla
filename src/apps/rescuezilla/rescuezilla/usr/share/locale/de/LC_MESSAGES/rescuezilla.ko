@@ -305,9 +305,6 @@ msgstr "Klicken Sie unten auf das Feld, um den Ordner mit den Sicherungsdateien 
 msgid "Select the image file to restore"
 msgstr "Wählen Sie die Sicherungskopie aus, die wiederhergestellt werden soll."
 
-msgid "Date created"
-msgstr "Erstelldatum"
-
 msgid "Step 3: Select Drive To Restore"
 msgstr "Schritt 3: Ziel - Laufwerk wählen"
 

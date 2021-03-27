@@ -304,9 +304,6 @@ msgstr "点击<b>浏览</b>选择包含镜像的文件夹"
 msgid "Select the image file to restore"
 msgstr "选择要还原的镜像文件"
 
-msgid "Date created"
-msgstr "创建日期"
-
 msgid "Step 3: Select Drive To Restore"
 msgstr "步骤 3: 选择要还原的镜像"
 

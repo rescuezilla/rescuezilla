@@ -20,7 +20,8 @@ import collections
 import glob
 import os
 import re
-import time
+
+from babel.dates import format_datetime
 
 from parser.partclone import Partclone
 from parser.sfdisk import Sfdisk
@@ -81,7 +82,7 @@ class RedoBackupLegacyImage:
         else:
             raise ValueError("Expected Rescuezilla backup to end with .backup: " + absolute_path)
 
-        self.last_modified_timestamp = str(time.ctime(os.stat(absolute_path).st_mtime))
+        self.last_modified_timestamp = format_datetime(os.stat(absolute_path).st_mtime)
         print("Last modified timestamp " + self.last_modified_timestamp)
 
         self.short_device_node_partition_list = Utility.read_linebreak_delimited_file_into_list(absolute_path)

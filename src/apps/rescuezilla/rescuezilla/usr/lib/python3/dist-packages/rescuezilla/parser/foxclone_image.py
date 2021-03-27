@@ -18,9 +18,10 @@ import collections
 import glob
 import os
 import re
-import time
 from datetime import datetime
 from pathlib import Path
+
+from babel.dates import format_datetime
 
 # The handling of Foxclone images is not derived from the Foxclone source code, but has been implemented purely based
 # on examining the images generated from using that program. Any errors in parsing here are Rescuezilla's own.
@@ -61,7 +62,7 @@ class FoxcloneImage:
         # Convert Foxclone's English human-readable string to Python datetime
         foxclone_datetime = datetime.strptime(self.foxclone_dict['timestamp'], "%d %b %Y, %H:%M")
         # Convert to a string that's consistent with the rest of Rescuezilla
-        self.last_modified_timestamp = str(time.ctime(foxclone_datetime.timestamp()))
+        self.last_modified_timestamp = format_datetime(datetime.fromtimestamp(foxclone_datetime.timestamp()))
         print("Last modified timestamp " + self.last_modified_timestamp)
 
         dir = Path(absolute_foxclone_img_path).parent.as_posix()

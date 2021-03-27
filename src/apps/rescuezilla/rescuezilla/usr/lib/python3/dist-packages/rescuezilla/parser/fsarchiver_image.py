@@ -14,9 +14,6 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
-import collections
-import glob
-import json
 import os
 import pprint
 import re
@@ -24,8 +21,11 @@ import time
 from datetime import datetime
 from pathlib import Path
 
+from babel.dates import format_datetime
+
 import utility
-from utility import Utility, _
+from utility import Utility
+
 
 # The handling of FSArchiver images is not derived from the FSArchiver source code, but has been implemented purely
 # based on examining the images generated from using qt-fsarchiver and the fsarchiver command-line program.
@@ -78,7 +78,7 @@ class FsArchiverImage:
             self.fsa_dict = FsArchiverImage.parse_fsarchiver_archinfo_output(process.stderr)
             print("Processed: " + str(self.fsa_dict))
         else:
-            self.last_modified_timestamp = str(time.ctime(os.stat(absolute_fsarchiver_fsa_path).st_mtime))
+            self.last_modified_timestamp = format_datetime(datetime.fromtimestamp((os.stat(absolute_fsarchiver_fsa_path).st_mtime)))
             self.size_bytes = Utility.count_total_size_of_files_on_disk([absolute_fsarchiver_fsa_path], "unknown")
             # Covert size in bytes to KB/MB/GB/TB as relevant
             self.enduser_readable_size = Utility.human_readable_filesize(int(self.size_bytes))
@@ -95,7 +95,7 @@ class FsArchiverImage:
         # Convert FSArchiver's English human-readable string to Python datetime
         fsarchiver_datetime = datetime.strptime(self.fsa_dict['date'], "%Y-%m-%d_%H-%M-%S")
         # Convert to a string that's consistent with the rest of Rescuezilla
-        self.last_modified_timestamp = str(time.ctime(fsarchiver_datetime.timestamp()))
+        self.last_modified_timestamp = format_datetime(datetime.fromtimestamp(fsarchiver_datetime.timestamp()))
         print("Last modified timestamp " + self.last_modified_timestamp)
 
         self.size_bytes = 0
