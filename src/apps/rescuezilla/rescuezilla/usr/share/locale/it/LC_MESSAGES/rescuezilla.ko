@@ -232,6 +232,18 @@ msgstr "L'immagine di backup verrà scritta nella cartella {dest_dir} su {descri
 msgid "Confirm the following backup configuration."
 msgstr "Conferma la seguente configurazione di backup."
 
+msgid "On successful completion of the task, perform the following action: "
+msgstr ""
+
+msgid "Do nothing"
+msgstr ""
+
+msgid "Shutdown"
+msgstr "Spegni"
+
+msgid "Reboot"
+msgstr "Riavvia"
+
 msgid "To start the backup, click <b>Next</b>."
 msgstr "Per avviare il backup, fai click su <b>Avanti</b>."
 

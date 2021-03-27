@@ -233,6 +233,18 @@ msgstr "Die Sicherungskopie wird im Ordner {dest_dir} auf {description} gespeich
 msgid "Confirm the following backup configuration."
 msgstr "Bestätigen Sie folgende Sicherungskonfiguration."
 
+msgid "On successful completion of the task, perform the following action: "
+msgstr ""
+
+msgid "Do nothing"
+msgstr ""
+
+msgid "Shutdown"
+msgstr ""
+
+msgid "Reboot"
+msgstr "Neu starten"
+
 msgid "To start the backup, click <b>Next</b>."
 msgstr "Klicken Sie zum Starten des Sicherungsvorgangs auf <b>Weiter</b>."
 

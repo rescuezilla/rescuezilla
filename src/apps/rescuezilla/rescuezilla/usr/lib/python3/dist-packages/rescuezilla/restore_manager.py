@@ -70,12 +70,13 @@ class RestoreManager:
         return self.restore_in_progress
 
     def start_restore(self, image, restore_destination_drive, restore_mapping_dict, is_overwriting_partition_table,
-                      completed_callback):
+                      post_task_action, completed_callback):
         self.restore_timestart = datetime.now()
         self.image = image
         self.restore_destination_drive = restore_destination_drive
         self.restore_mapping_dict = restore_mapping_dict
         self.is_overwriting_partition_table = is_overwriting_partition_table
+        self.post_task_action = post_task_action
         self.completed_callback = completed_callback
 
         self.restore_in_progress = True
@@ -1098,6 +1099,12 @@ class RestoreManager:
             print("Failure")
         with self.summary_message_lock:
             self.summary_message += "\n" + _("Operation took {num_minutes} minutes.").format(num_minutes=duration_minutes) + "\n"
+            if self.post_task_action != "DO_NOTHING":
+                if succeeded:
+                    has_scheduled, msg = Utility.schedule_shutdown_reboot(self.post_task_action)
+                    self.summary_message += "\n" + msg
+                else:
+                    self.summary_message += "\n" + _("Shutdown/Reboot cancelled due to errors.")
         self.populate_summary_page()
         self.logger.close()
         self.completed_callback(succeeded)

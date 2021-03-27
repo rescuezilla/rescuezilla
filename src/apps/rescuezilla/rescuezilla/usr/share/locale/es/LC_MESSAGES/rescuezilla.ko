@@ -233,6 +233,18 @@ msgstr "La copia de seguridad de la imagen se escribirá en la carpeta {dest_dir
 msgid "Confirm the following backup configuration."
 msgstr "Confirma la siguiente configuración de copia de seguridad."
 
+msgid "On successful completion of the task, perform the following action: "
+msgstr ""
+
+msgid "Do nothing"
+msgstr ""
+
+msgid "Shutdown"
+msgstr "Apagar"
+
+msgid "Reboot"
+msgstr "Reiniciar"
+
 msgid "To start the backup, click <b>Next</b>."
 msgstr "Para iniciar la copia de seguridad, haz clic en <b>Siguiente</b>."
 
