@@ -214,6 +214,9 @@ msgstr "Fornisci un nome univoco per questa immagine di backup, ad esempio la da
 "\n"
 "Puoi utilizzare solo lettere, numeri e trattini nel nome del backup."
 
+msgid "Optional: Provide a short description."
+msgstr ""
+
 msgid "Step 6: Confirm Backup Configuration"
 msgstr "Fase 6: Conferma le configurazioni del backup"
 

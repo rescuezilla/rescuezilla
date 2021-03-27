@@ -171,6 +171,11 @@ class ClonezillaImage:
         self.enduser_drive_number = enduser_drive_number
         self.user_notes = ""
         self.warning_dict = {}
+
+        notes_filepath = os.path.join(dir, "rescuezilla.description.txt")
+        if os.path.exists(notes_filepath):
+            self.user_notes = Utility.read_file_into_string(notes_filepath)
+
         if is_display_multidisk:
             multidisk_desc = _("Drive {drive_number}".format(drive_number=str(self.enduser_drive_number)))
             self.enduser_filename = enduser_filename + " (" + multidisk_desc + ")"

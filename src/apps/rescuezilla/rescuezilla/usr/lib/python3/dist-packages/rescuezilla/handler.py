@@ -278,6 +278,7 @@ class Handler:
                     selected_directory = self.builder.get_object("backup_folder_label").get_text()
                     folder_name = self.builder.get_object("backup_name").get_text()
                     self.dest_dir = os.path.join(selected_directory, folder_name)
+                    self.backup_notes = self.builder.get_object("backup_notes").get_text()
                     print ("going to write to" + str(self.dest_dir))
                     self.confirm_backup_configuration()
                     self.current_page = Page.BACKUP_CONFIRM_CONFIGURATION
@@ -285,7 +286,7 @@ class Handler:
                 elif self.current_page == Page.BACKUP_CONFIRM_CONFIGURATION:
                     self.current_page = Page.BACKUP_PROGRESS
                     self.builder.get_object("backup_tabs").set_current_page(6)
-                    self.backup_manager.start_backup(self.selected_drive_key, self.partitions_to_backup, self.drive_query.drive_state, self.dest_dir, self._on_operation_completed_callback)
+                    self.backup_manager.start_backup(self.selected_drive_key, self.partitions_to_backup, self.drive_query.drive_state, self.dest_dir, self.backup_notes, self._on_operation_completed_callback)
                     # Disable back/next button until the restore completes
                     self.builder.get_object("button_next").set_sensitive(False)
                     self.builder.get_object("button_back").set_sensitive(False)
@@ -766,9 +767,6 @@ class Handler:
 
     def open_url_as_non_root(self, button):
         Utility.open_url_as_non_root("ubuntu", button.get_uri())
-        return
-
-    def backup_name_changed(self):
         return
 
     def select_image_folder(self, button):

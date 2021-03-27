@@ -1696,35 +1696,48 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                             <property name="yalign">1</property>
                                           </object>
                                           <packing>
-                                            <property name="expand">True</property>
+                                            <property name="expand">False</property>
                                             <property name="fill">True</property>
                                             <property name="position">0</property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkBox" id="backup_step5_box">
+                                          <object class="GtkEntry" id="backup_name">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="invisible_char">●</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">1</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkLabel" id="backup_step5_text1">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
-                                            <property name="orientation">vertical</property>
-                                            <child>
-                                              <object class="GtkEntry" id="backup_name">
-                                                <property name="visible">True</property>
-                                                <property name="can_focus">True</property>
-                                                <property name="margin_left">30</property>
-                                                <property name="margin_right">30</property>
-                                                <property name="invisible_char">●</property>
-                                              </object>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="fill">True</property>
-                                                <property name="position">0</property>
-                                              </packing>
-                                            </child>
+                                            <property name="ypad">20</property>
+                                            <property name="label" translatable="yes">Optional: Provide a short description.</property>
+                                            <property name="wrap">True</property>
+                                            <property name="yalign">1</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">2</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkEntry" id="backup_notes">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
+                                            <property name="invisible_char">●</property>
                                           </object>
                                           <packing>
                                             <property name="expand">True</property>
                                             <property name="fill">True</property>
-                                            <property name="position">1</property>
+                                            <property name="position">3</property>
                                           </packing>
                                         </child>
                                       </object>

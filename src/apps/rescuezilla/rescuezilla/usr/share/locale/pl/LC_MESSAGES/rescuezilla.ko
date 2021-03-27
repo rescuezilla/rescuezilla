@@ -214,6 +214,9 @@ msgstr "Podaj unikalną nazwę dla tego obrazu kopii zapasowej, np. datę.  Dzis
 "\n"
 "W nazwie zapasowej można używać tylko liter, cyfr i myślników"
 
+msgid "Optional: Provide a short description."
+msgstr ""
+
 msgid "Step 6: Confirm Backup Configuration"
 msgstr "Krok 6: Potwierdzenie konfiguracji kopii zapasowej"
 

@@ -214,6 +214,9 @@ msgstr "Ange ett unikt namn för den här filen, till exempel datumet. Dagens da
 "\n"
 "Du får endast använda bokstäver, siffror och bindestreck i ditt filnamn."
 
+msgid "Optional: Provide a short description."
+msgstr ""
+
 msgid "Step 6: Confirm Backup Configuration"
 msgstr "Steg 6: Bekräfta konfigurationen"
 

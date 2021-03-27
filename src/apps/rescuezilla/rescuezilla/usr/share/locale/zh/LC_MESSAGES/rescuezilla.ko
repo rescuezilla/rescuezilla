@@ -214,6 +214,9 @@ msgstr "为备份文件起一个唯一的名称 ，当前日期将自动显示�
 "\n"
 "注意：您只能在备份名称中使用字母、数字和-!"
 
+msgid "Optional: Provide a short description."
+msgstr ""
+
 msgid "Step 6: Confirm Backup Configuration"
 msgstr "步骤 6: 确认备份配置"
 
