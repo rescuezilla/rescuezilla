@@ -264,10 +264,10 @@
         <menu>client-menu</menu>
       </action>
     </keybind>
-    <!-- Take a screenshot of the current window with gnome-screenshot when Alt+Print are pressed -->
+    <!-- Take a screenshot of the current window with xfce4-screenshooter when Alt+Print are pressed -->
     <keybind key="A-Print">
       <action name="Execute">
-        <command>xfce4-screenshooter</command>
+        <command>xfce4-screenshooter -w</command>
       </action>
     </keybind>
     <!-- Keybindings for window switching -->
@@ -331,10 +331,10 @@
         <command>kfmclient openProfile filemanagement</command>
       </action>
     </keybind>
-    <!-- Launch gnome-screenshot when Print is pressed -->
+    <!-- Launch xfce4-screenshooter when Print is pressed -->
     <keybind key="Print">
       <action name="Execute">
-        <command>gnome-screenshot</command>
+        <command>xfce4-screenshooter</command>
       </action>
     </keybind>
   </keyboard>
