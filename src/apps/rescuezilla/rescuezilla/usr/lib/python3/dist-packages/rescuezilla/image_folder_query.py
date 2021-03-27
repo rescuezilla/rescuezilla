@@ -140,6 +140,7 @@ class ImageFolderQuery:
                                               image.enduser_filename,
                                               image.enduser_readable_size,
                                               str(image.last_modified_timestamp),
+                                              image.user_notes,
                                               image.get_enduser_friendly_partition_description()
                                               ])
             except Exception as e:

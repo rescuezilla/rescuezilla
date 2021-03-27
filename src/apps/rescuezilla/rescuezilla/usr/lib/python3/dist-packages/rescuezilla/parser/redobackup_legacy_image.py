@@ -47,6 +47,7 @@ class RedoBackupLegacyImage:
         self.enduser_filename = enduser_filename
         print("Reading backup : " + absolute_path)
         dirname = os.path.dirname(absolute_path)
+        self.user_notes = ""
         self.warning_dict = {}
 
         # Clonezilla format

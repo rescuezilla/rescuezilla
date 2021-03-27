@@ -47,6 +47,21 @@
       <column type="gchararray"/>
     </columns>
   </object>
+  <object class="GtkImage" id="fogproject_icon">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixbuf">fogproject_icon.png</property>
+  </object>
+  <object class="GtkImage" id="foxclone_icon">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixbuf">foxclone_icon.png</property>
+  </object>
+  <object class="GtkImage" id="fsarchiver_placeholder_icon">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixbuf">fsarchiver_placeholder_icon.png</property>
+  </object>
   <object class="GtkImage" id="image_explorer_mode_button">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -83,6 +98,8 @@
       <column type="gchararray"/>
       <!-- column-name last_modified_timestamp -->
       <column type="gchararray"/>
+      <!-- column-name image_description -->
+      <column type="gchararray"/>
       <!-- column-name partitions_description -->
       <column type="gchararray"/>
     </columns>
@@ -107,6 +124,16 @@
       <column type="gchararray"/>
     </columns>
   </object>
+  <object class="GtkImage" id="padlock_icon">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixbuf">padlock_icon.png</property>
+  </object>
+  <object class="GtkImage" id="qemu_nbd_placeholder_icon">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixbuf">qemu_nbd_placeholder_icon.png</property>
+  </object>
   <object class="GtkImage" id="redobackup_v092_icon">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -117,37 +144,16 @@
     <property name="can_focus">False</property>
     <property name="pixbuf">redobackup_v093_to_v104_icon.png</property>
   </object>
-  <object class="GtkImage" id="rescuezilla_icon">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="pixbuf">icon.png</property>
-  </object>
-  <object class="GtkImage" id="qemu_nbd_placeholder_icon">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="pixbuf">qemu_nbd_placeholder_icon.png</property>
-  </object>
-  <object class="GtkImage" id="fogproject_icon">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="pixbuf">fogproject_icon.png</property>
-  </object>
   <object class="GtkImage" id="redorescue_placeholder_icon">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="pixbuf">redorescue_placeholder_icon.png</property>
   </object>
-  <object class="GtkImage" id="foxclone_icon">
+  <object class="GtkImage" id="rescuezilla_icon">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="pixbuf">foxclone_icon.png</property>
+    <property name="pixbuf">icon.png</property>
   </object>
-  <object class="GtkImage" id="fsarchiver_placeholder_icon">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="pixbuf">fsarchiver_placeholder_icon.png</property>
-  </object>
- 
   <object class="GtkFileFilter" id="restore_filefilter"/>
   <object class="GtkImage" id="restore_mode_button">
     <property name="visible">True</property>
@@ -199,6 +205,9 @@
     <property name="window_position">center</property>
     <property name="icon">icon.png</property>
     <signal name="delete-event" handler="main_window_delete_event" swapped="no"/>
+    <child>
+      <placeholder/>
+    </child>
     <child>
       <object class="GtkBox">
         <property name="visible">True</property>
@@ -1552,11 +1561,22 @@ The folder a backup is saved in is usually a description of the computer, e.g. &
                                                 <child>
                                                   <object class="GtkTreeViewColumn">
                                                     <property name="resizable">True</property>
-                                                    <property name="title" translatable="yes">Partitions</property>
+                                                    <property name="title" translatable="yes">Description</property>
                                                     <child>
                                                       <object class="GtkCellRendererText"/>
                                                       <attributes>
                                                         <attribute name="text">8</attribute>
+                                                      </attributes>
+                                                    </child>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkTreeViewColumn">
+                                                    <property name="title" translatable="yes">Partitions</property>
+                                                    <child>
+                                                      <object class="GtkCellRendererText"/>
+                                                      <attributes>
+                                                        <attribute name="text">9</attribute>
                                                       </attributes>
                                                     </child>
                                                   </object>
@@ -2957,11 +2977,23 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                     <child>
                                                       <object class="GtkTreeViewColumn">
                                                         <property name="resizable">True</property>
-                                                        <property name="title" translatable="yes">Partitions</property>
+                                                        <property name="title" translatable="yes">Description</property>
                                                         <child>
                                                           <object class="GtkCellRendererText"/>
                                                           <attributes>
                                                             <attribute name="text">8</attribute>
+                                                          </attributes>
+                                                        </child>
+                                                      </object>
+                                                    </child>
+                                                    <child>
+                                                      <object class="GtkTreeViewColumn">
+                                                        <property name="resizable">True</property>
+                                                        <property name="title" translatable="yes">Partitions</property>
+                                                        <child>
+                                                          <object class="GtkCellRendererText"/>
+                                                          <attributes>
+                                                            <attribute name="text">9</attribute>
                                                           </attributes>
                                                         </child>
                                                       </object>
@@ -4668,11 +4700,23 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                     <child>
                                                       <object class="GtkTreeViewColumn">
                                                         <property name="resizable">True</property>
-                                                        <property name="title" translatable="yes">Partitions</property>
+                                                        <property name="title" translatable="yes">Description</property>
                                                         <child>
                                                           <object class="GtkCellRendererText"/>
                                                           <attributes>
                                                             <attribute name="text">8</attribute>
+                                                          </attributes>
+                                                        </child>
+                                                      </object>
+                                                    </child>
+                                                    <child>
+                                                      <object class="GtkTreeViewColumn">
+                                                        <property name="resizable">True</property>
+                                                        <property name="title" translatable="yes">Partitions</property>
+                                                        <child>
+                                                          <object class="GtkCellRendererText"/>
+                                                          <attributes>
+                                                            <attribute name="text">9</attribute>
                                                           </attributes>
                                                         </child>
                                                       </object>
@@ -5803,11 +5847,23 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                     <child>
                                                       <object class="GtkTreeViewColumn">
                                                         <property name="resizable">True</property>
-                                                        <property name="title" translatable="yes">Partitions</property>
+                                                        <property name="title" translatable="yes">Description</property>
                                                         <child>
                                                           <object class="GtkCellRendererText"/>
                                                           <attributes>
                                                             <attribute name="text">8</attribute>
+                                                          </attributes>
+                                                        </child>
+                                                      </object>
+                                                    </child>
+                                                    <child>
+                                                      <object class="GtkTreeViewColumn">
+                                                        <property name="resizable">True</property>
+                                                        <property name="title" translatable="yes">Partition</property>
+                                                        <child>
+                                                          <object class="GtkCellRendererText"/>
+                                                          <attributes>
+                                                            <attribute name="text">9</attribute>
                                                           </attributes>
                                                         </child>
                                                       </object>
@@ -6294,10 +6350,5 @@ In the short-term, advanced users who expect to regularly explore 100+ gigabyte 
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="pixbuf">warning_icon.png</property>
-  </object>
-  <object class="GtkImage" id="padlock_icon">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="pixbuf">padlock_icon.png</property>
   </object>
 </interface>

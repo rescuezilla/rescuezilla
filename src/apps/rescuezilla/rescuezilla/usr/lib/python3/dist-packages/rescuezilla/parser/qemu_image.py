@@ -67,6 +67,7 @@ class QemuImage:
         self.absolute_path = absolute_qemu_img_path
         self.enduser_filename = enduser_filename
         self.normalized_sfdisk_dict = {'absolute_path': None, 'sfdisk_dict': {'partitions': {}}, 'file_length': 0}
+        self.user_notes = ""
         self.warning_dict = {}
 
         # Clonezilla format
