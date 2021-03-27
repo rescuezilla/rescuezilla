@@ -57,12 +57,13 @@ class BackupManager:
     def is_backup_in_progress(self):
         return self.backup_in_progress
 
-    def start_backup(self, selected_drive_key, partitions_to_backup, drive_state, dest_dir, backup_notes, completed_backup_callback):
+    def start_backup(self, selected_drive_key, partitions_to_backup, drive_state, dest_dir, backup_notes, post_task_action, completed_backup_callback):
         self.backup_timestart = datetime.now()
         self.completed_backup_callback = completed_backup_callback
         self.selected_drive_key = selected_drive_key
         self.dest_dir = dest_dir
         self.backup_notes = backup_notes
+        self.post_task_action = post_task_action
         self.partitions_to_backup = partitions_to_backup
         # Entire machine's drive state
         # TODO: This is a crutch that ideally will be removed. It's very bad from an abstraction perspective, and
@@ -872,8 +873,15 @@ class BackupManager:
                 self.summary_message = _("Backup operation failed:") + "\n\n" + self.summary_message + "\n\n" + message + "\n"
                 error = ErrorMessageModalPopup(self.builder, self.summary_message)
 
-        with self.summary_message_lock:
             self.summary_message += duration_message + "\n"
+
+            if self.post_task_action != "DO_NOTHING":
+                if succeeded:
+                    has_scheduled, msg = Utility.schedule_shutdown_reboot(self.post_task_action)
+                    self.summary_message += "\n" + msg
+                else:
+                    self.summary_message += "\n" + _("Shutdown/Reboot cancelled due to errors.")
+
         self.populate_summary_page()
 
         # Clonezilla writes a file named "Info-img-id.txt" which contains a sha512sum of the clonezilla-img log file.

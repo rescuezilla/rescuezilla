@@ -659,3 +659,24 @@ class Utility:
             return ["cat", "-"]
         else:
             raise Exception("Unexpected compression: " + compression_type)
+
+    @staticmethod
+    def schedule_shutdown_reboot(post_task_action):
+        if post_task_action == "SHUTDOWN":
+            cmd_list = ['shutdown']
+            msg = "Shutdown PC"
+        elif post_task_action == "REBOOT":
+            cmd_list = ['shutdown', '--reboot']
+            msg = "Reboot PC"
+        else:
+            # Do nothing
+            return True, ""
+
+        # Run process and don't use the C locale but because the output is displayed to the enduser so translation is
+        # useful.
+        process, flat_command_string, failed_message = Utility.run(msg, cmd_list, use_c_locale=False)
+        if process.returncode == 0:
+            # Shutdown command outputs over
+            return True, process.stderr
+        else:
+            return False, "Failed to shutdown: " + failed_message

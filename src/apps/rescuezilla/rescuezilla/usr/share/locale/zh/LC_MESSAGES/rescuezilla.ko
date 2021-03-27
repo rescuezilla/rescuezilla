@@ -232,6 +232,18 @@ msgstr "备份镜像将保存到 {description} 的 {dest_dir} 文件夹中。"
 msgid "Confirm the following backup configuration."
 msgstr "确认以下备份配置。"
 
+msgid "On successful completion of the task, perform the following action: "
+msgstr ""
+
+msgid "Do nothing"
+msgstr ""
+
+msgid "Shutdown"
+msgstr "关机"
+
+msgid "Reboot"
+msgstr "重启"
+
 msgid "To start the backup, click <b>Next</b>."
 msgstr "单击 <b>下一步</b> 开始备份。"
 

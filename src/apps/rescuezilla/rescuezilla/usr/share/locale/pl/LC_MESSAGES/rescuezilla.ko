@@ -232,6 +232,18 @@ msgstr "Kopia zapasowa obrazu zostanie zapisana w folderze {dest_dir} na {descri
 msgid "Confirm the following backup configuration."
 msgstr "Potwierdzić następującą konfigurację kopii zapasowej."
 
+msgid "On successful completion of the task, perform the following action: "
+msgstr ""
+
+msgid "Do nothing"
+msgstr ""
+
+msgid "Shutdown"
+msgstr "Zamknij"
+
+msgid "Reboot"
+msgstr "Restart"
+
 msgid "To start the backup, click <b>Next</b>."
 msgstr "Aby rozpocząć tworzenie kopii zapasowej, kliknij <b>Następny</b>."
 

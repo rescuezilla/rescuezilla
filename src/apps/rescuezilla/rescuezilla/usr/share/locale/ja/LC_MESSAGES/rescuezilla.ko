@@ -232,6 +232,18 @@ msgstr "バックアップイメージは、{description}のフォルダ{dest_di
 msgid "Confirm the following backup configuration."
 msgstr "バックアップの構成を確認してください。"
 
+msgid "On successful completion of the task, perform the following action: "
+msgstr ""
+
+msgid "Do nothing"
+msgstr ""
+
+msgid "Shutdown"
+msgstr "シャットダウン"
+
+msgid "Reboot"
+msgstr "再起動"
+
 msgid "To start the backup, click <b>Next</b>."
 msgstr "バックアップを開始するには、[<b>次へ</b>]をクリックします。"
 
