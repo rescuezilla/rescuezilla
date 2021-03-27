@@ -304,9 +304,6 @@ msgstr "下のボックスをクリックして、イメージファイルを含
 msgid "Select the image file to restore"
 msgstr "レストアするイメージファイルを選択します"
 
-msgid "Date created"
-msgstr "作成日時"
-
 msgid "Step 3: Select Drive To Restore"
 msgstr "ステップ 3: レストアするドライブを選択します"
 

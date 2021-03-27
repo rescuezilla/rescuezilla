@@ -21,6 +21,8 @@ from datetime import datetime
 from email.utils import format_datetime
 from pathlib import Path
 
+from babel.dates import format_datetime
+
 # https://qemu.readthedocs.io/en/latest/tools/qemu-nbd.html
 import utility
 from parser.parted import Parted
@@ -82,14 +84,10 @@ class QemuImage:
 
         statbuf = os.stat(self.absolute_path)
         self.last_modified_timestamp = format_datetime(datetime.fromtimestamp(statbuf.st_mtime))
-
         print("Last modified timestamp " + self.last_modified_timestamp)
 
         dir = Path(absolute_qemu_img_path).parent.as_posix()
         print("Qemu directory : " + dir)
-
-
-
 
         qemu_img_cmd_list = ["qemu-img", "info", absolute_qemu_img_path]
         process, flat_command_string, fail_description = Utility.run("qemu-img info", qemu_img_cmd_list, use_c_locale=True)

@@ -2945,7 +2945,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                     <child>
                                                       <object class="GtkTreeViewColumn">
                                                         <property name="resizable">True</property>
-                                                        <property name="title" translatable="yes">Date created</property>
+                                                        <property name="title" translatable="yes">Last modified</property>
                                                         <child>
                                                           <object class="GtkCellRendererText"/>
                                                           <attributes>
@@ -4656,7 +4656,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                     <child>
                                                       <object class="GtkTreeViewColumn">
                                                         <property name="resizable">True</property>
-                                                        <property name="title" translatable="yes">Date created</property>
+                                                        <property name="title" translatable="yes">Last modified</property>
                                                         <child>
                                                           <object class="GtkCellRendererText"/>
                                                           <attributes>
@@ -5791,7 +5791,7 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                     <child>
                                                       <object class="GtkTreeViewColumn">
                                                         <property name="resizable">True</property>
-                                                        <property name="title" translatable="yes">Date created</property>
+                                                        <property name="title" translatable="yes">Last modified</property>
                                                         <child>
                                                           <object class="GtkCellRendererText"/>
                                                           <attributes>
