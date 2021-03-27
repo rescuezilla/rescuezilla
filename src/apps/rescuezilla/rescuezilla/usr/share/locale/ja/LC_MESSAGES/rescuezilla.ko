@@ -105,7 +105,7 @@ msgstr "ネットワーク経由で保存する"
 msgid "Where is the destination drive?"
 msgstr "宛先ドライブはどこですか？"
 
-msgid "SMB/CIFS shared folder specified below"
+msgid "Windows shared folder (SMB/CIFS, Samba)"
 msgstr "以下に指定されているSMB/CIFS共有フォルダ"
 
 msgid "Search network"

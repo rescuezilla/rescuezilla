@@ -105,7 +105,7 @@ msgstr "通过网络共享"
 msgid "Where is the destination drive?"
 msgstr "请选择目标驱动器位置："
 
-msgid "SMB/CIFS shared folder specified below"
+msgid "Windows shared folder (SMB/CIFS, Samba)"
 msgstr "SMB/CIFS共享方式请参见下文"
 
 msgid "Search network"

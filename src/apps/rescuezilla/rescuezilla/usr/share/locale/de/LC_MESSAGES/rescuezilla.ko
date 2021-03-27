@@ -106,7 +106,7 @@ msgstr "Über das Netzwerk verbunden"
 msgid "Where is the destination drive?"
 msgstr "Wo befindet sich das Ziel- Laufwerk?"
 
-msgid "SMB/CIFS shared folder specified below"
+msgid "Windows shared folder (SMB/CIFS, Samba)"
 msgstr "SMB/CIFS-Freigabeordner siehe unten"
 
 msgid "Search network"

@@ -105,7 +105,7 @@ msgstr "Delas över ett nätverk"
 msgid "Where is the destination drive?"
 msgstr "Var är målenheten?"
 
-msgid "SMB/CIFS shared folder specified below"
+msgid "Windows shared folder (SMB/CIFS, Samba)"
 msgstr "SMB/CIFS-delad mapp som anges nedan"
 
 msgid "Search network"

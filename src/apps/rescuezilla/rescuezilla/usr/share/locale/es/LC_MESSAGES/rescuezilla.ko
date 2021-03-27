@@ -106,7 +106,7 @@ msgstr "Conectar a travez de la red"
 msgid "Where is the destination drive?"
 msgstr "¿Dónde está el disco de destino?"
 
-msgid "SMB/CIFS shared folder specified below"
+msgid "Windows shared folder (SMB/CIFS, Samba)"
 msgstr "Directorio/carpeta compartida especificada a continuación"
 
 msgid "Search network"
