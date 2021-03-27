@@ -5,12 +5,26 @@
       "Additional": [ "https://rescuezilla.com/?v=VERSION-SUBSTITUTED-BY-BUILD-SCRIPT" ]
     },
     "DisableTelemetry": true, 
+    "DisableProfileImport": true,
     "OfferToSaveLogins": false,
     "NewTabPage": false, 
     "OverrideFirstRunPage": "",
     "OverridePostUpdatePage": "",
     "Preferences": {
       "browser.tabs.warnOnClose": false
-    }
+    },
+    "Bookmarks": [
+      {
+        "Title": "Patreon",
+        "URL": "https://patreon.com/join/rescuezilla",
+        "Placement": "toolbar"
+      },
+      {
+        "Title": "Help",
+        "URL": "https://rescuezilla.com/help.html",
+        "Placement": "toolbar"
+      }],
+    "DisplayBookmarksToolbar": true,
+    "NoDefaultBookmarks": true
   }
 }
