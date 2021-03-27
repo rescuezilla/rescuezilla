@@ -67,17 +67,21 @@ class MountNetworkPath:
             tmp = tempfile.NamedTemporaryFile()
             if settings['username'] != "":
                 credentials_string = "username=" + settings['username'] + "\n"
+            else:
+                # The mount.cifs man page states "If [the username field] is not given, then the environment variable
+                # USER is used". However in practice, for anonymous Windows network shared folders some username must
+                # be specified. Trying to pass in a blank username returns makes mount.cifs return "username
+                # specified with no parameter". Some users have set an asterisk character [1], but any username works.
+                # Therefore choosing using 'rescuezilla' to provide more descriptive logs for system administrators.
+                # https://github.com/rescuezilla/rescuezilla/issues/190
+                credentials_string = "username=rescuezilla" + "\n"
             if settings['password'] != "":
                 credentials_string += "password=" + settings['password'] + "\n"
             if settings['domain'] != "":
                 credentials_string += "domain=" + settings['domain'] + "\n"
+            smb_arguments += "credentials=" + tmp.name
 
-            if settings['username'] != "" or settings['password'] != "":
-                smb_arguments += "credentials=" + tmp.name
-
-            if credentials_string == "":
-                smb_arguments += "guest"
-            elif settings['password'] == "":
+            if settings['password'] == "":
                     smb_arguments += ",guest"
 
             if settings['version'] != "":
