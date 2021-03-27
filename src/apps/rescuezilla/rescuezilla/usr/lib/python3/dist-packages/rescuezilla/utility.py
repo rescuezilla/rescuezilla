@@ -660,6 +660,34 @@ class Utility:
         else:
             raise Exception("Unexpected compression: " + compression_type)
 
+    # TODO: Evaluate Clonezilla's ocs-get-comp-suffix function from scripts/sbin/ocs-functions
+    # TODO: Simplify logic, maybe combine with other functions
+    @staticmethod
+    def get_compression_suffix(format):
+        if format == "gzip":
+            return "gz"
+        elif format == "zstd":
+            return "zst"
+        elif format == "uncompressed":
+            return "uncomp"
+        else:
+            raise ValueError("Unknown compression format: " + format)
+
+    # TODO: Simplify logic, maybe combine with other functions
+    @staticmethod
+    def get_compression_cmd_list(format, level_integer):
+        # gzip/pigz/zstd use dash number argument to specify compression level
+        level = "-" + str(level_integer)
+        if format == "gzip":
+            return ["pigz", "--stdout", level]
+        elif format == "zstd":
+            # Set number of threads to 0 to autodetect number of physical cores
+            return ["zstd", "--stdout", level, "--threads=0"]
+        elif format == "uncompressed":
+            return ["cat", "-"]
+        else:
+            raise ValueError("Unknown compression format: " + format)
+
     @staticmethod
     def schedule_shutdown_reboot(post_task_action):
         if post_task_action == "SHUTDOWN":

@@ -57,12 +57,13 @@ class BackupManager:
     def is_backup_in_progress(self):
         return self.backup_in_progress
 
-    def start_backup(self, selected_drive_key, partitions_to_backup, drive_state, dest_dir, backup_notes, post_task_action, completed_backup_callback):
+    def start_backup(self, selected_drive_key, partitions_to_backup, drive_state, dest_dir, backup_notes, compression_dict, post_task_action, completed_backup_callback):
         self.backup_timestart = datetime.now()
         self.completed_backup_callback = completed_backup_callback
         self.selected_drive_key = selected_drive_key
         self.dest_dir = dest_dir
         self.backup_notes = backup_notes
+        self.compression_dict = compression_dict
         self.post_task_action = post_task_action
         self.partitions_to_backup = partitions_to_backup
         # Entire machine's drive state
@@ -662,8 +663,11 @@ class BackupManager:
             # partclone > partclone.dd priority
             # [1] https://clonezilla.org/clonezilla-live/doc/01_Save_disk_image/advanced/09-advanced-param.php
 
-            # Expand upon Clonezilla's ocs-get-comp-suffix() function
-            compression_suffix = "gz"
+            # TODO: Simplify logic
+            compression_format = self.compression_dict['format']
+            compression_suffix = Utility.get_compression_suffix(compression_format)
+            compression_cmd_list = Utility.get_compression_cmd_list(compression_format, self.compression_dict['level'])
+
             split_size = "4GB"
             # Partclone dd blocksize (16MB)
             partclone_dd_bs = "16777216"
@@ -687,8 +691,6 @@ class BackupManager:
             filesystem_backup_message = _("Backup {partition_name} containing filesystem {filesystem} to {destination}").format(partition_name=partition_key, filesystem=filesystem, destination=filepath)
             GLib.idle_add(self.update_main_statusbar, filesystem_backup_message)
             self.logger.write(filesystem_backup_message)
-
-            compression_cmd_list = ["pigz", "--stdout"]
 
             flat_command_string = Utility.print_cli_friendly("Running ", [partclone_cmd_list, compression_cmd_list, split_cmd_list])
             self.proc['partclone_backup_' + partition_key] = subprocess.Popen(partclone_cmd_list,
@@ -927,7 +929,7 @@ class BackupManager:
             text_to_display = """<b>{heading}</b>
 
 {message}""".format(heading=_("Backup Summary"), message=GObject.markup_escape_text(self.summary_message))
-        self.builder.get_object("backup_step8_summary_program_defined_text").set_markup(text_to_display)
+        self.builder.get_object("backup_step9_summary_program_defined_text").set_markup(text_to_display)
 
     def print_cli_friendly(self, message, cmd_list_list):
         self.logger.write(message + ". Running: ", end="")

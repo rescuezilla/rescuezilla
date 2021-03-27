@@ -105,8 +105,17 @@ class Handler:
         self.post_operation_action_list.append(["DO_NOTHING", _("Do nothing")])
         self.post_operation_action_list.append(["SHUTDOWN", _("Shutdown")])
         self.post_operation_action_list.append(["REBOOT", _("Reboot")])
-        self.builder.get_object("backup_step6_perform_action_combobox").set_active(0)
+        self.builder.get_object("backup_step7_perform_action_combobox").set_active(0)
         self.builder.get_object("restore_step5_perform_action_combobox").set_active(0)
+
+        # Initialize compression tool option
+        self.compression_tool_list = self.builder.get_object("compression_tool_list")
+        self.compression_tool_list.append(["gzip", "gzip (default)"])
+        self.compression_tool_list.append(["zstd", "zstandard"])
+        self.compression_tool_list.append(["uncompressed", _("Uncompressed (Suitable for use with Image Explorer)")])
+        compression_format_combobox = self.builder.get_object("backup_step6_compression_format_combobox")
+        compression_format_combobox.set_active(0)
+        self.compression_tool_changed(compression_format_combobox)
 
         self.backup_manager = BackupManager(builder, self.human_readable_version)
         self.restore_manager = RestoreManager(builder)
@@ -138,7 +147,7 @@ class Handler:
     # Suggest the user read the frequently asked questions, then potentially proceed to the support forum.
     def set_support_information_linkbutton_visible(self, is_visible):
         self.builder.get_object("welcome_support_linkbutton").set_visible(is_visible)
-        self.builder.get_object("backup_step8_support_linkbutton").set_visible(is_visible)
+        self.builder.get_object("backup_step9_support_linkbutton").set_visible(is_visible)
         self.builder.get_object("restore_step7_support_linkbutton").set_visible(is_visible)
         self.builder.get_object("verify_step4_support_linkbutton").set_visible(is_visible)
         self.builder.get_object("image_explorer_step3_support_linkbutton").set_visible(is_visible)
@@ -146,7 +155,7 @@ class Handler:
     # Ask users to contribute on the crowdfunding website Patreon.
     def set_patreon_call_to_action_visible(self, is_visible):
         self.builder.get_object("welcome_patreon_linkbutton").set_visible(is_visible)
-        self.builder.get_object("backup_step8_patreon_linkbutton").set_visible(is_visible)
+        self.builder.get_object("backup_step9_patreon_linkbutton").set_visible(is_visible)
         self.builder.get_object("restore_step7_patreon_linkbutton").set_visible(is_visible)
         self.builder.get_object("verify_step4_patreon_linkbutton").set_visible(is_visible)
         self.builder.get_object("image_explorer_step3_patreon_linkbutton").set_visible(is_visible)
@@ -288,14 +297,18 @@ class Handler:
                     self.dest_dir = os.path.join(selected_directory, folder_name)
                     self.backup_notes = self.builder.get_object("backup_notes").get_text()
                     print ("going to write to" + str(self.dest_dir))
+                    self.current_page = Page.BACKUP_COMPRESSION_CUSTOMIZATION
+                    self.builder.get_object("backup_tabs").set_current_page(5)
+                elif self.current_page == Page.BACKUP_COMPRESSION_CUSTOMIZATION:
+                    self.compression_dict = self.get_compression_dict()
                     self.confirm_backup_configuration()
                     self.current_page = Page.BACKUP_CONFIRM_CONFIGURATION
-                    self.builder.get_object("backup_tabs").set_current_page(5)
+                    self.builder.get_object("backup_tabs").set_current_page(6)
                 elif self.current_page == Page.BACKUP_CONFIRM_CONFIGURATION:
                     self.current_page = Page.BACKUP_PROGRESS
-                    self.builder.get_object("backup_tabs").set_current_page(6)
-                    self.post_task_action = self.get_post_task_action(self.builder.get_object("backup_step6_perform_action_combobox"))
-                    self.backup_manager.start_backup(self.selected_drive_key, self.partitions_to_backup, self.drive_query.drive_state, self.dest_dir, self.backup_notes, self.post_task_action, self._on_operation_completed_callback)
+                    self.builder.get_object("backup_tabs").set_current_page(7)
+                    self.post_task_action = self.get_post_task_action(self.builder.get_object("backup_step7_perform_action_combobox"))
+                    self.backup_manager.start_backup(self.selected_drive_key, self.partitions_to_backup, self.drive_query.drive_state, self.dest_dir, self.backup_notes, self.compression_dict, self.post_task_action, self._on_operation_completed_callback)
                     # Disable back/next button until the restore completes
                     self.builder.get_object("button_next").set_sensitive(False)
                     self.builder.get_object("button_back").set_sensitive(False)
@@ -306,7 +319,7 @@ class Handler:
                     # self.builder.get_object("button_next").set_sensitive(False)
                 elif self.current_page == Page.BACKUP_PROGRESS:
                     self.current_page = Page.BACKUP_SUMMARY_SCREEN
-                    self.builder.get_object("backup_tabs").set_current_page(7)
+                    self.builder.get_object("backup_tabs").set_current_page(8)
                     self.builder.get_object("button_next").set_sensitive(True)
                     self.builder.get_object("button_back").set_sensitive(False)
                 elif self.current_page == Page.BACKUP_SUMMARY_SCREEN:
@@ -505,15 +518,18 @@ class Handler:
                 elif self.current_page == Page.BACKUP_IMAGE_NAME_SELECTION:
                     self.current_page = Page.BACKUP_DESTINATION_FOLDER
                     self.builder.get_object("backup_tabs").set_current_page(3)
-                elif self.current_page == Page.BACKUP_CONFIRM_CONFIGURATION:
+                elif self.current_page == Page.BACKUP_COMPRESSION_CUSTOMIZATION:
                     self.current_page = Page.BACKUP_IMAGE_NAME_SELECTION
                     self.builder.get_object("backup_tabs").set_current_page(4)
+                elif self.current_page == Page.BACKUP_CONFIRM_CONFIGURATION:
+                    self.current_page = Page.BACKUP_COMPRESSION_CUSTOMIZATION
+                    self.builder.get_object("backup_tabs").set_current_page(5)
                 elif self.current_page == Page.BACKUP_PROGRESS:
                     self.current_page = Page.BACKUP_CONFIRM_CONFIGURATION
-                    self.builder.get_object("backup_tabs").set_current_page(5)
+                    self.builder.get_object("backup_tabs").set_current_page(6)
                 elif self.current_page == Page.BACKUP_SUMMARY_SCREEN:
                     self.current_page = Page.BACKUP_PROGRESS
-                    self.builder.get_object("backup_tabs").set_current_page(6)
+                    self.builder.get_object("backup_tabs").set_current_page(7)
                 else:
                     print("Unexpected page " + str(self.current_page))
             elif self.mode == Mode.RESTORE:
@@ -715,6 +731,65 @@ class Handler:
     def image_explorer_network_network_changed(self):
         return
 
+    def compression_tool_changed(self, combobox):
+        compression_level_scale = self.builder.get_object("backup_step6_compression_level_scale")
+        # "The step size is used when the user clicks the gtk.Scrollbar arrows or moves gtk.Scale via the arrow keys.
+        # The page size is used for example when moving via Page Up or Page Down keys."
+        compression_level_scale.set_increments(step=1, page=5)
+
+        compression_level_box = self.builder.get_object("backup_step6_compression_level_selection_box")
+        tree_iter = combobox.get_active_iter()
+        range = (0,0)
+        default_value = 0
+        if tree_iter is not None:
+            model = combobox.get_model()
+            compression_key, = model[tree_iter][:1]
+            if compression_key == "uncompressed":
+                compression_level_box.set_visible(False)
+
+            elif compression_key == "gzip":
+                compression_level_box.set_visible(True)
+                # Like gzip binary, the pigz multithreaded gzip arguments typically takes compression levels 1-9,
+                # though pigz can actually take 0 (no compression) and 11 ("-11 gives a few percent better
+                # compression at a severe cost in execution time").
+                range = (0, 9)
+                # Default compression for pigz is 6
+                default_value = 6
+            elif compression_key == "zstd":
+                compression_level_box.set_visible(True)
+                # As with zstd command-line utility, hiding high compression levels 20+ (maximum 22) by default as it
+                # "a lot more memory. Note that decompression will also require more memory when using these levels"
+                range = (1, 19)
+                # Default compression for zstd is 3
+                default_value = 3
+
+        compression_level_scale.clear_marks()
+        compression_level_scale.set_range(range[0], range[1])
+        compression_level_scale.set_value(default_value)
+        compression_level_scale.add_mark(range[0], Gtk.PositionType.TOP, _("Fastest"))
+        compression_level_scale.add_mark(range[1], Gtk.PositionType.TOP, _("Best"))
+        return
+
+    def get_compression_dict(self):
+        compression_dict = {}
+
+        compression_level_combobox = self.builder.get_object("backup_step6_compression_format_combobox")
+        tree_iter = compression_level_combobox.get_active_iter()
+        compression_key = ""
+        if tree_iter is not None:
+            model = compression_level_combobox.get_model()
+            compression_key, = model[tree_iter][:1]
+
+        if compression_key == "":
+            raise ValueError("Compression not specified")
+
+        compression_level_scale = self.builder.get_object("backup_step6_compression_level_scale")
+        level = int(compression_level_scale.get_value())
+
+        compression_dict = {"format": compression_key, "level": level}
+
+        return compression_dict
+
     # GtkToggleButton handler for switching the image location selection between local folder, and network share.
     def image_location_toggle(self, toggle_button):
         is_local_active = self.use_local_radiobutton_dict[self.mode].get_active()
@@ -799,7 +874,6 @@ class Handler:
     def backup_scan_network(self):
         return
 
-
     def confirm_backup_configuration(self):
         number = GObject.markup_escape_text(self.selected_drive_enduser_friendly_drive_number)
         device = GObject.markup_escape_text(self.selected_drive_key)
@@ -814,6 +888,8 @@ class Handler:
             partition_list_string += "    " + GObject.markup_escape_text(key) + ":  " + GObject.markup_escape_text(
                 self.partitions_to_backup[key]['description']) + "\n"
 
+        compression_string = _("<b>Compression</b>: {format}, compression level: {level}").format(format=self.compression_dict['format'], level=str(self.compression_dict['level']))
+
         source_drive_heading = GObject.markup_escape_text(_("Source drive"))
         backup_partitions_heading = GObject.markup_escape_text(_("Backing up the following partition"))
         backup_image_destination_heading = GObject.markup_escape_text(_("The backup image will be written into folder {dest_dir} on {description}").format(dest_dir=self.dest_dir, description=description))
@@ -824,9 +900,11 @@ class Handler:
 <b>{backup_partitions_heading}</b>:
 {partition_list_string}
 
+{compression_string}
+
 <b>{backup_image_destination_heading}</b>
 """
-        self.builder.get_object("backup_step6_confirm_config_program_defined_text").set_markup(text_to_display)
+        self.builder.get_object("backup_step7_confirm_config_program_defined_text").set_markup(text_to_display)
 
     def confirm_restore_configuration(self):
         # number = GObject.markup_escape_text(self.selected_drive_enduser_friendly_drive_number)
