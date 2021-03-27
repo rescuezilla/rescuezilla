@@ -169,6 +169,7 @@ class ClonezillaImage:
         self.short_disk_device_node = short_disk_device_node
         self.is_display_multidisk = is_display_multidisk
         self.enduser_drive_number = enduser_drive_number
+        self.user_notes = ""
         self.warning_dict = {}
         if is_display_multidisk:
             multidisk_desc = _("Drive {drive_number}".format(drive_number=str(self.enduser_drive_number)))

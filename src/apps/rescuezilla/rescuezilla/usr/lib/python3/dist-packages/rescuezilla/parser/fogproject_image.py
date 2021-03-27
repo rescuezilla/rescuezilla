@@ -41,6 +41,7 @@ class FogProjectImage:
         self.image_format = "FOGPROJECT_FORMAT"
         self.absolute_path = absolute_fogproject_img_path
         self.enduser_filename = enduser_filename
+        self.user_notes = ""
         self.warning_dict = {}
 
         # Clonezilla format
