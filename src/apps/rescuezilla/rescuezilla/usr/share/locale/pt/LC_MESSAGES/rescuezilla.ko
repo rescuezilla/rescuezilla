@@ -105,7 +105,7 @@ msgstr "Compartilhado em uma rede"
 msgid "Where is the destination drive?"
 msgstr "Onde é a unidade de destino?"
 
-msgid "SMB/CIFS shared folder specified below"
+msgid "Windows shared folder (SMB/CIFS, Samba)"
 msgstr "SMB/CIFS Pasta compartilhada especificada abaixo"
 
 msgid "Search network"

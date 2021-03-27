@@ -105,7 +105,7 @@ msgstr "Κοινόχρηστο μέσω δικτύου"
 msgid "Where is the destination drive?"
 msgstr "Πού βρίσκεται η μονάδα προορισμού;"
 
-msgid "SMB/CIFS shared folder specified below"
+msgid "Windows shared folder (SMB/CIFS, Samba)"
 msgstr "SMB/CIFS κοινόχρηστος φάκελος καθορίζεται παρακάτω"
 
 msgid "Search network"
