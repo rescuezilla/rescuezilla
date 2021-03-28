@@ -3,6 +3,8 @@
 # Echo each command
 set -x
 
+IS_INTEGRATION_TEST="${IS_INTEGRATION_TEST=:false}"
+
 # Set the default base operating system, using the Ubuntu release's shortened code name [1].
 # [1] https://wiki.ubuntu.com/Releases
 CODENAME="${CODENAME:-INVALID}"
@@ -139,6 +141,15 @@ if [[ $RET -ne 0 ]]; then
     exit 1
 fi
 
+if  [ "$IS_INTEGRATION_TEST" == "true" ]; then
+    LINUX_QUERY_SERVER_INSTALLER="$BASEDIR/src/integration-test/scripts/install_linux_query_tcp_server.sh"
+    rsync --archive "$LINUX_QUERY_SERVER_INSTALLER" "$BUILD_DIRECTORY/chroot/"
+    RET=$?
+    if [[ $RET -ne 0 ]]; then
+        echo "Failed to copy"
+        exit 1
+    fi
+fi
 
 # Renames the apt-preferences file to ensure backports and proposed
 # repositories for the desired code name are never automatically selected.
@@ -159,11 +170,13 @@ done
 cp "$BASEDIR/chroot.steps.part.1.sh" "$BASEDIR/chroot.steps.part.2.sh" chroot
 # Launch first stage chroot. In other words, run commands within the root filesystem
 # that is being constructed using binaries from within that root filesystem.
-chroot chroot/ /bin/bash -c "ARCH=$ARCH CODENAME=$CODENAME /chroot.steps.part.1.sh"
+chroot chroot/ /bin/bash -c "IS_INTEGRATION_TEST=$IS_INTEGRATION_TEST ARCH=$ARCH CODENAME=$CODENAME /chroot.steps.part.1.sh"
 if [[ $? -ne 0 ]]; then
     echo "Error: Failed to execute chroot steps part 1."
     exit 1
 fi
+
+rm "$BUILD_DIRECTORY/chroot/install_linux_query_tcp_server.sh"
 
 cd "$BASEDIR"
 # Copy the source FHS filesystem tree onto the build's chroot FHS tree, overwriting the base files where conflicts occur.

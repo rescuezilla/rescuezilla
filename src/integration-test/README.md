@@ -25,9 +25,27 @@ The test suite can then restore a large number of backup images (specified by co
 
 The test suite then checks whether the subsequently restored image can boot by launching the VM. Once the target VM has booted, the restored operating system has been pre-configured to automatically listen on a TCP network port so that the test suite can connect to it and receive a short message indicating that the boot (and therefore the restore) was successful.
 
+## Preparing Rescuezilla ISO image
+
+Public Rescuezilla ISO images keeps the number of services, ports and installed programs to an absolute minimum. However, for the integration tests the script needs to connect to the Rescuezilla environment (over SSH), and also needs to be able to query that a particular operating system (including Rescuezilla ISO itself) has successfully booted. This is achieved by configuring each OS disk with a simple TCP query server (connect on TCP port 9999 and receive an informational string message).
+
+For the Rescuezilla ISO, the SSH server and query server can be enabled by building the ISO with the integration test variable enabled:
+
+```
+# Authorize your host system's SSH key
+mkdir 700 src/livecd/chroot/home/ubuntu/.ssh/
+cp ~/.ssh/id_rsa.pub src/livecd/chroot/home/ubuntu/.ssh/authorized_keys
+# Build Rescuezilla ISO image with an SSH server, and the TCP query server
+IS_INTEGRATION_TEST=true make 
+```
+
+For Rescuezilla's test operating system VDI files and image repository files (see below), configuring the TCP query server was done by manually running the installer scripts.
+
 ## Preprepared disk images
 
 **As of writing, the Rescuezilla operating system VDI files, and image repository has not yet been publicly released.** Constructing such an image repository is extremely time consuming (involving installing many different operating systems and making backups with many different tools), so this repository will eventually be made available for anybody interested in contributing to Rescuezilla and Clonezilla.
+
+Each OS is simply a standard OS install, plus the Rescuezilla Integration Test TCP query server that's configured as an auto-restarting service (see: scripts/ folder for the installers: install_linux_query_tcp_server.sh and install_windows_query_tcp_server.bat).
 
 ## Usage
 

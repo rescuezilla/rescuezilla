@@ -232,6 +232,11 @@ common_pkgs=("discover"
              "xfce4-screenshooter"
 )
 
+# Install openssh-server only if the IS_INTEGRATION_TEST variable is enable
+if  [ "$IS_INTEGRATION_TEST" == "true" ]; then
+    common_pkgs=("${common_pkgs[@]}" "openssh-server")
+fi
+
 if  [ "$ARCH" == "i386" ]; then
   apt_pkg_list=("${pkgs_specific_to_32bit[@]}" "${common_pkgs[@]}")
 elif  [ "$ARCH" == "amd64" ] && [ "$CODENAME" == "focal" ]; then
@@ -247,6 +252,10 @@ apt-get install --yes --no-install-recommends "${apt_pkg_list[@]}"
 if [[ $? -ne 0 ]]; then
     echo "Error: Failed to install packages."
     exit 1
+fi
+
+if  [ "$IS_INTEGRATION_TEST" == "true" ]; then
+    bash /install_linux_query_tcp_server.sh
 fi
 
 # Lowers systemd timeout if a service cannot start, as a 90 second delay in boot/shutdown
