@@ -309,7 +309,7 @@ class Handler:
                 elif self.current_page == Page.BACKUP_CONFIRM_CONFIGURATION:
                     self.current_page = Page.BACKUP_PROGRESS
                     self.builder.get_object("backup_tabs").set_current_page(7)
-                    self.post_task_action = self.get_post_task_action(self.builder.get_object("backup_step7_perform_action_combobox"))
+                    self.post_task_action = Utility.get_combobox_key(self.builder.get_object("backup_step7_perform_action_combobox"))
                     self.backup_manager.start_backup(self.selected_drive_key, self.partitions_to_backup, self.drive_query.drive_state, self.dest_dir, self.backup_notes, self.compression_dict, self.post_task_action, self._on_operation_completed_callback)
                     # Disable back/next button until the restore completes
                     self.builder.get_object("button_next").set_sensitive(False)
@@ -408,7 +408,7 @@ class Handler:
                     # Disable back/next button until the restore completes
                     self.builder.get_object("button_next").set_sensitive(False)
                     self.builder.get_object("button_back").set_sensitive(False)
-                    self.post_task_action = self.get_post_task_action(self.builder.get_object("restore_step5_perform_action_combobox"))
+                    self.post_task_action = Utility.get_combobox_key(self.builder.get_object("restore_step5_perform_action_combobox"))
                     AreYouSureModalPopup(self.builder,
                                          _("Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite the data on this drive!").format(destination_drive = self.restore_destination_drive),
                                          self._restore_confirmation_callback)
@@ -964,12 +964,3 @@ class Handler:
         else:
             # Unmounting doesn't need an AreYouSure popup.
             self._mount_partition_confirmation_callback(True)
-
-    def get_post_task_action(self, combobox):
-        tree_iter = combobox.get_active_iter()
-        if tree_iter is not None:
-            model = combobox.get_model()
-            post_action_id, = model[tree_iter][:1]
-            return post_action_id
-        else:
-            raise ValueError("Could not get post task action")

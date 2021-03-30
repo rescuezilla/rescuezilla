@@ -713,3 +713,13 @@ class Utility:
             return True, process.stderr
         else:
             return False, "Failed to shutdown: " + failed_message
+
+    @staticmethod
+    def get_combobox_key(combobox):
+        tree_iter = combobox.get_active_iter()
+        if tree_iter is not None:
+            model = combobox.get_model()
+            combobox_key, = model[tree_iter][:1]
+            return combobox_key
+        else:
+            raise ValueError("Could not get combobox key")
