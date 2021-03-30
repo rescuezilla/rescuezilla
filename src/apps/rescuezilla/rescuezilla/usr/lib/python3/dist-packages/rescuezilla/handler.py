@@ -38,7 +38,7 @@ from gi.repository import Gtk, GObject
 from partitions_to_restore import PartitionsToRestore
 from drive_query import DriveQuery
 from image_folder_query import ImageFolderQuery
-from utility import ErrorMessageModalPopup, FolderSelectionPopup, Utility, AreYouSureModalPopup, _
+from utility import ErrorMessageModalPopup, BrowseSelectionPopup, Utility, AreYouSureModalPopup, _
 from wizard_state import Mode, Page, MOUNT_DIR, IMAGE_EXPLORER_DIR
 
 
@@ -849,11 +849,11 @@ class Handler:
         return
 
     def select_image_folder(self, button):
-        folder_selection_popup = FolderSelectionPopup(self.builder, callback=self.selected_image_folder, default_directory=MOUNT_DIR, is_allow_selecting_folder_outside_mount=True)
+        folder_selection_popup = BrowseSelectionPopup(self.builder, callback=self.selected_image_folder, default_directory=MOUNT_DIR, is_allow_selecting_folder_outside_mount=True)
         return
 
     def select_image_explorer_image_folder(self, button):
-        folder_selection_popup = FolderSelectionPopup(self.builder, callback=self.selected_image_folder, default_directory="/", is_allow_selecting_folder_outside_mount=True)
+        folder_selection_popup = BrowseSelectionPopup(self.builder, callback=self.selected_image_folder, default_directory="/", is_allow_selecting_folder_outside_mount=True)
         return
 
     def selected_image_folder(self, text, is_allow_selecting_folder_outside_mount):
