@@ -92,14 +92,6 @@ class Handler:
         # Ensuring toggle button is ticked and consistency of the user-interface elements that are associated with this
         # checkbox.
 
-        # Initialize network share options
-        self.network_share_protocol_list = self.builder.get_object("network_share_protocol_list")
-        self.network_share_protocol_list.append(["SMB", _("Windows shared folder (SMB/CIFS, Samba)")])
-        self.builder.get_object("restore_network_protocol_combobox").set_active(0)
-        self.builder.get_object("backup_network_protocol_combobox").set_active(0)
-        self.builder.get_object("image_explorer_network_protocol_combobox").set_active(0)
-        self.builder.get_object("verify_network_protocol_combobox").set_active(0)
-
         # Initialize perform action option
         self.post_operation_action_list = self.builder.get_object("post_operation_action_list")
         self.post_operation_action_list.append(["DO_NOTHING", _("Do nothing")])
@@ -124,23 +116,33 @@ class Handler:
         self.image_explorer_manager = ImageExplorerManager(builder, self.image_explorer_partition_selection_list,
                                                            self.set_support_information_linkbutton_visible, self.set_patreon_call_to_action_visible)
 
-        # Network
-        self.frame_local_dict = {Mode.BACKUP: self.builder.get_object("backup_frame_local"),
-                       Mode.RESTORE: self.builder.get_object("restore_frame_local"),
-                       Mode.VERIFY: self.builder.get_object("verify_frame_local"),
-                       Mode.IMAGE_EXPLORER: self.builder.get_object("image_explorer_frame_local")}
-        self.frame_network_dict = {Mode.BACKUP: self.builder.get_object("backup_frame_network"),
-                         Mode.RESTORE: self.builder.get_object("restore_frame_network"),
-                         Mode.VERIFY: self.builder.get_object("verify_frame_network"),
-                         Mode.IMAGE_EXPLORER: self.builder.get_object("image_explorer_frame_network")}
-        self.use_local_radiobutton_dict = {Mode.BACKUP: self.builder.get_object("backup_network_use_local_radiobutton"),
-                                 Mode.RESTORE: self.builder.get_object("restore_network_use_local_radiobutton"),
-                                 Mode.VERIFY: self.builder.get_object("verify_network_use_local_radiobutton"),
-                                 Mode.IMAGE_EXPLORER: self.builder.get_object("image_explorer_network_use_local_radiobutton")}
-        self.mount_partition_selection_treeselection_id_dict = {Mode.BACKUP: "backup_mount_partition_selection_treeselection",
-                                                                Mode.RESTORE: "restore_mount_partition_selection_treeselection",
-                                                                Mode.VERIFY: "verify_mount_partition_selection_treeselection",
-                                                                Mode.IMAGE_EXPLORER: "image_explorer_mount_partition_selection_treeselection"}
+        # Add network protocols combobox model
+        self.network_share_protocol_list = self.builder.get_object("network_share_protocol_list")
+        self.network_share_protocol_list.append(["SMB", _("Windows shared folder (SMB/CIFS, Samba)")])
+        # Manage all network protocol UI widgets
+        self.network_protocol_widget_dict = {
+            'network_protocol_combobox': {},
+            'frame_local': {},
+            'frame_network': {},
+            'network_use_local_radiobutton': {},
+        }
+        for mode in Mode:
+            for prefix in self.network_protocol_widget_dict.keys():
+                id = mode.name.lower() + "_" + prefix
+                object = self.builder.get_object(id)
+                if object is None:
+                    raise ValueError("Could not find: " + id)
+                self.network_protocol_widget_dict[prefix][mode] = object
+        # Initialize default network protocol combobox
+        for mode in self.network_protocol_widget_dict['network_protocol_combobox'].keys():
+            self.network_protocol_widget_dict['network_protocol_combobox'][mode].set_active(0)
+
+        self.mount_partition_selection_treeselection_id_dict = {
+            Mode.BACKUP: "backup_mount_partition_selection_treeselection",
+            Mode.RESTORE: "restore_mount_partition_selection_treeselection",
+            Mode.VERIFY: "verify_mount_partition_selection_treeselection",
+            Mode.IMAGE_EXPLORER: "image_explorer_mount_partition_selection_treeselection"}
+
         self.requested_shutdown_lock = threading.Lock()
         self.requested_shutdown = False
 
@@ -783,16 +785,16 @@ class Handler:
 
     # GtkToggleButton handler for switching the image location selection between local folder, and network share.
     def image_location_toggle(self, toggle_button):
-        is_local_active = self.use_local_radiobutton_dict[self.mode].get_active()
+        is_local_active = self.network_protocol_widget_dict['network_use_local_radiobutton'][self.mode].get_active()
         for mode in Mode:
-            self.frame_local_dict[mode].set_visible(is_local_active)
-            self.frame_network_dict[mode].set_visible(not is_local_active)
+            self.network_protocol_widget_dict['frame_local'][mode].set_visible(is_local_active)
+            self.network_protocol_widget_dict['frame_network'][mode].set_visible(not is_local_active)
         return
 
     def handle_mount_local_or_remote(self):
         selected_partition_key = None
         partition_description = None
-        if self.use_local_radiobutton_dict[self.mode].get_active():
+        if self.network_protocol_widget_dict['network_use_local_radiobutton'][self.mode].get_active():
             list_store, iter = self.get_row(self.mount_partition_selection_treeselection_id_dict[self.mode])
             if iter is None:
                 error = ErrorMessageModalPopup(self.builder, "Please select drive to mount")
