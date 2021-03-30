@@ -54,6 +54,8 @@ class MountNetworkPath:
             thread = threading.Thread(target=self._do_smb_mount_command, args=(settings,))
         elif network_protocol_key == "SSH":
             thread = threading.Thread(target=self._do_ssh_mount_command, args=(settings,))
+        elif network_protocol_key == "NFS":
+            thread = threading.Thread(target=self._do_nfs_mount_command, args=(settings,))
         else:
             raise ValueError("Unknown network protocol: " + network_protocol_key)
         thread.daemon = True
@@ -205,3 +207,45 @@ class MountNetworkPath:
             print(tb)
             GLib.idle_add(self.please_wait_popup.destroy)
             GLib.idle_add(self.callback, False, "Error mounting SSH folder: " + tb)
+
+    def _do_nfs_mount_command(self, settings):
+        destination_path = settings['destination_path']
+        try:
+            if not os.path.exists(destination_path) and not os.path.isdir(destination_path):
+                os.mkdir(destination_path, 0o755)
+
+            is_unmounted, message = Utility.umount_warn_on_busy(destination_path)
+            if not is_unmounted:
+                GLib.idle_add(self.please_wait_popup.destroy)
+                GLib.idle_add(self.callback, False, message)
+                return
+
+            if settings['server'] != "":
+                server = settings['server']
+            else:
+                GLib.idle_add(self.please_wait_popup.destroy)
+                GLib.idle_add(self.callback, False, "Must specify server.")
+                return
+
+            if settings['remote_path'] != "":
+                exported_dir = settings['remote_path']
+            else:
+                GLib.idle_add(self.please_wait_popup.destroy)
+                GLib.idle_add(self.callback, False, "Must specify exported directory.")
+                return
+
+            mount_cmd_list = ["mount.nfs", server + ":" + exported_dir, settings['destination_path']]
+            mount_process, mount_flat_command_string, mount_failed_message = Utility.run("Mounting network shared folder with NFS: ", mount_cmd_list, use_c_locale=False)
+            if mount_process.returncode != 0:
+                check_password_msg = _("Please ensure the server and exported path are correct, and try again.")
+                GLib.idle_add(self.please_wait_popup.destroy)
+                GLib.idle_add(self.callback, False, mount_failed_message + "\n\n" + check_password_msg)
+                return
+            else:
+                GLib.idle_add(self.please_wait_popup.destroy)
+                GLib.idle_add(self.callback, True, "", destination_path)
+        except Exception as e:
+            tb = traceback.format_exc()
+            print(tb)
+            GLib.idle_add(self.please_wait_popup.destroy)
+            GLib.idle_add(self.callback, False, "Error mounting NFS folder: " + tb)
