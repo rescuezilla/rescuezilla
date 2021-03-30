@@ -118,6 +118,7 @@ class Handler:
         self.network_share_protocol_list.append(["SMB", _("Windows shared folder (SMB/CIFS, Samba)")])
         # No need to translate "SSH" strings (unless the description string is expanded upon)
         self.network_share_protocol_list.append(["SSH", "SSH"])
+        self.network_share_protocol_list.append(["NFS", "NFS"])
         # Manage all network protocol UI widgets
         self.network_protocol_widget_dict = {
             'network_protocol_combobox': {},
@@ -783,6 +784,23 @@ class Handler:
                 self.network_protocol_widget_dict['network_version'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_ssh_idfile_label'][mode].set_visible(True)
                 self.network_protocol_widget_dict['network_ssh_idfile_box'][mode].set_visible(True)
+        elif network_protocol_key == "NFS":
+            for mode in Mode:
+                self.network_protocol_widget_dict['network_server_label'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_server'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_username_label'][mode].set_visible(False)
+                self.network_protocol_widget_dict['network_username'][mode].set_visible(False)
+                self.network_protocol_widget_dict['network_remote_path_label'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_remote_path'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_password_label'][mode].set_visible(False)
+                self.network_protocol_widget_dict['network_password'][mode].set_visible(False)
+                self.network_protocol_widget_dict['network_domain_label'][mode].set_visible(False)
+                self.network_protocol_widget_dict['network_domain'][mode].set_visible(False)
+                self.network_protocol_widget_dict['network_version_label'][mode].set_visible(False)
+                self.network_protocol_widget_dict['network_version'][mode].set_visible(False)
+                self.network_protocol_widget_dict['network_ssh_idfile_label'][mode].set_visible(False)
+                self.network_protocol_widget_dict['network_ssh_idfile_box'][mode].set_visible(False)
+
         else:
             raise ValueError("Unknown network protocol")
         return
