@@ -1102,11 +1102,11 @@
                                                             <property name="can_focus">False</property>
                                                             <property name="spacing">5</property>
                                                             <child>
-                                                            <object class="GtkComboBox" id="backup_network_network">
+                                                            <object class="GtkComboBox" id="backup_network_protocol_combobox">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="model">network_share_protocol_list</property>
-                                                            <signal name="changed" handler="backup_network_network_changed" swapped="no"/>
+                                                            <signal name="changed" handler="network_protocol_combobox_changed" swapped="no"/>
                                                             <child>
                                                             <object class="GtkCellRendererText" id="backup_network_cellrenderertext3"/>
                                                             <attributes>
@@ -2788,11 +2788,11 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="spacing">5</property>
                                                             <child>
-                                                            <object class="GtkComboBox" id="restore_network_network">
+                                                            <object class="GtkComboBox" id="restore_network_protocol_combobox">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="model">network_share_protocol_list</property>
-                                                            <signal name="changed" handler="restore_network_network_changed" swapped="no"/>
+                                                            <signal name="changed" handler="network_protocol_combobox_changed" swapped="no"/>
                                                             <child>
                                                             <object class="GtkCellRendererText" id="restore_network_cellrenderertext4"/>
                                                             <attributes>
@@ -4554,11 +4554,11 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="spacing">5</property>
                                                             <child>
-                                                            <object class="GtkComboBox" id="verify_network_network">
+                                                            <object class="GtkComboBox" id="verify_network_protocol_combobox">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="model">network_share_protocol_list</property>
-                                                            <signal name="changed" handler="verify_network_network_changed" swapped="no"/>
+                                                            <signal name="changed" handler="network_protocol_combobox_changed" swapped="no"/>
                                                             <child>
                                                             <object class="GtkCellRendererText" id="verify_network_cellrenderertext4"/>
                                                             <attributes>
@@ -5701,11 +5701,11 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="spacing">5</property>
                                                             <child>
-                                                            <object class="GtkComboBox" id="image_explorer_network_network">
+                                                            <object class="GtkComboBox" id="image_explorer_network_protocol_combobox">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="model">network_share_protocol_list</property>
-                                                            <signal name="changed" handler="image_explorer_network_network_changed" swapped="no"/>
+                                                            <signal name="changed" handler="network_protocol_combobox_changed" swapped="no"/>
                                                             <child>
                                                             <object class="GtkCellRendererText" id="image_explorer_network_cellrenderertext4"/>
                                                             <attributes>

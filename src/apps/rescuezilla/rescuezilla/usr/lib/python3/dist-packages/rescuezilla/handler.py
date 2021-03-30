@@ -95,10 +95,10 @@ class Handler:
         # Initialize network share options
         self.network_share_protocol_list = self.builder.get_object("network_share_protocol_list")
         self.network_share_protocol_list.append(["SMB", _("Windows shared folder (SMB/CIFS, Samba)")])
-        self.builder.get_object("restore_network_network").set_active(0)
-        self.builder.get_object("backup_network_network").set_active(0)
-        self.builder.get_object("image_explorer_network_network").set_active(0)
-        self.builder.get_object("verify_network_network").set_active(0)
+        self.builder.get_object("restore_network_protocol_combobox").set_active(0)
+        self.builder.get_object("backup_network_protocol_combobox").set_active(0)
+        self.builder.get_object("image_explorer_network_protocol_combobox").set_active(0)
+        self.builder.get_object("verify_network_protocol_combobox").set_active(0)
 
         # Initialize perform action option
         self.post_operation_action_list = self.builder.get_object("post_operation_action_list")
@@ -719,16 +719,7 @@ class Handler:
     def restore_file_changed(self):
         print("test")
 
-    def backup_network_network_changed(self, toggle_button):
-        return
-
-    def restore_network_network_changed(self):
-        return
-
-    def verify_network_network_changed(self):
-        return
-
-    def image_explorer_network_network_changed(self):
+    def network_protocol_combobox_changed(self, combobox):
         return
 
     def compression_tool_changed(self, combobox):
