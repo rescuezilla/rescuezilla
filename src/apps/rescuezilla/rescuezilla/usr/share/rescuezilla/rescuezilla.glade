@@ -1144,7 +1144,7 @@
                                                             <object class="GtkTable" id="backup_network_entries">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
-                                                            <property name="n_rows">5</property>
+                                                            <property name="n_rows">7</property>
                                                             <property name="n_columns">2</property>
                                                             <property name="column_spacing">5</property>
                                                             <property name="row_spacing">5</property>
@@ -1171,19 +1171,6 @@
                                                             </packing>
                                                             </child>
                                                             <child>
-                                                            <object class="GtkLabel" id="backup_network_username_label">
-                                                            <property name="visible">True</property>
-                                                            <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Username (Optional):</property>
-                                                            <property name="xalign">1</property>
-                                                            </object>
-                                                            <packing>
-                                                            <property name="top_attach">1</property>
-                                                            <property name="bottom_attach">2</property>
-                                                            <property name="x_options">GTK_FILL</property>
-                                                            </packing>
-                                                            </child>
-                                                            <child>
                                                             <object class="GtkEntry" id="backup_network_username">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">True</property>
@@ -1197,6 +1184,123 @@
                                                             </packing>
                                                             </child>
                                                             <child>
+                                                            <object class="GtkLabel" id="backup_network_ssh_idfile_label">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">False</property>
+                                                            <property name="label" translatable="yes">Identity File (Optional):</property>
+                                                            <property name="xalign">1</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="top_attach">6</property>
+                                                            <property name="bottom_attach">7</property>
+                                                            <property name="x_options">GTK_FILL</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkBox" id="backup_network_ssh_idfile_box">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">False</property>
+                                                            <child>
+                                                            <object class="GtkEntry" id="backup_network_ssh_idfile">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="invisible_char">●</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="expand">True</property>
+                                                            <property name="fill">True</property>
+                                                            <property name="position">0</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkButton" id="backup_network_ssh_idfile_browse">
+                                                            <property name="label" translatable="yes">Browse...</property>
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="receives_default">True</property>
+                                                            <signal name="clicked" handler="select_ssh_idfile" swapped="no"/>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="expand">False</property>
+                                                            <property name="fill">True</property>
+                                                            <property name="padding">2</property>
+                                                            <property name="position">1</property>
+                                                            </packing>
+                                                            </child>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="left_attach">1</property>
+                                                            <property name="right_attach">2</property>
+                                                            <property name="top_attach">6</property>
+                                                            <property name="bottom_attach">7</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkLabel" id="backup_network_version_label">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">False</property>
+                                                            <property name="label" translatable="yes">Version (Optional):</property>
+                                                            <property name="xalign">1</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="top_attach">5</property>
+                                                            <property name="bottom_attach">6</property>
+                                                            <property name="x_options">GTK_FILL</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkEntry" id="backup_network_version">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="invisible_char">●</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="left_attach">1</property>
+                                                            <property name="right_attach">2</property>
+                                                            <property name="top_attach">5</property>
+                                                            <property name="bottom_attach">6</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkLabel" id="backup_network_domain_label">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">False</property>
+                                                            <property name="label" translatable="yes">Domain (Optional):</property>
+                                                            <property name="xalign">1</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="top_attach">4</property>
+                                                            <property name="bottom_attach">5</property>
+                                                            <property name="x_options">GTK_FILL</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkEntry" id="backup_network_domain">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="invisible_char">●</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="left_attach">1</property>
+                                                            <property name="right_attach">2</property>
+                                                            <property name="top_attach">4</property>
+                                                            <property name="bottom_attach">5</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkLabel" id="backup_network_username_label">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">False</property>
+                                                            <property name="label" translatable="yes">Username (Optional):</property>
+                                                            <property name="xalign">1</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="top_attach">1</property>
+                                                            <property name="bottom_attach">2</property>
+                                                            <property name="x_options">GTK_FILL</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
                                                             <object class="GtkLabel" id="backup_network_password_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
@@ -1206,6 +1310,19 @@
                                                             <packing>
                                                             <property name="top_attach">2</property>
                                                             <property name="bottom_attach">3</property>
+                                                            <property name="x_options">GTK_FILL</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkLabel" id="backup_network_remote_path_label">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">False</property>
+                                                            <property name="label" translatable="yes">Remote Path (Optional):</property>
+                                                            <property name="xalign">1</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="top_attach">3</property>
+                                                            <property name="bottom_attach">4</property>
                                                             <property name="x_options">GTK_FILL</property>
                                                             </packing>
                                                             </child>
@@ -1224,20 +1341,7 @@
                                                             </packing>
                                                             </child>
                                                             <child>
-                                                            <object class="GtkLabel" id="backup_network_domain_label">
-                                                            <property name="visible">True</property>
-                                                            <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Domain (Optional):</property>
-                                                            <property name="xalign">1</property>
-                                                            </object>
-                                                            <packing>
-                                                            <property name="top_attach">3</property>
-                                                            <property name="bottom_attach">4</property>
-                                                            <property name="x_options">GTK_FILL</property>
-                                                            </packing>
-                                                            </child>
-                                                            <child>
-                                                            <object class="GtkEntry" id="backup_network_domain">
+                                                            <object class="GtkEntry" id="backup_network_remote_path">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">True</property>
                                                             <property name="invisible_char">●</property>
@@ -1247,32 +1351,6 @@
                                                             <property name="right_attach">2</property>
                                                             <property name="top_attach">3</property>
                                                             <property name="bottom_attach">4</property>
-                                                            </packing>
-                                                            </child>
-                                                            <child>
-                                                            <object class="GtkLabel" id="backup_network_version_label">
-                                                            <property name="visible">True</property>
-                                                            <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Version (Optional):</property>
-                                                            <property name="xalign">1</property>
-                                                            </object>
-                                                            <packing>
-                                                            <property name="top_attach">4</property>
-                                                            <property name="bottom_attach">5</property>
-                                                            <property name="x_options">GTK_FILL</property>
-                                                            </packing>
-                                                            </child>
-                                                            <child>
-                                                            <object class="GtkEntry" id="backup_network_version">
-                                                            <property name="visible">True</property>
-                                                            <property name="can_focus">True</property>
-                                                            <property name="invisible_char">●</property>
-                                                            </object>
-                                                            <packing>
-                                                            <property name="left_attach">1</property>
-                                                            <property name="right_attach">2</property>
-                                                            <property name="top_attach">4</property>
-                                                            <property name="bottom_attach">5</property>
                                                             </packing>
                                                             </child>
                                                             </object>
@@ -2830,7 +2908,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <object class="GtkTable" id="restore_network_entries">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
-                                                            <property name="n_rows">5</property>
+                                                            <property name="n_rows">7</property>
                                                             <property name="n_columns">2</property>
                                                             <property name="column_spacing">5</property>
                                                             <property name="row_spacing">5</property>
@@ -2854,6 +2932,110 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <packing>
                                                             <property name="left_attach">1</property>
                                                             <property name="right_attach">2</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkLabel" id="restore_network_ssh_idfile_label">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">False</property>
+                                                            <property name="label" translatable="yes">Identity File (Optional):</property>
+                                                            <property name="xalign">1</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="top_attach">6</property>
+                                                            <property name="bottom_attach">7</property>
+                                                            <property name="x_options">GTK_FILL</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkBox" id="restore_network_ssh_idfile_box">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">False</property>
+                                                            <child>
+                                                            <object class="GtkEntry" id="restore_network_ssh_idfile">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="invisible_char">●</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="expand">True</property>
+                                                            <property name="fill">True</property>
+                                                            <property name="position">0</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkButton" id="restore_network_ssh_idfile_browse">
+                                                            <property name="label" translatable="yes">Browse...</property>
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="receives_default">True</property>
+                                                            <signal name="clicked" handler="select_ssh_idfile" swapped="no"/>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="expand">False</property>
+                                                            <property name="fill">True</property>
+                                                            <property name="padding">2</property>
+                                                            <property name="position">1</property>
+                                                            </packing>
+                                                            </child>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="left_attach">1</property>
+                                                            <property name="right_attach">2</property>
+                                                            <property name="top_attach">6</property>
+                                                            <property name="bottom_attach">7</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkLabel" id="restore_network_version_label">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">False</property>
+                                                            <property name="label" translatable="yes">Version (Optional):</property>
+                                                            <property name="xalign">1</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="top_attach">5</property>
+                                                            <property name="bottom_attach">6</property>
+                                                            <property name="x_options">GTK_FILL</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkEntry" id="restore_network_version">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="invisible_char">●</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="left_attach">1</property>
+                                                            <property name="right_attach">2</property>
+                                                            <property name="top_attach">5</property>
+                                                            <property name="bottom_attach">6</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkLabel" id="restore_network_domain_label">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">False</property>
+                                                            <property name="label" translatable="yes">Domain (Optional):</property>
+                                                            <property name="xalign">1</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="top_attach">4</property>
+                                                            <property name="bottom_attach">5</property>
+                                                            <property name="x_options">GTK_FILL</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkEntry" id="restore_network_domain">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="invisible_char">●</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="left_attach">1</property>
+                                                            <property name="right_attach">2</property>
+                                                            <property name="top_attach">4</property>
+                                                            <property name="bottom_attach">5</property>
                                                             </packing>
                                                             </child>
                                                             <child>
@@ -2896,6 +3078,19 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             </packing>
                                                             </child>
                                                             <child>
+                                                            <object class="GtkLabel" id="restore_network_remote_path_label">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">False</property>
+                                                            <property name="label" translatable="yes">Remote Path (Optional):</property>
+                                                            <property name="xalign">1</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="top_attach">3</property>
+                                                            <property name="bottom_attach">4</property>
+                                                            <property name="x_options">GTK_FILL</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
                                                             <object class="GtkEntry" id="restore_network_password">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">True</property>
@@ -2910,20 +3105,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             </packing>
                                                             </child>
                                                             <child>
-                                                            <object class="GtkLabel" id="restore_network_domain_label">
-                                                            <property name="visible">True</property>
-                                                            <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Domain (Optional):</property>
-                                                            <property name="xalign">1</property>
-                                                            </object>
-                                                            <packing>
-                                                            <property name="top_attach">3</property>
-                                                            <property name="bottom_attach">4</property>
-                                                            <property name="x_options">GTK_FILL</property>
-                                                            </packing>
-                                                            </child>
-                                                            <child>
-                                                            <object class="GtkEntry" id="restore_network_domain">
+                                                            <object class="GtkEntry" id="restore_network_remote_path">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">True</property>
                                                             <property name="invisible_char">●</property>
@@ -2933,32 +3115,6 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <property name="right_attach">2</property>
                                                             <property name="top_attach">3</property>
                                                             <property name="bottom_attach">4</property>
-                                                            </packing>
-                                                            </child>
-                                                            <child>
-                                                            <object class="GtkLabel" id="restore_network_version_label">
-                                                            <property name="visible">True</property>
-                                                            <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Version (Optional):</property>
-                                                            <property name="xalign">1</property>
-                                                            </object>
-                                                            <packing>
-                                                            <property name="top_attach">4</property>
-                                                            <property name="bottom_attach">5</property>
-                                                            <property name="x_options">GTK_FILL</property>
-                                                            </packing>
-                                                            </child>
-                                                            <child>
-                                                            <object class="GtkEntry" id="restore_network_version">
-                                                            <property name="visible">True</property>
-                                                            <property name="can_focus">True</property>
-                                                            <property name="invisible_char">●</property>
-                                                            </object>
-                                                            <packing>
-                                                            <property name="left_attach">1</property>
-                                                            <property name="right_attach">2</property>
-                                                            <property name="top_attach">4</property>
-                                                            <property name="bottom_attach">5</property>
                                                             </packing>
                                                             </child>
                                                             </object>
@@ -4596,10 +4752,10 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <object class="GtkTable" id="verify_network_entries">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
-                                                            <property name="n_rows">5</property>
+                                                            <property name="n_rows">7</property>
                                                             <property name="n_columns">2</property>
                                                             <property name="column_spacing">5</property>
-                                                            <property name="row_spacing">5</property>
+                                                            <property name="row_spacing">7</property>
                                                             <child>
                                                             <object class="GtkLabel" id="verify_network_server_label">
                                                             <property name="visible">True</property>
@@ -4649,6 +4805,110 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             </packing>
                                                             </child>
                                                             <child>
+                                                            <object class="GtkLabel" id="verify_network_ssh_idfile_label">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">False</property>
+                                                            <property name="label" translatable="yes">Identity File (Optional):</property>
+                                                            <property name="xalign">1</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="top_attach">6</property>
+                                                            <property name="bottom_attach">7</property>
+                                                            <property name="x_options">GTK_FILL</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkBox" id="verify_network_ssh_idfile_box">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">False</property>
+                                                            <child>
+                                                            <object class="GtkEntry" id="verify_network_ssh_idfile">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="invisible_char">●</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="expand">True</property>
+                                                            <property name="fill">True</property>
+                                                            <property name="position">0</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkButton" id="verify_network_ssh_idfile_browse">
+                                                            <property name="label" translatable="yes">Browse...</property>
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="receives_default">True</property>
+                                                            <signal name="clicked" handler="select_ssh_idfile" swapped="no"/>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="expand">False</property>
+                                                            <property name="fill">True</property>
+                                                            <property name="padding">2</property>
+                                                            <property name="position">1</property>
+                                                            </packing>
+                                                            </child>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="left_attach">1</property>
+                                                            <property name="right_attach">2</property>
+                                                            <property name="top_attach">6</property>
+                                                            <property name="bottom_attach">7</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkLabel" id="verify_network_version_label">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">False</property>
+                                                            <property name="label" translatable="yes">Version (Optional):</property>
+                                                            <property name="xalign">1</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="top_attach">5</property>
+                                                            <property name="bottom_attach">6</property>
+                                                            <property name="x_options">GTK_FILL</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkEntry" id="verify_network_version">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="invisible_char">●</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="left_attach">1</property>
+                                                            <property name="right_attach">2</property>
+                                                            <property name="top_attach">5</property>
+                                                            <property name="bottom_attach">6</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkEntry" id="verify_network_domain">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="invisible_char">●</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="left_attach">1</property>
+                                                            <property name="right_attach">2</property>
+                                                            <property name="top_attach">4</property>
+                                                            <property name="bottom_attach">5</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkLabel" id="verify_network_domain_label">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">False</property>
+                                                            <property name="label" translatable="yes">Domain (Optional):</property>
+                                                            <property name="xalign">1</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="top_attach">4</property>
+                                                            <property name="bottom_attach">5</property>
+                                                            <property name="x_options">GTK_FILL</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
                                                             <object class="GtkLabel" id="verify_network_password_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
@@ -4658,6 +4918,19 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <packing>
                                                             <property name="top_attach">2</property>
                                                             <property name="bottom_attach">3</property>
+                                                            <property name="x_options">GTK_FILL</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkLabel" id="verify_network_remote_path_label">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">False</property>
+                                                            <property name="label" translatable="yes">Remote Path (Optional):</property>
+                                                            <property name="xalign">1</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="top_attach">3</property>
+                                                            <property name="bottom_attach">4</property>
                                                             <property name="x_options">GTK_FILL</property>
                                                             </packing>
                                                             </child>
@@ -4676,20 +4949,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             </packing>
                                                             </child>
                                                             <child>
-                                                            <object class="GtkLabel" id="verify_network_domain_label">
-                                                            <property name="visible">True</property>
-                                                            <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Domain (Optional):</property>
-                                                            <property name="xalign">1</property>
-                                                            </object>
-                                                            <packing>
-                                                            <property name="top_attach">3</property>
-                                                            <property name="bottom_attach">4</property>
-                                                            <property name="x_options">GTK_FILL</property>
-                                                            </packing>
-                                                            </child>
-                                                            <child>
-                                                            <object class="GtkEntry" id="verify_network_domain">
+                                                            <object class="GtkEntry" id="verify_network_remote_path">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">True</property>
                                                             <property name="invisible_char">●</property>
@@ -4699,32 +4959,6 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <property name="right_attach">2</property>
                                                             <property name="top_attach">3</property>
                                                             <property name="bottom_attach">4</property>
-                                                            </packing>
-                                                            </child>
-                                                            <child>
-                                                            <object class="GtkLabel" id="verify_network_version_label">
-                                                            <property name="visible">True</property>
-                                                            <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Version (Optional):</property>
-                                                            <property name="xalign">1</property>
-                                                            </object>
-                                                            <packing>
-                                                            <property name="top_attach">4</property>
-                                                            <property name="bottom_attach">5</property>
-                                                            <property name="x_options">GTK_FILL</property>
-                                                            </packing>
-                                                            </child>
-                                                            <child>
-                                                            <object class="GtkEntry" id="verify_network_version">
-                                                            <property name="visible">True</property>
-                                                            <property name="can_focus">True</property>
-                                                            <property name="invisible_char">●</property>
-                                                            </object>
-                                                            <packing>
-                                                            <property name="left_attach">1</property>
-                                                            <property name="right_attach">2</property>
-                                                            <property name="top_attach">4</property>
-                                                            <property name="bottom_attach">5</property>
                                                             </packing>
                                                             </child>
                                                             </object>
@@ -5743,7 +5977,7 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                             <object class="GtkTable" id="image_explorer_network_entries">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
-                                                            <property name="n_rows">5</property>
+                                                            <property name="n_rows">7</property>
                                                             <property name="n_columns">2</property>
                                                             <property name="column_spacing">5</property>
                                                             <property name="row_spacing">5</property>
@@ -5770,19 +6004,6 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                             </packing>
                                                             </child>
                                                             <child>
-                                                            <object class="GtkLabel" id="image_explorer_network_username_label">
-                                                            <property name="visible">True</property>
-                                                            <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Username (Optional):</property>
-                                                            <property name="xalign">1</property>
-                                                            </object>
-                                                            <packing>
-                                                            <property name="top_attach">1</property>
-                                                            <property name="bottom_attach">2</property>
-                                                            <property name="x_options">GTK_FILL</property>
-                                                            </packing>
-                                                            </child>
-                                                            <child>
                                                             <object class="GtkEntry" id="image_explorer_network_username">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">True</property>
@@ -5796,6 +6017,123 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                             </packing>
                                                             </child>
                                                             <child>
+                                                            <object class="GtkLabel" id="image_explorer_network_ssh_idfile_label">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">False</property>
+                                                            <property name="label" translatable="yes">Identity File (Optional):</property>
+                                                            <property name="xalign">1</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="top_attach">6</property>
+                                                            <property name="bottom_attach">7</property>
+                                                            <property name="x_options">GTK_FILL</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkBox" id="image_explorer_network_ssh_idfile_box">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">False</property>
+                                                            <child>
+                                                            <object class="GtkEntry" id="image_explorer_network_ssh_idfile">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="invisible_char">●</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="expand">True</property>
+                                                            <property name="fill">True</property>
+                                                            <property name="position">0</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkButton" id="image_explorer_network_ssh_idfile_browse">
+                                                            <property name="label" translatable="yes">Browse...</property>
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="receives_default">True</property>
+                                                            <signal name="clicked" handler="select_ssh_idfile" swapped="no"/>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="expand">False</property>
+                                                            <property name="fill">True</property>
+                                                            <property name="padding">2</property>
+                                                            <property name="position">1</property>
+                                                            </packing>
+                                                            </child>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="left_attach">1</property>
+                                                            <property name="right_attach">2</property>
+                                                            <property name="top_attach">6</property>
+                                                            <property name="bottom_attach">7</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkLabel" id="image_explorer_network_version_label">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">False</property>
+                                                            <property name="label" translatable="yes">Version (Optional):</property>
+                                                            <property name="xalign">1</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="top_attach">5</property>
+                                                            <property name="bottom_attach">6</property>
+                                                            <property name="x_options">GTK_FILL</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkEntry" id="image_explorer_network_version">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="invisible_char">●</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="left_attach">1</property>
+                                                            <property name="right_attach">2</property>
+                                                            <property name="top_attach">5</property>
+                                                            <property name="bottom_attach">6</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkLabel" id="image_explorer_network_domain_label">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">False</property>
+                                                            <property name="label" translatable="yes">Domain (Optional):</property>
+                                                            <property name="xalign">1</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="top_attach">4</property>
+                                                            <property name="bottom_attach">5</property>
+                                                            <property name="x_options">GTK_FILL</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkEntry" id="image_explorer_network_domain">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">True</property>
+                                                            <property name="invisible_char">●</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="left_attach">1</property>
+                                                            <property name="right_attach">2</property>
+                                                            <property name="top_attach">4</property>
+                                                            <property name="bottom_attach">5</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkLabel" id="image_explorer_network_username_label">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">False</property>
+                                                            <property name="label" translatable="yes">Username (Optional):</property>
+                                                            <property name="xalign">1</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="top_attach">1</property>
+                                                            <property name="bottom_attach">2</property>
+                                                            <property name="x_options">GTK_FILL</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
                                                             <object class="GtkLabel" id="image_explorer_network_password_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
@@ -5805,6 +6143,19 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                             <packing>
                                                             <property name="top_attach">2</property>
                                                             <property name="bottom_attach">3</property>
+                                                            <property name="x_options">GTK_FILL</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkLabel" id="image_explorer_network_remote_path_label">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">False</property>
+                                                            <property name="label" translatable="yes">Remote Path (Optional):</property>
+                                                            <property name="xalign">1</property>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="top_attach">3</property>
+                                                            <property name="bottom_attach">4</property>
                                                             <property name="x_options">GTK_FILL</property>
                                                             </packing>
                                                             </child>
@@ -5823,20 +6174,7 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                             </packing>
                                                             </child>
                                                             <child>
-                                                            <object class="GtkLabel" id="image_explorer_network_domain_label">
-                                                            <property name="visible">True</property>
-                                                            <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Domain (Optional):</property>
-                                                            <property name="xalign">1</property>
-                                                            </object>
-                                                            <packing>
-                                                            <property name="top_attach">3</property>
-                                                            <property name="bottom_attach">4</property>
-                                                            <property name="x_options">GTK_FILL</property>
-                                                            </packing>
-                                                            </child>
-                                                            <child>
-                                                            <object class="GtkEntry" id="image_explorer_network_domain">
+                                                            <object class="GtkEntry" id="image_explorer_network_remote_path">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">True</property>
                                                             <property name="invisible_char">●</property>
@@ -5846,32 +6184,6 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                             <property name="right_attach">2</property>
                                                             <property name="top_attach">3</property>
                                                             <property name="bottom_attach">4</property>
-                                                            </packing>
-                                                            </child>
-                                                            <child>
-                                                            <object class="GtkLabel" id="image_explorer_network_version_label">
-                                                            <property name="visible">True</property>
-                                                            <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Version (Optional):</property>
-                                                            <property name="xalign">1</property>
-                                                            </object>
-                                                            <packing>
-                                                            <property name="top_attach">4</property>
-                                                            <property name="bottom_attach">5</property>
-                                                            <property name="x_options">GTK_FILL</property>
-                                                            </packing>
-                                                            </child>
-                                                            <child>
-                                                            <object class="GtkEntry" id="image_explorer_network_version">
-                                                            <property name="visible">True</property>
-                                                            <property name="can_focus">True</property>
-                                                            <property name="invisible_char">●</property>
-                                                            </object>
-                                                            <packing>
-                                                            <property name="left_attach">1</property>
-                                                            <property name="right_attach">2</property>
-                                                            <property name="top_attach">4</property>
-                                                            <property name="bottom_attach">5</property>
                                                             </packing>
                                                             </child>
                                                             </object>
