@@ -2677,7 +2677,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <property name="enable_grid_lines">both</property>
                                                             <signal name="row-activated" handler="row_activated_next_tab" swapped="no"/>
                                                             <child internal-child="selection">
-                                                            <object class="GtkTreeSelection" id="source_mount_partition_selection_treeselection"/>
+                                                            <object class="GtkTreeSelection" id="restore_mount_partition_selection_treeselection"/>
                                                             </child>
                                                             <child>
                                                             <object class="GtkTreeViewColumn">

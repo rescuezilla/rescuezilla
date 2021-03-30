@@ -138,7 +138,7 @@ class Handler:
                                  Mode.VERIFY: self.builder.get_object("verify_network_use_local_radiobutton"),
                                  Mode.IMAGE_EXPLORER: self.builder.get_object("image_explorer_network_use_local_radiobutton")}
         self.mount_partition_selection_treeselection_id_dict = {Mode.BACKUP: "backup_mount_partition_selection_treeselection",
-                                                                Mode.RESTORE: "source_mount_partition_selection_treeselection",
+                                                                Mode.RESTORE: "restore_mount_partition_selection_treeselection",
                                                                 Mode.VERIFY: "verify_mount_partition_selection_treeselection",
                                                                 Mode.IMAGE_EXPLORER: "image_explorer_mount_partition_selection_treeselection"}
         self.requested_shutdown_lock = threading.Lock()
