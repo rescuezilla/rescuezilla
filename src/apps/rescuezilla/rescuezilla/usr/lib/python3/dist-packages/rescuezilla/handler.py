@@ -75,7 +75,6 @@ class Handler:
         self.commit_date = Utility.read_file_into_string("/usr/share/rescuezilla/GIT_COMMIT_DATE").strip()
         self.main_statusbar = self.builder.get_object("main_statusbar")
         self.human_readable_version = self.version + " (" + self.memory_bus_width + ") " + self.commit_date
-        self.display_welcome_page()
         self.mode = Mode.BACKUP
         self.current_page = Page.WELCOME
         self.drive_query = DriveQuery(self.builder, self.drive_list_store, self.save_partition_list_store,
@@ -97,8 +96,6 @@ class Handler:
         self.post_operation_action_list.append(["DO_NOTHING", _("Do nothing")])
         self.post_operation_action_list.append(["SHUTDOWN", _("Shutdown")])
         self.post_operation_action_list.append(["REBOOT", _("Reboot")])
-        self.builder.get_object("backup_step7_perform_action_combobox").set_active(0)
-        self.builder.get_object("restore_step5_perform_action_combobox").set_active(0)
 
         # Initialize compression tool option
         self.compression_tool_list = self.builder.get_object("compression_tool_list")
@@ -150,9 +147,6 @@ class Handler:
                 if object is None:
                     raise ValueError("Could not find: " + id)
                 self.network_protocol_widget_dict[prefix][mode] = object
-        # Initialize default network protocol combobox
-        for mode in self.network_protocol_widget_dict['network_protocol_combobox'].keys():
-            self.network_protocol_widget_dict['network_protocol_combobox'][mode].set_active(0)
 
         self.mount_partition_selection_treeselection_id_dict = {
             Mode.BACKUP: "backup_mount_partition_selection_treeselection",
@@ -162,6 +156,7 @@ class Handler:
 
         self.requested_shutdown_lock = threading.Lock()
         self.requested_shutdown = False
+        self.display_welcome_page()
 
     # Suggest the user read the frequently asked questions, then potentially proceed to the support forum.
     def set_support_information_linkbutton_visible(self, is_visible):
@@ -191,6 +186,22 @@ class Handler:
             self.builder.get_object("button_back").set_sensitive(True)
         else:
             self.builder.get_object("button_back").set_sensitive(False)
+
+        # TODO: Find more efficient way to do this
+        combobox_list = []
+        # Re-initialize the image selection network protocol
+        for mode in Mode:
+            self.network_protocol_widget_dict['network_use_local_radiobutton'][mode].set_active(True)
+            combobox_list.append(self.network_protocol_widget_dict['network_protocol_combobox'][mode])
+        # Reset all comboboxes
+        for combobox in combobox_list:
+            combobox.set_active(0)
+            combobox.set_active_iter(combobox.get_active_iter())
+            self.network_protocol_combobox_changed(combobox)
+
+        # Post action comboboxes don't have signal handlers so no need to trigger anything
+        self.builder.get_object("backup_step7_perform_action_combobox").set_active(0)
+        self.builder.get_object("restore_step5_perform_action_combobox").set_active(0)
 
     def display_backup_wizard(self, button):
         self.mode = Mode.BACKUP
