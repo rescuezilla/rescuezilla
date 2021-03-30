@@ -34,14 +34,15 @@ class MountNetworkPath:
         # Lowercase mode (eg "backup", "restore", "verify")
         mode_prefix = mode.name.lower()
         settings = {
-            'server': network_widget_dict["network_server"][mode].get_text(),
-            'username': network_widget_dict["network_username"][mode].get_text(),
+            'server': network_widget_dict["network_server"][mode].get_text().strip(),
+            'username': network_widget_dict["network_username"][mode].get_text().strip(),
             # For protocols that specify the remote path separately from the server
-            'remote_path': network_widget_dict["network_remote_path"][mode].get_text(),
+            'remote_path': network_widget_dict["network_remote_path"][mode].get_text().strip(),
+            # NOT stripping whitespace from the password
             'password': network_widget_dict["network_password"][mode].get_text(),
-            'domain': network_widget_dict["network_domain"][mode].get_text(),
-            'version': network_widget_dict["network_version"][mode].get_text(),
-            'ssh_idfile': network_widget_dict["network_ssh_idfile"][mode].get_text(),
+            'domain': network_widget_dict["network_domain"][mode].get_text().strip(),
+            'version': network_widget_dict["network_version"][mode].get_text().strip(),
+            'ssh_idfile': network_widget_dict["network_ssh_idfile"][mode].get_text().strip(),
             'destination_path': destination_path}
 
         network_protocol_key = Utility.get_combobox_key(network_widget_dict['network_protocol_combobox'][mode])
