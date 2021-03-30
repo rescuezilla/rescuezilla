@@ -36,9 +36,12 @@ class MountNetworkPath:
         settings = {
             'server': network_widget_dict["network_server"][mode].get_text(),
             'username': network_widget_dict["network_username"][mode].get_text(),
+            # For protocols that specify the remote path separately from the server
+            'remote_path': network_widget_dict["network_remote_path"][mode].get_text(),
             'password': network_widget_dict["network_password"][mode].get_text(),
             'domain': network_widget_dict["network_domain"][mode].get_text(),
             'version': network_widget_dict["network_version"][mode].get_text(),
+            'ssh_idfile': network_widget_dict["network_ssh_idfile"][mode].get_text(),
             'destination_path': destination_path}
 
         network_protocol_key = Utility.get_combobox_key(network_widget_dict['network_protocol_combobox'][mode])
@@ -48,6 +51,8 @@ class MountNetworkPath:
         self.please_wait_popup.show()
         if network_protocol_key == "SMB":
             thread = threading.Thread(target=self._do_smb_mount_command, args=(settings,))
+        elif network_protocol_key == "SSH":
+            thread = threading.Thread(target=self._do_ssh_mount_command, args=(settings,))
         else:
             raise ValueError("Unknown network protocol: " + network_protocol_key)
         thread.daemon = True
@@ -97,7 +102,7 @@ class MountNetworkPath:
                 f.write(credentials_string)
                 f.flush()
                 mount_cmd_list = ['mount.cifs', settings['server'], settings['destination_path'], "-o", smb_arguments]
-                mount_process, mount_flat_command_string, mount_failed_message = Utility.run("Mounting network shared folder: ", mount_cmd_list, use_c_locale=False)
+                mount_process, mount_flat_command_string, mount_failed_message = Utility.run("Mounting SMB/CIFS network shared folder: ", mount_cmd_list, use_c_locale=False)
 
             shred_cmd_list = ['shred', tmp.name]
             shred_process, shred_flat_command_string, failed_message = Utility.run("Shredding credentials temp file: ", shred_cmd_list, use_c_locale=False)
@@ -120,4 +125,82 @@ class MountNetworkPath:
             tb = traceback.format_exc()
             print(tb)
             GLib.idle_add(self.please_wait_popup.destroy)
-            GLib.idle_add(self.callback, False, "Error mounting folder: " + tb)
+            GLib.idle_add(self.callback, False, "Error mounting SMB/CIFS folder: " + tb)
+
+    def _do_ssh_mount_command(self, settings):
+        destination_path = settings['destination_path']
+        try:
+            if not os.path.exists(destination_path) and not os.path.isdir(destination_path):
+                os.mkdir(destination_path, 0o755)
+
+            is_unmounted, message = Utility.umount_warn_on_busy(destination_path)
+            if not is_unmounted:
+                GLib.idle_add(self.please_wait_popup.destroy)
+                GLib.idle_add(self.callback, False, message)
+                return
+
+            source_string = ""
+
+            # Username is optional in SSH, it uses the current user if not specified.
+            if settings['username'] != "":
+                source_string = settings['username'] + "@"
+
+            if settings['server'] != "":
+                source_string += settings['server']
+            else:
+                GLib.idle_add(self.please_wait_popup.destroy)
+                GLib.idle_add(self.callback, False, "Must specify server.")
+                return
+
+            if settings['remote_path'] != "":
+                source_string += ":" + settings['remote_path']
+            else:
+                # If no remote path specified, assume the user wants to mount the root directory of their remote server.
+                source_string += ":/"
+
+            mount_cmd_list = ["sshfs", source_string, settings['destination_path']]
+
+            if settings['password'] == "" and settings['ssh_idfile'] == "":
+                GLib.idle_add(self.please_wait_popup.destroy)
+                GLib.idle_add(self.callback, False, _("Must provide either password or SSH identity file."))
+                return
+
+            ssh_cmd = ""
+            tmp = tempfile.NamedTemporaryFile(delete=False)
+            if settings['password'] != "":
+                with open(tmp.name, 'w') as f:
+                    f.write(settings['password'] + "\n")
+                    f.flush()
+                    ssh_cmd += "sshpass -f " + tmp.name + " "
+
+            ssh_cmd += "ssh -o StrictHostKeyChecking=no"
+            if settings['ssh_idfile'] != "":
+                ssh_cmd += ",IdentityFile=" + settings['ssh_idfile'] + ",BatchMode=yes"
+            mount_cmd_list.append('-o')
+            # In the Python subprocess.run() cmd_list, the ssh_cmd variable cannot be surrounded by quotes
+            mount_cmd_list.append('ssh_command=' + ssh_cmd)
+
+            mount_process, mount_flat_command_string, mount_failed_message = Utility.run("Mounting network shared folder with SSH: ", mount_cmd_list, use_c_locale=False)
+            shred_cmd_list = ['shred', tmp.name]
+            shred_process, shred_flat_command_string, failed_message = Utility.run(
+                "Shredding credentials temp file: ", shred_cmd_list, use_c_locale=False)
+            # Delete temp file
+            os.remove(tmp.name)
+            if shred_process.returncode != 0:
+                GLib.idle_add(self.please_wait_popup.destroy)
+                GLib.idle_add(self.callback, False, failed_message)
+                return
+
+            if mount_process.returncode != 0:
+                check_password_msg = _("Please ensure the username, password and other fields provided are correct, and try again.")
+                GLib.idle_add(self.please_wait_popup.destroy)
+                GLib.idle_add(self.callback, False, mount_failed_message + "\n\n" + check_password_msg)
+                return
+            else:
+                GLib.idle_add(self.please_wait_popup.destroy)
+                GLib.idle_add(self.callback, True, "", destination_path)
+        except Exception as e:
+            tb = traceback.format_exc()
+            print(tb)
+            GLib.idle_add(self.please_wait_popup.destroy)
+            GLib.idle_add(self.callback, False, "Error mounting SSH folder: " + tb)

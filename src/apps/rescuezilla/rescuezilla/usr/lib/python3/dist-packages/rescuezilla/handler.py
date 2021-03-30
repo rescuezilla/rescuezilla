@@ -119,17 +119,29 @@ class Handler:
         # Add network protocols combobox model
         self.network_share_protocol_list = self.builder.get_object("network_share_protocol_list")
         self.network_share_protocol_list.append(["SMB", _("Windows shared folder (SMB/CIFS, Samba)")])
+        # No need to translate "SSH" strings (unless the description string is expanded upon)
+        self.network_share_protocol_list.append(["SSH", "SSH"])
         # Manage all network protocol UI widgets
         self.network_protocol_widget_dict = {
             'network_protocol_combobox': {},
             'frame_local': {},
             'frame_network': {},
             'network_use_local_radiobutton': {},
+            'network_server_label': {},
             'network_server': {},
+            'network_username_label': {},
             'network_username': {},
+            'network_remote_path_label': {},
+            'network_remote_path': {},
+            'network_password_label': {},
             'network_password': {},
+            'network_domain_label': {},
             'network_domain': {},
-            'network_version': {}
+            'network_version_label': {},
+            'network_version': {},
+            'network_ssh_idfile': {},
+            'network_ssh_idfile_box': {},
+            'network_ssh_idfile_label': {},
         }
         for mode in Mode:
             for prefix in self.network_protocol_widget_dict.keys():
@@ -727,7 +739,52 @@ class Handler:
         print("test")
 
     def network_protocol_combobox_changed(self, combobox):
+        network_protocol_key = Utility.get_combobox_key(combobox)
+        if network_protocol_key == "SMB":
+            for mode in Mode:
+                self.network_protocol_widget_dict['network_server_label'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_server'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_username_label'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_username'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_remote_path_label'][mode].set_visible(False)
+                self.network_protocol_widget_dict['network_remote_path'][mode].set_visible(False)
+                self.network_protocol_widget_dict['network_password_label'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_password'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_domain_label'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_domain'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_version_label'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_version'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_ssh_idfile_label'][mode].set_visible(False)
+                self.network_protocol_widget_dict['network_ssh_idfile_box'][mode].set_visible(False)
+        elif network_protocol_key == "SSH":
+            for mode in Mode:
+                self.network_protocol_widget_dict['network_server_label'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_server'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_username_label'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_username'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_remote_path_label'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_remote_path'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_password_label'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_password'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_domain_label'][mode].set_visible(False)
+                self.network_protocol_widget_dict['network_domain'][mode].set_visible(False)
+                self.network_protocol_widget_dict['network_version_label'][mode].set_visible(False)
+                self.network_protocol_widget_dict['network_version'][mode].set_visible(False)
+                self.network_protocol_widget_dict['network_ssh_idfile_label'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_ssh_idfile_box'][mode].set_visible(True)
+        else:
+            raise ValueError("Unknown network protocol")
         return
+
+    def select_ssh_idfile(self, button):
+        BrowseSelectionPopup(self.builder, callback=self.selected_ssh_idfile,
+                             default_directory="/", is_allow_selecting_folder_outside_mount = True, select_file = True)
+        return
+
+    def selected_ssh_idfile(self, text, is_allow_selecting_folder_outside_mount):
+        print("Received SSH ID file path" + text)
+        for mode in Mode:
+            self.network_protocol_widget_dict['network_ssh_idfile'][mode].set_text(text)
 
     def compression_tool_changed(self, combobox):
         compression_level_scale = self.builder.get_object("backup_step6_compression_level_scale")
