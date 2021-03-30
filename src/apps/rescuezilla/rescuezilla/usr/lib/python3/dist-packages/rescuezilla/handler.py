@@ -125,6 +125,11 @@ class Handler:
             'frame_local': {},
             'frame_network': {},
             'network_use_local_radiobutton': {},
+            'network_server': {},
+            'network_username': {},
+            'network_password': {},
+            'network_domain': {},
+            'network_version': {}
         }
         for mode in Mode:
             for prefix in self.network_protocol_widget_dict.keys():
@@ -808,7 +813,7 @@ class Handler:
                                MOUNT_DIR)
         else:
             partition_description = "network share"
-            MountNetworkPath(self.builder, self._post_mount_callback, self.mode, MOUNT_DIR)
+            MountNetworkPath(self.builder, self._post_mount_callback, self.mode, self.network_protocol_widget_dict, MOUNT_DIR)
         return selected_partition_key, partition_description
 
     def restore_partition_toggled(self, cell_render_toggle, path):

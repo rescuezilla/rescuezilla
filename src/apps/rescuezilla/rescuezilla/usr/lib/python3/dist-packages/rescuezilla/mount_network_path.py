@@ -30,26 +30,30 @@ from utility import PleaseWaitModalPopup, Utility, _
 
 
 class MountNetworkPath:
-    def __init__(self, builder, callback, mode, destination_path):
+    def __init__(self, builder, callback, mode, network_widget_dict, destination_path):
         # Lowercase mode (eg "backup", "restore", "verify")
         mode_prefix = mode.name.lower()
         settings = {
-            'server': builder.get_object(mode_prefix + "_network_server").get_text(),
-            'username': builder.get_object(mode_prefix + "_network_username").get_text(),
-            'password': builder.get_object(mode_prefix + "_network_password").get_text(),
-            'domain': builder.get_object(mode_prefix + "_network_domain").get_text(),
-            'version': builder.get_object(mode_prefix + "_network_version").get_text(),
+            'server': network_widget_dict["network_server"][mode].get_text(),
+            'username': network_widget_dict["network_username"][mode].get_text(),
+            'password': network_widget_dict["network_password"][mode].get_text(),
+            'domain': network_widget_dict["network_domain"][mode].get_text(),
+            'version': network_widget_dict["network_version"][mode].get_text(),
             'destination_path': destination_path}
 
+        network_protocol_key = Utility.get_combobox_key(network_widget_dict['network_protocol_combobox'][mode])
         # restore_network_version
         self.callback = callback
         self.please_wait_popup = PleaseWaitModalPopup(builder, title=_("Please wait..."), message=_("Mounting..."))
         self.please_wait_popup.show()
-        thread = threading.Thread(target=self._do_mount_command, args=(settings,))
+        if network_protocol_key == "SMB":
+            thread = threading.Thread(target=self._do_smb_mount_command, args=(settings,))
+        else:
+            raise ValueError("Unknown network protocol: " + network_protocol_key)
         thread.daemon = True
         thread.start()
 
-    def _do_mount_command(self, settings):
+    def _do_smb_mount_command(self, settings):
         destination_path = settings['destination_path']
         try:
             if not os.path.exists(destination_path) and not os.path.isdir(destination_path):
