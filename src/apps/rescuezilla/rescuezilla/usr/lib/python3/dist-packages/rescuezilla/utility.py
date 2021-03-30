@@ -158,13 +158,18 @@ class AreYouSureModalPopup:
         self._dialog.destroy()
 
 
-class FolderSelectionPopup:
-    def __init__(self, builder, callback, default_directory, is_allow_selecting_folder_outside_mount):
+class BrowseSelectionPopup:
+    def __init__(self, builder, callback, default_directory, is_allow_selecting_folder_outside_mount,
+                 select_file=False):
+        if select_file:
+            action = Gtk.FileChooserAction.OPEN
+        else:
+            action = Gtk.FileChooserAction.SELECT_FOLDER
         self._main_window = builder.get_object("main_window")
         #FIXME: Make this a validator
         self.is_allow_selecting_folder_outside_mount = is_allow_selecting_folder_outside_mount
         # Label to update with the selected folder
-        self._dialog = Gtk.FileChooserDialog(parent=self._main_window, action=Gtk.FileChooserAction.SELECT_FOLDER,
+        self._dialog = Gtk.FileChooserDialog(parent=self._main_window, action=action,
                                              buttons=(Gtk.STOCK_OK, Gtk.ResponseType.OK))
         if self._dialog.set_current_folder(default_directory):
             print("Changed folder selection popup directory to " + default_directory)
