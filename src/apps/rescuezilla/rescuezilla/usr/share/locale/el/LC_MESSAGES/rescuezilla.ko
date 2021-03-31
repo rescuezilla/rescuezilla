@@ -138,6 +138,9 @@ msgstr "Διαμέρισμα"
 msgid "Mounting..."
 msgstr "Δημιουγία Φακέλων και Αρχείων..."
 
+msgid "Close this popup to cancel the mount operation."
+msgstr ""
+
 msgid "Please ensure the username, password and other fields provided are correct, and try again."
 msgstr "Βεβαιωθείτε ότι το όνομα χρήστη, ο κωδικός πρόσβασης και όλα τα πεδία που παρέχονται είναι σωστά και δοκιμάστε ξανά.!"
 

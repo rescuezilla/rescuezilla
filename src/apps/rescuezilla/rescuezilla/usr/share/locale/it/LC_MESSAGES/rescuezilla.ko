@@ -138,6 +138,9 @@ msgstr "Partizione"
 msgid "Mounting..."
 msgstr "Montando..."
 
+msgid "Close this popup to cancel the mount operation."
+msgstr ""
+
 msgid "Please ensure the username, password and other fields provided are correct, and try again."
 msgstr "Assicurati che il nome utente, la password e gli altri campi forniti siano corretti e riprova."
 

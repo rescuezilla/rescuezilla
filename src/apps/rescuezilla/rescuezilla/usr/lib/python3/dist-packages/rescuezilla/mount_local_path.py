@@ -33,13 +33,25 @@ class MountLocalPath:
 
         self.source_path = source_path
         self.destination_path = destination_path
-
         self.callback = callback
-        self.please_wait_popup = PleaseWaitModalPopup(builder, title=_("Please wait..."), message=_("Mounting..."))
+
+        self.requested_stop_lock = threading.Lock()
+        self.requested_stop = False
+
+        self.please_wait_popup = PleaseWaitModalPopup(builder, title=_("Please wait..."), message=_("Mounting...") + "\n\n" + _("Close this popup to cancel the mount operation."), on_close_callback=self.cancel_mount)
         self.please_wait_popup.show()
         thread = threading.Thread(target=self._do_mount_command, args=(source_path, destination_path, ))
         thread.daemon = True
         thread.start()
+
+    def cancel_mount(self):
+        with self.requested_stop_lock:
+            self.requested_stop = True
+        return
+
+    def is_stop_requested(self):
+        with self.requested_stop_lock:
+            return self.requested_stop
 
     def _do_mount_command(self, source_path, destination_path):
         try:
@@ -59,7 +71,7 @@ class MountLocalPath:
                 return
 
             mount_cmd_list = ['mount', source_path, destination_path]
-            process, flat_command_string, failed_message = Utility.run("Mounting selected partition: ", mount_cmd_list, use_c_locale=False)
+            process, flat_command_string, failed_message = Utility.interruptable_run("Mounting selected partition: ", mount_cmd_list, use_c_locale=False, is_shutdown_fn=self.is_stop_requested)
             if process.returncode != 0:
                 GLib.idle_add(self.please_wait_popup.destroy)
                 GLib.idle_add(self.callback, False, failed_message)

@@ -138,6 +138,9 @@ msgstr "分区"
 msgid "Mounting..."
 msgstr "正在安装..."
 
+msgid "Close this popup to cancel the mount operation."
+msgstr ""
+
 msgid "Please ensure the username, password and other fields provided are correct, and try again."
 msgstr "请确保提供的用户名和密码正确，然后重试！"
 
