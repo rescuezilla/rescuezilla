@@ -139,6 +139,9 @@ msgstr "Partición"
 msgid "Mounting..."
 msgstr ""
 
+msgid "Close this popup to cancel the mount operation."
+msgstr ""
+
 msgid "Please ensure the username, password and other fields provided are correct, and try again."
 msgstr "Si el dispositivo se comparte en una red, asegúrese de que el nombre de usuario y la contraseña que escribió son correctos eInténtelo de nuevo."
 

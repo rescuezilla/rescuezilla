@@ -48,7 +48,11 @@ class MountNetworkPath:
         network_protocol_key = Utility.get_combobox_key(network_widget_dict['network_protocol_combobox'][mode])
         # restore_network_version
         self.callback = callback
-        self.please_wait_popup = PleaseWaitModalPopup(builder, title=_("Please wait..."), message=_("Mounting..."))
+
+        self.requested_stop_lock = threading.Lock()
+        self.requested_stop = False
+
+        self.please_wait_popup = PleaseWaitModalPopup(builder, title=_("Please wait..."), message=_("Mounting...") + "\n\n" + _("Close this popup to cancel the mount operation."), on_close_callback=self.cancel_mount)
         self.please_wait_popup.show()
         if network_protocol_key == "SMB":
             thread = threading.Thread(target=self._do_smb_mount_command, args=(settings,))
@@ -60,6 +64,15 @@ class MountNetworkPath:
             raise ValueError("Unknown network protocol: " + network_protocol_key)
         thread.daemon = True
         thread.start()
+
+    def cancel_mount(self):
+        with self.requested_stop_lock:
+            self.requested_stop = True
+        return
+
+    def is_stop_requested(self):
+        with self.requested_stop_lock:
+            return self.requested_stop
 
     def _do_smb_mount_command(self, settings):
         destination_path = settings['destination_path']
@@ -105,7 +118,7 @@ class MountNetworkPath:
                 f.write(credentials_string)
                 f.flush()
                 mount_cmd_list = ['mount.cifs', settings['server'], settings['destination_path'], "-o", smb_arguments]
-                mount_process, mount_flat_command_string, mount_failed_message = Utility.run("Mounting SMB/CIFS network shared folder: ", mount_cmd_list, use_c_locale=False)
+                mount_process, mount_flat_command_string, mount_failed_message = Utility.interruptable_run("Mounting SMB/CIFS network shared folder: ", mount_cmd_list, use_c_locale=False, is_shutdown_fn=self.is_stop_requested)
 
             shred_cmd_list = ['shred', tmp.name]
             shred_process, shred_flat_command_string, failed_message = Utility.run("Shredding credentials temp file: ", shred_cmd_list, use_c_locale=False)
@@ -183,7 +196,7 @@ class MountNetworkPath:
             # In the Python subprocess.run() cmd_list, the ssh_cmd variable cannot be surrounded by quotes
             mount_cmd_list.append('ssh_command=' + ssh_cmd)
 
-            mount_process, mount_flat_command_string, mount_failed_message = Utility.run("Mounting network shared folder with SSH: ", mount_cmd_list, use_c_locale=False)
+            mount_process, mount_flat_command_string, mount_failed_message = Utility.interruptable_run("Mounting network shared folder with SSH: ", mount_cmd_list, use_c_locale=False, is_shutdown_fn=self.is_stop_requested)
             shred_cmd_list = ['shred', tmp.name]
             shred_process, shred_flat_command_string, failed_message = Utility.run(
                 "Shredding credentials temp file: ", shred_cmd_list, use_c_locale=False)
@@ -235,7 +248,7 @@ class MountNetworkPath:
                 return
 
             mount_cmd_list = ["mount.nfs", server + ":" + exported_dir, settings['destination_path']]
-            mount_process, mount_flat_command_string, mount_failed_message = Utility.run("Mounting network shared folder with NFS: ", mount_cmd_list, use_c_locale=False)
+            mount_process, mount_flat_command_string, mount_failed_message = Utility.interruptable_run("Mounting network shared folder with NFS: ", mount_cmd_list, use_c_locale=False, is_shutdown_fn=self.is_stop_requested)
             if mount_process.returncode != 0:
                 check_password_msg = _("Please ensure the server and exported path are correct, and try again.")
                 GLib.idle_add(self.please_wait_popup.destroy)
