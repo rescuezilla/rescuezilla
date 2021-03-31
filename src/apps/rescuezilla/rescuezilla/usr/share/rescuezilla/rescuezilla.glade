@@ -1152,7 +1152,7 @@
                                                             <object class="GtkLabel" id="backup_network_server_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Server or share location:</property>
+                                                            <property name="label" translatable="yes">Server</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -1187,7 +1187,7 @@
                                                             <object class="GtkLabel" id="backup_network_ssh_idfile_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Identity File (Optional):</property>
+                                                            <property name="label" translatable="yes">Identity File</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -1239,7 +1239,7 @@
                                                             <object class="GtkLabel" id="backup_network_version_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Version (Optional):</property>
+                                                            <property name="label" translatable="yes">Version</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -1265,7 +1265,7 @@
                                                             <object class="GtkLabel" id="backup_network_domain_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Domain (Optional):</property>
+                                                            <property name="label" translatable="yes">Domain</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -1291,7 +1291,7 @@
                                                             <object class="GtkLabel" id="backup_network_username_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Username (Optional):</property>
+                                                            <property name="label" translatable="yes">Username</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -1304,7 +1304,7 @@
                                                             <object class="GtkLabel" id="backup_network_password_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Password (Optional):</property>
+                                                            <property name="label" translatable="yes">Password</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -1317,7 +1317,7 @@
                                                             <object class="GtkLabel" id="backup_network_remote_path_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Remote Path (Optional):</property>
+                                                            <property name="label" translatable="yes">Remote Path</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -2916,7 +2916,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <object class="GtkLabel" id="restore_network_server_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Server or share location:</property>
+                                                            <property name="label" translatable="yes">Server</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -2938,7 +2938,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <object class="GtkLabel" id="restore_network_ssh_idfile_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Identity File (Optional):</property>
+                                                            <property name="label" translatable="yes">Identity File</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -2990,7 +2990,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <object class="GtkLabel" id="restore_network_version_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Version (Optional):</property>
+                                                            <property name="label" translatable="yes">Version</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -3016,7 +3016,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <object class="GtkLabel" id="restore_network_domain_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Domain (Optional):</property>
+                                                            <property name="label" translatable="yes">Domain</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -3042,7 +3042,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <object class="GtkLabel" id="restore_network_username_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Username (Optional):</property>
+                                                            <property name="label" translatable="yes">Username</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -3068,7 +3068,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <object class="GtkLabel" id="restore_network_password_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Password (Optional):</property>
+                                                            <property name="label" translatable="yes">Password</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -3081,7 +3081,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <object class="GtkLabel" id="restore_network_remote_path_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Remote Path (Optional):</property>
+                                                            <property name="label" translatable="yes">Remote Path</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -4760,7 +4760,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <object class="GtkLabel" id="verify_network_server_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Server or share location:</property>
+                                                            <property name="label" translatable="yes">Server</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -4782,7 +4782,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <object class="GtkLabel" id="verify_network_username_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Username (Optional):</property>
+                                                            <property name="label" translatable="yes">Username</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -4808,7 +4808,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <object class="GtkLabel" id="verify_network_ssh_idfile_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Identity File (Optional):</property>
+                                                            <property name="label" translatable="yes">Identity File</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -4860,7 +4860,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <object class="GtkLabel" id="verify_network_version_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Version (Optional):</property>
+                                                            <property name="label" translatable="yes">Version</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -4899,7 +4899,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <object class="GtkLabel" id="verify_network_domain_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Domain (Optional):</property>
+                                                            <property name="label" translatable="yes">Domain</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -4912,7 +4912,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <object class="GtkLabel" id="verify_network_password_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Password (Optional):</property>
+                                                            <property name="label" translatable="yes">Password</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -4925,7 +4925,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <object class="GtkLabel" id="verify_network_remote_path_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Remote Path (Optional):</property>
+                                                            <property name="label" translatable="yes">Remote Path</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -5985,7 +5985,7 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                             <object class="GtkLabel" id="image_explorer_network_server_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Server or share location:</property>
+                                                            <property name="label" translatable="yes">Server</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -6020,7 +6020,7 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                             <object class="GtkLabel" id="image_explorer_network_ssh_idfile_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Identity File (Optional):</property>
+                                                            <property name="label" translatable="yes">Identity File</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -6072,7 +6072,7 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                             <object class="GtkLabel" id="image_explorer_network_version_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Version (Optional):</property>
+                                                            <property name="label" translatable="yes">Version</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -6098,7 +6098,7 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                             <object class="GtkLabel" id="image_explorer_network_domain_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Domain (Optional):</property>
+                                                            <property name="label" translatable="yes">Domain</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -6124,7 +6124,7 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                             <object class="GtkLabel" id="image_explorer_network_username_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Username (Optional):</property>
+                                                            <property name="label" translatable="yes">Username</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -6137,7 +6137,7 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                             <object class="GtkLabel" id="image_explorer_network_password_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Password (Optional):</property>
+                                                            <property name="label" translatable="yes">Password</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -6150,7 +6150,7 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                             <object class="GtkLabel" id="image_explorer_network_remote_path_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
-                                                            <property name="label" translatable="yes">Remote Path (Optional):</property>
+                                                            <property name="label" translatable="yes">Remote Path</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>

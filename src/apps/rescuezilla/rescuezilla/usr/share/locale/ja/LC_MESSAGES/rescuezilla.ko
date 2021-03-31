@@ -111,20 +111,35 @@ msgstr "以下に指定されているSMB/CIFS共有フォルダ"
 msgid "Search network"
 msgstr "ネットワークを検索"
 
-msgid "Server or share location:"
-msgstr "サーバーもしくは共有フォルダの場所:"
+msgid "Server"
+msgstr "サーバーもしくは共有フォルダの場所"
 
-msgid "Username (Optional):"
-msgstr "ユーザー名 (任意):"
+msgid "Share location (UNC path)"
+msgstr "サーバーもしくは共有フォルダの場所"
 
-msgid "Password (Optional):"
-msgstr "パスワード (任意):"
+msgid "Username"
+msgstr "ユーザー名"
 
-msgid "Domain (Optional):"
-msgstr "ドメイン (任意):"
+msgid "Password"
+msgstr "パスワード"
 
-msgid "Version (Optional):"
-msgstr "バージョン (任意):"
+msgid "Domain"
+msgstr "ドメイン"
+
+msgid "Version"
+msgstr "バージョン"
+
+msgid "Remote path"
+msgstr ""
+
+msgid "Exported path"
+msgstr ""
+
+msgid "Identity File"
+msgstr ""
+
+msgid "Optional"
+msgstr "任意"
 
 msgid "Select network-shared storage location:"
 msgstr "ネットワーク共有フォルダーの場所を選択します:"
@@ -143,6 +158,9 @@ msgstr ""
 
 msgid "Please ensure the username, password and other fields provided are correct, and try again."
 msgstr "パスワードや他の項目が正しいか確認し、再試行してください。"
+
+msgid "Must provide either password or SSH identity file."
+msgstr ""
 
 msgid "Scanning folder for backup images..."
 msgstr "バックアップイメージのフォルダを検索しています..."

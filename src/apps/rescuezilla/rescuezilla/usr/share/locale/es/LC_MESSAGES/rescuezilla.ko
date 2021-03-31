@@ -112,20 +112,35 @@ msgstr "Directorio/carpeta compartida especificada a continuación"
 msgid "Search network"
 msgstr "Buscar red"
 
-msgid "Server or share location:"
-msgstr "Servidor o ubicación compartida:"
+msgid "Server"
+msgstr "Servidor o ubicación compartida"
 
-msgid "Username (Optional):"
-msgstr "Nombre de usuario (Opcional):"
+msgid "Share location (UNC path)"
+msgstr "Servidor o ubicación compartida"
 
-msgid "Password (Optional):"
-msgstr "Contraseña (Opcional):"
+msgid "Username"
+msgstr "Nombre de usuario"
 
-msgid "Domain (Optional):"
-msgstr "Dominio (Opcional):"
+msgid "Password"
+msgstr "Contraseña"
 
-msgid "Version (Optional):"
+msgid "Domain"
+msgstr "Dominio"
+
+msgid "Version"
 msgstr ""
+
+msgid "Remote path"
+msgstr ""
+
+msgid "Exported path"
+msgstr ""
+
+msgid "Identity File"
+msgstr ""
+
+msgid "Optional"
+msgstr "Opcional"
 
 msgid "Select network-shared storage location:"
 msgstr "Seleccionar ubicación de almacenamiento compartido de red:"
@@ -144,6 +159,9 @@ msgstr ""
 
 msgid "Please ensure the username, password and other fields provided are correct, and try again."
 msgstr "Si el dispositivo se comparte en una red, asegúrese de que el nombre de usuario y la contraseña que escribió son correctos eInténtelo de nuevo."
+
+msgid "Must provide either password or SSH identity file."
+msgstr ""
 
 msgid "Scanning folder for backup images..."
 msgstr "Escaneando carpetas para copia de seguridad de imágenes..."

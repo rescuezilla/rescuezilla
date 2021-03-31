@@ -111,20 +111,35 @@ msgstr "SMB/CIFS共享方式请参见下文"
 msgid "Search network"
 msgstr "搜索网络"
 
-msgid "Server or share location:"
-msgstr "服务器或共享地址:"
+msgid "Server"
+msgstr "服务器或共享地址"
 
-msgid "Username (Optional):"
-msgstr "用户名 (可选):"
+msgid "Share location (UNC path)"
+msgstr "服务器或共享地址"
 
-msgid "Password (Optional):"
-msgstr "密码 (可选):"
+msgid "Username"
+msgstr "用户名"
 
-msgid "Domain (Optional):"
-msgstr "域 (可选):"
+msgid "Password"
+msgstr "密码"
 
-msgid "Version (Optional):"
-msgstr "版本 (可选):"
+msgid "Domain"
+msgstr "域"
+
+msgid "Version"
+msgstr "版本"
+
+msgid "Remote path"
+msgstr ""
+
+msgid "Exported path"
+msgstr ""
+
+msgid "Identity File"
+msgstr ""
+
+msgid "Optional"
+msgstr "可选"
 
 msgid "Select network-shared storage location:"
 msgstr "选择网络共享存储位置:"
@@ -143,6 +158,9 @@ msgstr ""
 
 msgid "Please ensure the username, password and other fields provided are correct, and try again."
 msgstr "请确保提供的用户名和密码正确，然后重试！"
+
+msgid "Must provide either password or SSH identity file."
+msgstr ""
 
 msgid "Scanning folder for backup images..."
 msgstr "正在扫描文件夹以查找备份镜像..."

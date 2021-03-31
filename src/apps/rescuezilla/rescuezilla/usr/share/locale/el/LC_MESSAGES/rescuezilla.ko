@@ -111,20 +111,35 @@ msgstr "SMB/CIFS κοινόχρηστος φάκελος καθορίζεται 
 msgid "Search network"
 msgstr "Αναζήτηση δικτύου"
 
-msgid "Server or share location:"
-msgstr "Διακομιστής ή τοποθεσία κοινής χρήσης:"
+msgid "Server"
+msgstr "Διακομιστής ή τοποθεσία κοινής χρήσης"
 
-msgid "Username (Optional):"
-msgstr "Όνομα Χρήστη (Προαιρετικό):"
+msgid "Share location (UNC path)"
+msgstr "Διακομιστής ή τοποθεσία κοινής χρήσης"
 
-msgid "Password (Optional):"
-msgstr "κωδικός Πρόσβασης (Προαιρετικό):"
+msgid "Username"
+msgstr "Όνομα Χρήστη"
 
-msgid "Domain (Optional):"
-msgstr "Domain (Προαιρετικό):"
+msgid "Password"
+msgstr "κωδικός Πρόσβασης"
 
-msgid "Version (Optional):"
-msgstr "Έκδοση (Προαιρετικό):"
+msgid "Domain"
+msgstr "Domain"
+
+msgid "Version"
+msgstr "Έκδοση"
+
+msgid "Remote path"
+msgstr ""
+
+msgid "Exported path"
+msgstr ""
+
+msgid "Identity File"
+msgstr ""
+
+msgid "Optional"
+msgstr "Προαιρετικό"
 
 msgid "Select network-shared storage location:"
 msgstr "Επιλέξτε την δικτυακή κοινόχρηστη τοποθεσία αποθήκευσης:"
@@ -143,6 +158,9 @@ msgstr ""
 
 msgid "Please ensure the username, password and other fields provided are correct, and try again."
 msgstr "Βεβαιωθείτε ότι το όνομα χρήστη, ο κωδικός πρόσβασης και όλα τα πεδία που παρέχονται είναι σωστά και δοκιμάστε ξανά.!"
+
+msgid "Must provide either password or SSH identity file."
+msgstr ""
 
 msgid "Scanning folder for backup images..."
 msgstr "Σάρωση φακέλου για είδωλα αντιγράφων ασφαλείας..."

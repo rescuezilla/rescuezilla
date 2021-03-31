@@ -112,20 +112,35 @@ msgstr "SMB/CIFS-Freigabeordner siehe unten"
 msgid "Search network"
 msgstr "Netzwerk durchsuchen"
 
-msgid "Server or share location:"
-msgstr "Server oder Freigabeort:"
+msgid "Server"
+msgstr "Server oder Freigabeort"
 
-msgid "Username (Optional):"
-msgstr "Benutzername (optional):"
+msgid "Share location (UNC path)"
+msgstr "Server oder Freigabeort"
 
-msgid "Password (Optional):"
-msgstr "Passwort (optional):"
+msgid "Username"
+msgstr "Benutzername"
 
-msgid "Domain (Optional):"
-msgstr "Domain (optional):"
+msgid "Password"
+msgstr "Passwort"
 
-msgid "Version (Optional):"
-msgstr "Version (optional):"
+msgid "Domain"
+msgstr "Domain"
+
+msgid "Version"
+msgstr "Version"
+
+msgid "Remote path"
+msgstr ""
+
+msgid "Exported path"
+msgstr ""
+
+msgid "Identity File"
+msgstr ""
+
+msgid "Optional"
+msgstr "optional"
 
 msgid "Select network-shared storage location:"
 msgstr "Speicherort mit Netzwerkfreigabe auswählen:"
@@ -144,6 +159,9 @@ msgstr ""
 
 msgid "Please ensure the username, password and other fields provided are correct, and try again."
 msgstr "Wenn das Gerät in einem Netzwerk freigegeben ist, sicherzustellen, dass der Benutzername und das Passwort richtig sind. Danach erneut versuchen!"
+
+msgid "Must provide either password or SSH identity file."
+msgstr ""
 
 msgid "Scanning folder for backup images..."
 msgstr "Ordner für Sicherungskopien wird gescannt..."
