@@ -751,46 +751,62 @@ class Handler:
         print("test")
 
     def network_protocol_combobox_changed(self, combobox):
+        # Shows and hides certain fields depending on the protocol.
+        # Shows different label text depending on the protocol (eg, "Remote path" for SSH and "Exported path" for NFS).
+        # Also whether or not a  field is depends on the network protocol.
+        optional = " (" + _("Optional") + "):"
         network_protocol_key = Utility.get_combobox_key(combobox)
         if network_protocol_key == "SMB":
             for mode in Mode:
                 self.network_protocol_widget_dict['network_server_label'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_server_label'][mode].set_text(_("Share location (UNC path)") + ": ")
                 self.network_protocol_widget_dict['network_server'][mode].set_visible(True)
                 self.network_protocol_widget_dict['network_username_label'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_username_label'][mode].set_text(_("Username") + optional)
                 self.network_protocol_widget_dict['network_username'][mode].set_visible(True)
                 self.network_protocol_widget_dict['network_remote_path_label'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_remote_path'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_password_label'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_password_label'][mode].set_text(_("Password") + optional)
                 self.network_protocol_widget_dict['network_password'][mode].set_visible(True)
                 self.network_protocol_widget_dict['network_domain_label'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_domain_label'][mode].set_text(_("Domain") + optional)
                 self.network_protocol_widget_dict['network_domain'][mode].set_visible(True)
                 self.network_protocol_widget_dict['network_version_label'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_version_label'][mode].set_text(_("Version") + optional)
                 self.network_protocol_widget_dict['network_version'][mode].set_visible(True)
                 self.network_protocol_widget_dict['network_ssh_idfile_label'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_ssh_idfile_box'][mode].set_visible(False)
         elif network_protocol_key == "SSH":
             for mode in Mode:
                 self.network_protocol_widget_dict['network_server_label'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_server_label'][mode].set_text(_("Server") + ": ")
                 self.network_protocol_widget_dict['network_server'][mode].set_visible(True)
                 self.network_protocol_widget_dict['network_username_label'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_username_label'][mode].set_text(_("Username") + ": ")
                 self.network_protocol_widget_dict['network_username'][mode].set_visible(True)
                 self.network_protocol_widget_dict['network_remote_path_label'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_remote_path_label'][mode].set_text(_("Remote path") + optional)
                 self.network_protocol_widget_dict['network_remote_path'][mode].set_visible(True)
                 self.network_protocol_widget_dict['network_password_label'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_password_label'][mode].set_text(_("Password") + optional)
                 self.network_protocol_widget_dict['network_password'][mode].set_visible(True)
                 self.network_protocol_widget_dict['network_domain_label'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_domain'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_version_label'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_version'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_ssh_idfile_label'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_ssh_idfile_label'][mode].set_text(_("Identity File") + optional)
                 self.network_protocol_widget_dict['network_ssh_idfile_box'][mode].set_visible(True)
         elif network_protocol_key == "NFS":
             for mode in Mode:
                 self.network_protocol_widget_dict['network_server_label'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_server_label'][mode].set_text(_("Server") + ": ")
                 self.network_protocol_widget_dict['network_server'][mode].set_visible(True)
                 self.network_protocol_widget_dict['network_username_label'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_username'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_remote_path_label'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_remote_path_label'][mode].set_text(_("Exported path") + ": ")
                 self.network_protocol_widget_dict['network_remote_path'][mode].set_visible(True)
                 self.network_protocol_widget_dict['network_password_label'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_password'][mode].set_visible(False)

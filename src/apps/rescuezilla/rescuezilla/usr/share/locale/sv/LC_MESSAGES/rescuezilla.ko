@@ -111,20 +111,35 @@ msgstr "SMB/CIFS-delad mapp som anges nedan"
 msgid "Search network"
 msgstr "Sök nätverk"
 
-msgid "Server or share location:"
-msgstr "Server eller utdelad lagringsplats:"
+msgid "Server"
+msgstr "Server eller utdelad lagringsplats"
 
-msgid "Username (Optional):"
-msgstr "Användarnamn (valfritt):"
+msgid "Share location (UNC path)"
+msgstr "Server eller utdelad lagringsplats"
 
-msgid "Password (Optional):"
-msgstr "Lösenord (valfritt):"
+msgid "Username"
+msgstr "Användarnamn"
 
-msgid "Domain (Optional):"
-msgstr "Domän (valfritt):"
+msgid "Password"
+msgstr "Lösenord"
 
-msgid "Version (Optional):"
-msgstr "Version (valfritt):"
+msgid "Domain"
+msgstr "Domän"
+
+msgid "Version"
+msgstr "Version"
+
+msgid "Remote path"
+msgstr ""
+
+msgid "Exported path"
+msgstr ""
+
+msgid "Identity File"
+msgstr ""
+
+msgid "Optional"
+msgstr "valfritt"
 
 msgid "Select network-shared storage location:"
 msgstr "Välj nätverksdelad lagringsplats:"
@@ -143,6 +158,9 @@ msgstr ""
 
 msgid "Please ensure the username, password and other fields provided are correct, and try again."
 msgstr "Se till att användarnamnet, lösenordet och andra angivna fält är korrekta och försök igen."
+
+msgid "Must provide either password or SSH identity file."
+msgstr ""
 
 msgid "Scanning folder for backup images..."
 msgstr "Skannar mapp för säkerhetskopierade filer..."

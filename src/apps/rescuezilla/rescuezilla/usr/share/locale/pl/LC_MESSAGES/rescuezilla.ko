@@ -111,20 +111,35 @@ msgstr "Folder współdzielony SMB/CIFS określony poniżej"
 msgid "Search network"
 msgstr "Wyszukaj sieć"
 
-msgid "Server or share location:"
-msgstr "Lokalizacja serwera lub udziału:"
+msgid "Server"
+msgstr "Lokalizacja serwera lub udziału"
 
-msgid "Username (Optional):"
-msgstr "Nazwa użytkownika (nieobowiązkowo):"
+msgid "Share location (UNC path)"
+msgstr "Lokalizacja serwera lub udziału"
 
-msgid "Password (Optional):"
-msgstr "Hasło (opcjonalnie):"
+msgid "Username"
+msgstr "Nazwa użytkownika"
 
-msgid "Domain (Optional):"
-msgstr "Domena (opcjonalnie):"
+msgid "Password"
+msgstr "Hasło"
 
-msgid "Version (Optional):"
-msgstr "Wersja (opcjonalnie):"
+msgid "Domain"
+msgstr "Domena"
+
+msgid "Version"
+msgstr "Wersja"
+
+msgid "Remote path"
+msgstr ""
+
+msgid "Exported path"
+msgstr ""
+
+msgid "Identity File"
+msgstr ""
+
+msgid "Optional"
+msgstr "opcjonalnie"
 
 msgid "Select network-shared storage location:"
 msgstr "Wybierz lokalizację pamięci masowej współdzielonej przez sieć :"
@@ -143,6 +158,9 @@ msgstr ""
 
 msgid "Please ensure the username, password and other fields provided are correct, and try again."
 msgstr "Proszę upewnić się, że nazwa użytkownika, hasło i inne podane pola są poprawne i spróbować ponownie.."
+
+msgid "Must provide either password or SSH identity file."
+msgstr ""
 
 msgid "Scanning folder for backup images..."
 msgstr "Folder kopii zapasowej obrazu ..."

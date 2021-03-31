@@ -112,20 +112,35 @@ msgstr "Dossier partagé indiqué ci-dessous"
 msgid "Search network"
 msgstr "Recherche des partages réseau"
 
-msgid "Server or share location:"
-msgstr "Emplacement du serveur ou du partage :"
+msgid "Server"
+msgstr "Emplacement du serveur ou du partage "
 
-msgid "Username (Optional):"
-msgstr "Nom d'utilisateur (optionnel) :"
+msgid "Share location (UNC path)"
+msgstr "Emplacement du serveur ou du partage "
 
-msgid "Password (Optional):"
-msgstr "Mot de passe (optionnel) :"
+msgid "Username"
+msgstr "Nom d'utilisateur"
 
-msgid "Domain (Optional):"
-msgstr "Domaine (optionnel) :"
+msgid "Password"
+msgstr "Mot de passe"
 
-msgid "Version (Optional):"
-msgstr "Version (optionnel) :"
+msgid "Domain"
+msgstr "Domaine"
+
+msgid "Version"
+msgstr "Version"
+
+msgid "Remote path"
+msgstr ""
+
+msgid "Exported path"
+msgstr ""
+
+msgid "Identity File"
+msgstr ""
+
+msgid "Optional"
+msgstr "optionnel"
 
 msgid "Select network-shared storage location:"
 msgstr "Choisir l'emplacement de stockage partagé sur le réseau :"
@@ -144,6 +159,9 @@ msgstr ""
 
 msgid "Please ensure the username, password and other fields provided are correct, and try again."
 msgstr "Si le périphérique est partagé sur un réseau, assurez-vous que le nom d'utilisateur et le mot de passe sont corrects et essayez à nouveau."
+
+msgid "Must provide either password or SSH identity file."
+msgstr ""
 
 msgid "Scanning folder for backup images..."
 msgstr "Analyse du dossier à la recherche d'images de sauvegarde..."
