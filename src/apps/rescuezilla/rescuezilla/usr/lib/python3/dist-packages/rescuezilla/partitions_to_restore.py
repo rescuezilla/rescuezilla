@@ -62,6 +62,19 @@ class PartitionsToRestore:
         self.dest_drive_key = ""
         self.dest_drive_node = {}
 
+    def set_overwriting_partition_warning_label(self, is_overwriting):
+        if is_overwriting:
+            overwrite_partition_table_warning_text = self.overwriting_partition_table_message + " " + _("The \"destination partition\" column has been updated using the information stored within the backup image.\n\n<b>If partitions have been resized, new partitions added, or additional operating systems installed <i>since the backup image was created</i>, then the destination drive's partition table will not match the backup image, and overwriting the destination drive's partition table will render these resized and additional partitions permanently inaccessible.</b> If you have not modified the partition table in such a way since creating this backup then overwriting the partition table is completely safe and will have no negative effects.")
+            self.builder.get_object(
+                "restore_step4_overwrite_partition_table_warning_label").set_markup(
+                overwrite_partition_table_warning_text)
+            self._use_image_partition_table()
+        else:
+            target_node_warning_text = self.not_overwriting_partition_table_message + " " + _("The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table.")
+            self.builder.get_object(
+                "restore_step4_overwrite_partition_table_warning_label").set_markup(target_node_warning_text)
+            self._use_existing_drive_partition_table()
+
     def initialize_individual_partition_restore_list(self, selected_image, dest_drive_node, dest_drive_desc,
                                                      dest_drive_dict):
         self.selected_image = selected_image
@@ -86,6 +99,7 @@ class PartitionsToRestore:
         overwrite_partition_table_checkbutton = self.builder.get_object("overwrite_partition_table_checkbutton")
         overwrite_partition_table_checkbutton.set_sensitive(self.selected_image.has_partition_table())
         overwrite_partition_table_checkbutton.set_active(self.selected_image.has_partition_table())
+        self.set_overwriting_partition_warning_label(self.selected_image.has_partition_table())
 
     def completed_toggle(self):
         if self.please_wait_popup is not None:
@@ -194,17 +208,7 @@ class PartitionsToRestore:
             overwrite_partition_table_checkbutton.set_sensitive(self.selected_image.has_partition_table())
             overwrite_partition_table_checkbutton.set_active(self.selected_image.has_partition_table())
 
-        if is_overwriting_partition_table:
-            overwrite_partition_table_warning_text = self.overwriting_partition_table_message + " " + _("The \"destination partition\" column has been updated using the information stored within the backup image.\n\n<b>If partitions have been resized, new partitions added, or additional operating systems installed <i>since the backup image was created</i>, then the destination drive's partition table will not match the backup image, and overwriting the destination drive's partition table will render these resized and additional partitions permanently inaccessible.</b> If you have not modified the partition table in such a way since creating this backup then overwriting the partition table is completely safe and will have no negative effects.")
-            self.builder.get_object(
-                "restore_step4_overwrite_partition_table_warning_label").set_markup(
-                overwrite_partition_table_warning_text)
-            self._use_image_partition_table()
-        else:
-            target_node_warning_text = self.not_overwriting_partition_table_message + " " + _("The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table.")
-            self.builder.get_object(
-                "restore_step4_overwrite_partition_table_warning_label").set_markup(target_node_warning_text)
-            self._use_existing_drive_partition_table()
+        self.set_overwriting_partition_warning_label(is_overwriting_partition_table)
         self.builder.get_object("destination_partition_combobox_cell_renderer").set_sensitive(not is_overwriting_partition_table)
 
     def change_combo_box(self, path_string, target_node_string, enduser_friendly_string):
