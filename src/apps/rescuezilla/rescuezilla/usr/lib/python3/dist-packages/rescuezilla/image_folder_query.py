@@ -166,12 +166,15 @@ class ImageFolderQuery:
         try:
             temp_image_dict = {}
             if isfile(absolute_path):
+                head, filename = os.path.split(absolute_path)
+                basename = os.path.basename(absolute_path)
                 # Identify Clonezilla images by presence of a file named "parts". Cannot use "clonezilla-img" or
                 # "dev-fs.list" because these files were not created by in earlier Clonezilla versions. Cannot use
                 # "disk" as Clonezilla's 'saveparts' function does not create it. But both 'savedisk' and 'saveparts'
                 # always creates a file named 'parts' across every version of Clonezilla tested.
                 error_suffix = ""
-                if absolute_path.endswith("parts"):
+                # Ignore [/mnt/backup/]/bin/parts and [/mnt/backup/]/sbin/parts
+                if filename == "parts" and not basename == "bin" and not basename == "sbin":
                     print("Found Clonezilla image " + filename)
                     GLib.idle_add(self.please_wait_popup.set_secondary_label_text,
                                   _("Scanning: {filename}").format(filename=absolute_path))
