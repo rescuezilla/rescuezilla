@@ -50,6 +50,11 @@ class QemuImage:
                                 "Apple DMG": [".dmg"],
                                 "Parallels": [".hds", ".hdd", ".fdd"]
         }
+
+        # Ignore [/mnt/backup]/sbin/partclone.dd
+        if filename.lower().endswith("partclone.dd"):
+            return False
+
         # Don't match on Redo Rescue images, which have filenames such as "20210307_sda1_001.img"
         m = utility.REMatcher(filename)
         if m.match(r".*_\d\d\d\.img"):
