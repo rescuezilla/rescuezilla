@@ -101,30 +101,40 @@ class PleaseWaitModalPopup:
         return True
 
 
-class ErrorMessageModalPopup:
-    def __init__(self, builder, message):
-        print("Displaying error box: " + message)
-        self._main_window = builder.get_object("main_window")
-        self._dialog = Gtk.MessageDialog(parent=self._main_window, type=Gtk.MessageType.ERROR,
+class ErrorMessageModalPopup(Gtk.MessageDialog):
+    def __init__(self, builder, error_content, error_heading=""):
+        Gtk.MessageDialog.__init__(self, type=Gtk.MessageType.ERROR,
                                          buttons=Gtk.ButtonsType.OK,
-                                         message_format=message)
-        # Ensure user can copy and paste dialog messages
-        for child in self._dialog.get_message_area().get_children():
-            child.set_selectable(True)
-        self._dialog.vbox.set_margin_left(30)
-        self._dialog.vbox.set_margin_right(30)
-        self._dialog.vbox.set_margin_bottom(15)
+                                         message_format=error_heading)
+        print("Displaying error box: " + error_heading + "\n\n" + error_content)
+        self.set_resizable(True)
+        self.set_default_size(width=650, height=400)
+        label = Gtk.Label(error_content)
+        scrolled_window = Gtk.ScrolledWindow()
+        label.set_selectable(True)
+        label.set_line_wrap(True)
+        scrolled_window.add_with_viewport(label)
+        scrolled_window.set_visible(True)
+        box = self.get_content_area()
+        box.pack_end(scrolled_window, expand=True, fill=True, padding=0)
+        self.show_all()
 
-        self._dialog.connect("response", self._response)
+        self._main_window = builder.get_object("main_window")
+
+        self.vbox.set_margin_left(30)
+        self.vbox.set_margin_right(30)
+        self.vbox.set_margin_bottom(15)
+
+        self.connect("response", self._response)
         self._main_window.set_sensitive(False)
-        self._dialog.set_keep_above(True)
-        self._dialog.show()
+        self.set_keep_above(True)
+        self.show()
 
     """ Close the window on clicking the 'OK' button """
 
     def _response(self, response_id, user_param1):
         self._main_window.set_sensitive(True)
-        self._dialog.destroy()
+        self.destroy()
 
     @staticmethod
     def display_nonfatal_warning_message(builder, message):
