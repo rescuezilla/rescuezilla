@@ -872,8 +872,9 @@ class BackupManager:
                 else:
                     self.summary_message = _("Backup succeeded with some errors:") + "\n\n" + self.summary_message + "\n\n" + message + "\n"
             else:
-                self.summary_message = _("Backup operation failed:") + "\n\n" + self.summary_message + "\n\n" + message + "\n"
-                error = ErrorMessageModalPopup(self.builder, self.summary_message)
+                heading = _("Backup operation failed:")
+                self.summary_message = heading + "\n\n" + self.summary_message + "\n\n" + message + "\n"
+                error = ErrorMessageModalPopup(self.builder, self.summary_message, error_heading=heading)
 
             self.summary_message += duration_message + "\n"
 

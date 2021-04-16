@@ -156,8 +156,7 @@ class ImageFolderQuery:
                 traceback_messages += key + ": " + self.failed_to_read_image_dict[key] + "\n\n"
 
         if len(traceback_messages) > 0:
-            ErrorMessageModalPopup(self.builder,
-                                   _("Error processing the following images:") + "\n\n" + str(traceback_messages))
+            ErrorMessageModalPopup(self.builder,str(traceback_messages), error_heading=_("Error processing the following images:"))
         self.please_wait_popup.destroy()
 
     def scan_file(self, absolute_path, filename, enduser_filename):
