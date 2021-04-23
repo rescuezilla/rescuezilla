@@ -21,12 +21,15 @@ import math
 import os
 import pwd
 import re
+import shutil
 import subprocess
 from queue import Queue
 from threading import Thread
 from time import sleep
 
 import gi
+
+from wizard_state import RESCUEZILLA_MOUNT_TMP_DIR
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import GLib, Gtk
@@ -723,6 +726,106 @@ class Utility:
             return True, process.stderr
         else:
             return False, "Failed to shutdown: " + failed_message
+
+    # Clear the NTFS volume dirty flag if the volume can be fixed and mounted. If the option is not present or the
+    # volume cannot be fixed, the dirty volume flag is set to request a volume checking at next mount.
+    @staticmethod
+    def run_ntfsfix(long_device_node):
+        process, flat_command_string, failed_message = Utility.run("Fix NTFS volume dirty flag",
+                                                   ["ntfsfix", "--clear-dirty", long_device_node], use_c_locale=False)
+        if process.returncode != 0:
+            return False, failed_message
+        return True, ""
+
+    # Query size in bytes of a partition, relevant when partition table may have been recently overwritten invalidating
+    # Rescuezilla's existing cache
+    @staticmethod
+    def query_partition_size_bytes(long_device_node):
+        process, flat_command_string, failed_message = Utility.run(
+            "Query " + long_device_node,
+            ["lsblk", "--bytes", "--noheadings", "--nodeps", "--output", "size", long_device_node],
+            use_c_locale=False)
+        if process.returncode != 0:
+            return False, failed_message
+        return True, process.stdout
+
+    # Grow filesystem to fill partition, like Clonezilla's "-r" implemented in sbin/ocs-resize-part
+    # TODO: Clonezilla only supports growing filesystems, and shrinking is a key feature which requires
+    # TODO: some thought [1]
+    # [1] https://github.com/rescuezilla/rescuezilla/issues/18#issuecomment-823057082
+    @staticmethod
+    def grow_filesystems(filesystem, long_device_node, logger):
+        if not os.path.exists(RESCUEZILLA_MOUNT_TMP_DIR) and not os.path.isdir(RESCUEZILLA_MOUNT_TMP_DIR):
+            os.mkdir(RESCUEZILLA_MOUNT_TMP_DIR, 0o755)
+
+        is_unmounted, message = Utility.umount_warn_on_busy(RESCUEZILLA_MOUNT_TMP_DIR)
+        if not is_unmounted:
+            return False, message
+
+        size_in_bytes=""
+        # Growing FAT filesystems require quering partition size which other filesystems don't.
+        if filesystem == "vfat" or filesystem == "fat16" or filesystem == "fat32":
+            is_success, output = Utility.query_partition_size_bytes(long_device_node)
+            if not is_success:
+                return False, output
+            else:
+                size_in_bytes = output
+
+        grow_filesystem_dict = {
+            'reiserfs': {'match': ["reiserfs"], 'fsck_command': [], 'mount_command': [], 'resize_command': ["resize_reiserfs", "-f", long_device_node]},
+            'fat':  {'match': ["vfat", "fat16", "fat32"], 'fsck_command': [], 'mount_command': [], 'resize_command': ["fatresize", "--progress", "--verbose", "--size " + size_in_bytes, long_device_node]},
+            'ext':  {'match': ["ext2", "ext3", "ext4"], 'fsck_command': ["e2fsck", "-f", "-y", long_device_node], 'mount_command': [], 'resize_command': ["resize2fs", "-p", long_device_node]},
+            # Not using "ntfsfix"
+            'ntfs': {'match': ["ntfs"], 'fsck_command': [], 'mount_command': [], 'resize_command': ["ntfsresize", long_device_node]},
+            'xfs':  {'match': ["xfs"], 'fsck_command': [], 'mount_command': ["mount", "-t", "xfs", long_device_node, RESCUEZILLA_MOUNT_TMP_DIR], 'resize_command': ["xfs_growfs", long_device_node]},
+            'jfs':  {'match': ["jfs"], 'fsck_command': [], 'mount_command': ["mount", "-o", "remount,resize", long_device_node, RESCUEZILLA_MOUNT_TMP_DIR], 'resize_command': []},
+            'btrfs':  {'match': ["btrfs"], 'fsck_command': [], 'mount_command': ["mount", "-t", "btrfs", long_device_node, RESCUEZILLA_MOUNT_TMP_DIR], 'resize_command': ["btrfs", "filesystem", "resize", "max"]},
+            'nilfs2': {'match': ["nilfs2"], 'fsck_command': [], 'mount_command': ["mount", "-t", "nilfs2", long_device_node, RESCUEZILLA_MOUNT_TMP_DIR], 'resize_command': ["nilfs-resize", "--yes", long_device_node]},
+        }
+
+        has_found_key = False
+        for key in grow_filesystem_dict.keys():
+            if filesystem.lower() in grow_filesystem_dict[key]['match']:
+                has_found_key = True
+                # Found supported filesystem to resize!
+                fsck_cmd_list = grow_filesystem_dict[key]['fsck_command']
+                if len(fsck_cmd_list) > 0 and shutil.which(fsck_cmd_list[0]) is None:
+                    return False, fsck_cmd_list[0] + " not found"
+                mount_cmd_list = grow_filesystem_dict[key]['mount_command']
+                if len(mount_cmd_list) > 0 and shutil.which(mount_cmd_list[0]) is None:
+                    return False, mount_cmd_list[0] + " not found"
+                resize_cmd_list = grow_filesystem_dict[key]['resize_command']
+                if len(resize_cmd_list) > 0 and shutil.which(resize_cmd_list[0]) is None:
+                    return False, resize_cmd_list[0] + " not found"
+
+                combined_identifier = long_device_node + " (" + filesystem + ")"
+                if len(fsck_cmd_list) > 0:
+                    process, flat_command_string, failed_message = Utility.run("Running filesystem check " + combined_identifier,
+                                                                               fsck_cmd_list, use_c_locale=False, logger=logger)
+                    if process.returncode != 0:
+                        return False, failed_message
+                if len(mount_cmd_list) > 0:
+                    process, flat_command_string, failed_message = Utility.run("Mounting " + combined_identifier, mount_cmd_list, use_c_locale=False, logger=logger)
+                    if process.returncode != 0:
+                        return False, failed_message
+                if len(resize_cmd_list) > 0:
+                    resize_process, resize_flat_command_string, resize_failed_message = Utility.run("Growing filesytem " + combined_identifier, resize_cmd_list, use_c_locale=False, logger=logger)
+                    # Always umount, even on resize failure
+                    if len(mount_cmd_list) > 0:
+                        umount_process, umount_flat_command_string, umount_failed_message = Utility.run("Umounting " + combined_identifier, ["umount", long_device_node], use_c_locale=False, logger=logger)
+                    if resize_process.returncode != 0:
+                        # Return the resize failed message
+                        return False, resize_failed_message
+                # Unmount even if the resize_command is empty (eg, the JFS case)
+                if len(mount_cmd_list) > 0:
+                    process, flat_command_string, failed_message = Utility.run(
+                    "Umount " + long_device_node, ["umount", long_device_node], use_c_locale=False, logger=logger)
+                    if process.returncode != 0:
+                        return False, failed_message
+
+        if not has_found_key:
+            print("Unable to resize " + long_device_node + " " + filesystem)
+        return True, ""
 
     @staticmethod
     def get_combobox_key(combobox):

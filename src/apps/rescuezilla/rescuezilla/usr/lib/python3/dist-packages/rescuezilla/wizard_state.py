@@ -20,6 +20,7 @@ from enum import Enum
 
 MOUNT_DIR = "/mnt/backup"
 IMAGE_EXPLORER_DIR = "/mnt/rescuezilla.image.explorer/"
+RESCUEZILLA_MOUNT_TMP_DIR = "/mnt/rescuezilla.mount.tmp.folder/"
 JOINED_FILES_NBD_DEVICE = "/dev/nbd0"
 DECOMPRESSED_NBD_DEVICE = "/dev/nbd1"
 MOUNTABLE_NBD_DEVICE = "/dev/nbd2"

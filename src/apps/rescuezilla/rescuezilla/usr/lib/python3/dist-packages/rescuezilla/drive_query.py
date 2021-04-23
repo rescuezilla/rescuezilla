@@ -36,7 +36,7 @@ from parser.os_prober import OsProber
 from parser.parted import Parted
 from parser.sfdisk import Sfdisk
 from utility import PleaseWaitModalPopup, Utility, _, ErrorMessageModalPopup
-from wizard_state import IMAGE_EXPLORER_DIR
+from wizard_state import IMAGE_EXPLORER_DIR, RESCUEZILLA_MOUNT_TMP_DIR
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import GLib
@@ -192,6 +192,13 @@ class DriveQuery:
         returncode, failed_message = ImageExplorerManager._do_unmount(IMAGE_EXPLORER_DIR)
         if not returncode:
             GLib.idle_add(self.error_message_callback, False, "Unable to shutdown Image Explorer \n\n" + failed_message)
+            GLib.idle_add(self.please_wait_popup.destroy)
+            return
+
+        GLib.idle_add(self.please_wait_popup.set_secondary_label_text, "Unmounting: " + RESCUEZILLA_MOUNT_TMP_DIR)
+        returncode, failed_message = ImageExplorerManager._do_unmount(RESCUEZILLA_MOUNT_TMP_DIR)
+        if not returncode:
+            GLib.idle_add(self.error_message_callback, False, "Unable to unmount " + RESCUEZILLA_MOUNT_TMP_DIR + "\n\n" + failed_message)
             GLib.idle_add(self.please_wait_popup.destroy)
             return
 
