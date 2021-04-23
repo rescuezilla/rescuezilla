@@ -39,7 +39,7 @@ from parser.fsarchiver_image import FsArchiverImage
 from parser.qemu_image import QemuImage
 from parser.redorescue_image import RedoRescueImage
 from parser.sfdisk import Sfdisk
-from wizard_state import IMAGE_EXPLORER_DIR
+from wizard_state import IMAGE_EXPLORER_DIR, RESCUEZILLA_MOUNT_TMP_DIR
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import GObject, GLib
@@ -279,6 +279,13 @@ class RestoreManager:
             self.summary_message += self.image.absolute_path + "\n"
 
         returncode, failed_message = ImageExplorerManager._do_unmount(IMAGE_EXPLORER_DIR)
+        if not returncode:
+            with self.summary_message_lock:
+                self.summary_message += failed_message + "\n"
+            GLib.idle_add(self.completed_restore, False, failed_message)
+            return
+
+        returncode, failed_message = ImageExplorerManager._do_unmount(RESCUEZILLA_MOUNT_TMP_DIR)
         if not returncode:
             with self.summary_message_lock:
                 self.summary_message += failed_message + "\n"
@@ -680,27 +687,9 @@ class RestoreManager:
                         self.summary_message += message + "\n"
                     GLib.idle_add(self.restore_destination_drive, False, message)
 
-
                 if self.requested_stop:
                     GLib.idle_add(self.completed_restore, False, "Requested stop")
                     return
-
-
-
-                # Unlike Clonezilla, for simplicitly Rescuezilla always removes the dirty flag.
-                """process, flat_command_string = Utility.run("Fix NTFS volume dirty flag", ["ntfsfix", "--clear-dirty", dest_part['dest_key']])
-                if process.returncode != 0:
-                    print("Error fixing NTFS volume dirty flag")
-                    GLib.idle_add(self.completed_restore, False,
-                                  "Error clearing NTFS volume dirty flag: " + process.stderr)
-                    return"""
-
-                # Clonezilla has various if guarded advanced features that Rescuezilla does not yet implement.
-                # TODO: Implement Clonezilla's "Remove the udev MAC address records on the restored GNU/Linux" function
-                # TODO: Implement Clonezilla's "re-install syslinux" function
-                # TODO: Implement Clonezilla's "re-install grub" function (not that important since not resizing fs etc?)
-                # TODO: Implement Clonezilla's "Update initramfs here" function
-                # TODO: Implement Clonezilla's "Reloc ntfs boot partition" function
 
                 # TODO: Reinstall whole MBR (512 bytes)
                 # FIXME: Already done above, double check if Clonezilla has mistaken duplication?
@@ -933,6 +922,46 @@ class RestoreManager:
                     with self.summary_message_lock:
                         self.summary_message += message + "\n"
                     continue
+
+                filesystem = self.image.image_format_dict_dict[image_key]['filesystem']
+                growing_filesystem_message = _(
+                    "Growing filesystem {partition} ({filesystem}). This my take a while").format(
+                    partition=dest_part['dest_key'], filesystem=filesystem)
+                self.logger.write(growing_filesystem_message)
+                GLib.idle_add(self.update_main_statusbar, growing_filesystem_message)
+                is_success, failed_message = Utility.grow_filesystems(filesystem, dest_part['dest_key'], self.logger)
+                if not is_success:
+                    message = "Resizing partition " + dest_part['dest_key'] + " (" + filesystem + ") failed:\n\n" + failed_message
+                    self.logger.write(message)
+                    GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, message)
+                    with self.summary_message_lock:
+                        self.summary_message += message + "\n"
+                    continue
+                GLib.idle_add(self.update_main_statusbar, "")
+
+                # TODO: Implement Clonezilla's "Do files checksum check. This must be before any further commands (like grub reinstalling) are done."
+                # TODO: This is only checked if "$chk_chksum_for_files_in_dev" / -cmf is set, which is non-default.
+                # TODO: (Not actually required before GRUB re-installation except for obviously invalidating checksums)
+
+                # "Clear the NTFS volume dirty flag if the volume can be fixed and mounted."
+                if "ntfs" == filesystem:
+                    GLib.idle_add(self.update_main_statusbar, "Running ntfsfix")
+                    is_success, failed_message = Utility.run_ntfsfix(dest_part['dest_key'])
+                    if not is_success:
+                        print("Error fixing NTFS volume dirty flag")
+                        GLib.idle_add(self.completed_restore, False, failed_message)
+                        return
+
+                # Clonezilla has various if guarded advanced features that Rescuezilla does not yet implement.
+                # TODO: Implement Clonezilla's "Remove the udev MAC address records on the restored GNU/Linux" function
+                # TODO: Implement Clonezilla's "re-install syslinux" function
+                # TODO: Implement Clonezilla's "re-install grub" function
+                # TODO: Implement Clonezilla's "Update initramfs here" function
+                # TODO: Implement Clonezilla's "Reloc ntfs boot partition" function
+                # TODO: Implement Clonezilla's "Reinstall whole MBR (512 bytes)" function
+                # TODO: Implement Clonezilla's "Updating EFI NVRAM for the boot device" function
+
+
         elif isinstance(self.image, FsArchiverImage):
             self.logger.write("Detected FsArchiverImage")
             self.logger.write(str(self.restore_mapping_dict))
