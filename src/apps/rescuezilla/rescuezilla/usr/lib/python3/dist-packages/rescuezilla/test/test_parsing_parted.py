@@ -121,3 +121,26 @@ Disk Flags:
 """
         parted_dict = Parted.parse_parted_output(input_parted_string)
         print("Output dict was: " + str(parted_dict))
+
+    def test_flag_detection(self):
+        # Modified input string to add "bios_grub" to flag section
+        input_parted_gpt_string = """Model: Testing a certain flag
+Disk /dev/sdc: 2147483648B
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags:
+
+Number  Start       End          Size         File system     Name  Flags
+ 1      1048576B    65011711B    63963136B    ext4
+ 2      65011712B   185597951B   120586240B   fat32                 test,bios_grub
+ 3      185597952B  307232767B   121634816B   ntfs                  test,msftdata,boot
+"""
+
+        parted_dict = Parted.parse_parted_output(input_parted_gpt_string)
+        self.assertEqual(Parted.get_partitions_containing_flag(parted_dict, "bios_grub"), [2])
+        self.assertEqual(Parted.get_partitions_containing_flag(parted_dict, "boot"), [3])
+        self.assertEqual(Parted.get_partitions_containing_flag(parted_dict, "test"), [2,3])
+        parted_dict['partitions'][2]['flags'] = "asdf"
+        self.assertFalse(Parted.get_partitions_containing_flag(parted_dict, "bios_grub"), [])
+        parted_dict['partitions'][2]['flags'] = "msftdata,bios_grub"
+        self.assertTrue(Parted.get_partitions_containing_flag(parted_dict, "bios_grub"), [3])
