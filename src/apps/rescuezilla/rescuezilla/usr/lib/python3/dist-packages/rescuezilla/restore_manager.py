@@ -33,9 +33,11 @@ from time import sleep
 import gi
 
 from image_explorer_manager import ImageExplorerManager
+from parser.chs_utilities import ChsUtilities
 from parser.fogproject_image import FogProjectImage
 from parser.foxclone_image import FoxcloneImage
 from parser.fsarchiver_image import FsArchiverImage
+from parser.parted import Parted
 from parser.qemu_image import QemuImage
 from parser.redorescue_image import RedoRescueImage
 from parser.sfdisk import Sfdisk
@@ -228,7 +230,6 @@ class RestoreManager:
             return False
         return True
 
-
     def _shutdown_lvm(self):
         self.display_status("Shutting down the Logical Volume Manager (LVM)", "")
         # Stop the Logical Volume Manager (LVM)
@@ -346,6 +347,17 @@ class RestoreManager:
                 GLib.idle_add(self.completed_restore, False, "Requested stop")
                 return
 
+            querying_geometry_msg = _("Querying hard drive geometry of {device}").format(device=self.restore_destination_drive)
+            self.display_status(querying_geometry_msg, "")
+            # Get the hard drive geometry, which while otherwise obsolete is important for NTFS filesystems.
+            # See ChsUtilities for more information.
+            destination_harddrive_geometry_dict, is_edd_geometry, message = ChsUtilities.query_drive_chs_geometry(long_device_node=self.restore_destination_drive,
+                                                                                                 image_sfdisk_geometry_dict=self.image.sfdisk_chs_dict,
+                                                                                                 logger=self.logger)
+            if destination_harddrive_geometry_dict is None:
+                # It's not fatal to failing to query geometry.
+                print("Failed to query geometry dictionary: " + message)
+
             if self.is_overwriting_partition_table:
                 process, flat_command_string, failed_message = Utility.run(
                     "Delete any existing the MBR and GPT partition table on the destination disk: " + self.restore_destination_drive,
@@ -365,12 +377,11 @@ class RestoreManager:
                     GLib.idle_add(self.completed_restore, False, message)
                     return
 
-                mbr_absolute_path = self.image.get_absolute_mbr_path()
-                if mbr_absolute_path:
+                if self.image.get_absolute_mbr_path():
                     # FIXME: The description here doesn't match what the code is doing
                     process, flat_command_string, failed_message = Utility.run("Restoring the first 446 bytes of MBR data (executable code area) for " + self.restore_destination_drive,
                                                                                ["dd", "if=" +
-                                                                                mbr_absolute_path,
+                                                                                self.image.get_absolute_mbr_path(),
                                                                                 "of=" + self.restore_destination_drive, "bs=446"],
                                                                                use_c_locale=False, logger=self.logger)
                     if process.returncode != 0:
@@ -460,7 +471,7 @@ class RestoreManager:
 
                 if not self.update_kernel_partition_table(wait_for_partition=True):
                     GLib.idle_add(self.completed_restore, False,
-                                  "Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table.")
+                                  _("Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."))
                     return
 
                 if self.requested_stop:
@@ -714,7 +725,6 @@ class RestoreManager:
       echo $msg_delimiter_star_line | tee --append $OCS_LOGFILE
 """
 
-                # TODO: Updating "EFI NVRAM for the boot device" function
                 filesystem_restore_message = _(
                     "Restoring {description} to {destination_partition} ({destination_description})").format(
                     description=dest_part['description'], destination_partition=dest_part['dest_key'],
@@ -923,45 +933,203 @@ class RestoreManager:
                         self.summary_message += message + "\n"
                     continue
 
-                filesystem = self.image.image_format_dict_dict[image_key]['filesystem']
-                growing_filesystem_message = _(
-                    "Growing filesystem {partition} ({filesystem}). This my take a while").format(
-                    partition=dest_part['dest_key'], filesystem=filesystem)
-                self.logger.write(growing_filesystem_message)
-                GLib.idle_add(self.update_main_statusbar, growing_filesystem_message)
-                is_success, failed_message = Utility.grow_filesystems(filesystem, dest_part['dest_key'], self.logger)
-                if not is_success:
-                    message = "Resizing partition " + dest_part['dest_key'] + " (" + filesystem + ") failed:\n\n" + failed_message
-                    self.logger.write(message)
-                    GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, message)
-                    with self.summary_message_lock:
-                        self.summary_message += message + "\n"
-                    continue
-                GLib.idle_add(self.update_main_statusbar, "")
+                if 'filesystem' in self.image.image_format_dict_dict[image_key].keys():
+                    filesystem = self.image.image_format_dict_dict[image_key]['filesystem']
+                    growing_filesystem_message = _(
+                        "Growing filesystem {partition} ({filesystem}). This may take a while...").format(
+                        partition=dest_part['dest_key'], filesystem=filesystem)
+                    self.logger.write(growing_filesystem_message)
+                    GLib.idle_add(self.display_status, growing_filesystem_message, "")
+                    is_success, failed_message = Utility.grow_filesystems(filesystem, dest_part['dest_key'], self.logger)
+                    if not is_success:
+                        message = "Resizing partition " + dest_part['dest_key'] + " (" + filesystem + ") failed:\n\n" + failed_message
+                        self.logger.write(message + "\n")
+                        GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, message)
+                        with self.summary_message_lock:
+                            self.summary_message += message + "\n"
+                        continue
+                GLib.idle_add(self.display_status, "", "")
 
                 # TODO: Implement Clonezilla's "Do files checksum check. This must be before any further commands (like grub reinstalling) are done."
-                # TODO: This is only checked if "$chk_chksum_for_files_in_dev" / -cmf is set, which is non-default.
-                # TODO: (Not actually required before GRUB re-installation except for obviously invalidating checksums)
+                # Note: This is only checked if "$chk_chksum_for_files_in_dev" / -cmf is enabled (which is non-default),
+                # and the check is not actually required before GRUB re-installation except for obviously invalidating
+                # checksums)
 
-                # "Clear the NTFS volume dirty flag if the volume can be fixed and mounted."
                 if "ntfs" == filesystem:
-                    GLib.idle_add(self.update_main_statusbar, "Running ntfsfix")
+                    GLib.idle_add(self.display_status, "Running ntfsfix...", "")
                     is_success, failed_message = Utility.run_ntfsfix(dest_part['dest_key'])
                     if not is_success:
-                        print("Error fixing NTFS volume dirty flag")
+                        self.logger.write(failed_message + "\n")
+                        GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, failed_message)
+                        with self.summary_message_lock:
+                            self.summary_message += failed_message + "\n"
+
+                    # Get the NTFS partition's start sector from the Parted dictionary
+                    base_device, partition_number = Utility.split_device_string(dest_part['dest_key'])
+                    ntfs_partition_start_sector = None
+                    try:
+                        ntfs_partition_start_sector = self.image.parted_dict['partitions'][partition_number]['start']
+                    except:
+                        print("Couldn't get start sector from parted dict")
+                        tb = traceback.format_exc()
+                        traceback.print_exc()
+                    # Adjust the NTFS filesystem CHS (cylinder-head-sector) information.
+                    # Note: Clonezilla's run_ntfsreloc_part function from sbin/ocs-functions file only adjusts
+                    # partitions containing the boot flag, but adjusting all NTFS filesystem seems to make more sense.
+                    is_success, message = ChsUtilities.adjust_ntfs_filesystem_chs_geometry_information(
+                        ntfs_partition_long_device_node=dest_part['dest_key'],
+                        ntfs_partition_start_sector=ntfs_partition_start_sector,
+                        destination_disk_geometry_dict=destination_harddrive_geometry_dict,
+                        is_edd_geometry=is_edd_geometry,
+                        logger=self.logger)
+
+                    self.logger.write(message + "\n")
+                    if not is_success:
+                        GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, message)
+                        with self.summary_message_lock:
+                            self.summary_message += _("Failed to adjust NTFS filesystem geometry of {ntfs_device}").format(ntfs_device=ntfs_partition_long_device_node) + "\n"
+                    else:
+                        with self.summary_message_lock:
+                            self.summary_message += message + "\n"
+
+            # Clonezilla bash scripts take partition list without leading /dev/, and as a single argument string.
+            restore_destination_drive_short_dev_node = re.sub('/dev/', '', self.restore_destination_drive)
+            dest_partition_short_dev_node_string = ""
+            for image_key in self.restore_mapping_dict.keys():
+                dest_partition_short_dev_node_string += re.sub('/dev/', '', self.restore_mapping_dict[image_key]['dest_key']) + " "
+
+            if shutil.which("ocs-tux-postprocess") is not None:
+                GLib.idle_add(self.display_status, "Removing udev MAC address records", "")
+                # TODO: Port Clonezilla's ocs-tux-postprocess bash script to Python instead of relying on Clonezilla's script
+                process, flat_command_string, failed_message = Utility.run(
+                   "Remove the udev MAC address records on the restored GNU/Linux (if any)",
+                    ["ocs-tux-postprocess", dest_partition_short_dev_node_string], use_c_locale=False, logger=self.logger)
+                if process.returncode == 0:
+                    message = "Successfully removed any udev MAC address records"
+                    self.logger.write(message + "\n")
+                    # Not displaying this to users because it wil lbe confusing for end-users.
+            else:
+                message = "Not removing udev MAC address records: Unable to find ocs-tux-postprocess. Is Clonezilla installed?"
+                self.logger.write(message + "\n")
+                with self.summary_message_lock:
+                    self.summary_message += message + "\n"
+
+            if shutil.which("ocs-update-syslinux") is not None:
+                GLib.idle_add(self.display_status, "Re-installing syslinux (if any)", "")
+                # TODO: Port Clonezilla's ocs-update-syslinux bash script to Python instead of relying on Clonezilla's script
+                process, flat_command_string, failed_message = Utility.run(
+                   "Re-install syslinux (if any)",
+                    ["ocs-update-syslinux", "--batch", dest_partition_short_dev_node_string], use_c_locale=False, logger=self.logger)
+                if process.returncode == 0:
+                    message = _("Successfully re-installed syslinux bootloader")
+                    self.logger.write(message + "\n")
+                    with self.summary_message_lock:
+                        self.summary_message += message + "\n"
+            else:
+                message = "Not re-installing syslinux: Unable to find ocs-update-syslinux. Is Clonezilla installed?"
+                self.logger.write(message + "\n")
+                with self.summary_message_lock:
+                    self.summary_message += message + "\n"
+
+            if shutil.which("ocs-install-grub") is not None:
+                GLib.idle_add(self.display_status, "Re-installing GRUB bootloader (if any)", "")
+                # TODO: Port Clonezilla's ocs-install-grub bash script to Python instead of relying on Clonezilla's script
+                process, flat_command_string, failed_message = Utility.run(
+                   "Re-installing GRUB bootloader (if any)",
+                    ["ocs-install-grub", "--selected-parts", dest_partition_short_dev_node_string,
+                     "--selected-hd", restore_destination_drive_short_dev_node, "auto"], use_c_locale=False, logger=self.logger)
+                # Returns 0 on GRUB re-install success, but returns -1 even if GRUB not found
+                if process.returncode == 0:
+                    message = _("Successfully re-installed GRUB bootloader")
+                    for line in process.stderr:
+                        if "Installing for" in line:
+                            message += ": " + line.sub("Installing for ")
+                    self.logger.write(message + "\n")
+                    with self.summary_message_lock:
+                        self.summary_message += message + "\n"
+                else:
+                    message = _("Did not update GRUB bootloader (if any)")
+                    self.logger.write(message + "\n")
+                    with self.summary_message_lock:
+                        self.summary_message += message + "\n"
+                # Clonezilla doesn't check the return code, so neither does Rescuezilla
+            else:
+                message = "Not re-installing GRUB bootloader: Unable to find ocs-install-grub. Is Clonezilla installed?"
+                self.logger.write(message + "\n")
+                with self.summary_message_lock:
+                    self.summary_message += message + "\n"
+
+            if shutil.which("ocs-update-initrd") is not None:
+                GLib.idle_add(self.display_status, "Updating initramfs (if any)", "")
+                # TODO: Port Clonezilla's ocs-update-initrd bash script to Python instead of relying on Clonezilla's script
+                process, flat_command_string, failed_message = Utility.run(
+                   "Update initramfs (if any)",
+                    ["ocs-update-initrd", "--selected-parts", dest_partition_short_dev_node_string,
+                     "--selected-hd", restore_destination_drive_short_dev_node, "auto"], use_c_locale=False, logger=self.logger)
+                if process.returncode == 0:
+                    message = _("Successfully updated initramfs")
+                    self.logger.write(message + "\n")
+                    with self.summary_message_lock:
+                        self.summary_message += message + "\n"
+            else:
+                message = "Not updating initramfs: Unable to find ocs-update-initrd. Is Clonezilla installed?"
+                self.logger.write(message + "\n")
+                with self.summary_message_lock:
+                    self.summary_message += message + "\n"
+
+            if self.is_overwriting_partition_table:
+                # "Reinstall whole MBR (512 bytes)"
+                if self.image.get_absolute_mbr_path():
+                    process, flat_command_string, failed_message = Utility.run(
+                        "Restoring the MBR data (512 bytes), i.e. executable code area + table of primary partitions + MBR signature, for " + self.restore_destination_drive,
+                        ["dd", "if=" + self.image.get_absolute_mbr_path(),
+                         "of=" + self.restore_destination_drive, "bs=512", "count=1"],
+                        use_c_locale=False, logger=self.logger)
+                    if process.returncode != 0:
+                        with self.summary_message_lock:
+                            self.summary_message += failed_message
                         GLib.idle_add(self.completed_restore, False, failed_message)
                         return
 
-                # Clonezilla has various if guarded advanced features that Rescuezilla does not yet implement.
-                # TODO: Implement Clonezilla's "Remove the udev MAC address records on the restored GNU/Linux" function
-                # TODO: Implement Clonezilla's "re-install syslinux" function
-                # TODO: Implement Clonezilla's "re-install grub" function
-                # TODO: Implement Clonezilla's "Update initramfs here" function
-                # TODO: Implement Clonezilla's "Reloc ntfs boot partition" function
-                # TODO: Implement Clonezilla's "Reinstall whole MBR (512 bytes)" function
-                # TODO: Implement Clonezilla's "Updating EFI NVRAM for the boot device" function
+                    if not self.update_kernel_partition_table(wait_for_partition=True):
+                        GLib.idle_add(self.completed_restore, False,
+                                      _("Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."))
+                        return
 
+                    # Shutdown the Logical Volume Manager (LVM) again -- it seems the volume groups re-activate after partition table restored for some reason.
+                    # FIXME: Look into this.
+                    is_successfully_shutdown, message = self._shutdown_lvm()
+                    if not is_successfully_shutdown:
+                        GLib.idle_add(self.completed_restore, False, message)
+                        return
+                else:
+                    print("No MBR associated with " + short_selected_image_drive_node)
 
+                # "Updating EFI NVRAM for the boot device"
+                if self.image.efi_nvram_dat_absolute_path and 'label' in self.image.normalized_sfdisk_dict['sfdisk_dict'].keys() and "gpt" == self.image.normalized_sfdisk_dict['sfdisk_dict']['label']:
+                    if len(Parted.get_partitions_containing_flag(self.image.parted_dict[self.image.short_disk_device_node], "bios_grub")) > 0:
+                        self.logger.write("Found bios_grub flag! Skipping EFI NVRAM update.")
+                    else:
+                        if shutil.which("update-efi-nvram-boot-entry") is None:
+                            GLib.idle_add(self.display_status, "Updating EFI NVRAM...")
+                            # TODO: Port Clonezilla's ocs-update-initrd bash script to Python instead of relying on Clonezilla's script
+                            # Unlike Clonezilla, no need to specify a -f/--efi-boot-file-info option
+                            process, flat_command_string, failed_message = Utility.run(
+                                "Update EFI NVRAM",
+                                ["update-efi-nvram-boot-entry", "--full-path-to-efi-file", self.image.efi_nvram_dat_absolute_path, self.restore_destination_drive], use_c_locale=False,
+                                logger=self.logger)
+                            if process.returncode == 0:
+                                message = _("Successfully updated EFI NVRAM")
+                                self.logger.write(message)
+                                with self.summary_message_lock:
+                                    self.summary_message += message + "\n"
+                            # No need to implement "get the new efi_os_label, efi_system_part_no and efi_sys_part_boot_file"
+                            # because Rescuezilla doesn't operate in client/server like Clonezilla.
+                        else:
+                            message = "Not updating EFI NVRAM: Unable to find update-efi-nvram-boot-entry. Is Clonezilla installed?\n"
+                            self.logger.write(message)
+                            with self.summary_message_lock:
+                                self.summary_message += message + "\n"
         elif isinstance(self.image, FsArchiverImage):
             self.logger.write("Detected FsArchiverImage")
             self.logger.write(str(self.restore_mapping_dict))

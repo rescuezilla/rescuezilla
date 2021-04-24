@@ -727,11 +727,17 @@ class Utility:
         else:
             return False, "Failed to shutdown: " + failed_message
 
-    # Clear the NTFS volume dirty flag if the volume can be fixed and mounted. If the option is not present or the
-    # volume cannot be fixed, the dirty volume flag is set to request a volume checking at next mount.
+    # Use ntfsfix to try and mount the partition and if successful clear the "volume dirty" flag, which cancels a
+    # scheduled filesystem check for the next boot, among other things.
+    #
+    # "If the volume cannot be fixed, the dirty volume flag is set to request a volume checking at next mount"
     @staticmethod
     def run_ntfsfix(long_device_node):
-        process, flat_command_string, failed_message = Utility.run("Fix NTFS volume dirty flag",
+        # From man page:
+        # "ntfsfix is a utility that fixes some common NTFS problems. ntfsfix is NOT a Linux version of chkdsk.
+        # It only repairs some fundamental NTFS inconsistencies, resets the NTFS journal file and schedules an
+        # NTFS consistency check for the first boot into Windows."
+        process, flat_command_string, failed_message = Utility.run("Run ntfsfix and don't schedule an NTFS consistency check",
                                                    ["ntfsfix", "--clear-dirty", long_device_node], use_c_locale=False)
         if process.returncode != 0:
             return False, failed_message

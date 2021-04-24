@@ -114,7 +114,30 @@ class Parted:
                     parted_dict['partitions'][partition_number]['size'] = int( partition_line[column_title.index("Size"):column_title.index("Type") - 1].strip()[:-1])
                     parted_dict['partitions'][partition_number]['type'] = partition_line[column_title.index("Type"):column_title.index("File system") - 1].strip()
                     parted_dict['partitions'][partition_number]['filesystem'] = partition_line[column_title.index( "File system"):column_title.index("Flags") - 1].strip()
-                    parted_dict['partitions'][partition_number]['flags'] = partition_line[column_title.index("Flags"):len( partition_line) - 1].strip()
+                    parted_dict['partitions'][partition_number]['flags'] = partition_line[column_title.index("Flags"):len( partition_line)].strip()
                 else:
                     print("Could not process: " + partition_line)
         return parted_dict
+
+    # Get all indexes to Parted dictionary for partitions with flag
+    #
+    # This function is loosely adapted from Clonezilla's "is_gpt_disk_with_bios_boot_part_in_legacy_bios"
+    # function from its "sbin/ocs-function", and also the "check_ntfs_boot_partition" function
+    #
+    # IMPORTANT: The returned value is in Parted's partition's indexing (a partition *number*, not a string or
+    # long_device_node)
+    @staticmethod
+    def get_partitions_containing_flag(parted_dict, flag):
+        found_partition_keys_list = []
+        for partition_key in parted_dict['partitions'].keys():
+            if Parted.has_flag(parted_dict, partition_key, flag):
+                found_partition_keys_list += [partition_key]
+        return found_partition_keys_list
+
+    @staticmethod
+    def has_flag(parted_dict, partition_key, flag):
+        if partition_key in parted_dict['partitions'].keys() and 'flags' in parted_dict['partitions'][partition_key].keys()\
+                and flag in parted_dict['partitions'][partition_key]['flags']:
+            return True
+        else:
+            return False
