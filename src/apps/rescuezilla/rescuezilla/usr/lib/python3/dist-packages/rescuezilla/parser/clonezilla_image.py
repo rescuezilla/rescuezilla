@@ -298,6 +298,15 @@ class ClonezillaImage:
             self.ebr_dict = {'short_device_node': short_ebr_device_node,
                                                           'absolute_path': absolute_ebr_filepath}
 
+        # There is a maximum of 1 EFI NVRAM backup per computer
+        self.efi_nvram_dat_absolute_path = None
+        efi_nvram_dat_filepath = os.path.join(dir, "efi-nvram.dat")
+        if isfile(efi_nvram_dat_filepath):
+            self.efi_nvram_dat_absolute_path = efi_nvram_dat_filepath
+        else:
+            # Non-EFI Clonezilla images don't have this file
+            print("Unable to locate " + efi_nvram_dat_filepath)
+
         self.image_format_dict_dict = collections.OrderedDict([])
         # Loops over the partitions listed in the 'parts' file
         for short_partition_device_node in self.short_device_node_partition_list:

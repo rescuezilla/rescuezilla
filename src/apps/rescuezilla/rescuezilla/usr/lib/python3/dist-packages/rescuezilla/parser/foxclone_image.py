@@ -39,6 +39,7 @@ class FoxcloneImage:
 
         # Clonezilla format
         self.ebr_dict = {}
+        self.efi_nvram_dat_absolute_path = None
         self.short_device_node_partition_list = []
         self.short_device_node_disk_list = []
         self.lvm_vg_dev_dict = {}
