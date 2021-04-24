@@ -326,6 +326,21 @@ class BackupManager:
             GLib.idle_add(self.completed_backup, False, failed_message)
             return
 
+        if os.path.isdir("/sys/firmware/efi/efivars"):
+            # Save EFI NVRAM info. What we need is actually the label
+            efi_nvram_filepath = os.path.join(self.dest_dir, "efi-nvram.dat")
+            GLib.idle_add(self.update_main_statusbar, "Saving " + efi_nvram_filepath)
+            process, flat_command_string, failed_message = Utility.run("Saving EFI NVRAM info",
+                                                                              ["efibootmgr", "--verbose"],
+                                                                              use_c_locale=True,
+                                                                              output_filepath=efi_nvram_filepath,
+                                                                              logger=self.logger)
+            if process.returncode != 0:
+                with self.summary_message_lock:
+                    self.summary_message += failed_message
+                GLib.idle_add(self.completed_backup, False, failed_message)
+                return
+
         parted_dict = Parted.parse_parted_output(parted_process.stdout)
         partition_table = parted_dict['partition_table']
 
