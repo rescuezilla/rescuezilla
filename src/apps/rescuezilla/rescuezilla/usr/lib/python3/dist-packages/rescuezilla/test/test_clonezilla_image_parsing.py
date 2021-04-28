@@ -21,6 +21,14 @@ from parser.clonezilla_image import ClonezillaImage
 
 
 class ClonezillaImageParsingTest(unittest.TestCase):
+    def test_chs_sf_parsing(self):
+        chs_sf_string = """cylinders=12336
+heads=255
+sectors=2"""
+        chs_sf_dict = ClonezillaImage.parse_chs_sf_output(chs_sf_string)
+        expected_dict = {'cylinders': 12336, 'heads': 255, 'sectors': 2}
+        self.assertEqual(chs_sf_dict, expected_dict)
+
     def test_dev_fs_list_parsing(self):
         dev_fs_list_string = """# This is a comment line
 # Another comment line
