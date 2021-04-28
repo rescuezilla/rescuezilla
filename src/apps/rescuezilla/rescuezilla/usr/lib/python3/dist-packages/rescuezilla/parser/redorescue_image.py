@@ -52,6 +52,7 @@ class RedoRescueImage:
         self.short_device_node_disk_list = []
         self.lvm_vg_dev_dict = {}
         self.lvm_logical_volume_dict = {}
+        self.sfdisk_chs_dict = None
         self.dev_fs_dict = {}
         self.size_bytes = 0
         self.enduser_readable_size = ""

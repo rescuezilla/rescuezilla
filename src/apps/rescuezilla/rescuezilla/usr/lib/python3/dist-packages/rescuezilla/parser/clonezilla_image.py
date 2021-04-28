@@ -270,6 +270,12 @@ class ClonezillaImage:
             sfdisk_absolute_path = os.path.join(dir, short_disk_device_node + "-pt.sf")
             self.normalized_sfdisk_dict = Sfdisk.generate_normalized_sfdisk_dict(sfdisk_absolute_path, self)
 
+        self.sfdisk_chs_dict = None
+        if not is_needs_decryption:
+            sfdisk_chs_absolute_path = os.path.join(dir, short_disk_device_node + "-chs.sf")
+            if isfile(sfdisk_chs_absolute_path):
+                self.sfdisk_chs_dict = ClonezillaImage.parse_chs_sf_output(sfdisk_chs_absolute_path)
+
         # There is a maximum of 1 MBR per drive (there can be many drives). Master Boot Record (MBR) is never
         # listed in 'parts' list.
         self._mbr_absolute_path = None
@@ -486,7 +492,7 @@ class ClonezillaImage:
 
     @staticmethod
     def parse_dev_fs_list_output(dev_fs_list_string):
-        dev_fs_dict = collections.OrderedDict([])
+        dev_fs_dict = {}
         for line in dev_fs_list_string.splitlines():
             # Ignore comment lines (lines starting with hash symbol)
             if not re.match(r'^#', line):
@@ -498,6 +504,26 @@ class ClonezillaImage:
                     if len(split_line) > 2:
                         dev_fs_dict[long_dev_node]['size'] = split_line[2]
         return dev_fs_dict
+
+    @staticmethod
+    def parse_chs_sf_output(chs_fs_string):
+        chs_sf_dict = collections.OrderedDict([])
+        for line in chs_fs_string.splitlines():
+            split = re.split("=", line)
+            try:
+                key = split[0].strip()
+                value = split[1].strip()
+                if key == "cylinders":
+                    chs_sf_dict['cylinders'] = int(value)
+                elif key == "heads":
+                    chs_sf_dict['heads'] = int(value)
+                elif key == "sectors":
+                    chs_sf_dict['sectors'] = int(value)
+                else:
+                    print("Unknown key" + key)
+            except IndexError:
+                print("Unable to parse: " + str(split) + " in " + str(line) + ". Skipping")
+        return chs_sf_dict
 
     def get_enduser_friendly_partition_description(self):
         flat_string = ""
