@@ -479,9 +479,8 @@ class BackupManager:
             self.logger.write(failed_message)
             with self.summary_message_lock:
                 self.summary_message += "Failed to retrieve disk geometry for " + self.selected_drive_key + "."
-            # Failure to retrieve disk geometry no longer considered fatal error, to avoid spurious failure affecting
-            # some users [1]. TODO: Understand why sfdisk fails on such disks and fix the bug in sfdisk.
-            # [1] https://github.com/rescuezilla/rescuezilla/issues/122
+            GLib.idle_add(self.completed_backup, False, failed_message)
+            return
         else:
             geometry_dict = Sfdisk.parse_sfdisk_show_geometry(process.stdout)
             with open(filepath, 'w') as filehandle:
