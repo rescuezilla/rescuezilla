@@ -56,7 +56,7 @@ class Parted:
                 parted_dict['model'] = m.group(1)
             # Processing: Disk /dev/sdc: 2147483648B
             elif m.match(r"Disk ([a-zA-Z0-9_/]+): ([0-9]+)([a-zA-Z]+)"):
-                parted_dict['short_dev_node'] = m.group(1)
+                parted_dict['long_dev_node'] = m.group(1)
                 parted_dict['capacity'] = int(m.group(2))
                 parted_dict['units'] = m.group(3)
             # Processing: Sector size (logical/physical): 512B/512B
