@@ -6,3 +6,6 @@ pcspkr
 
 # Network boot device
 nbd
+
+# Enhanced Disk Device (Exposes certain BIOS information including disk geometry under /sys/firmware/edd)
+edd
