@@ -82,10 +82,12 @@ class FogProjectImage:
         # [1] https://github.com/rescuezilla/rescuezilla/issues/18
         minimum_partitions_sfdisk_path = os.path.join(dir, prefix + ".minimum.partitions")
         if os.path.exists(minimum_partitions_sfdisk_path):
-            sfdisk_absolute_path = minimum_partitions_sfdisk_path
-        else:
-            sfdisk_absolute_path = absolute_fogproject_img_path
+            # TODO: Implement FOG Project's intelligent partition resizing. [1] Rescuezilla has growing filesystems,
+            # TODO: but not yet modifying partitions.
+            # [1] https://github.com/rescuezilla/rescuezilla/issues/18
+            print("Found minimum partitions, but ignoring until partition resize implemented")
 
+        sfdisk_absolute_path = absolute_fogproject_img_path
         self.normalized_sfdisk_dict = Sfdisk.generate_normalized_sfdisk_dict(sfdisk_absolute_path, self)
 
         # FOG Project images sometimes contains a file named eg, "d1.original.fstypes" which contains the association
