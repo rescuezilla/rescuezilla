@@ -6607,7 +6607,7 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                               <object class="GtkLabel" id="image_explorer_supported_formats_label">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
-                                                <property name="label" translatable="yes">Image Explorer (beta) currently only supports "partclone" images using the following compression formats: gzip, xz and uncompressed.</property>
+                                                <property name="label" translatable="yes">Supports "partclone" images (gzip, xz and uncompressed) and virtual machine hard drives</property>
                                                 <property name="use_markup">True</property>
                                                 <property name="justify">center</property>
                                                 <property name="wrap">True</property>
@@ -6643,7 +6643,7 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                     </child>
                                                     <child>
                                                       <object class="GtkTreeViewColumn">
-                                                        <property name="title">Partition</property>
+                                                        <property name="title" translatable="yes">Partition</property>
                                                         <child>
                                                           <object class="GtkCellRendererText"/>
                                                           <attributes>
@@ -6689,15 +6689,34 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                         <property name="visible">True</property>
                                                         <property name="can_focus">False</property>
                                                         <child>
+                                                          <object class="GtkLabel" id="image_explorer_known_issues_label">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">False</property>
+                                                            <property name="ypad">20</property>
+                                                            <property name="label" translatable="yes">&lt;b&gt;Known Issues&lt;/b&gt;
+* &lt;b&gt;partclone images of NTFS filesystems and Linux EXT2/3/4 filesystems have poor mount compatibility&lt;/b&gt;. partclone-utils is being developed to improve this.
+* 10+GB compressed backups made with 'gzip' or 'xz' WILL BE UNUSABLY SLOW: the &lt;i&gt;entire&lt;/i&gt; archive gets decompressed to a temporary file because gzip and xz are not well-suited for random access patterns.
+* &lt;b&gt;For fast mounting of even 2+TB images, use an &lt;i&gt;uncompressed&lt;/i&gt; image&lt;/b&gt;. A future version of Rescuezilla will add "indexed gzip" with ratarmount and optimize compression settings for faster mounting of compressed images.
+* If the mount fails immediately with "Socket failed: Connection refused" error, please try again. This will be improved in a future version.
+
+Did you know: Image Explorer (beta) now works with virtual hard drives created by VirtualBox, VMWare and Qemu? Try it out! :-)</property>
+                                                            <property name="use_markup">True</property>
+                                                            <property name="wrap">True</property>
+                                                            <property name="selectable">True</property>
+                                                            <property name="yalign">1</property>
+                                                          </object>
+                                                          <packing>
+                                                            <property name="expand">False</property>
+                                                            <property name="fill">True</property>
+                                                            <property name="position">0</property>
+                                                          </packing>
+                                                        </child>
+                                                        <child>
                                                           <object class="GtkLabel" id="image_explorer_mount_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="ypad">20</property>
-                                                            <property name="label" translatable="yes">Click &lt;b&gt;Mount&lt;/b&gt; to mount the backup image (as read-only).
-
-This operation is near-instantaneous for backups without compression or using xz-compression. Unfortunately Rescuezilla and Clonezilla currently both use 'gzip' compression by default which means before files within the image can start being accessed much more data gets decompressed to a temporary file. For 50+ gigabyte gzip-compressed backups this decompression is &lt;i&gt;very&lt;/i&gt; slow and may take &lt;b&gt;TENS OF MINUTES&lt;/b&gt; depending on the speed of your computer.
-
-In the short-term, advanced users who expect to regularly explore 100+ gigabyte images are suggested to create &lt;b&gt;uncompressed&lt;/b&gt; backups using Clonezilla Expert Mode (because creating 'xz' archives is too slow). To provide near-instantaneous image mount for large images whilst retaining good compression ratios &lt;i&gt;and&lt;/i&gt; fast backup and restore speeds, Rescuezilla may switch the default compression once archive mounting support for more formats have been added to Image Explorer.</property>
+                                                            <property name="label" translatable="yes">Click &lt;b&gt;Mount&lt;/b&gt; to mount the backup image (as read-only).</property>
                                                             <property name="use_markup">True</property>
                                                             <property name="justify">center</property>
                                                             <property name="wrap">True</property>
@@ -6707,7 +6726,7 @@ In the short-term, advanced users who expect to regularly explore 100+ gigabyte 
                                                           <packing>
                                                             <property name="expand">False</property>
                                                             <property name="fill">True</property>
-                                                            <property name="position">0</property>
+                                                            <property name="position">1</property>
                                                           </packing>
                                                         </child>
                                                         <child>
@@ -6736,7 +6755,7 @@ In the short-term, advanced users who expect to regularly explore 100+ gigabyte 
                                                           <packing>
                                                             <property name="expand">False</property>
                                                             <property name="fill">True</property>
-                                                            <property name="position">1</property>
+                                                            <property name="position">2</property>
                                                           </packing>
                                                         </child>
                                                         <child>
@@ -6750,7 +6769,7 @@ In the short-term, advanced users who expect to regularly explore 100+ gigabyte 
                                                           <packing>
                                                             <property name="expand">False</property>
                                                             <property name="fill">True</property>
-                                                            <property name="position">2</property>
+                                                            <property name="position">3</property>
                                                           </packing>
                                                         </child>
                                                         <child>
@@ -6768,7 +6787,7 @@ In the short-term, advanced users who expect to regularly explore 100+ gigabyte 
                                                           <packing>
                                                             <property name="expand">False</property>
                                                             <property name="fill">True</property>
-                                                            <property name="position">3</property>
+                                                            <property name="position">4</property>
                                                           </packing>
                                                         </child>
                                                         <child>
@@ -6797,7 +6816,7 @@ In the short-term, advanced users who expect to regularly explore 100+ gigabyte 
                                                           <packing>
                                                             <property name="expand">False</property>
                                                             <property name="fill">True</property>
-                                                            <property name="position">4</property>
+                                                            <property name="position">5</property>
                                                           </packing>
                                                         </child>
                                                       </object>
