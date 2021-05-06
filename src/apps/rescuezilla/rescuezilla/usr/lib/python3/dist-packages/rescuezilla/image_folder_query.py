@@ -145,7 +145,7 @@ class ImageFolderQuery:
                                               ])
             except Exception as e:
                 tb = traceback.format_exc()
-                traceback_messages += tb + "\n\n"
+                traceback_messages += image.enduser_filename + ":\n" + tb + "\n\n"
 
         # Highlight first image if there is only 1 image.
         if len(self.image_dict.keys()) == 1:
