@@ -1063,7 +1063,11 @@ class Handler:
             self.image_explorer_manager.mount_partition(selected_partition_key)
 
     def mount_partition(self, button):
-        if not self.image_explorer_manager.get_mounted_state():
+        list_store, iter = self.get_row("image_explorer_image_partition_treeselection")
+        selected_partition_key = list_store.get(iter, 0)[0]
+        compression = self.image_explorer_manager.get_partition_compression(selected_partition_key)
+        # Don't show reminder when unmounting or if the image is uncompressed.
+        if not self.image_explorer_manager.get_mounted_state() and not compression == "uncompressed":
             AreYouSureModalPopup(self.builder,
                              _(
                                  "Reminder: Mounting large gzipped-compressed images WILL be UNUSABLY slow.\n\ngzip is the default compression format used by Clonezilla and Rescuezilla. If Rescuezilla doesn't cleanly unmount the image being explored a reboot may be required.\n\nIf you want a good experience with this BETA feature, it is highly recommeded you try an image WITHOUT COMPRESSION (created by Clonezilla's Expert Mode).\n\nAre you sure you want to continue?"),
