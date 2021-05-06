@@ -51,6 +51,27 @@ msgstr "Por favor espere..."
 msgid "Identifying disk drives..." 
 msgstr "Identificando drives de disco ..."
 
+msgid "Unmounting: {path}"
+msgstr ""
+
+msgid "Unable to unmount {path}"
+msgstr ""
+
+msgid "Running: {app}"
+msgstr ""
+
+msgid "Running {app} on {device}"
+msgstr ""
+
+msgid "Failed to run command: "
+msgstr ""
+
+msgid "Error querying drives: "
+msgstr ""
+
+msgid "Unable to shutdown Image Explorer"
+msgstr ""
+
 msgid "Step 1: Select Drive To Backup"
 msgstr "Passo 1: Selecionar Drive para Backup"
 
@@ -84,11 +105,11 @@ msgstr "Salvar"
 msgid "Description"
 msgstr "Descrição"
 
-msgid "Drive {drive_number}, Partition {partition_number}"
-msgstr "Drive {drive_number}, Partição {partition_number}"
-
 msgid "Drive {drive_number}"
 msgstr "Drive {drive_number}"
+
+msgid "Partition {partition_number}"
+msgstr "Partição {partition_number}"
 
 msgid "Step 3: Select Destination Drive"
 msgstr "Passo 3: Selecione o Drive de Destino"
@@ -165,6 +186,12 @@ msgstr ""
 msgid "Scanning folder for backup images..."
 msgstr "Escaneando pasta por imagens de backup ..."
 
+msgid "Close this popup to cancel scanning the selected folder and subfolders."
+msgstr ""
+
+msgid "Scanning: {filename}"
+msgstr ""
+
 msgid "Error processing the following images:"
 msgstr "Erro ao processar as seguintes imagens:"
 
@@ -174,8 +201,11 @@ msgstr "Não foi possível processar totalmente a imagem associada às seguintes
 msgid "Unable to fully process the following image:"
 msgstr "Incapaz de processar totalmente a seguinte imagem:"
 
-msgid "This can happen when loading images which Clonezilla was unable to completely backup. Any other filesystems within the image should be restorable as normal."
-msgstr "Isso pode acontecer ao carregar imagens das quais o Clonezilla não conseguiu fazer backup completo. Quaisquer outros sistemas de arquivos na imagem devem ser restaurados normalmente."
+msgid "This can happen when loading images which Clonezilla was unable to completely backup."
+msgstr "Isso pode acontecer ao carregar imagens das quais o Clonezilla não conseguiu fazer backup completo."
+
+msgid "Any other filesystems within the image should be restorable as normal."
+msgstr "Quaisquer outros sistemas de arquivos na imagem devem ser restaurados normalmente."
 
 msgid "Needs decryption"
 msgstr "Precisa de descriptografia"
@@ -247,7 +277,10 @@ msgstr ""
 msgid "Compression format: "
 msgstr ""
 
-msgid "gzip (default)"
+msgid "gzip"
+msgstr ""
+
+msgid "(default)"
 msgstr ""
 
 msgid "zstandard"
@@ -304,6 +337,9 @@ msgstr "Passo 7: Criando Imagem de Backup..."
 msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr "Fazendo backup do seu sistema para o local informado. Isso pode levar uma hora ou mais dependendo da velocidade do seu sistema e quantidade de dados salvos."
 
+msgid "Saving: {file}"
+msgstr ""
+
 msgid "Time Elapsed / Remaining: "
 msgstr "Tempo gasto / restante: "
 
@@ -345,6 +381,9 @@ msgstr "Backup concluído com alguns erros:"
 
 msgid "Backup operation failed:"
 msgstr "Operação de backup falhou:"
+
+msgid "User requested operation to stop."
+msgstr ""
 
 msgid "Operation took {num_minutes} minutes."
 msgstr "Operação levou {num_minutes} minutos."
@@ -388,9 +427,6 @@ msgstr "Imagem Selecionada"
 msgid "Destination device"
 msgstr "Dispositivo de destino"
 
-msgid "IMPORTANT: Only selecting FIRST disk in Clonezilla image containing MULTIPLE DISKS."
-msgstr "IMPORTANTE: Selecionando apenas o PRIMEIRO disco na imagem do Clonezilla contendo VÁRIOS DISCOS."
-
 msgid "Destination partition"
 msgstr "Partição de destino"
 
@@ -412,10 +448,16 @@ msgstr "A Coluna \"partição de destino\" foi atualizada com as informações d
 msgid "No destination partition selected. Use the destination partition drop-down menu to select the destination"
 msgstr "Nenhuma partição de destino selecionada. Use o drop-down \"partição de destino\", no menu, para escolher o destino."
 
+msgid "Not restoring this partition"
+msgstr ""
+
+msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
+msgstr ""
+
 msgid "Step 5: Confirm Restore Configuration"
 msgstr "Passo 5: Confirme a configuração de restauração"
 
-msgid "Confirm the restore configuration."
+msgid "Confirm the following restore configuration."
 msgstr "Confirme a configuração de restauração."
 
 msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite the data on this drive!"
@@ -450,6 +492,54 @@ msgstr "Atualizando tabela de partição"
 
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
 msgstr "Restaurando {description} para {destination_partition} ({destination_description})"
+
+msgid "Synchronizing disks..."
+msgstr ""
+
+msgid "Querying hard drive geometry of {device}"
+msgstr ""
+
+msgid "Probing {device} with {app}"
+msgstr ""
+
+msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
+msgstr ""
+
+msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
+msgstr ""
+
+msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
+msgstr ""
+
+msgid "Removing udev MAC address records"
+msgstr ""
+
+msgid "Re-installing syslinux (if any)"
+msgstr ""
+
+msgid "Successfully re-installed syslinux bootloader"
+msgstr ""
+
+msgid "Re-installing GRUB bootloader (if any)"
+msgstr ""
+
+msgid "Successfully re-installed GRUB bootloader"
+msgstr ""
+
+msgid "Did not update GRUB bootloader (if any)"
+msgstr ""
+
+msgid "Updating initramfs (if any)"
+msgstr ""
+
+msgid "Successfully updated initramfs"
+msgstr ""
+
+msgid "Updating EFI NVRAM..."
+msgstr ""
+
+msgid "Successfully updated EFI NVRAM"
+msgstr ""
 
 msgid "Restore cancelled by user."
 msgstr "Restauração cancelada pelo usuário."
@@ -489,3 +579,38 @@ msgstr "Confirme o Resumo de Restauração."
 
 msgid "Backup restored successfully."
 msgstr "Backup restaurado com sucesso!" 
+
+msgid "Image Explorer\n"
+"      (beta)"
+msgstr ""
+""
+
+msgid "Image Explorer (beta)"
+msgstr ""
+
+msgid "Select the image file to explore"
+msgstr ""
+
+msgid "Step 3: Select Partition to Explore"
+msgstr ""
+
+msgid "Select the partition to access files from."
+msgstr ""
+
+msgid "Click <b>Mount</b> to mount the backup image (as read-only)."
+msgstr ""
+
+msgid "Mount"
+msgstr ""
+
+msgid "Mounting as read-only..."
+msgstr ""
+
+msgid "Unmount"
+msgstr ""
+
+msgid "Once the partition has been mounted, click <b>Open in file manager</b> to access your files."
+msgstr ""
+
+msgid "Open in file manager"
+msgstr ""

@@ -51,6 +51,27 @@ msgstr "お待ちください..."
 msgid "Identifying disk drives..." 
 msgstr "ディスクドライブを認識中..."
 
+msgid "Unmounting: {path}"
+msgstr ""
+
+msgid "Unable to unmount {path}"
+msgstr ""
+
+msgid "Running: {app}"
+msgstr ""
+
+msgid "Running {app} on {device}"
+msgstr ""
+
+msgid "Failed to run command: "
+msgstr ""
+
+msgid "Error querying drives: "
+msgstr ""
+
+msgid "Unable to shutdown Image Explorer"
+msgstr ""
+
 msgid "Step 1: Select Drive To Backup"
 msgstr "ステップ1: バックアップするドライブを選択します"
 
@@ -84,11 +105,11 @@ msgstr "保存する"
 msgid "Description"
 msgstr "説明"
 
-msgid "Drive {drive_number}, Partition {partition_number}"
-msgstr "ドライブ {drive_number}, パーティション {partition_number}"
-
 msgid "Drive {drive_number}"
 msgstr "ドライブ {drive_number}"
+
+msgid "Partition {partition_number}"
+msgstr "パーティション {partition_number}"
 
 msgid "Step 3: Select Destination Drive"
 msgstr "ステップ3: 宛先ドライブを選択します"
@@ -165,6 +186,12 @@ msgstr ""
 msgid "Scanning folder for backup images..."
 msgstr "バックアップイメージのフォルダを検索しています..."
 
+msgid "Close this popup to cancel scanning the selected folder and subfolders."
+msgstr ""
+
+msgid "Scanning: {filename}"
+msgstr ""
+
 msgid "Error processing the following images:"
 msgstr "次のイメージにエラーが発生しました:"
 
@@ -174,8 +201,11 @@ msgstr "次のパーティションに関連付けられているイメージを
 msgid "Unable to fully process the following image:"
 msgstr "次のイメージを完全に処理できません:"
 
-msgid "This can happen when loading images which Clonezilla was unable to completely backup. Any other filesystems within the image should be restorable as normal."
-msgstr "これは、Clonezillaが完全にバックアップできなかったイメージをロードしたために発生した可能性があります。イメージ内の他のファイルシステムは、通常通りレストア可能と思われます。"
+msgid "This can happen when loading images which Clonezilla was unable to completely backup."
+msgstr "これは、Clonezillaが完全にバックアップできなかったイメージをロードしたために発生した可能性があります。"
+
+msgid "Any other filesystems within the image should be restorable as normal."
+msgstr "イメージ内の他のファイルシステムは、通常通りレストア可能と思われます。"
 
 msgid "Needs decryption"
 msgstr "復号化が必要"
@@ -247,7 +277,10 @@ msgstr ""
 msgid "Compression format: "
 msgstr ""
 
-msgid "gzip (default)"
+msgid "gzip"
+msgstr ""
+
+msgid "(default)"
 msgstr ""
 
 msgid "zstandard"
@@ -304,6 +337,9 @@ msgstr "ステップ 7: バックアップイメージの作成をしていま�
 msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr "選択した場所にシステムをバックアップしています。 コンピュータのスペックやデータ量によっては、1時間以上かかる場合があります。"
 
+msgid "Saving: {file}"
+msgstr ""
+
 msgid "Time Elapsed / Remaining: "
 msgstr "経過時間 / 残り時間: "
 
@@ -345,6 +381,9 @@ msgstr "バックアップは成功しましたが、エラーが発生してい
 
 msgid "Backup operation failed:"
 msgstr "バックアップ作業に失敗しました:"
+
+msgid "User requested operation to stop."
+msgstr ""
 
 msgid "Operation took {num_minutes} minutes."
 msgstr "作業時間は{num_minutes}分でした。"
@@ -388,9 +427,6 @@ msgstr "選択したイメージ"
 msgid "Destination device"
 msgstr "宛先ドライブ"
 
-msgid "IMPORTANT: Only selecting FIRST disk in Clonezilla image containing MULTIPLE DISKS."
-msgstr "重要: <b>複数のディスク</b>を含むClonezillaイメージは、<b>最初のディスク</b>のみを選択します。"
-
 msgid "Destination partition"
 msgstr "宛先パーティション"
 
@@ -412,10 +448,16 @@ msgstr "「宛先パーティション」列が、宛先ドライブの既存の
 msgid "No destination partition selected. Use the destination partition drop-down menu to select the destination"
 msgstr "宛先パーティションが選択されていません。ドロップダウンメニューを使用して、宛先を選択します。"
 
+msgid "Not restoring this partition"
+msgstr ""
+
+msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
+msgstr ""
+
 msgid "Step 5: Confirm Restore Configuration"
 msgstr "ステップ 5: レストアの構成を確認します"
 
-msgid "Confirm the restore configuration."
+msgid "Confirm the following restore configuration."
 msgstr "レストアの構成を確認してください。"
 
 msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite the data on this drive!"
@@ -450,6 +492,54 @@ msgstr "パーティションテーブルを更新しています"
 
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
 msgstr "{description}を{destination_partition}にレストアしています ({destination_description})"
+
+msgid "Synchronizing disks..."
+msgstr ""
+
+msgid "Querying hard drive geometry of {device}"
+msgstr ""
+
+msgid "Probing {device} with {app}"
+msgstr ""
+
+msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
+msgstr ""
+
+msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
+msgstr ""
+
+msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
+msgstr ""
+
+msgid "Removing udev MAC address records"
+msgstr ""
+
+msgid "Re-installing syslinux (if any)"
+msgstr ""
+
+msgid "Successfully re-installed syslinux bootloader"
+msgstr ""
+
+msgid "Re-installing GRUB bootloader (if any)"
+msgstr ""
+
+msgid "Successfully re-installed GRUB bootloader"
+msgstr ""
+
+msgid "Did not update GRUB bootloader (if any)"
+msgstr ""
+
+msgid "Updating initramfs (if any)"
+msgstr ""
+
+msgid "Successfully updated initramfs"
+msgstr ""
+
+msgid "Updating EFI NVRAM..."
+msgstr ""
+
+msgid "Successfully updated EFI NVRAM"
+msgstr ""
 
 msgid "Restore cancelled by user."
 msgstr "ユーザーによってレストアがキャンセルされました。"
@@ -489,3 +579,38 @@ msgstr "レストアの概要を確認してください。"
 
 msgid "Backup restored successfully."
 msgstr "バックアップのレストアは成功しました。" 
+
+msgid "Image Explorer\n"
+"      (beta)"
+msgstr ""
+""
+
+msgid "Image Explorer (beta)"
+msgstr ""
+
+msgid "Select the image file to explore"
+msgstr ""
+
+msgid "Step 3: Select Partition to Explore"
+msgstr ""
+
+msgid "Select the partition to access files from."
+msgstr ""
+
+msgid "Click <b>Mount</b> to mount the backup image (as read-only)."
+msgstr ""
+
+msgid "Mount"
+msgstr ""
+
+msgid "Mounting as read-only..."
+msgstr ""
+
+msgid "Unmount"
+msgstr ""
+
+msgid "Once the partition has been mounted, click <b>Open in file manager</b> to access your files."
+msgstr ""
+
+msgid "Open in file manager"
+msgstr ""

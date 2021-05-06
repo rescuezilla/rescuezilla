@@ -129,7 +129,7 @@ class RestoreManager:
     # [1] https://serverfault.com/questions/36038/reread-partition-table-without-rebooting
     def update_kernel_partition_table(self, wait_for_partition):
         refresh_msg = _("Refreshing partition table")
-        self.display_status(refresh_msg, _("Unmounting..."))
+        self.display_status(refresh_msg, _("Unmounting: {path}").format(path=self.restore_destination_drive))
         Utility.umount_warn_on_busy(self.restore_destination_drive)
 
         self.display_status(refresh_msg, _("Synchronizing disks..."))
@@ -231,7 +231,7 @@ class RestoreManager:
         return True
 
     def _shutdown_lvm(self):
-        self.display_status("Shutting down the Logical Volume Manager (LVM)", "")
+        self.display_status(_("Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."), "")
         # Stop the Logical Volume Manager (LVM)
         failed_logical_volume_list, failed_volume_group_list = Lvm.shutdown_lvm2(self.builder, self.logger)
         for failed_volume_group in failed_volume_group_list:
@@ -334,7 +334,7 @@ class RestoreManager:
                 self.logger.write("Error writing hdparm: " + failed_message)
 
             if self.requested_stop:
-                GLib.idle_add(self.completed_restore, False, "Requested stop")
+                GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
                 return
 
             is_unmounted, message = Utility.umount_warn_on_busy(self.restore_destination_drive)
@@ -344,7 +344,7 @@ class RestoreManager:
                 GLib.idle_add(self.restore_destination_drive, False, message)
 
             if self.requested_stop:
-                GLib.idle_add(self.completed_restore, False, "Requested stop")
+                GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
                 return
 
             querying_geometry_msg = _("Querying hard drive geometry of {device}").format(device=self.restore_destination_drive)
@@ -405,7 +405,7 @@ class RestoreManager:
                     print("No MBR associated with " + short_selected_image_drive_node)
 
                 if self.requested_stop:
-                    GLib.idle_add(self.completed_restore, False, "Requested stop")
+                    GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
                     return
 
                 if self.image.normalized_sfdisk_dict['file_length'] == 0:
@@ -459,7 +459,7 @@ class RestoreManager:
                         return
 
                 if self.requested_stop:
-                    GLib.idle_add(self.completed_restore, False, "Requested stop")
+                    GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
                     return
 
                 # Shutdown the Logical Volume Manager (LVM) again -- it seems the volume groups re-activate after partition table restored for some reason.
@@ -475,7 +475,7 @@ class RestoreManager:
                     return
 
                 if self.requested_stop:
-                    GLib.idle_add(self.completed_restore, False, "Requested stop")
+                    GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
                     return
 
                 # Overwrite the post-MBR gap (if it exists). This file is typically 1 megabyte but may be a maximum
@@ -508,7 +508,7 @@ class RestoreManager:
                         return
 
                     if self.requested_stop:
-                        GLib.idle_add(self.completed_restore, False, "Requested stop")
+                        GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
                         return
 
                     if not self.update_kernel_partition_table(wait_for_partition=True):
@@ -525,7 +525,7 @@ class RestoreManager:
                         return
 
                     if self.requested_stop:
-                        GLib.idle_add(self.completed_restore, False, "Requested stop")
+                        GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
                         return
 
                 # The Extended Boot Record (EBR) information is already captured in the .sfdisk file, which provides
@@ -559,7 +559,7 @@ class RestoreManager:
                         return
 
                     if self.requested_stop:
-                        GLib.idle_add(self.completed_restore, False, "Requested stop")
+                        GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
                         return
 
                     if not self.update_kernel_partition_table(wait_for_partition=True):
@@ -576,7 +576,7 @@ class RestoreManager:
                         return
 
                     if self.requested_stop:
-                        GLib.idle_add(self.completed_restore, False, "Requested stop")
+                        GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
                         return
 
                 # Shutdown the Logical Volume Manager (LVM) again -- it seems the volume groups re-activate after partition table restored for some reason.
@@ -699,7 +699,7 @@ class RestoreManager:
                     GLib.idle_add(self.restore_destination_drive, False, message)
 
                 if self.requested_stop:
-                    GLib.idle_add(self.completed_restore, False, "Requested stop")
+                    GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
                     return
 
                 # TODO: Reinstall whole MBR (512 bytes)
@@ -866,7 +866,7 @@ class RestoreManager:
                     proc_stderr = ""
                     while True:
                         if self.requested_stop:
-                            GLib.idle_add(self.completed_restore, False, "Requested stop")
+                            GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
                             return
 
                         output = self.proc[image_type + '_restore_' + image_key].stderr.readline()
@@ -889,9 +889,9 @@ class RestoreManager:
                                 GLib.idle_add(self.update_restore_progress_status,
                                               filesystem_restore_message + "\n\n" + output)
                         elif "partimage" == image_type:
-                            self.display_status("partimage: " + filesystem_restore_message)
+                            self.display_status("partimage: " + filesystem_restore_message, "")
                         elif "ntfsclone" == image_type:
-                            self.display_status("ntfsclone: " + filesystem_restore_message)
+                            self.display_status("ntfsclone: " + filesystem_restore_message, "")
 
                         rc = self.proc[image_type + '_restore_' + image_key].poll()
 
@@ -954,7 +954,7 @@ class RestoreManager:
                 # checksums)
 
                 if "ntfs" == filesystem:
-                    GLib.idle_add(self.display_status, "Running ntfsfix...", "")
+                    GLib.idle_add(self.display_status, _("Running: {app}").format(app="ntfsfix"), "")
                     is_success, failed_message = Utility.run_ntfsfix(dest_part['dest_key'])
                     if not is_success:
                         self.logger.write(failed_message + "\n")
@@ -997,7 +997,7 @@ class RestoreManager:
                 dest_partition_short_dev_node_string += re.sub('/dev/', '', self.restore_mapping_dict[image_key]['dest_key']) + " "
 
             if shutil.which("ocs-tux-postprocess") is not None:
-                GLib.idle_add(self.display_status, "Removing udev MAC address records", "")
+                GLib.idle_add(self.display_status, _("Removing udev MAC address records"), "")
                 # TODO: Port Clonezilla's ocs-tux-postprocess bash script to Python instead of relying on Clonezilla's script
                 process, flat_command_string, failed_message = Utility.run(
                    "Remove the udev MAC address records on the restored GNU/Linux (if any)",
@@ -1013,7 +1013,7 @@ class RestoreManager:
                     self.summary_message += message + "\n"
 
             if shutil.which("ocs-update-syslinux") is not None:
-                GLib.idle_add(self.display_status, "Re-installing syslinux (if any)", "")
+                GLib.idle_add(self.display_status, _("Re-installing syslinux (if any)"), "")
                 # TODO: Port Clonezilla's ocs-update-syslinux bash script to Python instead of relying on Clonezilla's script
                 process, flat_command_string, failed_message = Utility.run(
                    "Re-install syslinux (if any)",
@@ -1030,7 +1030,7 @@ class RestoreManager:
                     self.summary_message += message + "\n"
 
             if shutil.which("ocs-install-grub") is not None:
-                GLib.idle_add(self.display_status, "Re-installing GRUB bootloader (if any)", "")
+                GLib.idle_add(self.display_status, _("Re-installing GRUB bootloader (if any)"), "")
                 # TODO: Port Clonezilla's ocs-install-grub bash script to Python instead of relying on Clonezilla's script
                 process, flat_command_string, failed_message = Utility.run(
                    "Re-installing GRUB bootloader (if any)",
@@ -1058,7 +1058,7 @@ class RestoreManager:
                     self.summary_message += message + "\n"
 
             if shutil.which("ocs-update-initrd") is not None:
-                GLib.idle_add(self.display_status, "Updating initramfs (if any)", "")
+                GLib.idle_add(self.display_status, _("Updating initramfs (if any)"), "")
                 # TODO: Port Clonezilla's ocs-update-initrd bash script to Python instead of relying on Clonezilla's script
                 process, flat_command_string, failed_message = Utility.run(
                    "Update initramfs (if any)",
@@ -1109,7 +1109,7 @@ class RestoreManager:
                         self.logger.write("Found bios_grub flag! Skipping EFI NVRAM update.")
                     else:
                         if shutil.which("update-efi-nvram-boot-entry") is None:
-                            GLib.idle_add(self.display_status, "Updating EFI NVRAM...")
+                            GLib.idle_add(self.display_status, _("Updating EFI NVRAM..."))
                             # TODO: Port Clonezilla's ocs-update-initrd bash script to Python instead of relying on Clonezilla's script
                             # Unlike Clonezilla, no need to specify a -f/--efi-boot-file-info option
                             process, flat_command_string, failed_message = Utility.run(
@@ -1139,7 +1139,7 @@ class RestoreManager:
                 GLib.idle_add(self.restore_destination_drive, False, message)
 
             if self.requested_stop:
-                GLib.idle_add(self.completed_restore, False, "Requested stop")
+                GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
                 return
 
             image_number = 0
@@ -1167,7 +1167,7 @@ class RestoreManager:
                 proc_stderr = ""
                 while True:
                     if self.requested_stop:
-                        GLib.idle_add(self.completed_restore, False, "Requested stop")
+                        GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
                         return
 
                     output = self.proc['fsarchiver_restfs_' + image_key].stderr.readline()
@@ -1216,7 +1216,7 @@ class RestoreManager:
                             image=image_key, destination_partition=self.restore_mapping_dict[image_key]['dest_key']) + "\n"
 
                 if self.requested_stop:
-                    GLib.idle_add(self.completed_restore, False, "Requested stop")
+                    GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
                     return
         elif isinstance(self.image, QemuImage):
             GLib.idle_add(self.restore_destination_drive, False, "QemuImage restore not yet implemented.")

@@ -51,6 +51,27 @@ msgstr "Παρακαλώ περιμένετε..."
 msgid "Identifying disk drives..." 
 msgstr "Αναγνώριση μονάδων δίσκου..."
 
+msgid "Unmounting: {path}"
+msgstr ""
+
+msgid "Unable to unmount {path}"
+msgstr ""
+
+msgid "Running: {app}"
+msgstr ""
+
+msgid "Running {app} on {device}"
+msgstr ""
+
+msgid "Failed to run command: "
+msgstr ""
+
+msgid "Error querying drives: "
+msgstr ""
+
+msgid "Unable to shutdown Image Explorer"
+msgstr ""
+
 msgid "Step 1: Select Drive To Backup"
 msgstr "Βήμα 1: Επιλέξτε Μονάδα Δίσκου Για Αντίγραφο Ασφαλείας"
 
@@ -84,11 +105,11 @@ msgstr "Αποθήκευση"
 msgid "Description"
 msgstr "Περιγραφή"
 
-msgid "Drive {drive_number}, Partition {partition_number}"
-msgstr "Μονάδα Δίσκου {drive_number}, Διαμέρισμα {partition_number}"
-
 msgid "Drive {drive_number}"
 msgstr "Μονάδα Δίσκου {drive_number}"
+
+msgid "Partition {partition_number}"
+msgstr "Διαμέρισμα {partition_number}"
 
 msgid "Step 3: Select Destination Drive"
 msgstr "Βήμα 3: Επιλέξτε Μονάδα Προορισμού"
@@ -165,6 +186,12 @@ msgstr ""
 msgid "Scanning folder for backup images..."
 msgstr "Σάρωση φακέλου για είδωλα αντιγράφων ασφαλείας..."
 
+msgid "Close this popup to cancel scanning the selected folder and subfolders."
+msgstr ""
+
+msgid "Scanning: {filename}"
+msgstr ""
+
 msgid "Error processing the following images:"
 msgstr "Παρουσιάστηκε σφάλμα κατά την επεξεργασία των ακόλουθων ειδώλων:"
 
@@ -174,8 +201,11 @@ msgstr "Δεν είναι δυνατή η πλήρης επεξεργασία τ
 msgid "Unable to fully process the following image:"
 msgstr "Δεν είναι δυνατή η πλήρης επεξεργασία του ακόλουθου ειδώλου:"
 
-msgid "This can happen when loading images which Clonezilla was unable to completely backup. Any other filesystems within the image should be restorable as normal."
-msgstr "Αυτό μπορεί να συμβεί κατά τη φόρτωση ειδώλων για τις οποίες το Clonezilla δεν ολοκλήρωσε επιτυχώς τη διαδικασία των αντιγράφων ασφαλείας. Οποιαδήποτε άλλα συστήματα αρχείων μέσα στο είδωλο θα πρέπει να είναι δυνατό να αποκατασταθούν κανονικά."
+msgid "This can happen when loading images which Clonezilla was unable to completely backup."
+msgstr "Αυτό μπορεί να συμβεί κατά τη φόρτωση ειδώλων για τις οποίες το Clonezilla δεν ολοκλήρωσε επιτυχώς τη διαδικασία των αντιγράφων ασφαλείας."
+
+msgid "Any other filesystems within the image should be restorable as normal."
+msgstr "Οποιαδήποτε άλλα συστήματα αρχείων μέσα στο είδωλο θα πρέπει να είναι δυνατό να αποκατασταθούν κανονικά."
 
 msgid "Needs decryption"
 msgstr "Απαιτείται αποκρυπτογράφηση"
@@ -247,7 +277,10 @@ msgstr ""
 msgid "Compression format: "
 msgstr ""
 
-msgid "gzip (default)"
+msgid "gzip"
+msgstr ""
+
+msgid "(default)"
 msgstr ""
 
 msgid "zstandard"
@@ -304,6 +337,9 @@ msgstr "Βήμα 7: Δημιουργία Ειδώλου Αντιγράφου Α�
 msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr "Δημιουργία των αντιγράφων ασφαλείας του συστήματός σας στη θέση που επιλέξατε. Αυτό μπορεί να διαρκέσει μια ώρα ή περισσότερο, ανάλογα με την ταχύτητα του υπολογιστή σας και το μέγεθος των δεδομένων."
 
+msgid "Saving: {file}"
+msgstr ""
+
 msgid "Time Elapsed / Remaining: "
 msgstr "Χρόνος που πέρασε / Υπόλοιπο: "
 
@@ -345,6 +381,9 @@ msgstr "Η δημιουργία αντιγράφων ασφαλείας ολοκ
 
 msgid "Backup operation failed:"
 msgstr "Η διαδικασία δημιουργίας αντιγράφου ασφαλείας απέτυχε:"
+
+msgid "User requested operation to stop."
+msgstr ""
 
 msgid "Operation took {num_minutes} minutes."
 msgstr "Η διαδικασία ολοκληρώθηκε σε {num_minutes} λεπτά."
@@ -388,9 +427,6 @@ msgstr "Επιλεγμένο είδωλο"
 msgid "Destination device"
 msgstr "Συσκευή προορισμού"
 
-msgid "IMPORTANT: Only selecting FIRST disk in Clonezilla image containing MULTIPLE DISKS."
-msgstr "ΣΗΜΑΝΤΙΚΟ: Επιλέξτε μόνο το ΠΡΩΤΟ δίσκο στο είδωλο Clonezilla που περιέχει ΠΟΛΛΑΠΛΟΥΣ ΔΙΣΚΟΥΣ."
-
 msgid "Destination partition"
 msgstr "Διαμέρισμα προορισμού"
 
@@ -412,10 +448,16 @@ msgstr "Η στήλη \"διαμέρισμα προορισμού\" έχει ε�
 msgid "No destination partition selected. Use the destination partition drop-down menu to select the destination"
 msgstr "Δεν έχει επιλεγεί διαμέρισμα προορισμού. Χρησιμοποιήστε το αναπτυσσόμενο μενού διαμερίσματος προορισμού για να επιλέξετε τον προορισμό"
 
+msgid "Not restoring this partition"
+msgstr ""
+
+msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
+msgstr ""
+
 msgid "Step 5: Confirm Restore Configuration"
 msgstr "Βήμα 5: Επιβεβαίωση Ρύθμισης Παραμέτρων Επαναφοράς"
 
-msgid "Confirm the restore configuration."
+msgid "Confirm the following restore configuration."
 msgstr "Επιβεβαιώστε τη ρύθμιση παραμέτρων επαναφοράς."
 
 msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite the data on this drive!"
@@ -450,6 +492,54 @@ msgstr "Ανανέωση πίνακα διαμερισμάτων"
 
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
 msgstr "Επαναφορά {description} στο {destination_partition} ({destination_description})"
+
+msgid "Synchronizing disks..."
+msgstr ""
+
+msgid "Querying hard drive geometry of {device}"
+msgstr ""
+
+msgid "Probing {device} with {app}"
+msgstr ""
+
+msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
+msgstr ""
+
+msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
+msgstr ""
+
+msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
+msgstr ""
+
+msgid "Removing udev MAC address records"
+msgstr ""
+
+msgid "Re-installing syslinux (if any)"
+msgstr ""
+
+msgid "Successfully re-installed syslinux bootloader"
+msgstr ""
+
+msgid "Re-installing GRUB bootloader (if any)"
+msgstr ""
+
+msgid "Successfully re-installed GRUB bootloader"
+msgstr ""
+
+msgid "Did not update GRUB bootloader (if any)"
+msgstr ""
+
+msgid "Updating initramfs (if any)"
+msgstr ""
+
+msgid "Successfully updated initramfs"
+msgstr ""
+
+msgid "Updating EFI NVRAM..."
+msgstr ""
+
+msgid "Successfully updated EFI NVRAM"
+msgstr ""
 
 msgid "Restore cancelled by user."
 msgstr "Η επαναφορά ακυρώθηκε από τον χρήστη."
@@ -489,3 +579,38 @@ msgstr "Επιβεβαιώστε τη σύνοψη επαναφοράς."
 
 msgid "Backup restored successfully."
 msgstr "Η επαναφορά του αντιγράφου ασφαλείας ολοκληρώθηκε με επιτυχία." 
+
+msgid "Image Explorer\n"
+"      (beta)"
+msgstr ""
+""
+
+msgid "Image Explorer (beta)"
+msgstr ""
+
+msgid "Select the image file to explore"
+msgstr ""
+
+msgid "Step 3: Select Partition to Explore"
+msgstr ""
+
+msgid "Select the partition to access files from."
+msgstr ""
+
+msgid "Click <b>Mount</b> to mount the backup image (as read-only)."
+msgstr ""
+
+msgid "Mount"
+msgstr ""
+
+msgid "Mounting as read-only..."
+msgstr ""
+
+msgid "Unmount"
+msgstr ""
+
+msgid "Once the partition has been mounted, click <b>Open in file manager</b> to access your files."
+msgstr ""
+
+msgid "Open in file manager"
+msgstr ""

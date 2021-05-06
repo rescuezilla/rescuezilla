@@ -51,6 +51,27 @@ msgstr "请稍后..."
 msgid "Identifying disk drives..." 
 msgstr "搜索磁盘..."
 
+msgid "Unmounting: {path}"
+msgstr ""
+
+msgid "Unable to unmount {path}"
+msgstr ""
+
+msgid "Running: {app}"
+msgstr ""
+
+msgid "Running {app} on {device}"
+msgstr ""
+
+msgid "Failed to run command: "
+msgstr ""
+
+msgid "Error querying drives: "
+msgstr ""
+
+msgid "Unable to shutdown Image Explorer"
+msgstr ""
+
 msgid "Step 1: Select Drive To Backup"
 msgstr "步骤 1: 选择要备份的磁盘"
 
@@ -84,11 +105,11 @@ msgstr "保存"
 msgid "Description"
 msgstr "信息"
 
-msgid "Drive {drive_number}, Partition {partition_number}"
-msgstr "磁盘 {drive_number}, 分区 {partition_number}"
-
 msgid "Drive {drive_number}"
 msgstr "磁盘 {drive_number}"
+
+msgid "Partition {partition_number}"
+msgstr "分区 {partition_number}"
 
 msgid "Step 3: Select Destination Drive"
 msgstr "步骤 3: 选择镜像要保存的磁盘"
@@ -165,6 +186,12 @@ msgstr ""
 msgid "Scanning folder for backup images..."
 msgstr "正在扫描文件夹以查找备份镜像..."
 
+msgid "Close this popup to cancel scanning the selected folder and subfolders."
+msgstr ""
+
+msgid "Scanning: {filename}"
+msgstr ""
+
 msgid "Error processing the following images:"
 msgstr "处理以下镜像时出错:"
 
@@ -174,8 +201,11 @@ msgstr "与以下分区关联的备份镜像无法完全处理:"
 msgid "Unable to fully process the following image:"
 msgstr "以下镜像无法完全处理:"
 
-msgid "This can happen when loading images which Clonezilla was unable to completely backup. Any other filesystems within the image should be restorable as normal."
-msgstr "在加载Clonezilla不完整的备份镜像时，则会发生这种情况。备份镜像中其他文件系统都应能够正常还原。"
+msgid "This can happen when loading images which Clonezilla was unable to completely backup."
+msgstr "在加载Clonezilla不完整的备份镜像时，则会发生这种情况。"
+
+msgid "Any other filesystems within the image should be restorable as normal."
+msgstr "备份镜像中其他文件系统都应能够正常还原。"
 
 msgid "Needs decryption"
 msgstr "需要解密"
@@ -247,7 +277,10 @@ msgstr ""
 msgid "Compression format: "
 msgstr ""
 
-msgid "gzip (default)"
+msgid "gzip"
+msgstr ""
+
+msgid "(default)"
 msgstr ""
 
 msgid "zstandard"
@@ -304,6 +337,9 @@ msgstr "步骤 7: 创建备份镜像中 ..."
 msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr "将系统备份到所选位置，这可能需要一个小时或更长时间(取决于计算机的速度和数据量)。"
 
+msgid "Saving: {file}"
+msgstr ""
+
 msgid "Time Elapsed / Remaining: "
 msgstr "已用时间 / 剩余时间: "
 
@@ -345,6 +381,9 @@ msgstr "备份成功，但出现一些错误:"
 
 msgid "Backup operation failed:"
 msgstr "备份操作失败:"
+
+msgid "User requested operation to stop."
+msgstr ""
 
 msgid "Operation took {num_minutes} minutes."
 msgstr "操作耗时 {num_minutes} 分钟。"
@@ -388,9 +427,6 @@ msgstr "选中镜像"
 msgid "Destination device"
 msgstr "目标设备"
 
-msgid "IMPORTANT: Only selecting FIRST disk in Clonezilla image containing MULTIPLE DISKS."
-msgstr "重要提示: 仅在Clonezilla映像中选择包含多个磁盘的第一张磁盘。"
-
 msgid "Destination partition"
 msgstr "目标分区"
 
@@ -412,10 +448,16 @@ msgstr "\"目标分区\"列已使用目标磁盘的现有分区表信息进行�
 msgid "No destination partition selected. Use the destination partition drop-down menu to select the destination"
 msgstr "未选择目标分区，使用目标分区下拉菜单进行选择。"
 
+msgid "Not restoring this partition"
+msgstr ""
+
+msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
+msgstr ""
+
 msgid "Step 5: Confirm Restore Configuration"
 msgstr "步骤 5: 确认还原配置"
 
-msgid "Confirm the restore configuration."
+msgid "Confirm the following restore configuration."
 msgstr "确认还原配置。"
 
 msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite the data on this drive!"
@@ -450,6 +492,54 @@ msgstr "更新分区表"
 
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
 msgstr "{description} 将还原到 {destination_partition} ({destination_description})"
+
+msgid "Synchronizing disks..."
+msgstr ""
+
+msgid "Querying hard drive geometry of {device}"
+msgstr ""
+
+msgid "Probing {device} with {app}"
+msgstr ""
+
+msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
+msgstr ""
+
+msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
+msgstr ""
+
+msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
+msgstr ""
+
+msgid "Removing udev MAC address records"
+msgstr ""
+
+msgid "Re-installing syslinux (if any)"
+msgstr ""
+
+msgid "Successfully re-installed syslinux bootloader"
+msgstr ""
+
+msgid "Re-installing GRUB bootloader (if any)"
+msgstr ""
+
+msgid "Successfully re-installed GRUB bootloader"
+msgstr ""
+
+msgid "Did not update GRUB bootloader (if any)"
+msgstr ""
+
+msgid "Updating initramfs (if any)"
+msgstr ""
+
+msgid "Successfully updated initramfs"
+msgstr ""
+
+msgid "Updating EFI NVRAM..."
+msgstr ""
+
+msgid "Successfully updated EFI NVRAM"
+msgstr ""
 
 msgid "Restore cancelled by user."
 msgstr "还原操作已被取消。"
@@ -489,3 +579,38 @@ msgstr "确认还原信息。"
 
 msgid "Backup restored successfully."
 msgstr "还原成功。" 
+
+msgid "Image Explorer\n"
+"      (beta)"
+msgstr ""
+""
+
+msgid "Image Explorer (beta)"
+msgstr ""
+
+msgid "Select the image file to explore"
+msgstr ""
+
+msgid "Step 3: Select Partition to Explore"
+msgstr ""
+
+msgid "Select the partition to access files from."
+msgstr ""
+
+msgid "Click <b>Mount</b> to mount the backup image (as read-only)."
+msgstr ""
+
+msgid "Mount"
+msgstr ""
+
+msgid "Mounting as read-only..."
+msgstr ""
+
+msgid "Unmount"
+msgstr ""
+
+msgid "Once the partition has been mounted, click <b>Open in file manager</b> to access your files."
+msgstr ""
+
+msgid "Open in file manager"
+msgstr ""

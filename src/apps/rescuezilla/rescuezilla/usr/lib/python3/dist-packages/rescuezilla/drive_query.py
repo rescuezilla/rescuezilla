@@ -188,17 +188,17 @@ class DriveQuery:
 
         drive_query_start_time = datetime.now()
 
-        GLib.idle_add(self.please_wait_popup.set_secondary_label_text, "Unmounting: " + IMAGE_EXPLORER_DIR)
+        GLib.idle_add(self.please_wait_popup.set_secondary_label_text, _("Unmounting: {path}").format(path=IMAGE_EXPLORER_DIR))
         returncode, failed_message = ImageExplorerManager._do_unmount(IMAGE_EXPLORER_DIR)
         if not returncode:
-            GLib.idle_add(self.error_message_callback, False, "Unable to shutdown Image Explorer \n\n" + failed_message)
+            GLib.idle_add(self.error_message_callback, False, _("Unable to shutdown Image Explorer") + "\n\n" + failed_message)
             GLib.idle_add(self.please_wait_popup.destroy)
             return
 
-        GLib.idle_add(self.please_wait_popup.set_secondary_label_text, "Unmounting: " + RESCUEZILLA_MOUNT_TMP_DIR)
+        GLib.idle_add(self.please_wait_popup.set_secondary_label_text,  _("Unmounting: {path}").format(path=RESCUEZILLA_MOUNT_TMP_DIR))
         returncode, failed_message = ImageExplorerManager._do_unmount(RESCUEZILLA_MOUNT_TMP_DIR)
         if not returncode:
-            GLib.idle_add(self.error_message_callback, False, "Unable to unmount " + RESCUEZILLA_MOUNT_TMP_DIR + "\n\n" + failed_message)
+            GLib.idle_add(self.error_message_callback, False, _("Unable to unmount {path}").format(path=RESCUEZILLA_MOUNT_TMP_DIR) + "\n\n" + failed_message)
             GLib.idle_add(self.please_wait_popup.destroy)
             return
 
@@ -226,14 +226,14 @@ class DriveQuery:
 
             # Not checking return codes here because Clonezilla does not, and some of these commands are expected to
             # fail. The Utility.run() command prints the output to stdout.
-            GLib.idle_add(self.please_wait_popup.set_secondary_label_text, "Running: lsblk")
+            GLib.idle_add(self.please_wait_popup.set_secondary_label_text,  _("Running: {app}").format(app="lsblk"))
             process, flat_command_string, fail_description = Utility.run("lsblk", lsblk_cmd_list, use_c_locale=True)
             lsblk_json_dict = json.loads(process.stdout)
-            GLib.idle_add(self.please_wait_popup.set_secondary_label_text, "Running: blkid")
+            GLib.idle_add(self.please_wait_popup.set_secondary_label_text,  _("Running: {app}").format(app="blkid"))
             process, flat_command_string, fail_description = Utility.run("blkid", blkid_cmd_list, use_c_locale=True)
             blkid_dict = Blkid.parse_blkid_output(process.stdout)
 
-            GLib.idle_add(self.please_wait_popup.set_secondary_label_text, "Running: os-prober")
+            GLib.idle_add(self.please_wait_popup.set_secondary_label_text, _("Running: {app}").format(app="os-prober"))
             # Use os-prober to get OS information (running WITH original locale information
             process, flat_command_string, fail_description = Utility.run("osprober", os_prober_cmd_list, use_c_locale=True)
             os_prober_dict = OsProber.parse_os_prober_output(process.stdout)
@@ -242,13 +242,13 @@ class DriveQuery:
                 partition_longdevname = lsblk_dict['name']
                 print("Going to run parted and sfdisk on " + partition_longdevname)
                 try:
-                    GLib.idle_add(self.please_wait_popup.set_secondary_label_text, "Running: parted on " + partition_longdevname)
+                    GLib.idle_add(self.please_wait_popup.set_secondary_label_text, _("Running {app} on {device}").format(app="parted", device=partition_longdevname))
                     process, flat_command_string, fail_description = Utility.run("parted", self._get_parted_cmd_list(partition_longdevname), use_c_locale=True)
                     if "unrecognized disk label" not in process.stderr:
                         parted_dict_dict[partition_longdevname] = Parted.parse_parted_output(process.stdout)
                     else:
                         print("Parted says " + process.stderr)
-                    GLib.idle_add(self.please_wait_popup.set_secondary_label_text, "Running: sfdisk on " + partition_longdevname)
+                    GLib.idle_add(self.please_wait_popup.set_secondary_label_text, _("Running {app} on {device}").format(app="sfdisk", device=partition_longdevname))
                     process, flat_command_string, fail_description = Utility.run("sfdisk", self._get_sfdisk_cmd_list(partition_longdevname), use_c_locale=True)
                     sfdisk_dict_dict[partition_longdevname] = Sfdisk.parse_sfdisk_dump_output(process.stdout)
                 except Exception:
