@@ -889,11 +889,9 @@ class RestoreManager:
                                 GLib.idle_add(self.update_restore_progress_status,
                                               filesystem_restore_message + "\n\n" + output)
                         elif "partimage" == image_type:
-                            GLib.idle_add(self.update_restore_progress_status,
-                                          "partimage: " + filesystem_restore_message)
+                            self.display_status("partimage: " + filesystem_restore_message)
                         elif "ntfsclone" == image_type:
-                            GLib.idle_add(self.update_restore_progress_status,
-                                          "ntfsclone: " + filesystem_restore_message)
+                            self.display_status("ntfsclone: " + filesystem_restore_message)
 
                         rc = self.proc[image_type + '_restore_' + image_key].poll()
 
