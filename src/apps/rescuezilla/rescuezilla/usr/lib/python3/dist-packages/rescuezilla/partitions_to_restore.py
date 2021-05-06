@@ -46,7 +46,7 @@ class PartitionsToRestore:
         self.restore_partition_treeview = self.builder.get_object("restore_step4_image_partition_treeview")
 
         self.NOT_RESTORING_PARTITION_KEY = "DISABLED"
-        self.NOT_RESTORING_PARTITION_ENDUSER_FRIENDLY = "Not restoring this partition"
+        self.NOT_RESTORING_PARTITION_ENDUSER_FRIENDLY = _("Not restoring this partition")
         self.win = self.builder.get_object("main_window")
 
         self.overwriting_partition_table_message = "<b>" + _("You will be overwriting the partition table.") + "</b>"
@@ -264,8 +264,8 @@ class PartitionsToRestore:
                         image_base_device_node, image_partition_number = Utility.split_device_string(image_format_dict_key)
                         # Combine image partition number with destination device node base
                         dest_partition = Utility.join_device_string(self.dest_drive_node, image_partition_number)
-                        flat_description = "Partition " + str(
-                            image_partition_number) + ": " + self.selected_image.flatten_partition_string(image_format_dict_key)
+                        flat_description = _("Partition {partition_number}").format(partition_number=str(
+                            image_partition_number)) + ": " + self.selected_image.flatten_partition_string(image_format_dict_key)
                     self.destination_partition_combobox_list.append([dest_partition, flat_description])
                     self.restore_partition_selection_list.append(
                         [image_format_dict_key, True, flat_description, dest_partition, flat_description,
@@ -279,8 +279,8 @@ class PartitionsToRestore:
                 image_base_device_node, image_partition_number = Utility.split_device_string(long_device_node)
                 # Combine image partition number with destination device node base
                 dest_partition = Utility.join_device_string(self.dest_drive_node, image_partition_number)
-                flat_description = "Partition " + str(
-                    image_partition_number) + " (" + dest_partition + "): " + self.selected_image.flatten_partition_string(
+                flat_description = _("Partition {partition_number}").format(partition_number=str(
+                    image_partition_number)) + " (" + dest_partition + "): " + self.selected_image.flatten_partition_string(
                     fs_key)
                 self.destination_partition_combobox_list.append([dest_partition, flat_description])
                 self.restore_partition_selection_list.append(
@@ -320,8 +320,8 @@ class PartitionsToRestore:
                                                       + self.selected_image.flatten_partition_string(image_format_dict_key)
                     else:
                         image_base_device_node, image_partition_number = Utility.split_device_string(image_format_dict_key)
-                        flat_image_part_description = "Partition " + str(
-                            image_partition_number) + ": "\
+                        flat_image_part_description = _("Partition {partition_number}").format(partition_number=str(
+                    image_partition_number)) + ": "\
                                                       + self.selected_image.flatten_partition_string(image_format_dict_key)
                     self.restore_partition_selection_list.append(
                         [image_format_dict_key, is_restoring_partition, flat_image_part_description, dest_partition_key,

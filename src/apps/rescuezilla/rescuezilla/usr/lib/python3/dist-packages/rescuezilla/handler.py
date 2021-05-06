@@ -99,8 +99,8 @@ class Handler:
 
         # Initialize compression tool option
         self.compression_tool_list = self.builder.get_object("compression_tool_list")
-        self.compression_tool_list.append(["gzip", "gzip (default)"])
-        self.compression_tool_list.append(["zstd", "zstandard"])
+        self.compression_tool_list.append(["gzip", _("gzip") + " " + _("(default)")])
+        self.compression_tool_list.append(["zstd", _("zstandard")])
         self.compression_tool_list.append(["uncompressed", _("Uncompressed (Suitable for use with Image Explorer)")])
         compression_format_combobox = self.builder.get_object("backup_step6_compression_format_combobox")
         compression_format_combobox.set_active(0)
@@ -988,7 +988,7 @@ class Handler:
             partition_list_string += "    " + GObject.markup_escape_text(key) + ":  " + GObject.markup_escape_text(
                 self.partitions_to_backup[key]['description']) + "\n"
 
-        compression_string = _("<b>Compression</b>: {format}, compression level: {level}").format(format=self.compression_dict['format'], level=str(self.compression_dict['level']))
+        compression_string = "<b>" + _("Compression format: ") + "</b>" + self.compression_dict['format'] + ", " + _("Compression level: ") + str(self.compression_dict['level'])
 
         source_drive_heading = GObject.markup_escape_text(_("Source drive"))
         backup_partitions_heading = GObject.markup_escape_text(_("Backing up the following partition"))

@@ -284,7 +284,7 @@ class ImageExplorerManager:
         if self.is_partition_mounted:
             # Unmount partition
             please_wait_popup = PleaseWaitModalPopup(self.builder, title=_("Please wait..."),
-                                                     message=_("Unmounting..."),
+                                                     message=_("Unmounting: {path}").format(path=selected_partition_key),
                                                      on_close_callback=self.cancel_image_explorer)
             please_wait_popup.show()
             self.mount_thread = threading.Thread(target=self._do_unmount_wrapper,
@@ -345,10 +345,10 @@ class ImageExplorerManager:
                                                                           self.partclone_nbd_process_queue)
             if not returncode:
                 print(failed_message)
-                GLib.idle_add(callback, False, "User requested operation to stop." + "\n\n" + failed_message)
+                GLib.idle_add(callback, False, _("User requested operation to stop.") + "\n\n" + failed_message)
                 GLib.idle_add(please_wait_popup.destroy)
             else:
-                GLib.idle_add(callback, False, "User requested operation to stop.")
+                GLib.idle_add(callback, False, _("User requested operation to stop."))
                 GLib.idle_add(please_wait_popup.destroy)
             return True
         else:
@@ -611,7 +611,7 @@ class ImageExplorerManager:
                     failed_message = "Unable to process image using partclone-nbd:\n\n" + partclone_nbd_flat_command_string + "\n\n"
                     if self.is_stop_requested():
                         self._do_unmount_wrapper(please_wait_popup, callback, destination_path)
-                        failed_message += "\n" + "User requested operation to stop."
+                        failed_message += "\n" + _("User requested operation to stop.")
                     is_unmount_success, unmount_failed_message = self._do_unmount(destination_path,
                                                                                   self.nbdkit_join_process_queue,
                                                                                   self.nbdkit_decompress_process_queue,
@@ -647,7 +647,7 @@ class ImageExplorerManager:
 
             backup_timeend = datetime.now()
             duration_minutes = Utility.get_human_readable_minutes_seconds((backup_timeend - backup_timestart).total_seconds())
-            duration_message = _("Mounting partition took {num_minutes} minutes.").format(
+            duration_message = _("Operation took {num_minutes} minutes.").format(
                 num_minutes=duration_minutes)
             GLib.idle_add(callback, True, duration_message)
             GLib.idle_add(please_wait_popup.destroy)

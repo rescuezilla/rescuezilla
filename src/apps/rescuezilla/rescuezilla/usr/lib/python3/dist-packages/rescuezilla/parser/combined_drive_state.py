@@ -228,7 +228,7 @@ class CombinedDriveState:
             # TODO: Handle this better
             enduser_partition_number = 0
             partition_string = CombinedDriveState.flatten_part(drive_dict[drive_key])
-        flat_string = _("Drive {drive_number}, Partition {partition_number}").format(drive_number=str(enduser_drive_number), partition_number=str(enduser_partition_number)) + ": " + partition_string
+        flat_string = _("Drive {drive_number}").format(drive_number=str(enduser_drive_number)) + ", " + _("Partition {partition_number}").format(partition_number=str(enduser_partition_number)) + ": " + partition_string
         return flat_string
 
     @staticmethod

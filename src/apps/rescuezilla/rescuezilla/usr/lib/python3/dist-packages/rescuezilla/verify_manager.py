@@ -115,7 +115,7 @@ class VerifyManager:
             # TODO: Handle multidisk Clonezilla images
             short_selected_image_drive_node = self.image.short_device_node_disk_list[0]
             if self.requested_stop:
-                GLib.idle_add(self.completed_verify, False, "Requested stop")
+                GLib.idle_add(self.completed_verify, False, _("User requested operation to stop."))
                 return
         elif isinstance(self.image, RedoBackupLegacyImage):
             self.logger.write("Detected RedoBackupLegacyImage")
