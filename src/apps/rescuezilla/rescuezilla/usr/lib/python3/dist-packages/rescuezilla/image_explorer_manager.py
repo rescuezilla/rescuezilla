@@ -276,6 +276,9 @@ class ImageExplorerManager:
         print("Successfully requested any partclone-nbd images to unmount.")
         return True, ""
 
+    def get_partition_compression(self, selected_partition_key):
+        return self.selected_image.image_format_dict_dict[selected_partition_key]['compression']
+
     def mount_partition(self, selected_partition_key):
         self.image_explorer_in_progress = True
         with self.requested_stop_lock:
