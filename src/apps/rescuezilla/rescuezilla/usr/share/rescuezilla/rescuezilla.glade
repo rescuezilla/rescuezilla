@@ -314,6 +314,7 @@
                                         <property name="can_focus">False</property>
                                         <property name="ypad">20</property>
                                         <property name="label" translatable="yes">Easily create a backup image of your computer, or completely restore from one.  Click an option to begin:</property>
+                                        <property name="use_markup">True</property>
                                         <property name="wrap">True</property>
                                         <property name="yalign">1</property>
                                       </object>
@@ -534,6 +535,7 @@
                                             <property name="can_focus">False</property>
                                             <property name="ypad">20</property>
                                             <property name="label" translatable="yes">Select the source drive that you would like to create a backup image from.</property>
+                                            <property name="use_markup">True</property>
                                             <property name="wrap">True</property>
                                             <property name="xalign">0.5</property>
                                             <property name="yalign">1</property>
@@ -728,6 +730,7 @@
                                             <property name="can_focus">False</property>
                                             <property name="ypad">20</property>
                                             <property name="label" translatable="yes">Select which partitions to create a backup of.  Leave all partitions selected if you are unsure.</property>
+                                            <property name="use_markup">True</property>
                                             <property name="wrap">True</property>
                                             <property name="yalign">1</property>
                                           </object>
@@ -1153,6 +1156,7 @@
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="label" translatable="yes">Server</property>
+                                                            <property name="use_markup">True</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -1188,6 +1192,7 @@
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="label" translatable="yes">Identity File</property>
+                                                            <property name="use_markup">True</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -1240,6 +1245,7 @@
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="label" translatable="yes">Version</property>
+                                                            <property name="use_markup">True</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -1266,6 +1272,7 @@
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="label" translatable="yes">Domain</property>
+                                                            <property name="use_markup">True</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -1292,6 +1299,7 @@
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="label" translatable="yes">Username</property>
+                                                            <property name="use_markup">True</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -1305,6 +1313,7 @@
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="label" translatable="yes">Password</property>
+                                                            <property name="use_markup">True</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -1318,6 +1327,7 @@
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="label" translatable="yes">Remote Path</property>
+                                                            <property name="use_markup">True</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -1786,6 +1796,7 @@ The folder a backup is saved in is usually a description of the computer, e.g. &
                                             <property name="label" translatable="yes">Provide a unique name for this backup image, such as the date.  Today's date is automatically entered for you below.
 
 You may only use letters, numbers, and dashes in your backup name.</property>
+                                            <property name="use_markup">True</property>
                                             <property name="wrap">True</property>
                                             <property name="yalign">1</property>
                                           </object>
@@ -1813,6 +1824,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                             <property name="can_focus">False</property>
                                             <property name="ypad">20</property>
                                             <property name="label" translatable="yes">Optional: Provide a short description.</property>
+                                            <property name="use_markup">True</property>
                                             <property name="wrap">True</property>
                                             <property name="yalign">1</property>
                                           </object>
@@ -1918,6 +1930,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                             <property name="can_focus">False</property>
                                             <property name="ypad">20</property>
                                             <property name="label" translatable="yes">Customize image compression settings. Don't make any changes if you are unsure.</property>
+                                            <property name="use_markup">True</property>
                                             <property name="wrap">True</property>
                                             <property name="yalign">1</property>
                                           </object>
@@ -2121,6 +2134,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                             <property name="can_focus">False</property>
                                             <property name="ypad">20</property>
                                             <property name="label" translatable="yes">Confirm the following backup configuration.</property>
+                                            <property name="use_markup">True</property>
                                             <property name="wrap">True</property>
                                             <property name="yalign">1</property>
                                           </object>
@@ -2306,6 +2320,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                             <property name="can_focus">False</property>
                                             <property name="ypad">20</property>
                                             <property name="label" translatable="yes">Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data.</property>
+                                            <property name="use_markup">True</property>
                                             <property name="wrap">True</property>
                                             <property name="yalign">1</property>
                                           </object>
@@ -2456,6 +2471,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                             <property name="can_focus">False</property>
                                             <property name="ypad">20</property>
                                             <property name="label" translatable="yes">Confirm the backup summary.</property>
+                                            <property name="use_markup">True</property>
                                             <property name="wrap">True</property>
                                             <property name="yalign">1</property>
                                           </object>
@@ -2917,6 +2933,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="label" translatable="yes">Server</property>
+                                                            <property name="use_markup">True</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -2939,6 +2956,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="label" translatable="yes">Identity File</property>
+                                                            <property name="use_markup">True</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -2991,6 +3009,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="label" translatable="yes">Version</property>
+                                                            <property name="use_markup">True</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -3017,6 +3036,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="label" translatable="yes">Domain</property>
+                                                            <property name="use_markup">True</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -3043,6 +3063,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="label" translatable="yes">Username</property>
+                                                            <property name="use_markup">True</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -3069,6 +3090,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="label" translatable="yes">Password</property>
+                                                            <property name="use_markup">True</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -3082,6 +3104,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="label" translatable="yes">Remote Path</property>
+                                                            <property name="use_markup">True</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -3234,6 +3257,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="ypad">20</property>
                                                 <property name="label" translatable="yes">Click the box below to select the folder containing image files.</property>
+                                                <property name="use_markup">True</property>
                                                 <property name="wrap">True</property>
                                                 <property name="yalign">1</property>
                                               </object>
@@ -3311,6 +3335,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="ypad">20</property>
                                                 <property name="label" translatable="yes">Select the image file to restore</property>
+                                                <property name="use_markup">True</property>
                                                 <property name="wrap">True</property>
                                                 <property name="yalign">1</property>
                                               </object>
@@ -3523,6 +3548,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="ypad">20</property>
                                                 <property name="label" translatable="yes">Select the destination drive you wish to overwrite and restore the selected image to.</property>
+                                                <property name="use_markup">True</property>
                                                 <property name="wrap">True</property>
                                                 <property name="yalign">1</property>
                                               </object>
@@ -3954,6 +3980,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="ypad">20</property>
                                                 <property name="label" translatable="yes">Confirm the following restore configuration.</property>
+                                                <property name="use_markup">True</property>
                                                 <property name="wrap">True</property>
                                                 <property name="yalign">1</property>
                                               </object>
@@ -4139,6 +4166,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="ypad">20</property>
                                                 <property name="label" translatable="yes">Restoring your system from the image you selected.  This may take an hour or more depending on the speed of your computer and the amount of data.</property>
+                                                <property name="use_markup">True</property>
                                                 <property name="wrap">True</property>
                                                 <property name="yalign">1</property>
                                               </object>
@@ -4293,6 +4321,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="ypad">20</property>
                                                 <property name="label" translatable="yes">Confirm the restore summary.</property>
+                                                <property name="use_markup">True</property>
                                                 <property name="wrap">True</property>
                                                 <property name="yalign">1</property>
                                               </object>
@@ -4761,6 +4790,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="label" translatable="yes">Server</property>
+                                                            <property name="use_markup">True</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -4783,6 +4813,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="label" translatable="yes">Username</property>
+                                                            <property name="use_markup">True</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -4809,6 +4840,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="label" translatable="yes">Identity File</property>
+                                                            <property name="use_markup">True</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -4861,6 +4893,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="label" translatable="yes">Version</property>
+                                                            <property name="use_markup">True</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -4900,6 +4933,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="label" translatable="yes">Domain</property>
+                                                            <property name="use_markup">True</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -4913,6 +4947,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="label" translatable="yes">Password</property>
+                                                            <property name="use_markup">True</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -4926,6 +4961,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="label" translatable="yes">Remote Path</property>
+                                                            <property name="use_markup">True</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -5078,6 +5114,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="ypad">20</property>
                                                 <property name="label" translatable="yes">Click the box below to select the folder containing image files.</property>
+                                                <property name="use_markup">True</property>
                                                 <property name="wrap">True</property>
                                                 <property name="yalign">1</property>
                                               </object>
@@ -5155,6 +5192,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="ypad">20</property>
                                                 <property name="label" translatable="yes">Select the image file to verify</property>
+                                                <property name="use_markup">True</property>
                                                 <property name="wrap">True</property>
                                                 <property name="yalign">1</property>
                                               </object>
@@ -5367,6 +5405,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="ypad">20</property>
                                                 <property name="label" translatable="yes">Verifying the image you selected.</property>
+                                                <property name="use_markup">True</property>
                                                 <property name="wrap">True</property>
                                                 <property name="yalign">1</property>
                                               </object>
@@ -5515,6 +5554,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="ypad">20</property>
                                                 <property name="label" translatable="yes">Confirm the verification summary.</property>
+                                                <property name="use_markup">True</property>
                                                 <property name="wrap">True</property>
                                                 <property name="yalign">1</property>
                                               </object>
@@ -5986,6 +6026,7 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="label" translatable="yes">Server</property>
+                                                            <property name="use_markup">True</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -6021,6 +6062,7 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="label" translatable="yes">Identity File</property>
+                                                            <property name="use_markup">True</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -6073,6 +6115,7 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="label" translatable="yes">Version</property>
+                                                            <property name="use_markup">True</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -6099,6 +6142,7 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="label" translatable="yes">Domain</property>
+                                                            <property name="use_markup">True</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -6125,6 +6169,7 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="label" translatable="yes">Username</property>
+                                                            <property name="use_markup">True</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -6138,6 +6183,7 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="label" translatable="yes">Password</property>
+                                                            <property name="use_markup">True</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -6151,6 +6197,7 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="label" translatable="yes">Remote Path</property>
+                                                            <property name="use_markup">True</property>
                                                             <property name="xalign">1</property>
                                                             </object>
                                                             <packing>
@@ -6303,6 +6350,7 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="ypad">20</property>
                                                 <property name="label" translatable="yes">Click the box below to select the folder containing image files.</property>
+                                                <property name="use_markup">True</property>
                                                 <property name="wrap">True</property>
                                                 <property name="yalign">1</property>
                                               </object>
@@ -6380,6 +6428,7 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="ypad">20</property>
                                                 <property name="label" translatable="yes">Select the image file to explore</property>
+                                                <property name="use_markup">True</property>
                                                 <property name="wrap">True</property>
                                                 <property name="yalign">1</property>
                                               </object>
