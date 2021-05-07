@@ -457,16 +457,20 @@ class ImageExplorerManager:
                                                        encoding='utf-8')
                 print("Adding join process with pid " + str(nbdkit_join_process.pid) + " to queue")
                 self.nbdkit_join_process_queue.put(nbdkit_join_process)
-                # Connect the /dev/nbdN device node to the NBD server launched earlier.
-                nbdclient_connect_cmd_list = ["nbd-client", "-block-size", "512", "localhost", JOINED_FILES_NBD_DEVICE]
 
                 if self._check_stop_and_cleanup(please_wait_popup, callback, destination_path):
                     return
 
-                process, flat_command_string, failed_message = Utility.interruptable_run(
-                    "Associating the nbdkit server process being used for dynamic CONCATENATION with the nbd device node: " + JOINED_FILES_NBD_DEVICE,
-                    nbdclient_connect_cmd_list, use_c_locale=False, is_shutdown_fn=self.is_stop_requested)
-                if process.returncode != 0:
+                # Connect the /dev/nbdN device node to the NBD server launched earlier.
+                nbdclient_connect_cmd_list = ["nbd-client", "-block-size", "512", "localhost", JOINED_FILES_NBD_DEVICE]
+                is_success, message = Utility.retry_run(short_description="Associating the nbdkit server process being used for dynamic CONCATENATION with the nbd device node: " + JOINED_FILES_NBD_DEVICE,
+                                                        cmd_list=nbdclient_connect_cmd_list,
+                                                        expected_error_msg="Error: Socket failed: Connection refused",
+                                                        retry_interval_seconds=1,
+                                                        timeout_seconds=5,
+                                                        is_shutdown_fn=self.is_stop_requested)
+                if not is_success:
+                    failed_message = message
                     is_unmount_success, unmount_failed_message = self._do_unmount(destination_path,
                                                                                   self.nbdkit_join_process_queue,
                                                                                   self.nbdkit_decompress_process_queue,
@@ -535,12 +539,17 @@ class ImageExplorerManager:
                     return
                 print("Adding decompress process with pid " + str(nbdkit_decompress_process.pid) + " to queue")
                 self.nbdkit_decompress_process_queue.put(nbdkit_decompress_process)
-                nbdclient_connect_cmd_list = ["nbd-client", "-block-size", "512", "localhost", port,
-                                              DECOMPRESSED_NBD_DEVICE]
-                process, flat_command_string, failed_message = Utility.interruptable_run(
-                    "Associating the nbdkit server process being used for dynamic DECOMPRESSION with the nbd device node. For gzip data this may take a while (as it effectively decompresses entire archive): " + DECOMPRESSED_NBD_DEVICE,
-                    nbdclient_connect_cmd_list, use_c_locale=False, is_shutdown_fn=self.is_stop_requested)
-                if process.returncode != 0:
+
+                nbdclient_connect_cmd_list = ["nbd-client", "-block-size", "512", "localhost", port, DECOMPRESSED_NBD_DEVICE]
+                is_success, message = Utility.retry_run(short_description="Associating the nbdkit server process being used for dynamic DECOMPRESSION with the nbd device node. For gzip data this may take a while (as it effectively decompresses entire archive): " + DECOMPRESSED_NBD_DEVICE,
+                                                        cmd_list=nbdclient_connect_cmd_list,
+                                                        expected_error_msg="Error: Socket failed: Connection refused",
+                                                        retry_interval_seconds=1,
+                                                        timeout_seconds=5,
+                                                        is_shutdown_fn=self.is_stop_requested)
+
+                if not is_success:
+                    failed_message = message
                     is_unmount_success, unmount_failed_message = self._do_unmount(destination_path,
                                                                                   self.nbdkit_join_process_queue,
                                                                                   self.nbdkit_decompress_process_queue,
