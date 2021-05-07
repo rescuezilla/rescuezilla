@@ -70,8 +70,9 @@ class RedoRescueImage:
         self.redo_dict = json.loads(Utility.read_file_into_string(absolute_redorescue_json_path))
         print(json.dumps(self.redo_dict, indent=4, sort_keys=True))
 
-        # Convert Redo Rescue's English human-readable string to Python datetime
-        redo_datetime = datetime.strptime(self.redo_dict['timestamp'], "%a, %d %b %Y %H:%M:%S %z")
+        with Utility.setlocale('C'):
+            # Convert Redo Rescue's English human-readable string to Python datetime
+            redo_datetime = datetime.strptime(self.redo_dict['timestamp'], "%a, %d %b %Y %H:%M:%S %z")
         # Convert to a string that's consistent with the rest of Rescuezilla
         self.last_modified_timestamp = format_datetime(datetime.fromtimestamp(redo_datetime.timestamp()))
         print("Last modified timestamp " + self.last_modified_timestamp)

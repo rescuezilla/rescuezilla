@@ -17,12 +17,15 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
 import gettext
+import locale
 import math
 import os
 import pwd
 import re
 import shutil
 import subprocess
+import threading
+from contextlib import contextmanager
 from queue import Queue
 from threading import Thread
 from time import sleep
@@ -221,6 +224,18 @@ class REMatcher(object):
 
 
 class Utility:
+    # Helper function copied from [1] that allows for running strptime() against a custom locale (usually, 'C')
+    # [1] https://stackoverflow.com/a/24070673/4745097
+    LOCALE_LOCK = threading.Lock()
+    @contextmanager
+    def setlocale(name):
+        with Utility.LOCALE_LOCK:
+            saved = locale.setlocale(locale.LC_ALL)
+            try:
+                yield locale.setlocale(locale.LC_ALL, name)
+            finally:
+                locale.setlocale(locale.LC_ALL, saved)
+
     # Background: The Rescuezilla frontend uses PolKit to elevate from the standard user to root user, as is required to
     # access harddrive block devices. To open graphical tools from an application running as root as a non-privileged
     # user requires this wrapper.
