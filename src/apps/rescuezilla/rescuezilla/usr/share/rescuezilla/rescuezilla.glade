@@ -473,7 +473,7 @@
                           </object>
                         </child>
                         <child type="tab">
-                          <object class="GtkLabel" id="mode_tab1_label">
+                          <object class="GtkLabel" id="mode_tab_welcome_label">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="label" translatable="yes">Welcome</property>
@@ -2607,7 +2607,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                           </packing>
                         </child>
                         <child type="tab">
-                          <object class="GtkLabel" id="mode_tab_label">
+                          <object class="GtkLabel" id="mode_tab_backup_label">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="label" translatable="yes">Backup</property>
@@ -4466,7 +4466,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                           </packing>
                         </child>
                         <child type="tab">
-                          <object class="GtkLabel" id="mode_tab2_label">
+                          <object class="GtkLabel" id="mode_tab_restore_label">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="label" translatable="yes">Restore</property>
@@ -5704,7 +5704,7 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                           </packing>
                         </child>
                         <child type="tab">
-                          <object class="GtkLabel">
+                          <object class="GtkLabel" id="mode_tab_verify_label">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="label" translatable="yes">Verify Image</property>
@@ -6965,7 +6965,7 @@ Did you know: Image Explorer (beta) now works with virtual hard drives created b
                           </packing>
                         </child>
                         <child type="tab">
-                          <object class="GtkLabel" id="mode_tab3_label">
+                          <object class="GtkLabel" id="mode_tab_image_explorer_label">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="label" translatable="yes">Image Explorer</property>
