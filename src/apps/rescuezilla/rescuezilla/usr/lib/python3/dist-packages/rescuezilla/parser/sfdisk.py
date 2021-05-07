@@ -105,17 +105,20 @@ class Sfdisk:
             print("Could not process: " + line)
             return temp_dict
 
-    # The Foxclone image format doesn't keep track of the disk capacity, and neither does the sfdisk file.
-    # However it has each partition's start offset and size, so finding the largest provides an estimate
-    # of drive capacity.
     # Adapted from CombinedDriveState's get_first_partition
     # TODO: Make more pythonic and more efficient
+    # TODO: Move function to a more suitable class.
     @staticmethod
-    def get_drive_capacity_estimate(partition_list):
+    def get_highest_offset_partition(normalized_sfdisk_dict):
         temp_tuple_list = []
         block_size = 512
-        for key in partition_list.keys():
-            temp_tuple_list.append((key, partition_list[key]['start']*block_size + partition_list[key]['size']*block_size))
+        sfdisk_partition_dict = normalized_sfdisk_dict['sfdisk_dict']['partitions']
+        print(str(sfdisk_partition_dict))
+        for key in sfdisk_partition_dict.keys():
+            # The Foxclone image format doesn't keep track of the disk capacity, and neither does the sfdisk file.
+            # However it has each partition's start offset and size, so finding the largest provides an estimate
+            # of drive capacity.
+            temp_tuple_list.append((key, sfdisk_partition_dict[key]['start'] * block_size + sfdisk_partition_dict[key]['size'] * block_size))
         temp_tuple_list.sort(key=lambda x: x[1], reverse=True)
         print("highest " + str(temp_tuple_list))
         return temp_tuple_list[0]

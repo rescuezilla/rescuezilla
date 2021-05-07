@@ -128,13 +128,6 @@ class FogProjectImage:
             # TODO: split smarter
             split = size_string.split(":")
             self.size_bytes = int(split[1])
-        else:
-            # When the file doesn't exist, estimate drive capacity from sfdisk partition table backup
-            last_partition_key, last_partition_final_byte = Sfdisk.get_drive_capacity_estimate(
-                self.normalized_sfdisk_dict['sfdisk_dict']['partitions'])
-            self.size_bytes = last_partition_final_byte
-        # Covert size in bytes to KB/MB/GB/TB as relevant
-        self.enduser_readable_size = Utility.human_readable_filesize(int(self.size_bytes))
 
         self._mbr_absolute_path = None
         mbr_path_string = os.path.join(dirname, prefix + ".mbr")
@@ -214,6 +207,12 @@ class FogProjectImage:
                                                              'filesystem': "swap",
                                                              "prefix": prefix,
                                                              'is_lvm_logical_volume': False}
+        if self.size_bytes == 0:
+            # When the file doesn't exist, estimate drive capacity from sfdisk partition table backup
+            last_partition_key, last_partition_final_byte = Sfdisk.get_highest_offset_partition(self.normalized_sfdisk_dict)
+            self.size_bytes = last_partition_final_byte
+        # Covert size in bytes to KB/MB/GB/TB as relevant
+        self.enduser_readable_size = Utility.human_readable_filesize(int(self.size_bytes))
         self.is_needs_decryption = False
 
     def get_enduser_friendly_partition_description(self):
