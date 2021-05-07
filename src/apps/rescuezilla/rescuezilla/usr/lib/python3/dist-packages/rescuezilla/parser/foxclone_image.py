@@ -61,8 +61,9 @@ class FoxcloneImage:
 
         dirname = os.path.dirname(absolute_foxclone_img_path)
         self.foxclone_dict = FoxcloneImage.parse_dot_backup(Utility.read_file_into_string(absolute_foxclone_img_path))
-        # Convert Foxclone's English human-readable string to Python datetime
-        foxclone_datetime = datetime.strptime(self.foxclone_dict['timestamp'], "%d %b %Y, %H:%M")
+        with Utility.setlocale('C'):
+            # Convert Foxclone's English human-readable string to Python datetime
+            foxclone_datetime = datetime.strptime(self.foxclone_dict['timestamp'], "%d %b %Y, %H:%M")
         # Convert to a string that's consistent with the rest of Rescuezilla
         self.last_modified_timestamp = format_datetime(datetime.fromtimestamp(foxclone_datetime.timestamp()))
         print("Last modified timestamp " + self.last_modified_timestamp)

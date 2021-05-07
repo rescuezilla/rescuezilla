@@ -94,8 +94,9 @@ class FsArchiverImage:
         pp = pprint.PrettyPrinter(depth=6)
         pp.pprint(self.fsa_dict)
 
-        # Convert FSArchiver's English human-readable string to Python datetime
-        fsarchiver_datetime = datetime.strptime(self.fsa_dict['date'], "%Y-%m-%d_%H-%M-%S")
+        with Utility.setlocale('C'):
+            # Convert FSArchiver's English human-readable string to Python datetime
+            fsarchiver_datetime = datetime.strptime(self.fsa_dict['date'], "%Y-%m-%d_%H-%M-%S")
         # Convert to a string that's consistent with the rest of Rescuezilla
         self.last_modified_timestamp = format_datetime(datetime.fromtimestamp(fsarchiver_datetime.timestamp()))
         print("Last modified timestamp " + self.last_modified_timestamp)
