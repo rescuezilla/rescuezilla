@@ -84,10 +84,6 @@ class FoxcloneImage:
         else:
             self.warning_dict[self.short_device_node_disk_list] = "Missing MBR"
 
-        # Foxclone doesn't keep track of the drive capacity, so estimate it from sfdisk partition table backup
-        last_partition_key, last_partition_final_byte = Sfdisk.get_drive_capacity_estimate(
-            self.normalized_sfdisk_dict['sfdisk_dict']['partitions'])
-
         self.image_format_dict_dict = collections.OrderedDict([])
         for short_device_node in self.foxclone_dict['partitions'].keys():
             type = self.foxclone_dict['partitions'][short_device_node]['type']
@@ -154,6 +150,8 @@ class FoxcloneImage:
         if os.path.exists(notes_abs_path):
             self.user_notes = Utility.read_file_into_string(notes_abs_path)
 
+        # Foxclone doesn't keep track of the drive capacity, so estimate it from sfdisk partition table backup
+        last_partition_key, last_partition_final_byte = Sfdisk.get_highest_offset_partition(self.normalized_sfdisk_dict)
         self.size_bytes = last_partition_final_byte
         # Covert size in bytes to KB/MB/GB/TB as relevant
         self.enduser_readable_size = Utility.human_readable_filesize(int(self.size_bytes))

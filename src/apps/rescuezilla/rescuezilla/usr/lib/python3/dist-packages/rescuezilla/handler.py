@@ -38,6 +38,7 @@ from gi.repository import Gtk, GObject
 from partitions_to_restore import PartitionsToRestore
 from drive_query import DriveQuery
 from image_folder_query import ImageFolderQuery
+from parser.sfdisk import Sfdisk
 from utility import ErrorMessageModalPopup, BrowseSelectionPopup, Utility, AreYouSureModalPopup, _
 from wizard_state import Mode, Page, MOUNT_DIR, IMAGE_EXPLORER_DIR
 
@@ -154,6 +155,9 @@ class Handler:
             Mode.RESTORE: "restore_mount_partition_selection_treeselection",
             Mode.VERIFY: "verify_mount_partition_selection_treeselection",
             Mode.IMAGE_EXPLORER: "image_explorer_mount_partition_selection_treeselection"}
+
+        self.larger_to_smaller_details_msg = _("The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes).")
+        self.larger_to_smaller_info_msg = _("Rescuezilla cannot yet automatically shrink partitions to restore from large disks to smaller disks. The final partition currently must always completely reside within the destination disk.\n\nCurrently the only way to restore to disks smaller than original is to first use GParted Partition Editor to shrink the final partition of the original disk before making a new backup image. Please read the following instructions for more information:\n\n{url}").format(url="https://github.com/rescuezilla/rescuezilla/wiki/HOWTO:-Restoring-to-a-smaller-disk.-Eg,-1000GB-HDD-to-500GB-SSD")
 
         self.requested_shutdown_lock = threading.Lock()
         self.requested_shutdown = False
@@ -430,9 +434,18 @@ class Handler:
                     if not has_atleast_one:
                         error = ErrorMessageModalPopup(self.builder, "Please select partitions to restore!")
                     else:
-                        self.confirm_restore_configuration()
-                        self.current_page = Page.RESTORE_CONFIRM_CONFIGURATION
-                        self.builder.get_object("restore_tabs").set_current_page(4)
+                        last_image_partition_key, last_image_partition_final_byte = Sfdisk.get_highest_offset_partition(self.selected_image.normalized_sfdisk_dict)
+                        destination_capacity_bytes = self.drive_query.drive_state[self.restore_destination_drive][
+                            'capacity']
+                        # Rough check if restoring to a smaller disk. Note: For GPT disks the secondary GPT backup
+                        # should mean the final partition should be a few bytes smaller than the capacity on GPT disks
+                        if self.is_overwriting_partition_table and last_image_partition_final_byte > destination_capacity_bytes:
+                            details = self.larger_to_smaller_details_msg.format(source=last_image_partition_key, source_size=last_image_partition_final_byte, destination_size=destination_capacity_bytes)
+                            error = ErrorMessageModalPopup(self.builder, details + "\n\n" + self.larger_to_smaller_info_msg)
+                        else:
+                            self.confirm_restore_configuration()
+                            self.current_page = Page.RESTORE_CONFIRM_CONFIGURATION
+                            self.builder.get_object("restore_tabs").set_current_page(4)
                 elif self.current_page == Page.RESTORE_CONFIRM_CONFIGURATION:
                     # Disable back/next button until the restore completes
                     self.builder.get_object("button_next").set_sensitive(False)

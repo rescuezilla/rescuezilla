@@ -455,6 +455,20 @@ msgstr ""
 msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
 msgstr ""
 
+msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
+msgstr ""
+
+msgid "Rescuezilla cannot yet automatically shrink partitions to restore from large disks to smaller disks. The final partition currently must always completely reside within the destination disk.\n"
+"\n"
+"Currently the only way to restore to disks smaller than original is to first use GParted Partition Editor to shrink the final partition of the original disk before making a new backup image. Please read the following instructions for more information:\n"
+"\n"
+"{url}"
+msgstr ""
+""
+""
+""
+""
+
 msgid "Step 5: Confirm Restore Configuration"
 msgstr "Étape 5 : Confirmez la configuration de restauration"
 
