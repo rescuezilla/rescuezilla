@@ -25,6 +25,7 @@ import re
 import shutil
 import subprocess
 import threading
+import time
 from contextlib import contextmanager
 from queue import Queue
 from threading import Thread
@@ -515,7 +516,7 @@ class Utility:
                 # timeout expired
                 continue
 
-        # This communicate should return immediately.
+        # This communicate should return immediately. Not stderr_data is None because of the redirection above.
         stdout_data, stderr_data = process.communicate()
         logging_output = short_description + ": " + flat_command_string + " returned " + str(
             process.returncode) + ": " + stdout_data + "\n"
@@ -523,6 +524,28 @@ class Utility:
 
         fail_description = _("Failed to run command: ") + flat_command_string + "\n\n" + stdout_data + "\n\n"
         return process, flat_command_string, fail_description
+
+    # Certain NBD commands appear to be unreliable. Due to NBD is handled in the kernel, apparently.
+    @staticmethod
+    def retry_run(short_description, cmd_list, expected_error_msg, retry_interval_seconds, timeout_seconds, is_shutdown_fn=None):
+        if is_shutdown_fn is None:
+            # If no is shutdown function specified, make a function that simply always return False
+            is_shutdown_fn = lambda : False
+
+        num_tries = 0
+        max_tries = timeout_seconds / retry_interval_seconds
+        while num_tries < max_tries:
+            num_tries += 1
+            process, flat_command_string, fail_description = Utility.interruptable_run(short_description, cmd_list, use_c_locale=True, is_shutdown_fn=is_shutdown_fn)
+            if process.returncode != 0:
+                if expected_error_msg in fail_description:
+                    time.sleep(retry_interval_seconds)
+                else:
+                    # If the error message was unexpected, return immediately
+                    return False, fail_description
+            else:
+                return True, process.stdout
+        return False, "Rescuezilla retry timeout exceeded"
 
     @staticmethod
     def umount_warn_on_busy(mount_point, is_lazy_umount=False):

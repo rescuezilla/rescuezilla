@@ -6754,7 +6754,6 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
 * &lt;b&gt;partclone images of NTFS filesystems and Linux EXT2/3/4 filesystems have poor mount compatibility&lt;/b&gt;. partclone-utils is being developed to improve this.
 * 10+GB compressed backups made with 'gzip' or 'xz' WILL BE UNUSABLY SLOW: the &lt;i&gt;entire&lt;/i&gt; archive gets decompressed to a temporary file because gzip and xz are not well-suited for random access patterns.
 * &lt;b&gt;For fast mounting of even 2+TB images, use an &lt;i&gt;uncompressed&lt;/i&gt; image&lt;/b&gt;. A future version of Rescuezilla will add "indexed gzip" with ratarmount and optimize compression settings for faster mounting of compressed images.
-* If the mount fails immediately with "Socket failed: Connection refused" error, please try again. This will be improved in a future version.
 
 Did you know: Image Explorer (beta) now works with virtual hard drives created by VirtualBox, VMWare and Qemu? Try it out! :-)</property>
                                                             <property name="use_markup">True</property>

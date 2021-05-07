@@ -137,33 +137,16 @@ class QemuImage:
             return
 
     def associate_nbd(self, nbd_device):
-        is_associated = False
-
-        num_tries = 0
-        retry_interval_seconds = 1
-        max_tries = self.timeout_seconds / retry_interval_seconds
-        # The qemu-nbd command often fails with "Disconnect client, due to: Unexpected end-of-file before all bytes
-        # were read". The root cause is how NBD is handled in the kernel, apparently. So keep retrying until it connects
-        while not is_associated and num_tries < max_tries:
-            num_tries += 1
-
-            is_success, error_message = self.deassociate_nbd(nbd_device)
-            if not is_success:
-                return False, error_message
-
-            qemu_nbd_cmd_list = ["qemu-nbd", "--read-only", "--connect=" + nbd_device, self.absolute_path]
-            process, flat_command_string, fail_description = Utility.run("qemu-nbd associate with " + nbd_device, qemu_nbd_cmd_list, use_c_locale=True)
-            if process.returncode != 0:
-                error_message = process.stderr
-                if "Unexpected end-of-file" in process.stderr:
-                    # Expecting a lot of "Disconnect client, due to: Unexpected end-of-file before all bytes were read"
-                    time.sleep(retry_interval_seconds)
-                else:
-                    # If the error message was unexpected, return immediately
-                    return False, error_message
-            else:
-                return True, ""
-        return False, "timeout exceeded"
+        is_success, error_message = self.deassociate_nbd(nbd_device)
+        if not is_success:
+            return False, error_message
+        qemu_nbd_cmd_list = ["qemu-nbd", "--read-only", "--connect=" + nbd_device, self.absolute_path]
+        is_success, message = Utility.retry_run(short_description="qemu-nbd associate with " + nbd_device,
+                          cmd_list=qemu_nbd_cmd_list,
+                          expected_error_msg="Unexpected end-of-file",
+                          retry_interval_seconds=1,
+                          timeout_seconds=self.timeout_seconds)
+        return is_success, message
 
     @staticmethod
     def deassociate_nbd(nbd_device):
