@@ -1665,6 +1665,8 @@ The folder a backup is saved in is usually a description of the computer, e.g. &
                                                 <child>
                                                   <object class="GtkTreeViewColumn">
                                                     <property name="resizable">True</property>
+                                                    <property name="sizing">fixed</property>
+                                                    <property name="fixed_width">100</property>
                                                     <property name="title" translatable="yes">Description</property>
                                                     <child>
                                                       <object class="GtkCellRendererText"/>
@@ -3433,6 +3435,8 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                     <child>
                                                       <object class="GtkTreeViewColumn">
                                                         <property name="resizable">True</property>
+                                                        <property name="sizing">fixed</property>
+                                                        <property name="fixed_width">100</property>
                                                         <property name="title" translatable="yes">Description</property>
                                                         <child>
                                                           <object class="GtkCellRendererText"/>
@@ -5290,6 +5294,8 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                     <child>
                                                       <object class="GtkTreeViewColumn">
                                                         <property name="resizable">True</property>
+                                                        <property name="sizing">fixed</property>
+                                                        <property name="fixed_width">100</property>
                                                         <property name="title" translatable="yes">Description</property>
                                                         <child>
                                                           <object class="GtkCellRendererText"/>
@@ -6526,6 +6532,8 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                     <child>
                                                       <object class="GtkTreeViewColumn">
                                                         <property name="resizable">True</property>
+                                                        <property name="sizing">fixed</property>
+                                                        <property name="fixed_width">100</property>
                                                         <property name="title" translatable="yes">Description</property>
                                                         <child>
                                                           <object class="GtkCellRendererText"/>
