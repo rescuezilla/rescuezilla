@@ -458,6 +458,9 @@ msgstr "No se ha seleccionado ninguna partición de destino. Usa el menú desple
 msgid "Not restoring this partition"
 msgstr ""
 
+msgid "When you are ready to continue, click <b>Next</b>."
+msgstr ""
+
 msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
 msgstr ""
 
