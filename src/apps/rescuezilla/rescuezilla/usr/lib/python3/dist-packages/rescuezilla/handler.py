@@ -716,6 +716,13 @@ class Handler:
         # invert toggle
         self.save_partition_list_store.set_value(iter, 1, not state)
 
+    # Callback for double click (row-activate) on backup mode partitions to backup toggle
+    # TODO: Directly call save_partition_toggled from above, to reduce duplication
+    def row_activated_backup_partition_toggle(self, treeview, path, view_column):
+        list_store, iter = self.get_row("backup_partitions_treeselection")
+        state = list_store.get(iter, 1)[0]
+        list_store.set_value(iter, 1, not state)
+
     def exit_app(self):
         print("Exiting Rescuezilla.")
         try:
@@ -934,6 +941,13 @@ class Handler:
     def restore_partition_toggled(self, cell_render_toggle, path):
         iter = self.restore_partition_selection_list.get_iter(path)
         new_state = not self.restore_partition_selection_list.get(iter, 1)[0]
+        self.backup_image.toggle_restore_of_row(iter, new_state)
+
+    # Callback for double click (row-activate) on restore partition mapping toggle
+    # TODO: Directly call restore_partition_toggled from above, to reduce duplication
+    def row_activated_restore_partition_toggle(self, treeview, path, view_column):
+        list_store, iter = self.get_row("restore_step4_image_partition_treeview_treeselection")
+        new_state = not list_store.get(iter, 1)[0]
         self.backup_image.toggle_restore_of_row(iter, new_state)
 
     def destination_partition_node_changed(self, cell_renderer_combo, path, cell_render_combo_iter):
