@@ -40,7 +40,7 @@ from drive_query import DriveQuery
 from image_folder_query import ImageFolderQuery
 from parser.sfdisk import Sfdisk
 from utility import ErrorMessageModalPopup, BrowseSelectionPopup, Utility, AreYouSureModalPopup, _
-from wizard_state import Mode, Page, MOUNT_DIR, IMAGE_EXPLORER_DIR
+from wizard_state import Mode, Page, MOUNT_DIR, IMAGE_EXPLORER_DIR, NETWORK_UI_WIDGET_MODES
 
 
 class Handler:
@@ -142,7 +142,7 @@ class Handler:
             'network_ssh_idfile_box': {},
             'network_ssh_idfile_label': {},
         }
-        for mode in Mode:
+        for mode in NETWORK_UI_WIDGET_MODES:
             for prefix in self.network_protocol_widget_dict.keys():
                 id = mode.name.lower() + "_" + prefix
                 object = self.builder.get_object(id)
@@ -195,7 +195,7 @@ class Handler:
         # TODO: Find more efficient way to do this
         combobox_list = []
         # Re-initialize the image selection network protocol
-        for mode in Mode:
+        for mode in NETWORK_UI_WIDGET_MODES:
             self.network_protocol_widget_dict['network_use_local_radiobutton'][mode].set_active(True)
             combobox_list.append(self.network_protocol_widget_dict['network_protocol_combobox'][mode])
         # Reset all comboboxes
@@ -770,7 +770,7 @@ class Handler:
         optional = " (" + _("Optional") + "):"
         network_protocol_key = Utility.get_combobox_key(combobox)
         if network_protocol_key == "SMB":
-            for mode in Mode:
+            for mode in NETWORK_UI_WIDGET_MODES:
                 self.network_protocol_widget_dict['network_server_label'][mode].set_visible(True)
                 self.network_protocol_widget_dict['network_server_label'][mode].set_text(_("Share location (UNC path)") + ": ")
                 self.network_protocol_widget_dict['network_server'][mode].set_visible(True)
@@ -791,7 +791,7 @@ class Handler:
                 self.network_protocol_widget_dict['network_ssh_idfile_label'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_ssh_idfile_box'][mode].set_visible(False)
         elif network_protocol_key == "SSH":
-            for mode in Mode:
+            for mode in NETWORK_UI_WIDGET_MODES:
                 self.network_protocol_widget_dict['network_server_label'][mode].set_visible(True)
                 self.network_protocol_widget_dict['network_server_label'][mode].set_text(_("Server") + ": ")
                 self.network_protocol_widget_dict['network_server'][mode].set_visible(True)
@@ -812,7 +812,7 @@ class Handler:
                 self.network_protocol_widget_dict['network_ssh_idfile_label'][mode].set_text(_("Identity File"))
                 self.network_protocol_widget_dict['network_ssh_idfile_box'][mode].set_visible(True)
         elif network_protocol_key == "NFS":
-            for mode in Mode:
+            for mode in NETWORK_UI_WIDGET_MODES:
                 self.network_protocol_widget_dict['network_server_label'][mode].set_visible(True)
                 self.network_protocol_widget_dict['network_server_label'][mode].set_text(_("Server") + ": ")
                 self.network_protocol_widget_dict['network_server'][mode].set_visible(True)
@@ -841,7 +841,7 @@ class Handler:
 
     def selected_ssh_idfile(self, text, is_allow_selecting_folder_outside_mount):
         print("Received SSH ID file path" + text)
-        for mode in Mode:
+        for mode in NETWORK_UI_WIDGET_MODES:
             self.network_protocol_widget_dict['network_ssh_idfile'][mode].set_text(text)
 
     def compression_tool_changed(self, combobox):
@@ -906,7 +906,7 @@ class Handler:
     # GtkToggleButton handler for switching the image location selection between local folder, and network share.
     def image_location_toggle(self, toggle_button):
         is_local_active = self.network_protocol_widget_dict['network_use_local_radiobutton'][self.mode].get_active()
-        for mode in Mode:
+        for mode in NETWORK_UI_WIDGET_MODES:
             self.network_protocol_widget_dict['frame_local'][mode].set_visible(is_local_active)
             self.network_protocol_widget_dict['frame_network'][mode].set_visible(not is_local_active)
         return
