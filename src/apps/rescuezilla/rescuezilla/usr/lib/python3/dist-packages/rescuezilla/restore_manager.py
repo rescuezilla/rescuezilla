@@ -105,7 +105,7 @@ class RestoreManager:
                 except:
                     print("Error killing process. (Maybe already dead?)")
         self.restore_in_progress = False
-        self.completed_restore(False, _("Restore cancelled by user."))
+        self.completed_restore(False, _("Operation cancelled by user."))
 
     def display_status(self, msg1, msg2):
         GLib.idle_add(self.update_restore_progress_status, msg1 + "\n" + msg2)
@@ -940,7 +940,7 @@ class RestoreManager:
                     GLib.idle_add(self.display_status, growing_filesystem_message, "")
                     is_success, failed_message = Utility.grow_filesystems(filesystem, dest_part['dest_key'], self.logger)
                     if not is_success:
-                        message = "Resizing partition " + dest_part['dest_key'] + " (" + filesystem + ") failed:\n\n" + failed_message
+                        message = _("Resizing partition {partition} ({filesystem}) failed: {msg}").format(partition=dest_part['dest_key'], filesystem=filesystem, msg=failed_message)
                         self.logger.write(message + "\n")
                         GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, message)
                         with self.summary_message_lock:
@@ -997,7 +997,7 @@ class RestoreManager:
                 dest_partition_short_dev_node_string += re.sub('/dev/', '', self.restore_mapping_dict[image_key]['dest_key']) + " "
 
             if shutil.which("ocs-tux-postprocess") is not None:
-                GLib.idle_add(self.display_status, _("Removing udev MAC address records"), "")
+                GLib.idle_add(self.display_status, _("Removing udev MAC address records (if any)"), "")
                 # TODO: Port Clonezilla's ocs-tux-postprocess bash script to Python instead of relying on Clonezilla's script
                 process, flat_command_string, failed_message = Utility.run(
                    "Remove the udev MAC address records on the restored GNU/Linux (if any)",

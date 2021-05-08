@@ -452,7 +452,7 @@ class Handler:
                     self.builder.get_object("button_back").set_sensitive(False)
                     self.post_task_action = Utility.get_combobox_key(self.builder.get_object("restore_step5_perform_action_combobox"))
                     AreYouSureModalPopup(self.builder,
-                                         _("Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite the data on this drive!").format(destination_drive = self.restore_destination_drive),
+                                         _("Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!").format(destination_drive = self.restore_destination_drive),
                                          self._restore_confirmation_callback)
                 elif self.current_page == Page.RESTORE_PROGRESS:
                     self.current_page = Page.RESTORE_SUMMARY_SCREEN
@@ -752,7 +752,7 @@ class Handler:
 
         if not has_already_requested_shutdown and (self.backup_manager.is_backup_in_progress() or self.restore_manager.is_restore_in_progress()):
             print("An operation is in progress. Do you wish to cancel?")
-            AreYouSureModalPopup(self.builder, "An operation is in progress. Do you wish to cancel?",
+            AreYouSureModalPopup(self.builder, _("An operation is in progress. Do you wish to cancel?"),
                                  self._cancel_current_operations)
         else:
             self.exit_app()

@@ -75,7 +75,7 @@ msgstr ""
 msgid "Step 1: Select Drive To Backup"
 msgstr "Steg 1: Välj Disk till säkerhetskopia"
 
-msgid "Select the source drive that you would like to create a backup image from."
+msgid "Select the <b>source drive</b> that you would like to create a backup image from."
 msgstr "Välj disken som du vill skapa en säkerhetskopia av."
 
 msgid "Drive"
@@ -96,7 +96,7 @@ msgstr "Visa gömda enheter (advancerat)"
 msgid "Step 2: Select Partitions to Save"
 msgstr "Steg 2: Välj partitioner att kopiera"
 
-msgid "Select which partitions to create a backup of.  Leave all partitions selected if you are unsure."
+msgid "Select which partitions to create a backup of. <b>Leave all partitions selected if you are unsure.</b>"
 msgstr "Välj vilka partitioner du vill skapa en säkerhetskopia av. Lämna alla partitioner markerade om du är osäker."
 
 msgid "Save"
@@ -123,7 +123,7 @@ msgstr "Ansluten direkt till min dator"
 msgid "Shared over a network"
 msgstr "Delas över ett nätverk"
 
-msgid "Where is the destination drive?"
+msgid "Where would you like to save the image?"
 msgstr "Var är målenheten?"
 
 msgid "Windows shared folder (SMB/CIFS, Samba)"
@@ -165,7 +165,7 @@ msgstr "valfritt"
 msgid "Select network-shared storage location:"
 msgstr "Välj nätverksdelad lagringsplats:"
 
-msgid "Select destination drive:"
+msgid "Select the partition where the image files will be saved to"
 msgstr "Välj destinationsdisk:"
 
 msgid "Partition"
@@ -186,6 +186,9 @@ msgstr ""
 msgid "Scanning folder for backup images..."
 msgstr "Skannar mapp för säkerhetskopierade filer..."
 
+msgid "({timeout_seconds} second timeout)"
+msgstr ""
+
 msgid "Close this popup to cancel scanning the selected folder and subfolders."
 msgstr ""
 
@@ -200,6 +203,9 @@ msgstr "Det går inte att bearbeta filen som är associerad med följande partit
 
 msgid "Unable to fully process the following image:"
 msgstr "Det går inte att bearbeta följande fil helt:"
+
+msgid "Cannot find partition's associated partclone image"
+msgstr ""
 
 msgid "This can happen when loading images which Clonezilla was unable to completely backup."
 msgstr "Detta kan hända när filer laddas som Clonezilla inte kunde säkerhetskopiera helt."
@@ -237,7 +243,7 @@ msgstr "Du måste välja en mapp inuti {location}"
 msgid "Please select a different folder."
 msgstr "Välj en annan mapp."
 
-msgid "The table below lists the backup images that already in this folder (if any)."
+msgid "The table below lists the backup images that are already in this folder (if any)."
 msgstr "Tabellen nedan visar de säkerhetskopierade filer som redan finns i den här mappen (om någon)."
 
 msgid "Browse..."
@@ -271,7 +277,7 @@ msgstr ""
 msgid "Step 6: Customize Compression Settings"
 msgstr ""
 
-msgid "Customize image compression settings. Don't make any changes if you are unsure."
+msgid "Customize image compression settings. <b>Don't make any changes if you are unsure.</b>"
 msgstr ""
 
 msgid "Compression format: "
@@ -352,7 +358,10 @@ msgstr "Bekräfta resultatet."
 msgid "Backup Summary"
 msgstr "Sammanställning av säkerhetskopiering"
 
-msgid "Backup cancelled by user."
+msgid "An operation is in progress. Do you wish to cancel?"
+msgstr ""
+
+msgid "Operation cancelled by user."
 msgstr "Säkerhetskopieringen avbröts av användaren."
 
 msgid "Error creating backup: "
@@ -391,31 +400,31 @@ msgstr "Klicka på <b>Nästa</b> för att starta en ny session"
 msgid "Step 1: Select Image Location"
 msgstr "Steg 1: Välj plats där säkerhetskopian ligger"
 
-msgid "Where is the source drive?"
+msgid "Where are the image files stored?"
 msgstr "Var är källenheten?"
 
-msgid "Select source drive:"
+msgid "Select the partition which contains the image files:"
 msgstr "Välj källenhet:"
 
 msgid "Step 2: Select Backup Image"
 msgstr "Steg 2: Välj säkerhetskopia"
 
-msgid "Click the box below to select the folder containing image files."
+msgid "Click <b>Browse</b> to select the folder containing image files."
 msgstr "Klicka i rutan nedan för att välja den mapp som innehåller filerna."
 
-msgid "Select the image file to restore"
+msgid "Select the image file to restore."
 msgstr "Välj den fil som ska återställas"
 
 msgid "Step 3: Select Drive To Restore"
 msgstr "Steg 3: Välj disk att återställa"
 
-msgid "Select the destination drive you wish to overwrite and restore the selected image to."
+msgid "Select the destination drive to restore with the selected image."
 msgstr "Välj den målenhet du vill skriva över och återställ den valda filen till."
 
 msgid "Step 4: Select Partitions to Restore"
 msgstr "Steg 4: Välj partitioner att återställa"
 
-msgid "Select which partitions from the backup to restore, and whether to overwrite the partition table. Leave everything selected to completely restore the destination drive."
+msgid "Select which partitions from the backup image to restore, and whether to overwrite the partition table. <b>Leave everything selected to completely restore the destination drive.</b>"
 msgstr "Välj vilka partitioner från säkerhetskopian som ska återställas och om partitionstabellen ska skrivas över. Lämna allt valt för att helt återställa målenheten."
 
 msgid "Selected image"
@@ -471,7 +480,7 @@ msgstr "Steg 5: Bekräfta återställningen"
 msgid "Confirm the following restore configuration."
 msgstr "Bekräfta återställningen."
 
-msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite the data on this drive!"
+msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr "Är du säker på att du vill återställa säkerhetskopian till {destination_drive}? Om du gör det kommer informationen på den här enheten permanent att skrivas över!"
 
 msgid "Source image"
@@ -516,13 +525,16 @@ msgstr ""
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
 msgstr ""
 
+msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
+msgstr ""
+
 msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
 msgstr ""
 
 msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
 msgstr ""
 
-msgid "Removing udev MAC address records"
+msgid "Removing udev MAC address records (if any)"
 msgstr ""
 
 msgid "Re-installing syslinux (if any)"
@@ -551,9 +563,6 @@ msgstr ""
 
 msgid "Successfully updated EFI NVRAM"
 msgstr ""
-
-msgid "Restore cancelled by user."
-msgstr "Återställningen avbröts av användaren."
 
 msgid "Error restoring image: "
 msgstr "Fel vid återställning av kopian:"

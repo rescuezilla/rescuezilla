@@ -534,7 +534,7 @@
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="ypad">20</property>
-                                            <property name="label" translatable="yes">Select the source drive that you would like to create a backup image from.</property>
+                                            <property name="label" translatable="yes">Select the &lt;b&gt;source drive&lt;/b&gt; that you would like to create a backup image from.</property>
                                             <property name="use_markup">True</property>
                                             <property name="wrap">True</property>
                                             <property name="xalign">0.5</property>
@@ -729,7 +729,7 @@
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="ypad">20</property>
-                                            <property name="label" translatable="yes">Select which partitions to create a backup of.  Leave all partitions selected if you are unsure.</property>
+                                            <property name="label" translatable="yes">Select which partitions to create a backup of. &lt;b&gt;Leave all partitions selected if you are unsure.&lt;/b&gt;</property>
                                             <property name="use_markup">True</property>
                                             <property name="wrap">True</property>
                                             <property name="yalign">1</property>
@@ -936,7 +936,7 @@
                                               <object class="GtkLabel" id="frame_top_label1">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
-                                                <property name="label" translatable="yes">Where is the destination drive?</property>
+                                                <property name="label" translatable="yes">Where would you like to save the image?</property>
                                                 <property name="use_markup">True</property>
                                               </object>
                                             </child>
@@ -1076,7 +1076,7 @@
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="xpad">7</property>
-                                                            <property name="label" translatable="yes">Select destination drive:</property>
+                                                            <property name="label" translatable="yes">Select the partition where the image files will be saved to</property>
                                                             <property name="use_markup">True</property>
                                                           </object>
                                                         </child>
@@ -1564,7 +1564,7 @@ The folder a backup is saved in is usually a description of the computer, e.g. &
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="ypad">20</property>
-                                            <property name="label" translatable="yes">The table below lists the backup images that already in this folder (if any).</property>
+                                            <property name="label" translatable="yes">The table below lists the backup images that are already in this folder (if any).</property>
                                             <property name="use_markup">True</property>
                                             <property name="wrap">True</property>
                                             <property name="yalign">1</property>
@@ -1931,7 +1931,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="ypad">20</property>
-                                            <property name="label" translatable="yes">Customize image compression settings. Don't make any changes if you are unsure.</property>
+                                            <property name="label" translatable="yes">Customize image compression settings. &lt;b&gt;Don't make any changes if you are unsure.&lt;/b&gt;</property>
                                             <property name="use_markup">True</property>
                                             <property name="wrap">True</property>
                                             <property name="yalign">1</property>
@@ -2716,7 +2716,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                   <object class="GtkLabel" id="frame_top_label3">
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
-                                                    <property name="label" translatable="yes">Where is the source drive?</property>
+                                                    <property name="label" translatable="yes">Where are the image files stored?</property>
                                                     <property name="use_markup">True</property>
                                                   </object>
                                                 </child>
@@ -2853,7 +2853,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="xpad">0</property>
-                                                            <property name="label" translatable="yes">Select source drive:</property>
+                                                            <property name="label" translatable="yes">Select the partition which contains the image files:</property>
                                                             <property name="use_markup">True</property>
                                                             </object>
                                                             </child>
@@ -3256,7 +3256,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="ypad">20</property>
-                                                <property name="label" translatable="yes">Click the box below to select the folder containing image files.</property>
+                                                <property name="label" translatable="yes">Click &lt;b&gt;Browse&lt;/b&gt; to select the folder containing image files.</property>
                                                 <property name="use_markup">True</property>
                                                 <property name="wrap">True</property>
                                                 <property name="yalign">1</property>
@@ -3334,7 +3334,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="ypad">20</property>
-                                                <property name="label" translatable="yes">Select the image file to restore</property>
+                                                <property name="label" translatable="yes">Select the image file to restore.</property>
                                                 <property name="use_markup">True</property>
                                                 <property name="wrap">True</property>
                                                 <property name="yalign">1</property>
@@ -3549,7 +3549,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="ypad">20</property>
-                                                <property name="label" translatable="yes">Select the destination drive you wish to overwrite and restore the selected image to.</property>
+                                                <property name="label" translatable="yes">Select the destination drive to restore with the selected image.</property>
                                                 <property name="use_markup">True</property>
                                                 <property name="wrap">True</property>
                                                 <property name="yalign">1</property>
@@ -3748,7 +3748,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="ypad">20</property>
-                                                <property name="label" translatable="yes">Select which partitions from the backup to restore, and whether to overwrite the partition table. Leave everything selected to completely restore the destination drive.</property>
+                                                <property name="label" translatable="yes">Select which partitions from the backup image to restore, and whether to overwrite the partition table. &lt;b&gt;Leave everything selected to completely restore the destination drive.&lt;/b&gt;</property>
                                                 <property name="use_markup">True</property>
                                                 <property name="wrap">True</property>
                                                 <property name="yalign">1</property>
@@ -4573,7 +4573,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                   <object class="GtkLabel" id="frame_top_label2">
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
-                                                    <property name="label" translatable="yes">Where is the source drive?</property>
+                                                    <property name="label" translatable="yes">Where are the image files stored?</property>
                                                     <property name="use_markup">True</property>
                                                   </object>
                                                 </child>
@@ -4710,7 +4710,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="xpad">0</property>
-                                                            <property name="label" translatable="yes">Select source drive:</property>
+                                                            <property name="label" translatable="yes">Select the partition which contains the image files:</property>
                                                             <property name="use_markup">True</property>
                                                             </object>
                                                             </child>
@@ -5113,7 +5113,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="ypad">20</property>
-                                                <property name="label" translatable="yes">Click the box below to select the folder containing image files.</property>
+                                                <property name="label" translatable="yes">Click &lt;b&gt;Browse&lt;/b&gt; to select the folder containing image files.</property>
                                                 <property name="use_markup">True</property>
                                                 <property name="wrap">True</property>
                                                 <property name="yalign">1</property>
@@ -5810,7 +5810,7 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                   <object class="GtkLabel" id="frame_top_label4">
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
-                                                    <property name="label" translatable="yes">Where is the source drive?</property>
+                                                    <property name="label" translatable="yes">Where are the image files stored?</property>
                                                     <property name="use_markup">True</property>
                                                   </object>
                                                 </child>
@@ -5947,7 +5947,7 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
                                                             <property name="xpad">0</property>
-                                                            <property name="label" translatable="yes">Select source drive:</property>
+                                                            <property name="label" translatable="yes">Select the partition which contains the image files:</property>
                                                             <property name="use_markup">True</property>
                                                             </object>
                                                             </child>
@@ -6350,7 +6350,7 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="ypad">20</property>
-                                                <property name="label" translatable="yes">Click the box below to select the folder containing image files.</property>
+                                                <property name="label" translatable="yes">Click &lt;b&gt;Browse&lt;/b&gt; to select the folder containing image files.</property>
                                                 <property name="use_markup">True</property>
                                                 <property name="wrap">True</property>
                                                 <property name="yalign">1</property>
