@@ -808,6 +808,22 @@
                                             <property name="position">1</property>
                                           </packing>
                                         </child>
+                                        <child>
+                                          <object class="GtkLabel" id="backup_step2_when_ready_label">
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">False</property>
+                                            <property name="ypad">20</property>
+                                            <property name="label" translatable="yes">When you are ready to continue, click &lt;b&gt;Next&lt;/b&gt;.</property>
+                                            <property name="use_markup">True</property>
+                                            <property name="wrap">True</property>
+                                            <property name="yalign">1</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">2</property>
+                                          </packing>
+                                        </child>
                                       </object>
                                     </child>
                                     <child type="label">
@@ -1697,7 +1713,7 @@ The folder a backup is saved in is usually a description of the computer, e.g. &
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkLabel" id="backup_step4_text1">
+                                          <object class="GtkLabel" id="backup_step4_when_ready_label">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="ypad">20</property>
@@ -2037,7 +2053,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkLabel" id="backup_step6_text">
+                                          <object class="GtkLabel" id="backup_step6_when_ready_label">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="ypad">20</property>
@@ -2223,7 +2239,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkLabel" id="backup_step7_text">
+                                          <object class="GtkLabel" id="backup_step7_start_backup_label">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
                                             <property name="ypad">20</property>
@@ -3897,6 +3913,22 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                 <property name="position">4</property>
                                               </packing>
                                             </child>
+                                            <child>
+                                              <object class="GtkLabel" id="backup_step2_when_ready_label1">
+                                                <property name="visible">True</property>
+                                                <property name="can_focus">False</property>
+                                                <property name="ypad">20</property>
+                                                <property name="label" translatable="yes">When you are ready to continue, click &lt;b&gt;Next&lt;/b&gt;.</property>
+                                                <property name="use_markup">True</property>
+                                                <property name="wrap">True</property>
+                                                <property name="yalign">1</property>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">5</property>
+                                              </packing>
+                                            </child>
                                           </object>
                                         </child>
                                         <child type="label">
@@ -4068,7 +4100,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkLabel" id="restore_step5_text">
+                                              <object class="GtkLabel" id="restore_step5_start_restore_label">
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="ypad">20</property>
