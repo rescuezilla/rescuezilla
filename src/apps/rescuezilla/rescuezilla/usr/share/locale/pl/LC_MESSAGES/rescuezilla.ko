@@ -75,7 +75,7 @@ msgstr ""
 msgid "Step 1: Select Drive To Backup"
 msgstr "Krok 1: Wybór dysku do utworzenia kopii zapasowej"
 
-msgid "Select the source drive that you would like to create a backup image from."
+msgid "Select the <b>source drive</b> that you would like to create a backup image from."
 msgstr "Wybierz dysk źródłowy, z którego chcesz utworzyć kopię zapasową obrazu."
 
 msgid "Drive"
@@ -96,7 +96,7 @@ msgstr "Pokaż ukryte narzędzia (dla zaawansowanych użytkowników)"
 msgid "Step 2: Select Partitions to Save"
 msgstr "Krok 2: Wybierz partycje do zapisania"
 
-msgid "Select which partitions to create a backup of.  Leave all partitions selected if you are unsure."
+msgid "Select which partitions to create a backup of. <b>Leave all partitions selected if you are unsure.</b>"
 msgstr "Wybierz partycje, z których chcesz utworzyć kopię zapasową.  Zostaw wszystkie partycje wybrane, jeśli nie jesteś pewien."
 
 msgid "Save"
@@ -126,7 +126,7 @@ msgstr "Podłączony bezpośrednio do mojego komputera"
 msgid "Shared over a network"
 msgstr "Współdzielone przez sieć"
 
-msgid "Where is the destination drive?"
+msgid "Where would you like to save the image?"
 msgstr "Gdzie jest docelowy dysk?"
 
 msgid "Windows shared folder (SMB/CIFS, Samba)"
@@ -168,7 +168,7 @@ msgstr "opcjonalnie"
 msgid "Select network-shared storage location:"
 msgstr "Wybierz lokalizację pamięci masowej współdzielonej przez sieć :"
 
-msgid "Select destination drive:"
+msgid "Select the partition where the image files will be saved to"
 msgstr "Wybierz dysk docelowy:"
 
 msgid "Partition"
@@ -189,6 +189,9 @@ msgstr ""
 msgid "Scanning folder for backup images..."
 msgstr "Folder kopii zapasowej obrazu ..."
 
+msgid "({timeout_seconds} second timeout)"
+msgstr ""
+
 msgid "Close this popup to cancel scanning the selected folder and subfolders."
 msgstr ""
 
@@ -203,6 +206,9 @@ msgstr "Nie można w pełni przetworzyć obrazu związanego z następującymi pa
 
 msgid "Unable to fully process the following image:"
 msgstr "Nie można w pełni przetworzyć następującego obrazu:"
+
+msgid "Cannot find partition's associated partclone image"
+msgstr ""
 
 msgid "This can happen when loading images which Clonezilla was unable to completely backup."
 msgstr "Może się to zdarzyć podczas ładowania obrazów, których Clonezilla nie była w stanie całkowicie skopiować."
@@ -240,7 +246,7 @@ msgstr "Musisz wybrać folder wewnątrz {location}"
 msgid "Please select a different folder."
 msgstr "Proszę wybrać inny folder."
 
-msgid "The table below lists the backup images that already in this folder (if any)."
+msgid "The table below lists the backup images that are already in this folder (if any)."
 msgstr "Poniższa tabela zawiera listę obrazów kopii zapasowych, które już znajdują się w tym folderze (jeśli istnieją)."
 
 msgid "Browse..."
@@ -274,7 +280,7 @@ msgstr ""
 msgid "Step 6: Customize Compression Settings"
 msgstr ""
 
-msgid "Customize image compression settings. Don't make any changes if you are unsure."
+msgid "Customize image compression settings. <b>Don't make any changes if you are unsure.</b>"
 msgstr ""
 
 msgid "Compression format: "
@@ -355,7 +361,10 @@ msgstr "Potwierdź podsumowanie kopii zapasowej."
 msgid "Backup Summary"
 msgstr "Kopia podsumowanie"
 
-msgid "Backup cancelled by user."
+msgid "An operation is in progress. Do you wish to cancel?"
+msgstr ""
+
+msgid "Operation cancelled by user."
 msgstr "Kopia zapasowa anulowana przez użytkownika."
 
 msgid "Error creating backup: "
@@ -394,31 +403,31 @@ msgstr "Aby rozpocząć nową sesję, kliknij <b>Następny</b>"
 msgid "Step 1: Select Image Location"
 msgstr "Krok 1: Wybierz lokalizację obrazu"
 
-msgid "Where is the source drive?"
+msgid "Where are the image files stored?"
 msgstr "Gdzie znajduje się dysk źródłowy?"
 
-msgid "Select source drive:"
+msgid "Select the partition which contains the image files:"
 msgstr "Wybór dysku źródłowego:"
 
 msgid "Step 2: Select Backup Image"
 msgstr "Krok 2: Wybierz kopię obrazu"
 
-msgid "Click the box below to select the folder containing image files."
+msgid "Click <b>Browse</b> to select the folder containing image files."
 msgstr "Kliknij poniższe pole, aby wybrać folder zawierający pliki obrazu."
 
-msgid "Select the image file to restore"
+msgid "Select the image file to restore."
 msgstr "Wybierz plik obrazu do przywrócenia."
 
 msgid "Step 3: Select Drive To Restore"
 msgstr "Krok 3: Wybierz opcję Przywróć Kopię"
 
-msgid "Select the destination drive you wish to overwrite and restore the selected image to."
+msgid "Select the destination drive to restore with the selected image."
 msgstr "Wybierz dysk docelowy, który chcesz nadpisać i przywrócić wybrany obraz do"
 
 msgid "Step 4: Select Partitions to Restore"
 msgstr "Krok 4: Wybierz partycje, które chcesz przywrócić"
 
-msgid "Select which partitions from the backup to restore, and whether to overwrite the partition table. Leave everything selected to completely restore the destination drive."
+msgid "Select which partitions from the backup image to restore, and whether to overwrite the partition table. <b>Leave everything selected to completely restore the destination drive.</b>"
 msgstr "Wybierz, które partycje z kopii zapasowej mają zostać przywrócone oraz czy nadpisać tabelę partycji. Pozostawienie wszystkich zaznaczonych partycji do całkowitego przywrócenia dysku docelowego."
 
 msgid "Selected image"
@@ -474,7 +483,7 @@ msgstr "Krok 5: Zatwierdzenie Przywrócenia konfiguracji"
 msgid "Confirm the following restore configuration."
 msgstr "Potwierdzić konfigurację przywracania."
 
-msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite the data on this drive!"
+msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr "Jesteś pewien, że chcesz przywrócić kopię zapasową na {destination_drive}? Zrobienie tego na stałe nadpisze dane na tym dysku!"
 
 msgid "Source image"
@@ -519,13 +528,16 @@ msgstr ""
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
 msgstr ""
 
+msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
+msgstr ""
+
 msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
 msgstr ""
 
 msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
 msgstr ""
 
-msgid "Removing udev MAC address records"
+msgid "Removing udev MAC address records (if any)"
 msgstr ""
 
 msgid "Re-installing syslinux (if any)"
@@ -554,9 +566,6 @@ msgstr ""
 
 msgid "Successfully updated EFI NVRAM"
 msgstr ""
-
-msgid "Restore cancelled by user."
-msgstr "Przywrócenie anulowane przez użytkownika."
 
 msgid "Error restoring image: "
 msgstr "Błąd przywracania obrazu:"

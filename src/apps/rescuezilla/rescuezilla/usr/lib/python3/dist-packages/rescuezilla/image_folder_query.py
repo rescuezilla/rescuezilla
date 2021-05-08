@@ -179,7 +179,8 @@ class ImageFolderQuery:
                                   _("Scanning: {filename}").format(filename=absolute_path))
                     temp_image_dict = ClonezillaImage.get_clonezilla_image_dict(absolute_path, enduser_filename)
                     error_suffix = _(
-                        "This can happen when loading images which Clonezilla was unable to completely backup. Any other filesystems within the image should be restorable as normal.")
+                        "This can happen when loading images which Clonezilla was unable to completely backup.")
+                    error_suffix += " " + _("Any other filesystems within the image should be restorable as normal.")
                     is_image = True
                 elif absolute_path.endswith(".backup"):
                     # The legacy Redo Backup and Recovery v0.9.3-v1.0.4 format was adapted and extended Foxclone, so
@@ -238,7 +239,8 @@ class ImageFolderQuery:
                     print("Skipping: " + filename)
                     timeout_seconds = 10
                     GLib.idle_add(self.please_wait_popup.set_secondary_label_text,
-                                  _(f"Scanning: {filename} ({timeout_seconds} second timeout)").format(filename=absolute_path, timeout_seconds=timeout_seconds))
+                                  _("Scanning: {filename}").format(filename=absolute_path)
+                                  + " " + _("({timeout_seconds} second timeout)").format(timeout_seconds=timeout_seconds))
                     temp_image_dict = {absolute_path: QemuImage(absolute_path, enduser_filename, timeout_seconds)}
                     error_suffix = _("Support for virtual machine images is still experimental.")
                     is_image = True

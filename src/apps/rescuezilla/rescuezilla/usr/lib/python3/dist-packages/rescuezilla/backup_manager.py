@@ -94,7 +94,7 @@ class BackupManager:
                 except:
                     self.logger.write("Error killing process. (Maybe already dead?)")
         self.backup_in_progress = False
-        self.completed_backup(False, _("Backup cancelled by user."))
+        self.completed_backup(False, _("Operation cancelled by user."))
 
     def do_backup_wrapper(self):
         try:
