@@ -33,6 +33,7 @@ class Mode(Enum):
     VERIFY = 3
     IMAGE_EXPLORER = 4
 
+NETWORK_UI_WIDGET_MODES = [Mode.BACKUP, Mode.RESTORE, Mode.IMAGE_EXPLORER, Mode.VERIFY]
 
 class Page(Enum):
     WELCOME = 1
