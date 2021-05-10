@@ -14,6 +14,7 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
+import collections
 import os
 import tempfile
 import time
@@ -131,6 +132,25 @@ class QemuImage:
         else:
             self.parted_dict = Parted.parse_parted_output(parted_process.stdout)
 
+        self.image_format_dict_dict = collections.OrderedDict([])
+        total_size_estimate = 0
+        for long_device_node in self.normalized_sfdisk_dict['sfdisk_dict']['partitions'].keys():
+            self.image_format_dict_dict[long_device_node] = {'type': "raw",
+                                                             'compression': "uncompressed",
+                                                             'is_lvm_logical_volume': False}
+            estimated_size_bytes = self._compute_partition_size_byte_estimate(long_device_node)
+            self.image_format_dict_dict[long_device_node]['estimated_size_bytes'] = estimated_size_bytes
+            total_size_estimate += estimated_size_bytes
+
+        if self.size_bytes == 0:
+            # For md RAID devices, Clonezilla doesn't have a parted of sfdisk partition table containing the hard drive
+            # size, so in that situation, summing the image sizes provides some kind of size estimate.
+            self.size_bytes = total_size_estimate
+
+        # Covert size in bytes to KB/MB/GB/TB as relevant
+        self.enduser_readable_size = Utility.human_readable_filesize(int(self.size_bytes))
+
+
         is_success, failed_message = QemuImage.deassociate_nbd(QEMU_NBD_NBD_DEVICE)
         if not is_success:
             self.warning_dict[flat_command_string] = failed_message
@@ -171,11 +191,14 @@ class QemuImage:
     def get_enduser_friendly_partition_description(self):
         flat_string = ""
         index = 0
-        for long_device_node in self.normalized_sfdisk_dict['sfdisk_dict']['partitions'].keys():
-            base_device_node, partition_number = Utility.split_device_string(long_device_node)
-            flat_string += "(" + str(partition_number) + ": " + self.flatten_partition_string(long_device_node) + ") "
+        for short_device_node in self.image_format_dict_dict.keys():
+            base_device_node, partition_number = Utility.split_device_string(short_device_node)
+            flat_string += "(" + str(partition_number) + ": " + self.flatten_partition_string(short_device_node) + ") "
             index += 1
         return flat_string
+
+    def does_image_key_belong_to_device(self, image_format_dict_key):
+        return True
 
     def has_partition_table(self):
         # Temp
