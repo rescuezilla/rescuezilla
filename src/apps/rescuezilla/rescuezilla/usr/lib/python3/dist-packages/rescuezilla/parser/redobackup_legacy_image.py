@@ -170,6 +170,10 @@ class RedoBackupLegacyImage:
                 # The legacy Redo Backup and Recovery format cannot distinguish between failed partclone backup and a
                 # user who chose not to backup a partition
                 self.warning_dict[short_device_node] = _("Cannot find partition's associated partclone image")
+                self.image_format_dict_dict[short_device_node] = {'type': "missing",
+                                                                  'prefix': short_device_node,
+                                                                  'estimated_size_bytes': 0,
+                                                                  'is_lvm_logical_volume': False}
                 continue
             self.image_format_dict_dict[short_device_node] = {'abs_image_glob': abs_partclone_image_list}
 
@@ -246,7 +250,7 @@ class RedoBackupLegacyImage:
 
     def _get_human_readable_filesystem(self, short_device_node):
         base_device_node, partition_number = Utility.split_device_string(short_device_node)
-        if short_device_node in self.image_format_dict_dict.keys():
+        if short_device_node in self.image_format_dict_dict.keys() and 'filesystem' in self.image_format_dict_dict[short_device_node].keys():
             return self.image_format_dict_dict[short_device_node]['filesystem']
         else:
             print(self.absolute_path + ": Unable to use " + str(partition_number) + " from " + short_device_node + " in " + str(self.partclone_info_dict_dict) + " or " + str(self.partclone_info_dict_dict))
