@@ -227,7 +227,7 @@ class ImageExplorerManager:
 
     @staticmethod
     def _do_unmount(destination_path, join_process_queue=None, decompress_process_queue=None,
-                    partclone_nbd_process_queue=None):
+                    partclone_nbd_process_queue=None, is_deassociate_qemu_nbd_device=True):
         # Ensure nbd-kernel module loaded (required for nbd-client -disconnect)
         process, flat_command_string, failed_message = Utility.run("Loading NBD kernel module",
                                                                    ["modprobe", "nbd"],
@@ -240,9 +240,10 @@ class ImageExplorerManager:
         if not is_unmounted:
             return False, message
 
-        is_success, message = QemuImage.deassociate_nbd(QEMU_NBD_NBD_DEVICE)
-        if not is_success:
-            return False, message
+        if is_deassociate_qemu_nbd_device:
+            is_success, message = QemuImage.deassociate_nbd(QEMU_NBD_NBD_DEVICE)
+            if not is_success:
+                return False, message
 
         is_success, message = ImageExplorerManager.pop_and_kill("partclone-nbd", partclone_nbd_process_queue,
                                                                 "partclone-nbd")
