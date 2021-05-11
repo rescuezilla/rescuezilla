@@ -16,7 +16,6 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
-import base64
 import collections
 import fileinput
 import os
@@ -34,12 +33,9 @@ import gi
 
 from image_explorer_manager import ImageExplorerManager
 from parser.chs_utilities import ChsUtilities
-from parser.fogproject_image import FogProjectImage
-from parser.foxclone_image import FoxcloneImage
 from parser.fsarchiver_image import FsArchiverImage
+from parser.metadata_only_image import MetadataOnlyImage
 from parser.parted import Parted
-from parser.qemu_image import QemuImage
-from parser.redorescue_image import RedoRescueImage
 from parser.sfdisk import Sfdisk
 from wizard_state import IMAGE_EXPLORER_DIR, RESCUEZILLA_MOUNT_TMP_DIR
 
@@ -47,11 +43,9 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import GObject, GLib
 
 from logger import Logger
-from parser.clonezilla_image import ClonezillaImage
 from parser.lvm import Lvm
 from parser.partclone import Partclone
 from parser.proc_partitions import ProcPartitions
-from parser.redobackup_legacy_image import RedoBackupLegacyImage
 from utility import ErrorMessageModalPopup, Utility, _
 
 
@@ -60,11 +54,12 @@ from utility import ErrorMessageModalPopup, Utility, _
 class RestoreManager:
     def __init__(self, builder):
         self.restore_in_progress_lock = threading.Lock()
-        with self.restore_in_progress_lock:
-            self.restore_in_progress = False
+        self.restore_in_progress = False
         self.builder = builder
         self.restore_progress = self.builder.get_object("restore_progress")
+        self.clone_progress = self.builder.get_object("clone_progress")
         self.restore_progress_status = self.builder.get_object("restore_progress_status")
+        self.clone_progress_status = self.builder.get_object("clone_progress_status")
         self.main_statusbar = self.builder.get_object("main_statusbar")
         # proc dictionary
         self.proc = collections.OrderedDict()
@@ -74,10 +69,20 @@ class RestoreManager:
         with self.restore_in_progress_lock:
             return self.restore_in_progress
 
-    def start_restore(self, image, restore_destination_drive, restore_mapping_dict, is_overwriting_partition_table,
-                      post_task_action, completed_callback, on_separate_thread=True):
+    def start_restore(self,
+                      image,
+                      restore_destination_drive,
+                      restore_mapping_dict,
+                      is_overwriting_partition_table,
+                      post_task_action,
+                      completed_callback,
+                      on_separate_thread=True):
         self.restore_timestart = datetime.now()
         self.image = image
+        if isinstance(self.image, MetadataOnlyImage):
+            self.is_cloning = True
+        else:
+            self.is_cloning = False
         self.restore_destination_drive = restore_destination_drive
         self.restore_mapping_dict = restore_mapping_dict
         self.is_overwriting_partition_table = is_overwriting_partition_table
@@ -113,10 +118,11 @@ class RestoreManager:
                     print("Error killing process. (Maybe already dead?)")
         with self.restore_in_progress_lock:
             self.restore_in_progress = False
-        self.completed_restore(False, _("Operation cancelled by user."))
+        if not self.is_cloning:
+            self.completed_restore(False, _("Operation cancelled by user."))
 
     def display_status(self, msg1, msg2):
-        GLib.idle_add(self.update_restore_progress_status, msg1 + "\n" + msg2)
+        GLib.idle_add(self.update_progress_status, msg1 + "\n" + msg2)
         if msg2 != "":
             status_bar_msg = msg1 + ": " + msg2
         else:
@@ -288,16 +294,17 @@ class RestoreManager:
         self.logger = Logger("/tmp/rescuezilla.log." + datetime.now().strftime("%Y%m%dT%H%M%S") + ".txt")
 
         with self.summary_message_lock:
-            self.summary_message += self.image.absolute_path + "\n"
+            # Could state source image vs source drive depending on cloning/restoring an image of drive
+            self.summary_message += _("Source image") + ": " + self.image.absolute_path + "\n"
 
-        returncode, failed_message = ImageExplorerManager._do_unmount(IMAGE_EXPLORER_DIR)
+        returncode, failed_message = ImageExplorerManager._do_unmount(IMAGE_EXPLORER_DIR, is_deassociate_qemu_nbd_device=False)
         if not returncode:
             with self.summary_message_lock:
                 self.summary_message += failed_message + "\n"
             GLib.idle_add(self.completed_restore, False, failed_message)
             return False, failed_message
 
-        returncode, failed_message = ImageExplorerManager._do_unmount(RESCUEZILLA_MOUNT_TMP_DIR)
+        returncode, failed_message = ImageExplorerManager._do_unmount(RESCUEZILLA_MOUNT_TMP_DIR, is_deassociate_qemu_nbd_device=False)
         if not returncode:
             with self.summary_message_lock:
                 self.summary_message += failed_message + "\n"
@@ -674,7 +681,6 @@ class RestoreManager:
                     else:
                         # Delete the temp copy
                         os.remove(lvm_vg_conf_filepath_tmp_copy)
-
             # Start the Logical Volume Manager (LVM). Caller raises Exception on failure
             Lvm.start_lvm2(self.logger)
 
@@ -784,9 +790,12 @@ class RestoreManager:
                         GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
                                       partition_summary)
                         continue
-                    cat_cmd_list = ["cat"] + self.image.image_format_dict_dict[image_key]['absolute_filename_glob_list']
-                    decompression_cmd_list = Utility.get_decompression_command_list(
-                        self.image.image_format_dict_dict[image_key]['compression'])
+                    if self.is_cloning:
+                        cat_cmd_list = ["true"]
+                        decompression_cmd_list = ["true"]
+                    else:
+                        cat_cmd_list = ["cat"] + self.image.image_format_dict_dict[image_key]['absolute_filename_glob_list']
+                        decompression_cmd_list = Utility.get_decompression_command_list(self.image.image_format_dict_dict[image_key]['compression'])
 
                     restore_binary = self.image.image_format_dict_dict[image_key]['binary']
                     use_old_partclone = False
@@ -816,14 +825,32 @@ class RestoreManager:
                     if 'TERM' in env.keys():
                         env.pop('TERM')
 
-                    if 'partclone' == image_type:
+                    if 'dd' == image_type or restore_binary == "partclone.dd":
+                        # TODO: $PARTCLONE_RESTORE_OPT
+                        # 16MB partclone dd blocksize (from Clonezilla)
+                        partclone_dd_blocksize = "16777216"
+                        if self.is_cloning:
+                            restore_command_list = [restore_binary, "--buffer_size", partclone_dd_blocksize, "--logfile",
+                                                log_filepath, "--source", image_key, "--overwrite",
+                                                dest_part['dest_key']]
+                        else:
+                            restore_command_list = [restore_binary, "--buffer_size", partclone_dd_blocksize, "--logfile",
+                                                log_filepath, "--source", "-", "--overwrite",
+                                                dest_part['dest_key']]
+                    elif 'partclone' == image_type:
                         if use_old_partclone:
                             restore_command_list = [restore_binary, "--logfile", log_filepath,
                                                     "--overwrite", dest_part['dest_key']]
                         else:
-                            # TODO: $PARTCLONE_RESTORE_OPT
-                            restore_command_list = [restore_binary, "--logfile", log_filepath, "--source",
-                                                    "-", "--restore", "--overwrite", dest_part['dest_key']]
+                            if self.is_cloning:
+                                # Partclone images require --dev-to-dev when cloning device-to-device. Except dd images,
+                                # which don't need it. (Note: Clonezilla's ptcl-img dd image is different to its dd-img)
+                                restore_command_list = [restore_binary, "--dev-to-dev", "--logfile", log_filepath, "--source",
+                                                    image_key, "--overwrite", dest_part['dest_key']]
+                            else:
+                                # TODO: $PARTCLONE_RESTORE_OPT
+                                restore_command_list = [restore_binary, "--logfile", log_filepath, "--source",
+                                                        "-", "--restore", "--overwrite", dest_part['dest_key']]
                     elif 'partimage' == image_type:
                         # TODO: partimage will put header in 2nd and later volumes, so we have to uncompress it, then strip it before pipe them to partimage
                         restore_command_list = [restore_binary, "--batch", "--finish=3", "--overwrite", "--nodesc",
@@ -834,13 +861,6 @@ class RestoreManager:
                         # TODO: Evaluate $ntfsclone_restore_extra_opt_def
                         restore_command_list = [restore_binary, "--restore-image", "--overwrite", dest_part['dest_key'],
                                                 "-"]
-                    elif 'dd' == image_type:
-                        # TODO: $PARTCLONE_RESTORE_OPT
-                        # 16MB partclone dd blocksize (from Clonezilla)
-                        partclone_dd_bs = "16777216"
-                        restore_command_list = [restore_binary, "--buffer_size", partclone_dd_bs, "--logfile",
-                                                log_filepath, "--source", "-", "--overwrite",
-                                                dest_part['dest_key']]
                     else:
                         self.logger.write("Unhandled type" + image_type + " from " + image_key)
                         message = "Unhandled type" + image_type + " from " + image_key
@@ -850,7 +870,11 @@ class RestoreManager:
                         continue
 
                     if "unknown" != image_type:
-                        flat_command_string = Utility.print_cli_friendly(image_type + " command ",
+                        if self.is_cloning:
+                            flat_command_string = Utility.print_cli_friendly(image_type + " command ",
+                                                                         [restore_command_list])
+                        else:
+                            flat_command_string = Utility.print_cli_friendly(image_type + " command ",
                                                                          [cat_cmd_list, decompression_cmd_list,
                                                                           restore_command_list])
                         self.proc['cat_' + image_key] = subprocess.Popen(cat_cmd_list, stdout=subprocess.PIPE,
@@ -869,12 +893,21 @@ class RestoreManager:
                                                                          env=env,
                                                                          encoding='utf-8')
                         restore_stdin_proc_key = 'cat_' + image_key"""
-                    self.proc[image_type + '_restore_' + image_key] = subprocess.Popen(restore_command_list,
+                    if self.is_cloning:
+                        flat_command_string = Utility.print_cli_friendly(image_type + " command ",
+                                                                         [restore_command_list])
+                        self.proc[image_type + '_restore_' + image_key] = subprocess.Popen(restore_command_list,
+                                                                                       stdout=subprocess.PIPE,
+                                                                                       stderr=subprocess.PIPE, env=env,
+                                                                                       encoding='utf-8')
+                    else:
+                        self.proc[image_type + '_restore_' + image_key] = subprocess.Popen(restore_command_list,
                                                                                        stdin=self.proc[
                                                                                            restore_stdin_proc_key].stdout,
                                                                                        stdout=subprocess.PIPE,
                                                                                        stderr=subprocess.PIPE, env=env,
                                                                                        encoding='utf-8')
+
                     # Process partclone output. Partclone outputs an update every 3 seconds, so processing the data
                     # on the current thread, for simplicity.
                     # Poll process.stdout to show stdout live
@@ -902,7 +935,7 @@ class RestoreManager:
                                     num_partitions=len(self.restore_mapping_dict.keys()))
                                 GLib.idle_add(self.update_progress_bar, total_progress_float)
                             if 'remaining' in temp_dict.keys():
-                                GLib.idle_add(self.update_restore_progress_status,
+                                GLib.idle_add(self.update_progress_status,
                                               filesystem_restore_message + "\n\n" + output)
                         elif "partimage" == image_type:
                             self.display_status("partimage: " + filesystem_restore_message, "")
@@ -1205,7 +1238,7 @@ class RestoreManager:
                                 num_partitions=len(self.restore_mapping_dict.keys()))
                             GLib.idle_add(self.update_progress_bar, total_progress_float)
                         if 'remaining' in temp_dict.keys():
-                            GLib.idle_add(self.update_restore_progress_status, output)
+                            GLib.idle_add(self.update_progress_status, output)
 
                 rc = self.proc['fsarchiver_restfs_' + image_key].poll()
 
@@ -1235,10 +1268,8 @@ class RestoreManager:
                     GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
                     return False, _("User requested operation to stop.")
 
-        elif isinstance(self.image, QemuImage):
-            GLib.idle_add(self.restore_destination_drive, False, "QemuImage restore not yet implemented.")
-
         GLib.idle_add(self.completed_restore, True, "")
+        return True, ""
 
     def do_sfdisk_corrections(self, input_sfdisk_absolute_path):
         # Delete the last-lba line to fix ensure secondary GPT gets written to the correct place even when
@@ -1287,45 +1318,49 @@ class RestoreManager:
         self.main_statusbar.push(context_id, message)
 
     # Intended to be called via event thread
-    def update_restore_progress_status(self, message):
+    def update_progress_status(self, message):
         self.restore_progress_status.set_text(message)
+        self.clone_progress_status.set_text(message)
 
     # Intended to be called via event thread
     def update_progress_bar(self, fraction):
         self.logger.write("Updating progress bar to " + str(fraction) + "\n")
         self.restore_progress.set_fraction(fraction)
+        self.clone_progress.set_fraction(fraction)
 
     # Expected to run on GTK event thread
     def completed_restore(self, succeeded, message):
-        restore_timeend = datetime.now()
-        duration_minutes = Utility.get_human_readable_minutes_seconds((restore_timeend - self.restore_timestart).total_seconds())
-
         self.main_statusbar.remove_all(self.main_statusbar.get_context_id("restore"))
+        if not self.is_cloning:
+            restore_timeend = datetime.now()
+            duration_minutes = Utility.get_human_readable_minutes_seconds((restore_timeend - self.restore_timestart).total_seconds())
+
+            if succeeded:
+                print("Success")
+            else:
+                with self.summary_message_lock:
+                    self.summary_message += message + "\n"
+                error = ErrorMessageModalPopup(self.builder, message)
+                print("Failure")
+            with self.summary_message_lock:
+                self.summary_message += "\n" + _("Operation took {num_minutes} minutes.").format(num_minutes=duration_minutes) + "\n"
+                if self.post_task_action != "DO_NOTHING":
+                    if succeeded:
+                        has_scheduled, msg = Utility.schedule_shutdown_reboot(self.post_task_action)
+                        self.summary_message += "\n" + msg
+                    else:
+                        self.summary_message += "\n" + _("Shutdown/Reboot cancelled due to errors.")
+        self.logger.close()
         with self.restore_in_progress_lock:
             self.restore_in_progress = False
-        if succeeded:
-            print("Success")
-        else:
-            with self.summary_message_lock:
-                self.summary_message += message + "\n"
-            error = ErrorMessageModalPopup(self.builder, message)
-            print("Failure")
-        with self.summary_message_lock:
-            self.summary_message += "\n" + _("Operation took {num_minutes} minutes.").format(num_minutes=duration_minutes) + "\n"
-            if self.post_task_action != "DO_NOTHING":
-                if succeeded:
-                    has_scheduled, msg = Utility.schedule_shutdown_reboot(self.post_task_action)
-                    self.summary_message += "\n" + msg
-                else:
-                    self.summary_message += "\n" + _("Shutdown/Reboot cancelled due to errors.")
         self.populate_summary_page()
-        self.logger.close()
-        self.completed_callback(succeeded)
+        if not self.is_cloning:
+            self.completed_callback(succeeded)
 
     def populate_summary_page(self):
         with self.summary_message_lock:
             self.logger.write("Populating summary page with:\n\n" + self.summary_message)
-            text_to_display = _("""<b>{heading}</b>
+            text_to_display = """<b>{heading}</b>
 
-{message}""").format(heading=_("Restore Summary"), message=GObject.markup_escape_text(self.summary_message))
+{message}""".format(heading=_("Restore Summary"), message=GObject.markup_escape_text(self.summary_message))
         self.builder.get_object("restore_step7_summary_program_defined_text").set_markup(text_to_display)

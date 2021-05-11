@@ -25,8 +25,9 @@ import gi
 from parser.fogproject_image import FogProjectImage
 from parser.foxclone_image import FoxcloneImage
 from parser.fsarchiver_image import FsArchiverImage
-from parser.qemu_image import QemuImage
+from parser.metadata_only_image import MetadataOnlyImage
 from parser.redorescue_image import RedoRescueImage
+from wizard_state import Mode
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import GObject, GLib
@@ -39,11 +40,9 @@ from utility import Utility, ErrorMessageModalPopup, _, PleaseWaitModalPopup
 
 # FIXME: The LVM handling in this class could be vastly improved.
 class PartitionsToRestore:
-    def __init__(self, builder, restore_partition_selection_list):
+    def __init__(self, builder):
         self.builder = builder
-        self.restore_partition_selection_list = restore_partition_selection_list
         self.destination_partition_combobox_list = self.builder.get_object("destination_partition_combobox_list")
-        self.restore_partition_treeview = self.builder.get_object("restore_step4_image_partition_treeview")
 
         self.NOT_RESTORING_PARTITION_KEY = "DISABLED"
         self.NOT_RESTORING_PARTITION_ENDUSER_FRIENDLY = _("Not restoring this partition")
@@ -58,21 +57,31 @@ class PartitionsToRestore:
         # FIXME: Refactor the code to remove the need for this ugly initialization.
         self.dest_drive_dict = {"partitions": {}}
 
+        self.mode_list = [Mode.RESTORE, Mode.CLONE]
+        self.partition_table_checkbutton_dict = {Mode.RESTORE: self.builder.get_object("restore_overwrite_partition_table_checkbutton"),
+                                                 Mode.CLONE: self.builder.get_object("clone_overwrite_partition_table_checkbutton")}
+        self.overwrite_partition_table_warning_label_dict = {Mode.RESTORE: self.builder.get_object("restore_step4_overwrite_partition_table_warning_label"),
+                                                             Mode.CLONE: self.builder.get_object("clone_step4_overwrite_partition_table_warning_label")}
+        self.selected_image_text_dict = {Mode.RESTORE: self.builder.get_object("restore_step4_selected_image_text"),
+                                                             Mode.CLONE: self.builder.get_object("clone_step4_selected_drives_text")}
+        self.partition_selection_list = self.builder.get_object("partition_selection_list")
+        self.destination_partition_combobox_cell_renderer_dict = {Mode.RESTORE: self.builder.get_object("restore_destination_partition_combobox_cell_renderer"),
+                                                             Mode.CLONE: self.builder.get_object("clone_destination_partition_combobox_cell_renderer")}
+
         self.selected_image = None
         self.dest_drive_key = ""
         self.dest_drive_node = {}
 
     def set_overwriting_partition_warning_label(self, is_overwriting):
         if is_overwriting:
-            overwrite_partition_table_warning_text = self.overwriting_partition_table_message + " " + _("The \"destination partition\" column has been updated using the information stored within the backup image.\n\n<b>If partitions have been resized, new partitions added, or additional operating systems installed <i>since the backup image was created</i>, then the destination drive's partition table will not match the backup image, and overwriting the destination drive's partition table will render these resized and additional partitions permanently inaccessible.</b> If you have not modified the partition table in such a way since creating this backup then overwriting the partition table is completely safe and will have no negative effects.")
-            self.builder.get_object(
-                "restore_step4_overwrite_partition_table_warning_label").set_markup(
-                overwrite_partition_table_warning_text)
+            for mode in self.mode_list:
+                overwrite_partition_table_warning_text = self.overwriting_partition_table_message + " " + _("The \"destination partition\" column has been updated using the information stored within the backup image.\n\n<b>If partitions have been resized, new partitions added, or additional operating systems installed <i>since the backup image was created</i>, then the destination drive's partition table will not match the backup image, and overwriting the destination drive's partition table will render these resized and additional partitions permanently inaccessible.</b> If you have not modified the partition table in such a way since creating this backup then overwriting the partition table is completely safe and will have no negative effects.")
+                self.overwrite_partition_table_warning_label_dict[mode].set_markup(overwrite_partition_table_warning_text)
             self._use_image_partition_table()
         else:
             target_node_warning_text = self.not_overwriting_partition_table_message + " " + _("The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table.")
-            self.builder.get_object(
-                "restore_step4_overwrite_partition_table_warning_label").set_markup(target_node_warning_text)
+            for mode in self.mode_list:
+                self.overwrite_partition_table_warning_label_dict[mode].set_markup(target_node_warning_text)
             self._use_existing_drive_partition_table()
 
     def initialize_individual_partition_restore_list(self, selected_image, dest_drive_node, dest_drive_desc,
@@ -89,16 +98,17 @@ class PartitionsToRestore:
         self._use_image_partition_table()
 
         info_string = "<b>" + _("Selected image") + "</b> " + GObject.markup_escape_text(self.selected_image.absolute_path) + "\n" + "<b>" + _("Destination device") + "</b> " + GObject.markup_escape_text(self.dest_drive_desc)
-        self.builder.get_object("restore_step4_selected_image_text").set_markup(info_string)
+        for mode in self.mode_list:
+            self.selected_image_text_dict[mode].set_markup(info_string)
 
         print("Have selected image " + str(self.selected_image))
         print("Have drive dict " + str(self.dest_drive_dict))
 
         # If the image has a partition table, the overwrite toggle is enabled and defaults to True. Otherwise
         # it's not possible to overwrite the partition table.
-        overwrite_partition_table_checkbutton = self.builder.get_object("overwrite_partition_table_checkbutton")
-        overwrite_partition_table_checkbutton.set_sensitive(self.selected_image.has_partition_table())
-        overwrite_partition_table_checkbutton.set_active(self.selected_image.has_partition_table())
+        for overwrite_partition_table_checkbutton in self.partition_table_checkbutton_dict.values():
+            overwrite_partition_table_checkbutton.set_sensitive(self.selected_image.has_partition_table())
+            overwrite_partition_table_checkbutton.set_active(self.selected_image.has_partition_table())
         self.set_overwriting_partition_warning_label(self.selected_image.has_partition_table())
 
     def completed_toggle(self):
@@ -204,29 +214,30 @@ class PartitionsToRestore:
             error = ErrorMessageModalPopup(self.builder, lvm_error_message)
             # Ensure that the overwrite partition table button stays checked.
             is_overwriting_partition_table = True
-            overwrite_partition_table_checkbutton = self.builder.get_object("overwrite_partition_table_checkbutton")
-            overwrite_partition_table_checkbutton.set_sensitive(self.selected_image.has_partition_table())
-            overwrite_partition_table_checkbutton.set_active(self.selected_image.has_partition_table())
+            for overwrite_partition_table_checkbutton in self.partition_table_checkbutton_dict:
+                overwrite_partition_table_checkbutton.set_sensitive(self.selected_image.has_partition_table())
+                overwrite_partition_table_checkbutton.set_active(self.selected_image.has_partition_table())
 
         self.set_overwriting_partition_warning_label(is_overwriting_partition_table)
-        self.builder.get_object("destination_partition_combobox_cell_renderer").set_sensitive(not is_overwriting_partition_table)
+        for mode in self.mode_list:
+            self.destination_partition_combobox_cell_renderer_dict[mode].set_sensitive(not is_overwriting_partition_table)
 
     def change_combo_box(self, path_string, target_node_string, enduser_friendly_string):
         print(
             "Changing the combobox on row " + path_string + " to " + target_node_string + " / " + enduser_friendly_string)
-        liststore_iter = self.restore_partition_selection_list.get_iter(path_string)
+        liststore_iter = self.partition_selection_list.get_iter(path_string)
 
         self._swap_destination_partition_node_with_backup(liststore_iter)
-        self.restore_partition_selection_list.set_value(liststore_iter, 3, target_node_string)
-        self.restore_partition_selection_list.set_value(liststore_iter, 4, enduser_friendly_string)
+        self.partition_selection_list.set_value(liststore_iter, 3, target_node_string)
+        self.partition_selection_list.set_value(liststore_iter, 4, enduser_friendly_string)
         # Automatically tick the restore checkbox
-        self.restore_partition_selection_list.set_value(liststore_iter, 1, True)
+        self.partition_selection_list.set_value(liststore_iter, 1, True)
 
     def toggle_restore_of_row(self, iter, new_toggle_state):
         # Need to be able to disable restore of individual partitions.
 
         is_empty_dest_partition = False
-        if self.restore_partition_selection_list.get_value(iter, 5) == self.NOT_RESTORING_PARTITION_KEY:
+        if self.partition_selection_list.get_value(iter, 5) == self.NOT_RESTORING_PARTITION_KEY:
             is_empty_dest_partition = True
         if new_toggle_state and is_empty_dest_partition:
             print("Blocking enabling the toggle when the destination partition is not set")
@@ -235,20 +246,20 @@ class PartitionsToRestore:
             return
 
         # Update the underlying model to ensure the checkbox will reflect the new state
-        self.restore_partition_selection_list.set_value(iter, 1, new_toggle_state)
+        self.partition_selection_list.set_value(iter, 1, new_toggle_state)
         self._swap_destination_partition_node_with_backup(iter)
         # If the row has been disabled, update the combobox
         if not new_toggle_state:
-            self.restore_partition_selection_list.set_value(iter, 3, self.NOT_RESTORING_PARTITION_KEY)
-            self.restore_partition_selection_list.set_value(iter, 4, self.NOT_RESTORING_PARTITION_ENDUSER_FRIENDLY)
+            self.partition_selection_list.set_value(iter, 3, self.NOT_RESTORING_PARTITION_KEY)
+            self.partition_selection_list.set_value(iter, 4, self.NOT_RESTORING_PARTITION_ENDUSER_FRIENDLY)
 
     def _use_image_partition_table(self):
         # Populate image partition list
         self.destination_partition_combobox_list.clear()
-        self.restore_partition_selection_list.clear()
+        self.partition_selection_list.clear()
         if isinstance(self.selected_image, ClonezillaImage) or isinstance(self.selected_image, RedoBackupLegacyImage) or \
                 isinstance(self.selected_image, FogProjectImage) or isinstance(self.selected_image, RedoRescueImage) or \
-                isinstance(self.selected_image, FoxcloneImage):
+                isinstance(self.selected_image, FoxcloneImage) or isinstance(self.selected_image, MetadataOnlyImage):
             for image_format_dict_key in self.selected_image.image_format_dict_dict.keys():
                 print("ClonezillaImage contains partition " + image_format_dict_key)
                 if self.selected_image.does_image_key_belong_to_device(image_format_dict_key):
@@ -267,7 +278,7 @@ class PartitionsToRestore:
                         flat_description = _("Partition {partition_number}").format(partition_number=str(
                             image_partition_number)) + ": " + self.selected_image.flatten_partition_string(image_format_dict_key)
                     self.destination_partition_combobox_list.append([dest_partition, flat_description])
-                    self.restore_partition_selection_list.append(
+                    self.partition_selection_list.append(
                         [image_format_dict_key, True, flat_description, dest_partition, flat_description,
                          dest_partition, flat_description])
         elif isinstance(self.selected_image, FsArchiverImage):
@@ -283,15 +294,16 @@ class PartitionsToRestore:
                     image_partition_number)) + " (" + dest_partition + "): " + self.selected_image.flatten_partition_string(
                     fs_key)
                 self.destination_partition_combobox_list.append([dest_partition, flat_description])
-                self.restore_partition_selection_list.append(
+                self.partition_selection_list.append(
                     [fs_key, True, flat_description, dest_partition, flat_description, dest_partition,
                      flat_description])
 
-        self.builder.get_object("destination_partition_combobox_cell_renderer").set_sensitive(False)
+        for mode in self.mode_list:
+            self.destination_partition_combobox_cell_renderer_dict[mode].set_sensitive(False)
 
     def _use_existing_drive_partition_table(self):
         self.destination_partition_combobox_list.clear()
-        self.restore_partition_selection_list.clear()
+        self.partition_selection_list.clear()
 
         num_destination_partitions = 0
 
@@ -312,7 +324,7 @@ class PartitionsToRestore:
         # Populate image partition selection list (left-hand side column)
         if isinstance(self.selected_image, ClonezillaImage) or isinstance(self.selected_image, RedoBackupLegacyImage) or \
                 isinstance(self.selected_image, FogProjectImage) or isinstance(self.selected_image, RedoRescueImage) or \
-                isinstance(self.selected_image, FoxcloneImage):
+                isinstance(self.selected_image, FoxcloneImage) or isinstance(self.selected_image, MetadataOnlyImage):
             for image_format_dict_key in self.selected_image.image_format_dict_dict.keys():
                 if self.selected_image.does_image_key_belong_to_device(image_format_dict_key):
                     if self.selected_image.image_format_dict_dict[image_format_dict_key]['is_lvm_logical_volume']:
@@ -323,7 +335,7 @@ class PartitionsToRestore:
                         flat_image_part_description = _("Partition {partition_number}").format(partition_number=str(
                     image_partition_number)) + ": "\
                                                       + self.selected_image.flatten_partition_string(image_format_dict_key)
-                    self.restore_partition_selection_list.append(
+                    self.partition_selection_list.append(
                         [image_format_dict_key, is_restoring_partition, flat_image_part_description, dest_partition_key,
                          flattened_part_description,
                          dest_partition_key, flattened_part_description])
@@ -332,25 +344,15 @@ class PartitionsToRestore:
             for fs_key in self.selected_image.fsa_dict['filesystems'].keys():
                 flat_image_part_description = "Filesystem " + str(
                 fs_key) + ": " + self.selected_image.flatten_partition_string(fs_key)
-                self.restore_partition_selection_list.append(
+                self.partition_selection_list.append(
                     [fs_key, is_restoring_partition, flat_image_part_description, dest_partition_key,
-                     flattened_part_description,
-                     dest_partition_key, flattened_part_description])
-                num_destination_partitions += 1
-        elif isinstance(self.selected_image, QemuImage):
-            for long_device_key in self.selected_image.sfdisk_dict['partitions'].keys():
-                image_base_device_node, image_partition_number = Utility.split_device_string(long_device_key)
-                flat_image_part_description = "Partition " + str(
-                    image_partition_number) + ": " + self.selected_image.flatten_partition_string(long_device_key)
-                self.restore_partition_selection_list.append(
-                    [long_device_key, is_restoring_partition, flat_image_part_description, dest_partition_key,
                      flattened_part_description,
                      dest_partition_key, flattened_part_description])
                 num_destination_partitions += 1
 
         if num_destination_partitions == 0:
             # The destination disk must be empty.
-            self.restore_partition_selection_list.append(
+            self.partition_selection_list.append(
                 [self.dest_drive_node, is_restoring_partition, flat_image_part_description, self.dest_drive_node,
                  flattened_part_description,
                  dest_partition_key, flattened_part_description])
@@ -376,15 +378,16 @@ class PartitionsToRestore:
             # If there are no partitions in the destination drive, we place the entire drive as the destination
             self.destination_partition_combobox_list.append([self.dest_drive_node, "WHOLE DRIVE " + flattened_disk_description])
 
-        self.builder.get_object("destination_partition_combobox_cell_renderer").set_sensitive(True)
+        for mode in self.mode_list:
+            self.destination_partition_combobox_cell_renderer_dict[mode].set_sensitive(True)
 
     def _swap_destination_partition_node_with_backup(self, liststore_iter):
-        current_value = self.restore_partition_selection_list.get_value(liststore_iter, 3)
-        old_value = self.restore_partition_selection_list.get_value(liststore_iter, 5)
-        self.restore_partition_selection_list.set_value(liststore_iter, 3, old_value)
-        self.restore_partition_selection_list.set_value(liststore_iter, 5, current_value)
+        current_value = self.partition_selection_list.get_value(liststore_iter, 3)
+        old_value = self.partition_selection_list.get_value(liststore_iter, 5)
+        self.partition_selection_list.set_value(liststore_iter, 3, old_value)
+        self.partition_selection_list.set_value(liststore_iter, 5, current_value)
 
-        current_value = self.restore_partition_selection_list.get_value(liststore_iter, 4)
-        old_value = self.restore_partition_selection_list.get_value(liststore_iter, 6)
-        self.restore_partition_selection_list.set_value(liststore_iter, 4, old_value)
-        self.restore_partition_selection_list.set_value(liststore_iter, 6, current_value)
+        current_value = self.partition_selection_list.get_value(liststore_iter, 4)
+        old_value = self.partition_selection_list.get_value(liststore_iter, 6)
+        self.partition_selection_list.set_value(liststore_iter, 4, old_value)
+        self.partition_selection_list.set_value(liststore_iter, 6, current_value)

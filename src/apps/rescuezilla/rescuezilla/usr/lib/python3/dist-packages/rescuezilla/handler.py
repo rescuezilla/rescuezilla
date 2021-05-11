@@ -26,9 +26,12 @@ from datetime import datetime
 import gi
 
 from backup_manager import BackupManager
+from clone_manager import CloneManager
 from image_explorer_manager import ImageExplorerManager
 from mount_local_path import MountLocalPath
 from mount_network_path import MountNetworkPath
+from parser.metadata_only_image import MetadataOnlyImage
+from parser.qemu_image import QemuImage
 from restore_manager import RestoreManager
 from verify_manager import VerifyManager
 
@@ -82,8 +85,8 @@ class Handler:
                                       self.mount_partition_list_store)
         self.image_folder_query = ImageFolderQuery(self.builder, self.image_list_store)
 
-        self.restore_partition_selection_list = self.builder.get_object("restore_partition_selection_list")
-        self.backup_image = PartitionsToRestore(self.builder, self.restore_partition_selection_list)
+        self.partition_selection_list = self.builder.get_object("partition_selection_list")
+        self.backup_image = PartitionsToRestore(self.builder)
         self.image_explorer_partition_selection_list = self.builder.get_object("image_explorer_partition_selection_list")
         self.set_support_information_linkbutton_visible(False)
         self.set_patreon_call_to_action_visible(True)
@@ -110,6 +113,7 @@ class Handler:
         self.backup_manager = BackupManager(builder, self.human_readable_version)
         self.restore_manager = RestoreManager(builder)
         self.verify_manager = VerifyManager(builder)
+        self.clone_manager = CloneManager(builder, self.backup_manager, self.restore_manager)
         # FIXME: Remove need to passing the support info / patreon visibility functions for improved abstraction
         self.image_explorer_manager = ImageExplorerManager(builder, self.image_explorer_partition_selection_list,
                                                            self.set_support_information_linkbutton_visible, self.set_patreon_call_to_action_visible)
@@ -169,6 +173,7 @@ class Handler:
         self.builder.get_object("backup_step9_support_linkbutton").set_visible(is_visible)
         self.builder.get_object("restore_step7_support_linkbutton").set_visible(is_visible)
         self.builder.get_object("verify_step4_support_linkbutton").set_visible(is_visible)
+        self.builder.get_object("clone_step7_support_linkbutton").set_visible(is_visible)
         self.builder.get_object("image_explorer_step3_support_linkbutton").set_visible(is_visible)
 
     # Ask users to contribute on the crowdfunding website Patreon.
@@ -177,6 +182,7 @@ class Handler:
         self.builder.get_object("backup_step9_patreon_linkbutton").set_visible(is_visible)
         self.builder.get_object("restore_step7_patreon_linkbutton").set_visible(is_visible)
         self.builder.get_object("verify_step4_patreon_linkbutton").set_visible(is_visible)
+        self.builder.get_object("clone_step6_patreon_linkbutton").set_visible(is_visible)
         self.builder.get_object("image_explorer_step3_patreon_linkbutton").set_visible(is_visible)
 
     def display_welcome_page(self):
@@ -207,6 +213,7 @@ class Handler:
         # Post action comboboxes don't have signal handlers so no need to trigger anything
         self.builder.get_object("backup_step7_perform_action_combobox").set_active(0)
         self.builder.get_object("restore_step5_perform_action_combobox").set_active(0)
+        self.builder.get_object("clone_step5_perform_action_combobox").set_active(0)
 
     def display_backup_wizard(self, button):
         self.mode = Mode.BACKUP
@@ -247,11 +254,27 @@ class Handler:
         # Remove access to any summary pages from prior operations
         self.has_prior_summary_page = False
 
+    def display_clone_wizard(self, button):
+        self.mode = Mode.CLONE
+        self.main_statusbar.pop(self.main_statusbar.get_context_id("version"))
+        self.builder.get_object("mode_tabs").set_current_page(4)
+        self.builder.get_object("clone_tabs").set_current_page(0)
+        self.current_page = Page.CLONE_INTRODUCTION
+        # Re-enable the forward/previous navigation buttons
+        self.builder.get_object("button_back").set_sensitive(True)
+        self.builder.get_object("button_next").set_sensitive(True)
+        # Remove access to any summary pages from prior operations
+        self.has_prior_summary_page = False
+        self.builder.get_object("button_mount").set_sensitive(False)
+        self.builder.get_object("button_open_file_manager").set_sensitive(False)
+        self.image_explorer_manager.set_parts_of_image_explorer_page_sensitive(True)
+        self.is_partition_mounted = False
+
     def display_image_explorer_wizard(self, button):
         self.mode = Mode.IMAGE_EXPLORER
         self.drive_query.start_query(self._display_error_message_callback)
         self.main_statusbar.pop(self.main_statusbar.get_context_id("version"))
-        self.builder.get_object("mode_tabs").set_current_page(4)
+        self.builder.get_object("mode_tabs").set_current_page(5)
         self.builder.get_object("image_explorer_tabs").set_current_page(0)
         self.current_page = Page.IMAGE_EXPLORER_SOURCE_LOCATION_SELECTION
         # Re-enable the forward/previous navigation buttons
@@ -377,9 +400,6 @@ class Handler:
                         if image.is_needs_decryption:
                             error = ErrorMessageModalPopup(self.builder,
                                                            "Ecryptfs encrypted images are not supported by current version of Rescuezilla.\n\nSupport for ecryptfs will be improved in a future version.\n\nHowever, as a temporary workaround, it is possible to carefully use the mount command line utility to decrypt the image, and then point Rescuezilla to this ecryptfs mount point and then use Rescuezilla to restore the image as normal.")
-                        elif image.image_format == "QEMU_FORMAT":
-                            error = ErrorMessageModalPopup(self.builder,
-                                                           "Virtual Machine images and raw disk images can be mounted and explored by the current version of Rescuezilla, but not restored.\n\nSupport for restoring such images will be added in a future version.")
                         else:
                             self.current_page = Page.RESTORE_DESTINATION_DRIVE_SELECTION
                             self.builder.get_object("restore_tabs").set_current_page(2)
@@ -411,16 +431,16 @@ class Handler:
                         except Exception as e:
                             tb = traceback.format_exc()
                             traceback.print_exc()
-                            error = ErrorMessageModalPopup(self.builder, "Unable to process image " + tb)
+                            error = ErrorMessageModalPopup(self.builder, "Unable to initialize partition restore list:\n\n" + tb)
                         self.current_page = Page.RESTORE_DESTINATION_PARTITION_SELECTION
                         self.builder.get_object("restore_tabs").set_current_page(3)
                 elif self.current_page == Page.RESTORE_DESTINATION_PARTITION_SELECTION:
                     self.is_overwriting_partition_table = self.builder.get_object(
-                        "overwrite_partition_table_checkbutton").get_active()
-                    restore_partition_selection_list = self.builder.get_object("restore_partition_selection_list")
+                        "restore_overwrite_partition_table_checkbutton").get_active()
+                    partition_selection_list = self.builder.get_object("partition_selection_list")
                     self.partitions_to_restore = collections.OrderedDict()
                     has_atleast_one = False
-                    for row in restore_partition_selection_list:
+                    for row in partition_selection_list:
                         print("row is " + str(row))
                         if row[1]:
                             image_key = row[0]
@@ -490,6 +510,123 @@ class Handler:
                     self.builder.get_object("button_back").set_sensitive(True)
                     self.builder.get_object("button_next").set_sensitive(True)
                 elif self.current_page == Page.VERIFY_SUMMARY_SCREEN:
+                    self.has_prior_summary_page = True
+                    self.display_welcome_page()
+                else:
+                    print("Unexpected page " + str(self.current_page))
+            elif self.mode == Mode.CLONE:
+                if self.current_page == Page.CLONE_INTRODUCTION:
+                    self.drive_query.start_query(self._display_error_message_callback)
+                    self.current_page = Page.CLONE_SOURCE_DRIVE_SELECTION
+                    self.builder.get_object("clone_tabs").set_current_page(1)
+                elif self.current_page == Page.CLONE_SOURCE_DRIVE_SELECTION:
+                    list_store, iter = self.get_row("clone_source_drive_selection_treeselection")
+                    if iter is None:
+                        error = ErrorMessageModalPopup(self.builder,
+                                                       _("No source drive selected. Please select source drive to clone"))
+                    else:
+                        # Get first column (which is hidden/invisible) containing the drive shortdevname (eg, 'sda')
+                        self.clone_source_drive_key = list_store.get(iter, 0)[0]
+                        print("User selected source drive: " + self.clone_source_drive_key)
+                        self.source_drive_enduser_friendly_drive_number = list_store.get(iter, 1)[0]
+                        self.source_drive_capacity = list_store.get(iter, 2)[0]
+                        # FIXME: May be None for devices like /dev/md127
+                        self.source_drive_model = list_store.get(iter, 3)[0]
+                        # Make metaimage
+                        # FIXME: Do on separate thread, with please wait popup. Like eg, mounting paths
+                        print("Creating MetadataOnlyImage (currently temporarily done on UI thread). This may take a moment...")
+                        self.source_drive_metadata_only_image = MetadataOnlyImage(self.clone_source_drive_key)
+                        if len(self.source_drive_metadata_only_image.warning_dict) > 0:
+                            error_msg = ""
+                            for value in self.source_drive_metadata_only_image.warning_dict.values():
+                                error_msg += value + "\n"
+                            error = ErrorMessageModalPopup(self.builder,
+                                                           _("Unable to process {source}:").format(source=self.clone_source_drive_key)
+                                                           + "\n\n" + error_msg)
+                        else:
+                            self.current_page = Page.CLONE_DESTINATION_DRIVE_SELECTION
+                            self.builder.get_object("clone_tabs").set_current_page(2)
+                elif self.current_page == Page.CLONE_DESTINATION_DRIVE_SELECTION:
+                    list_store, iter = self.get_row("clone_step3_destination_drive_selection_treeselection")
+                    if iter is None:
+                        error = ErrorMessageModalPopup(self.builder,
+                                                       _("No destination drive selected. Please select destination drive to overwrite"))
+                    else:
+                        self.clone_destination_drive = list_store.get(iter, 0)[0]
+                        if self.clone_source_drive_key == self.clone_destination_drive:
+                            error = ErrorMessageModalPopup(self.builder, "Destination device cannot be the same as source device.")
+                            return
+                        # Set a nice description like "sdc: 8.00 GB (TOSHIBA USB DRV)
+                        self.clone_destination_drive_desc = list_store.get(iter, 1)[0] + ": " + list_store.get(iter, 2)[0]
+                        drive_model = list_store.get(iter, 3)[0]
+                        if drive_model is not None:
+                            # Some devices, such as RAID devices /dev/md127 don't set the drive model field.
+                            self.clone_destination_drive_desc += " (" + drive_model + ")"
+                        print("User selected destination drive: " + self.clone_destination_drive)
+                        drive_dict = self.drive_query.drive_state[self.clone_destination_drive]
+                        # TODO: Compare source / destination size in bytes
+                        try:
+
+                            self.backup_image.initialize_individual_partition_restore_list(self.source_drive_metadata_only_image,
+                                                                                           self.clone_destination_drive,
+                                                                                           self.clone_destination_drive_desc,
+                                                                                           drive_dict)
+                        except Exception as e:
+                            tb = traceback.format_exc()
+                            traceback.print_exc()
+                            error = ErrorMessageModalPopup(self.builder, "Unable to initialize partition list:\n\n" + tb)
+                            return
+                        self.current_page = Page.CLONE_PARTITIONS_TO_CLONE_SELECTION
+                        self.builder.get_object("clone_tabs").set_current_page(3)
+                elif self.current_page == Page.CLONE_PARTITIONS_TO_CLONE_SELECTION:
+                    self.is_overwriting_partition_table = self.builder.get_object(
+                        "clone_overwrite_partition_table_checkbutton").get_active()
+                    partition_selection_list = self.builder.get_object("partition_selection_list")
+                    self.partitions_to_clone = collections.OrderedDict()
+                    has_atleast_one = False
+                    for row in partition_selection_list:
+                        print("row is " + str(row))
+                        if row[1]:
+                            image_key = row[0]
+                            self.partitions_to_clone[image_key] = {
+                                "description": row[2],
+                                "dest_key": row[3],
+                                "dest_description": row[4]
+                            }
+                            print("Added " + image_key + " " + str(self.partitions_to_clone[image_key]))
+                            has_atleast_one = True
+                    if not has_atleast_one:
+                        error = ErrorMessageModalPopup(self.builder, "Please select partitions to clone!")
+                    else:
+                        last_image_partition_key, last_image_partition_final_byte = Sfdisk.get_highest_offset_partition(
+                            self.source_drive_metadata_only_image.normalized_sfdisk_dict)
+                        destination_capacity_bytes = self.drive_query.drive_state[self.clone_destination_drive][
+                            'capacity']
+                        # Rough check if restoring to a smaller disk. Note: For GPT disks the secondary GPT backup
+                        # should mean the final partition should be a few bytes smaller than the capacity on GPT disks
+                        if self.is_overwriting_partition_table and last_image_partition_final_byte > destination_capacity_bytes:
+                            details = self.larger_to_smaller_details_msg.format(source=last_image_partition_key, source_size=last_image_partition_final_byte, destination_size=destination_capacity_bytes)
+                            error = ErrorMessageModalPopup(self.builder, details + "\n\n" + self.larger_to_smaller_info_msg)
+                        else:
+                            self.confirm_clone_configuration()
+                            self.current_page = Page.CLONE_CONFIRM_CONFIGURATION
+                            self.builder.get_object("clone_tabs").set_current_page(4)
+                elif self.current_page == Page.CLONE_CONFIRM_CONFIGURATION:
+                    # Disable back/next button until the clone completes
+                    self.builder.get_object("button_next").set_sensitive(False)
+                    self.builder.get_object("button_back").set_sensitive(False)
+                    self.post_task_action = Utility.get_combobox_key(
+                        self.builder.get_object("clone_step5_perform_action_combobox"))
+                    AreYouSureModalPopup(self.builder,
+                                         _("Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!").format(
+                                             destination_drive=self.clone_destination_drive),
+                                         self._clone_confirmation_callback)
+                elif self.current_page == Page.CLONE_PROGRESS:
+                    self.current_page = Page.CLONE_SUMMARY_SCREEN
+                    self.builder.get_object("clone_tabs").set_current_page(6)
+                    self.builder.get_object("button_back").set_sensitive(False)
+                    self.builder.get_object("button_next").set_sensitive(True)
+                elif self.current_page == Page.CLONE_SUMMARY_SCREEN:
                     self.has_prior_summary_page = True
                     self.display_welcome_page()
                 else:
@@ -631,10 +768,41 @@ class Handler:
                     self.builder.get_object("verify_tabs").set_current_page(1)
                 else:
                     print("Unexpected page " + str(self.current_page))
+            elif self.mode == Mode.CLONE:
+                if self.current_page == Page.WELCOME:
+                    print("Previous clone summary page")
+                    self.builder.get_object("mode_tabs").set_current_page(4)
+                    self.builder.get_object("clone_tabs").set_current_page(6)
+                    self.current_page = Page.CLONE_SUMMARY_SCREEN
+                    self.builder.get_object("button_back").set_sensitive(False)
+                    self.builder.get_object("button_next").set_sensitive(True)
+                elif self.current_page == Page.CLONE_INTRODUCTION:
+                    self.current_page = Page.WELCOME
+                    self.display_welcome_page()
+                elif self.current_page == Page.CLONE_SOURCE_DRIVE_SELECTION:
+                    self.current_page = Page.CLONE_INTRODUCTION
+                    self.builder.get_object("clone_tabs").set_current_page(0)
+                elif self.current_page == Page.CLONE_DESTINATION_DRIVE_SELECTION:
+                    self.current_page = Page.CLONE_SOURCE_DRIVE_SELECTION
+                    self.builder.get_object("clone_tabs").set_current_page(1)
+                elif self.current_page == Page.CLONE_PARTITIONS_TO_CLONE_SELECTION:
+                    self.current_page = Page.CLONE_DESTINATION_DRIVE_SELECTION
+                    self.builder.get_object("clone_tabs").set_current_page(2)
+                elif self.current_page == Page.CLONE_CONFIRM_CONFIGURATION:
+                    self.current_page = Page.CLONE_PARTITIONS_TO_CLONE_SELECTION
+                    self.builder.get_object("clone_tabs").set_current_page(3)
+                elif self.current_page == Page.CLONE_PROGRESS:
+                    self.current_page = Page.CLONE_CONFIRM_CONFIGURATION
+                    self.builder.get_object("clone_tabs").set_current_page(4)
+                elif self.current_page == Page.CLONE_SUMMARY_SCREEN:
+                    self.current_page = Page.CLONE_PROGRESS
+                    self.builder.get_object("clone_tabs").set_current_page(5)
+                else:
+                    print("Unexpected page " + str(self.current_page))
             elif self.mode == Mode.IMAGE_EXPLORER:
                 if self.current_page == Page.WELCOME:
                     print("Previous image explorer summary page")
-                    self.builder.get_object("mode_tabs").set_current_page(4)
+                    self.builder.get_object("mode_tabs").set_current_page(5)
                     self.current_page = Page.IMAGE_EXPLORER_PARTITION_MOUNT
                     self.builder.get_object("image_explorer_tabs").set_current_page(2)
                     self.builder.get_object("button_back").set_sensitive(True)
@@ -684,10 +852,36 @@ class Handler:
         if is_affirmative:
             self.current_page = Page.RESTORE_PROGRESS
             self.builder.get_object("restore_tabs").set_current_page(5)
-            self.restore_manager.start_restore(self.selected_image, self.restore_destination_drive,
-                                               self.partitions_to_restore, self.is_overwriting_partition_table,
-                                               self.post_task_action,
-                                               self._on_operation_completed_callback)
+            if not isinstance(self.selected_image, QemuImage):
+                self.restore_manager.start_restore(self.selected_image, self.restore_destination_drive,
+                                                   self.partitions_to_restore, self.is_overwriting_partition_table,
+                                                   self.post_task_action,
+                                                   self._on_operation_completed_callback)
+            else:
+                self.clone_manager.start_clone(image=self.selected_image,
+                                               clone_destination_drive=self.restore_destination_drive,
+                                               clone_mapping_dict=self.partitions_to_restore,
+                                               drive_state=self.drive_query.drive_state,
+                                               is_overwriting_partition_table=self.is_overwriting_partition_table,
+                                               post_task_action=self.post_task_action,
+                                               completed_callback=self._on_operation_completed_callback)
+            # Display the Patreon call-to-action.
+            self.set_patreon_call_to_action_visible(True)
+        else:
+            self.builder.get_object("button_back").set_sensitive(True)
+            self.builder.get_object("button_next").set_sensitive(True)
+
+    def _clone_confirmation_callback(self, is_affirmative):
+        if is_affirmative:
+            self.current_page = Page.CLONE_PROGRESS
+            self.builder.get_object("clone_tabs").set_current_page(5)
+            self.clone_manager.start_clone(image=self.source_drive_metadata_only_image,
+                                           clone_destination_drive=self.clone_destination_drive,
+                                           clone_mapping_dict=self.partitions_to_clone,
+                                           drive_state=self.drive_query.drive_state,
+                                           is_overwriting_partition_table=self.is_overwriting_partition_table,
+                                           post_task_action=self.post_task_action,
+                                           completed_callback=self._on_operation_completed_callback)
             # Display the Patreon call-to-action.
             self.set_patreon_call_to_action_visible(True)
         else:
@@ -741,6 +935,8 @@ class Handler:
             print("Cancelling current operations.")
             if self.image_folder_query.is_image_folder_query_in_progress():
                 self.image_folder_query.cancel_image_folder_query()
+            if self.clone_manager.is_clone_in_progress():
+                self.clone_manager.cancel_clone()
             if self.restore_manager.is_restore_in_progress():
                 self.restore_manager.cancel_restore()
             if self.backup_manager.is_backup_in_progress():
@@ -757,7 +953,9 @@ class Handler:
         with self.requested_shutdown_lock:
             has_already_requested_shutdown = self.requested_shutdown
 
-        if not has_already_requested_shutdown and (self.backup_manager.is_backup_in_progress() or self.restore_manager.is_restore_in_progress()):
+        if not has_already_requested_shutdown and (self.backup_manager.is_backup_in_progress()
+                                                   or self.restore_manager.is_restore_in_progress()
+                                                   or self.clone_manager.is_clone_in_progress()):
             print("An operation is in progress. Do you wish to cancel?")
             AreYouSureModalPopup(self.builder, _("An operation is in progress. Do you wish to cancel?"),
                                  self._cancel_current_operations)
@@ -939,14 +1137,26 @@ class Handler:
         return selected_partition_key, partition_description
 
     def restore_partition_toggled(self, cell_render_toggle, path):
-        iter = self.restore_partition_selection_list.get_iter(path)
-        new_state = not self.restore_partition_selection_list.get(iter, 1)[0]
+        iter = self.partition_selection_list.get_iter(path)
+        new_state = not self.partition_selection_list.get(iter, 1)[0]
         self.backup_image.toggle_restore_of_row(iter, new_state)
+
+    # Same function for restore case, but with clear function name.
+    # TODO: Rename the original function to remove need for this alias.
+    def clone_partition_toggled(self, cell_render_toggle, path):
+        self.restore_partition_toggled(cell_render_toggle, path)
 
     # Callback for double click (row-activate) on restore partition mapping toggle
     # TODO: Directly call restore_partition_toggled from above, to reduce duplication
     def row_activated_restore_partition_toggle(self, treeview, path, view_column):
         list_store, iter = self.get_row("restore_step4_image_partition_treeview_treeselection")
+        new_state = not list_store.get(iter, 1)[0]
+        self.backup_image.toggle_restore_of_row(iter, new_state)
+
+    # Callback for double click (row-activate) on restore partition mapping toggle
+    # TODO: Directly call restore_partition_toggled from above, to reduce duplication
+    def row_activated_clone_partition_toggle(self, treeview, path, view_column):
+        list_store, iter = self.get_row("clone_step4_image_partition_treeview_treeselection")
         new_state = not list_store.get(iter, 1)[0]
         self.backup_image.toggle_restore_of_row(iter, new_state)
 
@@ -968,6 +1178,8 @@ class Handler:
         self.builder.get_object("backup_step3_show_hidden_devices").set_active(new_state)
         self.builder.get_object("restore_step1_show_hidden_devices").set_active(new_state)
         self.builder.get_object("restore_step3_show_hidden_devices").set_active(new_state)
+        self.builder.get_object("clone_step2_show_hidden_devices").set_active(new_state)
+        self.builder.get_object("clone_step3_show_hidden_devices").set_active(new_state)
         self.drive_query.set_show_hidden_information(new_state)
         # Refresh the tables.
         # FIXME: Not ideal from an abstraction perspective
@@ -1064,6 +1276,39 @@ class Handler:
 {overwriting_partition_table_string}
 """
         self.builder.get_object("restore_step5_confirm_config_program_defined_text").set_markup(text_to_display)
+
+    def confirm_clone_configuration(self):
+        print("Partitions to clone is " + str(self.partitions_to_clone))
+        source_image_absolute_path = self.source_drive_metadata_only_image.absolute_path
+        destination_drive_description = self.clone_destination_drive_desc
+        clone_partition_list_string = ""
+        for key in self.partitions_to_clone.keys():
+            image_part_description = GObject.markup_escape_text(self.partitions_to_clone[key]["description"])
+            dest_key = GObject.markup_escape_text(self.partitions_to_clone[key]["dest_key"])
+            dest_description = GObject.markup_escape_text(self.partitions_to_clone[key]["dest_description"])
+            clone_partition_list_string += "    " + GObject.markup_escape_text(
+                key) + " (" + image_part_description + ")  ---->  " + dest_key + " (" + dest_description + ")\n"
+        clone_partition_list_string += "\n"
+
+        if self.is_overwriting_partition_table:
+            overwriting_partition_table_string = "<b>" + _("WILL BE OVERWRITING PARTITION TABLE") + "</b>"
+        else:
+            overwriting_partition_table_string = _("Will <b>NOT</b> be overwriting partition table")
+
+        source_image_heading = _("Source drive")
+        destination_drive_msg = _("Destination drive")
+        restoring_following_partition_msg = _("Cloning the following partitions")
+
+        text_to_display = f"""
+<b>{source_image_heading}</b> {source_image_absolute_path}
+<b>{destination_drive_msg}</b> {destination_drive_description}
+
+<b>{restoring_following_partition_msg}</b>:
+{clone_partition_list_string}
+
+{overwriting_partition_table_string}
+"""
+        self.builder.get_object("clone_step5_confirm_config_program_defined_text").set_markup(text_to_display)
 
     def find_network_share(self, button):
         # FIXME: Overhaul network share handling.

@@ -66,6 +66,7 @@ def main():
     builder.get_object("backup_tabs").set_show_tabs(False)
     builder.get_object("restore_tabs").set_show_tabs(False)
     builder.get_object("verify_tabs").set_show_tabs(False)
+    builder.get_object("clone_tabs").set_show_tabs(False)
     builder.get_object("image_explorer_tabs").set_show_tabs(False)
 
     # Display the main GTK window

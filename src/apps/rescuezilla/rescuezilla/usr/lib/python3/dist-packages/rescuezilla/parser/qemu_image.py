@@ -14,25 +14,15 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
-import collections
-import os
-import tempfile
-import time
-from datetime import datetime
-from email.utils import format_datetime
-from pathlib import Path
 
-from babel.dates import format_datetime
-
-# https://qemu.readthedocs.io/en/latest/tools/qemu-nbd.html
 import utility
-from parser.parted import Parted
-from parser.sfdisk import Sfdisk
+from parser.metadata_only_image import MetadataOnlyImage
 from utility import Utility
 from wizard_state import QEMU_NBD_NBD_DEVICE
 
 
-class QemuImage:
+# https://qemu.readthedocs.io/en/latest/tools/qemu-nbd.html
+class QemuImage(MetadataOnlyImage):
     @staticmethod
     def is_supported_extension(filename):
         # https://fileinfo.com/filetypes/disk_image
@@ -67,37 +57,20 @@ class QemuImage:
                     return True
         return False
 
+    @staticmethod
+    def parse_qemu_img_info(qemu_img_info_string):
+        qemu_img_info_dict = {}
+        lines = qemu_img_info_string.splitlines()
+        for line in lines:
+            split = line.split(":")
+            key = split[0].strip()
+            value = split[1].strip()
+            qemu_img_info_dict[key] = value
+        return qemu_img_info_dict
+
     def __init__(self, absolute_qemu_img_path, enduser_filename, timeout_seconds):
-        self.timeout_seconds = timeout_seconds
-        self.image_format = "QEMU_FORMAT"
         self.absolute_path = absolute_qemu_img_path
-        self.enduser_filename = enduser_filename
-        self.normalized_sfdisk_dict = {'absolute_path': None, 'sfdisk_dict': {'partitions': {}}, 'file_length': 0}
-        self.user_notes = ""
-        self.warning_dict = {}
-
-        # Clonezilla format
-        self.ebr_dict = {}
-        self.efi_nvram_dat_absolute_path = None
-        self.short_device_node_partition_list = []
-        self.short_device_node_disk_list = []
-        self.lvm_vg_dev_dict = {}
-        self.lvm_logical_volume_dict = {}
-        self.sfdisk_chs_dict = None
-        self.dev_fs_dict = {}
-        self.size_bytes = 0
-        self.enduser_readable_size = ""
-        self.is_needs_decryption = False
-        self.parted_dict = {'partitions': {}}
-        self.post_mbr_gap_absolute_path = {}
-
-        statbuf = os.stat(self.absolute_path)
-        self.last_modified_timestamp = format_datetime(datetime.fromtimestamp(statbuf.st_mtime))
-        print("Last modified timestamp " + self.last_modified_timestamp)
-
-        dir = Path(absolute_qemu_img_path).parent.as_posix()
-        print("Qemu directory : " + dir)
-
+        self.timeout_seconds = timeout_seconds
         qemu_img_cmd_list = ["qemu-img", "info", absolute_qemu_img_path]
         process, flat_command_string, fail_description = Utility.run("qemu-img info", qemu_img_cmd_list, use_c_locale=True)
         if process.returncode != 0:
@@ -111,45 +84,9 @@ class QemuImage:
             self.warning_dict[flat_command_string] = "Could not associate: " + failed_message
             return
 
-        self.normalized_sfdisk_dict = {'absolute_path': None, 'sfdisk_dict': {'partitions': {}}, 'file_length': 0}
-        process, flat_command_string, failed_message = Utility.run("Get partition table", ["sfdisk", "--dump", QEMU_NBD_NBD_DEVICE], use_c_locale=True)
-        if process.returncode != 0:
-            self.warning_dict[flat_command_string] = "Could not extract partition table: " + process.stderr
-            # Not returning here so can disconnect.
-        else:
-            sfdisk_string = process.stdout
-            f = tempfile.NamedTemporaryFile(mode='w', delete=False)
-            f.write(sfdisk_string)
-            f.close()
-            self.normalized_sfdisk_dict = Sfdisk.generate_normalized_sfdisk_dict(f.name, self)
-
-        parted_process, flat_command_string, failed_message = Utility.run("Get filesystem information",
-                                                          ["parted", "--script", QEMU_NBD_NBD_DEVICE, "unit", "s",
-                                                           "print"], use_c_locale=True)
-        if process.returncode != 0:
-            self.warning_dict[flat_command_string] = "Could not extract filesystem: " + process.stderr
-            # Not returning here so can disconnect.
-        else:
-            self.parted_dict = Parted.parse_parted_output(parted_process.stdout)
-
-        self.image_format_dict_dict = collections.OrderedDict([])
-        total_size_estimate = 0
-        for long_device_node in self.normalized_sfdisk_dict['sfdisk_dict']['partitions'].keys():
-            self.image_format_dict_dict[long_device_node] = {'type': "raw",
-                                                             'compression': "uncompressed",
-                                                             'is_lvm_logical_volume': False}
-            estimated_size_bytes = self._compute_partition_size_byte_estimate(long_device_node)
-            self.image_format_dict_dict[long_device_node]['estimated_size_bytes'] = estimated_size_bytes
-            total_size_estimate += estimated_size_bytes
-
-        if self.size_bytes == 0:
-            # For md RAID devices, Clonezilla doesn't have a parted of sfdisk partition table containing the hard drive
-            # size, so in that situation, summing the image sizes provides some kind of size estimate.
-            self.size_bytes = total_size_estimate
-
-        # Covert size in bytes to KB/MB/GB/TB as relevant
-        self.enduser_readable_size = Utility.human_readable_filesize(int(self.size_bytes))
-
+        super().__init__(QEMU_NBD_NBD_DEVICE, absolute_qemu_img_path, enduser_filename)
+        # Overwrite the image format.
+        self.image_format = "QEMU_FORMAT"
 
         is_success, failed_message = QemuImage.deassociate_nbd(QEMU_NBD_NBD_DEVICE)
         if not is_success:
@@ -160,6 +97,7 @@ class QemuImage:
         is_success, error_message = self.deassociate_nbd(nbd_device)
         if not is_success:
             return False, error_message
+        self.long_device_node = nbd_device
         qemu_nbd_cmd_list = ["qemu-nbd", "--read-only", "--connect=" + nbd_device, self.absolute_path]
         is_success, message = Utility.retry_run(short_description="qemu-nbd associate with " + nbd_device,
                           cmd_list=qemu_nbd_cmd_list,
@@ -195,52 +133,3 @@ class QemuImage:
             return False, fail_description
 
         return True, ""
-
-    def get_enduser_friendly_partition_description(self):
-        flat_string = ""
-        index = 0
-        for short_device_node in self.image_format_dict_dict.keys():
-            base_device_node, partition_number = Utility.split_device_string(short_device_node)
-            flat_string += "(" + str(partition_number) + ": " + self.flatten_partition_string(short_device_node) + ") "
-            index += 1
-        return flat_string
-
-    def does_image_key_belong_to_device(self, image_format_dict_key):
-        return True
-
-    def has_partition_table(self):
-        # Temp
-        return True
-
-    def get_absolute_mbr_path(self):
-        return None
-
-    def flatten_partition_string(self, long_device_node):
-        flat_string = ""
-        fs = self._get_human_readable_filesystem(long_device_node)
-        if fs != "" and fs is not None:
-            flat_string = fs + " "
-        partition_size_bytes = self._compute_partition_size_byte_estimate(long_device_node)
-        flat_string += Utility.human_readable_filesize(partition_size_bytes)
-        return flat_string
-
-    def _compute_partition_size_byte_estimate(self, long_device_node):
-        return self.normalized_sfdisk_dict['sfdisk_dict']['partitions'][long_device_node]['size'] * 512
-
-    def _get_human_readable_filesystem(self, long_device_node):
-        # Prefer estimated size from parted partition table backup, but this requires splitting the device node
-        image_base_device_node, image_partition_number = Utility.split_device_string(long_device_node)
-        if image_partition_number in self.parted_dict['partitions'].keys():
-            return self.parted_dict['partitions'][image_partition_number]['filesystem']
-
-    @staticmethod
-    def parse_qemu_img_info(qemu_img_info_string):
-        qemu_img_info_dict = {}
-        lines = qemu_img_info_string.splitlines()
-        for line in lines:
-            split = line.split(":")
-            key = split[0].strip()
-            value = split[1].strip()
-            qemu_img_info_dict[key] = value
-        return qemu_img_info_dict
-

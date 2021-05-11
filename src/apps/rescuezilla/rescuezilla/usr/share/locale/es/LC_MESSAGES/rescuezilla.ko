@@ -70,6 +70,76 @@ msgstr ""
 msgid "Error querying drives: "
 msgstr ""
 
+msgid "Clone"
+msgstr ""
+
+msgid "Step 1: Understanding Cloning"
+msgstr ""
+
+msgid "Please understand how \"cloning\" differs from \"imaging\"."
+msgstr ""
+
+msgid "This mode is for \"disk cloning\". Cloning means copying one drive and directly overwriting another drive. This is a direct one-step operation with no temporary storage required.\n"
+"\n"
+"Cloning is different to \"disk imaging\". Imaging means copying everything from one drive into very large files stored inside a folder on an external drive. Multiple images can be saved on the same external drive. These images can be restored back to the original disk, or to additional disks. In other words, for \"imaging\" the backup operation copies your drive to <i>files</i> that need to be stored on a drive at least temporarily before it can be restored.\n"
+"\n"
+""
+"To use the \"imaging\" wizards, click <b>Back</b> and select <b>Backup</b> or <b>Restore</b>."
+msgstr ""
+""
+""
+""
+""
+""
+
+msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
+msgstr ""
+
+msgid "Step 2: Select Source Drive"
+msgstr ""
+
+msgid "Select the <b>source drive</b> to clone."
+msgstr ""
+
+msgid "Select the <b>destination drive</b> to overwrite."
+msgstr ""
+
+msgid "Step 4: Select Partitions to Clone"
+msgstr ""
+
+msgid "Select which partitions from the source drive to clone, and whether to overwrite the partition table. <b>Leave everything selected to completely clone the source drive to the destination drive.</b>"
+msgstr ""
+
+msgid "Step 5: Confirm Cloning Configuration"
+msgstr ""
+
+msgid "Confirm the following cloning configuration."
+msgstr ""
+
+msgid "Cloning the following partitions"
+msgstr ""
+
+msgid "To start cloning, click <b>Next</b>."
+msgstr ""
+
+msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
+msgstr ""
+
+msgid "Step 6: Cloning Disk"
+msgstr ""
+
+msgid "Cloning the drive you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
+msgstr ""
+
+msgid "Summary of Clone"
+msgstr ""
+
+msgid "Clone Summary"
+msgstr ""
+
+msgid "Confirm the clone summary."
+msgstr ""
+
 msgid "Unable to shutdown Image Explorer"
 msgstr ""
 
