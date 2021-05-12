@@ -12,7 +12,7 @@ set -x
 #            tools are in use concurrently.
 #
 # Copyright (C) 2008, 2009, 2010, 2013, 2015 Curtis Gedak
-# Copyright (C) 2020 Rescuezilla.com <rescuezilla@gmail.com>
+# Copyright (C) 2020-2021 Rescuezilla.com <rescuezilla@gmail.com>
 #
 #  This file has been imported from the GParted project as it happens to be
 #  perfectly suited for the Rescuezilla project
