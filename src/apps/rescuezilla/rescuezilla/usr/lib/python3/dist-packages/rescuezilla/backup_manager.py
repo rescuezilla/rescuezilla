@@ -57,7 +57,8 @@ class BackupManager:
     def is_backup_in_progress(self):
         return self.backup_in_progress
 
-    def start_backup(self, selected_drive_key, partitions_to_backup, drive_state, dest_dir, backup_notes, compression_dict, post_task_action, completed_backup_callback):
+    def start_backup(self, selected_drive_key, partitions_to_backup, drive_state, dest_dir, backup_notes,
+                     compression_dict, post_task_action, completed_backup_callback, on_separate_thread=True):
         self.backup_timestart = datetime.now()
         self.completed_backup_callback = completed_backup_callback
         self.selected_drive_key = selected_drive_key
@@ -71,9 +72,12 @@ class BackupManager:
         # TODO: clear abstractions is important for ensuring correctness of the backup/restore operation
         self.drive_state = drive_state
         self.backup_in_progress = True
-        thread = threading.Thread(target=self.do_backup_wrapper)
-        thread.daemon = True
-        thread.start()
+        if on_separate_thread:
+            thread = threading.Thread(target=self.do_backup_wrapper)
+            thread.daemon = True
+            thread.start()
+        else:
+            return self.do_backup()
 
     # Intended to be called via event thread
     # Sending signals to process objects on its own thread. Relying on Python GIL.
@@ -131,7 +135,7 @@ class BackupManager:
                 traceback.print_exc()
                 error_message = _("Failed to write destination file. Please confirm it is valid to create the provided file path, and try again.") + "\n\n" + tb
                 GLib.idle_add(self.completed_backup, False, error_message)
-                return
+                return False, error_message
 
         self.logger = Logger(clonezilla_img_filepath)
         GLib.idle_add(self.update_backup_progress_bar, 0)
@@ -151,7 +155,7 @@ class BackupManager:
             with self.summary_message_lock:
                 self.summary_message += failed_message
             GLib.idle_add(self.completed_backup, False, failed_message)
-            return
+            return False, failed_message
 
         blkid_list_filepath = os.path.join(self.dest_dir, "blkid.list")
         GLib.idle_add(self.display_status, _("Saving: {file}").format(file=blkid_list_filepath), "")
@@ -163,7 +167,7 @@ class BackupManager:
             with self.summary_message_lock:
                 self.summary_message += failed_message
             GLib.idle_add(self.completed_backup, False, failed_message)
-            return
+            return False, failed_message
 
         info_lshw_filepath = os.path.join(self.dest_dir, "Info-lshw.txt")
         GLib.idle_add(self.display_status, _("Saving: {file}").format(file=info_lshw_filepath), "")
@@ -172,7 +176,7 @@ class BackupManager:
             with self.summary_message_lock:
                 self.summary_message += failed_message
             GLib.idle_add(self.completed_backup, False, failed_message)
-            return
+            return False, failed_message
 
         info_dmi_txt_filepath = os.path.join(self.dest_dir, "Info-dmi.txt")
         GLib.idle_add(self.display_status, _("Saving: {file}").format(file=info_dmi_txt_filepath), "")
@@ -184,7 +188,7 @@ class BackupManager:
             with self.summary_message_lock:
                 self.summary_message += failed_message
             GLib.idle_add(self.completed_backup, False, failed_message)
-            return
+            return False, failed_message
 
         info_lspci_filepath = os.path.join(self.dest_dir, "Info-lspci.txt")
         with open(info_lspci_filepath, 'w') as filehandle:
@@ -198,7 +202,7 @@ class BackupManager:
             with self.summary_message_lock:
                 self.summary_message += failed_message
             GLib.idle_add(self.completed_backup, False, failed_message)
-            return
+            return False, failed_message
 
         msg_delimiter_star_line = "*****************************************************."
         with open(info_lspci_filepath, 'a+') as filehandle:
@@ -212,7 +216,7 @@ class BackupManager:
             with self.summary_message_lock:
                 self.summary_message += failed_message
             GLib.idle_add(self.completed_backup, False, failed_message)
-            return
+            return False, failed_message
 
         info_smart_filepath = os.path.join(self.dest_dir, "Info-smart.txt")
         GLib.idle_add(self.display_status, _("Saving: {file}").format(file=info_smart_filepath), "")
@@ -238,8 +242,7 @@ class BackupManager:
                                                                        logger=self.logger)
         if process.returncode != 0:
             self.logger.write(failed_message)
-            # Not considering os-prober exit code to match Clonezilla's behavior
-            return
+            # Not considering os-prober exit code as fatal, to match Clonezilla's behavior
 
         with open(info_os_prober_filepath, 'a+') as filehandle:
             filehandle.write(msg_delimiter_star_line + "\n")
@@ -254,8 +257,7 @@ class BackupManager:
                                                                        logger=self.logger)
             if process.returncode != 0:
                 self.logger.write(failed_message)
-                # Not considering os-prober exit code to match Clonezilla's behavior
-                return
+                # Not considering os-prober exit code as fatal, to match Clonezilla's behavior
 
         filepath = os.path.join(self.dest_dir, "Info-packages.txt")
         GLib.idle_add(self.display_status, _("Saving: {file}").format(file=filepath), "")
@@ -311,7 +313,7 @@ class BackupManager:
             with self.summary_message_lock:
                 self.summary_message += failed_message
             GLib.idle_add(self.completed_backup, False, failed_message)
-            return
+            return False, failed_message
 
         # Parted drive information with standard sector units. Clonezilla doesn't output easily parsable output using
         # the --machine flag, so for maximum Clonezilla compatibility neither does Rescuezilla.
@@ -324,7 +326,7 @@ class BackupManager:
             with self.summary_message_lock:
                 self.summary_message += failed_message
             GLib.idle_add(self.completed_backup, False, failed_message)
-            return
+            return False, failed_message
 
         if os.path.isdir("/sys/firmware/efi/efivars"):
             # Save EFI NVRAM info. What we need is actually the label
@@ -339,7 +341,7 @@ class BackupManager:
                 with self.summary_message_lock:
                     self.summary_message += failed_message
                 GLib.idle_add(self.completed_backup, False, failed_message)
-                return
+                return False, failed_message
 
         parted_dict = Parted.parse_parted_output(parted_process.stdout)
         partition_table = parted_dict['partition_table']
@@ -355,7 +357,7 @@ class BackupManager:
                 with self.summary_message_lock:
                     self.summary_message += failed_message
                 GLib.idle_add(self.completed_backup, False, failed_message)
-                return
+                return False, failed_message
 
         if "gpt" == partition_table:
             first_gpt_filename = short_selected_device_node + "-gpt-1st"
@@ -367,7 +369,7 @@ class BackupManager:
                 with self.summary_message_lock:
                     self.summary_message += failed_message
                 GLib.idle_add(self.completed_backup, False, failed_message)
-                return
+                return False, failed_message
 
             # From Clonezilla's scripts/sbin/ocs-functions:
             # We need to get the total size of disk so that we can skip and dump the last block:
@@ -394,7 +396,7 @@ class BackupManager:
                 with self.summary_message_lock:
                     self.summary_message += failed_message
                 GLib.idle_add(self.completed_backup, False, failed_message)
-                return
+                return False, failed_message
 
             # LC_ALL=C sgdisk -b $target_dir_fullpath/$(to_filename ${ihd})-gpt.gdisk /dev/$ihd | tee --append ${OCS_LOGFILE}
             gdisk_filename = short_selected_device_node + "-gpt.gdisk"
@@ -405,7 +407,7 @@ class BackupManager:
                 with self.summary_message_lock:
                     self.summary_message += failed_message
                 GLib.idle_add(self.completed_backup, False, failed_message)
-                return
+                return False, failed_message
 
             sgdisk_filename = short_selected_device_node + "-gpt.sgdisk"
             GLib.idle_add(self.display_status, _("Saving: {file}").format(file=sgdisk_filename), "")
@@ -414,7 +416,7 @@ class BackupManager:
                 with self.summary_message_lock:
                     self.summary_message += failed_message
                 GLib.idle_add(self.completed_backup, False, failed_message)
-                return
+                return False, failed_message
         elif "msdos" == partition_table:
             # image_save
             first_partition_key, first_partition_offset_bytes = CombinedDriveState.get_first_partition(
@@ -440,7 +442,7 @@ class BackupManager:
                         error_message = _(
                             "Failed to write hidden data info file. Please confirm it is valid to create the provided file path, and try again.") + "\n\n" + tb
                         GLib.idle_add(self.completed_backup, False, error_message)
-                        return
+                        return False, failed_message
 
             else:
                 first_partition_offset_sectors = int(first_partition_offset_bytes / 512)
@@ -456,7 +458,7 @@ class BackupManager:
                 with self.summary_message_lock:
                     self.summary_message += failed_message
                 GLib.idle_add(self.completed_backup, False, failed_message)
-                return
+                return False, failed_message
 
         else:
             self.logger.write("Partition table is: " + partition_table)
@@ -470,7 +472,7 @@ class BackupManager:
                 with self.summary_message_lock:
                     self.summary_message += failed_message
                 GLib.idle_add(self.completed_backup, False, failed_message)
-                return
+                return False, failed_message
 
         filepath = os.path.join(self.dest_dir, short_selected_device_node + "-chs.sf")
         GLib.idle_add(self.display_status, _("Saving: {file}").format(file=filepath), "")
@@ -480,7 +482,7 @@ class BackupManager:
             with self.summary_message_lock:
                 self.summary_message += "Failed to retrieve disk geometry for " + self.selected_drive_key + "."
             GLib.idle_add(self.completed_backup, False, failed_message)
-            return
+            return False, failed_message
         else:
             geometry_dict = Sfdisk.parse_sfdisk_show_geometry(process.stdout)
             with open(filepath, 'w') as filehandle:
@@ -541,7 +543,7 @@ class BackupManager:
                         with self.summary_message_lock:
                             self.summary_message += failed_message
                         GLib.idle_add(self.completed_backup, False, failed_message)
-                        return
+                        return False, failed_message
 
                     output = file_command_process.stdout.split(" ", maxsplit=1)[1].strip()
                     lvm_logv_list_filepath = os.path.join(self.dest_dir, "lvm_logv.list")
@@ -553,9 +555,9 @@ class BackupManager:
                         # Device mapper path, eg /dev/mapper/vgtest-lvtest
                         lv_dm_path = lv_dict['lv_dm_path']
                     else:
-                        GLib.idle_add(self.completed_backup, False,
-                                      "Could not find lv_dm_path name in " + str(lv_dict))
-                        return
+                        failed_message = "Could not find lv_dm_path name in " + str(lv_dict)
+                        GLib.idle_add(self.completed_backup, False, failed_message)
+                        return False, failed_message
 
                     if lv_dm_path in self.drive_state.keys() and 'partitions' in self.drive_state[lv_dm_path].keys():
                         # Remove the partition key associated with the volume group that contains this LVM logical volume
@@ -580,7 +582,7 @@ class BackupManager:
                         with self.summary_message_lock:
                             self.summary_message += failed_message
                         GLib.idle_add(self.completed_backup, False, failed_message)
-                        return
+                        return False, failed_message
 
         filepath = os.path.join(self.dest_dir, "dev-fs.list")
         GLib.idle_add(self.display_status, _("Saving: {file}").format(file=filepath), "")
@@ -635,7 +637,7 @@ class BackupManager:
                 with self.summary_message_lock:
                     self.summary_message += failed_message
                 GLib.idle_add(self.completed_backup, False, failed_message)
-                return
+                return False, failed_message
 
             if filesystem == 'swap':
                 filepath = os.path.join(self.dest_dir, "swappt-" + short_device_node + ".info")
@@ -671,7 +673,7 @@ class BackupManager:
                             error_message = _(
                                 "Failed to write NTFS boot reserve file. Please confirm it is valid to create the provided file path, and try again.") + "\n\n" + tb
                             GLib.idle_add(self.completed_backup, False, error_message)
-                            return
+                            return False, error_message
 
             # Clonezilla uses -q2 priority by default (partclone > partimage > dd).
             # PartImage does not appear to be maintained software, so for simplicity, Rescuezilla is using a
@@ -700,8 +702,9 @@ class BackupManager:
                 filepath = os.path.join(self.dest_dir, short_device_node + ".dd-ptcl-img." + compression_suffix + ".")
                 split_cmd_list = ["split", "--suffix-length=2", "--bytes=" + split_size, "-", filepath]
             else:
-                GLib.idle_add(self.completed_backup, False, "Partclone not found.")
-                return
+                failed_message = "Partclone not found."
+                GLib.idle_add(self.completed_backup, False, failed_message)
+                return False, failed_message
 
             filesystem_backup_message = _("Backup {partition_name} containing filesystem {filesystem} to {destination}").format(partition_name=partition_key, filesystem=filesystem, destination=filepath)
             GLib.idle_add(self.update_main_statusbar, filesystem_backup_message)
@@ -729,7 +732,8 @@ class BackupManager:
             # Poll process.stdout to show stdout live
             while True:
                 if self.requested_stop:
-                    return
+                    GLib.idle_add(self.completed_backup, False, _("User requested operation to stop."))
+                    return False, _("User requested operation to stop.")
 
                 output = self.proc['partclone_backup_' + partition_key].stderr.readline()
                 if self.proc['partclone_backup_' + partition_key].poll() is not None:
@@ -785,7 +789,8 @@ class BackupManager:
 
         # GLib.idle_add(self.update_progress_bar, (i + 1) / len(self.restore_mapping_dict.keys()))
         if self.requested_stop:
-            return
+            GLib.idle_add(self.completed_backup, False, _("User requested operation to stop."))
+            return False, _("User requested operation to stop.")
 
         i += 1
         sleep(1.0)
@@ -871,7 +876,7 @@ class BackupManager:
 
     def display_status(self, msg1, msg2):
         GLib.idle_add(self.update_backup_progress_status, msg1 + "\n" + msg2)
-        if msg2 == "":
+        if msg2 != "":
             status_bar_msg = msg1 + ": " + msg2
         else:
             status_bar_msg = msg1
