@@ -72,7 +72,7 @@ class RestoreManager:
         return self.restore_in_progress
 
     def start_restore(self, image, restore_destination_drive, restore_mapping_dict, is_overwriting_partition_table,
-                      post_task_action, completed_callback):
+                      post_task_action, completed_callback, on_separate_thread=True):
         self.restore_timestart = datetime.now()
         self.image = image
         self.restore_destination_drive = restore_destination_drive
@@ -80,11 +80,13 @@ class RestoreManager:
         self.is_overwriting_partition_table = is_overwriting_partition_table
         self.post_task_action = post_task_action
         self.completed_callback = completed_callback
-
         self.restore_in_progress = True
-        thread = threading.Thread(target=self.do_restore_wrapper)
-        thread.daemon = True
-        thread.start()
+        if on_separate_thread:
+            thread = threading.Thread(target=self.do_restore_wrapper)
+            thread.daemon = True
+            thread.start()
+        else:
+            return self.do_restore()
 
     # Intended to be called via event thread
     # Sending signals to process objects on its own thread. Relying on Python GIL.
@@ -109,7 +111,7 @@ class RestoreManager:
 
     def display_status(self, msg1, msg2):
         GLib.idle_add(self.update_restore_progress_status, msg1 + "\n" + msg2)
-        if msg2 == "":
+        if msg2 != "":
             status_bar_msg = msg1 + ": " + msg2
         else:
             status_bar_msg = msg1
@@ -223,7 +225,7 @@ class RestoreManager:
                                                                    use_c_locale=False, logger=self.logger)
         if process.returncode != 0:
             GLib.idle_add(self.completed_restore, False, failed_message)
-            return False
+            return False, failed_message
 
         process, flat_command_string, failed_message = Utility.run("Wipe first MB",
                                                                    ["dd", "if=/dev/zero", "of=" + long_device_node,
@@ -231,8 +233,8 @@ class RestoreManager:
                                                                    logger=self.logger)
         if process.returncode != 0:
             GLib.idle_add(self.completed_restore, False, failed_message)
-            return False
-        return True
+            return False, failed_message
+        return True, ""
 
     def _shutdown_lvm(self):
         self.display_status(_("Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."), "")
@@ -288,19 +290,19 @@ class RestoreManager:
             with self.summary_message_lock:
                 self.summary_message += failed_message + "\n"
             GLib.idle_add(self.completed_restore, False, failed_message)
-            return
+            return False, failed_message
 
         returncode, failed_message = ImageExplorerManager._do_unmount(RESCUEZILLA_MOUNT_TMP_DIR)
         if not returncode:
             with self.summary_message_lock:
                 self.summary_message += failed_message + "\n"
             GLib.idle_add(self.completed_restore, False, failed_message)
-            return
+            return False, failed_message
 
         is_successfully_shutdown, message = self._shutdown_lvm()
         if not is_successfully_shutdown:
             GLib.idle_add(self.completed_restore, False, message)
-            return
+            return False, message
 
         # Determine the size of each partition, and the total size. This is used for the weighted progress bar
         total_size_estimate = 0
@@ -339,7 +341,7 @@ class RestoreManager:
 
             if self.requested_stop:
                 GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
-                return
+                return False, _("User requested operation to stop.")
 
             is_unmounted, message = Utility.umount_warn_on_busy(self.restore_destination_drive)
             if not is_unmounted:
@@ -349,7 +351,7 @@ class RestoreManager:
 
             if self.requested_stop:
                 GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
-                return
+                return False, _("User requested operation to stop.")
 
             querying_geometry_msg = _("Querying hard drive geometry of {device}").format(device=self.restore_destination_drive)
             self.display_status(querying_geometry_msg, "")
@@ -370,16 +372,16 @@ class RestoreManager:
                     self.logger.write("sgdisk --zap-all failed (This is expected on a blank disk).")
 
                 if not self.update_kernel_partition_table(wait_for_partition=False):
-                    GLib.idle_add(self.completed_restore, False,
-                                  _("Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."))
-                    return
+                    failed_message = _("Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table.")
+                    GLib.idle_add(self.completed_restore, False, failed_message)
+                    return False, failed_message
 
                 # Shutdown the Logical Volume Manager (LVM) again -- it seems the volume groups re-activate after partition table restored for some reason.
                 # FIXME: Look into this.
                 is_successfully_shutdown, message = self._shutdown_lvm()
                 if not is_successfully_shutdown:
                     GLib.idle_add(self.completed_restore, False, message)
-                    return
+                    return False, message
 
                 if self.image.get_absolute_mbr_path():
                     # FIXME: The description here doesn't match what the code is doing
@@ -392,25 +394,25 @@ class RestoreManager:
                         with self.summary_message_lock:
                             self.summary_message += failed_message
                         GLib.idle_add(self.completed_restore, False, failed_message)
-                        return
+                        return False, failed_message
 
                     if not self.update_kernel_partition_table(wait_for_partition=True):
-                        GLib.idle_add(self.completed_restore, False,
-                                      _("Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."))
-                        return
+                        failed_message = _("Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table.")
+                        GLib.idle_add(self.completed_restore, False, failed_message)
+                        return False, failed_message
 
                     # Shutdown the Logical Volume Manager (LVM) again -- it seems the volume groups re-activate after partition table restored for some reason.
                     # FIXME: Look into this.
                     is_successfully_shutdown, message = self._shutdown_lvm()
                     if not is_successfully_shutdown:
                         GLib.idle_add(self.completed_restore, False, message)
-                        return
+                        return False, message
                 else:
                     print("No MBR associated with " + short_selected_image_drive_node)
 
                 if self.requested_stop:
                     GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
-                    return
+                    return False, _("User requested operation to stop.")
 
                 if self.image.normalized_sfdisk_dict['file_length'] == 0:
                     message = _("Could not restore sfdisk partition table as file has zero length: ") + \
@@ -432,7 +434,9 @@ class RestoreManager:
                             self.summary_message += message + "\n"
                         GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, message)
                     if sfdisk_cmd_list is None:
-                        return
+                        failed_message = "sfdisk_cmd_list is None"
+                        GLib.idle_add(self.completed_restore, False, failed_message)
+                        return False, failed_message
 
                     Utility.print_cli_friendly("sfdisk ", [cat_cmd_list, sfdisk_cmd_list])
                     self.proc['cat_sfdisk'] = subprocess.Popen(cat_cmd_list, stdout=subprocess.PIPE, env=env,
@@ -444,9 +448,10 @@ class RestoreManager:
                     rc = self.proc['sfdisk'].returncode
                     self.logger.write("sfdisk Exit output " + str(rc) + ": " + str(output))
                     if self.proc['sfdisk'].returncode != 0:
-                        self.logger.write("Error restoring sfdisk: " + str(output))
-                        GLib.idle_add(self.completed_restore, False, "Error restoring sfdisk: " + str(output))
-                        return
+                        failed_message = "Error restoring sfdisk: " + str(output)
+                        self.logger.write(failed_message)
+                        GLib.idle_add(self.completed_restore, False, failed_message)
+                        return False, failed_message
                     else:
                         with self.summary_message_lock:
                             self.summary_message += _("Successfully restored partition table.") + "\n"
@@ -460,27 +465,27 @@ class RestoreManager:
                         with self.summary_message_lock:
                             self.summary_message += failed_message
                         GLib.idle_add(self.completed_restore, False, failed_message)
-                        return
+                        return False, failed_message
 
                 if self.requested_stop:
                     GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
-                    return
+                    return False, _("User requested operation to stop.")
 
                 # Shutdown the Logical Volume Manager (LVM) again -- it seems the volume groups re-activate after partition table restored for some reason.
                 # FIXME: Look into this.
                 is_successfully_shutdown, message = self._shutdown_lvm()
                 if not is_successfully_shutdown:
                     GLib.idle_add(self.completed_restore, False, message)
-                    return
+                    return False, message
 
                 if not self.update_kernel_partition_table(wait_for_partition=True):
-                    GLib.idle_add(self.completed_restore, False,
-                                  _("Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."))
-                    return
+                    failed_message = _("Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table.")
+                    GLib.idle_add(self.completed_restore, False, failed_message)
+                    return False, failed_message
 
                 if self.requested_stop:
                     GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
-                    return
+                    return False, _("User requested operation to stop.")
 
                 # Overwrite the post-MBR gap (if it exists). This file is typically 1 megabyte but may be a maximum
                 # of 1024 megabytes. For the post-MBR gap to be overwritten the user has requested the destination
@@ -509,28 +514,28 @@ class RestoreManager:
                         with self.summary_message_lock:
                             self.summary_message += failed_message
                         GLib.idle_add(self.completed_restore, False, failed_message)
-                        return
+                        return False, failed_message
 
                     if self.requested_stop:
                         GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
-                        return
+                        return False, _("User requested operation to stop.")
 
                     if not self.update_kernel_partition_table(wait_for_partition=True):
-                        GLib.idle_add(self.completed_restore, False,
-                                      _(
-                                          "Failed to refresh kernel partition table. This can happen if another process is accessing the partition table."))
-                        return
+                        failed_message = _(
+                                          "Failed to refresh kernel partition table. This can happen if another process is accessing the partition table.")
+                        GLib.idle_add(self.completed_restore, False, failed_message)
+                        return False, failed_message
 
                     # Shutdown the Logical Volume Manager (LVM) again -- it seems the volume groups re-activate after partition table restored for some reason.
                     # FIXME: Look into this.
                     is_successfully_shutdown, message = self._shutdown_lvm()
                     if not is_successfully_shutdown:
                         GLib.idle_add(self.completed_restore, False, message)
-                        return
+                        return False, message
 
                     if self.requested_stop:
                         GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
-                        return
+                        return False, _("User requested operation to stop.")
 
                 # The Extended Boot Record (EBR) information is already captured in the .sfdisk file, which provides
                 # greater flexibility around destination hard drive sizes. The '-ebr' image files in the Clonezilla
@@ -542,10 +547,10 @@ class RestoreManager:
                 relevant_ebr_list = [image_number for image_number in self.image.ebr_dict.keys() if
                                      image_number.startswith(short_selected_image_drive_node)]
                 if len(relevant_ebr_list) > 1:
-                    GLib.idle_add(self.completed_restore, False,
-                                  "Found multiple Extended Boot Records for " + short_selected_image_drive_node + " " + str(
-                                      relevant_ebr_list))
-                    return
+                    failed_message = "Found multiple Extended Boot Records for " + short_selected_image_drive_node + " " + str(
+                                      relevant_ebr_list)
+                    GLib.idle_add(self.completed_restore, False, failed_message)
+                    return False, failed_message
                 elif len(relevant_ebr_list) == 1:
                     # Restore EBR.
                     base_image_device, image_partition_number = Utility.split_device_string(
@@ -560,35 +565,35 @@ class RestoreManager:
                         with self.summary_message_lock:
                             self.summary_message += failed_message
                         GLib.idle_add(self.completed_restore, False, failed_message)
-                        return
+                        return False, failed_message
 
                     if self.requested_stop:
                         GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
-                        return
+                        return False, _("User requested operation to stop.")
 
                     if not self.update_kernel_partition_table(wait_for_partition=True):
-                        GLib.idle_add(self.completed_restore, False,
-                                      _(
-                                          "Failed to refresh kernel partition table. This can happen if another process is accessing the partition table."))
-                        return
+                        failed_message = _(
+                                          "Failed to refresh kernel partition table. This can happen if another process is accessing the partition table.")
+                        GLib.idle_add(self.completed_restore, False, failed_message)
+                        return False, failed_message
 
                     # Shutdown the Logical Volume Manager (LVM) again -- it seems the volume groups re-activate after partition table restored for some reason.
                     # FIXME: Look into this.
                     is_successfully_shutdown, message = self._shutdown_lvm()
                     if not is_successfully_shutdown:
                         GLib.idle_add(self.completed_restore, False, message)
-                        return
+                        return False, message
 
                     if self.requested_stop:
                         GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
-                        return
+                        return False, _("User requested operation to stop.")
 
                 # Shutdown the Logical Volume Manager (LVM) again -- it seems the volume groups re-activate after partition table restored for some reason.
                 # FIXME: Look into this.
                 is_successfully_shutdown, message = self._shutdown_lvm()
                 if not is_successfully_shutdown:
                     GLib.idle_add(self.completed_restore, False, message)
-                    return
+                    return False, message
 
                 # Given the partition table is being overwritten, restore LVM Physical Volume and Volume Groups
                 # Restore Logical Volume Manager (LVM)'s Physical Volume (PV) and Volume Group (VG) data
@@ -610,9 +615,10 @@ class RestoreManager:
                     lvm_vg_conf_filepath = os.path.join(image_dir, "lvm_" + volume_group_key + ".conf")
                     if volume_group_key == "/NOT_FOUND" or not os.path.isfile(lvm_vg_conf_filepath):
                         # Prevent pvcreate returning an error like "Device /dev/[...] excluded by a filter."
-                        if not self.clean_filesystem_header_in_partition(destination_pv_long_device_node):
+                        is_success, failed_message = self.clean_filesystem_header_in_partition(destination_pv_long_device_node)
+                        if not is_success:
                             # Error callback handled in the function
-                            return
+                            return False, failed_message
                         pvcreate_cmd_list = ["pvcreate", "-ff", "--yes", "--uuid=" + uuid, "--zero", "y",
                                              destination_pv_long_device_node]
                         process, flat_command_string, failed_message = Utility.run(
@@ -622,7 +628,7 @@ class RestoreManager:
                             with self.summary_message_lock:
                                 self.summary_message += failed_message
                             GLib.idle_add(self.completed_restore, False, failed_message)
-                            return
+                            return False, failed_message
                     else:
                         # Clonezilla codebase suggests remote disks may not be able to mmap the file, so make a temp copy.
                         lvm_vg_conf_filepath_tmp_copy = RestoreManager.create_temporary_copy(lvm_vg_conf_filepath,
@@ -636,7 +642,7 @@ class RestoreManager:
                             with self.summary_message_lock:
                                 self.summary_message += failed_message
                             GLib.idle_add(self.completed_restore, False, failed_message)
-                            return
+                            return False, failed_message
                         else:
                             # Delete the temp copy
                             os.remove(lvm_vg_conf_filepath_tmp_copy)
@@ -659,7 +665,7 @@ class RestoreManager:
                         with self.summary_message_lock:
                             self.summary_message += failed_message
                         GLib.idle_add(self.completed_restore, False, failed_message)
-                        return
+                        return False, failed_message
                     else:
                         # Delete the temp copy
                         os.remove(lvm_vg_conf_filepath_tmp_copy)
@@ -691,9 +697,10 @@ class RestoreManager:
                 dest_part = self.restore_mapping_dict[image_key]
                 if self.image.image_format_dict_dict[image_key]['is_lvm_logical_volume']:
                     # Erase the filesytem header when it exists
-                    if not self.clean_filesystem_header_in_partition(dest_part['dest_key']):
+                    is_success, failed_message = self.clean_filesystem_header_in_partition(dest_part['dest_key'])
+                    if not is_success:
                         # Error callback handled in the function
-                        return
+                        return False, failed_message
 
                 is_unmounted, message = Utility.umount_warn_on_busy(dest_part['dest_key'])
                 if not is_unmounted:
@@ -704,7 +711,7 @@ class RestoreManager:
 
                 if self.requested_stop:
                     GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
-                    return
+                    return False, _("User requested operation to stop.")
 
                 # TODO: Reinstall whole MBR (512 bytes)
                 # FIXME: Already done above, double check if Clonezilla has mistaken duplication?
@@ -757,7 +764,7 @@ class RestoreManager:
                             GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
                                           failed_message)
                             GLib.idle_add(self.completed_restore, False, failed_message)
-                            continue
+                            return False, failed_message
                         continue
                     if image_type == 'missing':
                         image_base_device_node, image_partition_number = Utility.split_device_string(image_key)
@@ -871,7 +878,7 @@ class RestoreManager:
                     while True:
                         if self.requested_stop:
                             GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
-                            return
+                            return False, _("User requested operation to stop.")
 
                         output = self.proc[image_type + '_restore_' + image_key].stderr.readline()
                         proc_stderr += output
@@ -1091,19 +1098,19 @@ class RestoreManager:
                         with self.summary_message_lock:
                             self.summary_message += failed_message
                         GLib.idle_add(self.completed_restore, False, failed_message)
-                        return
+                        return False, failed_message
 
                     if not self.update_kernel_partition_table(wait_for_partition=True):
-                        GLib.idle_add(self.completed_restore, False,
-                                      _("Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."))
-                        return
+                        failed_message = _("Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table.")
+                        GLib.idle_add(self.completed_restore, False, failed_message)
+                        return False, failed_message
 
                     # Shutdown the Logical Volume Manager (LVM) again -- it seems the volume groups re-activate after partition table restored for some reason.
                     # FIXME: Look into this.
                     is_successfully_shutdown, message = self._shutdown_lvm()
                     if not is_successfully_shutdown:
                         GLib.idle_add(self.completed_restore, False, message)
-                        return
+                        return False, message
                 else:
                     print("No MBR associated with " + short_selected_image_drive_node)
 
@@ -1144,7 +1151,7 @@ class RestoreManager:
 
             if self.requested_stop:
                 GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
-                return
+                return False, _("User requested operation to stop.")
 
             image_number = 0
             for image_key in self.restore_mapping_dict.keys():
@@ -1172,7 +1179,7 @@ class RestoreManager:
                 while True:
                     if self.requested_stop:
                         GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
-                        return
+                        return False, _("User requested operation to stop.")
 
                     output = self.proc['fsarchiver_restfs_' + image_key].stderr.readline()
                     proc_stderr += output
@@ -1221,7 +1228,8 @@ class RestoreManager:
 
                 if self.requested_stop:
                     GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
-                    return
+                    return False, _("User requested operation to stop.")
+
         elif isinstance(self.image, QemuImage):
             GLib.idle_add(self.restore_destination_drive, False, "QemuImage restore not yet implemented.")
 
