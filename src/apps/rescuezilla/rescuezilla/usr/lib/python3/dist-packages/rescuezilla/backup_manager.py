@@ -871,7 +871,11 @@ class BackupManager:
 
     def display_status(self, msg1, msg2):
         GLib.idle_add(self.update_backup_progress_status, msg1 + "\n" + msg2)
-        GLib.idle_add(self.update_main_statusbar, msg1 + ": " + msg2)
+        if msg2 == "":
+            status_bar_msg = msg1 + ": " + msg2
+        else:
+            status_bar_msg = msg1
+        GLib.idle_add(self.update_main_statusbar, status_bar_msg)
 
     # Intended to be called via event thread
     def update_backup_progress_bar(self, fraction):
