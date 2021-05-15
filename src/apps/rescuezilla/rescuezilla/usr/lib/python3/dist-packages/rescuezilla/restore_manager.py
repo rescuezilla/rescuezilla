@@ -109,7 +109,11 @@ class RestoreManager:
 
     def display_status(self, msg1, msg2):
         GLib.idle_add(self.update_restore_progress_status, msg1 + "\n" + msg2)
-        GLib.idle_add(self.update_main_statusbar, msg1 + ": " + msg2)
+        if msg2 == "":
+            status_bar_msg = msg1 + ": " + msg2
+        else:
+            status_bar_msg = msg1
+        GLib.idle_add(self.update_main_statusbar, status_bar_msg)
 
     # Refresh partition table using partprobe, kpartx and `blockdev --rereadpt` based on Clonezilla's
     # inform_kernel_partition_table_changed function.
