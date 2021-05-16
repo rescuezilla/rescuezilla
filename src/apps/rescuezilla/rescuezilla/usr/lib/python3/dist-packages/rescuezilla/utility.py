@@ -61,8 +61,6 @@ class PleaseWaitModalPopup:
         label = Gtk.Label(label=message, xalign=0)
         label.set_halign(Gtk.Align.CENTER)
         label.set_padding(xpad=0, ypad=10)
-        # Allow users to highlight and copy the label (eg, to machine translate untranslated strings)
-        label.set_selectable(True)
         label.show()
         self._dialog.vbox.pack_start(label, expand=True, fill=True, padding=0)
 
@@ -70,7 +68,6 @@ class PleaseWaitModalPopup:
         self.secondary_label.set_halign(Gtk.Align.CENTER)
         self.secondary_label.set_padding(xpad=0, ypad=10)
         self.secondary_label.show()
-        self.secondary_label.set_selectable(True)
         self.secondary_label.set_visible(False)
         self._dialog.vbox.pack_start(self.secondary_label, expand=True, fill=True, padding=0)
 
@@ -118,6 +115,7 @@ class ErrorMessageModalPopup(Gtk.MessageDialog):
         self.set_default_size(width=650, height=400)
         label = Gtk.Label(error_content)
         scrolled_window = Gtk.ScrolledWindow()
+        # Error messages should be able to be copy-and-pasted
         label.set_selectable(True)
         label.set_line_wrap(True)
         scrolled_window.add_with_viewport(label)
@@ -154,9 +152,6 @@ class AreYouSureModalPopup:
         self._main_window = builder.get_object("main_window")
         self._dialog = Gtk.MessageDialog(parent=self._main_window, type=Gtk.MessageType.ERROR,
                                          buttons=Gtk.ButtonsType.YES_NO, message_format=message)
-        # Ensure user can copy and paste dialog messages
-        for child in self._dialog.get_message_area().get_children():
-           child.set_selectable(True)
         self._callback = callback
         self._dialog.connect("response", self._response)
         self._main_window.set_sensitive(False)
