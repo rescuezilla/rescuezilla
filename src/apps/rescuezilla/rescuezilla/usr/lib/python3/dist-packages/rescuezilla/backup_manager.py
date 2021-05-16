@@ -72,6 +72,7 @@ class BackupManager:
         # TODO: clear abstractions is important for ensuring correctness of the backup/restore operation
         self.drive_state = drive_state
         self.backup_in_progress = True
+        GLib.idle_add(self.update_backup_progress_bar, 0)
         if on_separate_thread:
             thread = threading.Thread(target=self.do_backup_wrapper)
             thread.daemon = True
@@ -138,7 +139,6 @@ class BackupManager:
                 return False, error_message
 
         self.logger = Logger(clonezilla_img_filepath)
-        GLib.idle_add(self.update_backup_progress_bar, 0)
 
         backup_notes_filepath = os.path.join(self.dest_dir, "rescuezilla.description.txt")
         if self.backup_notes.strip() != "":
