@@ -953,7 +953,6 @@ class RestoreManager:
                     if not is_success:
                         message = _("Resizing partition {partition} ({filesystem}) failed: {msg}").format(partition=dest_part['dest_key'], filesystem=filesystem, msg=failed_message)
                         self.logger.write(message + "\n")
-                        GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, message)
                         with self.summary_message_lock:
                             self.summary_message += message + "\n"
                         continue
