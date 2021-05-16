@@ -823,7 +823,7 @@ class Utility:
             'ntfs': {'match': ["ntfs"], 'fsck_command': [], 'mount_command': [], 'resize_command': ["ntfsresize", long_device_node]},
             'xfs':  {'match': ["xfs"], 'fsck_command': [], 'mount_command': ["mount", "-t", "xfs", long_device_node, RESCUEZILLA_MOUNT_TMP_DIR], 'resize_command': ["xfs_growfs", long_device_node]},
             'jfs':  {'match': ["jfs"], 'fsck_command': [], 'mount_command': ["mount", "-o", "remount,resize", long_device_node, RESCUEZILLA_MOUNT_TMP_DIR], 'resize_command': []},
-            'btrfs':  {'match': ["btrfs"], 'fsck_command': [], 'mount_command': ["mount", "-t", "btrfs", long_device_node, RESCUEZILLA_MOUNT_TMP_DIR], 'resize_command': ["btrfs", "filesystem", "resize", "max"]},
+            'btrfs':  {'match': ["btrfs"], 'fsck_command': [], 'mount_command': ["mount", "-t", "btrfs", long_device_node, RESCUEZILLA_MOUNT_TMP_DIR], 'resize_command': ["btrfs", "filesystem", "resize", "max", RESCUEZILLA_MOUNT_TMP_DIR]},
             'nilfs2': {'match': ["nilfs2"], 'fsck_command': [], 'mount_command': ["mount", "-t", "nilfs2", long_device_node, RESCUEZILLA_MOUNT_TMP_DIR], 'resize_command': ["nilfs-resize", "--yes", long_device_node]},
         }
 
