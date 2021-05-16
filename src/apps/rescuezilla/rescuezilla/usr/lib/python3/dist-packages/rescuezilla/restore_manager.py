@@ -942,7 +942,8 @@ class RestoreManager:
                         self.summary_message += message + "\n"
                     continue
 
-                if 'filesystem' in self.image.image_format_dict_dict[image_key].keys():
+                if 'filesystem' in self.image.image_format_dict_dict[image_key].keys() \
+                        and not self.image.image_format_dict_dict[image_key]['is_lvm_logical_volume']:
                     filesystem = self.image.image_format_dict_dict[image_key]['filesystem']
                     growing_filesystem_message = _(
                         "Growing filesystem {partition} ({filesystem}). This may take a while...").format(
