@@ -80,6 +80,7 @@ class RestoreManager:
         self.is_overwriting_partition_table = is_overwriting_partition_table
         self.post_task_action = post_task_action
         self.completed_callback = completed_callback
+        GLib.idle_add(self.update_progress_bar, 0)
         self.restore_in_progress = True
         if on_separate_thread:
             thread = threading.Thread(target=self.do_restore_wrapper)
@@ -280,7 +281,6 @@ class RestoreManager:
         env = Utility.get_env_C_locale()
 
         self.logger = Logger("/tmp/rescuezilla.log." + datetime.now().strftime("%Y%m%dT%H%M%S") + ".txt")
-        GLib.idle_add(self.update_progress_bar, 0)
 
         with self.summary_message_lock:
             self.summary_message += self.image.absolute_path + "\n"
