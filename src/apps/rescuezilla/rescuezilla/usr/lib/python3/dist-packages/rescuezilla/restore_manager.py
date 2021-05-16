@@ -741,7 +741,7 @@ class RestoreManager:
                     description=dest_part['description'], destination_partition=dest_part['dest_key'],
                     destination_description=dest_part['dest_description'])
                 self.logger.write(filesystem_restore_message)
-                GLib.idle_add(self.update_main_statusbar, filesystem_restore_message)
+                GLib.idle_add(self.display_status, filesystem_restore_message, "")
                 # Restore filesystem. Implements Clonezillas "unicast_restore_by_partclone", "unicast_restore_by_partimage", "unicast_restore_by_ntfsclone"
                 if 'type' in self.image.image_format_dict_dict[image_key].keys():
                     image_type = self.image.image_format_dict_dict[image_key]['type']
