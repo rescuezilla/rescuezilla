@@ -996,7 +996,7 @@ class RestoreManager:
                     if not is_success:
                         GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, message)
                         with self.summary_message_lock:
-                            self.summary_message += _("Failed to adjust NTFS filesystem geometry of {ntfs_device}").format(ntfs_device=ntfs_partition_long_device_node) + "\n"
+                            self.summary_message += _("Failed to adjust NTFS filesystem geometry of {ntfs_device}").format(ntfs_device=dest_part['dest_key']) + "\n"
                     else:
                         with self.summary_message_lock:
                             self.summary_message += message + "\n"
