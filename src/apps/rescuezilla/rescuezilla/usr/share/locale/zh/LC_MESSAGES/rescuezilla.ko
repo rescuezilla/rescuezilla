@@ -210,6 +210,9 @@ msgstr ""
 msgid "This can happen when loading images which Clonezilla was unable to completely backup."
 msgstr "在加载Clonezilla不完整的备份镜像时，则会发生这种情况。"
 
+msgid "Note: This image format cannot distinguish between failed partclone backup and a user who chose not to backup a partition."
+msgstr ""
+
 msgid "Any other filesystems within the image should be restorable as normal."
 msgstr "备份镜像中其他文件系统都应能够正常还原。"
 

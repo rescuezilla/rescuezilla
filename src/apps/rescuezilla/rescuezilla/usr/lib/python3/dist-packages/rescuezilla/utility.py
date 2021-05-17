@@ -880,3 +880,8 @@ class Utility:
             return combobox_key
         else:
             raise ValueError("Could not get combobox key")
+
+    # TODO: Find better place for this
+    @staticmethod
+    def get_cannot_distinguish_msg():
+        return _("Note: This image format cannot distinguish between failed partclone backup and a user who chose not to backup a partition.")
