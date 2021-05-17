@@ -343,9 +343,6 @@ msgstr "Tworzenie kopii zapasowej systemu na wybranej lokalizacji.  Może to pot
 msgid "Saving: {file}"
 msgstr ""
 
-msgid "Time Elapsed / Remaining: "
-msgstr "Czas, który upłynął / pozostałość: "
-
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
 msgstr "Kopia {partition_name} zawierająca system plików {filesystem} do {destination}"
 

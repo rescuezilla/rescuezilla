@@ -340,9 +340,6 @@ msgstr "Fazendo backup do seu sistema para o local informado. Isso pode levar um
 msgid "Saving: {file}"
 msgstr ""
 
-msgid "Time Elapsed / Remaining: "
-msgstr "Tempo gasto / restante: "
-
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
 msgstr "Fazendo backup {partition_name} contendo filesystem {filesystem} para o {destination}"
 

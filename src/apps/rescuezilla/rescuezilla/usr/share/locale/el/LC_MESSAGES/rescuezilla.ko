@@ -340,9 +340,6 @@ msgstr "Δημιουργία των αντιγράφων ασφαλείας το
 msgid "Saving: {file}"
 msgstr ""
 
-msgid "Time Elapsed / Remaining: "
-msgstr "Χρόνος που πέρασε / Υπόλοιπο: "
-
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
 msgstr "Αντίγραφο Ασφαλείας {partition_name} περιέχει αρχείο συστήματος {filesystem} σε {destination}"
 

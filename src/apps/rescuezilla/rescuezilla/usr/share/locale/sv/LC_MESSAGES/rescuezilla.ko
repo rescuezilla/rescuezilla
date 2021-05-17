@@ -340,9 +340,6 @@ msgstr "Säkerhetskopierar ditt system till den plats du valt. Det kan ta en tim
 msgid "Saving: {file}"
 msgstr ""
 
-msgid "Time Elapsed / Remaining: "
-msgstr "Tid / Återstående: "
-
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
 msgstr "{partition_name} med filsystem {filesystem} till {destination}"
 

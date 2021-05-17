@@ -2355,7 +2355,6 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="ypad">10</property>
-                                                <property name="label" translatable="yes">Time Elapsed / Remaining: </property>
                                                 <property name="wrap">True</property>
                                                 <property name="selectable">True</property>
                                               </object>
@@ -4207,7 +4206,6 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                     <property name="visible">True</property>
                                                     <property name="can_focus">False</property>
                                                     <property name="ypad">10</property>
-                                                    <property name="label" translatable="yes">Time Elapsed / Remaining: </property>
                                                     <property name="wrap">True</property>
                                                     <property name="selectable">True</property>
                                                   </object>

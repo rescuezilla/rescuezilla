@@ -341,9 +341,6 @@ msgstr "Haciendo una copia de seguridad de su sistema en la ubicación que selec
 msgid "Saving: {file}"
 msgstr ""
 
-msgid "Time Elapsed / Remaining: "
-msgstr "Tiempo transcurrido / Restante: "
-
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
 msgstr "Crear copia de seguridad de {partition_name} que contiene el sistema de archivos {filesystem} en {destination}"
 

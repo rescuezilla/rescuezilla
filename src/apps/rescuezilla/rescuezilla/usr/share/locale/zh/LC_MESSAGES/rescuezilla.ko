@@ -340,9 +340,6 @@ msgstr "将系统备份到所选位置，这可能需要一个小时或更长时
 msgid "Saving: {file}"
 msgstr ""
 
-msgid "Time Elapsed / Remaining: "
-msgstr "已用时间 / 剩余时间: "
-
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
 msgstr "将包含文件系统 {filesystem} 的 {partition_name} 备份到 {destination}"
 
