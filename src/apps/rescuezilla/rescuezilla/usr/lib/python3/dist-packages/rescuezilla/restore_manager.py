@@ -199,7 +199,7 @@ class RestoreManager:
             status_msg,
             blockdev_rereadpt_cmd_list, use_c_locale=False, logger=self.logger)
         if process.returncode != 0:
-            message = failed_message
+            self.logger.write(failed_message)
 
         sleep(1.0)
         if wait_for_partition:
