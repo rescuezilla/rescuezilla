@@ -284,6 +284,9 @@ class Utility:
         with open(file_path) as f:
             lines = f.read().strip().split(" ")
             map(str.strip, lines)
+            # Consider file containing just a newline as empty list.
+            if len(lines) == 1 and lines[0] == "":
+                lines = []
         return lines
 
     @staticmethod

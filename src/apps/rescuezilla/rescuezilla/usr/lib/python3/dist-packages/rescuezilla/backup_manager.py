@@ -298,6 +298,9 @@ class BackupManager:
                     if i + 1 != len(self.partitions_to_backup.keys()):
                         filehandle.write(' ')
                 i += 1
+            # FIXME: This diverges from Clonezilla behavior. It's possible for Rescuezilla to write just a newline for
+            # FIXME: eg, disk full of only swap partitions. Rescuezilla can handle restoring such images, but Clonezilla
+            # FIXME: cannot (a divergence of behavior).
             filehandle.write('\n')
 
         filepath = os.path.join(self.dest_dir, "disk")
