@@ -43,6 +43,7 @@ from utility import ErrorMessageModalPopup, Utility, _
 # TODO: VERY useful to display stdout/stderr when the exit code is non-zero, like the RestoreManager does.
 class BackupManager:
     def __init__(self, builder, human_readable_version):
+        self.backup_in_progress_lock = threading.Lock()
         self.backup_in_progress = False
         self.builder = builder
         self.human_readable_version = human_readable_version
@@ -55,7 +56,8 @@ class BackupManager:
         self.requested_stop = False
 
     def is_backup_in_progress(self):
-        return self.backup_in_progress
+        with self.backup_in_progress_lock:
+            return self.backup_in_progress
 
     def start_backup(self, selected_drive_key, partitions_to_backup, drive_state, dest_dir, backup_notes,
                      compression_dict, post_task_action, completed_backup_callback, on_separate_thread=True):
@@ -71,7 +73,8 @@ class BackupManager:
         # TODO: This is a crutch that ideally will be removed. It's very bad from an abstraction perspective, and
         # TODO: clear abstractions is important for ensuring correctness of the backup/restore operation
         self.drive_state = drive_state
-        self.backup_in_progress = True
+        with self.backup_in_progress_lock:
+            self.backup_in_progress = True
         GLib.idle_add(self.update_backup_progress_bar, 0)
         if on_separate_thread:
             thread = threading.Thread(target=self.do_backup_wrapper)
@@ -98,7 +101,8 @@ class BackupManager:
                     process.terminate()
                 except:
                     self.logger.write("Error killing process. (Maybe already dead?)")
-        self.backup_in_progress = False
+        with self.backup_in_progress_lock:
+            self.backup_in_progress = False
         self.completed_backup(False, _("Operation cancelled by user."))
 
     def do_backup_wrapper(self):
@@ -940,8 +944,8 @@ class BackupManager:
                         filehandle.flush()
                 else:
                     GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, "Failed to output checksum file Info-img-id.txt: " + process.stdout + "\n\n" + process.stderr)
-
-        self.backup_in_progress = False
+        with self.backup_in_progress_lock:
+            self.backup_in_progress = False
         is_unmounted, umount_message = Utility.umount_warn_on_busy("/mnt/backup", is_lazy_umount=True)
         if not is_unmounted:
             if self.logger is not None:

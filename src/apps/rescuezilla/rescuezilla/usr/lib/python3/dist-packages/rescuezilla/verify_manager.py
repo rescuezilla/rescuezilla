@@ -38,6 +38,7 @@ from utility import ErrorMessageModalPopup, Utility, _
 
 class VerifyManager:
     def __init__(self, builder):
+        self.verify_in_progress_lock = threading.Lock()
         self.verify_in_progress = False
         self.builder = builder
         self.verify_progress = self.builder.get_object("verify_progress")
@@ -48,14 +49,16 @@ class VerifyManager:
         self.requested_stop = False
 
     def is_verify_in_progress(self):
-        return self.verify_in_progress
+        with self.verify_in_progress_lock:
+            return self.verify_in_progress
 
     def start_verify(self, image, completed_callback):
         self.verify_timestart = datetime.now()
         self.image = image
         self.completed_callback = completed_callback
 
-        self.verify_in_progress = True
+        with self.verify_in_progress_lock:
+            self.verify_in_progress = True
         thread = threading.Thread(target=self.do_verify_wrapper)
         thread.daemon = True
         thread.start()
@@ -78,7 +81,8 @@ class VerifyManager:
                     process.terminate()
                 except:
                     print("Error killing process. (Maybe already dead?)")
-        self.verify_in_progress = False
+        with self.verify_in_progress_lock:
+            self.verify_in_progress = False
         self.completed_verify(False, _("Restore cancelled by user."))
 
     def do_verify_wrapper(self):
@@ -142,7 +146,8 @@ class VerifyManager:
         duration_minutes = (verify_timeend - self.verify_timestart).total_seconds() / 60.0
 
         self.main_statusbar.remove_all(self.main_statusbar.get_context_id("verify"))
-        self.verify_in_progress = False
+        with self.verify_in_progress_lock:
+            self.verify_in_progress = False
         if succeeded:
             print("Success")
         else:

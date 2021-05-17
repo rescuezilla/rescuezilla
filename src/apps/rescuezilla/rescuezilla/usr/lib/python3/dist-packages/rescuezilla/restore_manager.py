@@ -59,7 +59,9 @@ from utility import ErrorMessageModalPopup, Utility, _
 
 class RestoreManager:
     def __init__(self, builder):
-        self.restore_in_progress = False
+        self.restore_in_progress_lock = threading.Lock()
+        with self.restore_in_progress_lock:
+            self.restore_in_progress = False
         self.builder = builder
         self.restore_progress = self.builder.get_object("restore_progress")
         self.restore_progress_status = self.builder.get_object("restore_progress_status")
@@ -69,7 +71,8 @@ class RestoreManager:
         self.requested_stop = False
 
     def is_restore_in_progress(self):
-        return self.restore_in_progress
+        with self.restore_in_progress_lock:
+            return self.restore_in_progress
 
     def start_restore(self, image, restore_destination_drive, restore_mapping_dict, is_overwriting_partition_table,
                       post_task_action, completed_callback, on_separate_thread=True):
@@ -81,7 +84,8 @@ class RestoreManager:
         self.post_task_action = post_task_action
         self.completed_callback = completed_callback
         GLib.idle_add(self.update_progress_bar, 0)
-        self.restore_in_progress = True
+        with self.restore_in_progress_lock:
+            self.restore_in_progress = True
         if on_separate_thread:
             thread = threading.Thread(target=self.do_restore_wrapper)
             thread.daemon = True
@@ -107,7 +111,8 @@ class RestoreManager:
                     process.terminate()
                 except:
                     print("Error killing process. (Maybe already dead?)")
-        self.restore_in_progress = False
+        with self.restore_in_progress_lock:
+            self.restore_in_progress = False
         self.completed_restore(False, _("Operation cancelled by user."))
 
     def display_status(self, msg1, msg2):
@@ -1296,7 +1301,8 @@ class RestoreManager:
         duration_minutes = Utility.get_human_readable_minutes_seconds((restore_timeend - self.restore_timestart).total_seconds())
 
         self.main_statusbar.remove_all(self.main_statusbar.get_context_id("restore"))
-        self.restore_in_progress = False
+        with self.restore_in_progress_lock:
+            self.restore_in_progress = False
         if succeeded:
             print("Success")
         else:
