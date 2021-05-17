@@ -26,7 +26,7 @@ from pathlib import Path
 
 from babel.dates import format_datetime
 
-from parser.sfdisk import EMPTY_SFDISK_MSG, Sfdisk
+from parser.sfdisk import Sfdisk
 from utility import Utility, _
 
 
@@ -94,7 +94,7 @@ class RedoRescueImage:
             f.close()
             self.normalized_sfdisk_dict = Sfdisk.generate_normalized_sfdisk_dict(f.name, self)
         else:
-            self.warning_dict[enduser_filename] = EMPTY_SFDISK_MSG
+            self.warning_dict[enduser_filename] = Sfdisk.get_empty_sfdisk_msg()
 
         self.size_bytes = self.redo_dict['drive_bytes']
         # Covert size in bytes to KB/MB/GB/TB as relevant

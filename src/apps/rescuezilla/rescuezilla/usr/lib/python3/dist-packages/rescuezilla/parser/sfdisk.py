@@ -33,12 +33,6 @@ import utility
 
 """
 
-empty_sfdisk_bug_url = "https://github.com/rescuezilla/rescuezilla/wiki/Bugs-in-unofficial-Redo-Backup-updates#bugs-in-louvetchs-ubuntu-1604-releases"
-EMPTY_SFDISK_MSG = utility._(
-    "The backup's extended partition information is empty. If the backup contains extended partitions, these will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore any extended partitions. Please consult {url} for information and assistance. The destination drive has not yet been modified. Do you wish to continue with the restore?").format(
-    url=empty_sfdisk_bug_url)
-
-
 class Sfdisk:
     @staticmethod
     def parse_sfdisk_dump_output(sfdisk_output):
@@ -132,11 +126,11 @@ class Sfdisk:
             normalized_sfdisk_dict['absolute_path'] = sfdisk_absolute_path
             normalized_sfdisk_dict['file_length'] = len(sfdisk_string)
             if normalized_sfdisk_dict['file_length'] == 0:
-                image.warning_dict[sfdisk_filename] = EMPTY_SFDISK_MSG
+                image.warning_dict[sfdisk_filename] = Sfdisk.get_empty_sfdisk_msg()
             else:
                 normalized_sfdisk_dict['sfdisk_dict'] = Sfdisk.parse_sfdisk_dump_output(sfdisk_string)
         else:
-            image.warning_dict[sfdisk_filename] = EMPTY_SFDISK_MSG
+            image.warning_dict[sfdisk_filename] = Sfdisk.get_empty_sfdisk_msg()
         return normalized_sfdisk_dict
 
     @staticmethod
@@ -161,3 +155,11 @@ class Sfdisk:
             else:
                 sfdisk_cmd_list = [sfdisk_binary, "-f", destination_device_node]
         return sfdisk_cmd_list, warning_message
+
+    @staticmethod
+    def get_empty_sfdisk_msg():
+        empty_sfdisk_bug_url = "https://github.com/rescuezilla/rescuezilla/wiki/Bugs-in-unofficial-Redo-Backup-updates#bugs-in-louvetchs-ubuntu-1604-releases"
+        empty_sfdisk_msg = utility._(
+            "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance.").format(
+            url=empty_sfdisk_bug_url)
+        return empty_sfdisk_msg
