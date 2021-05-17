@@ -169,7 +169,7 @@ class RedoBackupLegacyImage:
             if len(abs_partclone_image_list) == 0:
                 # The legacy Redo Backup and Recovery format cannot distinguish between failed partclone backup and a
                 # user who chose not to backup a partition
-                self.warning_dict[short_device_node] = _("Cannot find partition's associated partclone image")
+                self.warning_dict[short_device_node] = _("Cannot find partition's associated partclone image") + " " + Utility.get_cannot_distinguish_msg()
                 self.image_format_dict_dict[short_device_node] = {'type': "missing",
                                                                   'prefix': short_device_node,
                                                                   'estimated_size_bytes': 0,

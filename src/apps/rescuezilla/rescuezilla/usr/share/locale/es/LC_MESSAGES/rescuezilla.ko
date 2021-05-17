@@ -211,6 +211,9 @@ msgstr ""
 msgid "This can happen when loading images which Clonezilla was unable to completely backup."
 msgstr "Esto puede ocurrir al cargar imágenes de las que Clonezilla no pudo acabar la copia de seguridad."
 
+msgid "Note: This image format cannot distinguish between failed partclone backup and a user who chose not to backup a partition."
+msgstr ""
+
 msgid "Any other filesystems within the image should be restorable as normal."
 msgstr "Cualquier otro sistema de archivos de la imagen debe poder restaurarse como de costumbre."
 
