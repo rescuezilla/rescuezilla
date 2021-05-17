@@ -104,17 +104,14 @@ class RedoBackupLegacyImage:
         # [1] https://github.com/rescuezilla/rescuezilla/wiki/Bugs-in-unofficial-Redo-Backup-updates#bugs-in-chcatzsfs-ubuntu-1310-and-1404-releases-german-language-only
         self.mbr_size = int(os.stat(self._mbr_absolute_path).st_size)
         if self.mbr_size == 512:
-            # Explain the situation to users with this issue and link to further information about how the GRUB boot
-            # loader can be regenerated, and confirm whether they wish to proceed.
-            truncated_bootloader_bug_url = "https://github.com/rescuezilla/rescuezilla/wiki/Bugs-in-unofficial-Redo-Backup-updates#bugs-in-chcatzsfs-ubuntu-1310-and-1404-releases-german-language-only";
-            # Context for translators: Two popular unofficial Redo Backup v1.0.4 updates by Sourceforge user chcatzsf
+            # Two popular unofficial Redo Backup v1.0.4 updates by Sourceforge user chcatzsf
             # have major bugs where bootloaders like GRUB are not not fully backed up, so Linux-based operating
             # cannot boot after a restore. This bug only affected those two updates (German-language only) and the
-            # problem can be fixed with careful manual intervention. Translating this message into languages other
-            # than English and German is not required. Full details in:
+            # problem can be fixed with careful manual intervention.
+            # Full details in:
             # https://github.com/rescuezilla/rescuezilla/wiki/Bugs-in-unofficial-Redo-Backup-updates#bugs-in
             # -chcatzsfs-ubuntu-1310-and-1404-releases-german-language-only
-            self.warning_dict[enduser_filename] = _("The backup's bootloader data is shorter than expected. This happens with backups created by an unofficial Redo Backup update. If the backup contained certain bootloaders like GRUB, the restored hard drive will not boot correctly without a manual fix. All data is still fully recoverable but manual intervention may required to restore the bootloader. Please consult {url} for information and assistance. The destination drive has not yet been modified. Do you wish to continue with the restore?").format(url=truncated_bootloader_bug_url)
+            self.warning_dict[enduser_filename] = _("The backup's bootloader data is shorter than expected. If the backup contained certain bootloaders like GRUB, during a restore operation Rescuezilla will try and re-install the bootloader.")
 
         sfdisk_absolute_path = os.path.join(dirname, prefix + ".sfdisk")
         self.normalized_sfdisk_dict = Sfdisk.generate_normalized_sfdisk_dict(sfdisk_absolute_path, self)
