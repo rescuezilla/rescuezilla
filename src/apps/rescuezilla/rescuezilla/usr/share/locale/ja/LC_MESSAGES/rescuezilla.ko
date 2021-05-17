@@ -340,9 +340,6 @@ msgstr "選択した場所にシステムをバックアップしています。
 msgid "Saving: {file}"
 msgstr ""
 
-msgid "Time Elapsed / Remaining: "
-msgstr "経過時間 / 残り時間: "
-
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
 msgstr "{partition_name}(ファイルシステム:{filesystem})を{destination}にバックアップしています"
 

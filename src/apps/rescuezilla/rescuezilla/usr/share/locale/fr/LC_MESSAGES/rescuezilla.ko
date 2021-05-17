@@ -341,9 +341,6 @@ msgstr "Sauvegarde du système sur l'emplacement sélectionné. Cela peut prendr
 msgid "Saving: {file}"
 msgstr ""
 
-msgid "Time Elapsed / Remaining: "
-msgstr "Temps écoulé / restant :"
-
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
 msgstr "Sauvegarder {partition_name} contenant le système de fichier {filesystem} vers {destination}"
 
