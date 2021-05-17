@@ -2356,7 +2356,6 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="ypad">10</property>
                                                 <property name="wrap">True</property>
-                                                <property name="selectable">True</property>
                                               </object>
                                               <packing>
                                                 <property name="expand">True</property>
@@ -4207,7 +4206,6 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                     <property name="can_focus">False</property>
                                                     <property name="ypad">10</property>
                                                     <property name="wrap">True</property>
-                                                    <property name="selectable">True</property>
                                                   </object>
                                                   <packing>
                                                     <property name="expand">True</property>
@@ -5443,7 +5441,6 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                     <property name="can_focus">False</property>
                                                     <property name="ypad">10</property>
                                                     <property name="wrap">True</property>
-                                                    <property name="selectable">True</property>
                                                   </object>
                                                   <packing>
                                                     <property name="expand">True</property>
