@@ -166,6 +166,14 @@ class QemuImage:
                           expected_error_msg="Unexpected end-of-file",
                           retry_interval_seconds=1,
                           timeout_seconds=self.timeout_seconds)
+        if is_success:
+            # Keep probing using blkid until NBD device is ready.
+            blkid_cmd_list = ["blkid", nbd_device]
+            is_success, message = Utility.retry_run(short_description="Run blkid until NBD device ready " + nbd_device,
+                              cmd_list=blkid_cmd_list,
+                              expected_error_msg="",
+                              retry_interval_seconds=1,
+                              timeout_seconds=self.timeout_seconds)
         return is_success, message
 
     @staticmethod
