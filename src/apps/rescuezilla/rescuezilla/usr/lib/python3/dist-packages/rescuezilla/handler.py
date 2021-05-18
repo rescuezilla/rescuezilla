@@ -984,9 +984,6 @@ class Handler:
         else:
             self.image_folder_query.query_folder(text)
 
-    def backup_scan_network(self):
-        return
-
     def confirm_backup_configuration(self):
         number = GObject.markup_escape_text(self.selected_drive_enduser_friendly_drive_number)
         device = GObject.markup_escape_text(self.selected_drive_key)
