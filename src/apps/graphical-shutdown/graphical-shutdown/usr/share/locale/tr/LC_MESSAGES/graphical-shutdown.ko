@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2021-05-18 15:31+0000\n"
+"PO-Revision-Date: 2021-05-18 21:28+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/rescuezilla/"
 "graphical-shutdown/tr/>\n"
@@ -20,7 +20,7 @@ msgid "Shutdown"
 msgstr "Kapat"
 
 msgid "Reboot"
-msgstr "Yeniden Başlat"
+msgstr "Yeniden başlat"
 
 msgid "Choose action."
 msgstr "Eylem seçin."
