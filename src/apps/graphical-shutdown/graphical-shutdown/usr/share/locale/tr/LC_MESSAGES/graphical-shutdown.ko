@@ -1,20 +1,26 @@
 msgid ""
 msgstr ""
+"PO-Revision-Date: 2021-05-18 15:31+0000\n"
+"Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
+"Language-Team: Turkish <https://hosted.weblate.org/projects/rescuezilla/"
+"graphical-shutdown/tr/>\n"
 "Language: tr\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.7-dev\n"
 
 msgid "End Session"
-msgstr ""
+msgstr "Oturumu Sonlandır"
 
 msgid "Cancel"
-msgstr ""
+msgstr "İptal"
 
 msgid "Shutdown"
-msgstr ""
+msgstr "Kapat"
 
 msgid "Reboot"
-msgstr ""
+msgstr "Yeniden Başlat"
 
 msgid "Choose action."
-msgstr ""
+msgstr "Eylem seçin."
