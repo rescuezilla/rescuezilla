@@ -105,11 +105,6 @@ class MetadataOnlyImage:
         if lsblk_process.returncode != 0:
             # Expected for NBD device nodes
             print("Failed to get drive capacity from device node")
-        else:
-            self.size_bytes = int(lsblk_process.stdout)
-
-        # Covert size in bytes to KB/MB/GB/TB as relevant
-        self.enduser_readable_size = Utility.human_readable_filesize(int(self.size_bytes))
 
         # Create a CombinedDriveState structure for the MetadataOnlyImage, which may otherwise not be populated.
         lsblk_cmd_list = ["lsblk", "-o", "KNAME,NAME,SIZE,TYPE,FSTYPE,MOUNTPOINT,MODEL", "--paths", "--bytes",
@@ -147,15 +142,12 @@ class MetadataOnlyImage:
                                                                        'compression': "uncompressed",
                                                                        'is_lvm_logical_volume': False,
                                                                        'filesystem': drive_state_partitions_dict[partition_long_device_node]['filesystem']}
-            # TODO: Could get the size from the drive state dictionary
-            estimated_size_bytes = self._compute_partition_size_byte_estimate(partition_long_device_node)
-            self.image_format_dict_dict[partition_long_device_node]['estimated_size_bytes'] = estimated_size_bytes
-            total_size_estimate += estimated_size_bytes
 
-        if self.size_bytes == 0:
-            # For md RAID devices, Clonezilla doesn't have a parted of sfdisk partition table containing the hard drive
-            # size, so in that situation, summing the image sizes provides some kind of size estimate.
-            self.size_bytes = total_size_estimate
+        # Estimate the disk size from sfdisk partition table backup
+        last_partition_key, last_partition_final_byte = Sfdisk.get_highest_offset_partition(self.normalized_sfdisk_dict)
+        self.size_bytes = last_partition_final_byte
+        # Covert size in bytes to KB/MB/GB/TB as relevant
+        self.enduser_readable_size = Utility.human_readable_filesize(int(self.size_bytes))
 
     # The BackupManager, needs partition information (filesystems etc) in certain structure. Clonezilla combines
     # information from several different sources using what Rescuezilla called the 'CombinedDriveState'

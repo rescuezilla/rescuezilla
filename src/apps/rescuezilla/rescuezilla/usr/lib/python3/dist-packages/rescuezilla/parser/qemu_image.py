@@ -77,7 +77,7 @@ class QemuImage(MetadataOnlyImage):
             self.warning_dict[flat_command_string] = process.stderr
             return
         self.qemu_img_dict = QemuImage.parse_qemu_img_info(process.stdout)
-        self.enduser_readable_size = self.qemu_img_dict['disk size']
+        # Could use self.qemu_img_dict['disk size'], but getting from block device is preferable.
 
         is_associated, failed_message = self.associate_nbd(QEMU_NBD_NBD_DEVICE)
         if not is_associated:
