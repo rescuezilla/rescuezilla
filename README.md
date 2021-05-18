@@ -1,6 +1,6 @@
 [![Rescuezilla banner](docs/images/banner.big.png)](https://rescuezilla.com) 
 
-# Rescuezilla [![Build Status](https://travis-ci.org/rescuezilla/rescuezilla.svg?branch=master)](https://travis-ci.org/rescuezilla/rescuezilla) 
+# Rescuezilla [![Build Status](https://travis-ci.org/rescuezilla/rescuezilla.svg?branch=master)](https://travis-ci.org/rescuezilla/rescuezilla) [![Translation status](https://hosted.weblate.org/widgets/rescuezilla/-/svg-badge.svg)](https://hosted.weblate.org/engage/rescuezilla/)
 
 Rescuezilla is an easy-to-use disk imaging application that's fully compatible with Clonezilla — the industry-standard trusted by tens of millions.
 
