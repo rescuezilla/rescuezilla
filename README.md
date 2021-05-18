@@ -39,8 +39,8 @@ Rescuezilla has been translated into the following languages:
 * 日本語 (ja-JP)
 * Svenska (sv-SE) ([Translation complete](https://github.com/rescuezilla/rescuezilla/issues/186))
 * 简体中文 (zh-CN) ([Translation complete](https://github.com/rescuezilla/rescuezilla/issues/191))
- 
-**Rescuezilla is now officially open for translations! See [Translations HOWTO](https://github.com/rescuezilla/rescuezilla/wiki/Translations-HOWTO) to submit a translation.**
+
+Rescuezilla uses Weblate for translation. **Please see [Translations HOWTO](https://github.com/rescuezilla/rescuezilla/wiki/Translations-HOWTO) to submit or update a translation.**
 
 ## Screenshots
 
