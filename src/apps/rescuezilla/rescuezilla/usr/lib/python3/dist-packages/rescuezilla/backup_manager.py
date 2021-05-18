@@ -703,6 +703,14 @@ class BackupManager:
                 continue
 
             if filesystem == "ntfs":
+                GLib.idle_add(self.display_status, _("Running: {app}").format(app="ntfsfix"), "")
+                is_success, failed_message = Utility.run_ntfsfix(partition_key)
+                if not is_success:
+                    self.logger.write(failed_message + "\n")
+                    GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, failed_message)
+                    with self.summary_message_lock:
+                        self.summary_message += failed_message + "\n"
+
                 # Create Clonezilla's NTFS boot reserved partition "sda1.info"
                 tmp_mount = "/tmp/rescuezilla.ntfs.mount"
                 if self.is_partition_windows_boot_reserved(partition_key, tmp_mount):
