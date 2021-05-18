@@ -98,7 +98,9 @@ class QemuImage(MetadataOnlyImage):
         if not is_success:
             return False, error_message
         self.long_device_node = nbd_device
-        qemu_nbd_cmd_list = ["qemu-nbd", "--read-only", "--connect=" + nbd_device, self.absolute_path]
+        # Does NOT mount images read-only to provide the ability to ntfsfix partitions as the standard Clonezilla
+        # behavior is to eg, ntfsfix hibernated NTFS partitions during a restore.
+        qemu_nbd_cmd_list = ["qemu-nbd", "--connect=" + nbd_device, self.absolute_path]
         is_success, message = Utility.retry_run(short_description="qemu-nbd associate with " + nbd_device,
                           cmd_list=qemu_nbd_cmd_list,
                           expected_error_msg="Unexpected end-of-file",
