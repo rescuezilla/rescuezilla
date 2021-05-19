@@ -1331,6 +1331,8 @@ class RestoreManager:
 
     # Expected to run on GTK event thread
     def completed_restore(self, succeeded, message):
+        # Clear messages
+        self.update_progress_status("")
         self.main_statusbar.remove_all(self.main_statusbar.get_context_id("restore"))
         if not self.is_cloning:
             restore_timeend = datetime.now()
