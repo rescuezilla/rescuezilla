@@ -373,9 +373,6 @@ class Handler:
                     self.builder.get_object("button_back").set_sensitive(False)
                     # On success, display the Patreon call-to-action.
                     self.set_patreon_call_to_action_visible(True)
-                    # Disable back/next button until the backup completes
-                    self.builder.get_object("button_back").set_sensitive(False)
-                    # self.builder.get_object("button_next").set_sensitive(False)
                 elif self.current_page == Page.BACKUP_PROGRESS:
                     self.current_page = Page.BACKUP_SUMMARY_SCREEN
                     self.builder.get_object("backup_tabs").set_current_page(8)
@@ -681,7 +678,7 @@ class Handler:
                 if self.current_page == Page.WELCOME:
                     print("Previous backup summary page")
                     self.builder.get_object("mode_tabs").set_current_page(1)
-                    self.builder.get_object("backup_tabs").set_current_page(7)
+                    self.builder.get_object("backup_tabs").set_current_page(8)
                     self.current_page = Page.BACKUP_SUMMARY_SCREEN
                     self.builder.get_object("button_back").set_sensitive(False)
                     self.builder.get_object("button_next").set_sensitive(True)
