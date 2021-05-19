@@ -955,6 +955,8 @@ class BackupManager:
         self.backup_progress.set_fraction(fraction)
 
     def completed_backup(self, succeeded, message):
+        self.update_backup_progress_status("")
+        self.main_statusbar.remove_all(self.main_statusbar.get_context_id("backup"))
         if not self.is_cloning:
             backup_timeend = datetime.now()
             duration_minutes = Utility.get_human_readable_minutes_seconds((backup_timeend - self.backup_timestart).total_seconds())
