@@ -703,7 +703,7 @@ class BackupManager:
                 continue
 
             if filesystem == "ntfs":
-                GLib.idle_add(self.display_status, _("Running: {app}").format(app="ntfsfix"), "")
+                GLib.idle_add(self.display_status, _("Running {app} on {device}").format(app="ntfsfix", device=partition_key), "")
                 is_success, failed_message = Utility.run_ntfsfix(partition_key)
                 if not is_success:
                     self.logger.write(failed_message + "\n")
