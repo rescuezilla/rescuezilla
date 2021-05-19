@@ -136,6 +136,8 @@ common_pkgs=("discover"
              "firefox-locale-el"
              "firefox-locale-ja"
              "firefox-locale-sv"
+             "firefox-locale-tr"
+             "firefox-locale-ru"
              # Simplified Chinese is 'hanz' package, TODO: Add taditional is 'hant' once translation submitted.
              "firefox-locale-zh-hans"
               # Japanese font
@@ -216,6 +218,8 @@ common_pkgs=("discover"
              "language-pack-gnome-sv-base"
              # Simplified Chinese language pack, TODO: add Traditional (hant) once translation submitted.
              "language-pack-gnome-zh-hans"
+             "language-pack-gnome-tr-base"
+             "language-pack-gnome-ru-base"
              "qemu-utils"
              "xfce4-screenshooter"
 )

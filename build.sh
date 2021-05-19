@@ -162,6 +162,8 @@ LANG_CODES=(
     "ja"
     "sv"
     "zh"
+    "tr"
+    "ru"
 )
 
 # Process GRUB locale files
