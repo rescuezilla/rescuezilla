@@ -1003,7 +1003,8 @@ class RestoreManager:
                 # checksums)
 
                 if "ntfs" == filesystem:
-                    GLib.idle_add(self.display_status, _("Running: {app}").format(app="ntfsfix"), "")
+                    GLib.idle_add(self.display_status,
+                                  _("Running {app} on {device}").format(app="ntfsfix", device=dest_part['dest_key']), "")
                     is_success, failed_message = Utility.run_ntfsfix(dest_part['dest_key'])
                     if not is_success:
                         self.logger.write(failed_message + "\n")
