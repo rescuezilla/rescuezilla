@@ -20,15 +20,15 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
-import argparse
 import gettext
 import os
+import sys
 
 import gi
 
 gi.require_version("Gtk", "3.0")
 
-from gi.repository import Gtk, Gdk
+from gi.repository import Gtk
 
 from handler import Handler
 
@@ -42,10 +42,9 @@ def main():
         print("Rescuezilla must run as root.")
         exit(0)
 
-    lang = os.environ.copy()['LANG'][0:2]
-    print("Setting GTK translation domain to load files from /usr/share/locale/" + lang + "/LC_MESSAGES/rescuezilla.mo")
+    gettext_translation_search_path = sys.base_prefix + "/share/locale/{LANGUAGE,LC_ALL,LC_MESSAGES,LANG}/LC_MESSAGES/rescuezilla.mo"
+    print("Setting GTK translation domain by searching: " + gettext_translation_search_path)
     gettext.bindtextdomain('rescuezilla')
-    gettext.textdomain('rescuezilla')
 
     builder = Gtk.Builder()
     builder.set_translation_domain('rescuezilla')
