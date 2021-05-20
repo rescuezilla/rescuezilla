@@ -151,33 +151,22 @@ ln -s /usr/share/applications/rescuezilla.desktop "$BUILD_DIRECTORY/chroot/home/
 ln -s /usr/share/applications/mousepad.desktop "$BUILD_DIRECTORY/chroot/home/ubuntu/Desktop/mousepad.desktop"
 ln -s /usr/share/applications/gparted.desktop "$BUILD_DIRECTORY/chroot/home/ubuntu/Desktop/gparted.desktop"
 
-LANG_CODES=(
-    "fr"
-    "de"
-    "es"
-    "pt"
-    "pl"
-    "it"
-    "el"
-    "ja"
-    "sv"
-    "zh"
-)
-
 # Process GRUB locale files
 pushd "$BUILD_DIRECTORY/image/boot/grub/locale/"
-for lang in "${LANG_CODES[@]}"; do
-        if [[ ! -f "$lang.ko" ]]; then
-                echo "Warning: $lang.ko translation does not exist. Skipping."
+for grub_ko_file in *.ko; do
+        if [[ ! -f "$grub_ko_file" ]]; then
+                echo "Warning: $grub_ko_file translation does not exist. Skipping."
         else
-                echo "Converting language translation file: $BUILD_DIRECTORY/image/boot/grub/locale/$lang.ko" 
-                msgfmt --output-file="$lang.mo" "$lang.ko"
+                # Remove .ko extension from filename
+                lang=$(echo "$grub_ko_file" | cut -f 1 -d '.')
+                echo "Converting language translation file: $BUILD_DIRECTORY/image/boot/grub/locale/$grub_ko_file to $lang.mo" 
+                msgfmt --output-file="$lang.mo" "$grub_ko_file"
                 if [[ $? -ne 0 ]]; then
                         echo "Error: Unable to convert GRUB bootloader configuration $lang translation from text-based ko format to binary mo format."
                         exit 1
                 fi
                 # Remove unused *.ko file
-                rm "$app_name.ko"
+                rm "$grub_ko_file"
         fi
 done
 popd
