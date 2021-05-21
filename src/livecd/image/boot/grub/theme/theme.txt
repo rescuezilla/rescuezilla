@@ -40,10 +40,16 @@ terminal-font: "Unifont Regular 16"
         selected_item_pixmap_style = "select_*.png"
         item_height = 16
         item_padding = 0
+        item_icon_space = 0
         item_spacing = 4
         icon_width = 0
-        icon_heigh = 0
-        item_icon_space = 0
+        icon_height = 0
+
+        menu_pixmap_style = "menu_pixmap_style_*.png"
+        scrollbar = true
+        scrollbar_width = 20
+        scrollbar_thumb = "scrollbar_thumb_*.png"
+        scrollbar_frame = "scrollbar_frame_*.png"
 }
 
 # Countdown for automatic booting of the default menu option
