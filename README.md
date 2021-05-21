@@ -28,20 +28,20 @@ Rescuezilla is an fork of _Redo Backup and Recovery_ (now called _Redo Rescue_) 
 
 Rescuezilla has been translated into the following languages:
 
-* English (en-US)
-* Français (fr-FR)
 * Deutsch (de-DE)
-* Español (es-ES)
-* Português brasileiro (pt-BR)
-* Polski (pl-PL)
-* Italiano (it-IT)
 * Ελληνικά (el-GR)
+* English (en-US)
+* Español (es-ES)
+* Français (fr-FR)
+* Italiano (it-IT)
 * 日本語 (ja-JP)
-* Svenska (sv-SE) ([Translation complete](https://github.com/rescuezilla/rescuezilla/issues/186))
-* 简体中文 (zh-CN) ([Translation complete](https://github.com/rescuezilla/rescuezilla/issues/191))
-* Türkçe (tr-TR) (Translation complete)
-* Русский (ru-RU) (Translation in-progress)
 * Norsk Bokmål (nb-NO) (Translation in-progress)
+* Polski (pl-PL)
+* Português brasileiro (pt-BR)
+* Русский (ru-RU) (Translation in-progress)
+* Svenska (sv-SE) ([Translation complete](https://github.com/rescuezilla/rescuezilla/issues/186))
+* Türkçe (tr-TR) (Translation complete)
+* 中文(简体) (zh-CN) ([Translation complete](https://github.com/rescuezilla/rescuezilla/issues/191))
 
 Rescuezilla uses Weblate for translation. **Please see [Translations HOWTO](https://github.com/rescuezilla/rescuezilla/wiki/Translations-HOWTO) to submit or update a translation.**
 
