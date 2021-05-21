@@ -29,13 +29,6 @@ update-alternatives --set default.plymouth /usr/share/plymouth/themes/rescuezill
 
 update-initramfs -u
 
-# Install localepurge, and use currently installed /etc/locale.nopurge config file, not package maintainer's version.
-apt-get -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install --yes localepurge
-
-# Explicitly run localepurge. The man page says localepurge "will be automagically invoked by dpkg upon completion of  any  apt
-# installation  run". This did not happen in testing (possibly because of debconf/frontend Noninteractive mode).
-localepurge
-
 # Remove unused packages (such as old linux kernels, if present)
 # 
 # From `man apt-get`: autoremove is used to remove packages that were
