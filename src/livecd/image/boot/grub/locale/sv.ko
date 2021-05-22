@@ -23,28 +23,24 @@ msgstr ""
 msgid "Start Rescuezilla"
 msgstr "Starta Rescuezilla"
 
-#      "----------MAX-LENGTH----------"
 msgid "If boot fails, reboot and try selecting Graphical fallback instead"
 msgstr "Om start misslyckas, starta om och välj 'Grafiskt reservläge' i stället"
 
 msgid "Graphical fallback mode"
 msgstr "Grafisk Reserv"
 
-#      "----------MAX-LENGTH----------"
 msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
 msgstr "Använd låg upplösning om standardläget inte fungerar för din hårdvara"
 
 msgid "Load USB into RAM"
 msgstr "Ladda USB i RAM"
 
-#      "----------MAX-LENGTH----------"
 msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
 msgstr "Lägger in Rescuezilla i minnet så att startmediet kan matas ut efter start"
 
 msgid "Check USB for defects"
 msgstr "Kontrollera USB för defekter"
 
-#      "----------MAX-LENGTH----------"
 msgid "Verify integrity of USB drive"
 msgstr "Kontrollera USB-enheten"
 
@@ -57,6 +53,5 @@ msgstr "Konfigurera maskinens firmware, bootalternativ etc"
 msgid "Memory test"
 msgstr "Minnestest"
 
-#      "----------MAX-LENGTH----------"
 msgid "Check computer memory for errors"
 msgstr "Kontrollera ev. fel på minnet"
