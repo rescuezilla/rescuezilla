@@ -8,39 +8,42 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-27 14:12+0930\n"
-"PO-Revision-Date: 2021-02-10 17:39-0500\n"
-"Last-Translator: Carlos Luna <caralu74@protonmail.com>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2021-05-18 21:28+0000\n"
+"Last-Translator: caralu74 <caralu74@protonmail.com>\n"
+"Language-Team: Spanish <https://hosted.weblate.org/projects/rescuezilla/"
+"grub-boot/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.7-dev\n"
 
 msgid "Start Rescuezilla"
 msgstr "Iniciar Rescuezilla"
-#      "----------MAX-LENGTH----------"
 
+#      "----------MAX-LENGTH----------"
 msgid "If boot fails, reboot and try selecting Graphical fallback instead"
 msgstr "Si el arranque falla, reinicie y pruebe a seleccionar otra opción o resolución gráfica en su lugar"
 
 msgid "Graphical fallback mode"
 msgstr "Modo gráfico de seguridad"
-#      "----------MAX-LENGTH----------"
 
+#      "----------MAX-LENGTH----------"
 msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
 msgstr "Utilice una resolución grafica inferior si el modo estándar no funciona para su hardware"
 
 msgid "Load USB into RAM"
 msgstr "Cargar USB en memoria RAM"
-#      "----------MAX-LENGTH----------"
 
+#      "----------MAX-LENGTH----------"
 msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
 msgstr "Carga Rescuezilla en la memoria permitiendo que el medio de arranque sea expulsado después del arranque"
 
 msgid "Check USB for defects"
 msgstr "Probar USB por defectos"
-#      "----------MAX-LENGTH----------"
 
+#      "----------MAX-LENGTH----------"
 msgid "Verify integrity of USB drive"
 msgstr "Compruebe si hay errores en la memoria del computador"
 
@@ -48,12 +51,11 @@ msgid "Enter BIOS Setup"
 msgstr "Entrar en la configuración de la BIOS"
 
 msgid "Configure machine's firmware, boot options etc"
-msgstr "Configurar el firmware de la máquina, las opciones de arranque, etc."
+msgstr "Configurar el firmware de la máquina, las opciones de arranque, etc"
 
 msgid "Memory test"
 msgstr "Prueba de memoria"
-#      "----------MAX-LENGTH----------"
 
+#      "----------MAX-LENGTH----------"
 msgid "Check computer memory for errors"
 msgstr "Compruebe si hay errores en la memoria del computador"
-

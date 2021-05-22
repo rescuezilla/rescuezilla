@@ -4,19 +4,22 @@
 # Zeit 439 <darspr82@gmail.com>
 # Submitted at: https://github.com/rescuezilla/rescuezilla/issues/135
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2020-11-13 00:00+1030\n"
-"Last-Translator: Zeit 439 <darspr82@gmail.com>\n"
-"Language-Team: POLAND <LL@li.org>\n"
+"PO-Revision-Date: 2021-05-18 21:28+0000\n"
+"Last-Translator: Matthaiks <kitynska@gmail.com>\n"
+"Language-Team: Polish <https://hosted.weblate.org/projects/rescuezilla/"
+"rescuezilla/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.7-dev\n"
 
 msgid "Welcome"
 msgstr "Witamy"
@@ -34,10 +37,14 @@ msgid "Restore"
 msgstr "Przywróć"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
-msgstr "Potrzebujesz pomocy? Zacznij od sprawdzenia często zadawanych\npytań w Rescuezilla, a następnie przejdź do forum Rescuezilla."
+msgstr ""
+"Potrzebujesz pomocy? Zacznij od sprawdzenia często zadawanych pytań w "
+"Rescuezilla, a następnie przejdź do forum Rescuezilla."
 
 msgid "Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed."
-msgstr "Weź pod uwagę wkład $1/miesiąc na stronie internetowej Patreon\npoświęconej crowdfundingowi, aby Rescuezilla mogła być nadal rozwijana."
+msgstr ""
+"Rozważ wpłatę 1$ miesięcznie na stronie crowdfundingowej Patreon, aby "
+"Rescuezilla mogła być dalej rozwijana."
 
 msgid "Back"
 msgstr "Powrót"
@@ -48,35 +55,35 @@ msgstr "Dalej >"
 msgid "Please wait..."
 msgstr "Proszę zaczekać..."
 
-msgid "Identifying disk drives..." 
+msgid "Identifying disk drives..."
 msgstr "Identyfikacja napędów dyskowych ..."
 
 msgid "Unmounting: {path}"
-msgstr ""
+msgstr "Odmontowywanie: {path}"
 
 msgid "Unable to unmount {path}"
-msgstr ""
+msgstr "Nie można odmontować {path}"
 
 msgid "Running: {app}"
-msgstr ""
+msgstr "Uruchomiono: {app}"
 
 msgid "Running {app} on {device}"
-msgstr ""
+msgstr "Uruchomiono {app} w {device}"
 
 msgid "Failed to run command: "
-msgstr ""
+msgstr "Nie udało się uruchomić polecenia: "
 
 msgid "Error querying drives: "
-msgstr ""
+msgstr "Błąd podczas odpytywania napędów: "
 
 msgid "Clone"
-msgstr ""
+msgstr "Sklonuj"
 
 msgid "Step 1: Understanding Cloning"
-msgstr ""
+msgstr "Krok 1: Zrozumienie klonowania"
 
 msgid "Please understand how \"cloning\" differs from \"imaging\"."
-msgstr ""
+msgstr "Proszę zrozumieć, jak \"klonowanie\" różni się od \"obrazowania\"."
 
 msgid "This mode is for \"disk cloning\". Cloning means copying one drive and directly overwriting another drive. This is a direct one-step operation with no temporary storage required.\n"
 "\n"
@@ -85,68 +92,87 @@ msgid "This mode is for \"disk cloning\". Cloning means copying one drive and di
 ""
 "To use the \"imaging\" wizards, click <b>Back</b> and select <b>Backup</b> or <b>Restore</b>."
 msgstr ""
-""
-""
-""
-""
-""
+"Ten tryb służy do \"klonowania dysku\". Klonowanie oznacza kopiowanie "
+"jednego dysku i bezpośrednie nadpisywanie innego dysku. Jest to bezpośrednia "
+"operacja jednokierunkowana bez tymczasowego przechowywania.\n"
+"\n"
+"Klonowanie różni się od \"obrazowania dysku\". Obrazowanie oznacza "
+"kopiowanie wszystkiego z jednego dysku do bardzo dużych plików zapisanych w "
+"folderze na zewnętrznym dysku. Wiele obrazów można zapisać na tym samym "
+"dysku zewnętrznym. Te obrazy można przywrócić do oryginalnego dysku lub do "
+"dodatkowych dysków. Innymi słowy, w przypadku \"obrazowania\" operacja "
+"tworzenia kopii zapasowej kopiuje dysk do <i>plików</i>, które muszą być "
+"przechowywane na dysku przynajmniej tymczasowo, zanim będzie można je "
+"przywrócić.\n"
+"\n"
+"Aby użyć kreatorów \"obrazowania\", kliknij <b>Powrót</b> i wybierz "
+"<b>Kopia</b> lub <b>Przywróć</b>."
 
 msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
-msgstr ""
+msgstr "Aby rozpocząć kreator \"klonowania\", kliknij <b>Dalej</b>"
 
 msgid "Step 2: Select Source Drive"
-msgstr ""
+msgstr "Krok 2: Wybierz dysk źródłowy"
 
 msgid "Select the <b>source drive</b> to clone."
-msgstr ""
+msgstr "Wybierz <b>dysk źródłowy</b> do sklonowania."
 
 msgid "Select the <b>destination drive</b> to overwrite."
-msgstr ""
+msgstr "Wybierz <b>dysk docelowy</b> do nadpisania."
 
 msgid "Step 4: Select Partitions to Clone"
-msgstr ""
+msgstr "Krok 4: Wybierz partycje do sklonowania"
 
 msgid "Select which partitions from the source drive to clone, and whether to overwrite the partition table. <b>Leave everything selected to completely clone the source drive to the destination drive.</b>"
 msgstr ""
+"Wybierz partycje z napędu źródłowego do sklonowania i czy nadpisać tabelę "
+"partycji. <b>Zostaw wszystko wybrane, aby całkowicie sklonować napęd "
+"źródłowy do napędu docelowego.</b>"
 
 msgid "Step 5: Confirm Cloning Configuration"
-msgstr ""
+msgstr "Krok 5: Potwierdź konfigurację klonowania"
 
 msgid "Confirm the following cloning configuration."
-msgstr ""
+msgstr "Potwierdź następującą konfigurację klonowania."
 
 msgid "Cloning the following partitions"
-msgstr ""
+msgstr "Klonowanie następujących partycji"
 
 msgid "To start cloning, click <b>Next</b>."
-msgstr ""
+msgstr "Aby rozpocząć klonowanie, kliknij <b>Dalej</b>."
 
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
+"Czy na pewno chcesz sklonować dysk do {destination_drive}? Zrobienie tego "
+"trwale nadpisze dane na tym dysku!"
 
 msgid "Step 6: Cloning Disk"
-msgstr ""
+msgstr "Krok 6: Klonowanie dysku"
 
 msgid "Cloning the drive you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
+"Klonowanie wybranego dysku. Może to potrwać godzinę lub więcej w zależności "
+"od prędkości komputera i ilości danych."
 
 msgid "Summary of Clone"
-msgstr ""
+msgstr "Podsumowanie klonowania"
 
 msgid "Clone Summary"
-msgstr ""
+msgstr "Podsumowanie klonowania"
 
 msgid "Confirm the clone summary."
-msgstr ""
+msgstr "Potwierdź podsumowanie klonowania."
 
 msgid "Unable to shutdown Image Explorer"
-msgstr ""
+msgstr "Nie można zamknąć Eksploratora obrazów"
 
 msgid "Step 1: Select Drive To Backup"
-msgstr "Krok 1: Wybór dysku do utworzenia kopii zapasowej"
+msgstr "Krok 1: Wybierz dysk do utworzenia kopii zapasowej"
 
 msgid "Select the <b>source drive</b> that you would like to create a backup image from."
-msgstr "Wybierz dysk źródłowy, z którego chcesz utworzyć kopię zapasową obrazu."
+msgstr ""
+"Wybierz <b>dysk źródłowy</b>, z którego chcesz utworzyć obraz kopii "
+"zapasowej."
 
 msgid "Drive"
 msgstr "Dysk"
@@ -155,19 +181,21 @@ msgid "Capacity"
 msgstr "Pojemność"
 
 msgid "Drive Model"
-msgstr "Dysk"
+msgstr "Model dysku"
 
 msgid "Partitions"
 msgstr "Partycje"
 
 msgid "Show hidden devices (for advanced users)"
-msgstr "Pokaż ukryte narzędzia (dla zaawansowanych użytkowników)"
+msgstr "Pokaż ukryte urządzenia (dla zaawansowanych użytkowników)"
 
 msgid "Step 2: Select Partitions to Save"
 msgstr "Krok 2: Wybierz partycje do zapisania"
 
 msgid "Select which partitions to create a backup of. <b>Leave all partitions selected if you are unsure.</b>"
-msgstr "Wybierz partycje, z których chcesz utworzyć kopię zapasową.  Zostaw wszystkie partycje wybrane, jeśli nie jesteś pewien."
+msgstr ""
+"Wybierz partycje, z których chcesz utworzyć kopię zapasową. <b>Zostaw "
+"wszystkie partycje wybrane, jeśli nie jesteś pewien.</b>"
 
 msgid "Save"
 msgstr "Zapisz"
@@ -176,7 +204,7 @@ msgid "Description"
 msgstr "Opis"
 
 msgid "Drive {drive_number}, Partition {partition_number}"
-msgstr "Dysk {drive_number},Partycja {partition_number}"
+msgstr "Dysk {drive_number}, Partycja {partition_number}"
 
 msgid "Drive {drive_number}"
 msgstr "Dysk {drive_number}"
@@ -197,19 +225,19 @@ msgid "Shared over a network"
 msgstr "Współdzielone przez sieć"
 
 msgid "Where would you like to save the image?"
-msgstr "Gdzie jest docelowy dysk?"
+msgstr "Gdzie chcesz zapisać obraz?"
 
 msgid "Windows shared folder (SMB/CIFS, Samba)"
-msgstr "Folder współdzielony SMB/CIFS określony poniżej"
+msgstr "Folder współdzielony Windows (SMB/CIFS, Samba)"
 
 msgid "Search network"
 msgstr "Wyszukaj sieć"
 
 msgid "Server"
-msgstr "Lokalizacja serwera lub udziału"
+msgstr "Serwer"
 
 msgid "Share location (UNC path)"
-msgstr "Lokalizacja serwera lub udziału"
+msgstr "Lokalizacja udziału (ścieżka UNC)"
 
 msgid "Username"
 msgstr "Nazwa użytkownika"
@@ -224,49 +252,50 @@ msgid "Version"
 msgstr "Wersja"
 
 msgid "Remote path"
-msgstr ""
+msgstr "Zdalna ścieżka"
 
 msgid "Exported path"
-msgstr ""
+msgstr "Wyeksportowana ścieżka"
 
 msgid "Identity File"
-msgstr ""
+msgstr "Plik tożsamości"
 
 msgid "Optional"
-msgstr "opcjonalnie"
+msgstr "Opcjonalnie"
 
 msgid "Select network-shared storage location:"
 msgstr "Wybierz lokalizację pamięci masowej współdzielonej przez sieć :"
 
 msgid "Select the partition where the image files will be saved to"
-msgstr "Wybierz dysk docelowy:"
+msgstr "Wybierz partycję, na której zostaną zapisane pliki obrazów"
 
 msgid "Partition"
 msgstr "Partycja"
 
 msgid "Mounting..."
-msgstr "Montaż..."
+msgstr "Montowanie..."
 
 msgid "Close this popup to cancel the mount operation."
-msgstr ""
+msgstr "Zamknij to okienko, aby anulować operację montowania."
 
 msgid "Please ensure the username, password and other fields provided are correct, and try again."
 msgstr "Proszę upewnić się, że nazwa użytkownika, hasło i inne podane pola są poprawne i spróbować ponownie.."
 
 msgid "Must provide either password or SSH identity file."
-msgstr ""
+msgstr "Musisz podać hasło lub plik tożsamości SSH."
 
 msgid "Scanning folder for backup images..."
 msgstr "Folder kopii zapasowej obrazu ..."
 
 msgid "({timeout_seconds} second timeout)"
-msgstr ""
+msgstr "({timeout_seconds} sekundowy limit czasu)"
 
 msgid "Close this popup to cancel scanning the selected folder and subfolders."
 msgstr ""
+"Zamknij to okienko, aby anulować skanowanie wybranego folderu i podfolderów."
 
 msgid "Scanning: {filename}"
-msgstr ""
+msgstr "Skanowanie: {filename}"
 
 msgid "Error processing the following images:"
 msgstr "Błędy w przetwarzaniu następujących obrazów:"
@@ -278,13 +307,16 @@ msgid "Unable to fully process the following image:"
 msgstr "Nie można w pełni przetworzyć następującego obrazu:"
 
 msgid "Cannot find partition's associated partclone image"
-msgstr ""
+msgstr "Nie można znaleźć powiązanego z partycją obrazu partclone"
 
 msgid "This can happen when loading images which Clonezilla was unable to completely backup."
 msgstr "Może się to zdarzyć podczas ładowania obrazów, których Clonezilla nie była w stanie całkowicie skopiować."
 
 msgid "Note: This image format cannot distinguish between failed partclone backup and a user who chose not to backup a partition."
 msgstr ""
+"Uwaga: Ten format obrazu nie może odróżnić nieprawidłowego kopii zapasowej "
+"partclone i użytkownika, który wybrał, aby nie tworzyć kopii zapasowej "
+"partycji."
 
 msgid "Any other filesystems within the image should be restorable as normal."
 msgstr "Wszelkie inne systemy plików w obrębie obrazu powinny być odtwarzalne jak zwykle."
@@ -296,10 +328,18 @@ msgid "Unknown filesystem"
 msgstr "Nieznany system plików"
 
 msgid "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance."
-msgstr "Informacje o partycji rozszerzonej w kopii zapasowej są puste lub brakuje ich. Dzieje się tak w przypadku niekompletnych kopii zapasowych utworzonych przez nieoficjalną aktualizację Redo Backup. Jeśli kopia zapasowa zawiera rozszerzone partycje, nie zostaną one przywrócone poprawnie. Wszystkie dane są nadal w pełni odzyskiwalne, ale do pełnego przywrócenia partycji rozszerzonych wymagana jest ręczna interwencja. W celu uzyskania informacji i pomocy należy skontaktować się z {url}. Dysk docelowy nie został jeszcze zmodyfikowany. Czy chcesz kontynuować przywracanie?"
+msgstr ""
+"Informacje o partycji rozszerzonej w kopii zapasowej są puste. Jeśli kopia "
+"zapasowa zawiera partycję rozszerzoną, jej przywrócenie nie będzie "
+"prawidłowe. Wszystkie dane są nadal w pełni odzyskiwalne, ale do pełnego "
+"przywrócenia danych na partycji rozszerzonej wymagana jest interwencja "
+"ręczna. Informacje i pomoc można uzyskać na stronie {url}."
 
 msgid "The backup's bootloader data is shorter than expected. If the backup contained certain bootloaders like GRUB, during a restore operation Rescuezilla will try and re-install the bootloader."
-msgstr "Dane bootloadera kopii zapasowej są krótsze niż oczekiwano. Dzieje się tak w przypadku kopii zapasowych utworzonych przez nieoficjalną aktualizację Redo Backup. Jeśli kopia zapasowa zawierała pewne bootloadery, takie jak GRUB, przywrócony dysk twardy nie uruchomi się poprawnie bez ręcznej poprawki. Wszystkie dane są nadal w pełni odzyskiwalne, ale może być wymagana ręczna interwencja w celu przywrócenia programu rozruchowego. Proszę skonsultować się z {url} w celu uzyskania informacji i pomocy. Dysk docelowy nie został jeszcze zmodyfikowany. Czy chcesz kontynuować przywracanie?"
+msgstr ""
+"Dane bootloadera z kopii zapasowej są krótsze niż oczekiwano. Jeśli kopia "
+"zapasowa zawierała pewne bootloadery, takie jak GRUB, podczas operacji "
+"przywracania Rescuezilla spróbuje ponownie zainstalować bootloader."
 
 msgid "Step 4: Select Destination Folder"
 msgstr "Krok 4: Wybierz folder docelowy"
@@ -333,7 +373,7 @@ msgid "Last modified"
 msgstr "Ostatnio zmieniony"
 
 msgid "When you are happy with the destination folder, click <b>Next</b>."
-msgstr "Jeśli jesteś zadowolony z folderu docelowego, kliknij <b>Następny</b>.."
+msgstr "Jeśli jesteś zadowolony z folderu docelowego, kliknij <b>Dalej</b>."
 
 msgid "Step 5: Name Your Backup"
 msgstr "Krok 5: Nazwij swoją kopię zapasową"
@@ -341,45 +381,49 @@ msgstr "Krok 5: Nazwij swoją kopię zapasową"
 msgid "Provide a unique name for this backup image, such as the date.  Today's date is automatically entered for you below.\n"
 "\n"
 "You may only use letters, numbers, and dashes in your backup name."
-msgstr "Podaj unikalną nazwę dla tego obrazu kopii zapasowej, np. datę.  Dzisiejsza data jest automatycznie wprowadzana dla Ciebie poniżej.\n"
+msgstr ""
+"Podaj unikalną nazwę dla tego obrazu kopii zapasowej, np. datę.  Dzisiejsza "
+"data jest automatycznie wprowadzana dla Ciebie poniżej.\n"
 "\n"
-"W nazwie zapasowej można używać tylko liter, cyfr i myślników"
+"W nazwie zapasowej można używać tylko liter, cyfr i myślników."
 
 msgid "Optional: Provide a short description."
-msgstr ""
+msgstr "Opcjonalnie: Podaj krótki opis."
 
 msgid "Step 6: Customize Compression Settings"
-msgstr ""
+msgstr "Krok 6: Dostosuj ustawienia kompresji"
 
 msgid "Customize image compression settings. <b>Don't make any changes if you are unsure.</b>"
 msgstr ""
+"Dostosuj ustawienia kompresji obrazu. <b>Nie wprowadzaj żadnych zmian, jeśli "
+"nie masz pewności.</b>"
 
 msgid "Compression format: "
-msgstr ""
+msgstr "Format kompresji: "
 
 msgid "gzip"
-msgstr ""
+msgstr "gzip"
 
 msgid "(default)"
-msgstr ""
+msgstr "(domyślny)"
 
 msgid "zstandard"
-msgstr ""
+msgstr "zstandard"
 
 msgid "Uncompressed (Suitable for use with Image Explorer)"
-msgstr ""
+msgstr "Nieskompresowany (odpowiedni do użytku z Eksploratorem obrazu)"
 
 msgid "Compression level: "
-msgstr ""
+msgstr "Poziom kompresji: "
 
 msgid "Fastest"
-msgstr ""
+msgstr "Najszybszy"
 
 msgid "Best"
-msgstr ""
+msgstr "Najlepszy"
 
 msgid "When you are happy with the compression settings, click <b>Next</b>."
-msgstr ""
+msgstr "Jeśli jesteś zadowolony z ustawień kompresji, kliknij <b>Dalej</b>."
 
 msgid "Step 7: Confirm Backup Configuration"
 msgstr "Krok 6: Potwierdzenie konfiguracji kopii zapasowej"
@@ -391,25 +435,27 @@ msgid "Backing up the following partition"
 msgstr "Tworzenie kopii zapasowej następującej partycji"
 
 msgid "The backup image will be written into folder {dest_dir} on {description}"
-msgstr "Kopia zapasowa obrazu zostanie zapisana w folderze {dest_dir} na {description}."
+msgstr ""
+"Kopia zapasowa obrazu zostanie zapisana w folderze {dest_dir} na "
+"{description}"
 
 msgid "Confirm the following backup configuration."
 msgstr "Potwierdzić następującą konfigurację kopii zapasowej."
 
 msgid "On successful completion of the task, perform the following action: "
-msgstr ""
+msgstr "Po pomyślnym zakończeniu zadania wykonaj następującą czynność: "
 
 msgid "Do nothing"
-msgstr ""
+msgstr "Nic nie rób"
 
 msgid "Shutdown"
 msgstr "Zamknij"
 
 msgid "Reboot"
-msgstr "Restart"
+msgstr "Restartuj"
 
 msgid "To start the backup, click <b>Next</b>."
-msgstr "Aby rozpocząć tworzenie kopii zapasowej, kliknij <b>Następny</b>."
+msgstr "Aby rozpocząć tworzenie kopii zapasowej, kliknij <b>Dalej</b>."
 
 msgid "Step 8: Creating Backup Image"
 msgstr "Krok 7: Tworzenie kopii zapasowej obrazu"
@@ -418,7 +464,7 @@ msgid "Backing up your system to the location you selected.  This may take an ho
 msgstr "Tworzenie kopii zapasowej systemu na wybranej lokalizacji.  Może to potrwać godzinę lub więcej, w zależności od szybkości komputera i ilości danych.."
 
 msgid "Saving: {file}"
-msgstr ""
+msgstr "Zapisywanie: {file}"
 
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
 msgstr "Kopia {partition_name} zawierająca system plików {filesystem} do {destination}"
@@ -427,22 +473,24 @@ msgid "Summary of Backup"
 msgstr "Podsumowanie tworzenia kopii zapasowej"
 
 msgid "Confirm the backup summary."
-msgstr "Potwierdź podsumowanie kopii zapasowej."
+msgstr "Potwierdź podsumowanie tworzenia kopii zapasowej."
 
 msgid "Backup Summary"
-msgstr "Kopia podsumowanie"
+msgstr "Podsumowanie tworzenia kopii zapasowej"
 
 msgid "An operation is in progress. Do you wish to cancel?"
-msgstr ""
+msgstr "Trwa operacja. Czy chcesz anulować?"
 
 msgid "Operation cancelled by user."
-msgstr "Kopia zapasowa anulowana przez użytkownika."
+msgstr "Operacja anulowana przez użytkownika."
 
 msgid "Error creating backup: "
-msgstr "Błąd tworzenia kopii zapasowej:"
+msgstr "Błąd tworzenia kopii zapasowej: "
 
 msgid "Failed to write destination file. Please confirm it is valid to create the provided file path, and try again."
-msgstr "Nie udało się zapisać pliku docelowego. Proszę potwierdzić, że podana ścieżka dostępu jest poprawna i spróbować ponownie.."
+msgstr ""
+"Nie udało się zapisać pliku docelowego. Proszę potwierdzić, że podana "
+"ścieżka dostępu jest poprawna i spróbować ponownie."
 
 msgid "Successful backup of swap partition {partition_name}"
 msgstr "Pomyślne utworzenie kopii zapasowej partycji wymiany {partition_name}"
@@ -460,46 +508,51 @@ msgid "Backup succeeded with some errors:"
 msgstr "Kopia zakończyła się sukcesem z pewnymi błędami:"
 
 msgid "Backup operation failed:"
-msgstr "Operacja backapu nie powiodła się:"
+msgstr "Operacja kopii zapasowej nie powiodła się:"
 
 msgid "User requested operation to stop."
-msgstr ""
+msgstr "Użytkownik zażądał zatrzymania operacji."
 
 msgid "Operation took {num_minutes} minutes."
 msgstr "Operacja trwała {num_minutes} minuty."
 
 msgid "To start a new session, click <b>Next</b>"
-msgstr "Aby rozpocząć nową sesję, kliknij <b>Następny</b>"
+msgstr "Aby rozpocząć nową sesję, kliknij <b>Dalej</b>"
 
 msgid "Step 1: Select Image Location"
 msgstr "Krok 1: Wybierz lokalizację obrazu"
 
 msgid "Where are the image files stored?"
-msgstr "Gdzie znajduje się dysk źródłowy?"
+msgstr "Gdzie znajdują się pliki obrazów?"
 
 msgid "Select the partition which contains the image files:"
-msgstr "Wybór dysku źródłowego:"
+msgstr "Wybierz partycję, która zawiera pliki obrazów:"
 
 msgid "Step 2: Select Backup Image"
-msgstr "Krok 2: Wybierz kopię obrazu"
+msgstr "Krok 2: Wybierz obraz kopii zapasowej"
 
 msgid "Click <b>Browse</b> to select the folder containing image files."
-msgstr "Kliknij poniższe pole, aby wybrać folder zawierający pliki obrazu."
+msgstr "Kliknij <b>Przeglądaj</b>, aby wybrać folder zawierający pliki obrazów."
 
 msgid "Select the image file to restore."
 msgstr "Wybierz plik obrazu do przywrócenia."
 
 msgid "Step 3: Select Drive To Restore"
-msgstr "Krok 3: Wybierz opcję Przywróć Kopię"
+msgstr "Krok 3: Wybierz dysk, który chcesz przywrócić"
 
 msgid "Select the destination drive to restore with the selected image."
-msgstr "Wybierz dysk docelowy, który chcesz nadpisać i przywrócić wybrany obraz do"
+msgstr ""
+"Wybierz dysk docelowy, który ma zostać przywrócony za pomocą wybranego "
+"obrazu."
 
 msgid "Step 4: Select Partitions to Restore"
 msgstr "Krok 4: Wybierz partycje, które chcesz przywrócić"
 
 msgid "Select which partitions from the backup image to restore, and whether to overwrite the partition table. <b>Leave everything selected to completely restore the destination drive.</b>"
-msgstr "Wybierz, które partycje z kopii zapasowej mają zostać przywrócone oraz czy nadpisać tabelę partycji. Pozostawienie wszystkich zaznaczonych partycji do całkowitego przywrócenia dysku docelowego."
+msgstr ""
+"Wybierz, które partycje z obrazu kopii zapasowej mają zostać przywrócone i "
+"czy tabela partycji ma zostać nadpisana. <b>Zostaw wszystko wybrane, aby "
+"całkowicie przywrócić dysk docelowy.</b>"
 
 msgid "Selected image"
 msgstr "Wybierz obraz"
@@ -520,25 +573,32 @@ msgid "The \"destination partition\" column has been updated using the informati
 msgstr "Kolumna \"partycja docelowa\" została zaktualizowana przy użyciu informacji przechowywanych w obrazie kopii zapasowej.n\n\n<b>Jeśli partycje zostały zmienione, dodano nowe partycje lub zainstalowano dodatkowe systemy operacyjne <i>od momentu utworzenia obrazu kopii zapasowej</i>, wówczas tabela partycji dysku docelowego nie będzie zgodna z obrazem kopii zapasowej, a zastąpienie tabeli partycji dysku docelowego spowoduje, że te zmienione i dodatkowe partycje będą trwale niedostępne. </b> Jeżeli tabela partycji nie została zmodyfikowana w taki sposób od czasu utworzenia kopii zapasowej, nadpisanie tabeli partycji jest całkowicie bezpieczne i nie będzie miało żadnych negatywnych skutków."
 
 msgid "You will <b>not</b> be overwriting the partition table."
-msgstr "<b>nie</b>będziesz nadpisywał tabelę partycji."
+msgstr "<b>Nie</b> będziesz nadpisywać tabeli partycji."
 
 msgid "The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table."
 msgstr "Kolumna \"partycja docelowa\" została zaktualizowana o istniejące informacje w tabeli partycji dysku docelowego.\n\n<b>Kolumna partycji docelowej może zostać zmodyfikowana jako menu rozwijane. Nieprawidłowe mapowanie partycji docelowych może spowodować, że systemy operacyjne nie będą się już uruchamiać.</b> Jeśli nie masz pewności co do mapowania, zastanów się, czy bardziej odpowiednie jest nadpisanie tabeli partycji."
 
 msgid "No destination partition selected. Use the destination partition drop-down menu to select the destination"
-msgstr "Nie wybrano żadnej partycji docelowej. Użyj menu rozwijanego partycji docelowej, aby wybrać miejsce docelowe."
+msgstr ""
+"Nie wybrano żadnej partycji docelowej. Użyj menu rozwijanego partycji "
+"docelowej, aby wybrać miejsce docelowe"
 
 msgid "Not restoring this partition"
-msgstr ""
+msgstr "Nie przywracam tej partycji"
 
 msgid "When you are ready to continue, click <b>Next</b>."
-msgstr ""
+msgstr "Gdy jesteś gotów do kontynuowania, kliknij <b>Dalej</b>."
 
 msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
 msgstr ""
+"Skanowanie i odmontowywanie dowolnych woluminów logicznych Menedżera "
+"woluminów logicznych (LVM)..."
 
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
 msgstr ""
+"Ostatnia partycja tabeli partycji źródłowej ({source}: {source_size} bajtów))"
+" musi odniesić się do regionu całkowicie wewnątrz dysku docelowego "
+"({destination_size} bajtów)."
 
 msgid "Rescuezilla cannot yet automatically shrink partitions to restore from large disks to smaller disks. The final partition currently must always completely reside within the destination disk.\n"
 "\n"
@@ -546,13 +606,19 @@ msgid "Rescuezilla cannot yet automatically shrink partitions to restore from la
 "\n"
 "{url}"
 msgstr ""
-""
-""
-""
-""
+"Rescuezilla nie może jeszcze automatycznie zmniejszać partycji, aby "
+"przywracać z dużych dysków do mniejszych dysków. Ostatnia partycja musi "
+"zawsze być całkowicie wewnątrz dysku docelowego.\n"
+"\n"
+"Obecnie jedynym sposobem przywracania dysków mniejszych niż oryginał jest "
+"najpierw użycie edytora partycji GParted, aby zmniejszyć końcową partycję "
+"oryginalnego dysku przed utworzeniem nowego obrazu kopii zapasowej. Proszę "
+"zapoznać się z poniższymi instrukcjami, aby uzyskać więcej informacji:\n"
+"\n"
+"{url}"
 
 msgid "Step 5: Confirm Restore Configuration"
-msgstr "Krok 5: Zatwierdzenie Przywrócenia konfiguracji"
+msgstr "Krok 5: Potwierdź konfigurację przywracania"
 
 msgid "Confirm the following restore configuration."
 msgstr "Potwierdzić konfigurację przywracania."
@@ -573,7 +639,7 @@ msgid "WILL BE OVERWRITING PARTITION TABLE"
 msgstr "BĘDZIE NADPISYWAĆ TABELĘ PARTYCJI"
 
 msgid "Will <b>NOT</b> be overwriting partition table"
-msgstr "Czy <b>Nie</b> będzie nadpisywać tabelę partycji."
+msgstr "<b>NIE</b> będzie nadpisywać tabeli partycji"
 
 msgid "To start the restore, click <b>Next</b>."
 msgstr "Aby rozpocząć przywracanie, kliknij <b>Następny</b>."
@@ -591,67 +657,74 @@ msgid "Restoring {description} to {destination_partition} ({destination_descript
 msgstr "Przywrócenie {description} do {destination_partition} ({destination_description})"
 
 msgid "Synchronizing disks..."
-msgstr ""
+msgstr "Synchronizowanie dysków..."
 
 msgid "Querying hard drive geometry of {device}"
-msgstr ""
+msgstr "Odpytywanie geometrii dysku twardego {device}"
 
 msgid "Probing {device} with {app}"
-msgstr ""
+msgstr "Sondowanie {device} za pomocą {app}"
 
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
 msgstr ""
+"Rozrastanie systemu plików {partition} ({filesystem}). To może zająć "
+"chwilę..."
 
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
 msgstr ""
+"Zmiana rozmiaru partycji {partition} ({filesystem}) nie powiodła się: {msg}"
 
 msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
 msgstr ""
+"Pomyślnie dostosowano geometrię systemu plików NTFS {ntfs_device} przy "
+"użyciu wartości z {geometry_source}"
 
 msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
-msgstr ""
+msgstr "Nie udało się dostosować geometrii systemu plików NTFS {ntfs_device}"
 
 msgid "Removing udev MAC address records (if any)"
-msgstr ""
+msgstr "Usuwanie rekordów adresów MAC udev"
 
 msgid "Re-installing syslinux (if any)"
-msgstr ""
+msgstr "Ponowna instalacja syslinux (jeśli istnieje)"
 
 msgid "Successfully re-installed syslinux bootloader"
-msgstr ""
+msgstr "Pomyślnie ponownie zainstalowano bootloader syslinux"
 
 msgid "Re-installing GRUB bootloader (if any)"
-msgstr ""
+msgstr "Ponowna instalacja bootloadera GRUB (jeśli istnieje)"
 
 msgid "Successfully re-installed GRUB bootloader"
-msgstr ""
+msgstr "Pomyślnie ponownie zainstalowano bootloader GRUB"
 
 msgid "Did not update GRUB bootloader (if any)"
-msgstr ""
+msgstr "Nie zaktualizowano bootloadera GRUB (jeśli istnieje)"
 
 msgid "Updating initramfs (if any)"
-msgstr ""
+msgstr "Aktualizowanie initramfs (jeśli istnieje)"
 
 msgid "Successfully updated initramfs"
-msgstr ""
+msgstr "Pomyślnie zaktualizowano initramfs"
 
 msgid "Updating EFI NVRAM..."
-msgstr ""
+msgstr "Aktualizowanie NVRAM EFI..."
 
 msgid "Successfully updated EFI NVRAM"
-msgstr ""
+msgstr "Pomyślnie zaktualizowano NVRAM EFI"
 
 msgid "Error restoring image: "
-msgstr "Błąd przywracania obrazu:"
+msgstr "Błąd przywracania obrazu: "
 
 msgid "Could not restore sfdisk partition table as file has zero length: "
 msgstr "Nie można przywrócić tabeli partycji sfdisk, ponieważ plik ma zerową długość: "
 
 msgid "Successfully restored partition table."
-msgstr "Pomyślnie przywrócona tabela partycji."
+msgstr "Pomyślnie przywrócono tabelę partycji."
 
 msgid "Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."
-msgstr "Nie udało się odświeżyć tabeli partycji urządzeń. Może to nastąpić, jeśli inny proces ma dostęp do tabeli partycji"
+msgstr ""
+"Nie udało się odświeżyć tabeli partycji urządzeń. Może to nastąpić, jeśli "
+"inny proces ma dostęp do tabeli partycji."
 
 msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
 msgstr "Nie można przywrócić partycji {destination_partition}, ponieważ nie jest z nią powiązany żaden zapisany obraz: {description}."
@@ -663,51 +736,56 @@ msgid "Error restoring partition {image_key} to {destination_partition}."
 msgstr "Błąd przywracania partycji {image_key} do {destination_partition}."
 
 msgid "Successfully restored image partition {image} to {destination_partition}"
-msgstr "Pomyślnie przywrócona partycja obrazu {image} do {destination_partition}."
+msgstr "Pomyślnie przywrócono obraz partycji {image} do {destination_partition}"
 
 msgid "Summary of Restore"
 msgstr "Podsumowanie przywracania"
 
 msgid "Restore Summary"
-msgstr "Podsumowanie "
+msgstr "Podsumowanie przywracania"
 
 msgid "Confirm the restore summary."
-msgstr "Potwierdzenie podsumowania przywracania."
+msgstr "Potwierdź podsumowanie przywracania."
 
 msgid "Backup restored successfully."
-msgstr "Kopia zapasowa przywrócona z powodzeniem!" 
+msgstr "Kopia zapasowa przywrócona z powodzeniem."
 
 msgid "Image Explorer\n"
 "      (beta)"
 msgstr ""
-""
+"Eksplorator obrazów\n"
+"      (beta)"
 
 msgid "Image Explorer (beta)"
-msgstr ""
+msgstr "Eksplorator obrazów (beta)"
 
 msgid "Select the image file to explore"
-msgstr ""
+msgstr "Wybierz plik obrazu do eksploracji"
 
 msgid "Step 3: Select Partition to Explore"
-msgstr ""
+msgstr "Krok 3: Wybierz partycję do eksploracji"
 
 msgid "Select the partition to access files from."
-msgstr ""
+msgstr "Wybierz partycję, z której chcesz uzyskać dostęp do plików."
 
 msgid "Click <b>Mount</b> to mount the backup image (as read-only)."
 msgstr ""
+"Kliknij <b>Zamontuj</b>, aby zamontować obraz kopii zapasowej (tylko do "
+"odczytu)."
 
 msgid "Mount"
-msgstr ""
+msgstr "Zamontuj"
 
 msgid "Mounting as read-only..."
-msgstr ""
+msgstr "Montowanie tylko do odczytu..."
 
 msgid "Unmount"
-msgstr ""
+msgstr "Odmontuj"
 
 msgid "Once the partition has been mounted, click <b>Open in file manager</b> to access your files."
 msgstr ""
+"Po zamontowaniu partycji kliknij <b>Otwórz w menedżerze plików</b>, aby "
+"uzyskać dostęp do plików."
 
 msgid "Open in file manager"
-msgstr ""
+msgstr "Otwórz w menedżerze plików"

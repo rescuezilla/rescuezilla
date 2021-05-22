@@ -1,19 +1,13 @@
-# Swedish translation of Rescuezilla
-# Copyright (C) 2021
-# This file is distributed under the same license as the PACKAGE package.
-#
-# Submitted at: https://github.com/rescuezilla/rescuezilla/issues/186
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-27 14:12+0930\n"
-"PO-Revision-Date: 2021-05-22 05:28+0000\n"
-"Last-Translator: OerjanS <oerjan.snell@gmail.com>\n"
-"Language-Team: Swedish <https://hosted.weblate.org/projects/rescuezilla/"
-"grub-boot/sv/>\n"
-"Language: sv\n"
+"POT-Creation-Date: 2021-03-02 00:00+0000\n"
+"PO-Revision-Date: 2021-05-20 04:02+0000\n"
+"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
+"rescuezilla/grub-boot/nb_NO/>\n"
+"Language: nb_NO\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -21,42 +15,46 @@ msgstr ""
 "X-Generator: Weblate 4.7-dev\n"
 
 msgid "Start Rescuezilla"
-msgstr "Starta Rescuezilla"
+msgstr "Start Rescuezilla"
 
 #      "----------MAX-LENGTH----------"
 msgid "If boot fails, reboot and try selecting Graphical fallback instead"
-msgstr "Om start misslyckas, starta om och välj 'Grafiskt reservläge' i stället"
+msgstr ""
+"Hvis oppstart mislykkes kan du starte på nytt og velge grafisk tilbakefall"
 
 msgid "Graphical fallback mode"
-msgstr "Grafisk Reserv"
+msgstr "Grafisk tilbakefallsmodus"
 
 #      "----------MAX-LENGTH----------"
 msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
-msgstr "Använd låg upplösning om standardläget inte fungerar för din hårdvara"
+msgstr ""
 
 msgid "Load USB into RAM"
-msgstr "Ladda USB i RAM"
+msgstr "Last USB inn i minne"
 
 #      "----------MAX-LENGTH----------"
 msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
-msgstr "Lägger in Rescuezilla i minnet så att startmediet kan matas ut efter start"
+msgstr ""
+"Laster Rescuezilla inn i minne, noe som tillater oppstartsmedia å frakobles "
+"etter oppstart"
 
 msgid "Check USB for defects"
-msgstr "Kontrollera USB för defekter"
+msgstr "Kontroller USB for defekter"
 
 #      "----------MAX-LENGTH----------"
 msgid "Verify integrity of USB drive"
-msgstr "Kontrollera USB-enheten"
+msgstr "Bekrefter USB-enhetens integritet"
 
 msgid "Enter BIOS Setup"
-msgstr "Gå in i BIOS Setup"
+msgstr "Gå inn i BIOS-oppsett"
 
+#, fuzzy
 msgid "Configure machine's firmware, boot options etc"
-msgstr "Konfigurera maskinens firmware, bootalternativ etc"
+msgstr "Sett opp maskinens fastvare, oppstartsvalg, osv."
 
 msgid "Memory test"
-msgstr "Minnestest"
+msgstr "Minnetest"
 
 #      "----------MAX-LENGTH----------"
 msgid "Check computer memory for errors"
-msgstr "Kontrollera ev. fel på minnet"
+msgstr "Sjekk datamaskinen for feil"
