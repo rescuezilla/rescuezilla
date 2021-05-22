@@ -54,7 +54,7 @@ terminal-font: "Unifont Regular 16"
 
 # Countdown for automatic booting of the default menu option
 + progress_bar {
-        left = 55%
+        left = 60%
         top = 75%
         width = 40%
         # Height parameter does not seem to be respected for some reason (bar too thick)
