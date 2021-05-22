@@ -44,7 +44,10 @@ def main():
 
     gettext_translation_search_path = sys.base_prefix + "/share/locale/{LANGUAGE,LC_ALL,LC_MESSAGES,LANG}/LC_MESSAGES/rescuezilla.mo"
     print("Setting GTK translation domain by searching: " + gettext_translation_search_path)
+    # Set the translation domain folder:
     gettext.bindtextdomain('rescuezilla')
+    # Query the translation
+    gettext.textdomain('rescuezilla')
 
     builder = Gtk.Builder()
     builder.set_translation_domain('rescuezilla')
