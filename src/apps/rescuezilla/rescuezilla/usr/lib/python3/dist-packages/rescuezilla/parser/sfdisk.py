@@ -134,7 +134,9 @@ class Sfdisk:
                 image.warning_dict[sfdisk_filename] = Sfdisk.get_empty_sfdisk_msg()
             else:
                 normalized_sfdisk_dict['sfdisk_dict'] = Sfdisk.parse_sfdisk_dump_output(sfdisk_string)
-        else:
+        elif image.has_partition_table():
+            # Only display warning message for image if it has an MBR backup, as Clonezilla can do a saveparts
+            # on drives without partition table and it's expected to be missing a MBR and an sfdisk file.
             image.warning_dict[sfdisk_filename] = Sfdisk.get_empty_sfdisk_msg()
         return normalized_sfdisk_dict
 
