@@ -372,9 +372,8 @@ class PartitionsToRestore:
                 self.destination_partition_combobox_list.append([dest_partition_key, flattened_part_description])
                 num_combo_box_entries += 1
 
-        if num_combo_box_entries == 0:
-            # TODO: Improve disk description
-            flattened_disk_description = self.dest_drive_node
+        if num_combo_box_entries == 0 or not self.selected_image.has_partition_table():
+            flattened_disk_description = self.dest_drive_node + ": " + CombinedDriveState.flatten_drive(self.dest_drive_dict)
             # If there are no partitions in the destination drive, we place the entire drive as the destination
             self.destination_partition_combobox_list.append([self.dest_drive_node, "WHOLE DRIVE " + flattened_disk_description])
 
