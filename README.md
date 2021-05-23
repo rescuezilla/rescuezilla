@@ -2,27 +2,37 @@
 
 # Rescuezilla [![Build Status](https://api.travis-ci.com/rescuezilla/rescuezilla.svg?branch=master)](https://travis-ci.com/github/rescuezilla/rescuezilla) [![Translation status](https://hosted.weblate.org/widgets/rescuezilla/-/svg-badge.svg)](https://hosted.weblate.org/engage/rescuezilla/)
 
-Rescuezilla is an easy-to-use disk imaging application that's fully compatible with Clonezilla — the industry-standard trusted by tens of millions.
+Rescuezilla is an easy-to-use disk cloning and imaging application that's fully compatible with Clonezilla — the industry-standard trusted by tens of millions.
 
-Disk imaging is the process of making a backup of your computer's hard drive which is managed as files stored on an external hard drive.
+Yes, Rescuezilla is the Clonezilla GUI (graphical user interface) that you might have been looking for.
 
-For many people, the alternative open-source tools Clonezilla and SysRescueCD, are intimidating and difficult to use, so Rescuezilla provides an easy-to-use graphical environment like the leading commercial tools, Acronis True Image and Macrium Reflect.
+Disk imaging is the process of making a backup of your computer's hard drive which is managed as files stored on an external hard drive, and 'disk cloning' is the process of making a direct copy without needing a third drive for temporary storage.
 
-Rescuezilla can be booted on any PC or Mac from a USB stick, or CD, and has been carefully developed to be fully interoperable with the Clonezilla. This means Rescuezilla can restore backups created by Clonezilla, and backups created by Rescuezilla can be restored using Clonezilla!
+For many people, the alternative open-source tools such as Clonezilla are intimidating and difficult to use, so Rescuezilla provides an easy-to-use graphical environment like the leading commercial tools, Acronis True Image and Macrium Reflect.
+
+It's worth noting that hard drive imaging and cloning is a very specialized task that's not necessarily the best solution for every user: it's worth researching whether a traditional file-based backup approach is more suitable for the specific problem you are looking to solve.
+
+Rescuezilla can be booted on any PC or Mac from a USB stick, and has been carefully developed to be fully interoperable with the Clonezilla. This means Rescuezilla can restore backups created by Clonezilla, and backups created by Rescuezilla can be restored using Clonezilla!
 
 Rescuezilla is an fork of _Redo Backup and Recovery_ (now called _Redo Rescue_) after it had been abandoned for 7 years.
 
 ## Features
 
 * Simple graphical environment anyone can use
-* Fully interoperable with industry-standard Clonezilla
-* Ability to the access files within Clonezilla backup images (beta)
-* Boots from Live CD or a USB drive on any PC or Mac
+* Creates backup images that are fully interoperable with the industry-standard Clonezilla
+* Supports images made by all known open-source imaging frontends, including Clonezilla (see 'compatibility' section of download page)
+* Also supports virtual machine images: VirtualBox (VDI), VMWare (VMDK), Hyper-V (VHDx), Qemu (QCOW2), raw (.dd, .img) and many more
+* Access files from within images (including virtual machine images) using 'Image Explorer (beta)'
+* Fully supports advanced environments such as Linux md RAID, LVM and no partition table (filesystem directly-on-disk)
+* Supports cloning (for direct 'device-to-device' mode without needing a third drive for temporary storage)
+* Boots from Live USB stick on any PC or Mac
 * Full system backup, bare metal recovery, partition editing, data protection, web browsing, and more
 * Extra tools for hard drive partitioning, factory reset, undeleting files
 * Web browser for downloading drivers, reading documentation
 * File explorer for copying and editing files even if system won't boot
 * Based on Ubuntu and partclone
+
+Note: Rescuezilla does NOT yet _automatically_ shrink partitions to restore to disks _smaller_ than original. This feature will be added in future version.
 
 ## Supported Languages
 
@@ -40,10 +50,10 @@ Rescuezilla has been translated into the following languages:
 * Polski (pl-PL)
 * Português brasileiro (pt-BR)
 * Русский (ru-RU) (Translation in-progress)
-* Svenska (sv-SE) ([Translation complete](https://github.com/rescuezilla/rescuezilla/issues/186))
-* Türkçe (tr-TR) (Translation complete)
-* 中文(简体) (zh-Hans) ([Translation complete](https://github.com/rescuezilla/rescuezilla/issues/191))
-* 中文(繁體) (zh-Hant) (Translation complete)
+* Svenska (sv-SE)
+* Türkçe (tr-TR)
+* 中文(简体) (zh-CN)
+* 中文(繁體) (zh-Hant)
 
 Rescuezilla uses Weblate for translation. **Please see [Translations HOWTO](https://github.com/rescuezilla/rescuezilla/wiki/Translations-HOWTO) to submit or update a translation.**
 
@@ -64,16 +74,16 @@ Below table shows an abridged history of Rescuezilla. For more information, see 
 
 | Release             | Release Date | Operating System | Notes |
 | ------------------- | ---------- | ---------------- | ---------------------------------- |
-| Rescuezilla 2.1.3   | 2021-01-29 | Ubuntu 20.10     | [Download page](https://github.com/rescuezilla/rescuezilla/releases/latest)
+| Rescuezilla 2.2     | 2021-06-04 | Ubuntu 21.04     | Added 'Clone', VM image support. [Download page](https://github.com/rescuezilla/rescuezilla/releases/latest)
 | Rescuezilla 2.1     | 2020-12-12 | Ubuntu 20.10     | Added Image Explorer (beta)
-| Rescuezilla 2.0     | 2020-10-14 | Ubuntu 20.04     | Added Clonezilla support
+| Rescuezilla 2.0     | 2020-10-14 | Ubuntu 20.04     | Added Clonezilla image support
 | Rescuezilla 1.0.6   | 2020-06-17 | Ubuntu 20.04     |
-| Redo Rescue 2.0.0   | 2020-06-12 | Debian 9 Stretch | Original author [resurfaces](https://sourceforge.net/p/redobackup/discussion/general/thread/d0e37c4750/) after 7.5 year absence
+| Redo Rescue 2.0.0   | 2020-06-12 | Debian 9 Stretch | Redo author [resurfaces](https://sourceforge.net/p/redobackup/discussion/general/thread/d0e37c4750/) after 7.5 year absence
 | Rescuezilla 1.0.5.1 | 2020-03-24 | Ubuntu 18.04.4   |
-| Rescuezilla 1.0.5   | 2019-11-08 | Ubuntu 18.04.3   | Project systematically [revived](https://sourceforge.net/p/redobackup/discussion/general/thread/116063b485/?limit=25#610c) by new developer
-| Unofficial updates  | Various    | Various          | Pre-Rescuezilla [updates](https://github.com/rescuezilla/rescuezilla/wiki/Bugs-in-unofficial-Redo-Backup-updates#identifying-redo-backup-versions)
-| Redo Backup 1.0.4   | 2012-11-20 | Ubuntu 12.04.1   | Last release by original author for 7.5 years
-| Redo Backup 0.9.8   | 2011-03-10 | Ubuntu 10.10     | Original author [deleted](https://sourceforge.net/p/redobackup/discussion/help/thread/4ea6ca31/) v0.9.2-v0.9.7
+| Rescuezilla 1.0.5   | 2019-11-08 | Ubuntu 18.04.3   | Rescuezilla [fork](https://sourceforge.net/p/redobackup/discussion/general/thread/116063b485/?limit=25#610c) revives project
+| Community updates   | Various    | Various          | Sporadic community [updates](https://github.com/rescuezilla/rescuezilla/wiki/Bugs-in-unofficial-Redo-Backup-updates#identifying-redo-backup-versions) for Redo
+| Redo Backup 1.0.4   | 2012-11-20 | Ubuntu 12.04.1   | Last release by Redo author for 7.5 years
+| Redo Backup 0.9.8   | 2011-03-10 | Ubuntu 10.10     | Redo author [deleted](https://sourceforge.net/p/redobackup/discussion/help/thread/4ea6ca31/) v0.9.2-v0.9.7
 | Redo Backup 0.9.2   | 2010-06-24 | xPUD             |
 
 ## Reviews and testimonials
