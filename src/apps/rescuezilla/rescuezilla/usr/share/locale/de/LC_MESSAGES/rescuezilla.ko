@@ -520,6 +520,9 @@ msgstr "Die Spalte „Zielpartition“ wurde mit den Informationen der Sicherung
 msgid "You will <b>not</b> be overwriting the partition table."
 msgstr "Hiermit werden Sie die Partitionstabelle <b>nicht</b> überschreiben."
 
+msgid "The source does not contain a partition table."
+msgstr ""
+
 msgid "The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table."
 msgstr "Die Spalte „Zielpartition“ wurde mit den Daten der vorhandenen Partitionstabelle des Laufwerks aktualisiert.\n\n<b>Die Zielpartitionsspalte kann als Dropdown-Menü geändert werden. Eine falsche Zuordnung der Zielpartitionen kann dazu führen, dass sich das Betriebssystem nicht mehr starten lässt.</b> Wenn Sie sich bezüglich der Zuordnung unsicher sind, sollten Sie überlegen, stattdessen die Partitionstabelle zu überschreiben."
 

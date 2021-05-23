@@ -589,6 +589,9 @@ msgstr ""
 msgid "You will <b>not</b> be overwriting the partition table."
 msgstr "<b>No</b> se va a sobreescribir la tabla de partición."
 
+msgid "The source does not contain a partition table."
+msgstr ""
+
 msgid "The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table."
 msgstr "Se ha actualizado la columna de \"partición de destino\" con la información de la tabla de partición existente en la unidad de destino.\n\n<b>La columna de partición de destino se puede modificar como un menú desplegable. Un mapeo incorrecto de las particiones de destino puede provocar que los sistemas operativos dejen de arrancar.</b> Si no estás seguro del mapeo, piensa si es más adecuado sobreescribir la tabla de partición en lugar de ello."
 

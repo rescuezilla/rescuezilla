@@ -50,6 +50,7 @@ class PartitionsToRestore:
 
         self.overwriting_partition_table_message = "<b>" + _("You will be overwriting the partition table.") + "</b>"
         self.not_overwriting_partition_table_message = _("You will <b>not</b> be overwriting the partition table.")
+        self.no_partition_table_message = _("The source does not contain a partition table.")
 
         self.lvm_lv_path_list = []
         self.lvm_lv_path_lock = threading.Lock()
@@ -79,7 +80,10 @@ class PartitionsToRestore:
                 self.overwrite_partition_table_warning_label_dict[mode].set_markup(overwrite_partition_table_warning_text)
             self._use_image_partition_table()
         else:
-            target_node_warning_text = self.not_overwriting_partition_table_message + " " + _("The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table.")
+            pt_warning = self.not_overwriting_partition_table_message
+            if not self.selected_image.has_partition_table():
+                pt_warning = self.no_partition_table_message
+            target_node_warning_text = pt_warning + " " + _("The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table.")
             for mode in self.mode_list:
                 self.overwrite_partition_table_warning_label_dict[mode].set_markup(target_node_warning_text)
             self._use_existing_drive_partition_table()
@@ -359,6 +363,7 @@ class PartitionsToRestore:
 
         # Populate combobox (right-hand side column)
         num_combo_box_entries = 0
+        is_destination_partition_target_drive = False
         if 'partitions' in self.dest_drive_dict.keys() and len(self.dest_drive_dict['partitions'].keys()) > 0:
             # Loop over the partitions in in the destination drive
             for dest_partition_key in self.dest_drive_dict['partitions'].keys():
@@ -366,13 +371,18 @@ class PartitionsToRestore:
                     # Do not add a destination combobox entry for any Extended Boot Record (EBR) destination partition
                     # nodes to reduce risk of user confusion.
                     continue
-
+                if dest_partition_key == self.dest_drive_node:
+                    is_destination_partition_target_drive = True
                 flattened_part_description = dest_partition_key + ": " + CombinedDriveState.flatten_part(
                     self.dest_drive_dict['partitions'][dest_partition_key])
                 self.destination_partition_combobox_list.append([dest_partition_key, flattened_part_description])
                 num_combo_box_entries += 1
 
-        if num_combo_box_entries == 0 or not self.selected_image.has_partition_table():
+        # If there is no partitions on the destination disk, provide the option to remap the partitions to the whole
+        # destination disk. If the source image doesn't have a partition table, also want to be able to remap partitons
+        # to the destination disk. Finally, if the destination disk already has a filesystem directly on disk then
+        # that would have already been handled above and there's no need to add a new entry to the combobox.
+        if (num_combo_box_entries == 0 or not self.selected_image.has_partition_table()) and not is_destination_partition_target_drive:
             flattened_disk_description = self.dest_drive_node + ": " + CombinedDriveState.flatten_drive(self.dest_drive_dict)
             # If there are no partitions in the destination drive, we place the entire drive as the destination
             self.destination_partition_combobox_list.append([self.dest_drive_node, "WHOLE DRIVE " + flattened_disk_description])
