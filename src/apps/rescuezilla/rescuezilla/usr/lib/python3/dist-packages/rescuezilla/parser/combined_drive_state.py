@@ -249,6 +249,15 @@ class CombinedDriveState:
                 flat_string += type
         return flat_string
 
+    @staticmethod
+    def flatten_drive(drive_dict):
+        flat_string = ""
+        if 'capacity' in drive_dict.keys():
+            size_in_bytes = drive_dict['capacity']
+            enduser_readable_size = Utility.human_readable_filesize(int(size_in_bytes))
+            flat_string += enduser_readable_size
+        return flat_string
+
     # Important in calculating the hidden data after MBR in most accurate way possible.
     @staticmethod
     def get_first_partition(partition_list):

@@ -414,6 +414,19 @@ class Utility:
                 joined = base_device_node
         return joined
 
+    @staticmethod
+    def is_base_device_node(device_node):
+        try:
+            base_device_node, partition_number = Utility.split_device_string(device_node)
+        except Exception:
+            print("Could not split " + device_node)
+            return False
+
+        if partition_number == 0:
+            return True
+        else:
+            return False
+
     # FIXME: Make better
     @staticmethod
     def get_env_C_locale():
