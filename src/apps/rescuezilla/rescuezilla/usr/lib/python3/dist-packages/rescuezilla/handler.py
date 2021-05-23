@@ -1245,6 +1245,7 @@ class Handler:
     def confirm_restore_configuration(self):
         # number = GObject.markup_escape_text(self.selected_drive_enduser_friendly_drive_number)
 
+        is_overwriting_base_destination = False
         print("Partitions to restore is " + str(self.partitions_to_restore))
         source_image_absolute_path = self.selected_image_absolute_path
         destination_drive_description = self.restore_destination_drive_desc
@@ -1252,12 +1253,14 @@ class Handler:
         for key in self.partitions_to_restore.keys():
             image_part_description = GObject.markup_escape_text(self.partitions_to_restore[key]["description"])
             dest_key = GObject.markup_escape_text(self.partitions_to_restore[key]["dest_key"])
+            if Utility.is_base_device_node(dest_key):
+                is_overwriting_base_destination = True
             dest_description = GObject.markup_escape_text(self.partitions_to_restore[key]["dest_description"])
             restore_partition_list_string += "    " + GObject.markup_escape_text(
                 key) + " (" + image_part_description + ")  ---->  " + dest_key + " (" + dest_description + ")\n"
         restore_partition_list_string += "\n"
 
-        if self.is_overwriting_partition_table:
+        if self.is_overwriting_partition_table or is_overwriting_base_destination:
             overwriting_partition_table_string = "<b>" + _("WILL BE OVERWRITING PARTITION TABLE") + "</b>"
         else:
             overwriting_partition_table_string = _("Will <b>NOT</b> be overwriting partition table")
@@ -1279,18 +1282,21 @@ class Handler:
 
     def confirm_clone_configuration(self):
         print("Partitions to clone is " + str(self.partitions_to_clone))
+        is_overwriting_base_destination = False
         source_image_absolute_path = self.source_drive_metadata_only_image.absolute_path
         destination_drive_description = self.clone_destination_drive_desc
         clone_partition_list_string = ""
         for key in self.partitions_to_clone.keys():
             image_part_description = GObject.markup_escape_text(self.partitions_to_clone[key]["description"])
             dest_key = GObject.markup_escape_text(self.partitions_to_clone[key]["dest_key"])
+            if Utility.is_base_device_node(dest_key):
+                is_overwriting_base_destination = True
             dest_description = GObject.markup_escape_text(self.partitions_to_clone[key]["dest_description"])
             clone_partition_list_string += "    " + GObject.markup_escape_text(
                 key) + " (" + image_part_description + ")  ---->  " + dest_key + " (" + dest_description + ")\n"
         clone_partition_list_string += "\n"
 
-        if self.is_overwriting_partition_table:
+        if self.is_overwriting_partition_table or is_overwriting_base_destination:
             overwriting_partition_table_string = "<b>" + _("WILL BE OVERWRITING PARTITION TABLE") + "</b>"
         else:
             overwriting_partition_table_string = _("Will <b>NOT</b> be overwriting partition table")
