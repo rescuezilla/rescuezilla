@@ -8024,7 +8024,6 @@ To use the "imaging" wizards, click &lt;b&gt;Back&lt;/b&gt; and select &lt;b&gt;
                                                 <property name="label" translatable="yes">Select the partition to access files from.</property>
                                                 <property name="use_markup">True</property>
                                                 <property name="wrap">True</property>
-                                                <property name="selectable">True</property>
                                                 <property name="yalign">1</property>
                                               </object>
                                               <packing>
@@ -8041,7 +8040,6 @@ To use the "imaging" wizards, click &lt;b&gt;Back&lt;/b&gt; and select &lt;b&gt;
                                                 <property name="use_markup">True</property>
                                                 <property name="justify">center</property>
                                                 <property name="wrap">True</property>
-                                                <property name="selectable">True</property>
                                               </object>
                                               <packing>
                                                 <property name="expand">False</property>
@@ -8131,7 +8129,6 @@ To use the "imaging" wizards, click &lt;b&gt;Back&lt;/b&gt; and select &lt;b&gt;
 Did you know: Image Explorer (beta) now works with virtual hard drives created by VirtualBox, VMWare and Qemu? Try it out! :-)</property>
                                                             <property name="use_markup">True</property>
                                                             <property name="wrap">True</property>
-                                                            <property name="selectable">True</property>
                                                             <property name="yalign">1</property>
                                                           </object>
                                                           <packing>
@@ -8149,7 +8146,6 @@ Did you know: Image Explorer (beta) now works with virtual hard drives created b
                                                             <property name="use_markup">True</property>
                                                             <property name="justify">center</property>
                                                             <property name="wrap">True</property>
-                                                            <property name="selectable">True</property>
                                                             <property name="yalign">1</property>
                                                           </object>
                                                           <packing>
@@ -8210,7 +8206,6 @@ Did you know: Image Explorer (beta) now works with virtual hard drives created b
                                                             <property name="use_markup">True</property>
                                                             <property name="justify">center</property>
                                                             <property name="wrap">True</property>
-                                                            <property name="selectable">True</property>
                                                             <property name="yalign">1</property>
                                                           </object>
                                                           <packing>
