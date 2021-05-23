@@ -114,8 +114,13 @@ class Sfdisk:
             # of drive capacity.
             temp_tuple_list.append((key, sfdisk_partition_dict[key]['start'] * block_size + sfdisk_partition_dict[key]['size'] * block_size))
         temp_tuple_list.sort(key=lambda x: x[1], reverse=True)
-        print("highest " + str(temp_tuple_list))
-        return temp_tuple_list[0]
+        print("sorted offset list: " + str(temp_tuple_list))
+        if len(temp_tuple_list) == 0:
+            # Some image formats may not have any partitions (eg, Clonezilla saveparts when filesystem directly on disk)
+            # FIXME: Handle images without sfdisk partition tables better
+            return "NO_PARTITIONS", 0
+        else:
+            return temp_tuple_list[0]
 
     @staticmethod
     def generate_normalized_sfdisk_dict(sfdisk_absolute_path, image):

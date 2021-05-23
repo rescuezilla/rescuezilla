@@ -255,7 +255,12 @@ class CombinedDriveState:
         # TODO: Make more pythonic and more efficient
         temp_tuple_list = []
         for key in partition_list.keys():
-            temp_tuple_list.append((key, partition_list[key]['start']))
+            if 'start' in partition_list[key].keys():
+                temp_tuple_list.append((key, partition_list[key]['start']))
         temp_tuple_list.sort(key=lambda x: x[1])
         print("lowest " + str(temp_tuple_list))
-        return temp_tuple_list[0]
+        if len(temp_tuple_list) == 0:
+            # FIXME: Handle better
+            return "NO_PARTITIONS", 0
+        else:
+            return temp_tuple_list[0]
