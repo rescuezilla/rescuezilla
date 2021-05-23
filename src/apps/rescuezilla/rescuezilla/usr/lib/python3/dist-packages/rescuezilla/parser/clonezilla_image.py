@@ -30,6 +30,7 @@ import utility
 from parser.blkid import Blkid
 from parser.ecryptfs import Ecryptfs
 from parser.lvm import Lvm
+from parser.partclone import Partclone
 from parser.parted import Parted
 from parser.sfdisk import Sfdisk
 from parser.swappt import Swappt
@@ -313,6 +314,7 @@ class ClonezillaImage:
             # Non-EFI Clonezilla images don't have this file
             print("Unable to locate " + efi_nvram_dat_filepath)
 
+        self.partclone_info_dict_dict = collections.OrderedDict([])
         self.image_format_dict_dict = collections.OrderedDict([])
         # Loops over the partitions listed in the 'parts' file
         for short_partition_device_node in self.short_device_node_partition_list:
@@ -353,6 +355,15 @@ class ClonezillaImage:
             else:
                 has_found_atleast_one_associated_image = True
                 self.image_format_dict_dict[short_partition_device_node] = image_format_dict
+                if not self.has_partition_table() and image_format_dict['type'] == 'partclone':
+                    # Both Clonezilla's savedisk and saveparts will generally contain the partition table, except in
+                    # the case of saveparts made of the filesystem-directly-on-disk case. For this case (which could
+                    # be a dd image), scan using partclone.info. Scanning is slow, but due to lack of partition
+                    # table, it will only ever be a single filesystem.
+                    self.partclone_info_dict_dict[self.short_disk_device_node] = Partclone.get_partclone_info_dict(
+                        abs_partclone_image_list=self.image_format_dict_dict[short_partition_device_node]['absolute_filename_glob_list'],
+                        image_key=short_partition_device_node,
+                        compression=self.image_format_dict_dict[short_partition_device_node]['compression'])
 
             if not has_found_atleast_one_associated_image:
                 self.image_format_dict_dict[short_partition_device_node] = {'type': "missing",
@@ -600,6 +611,11 @@ class ClonezillaImage:
     # number of bytes used by the image files. Does NOT use partclone.info, which too slow to run on every image.
     def _compute_partition_size_byte_estimate(self, short_disk_key, partition_short_device_node):
         estimated_size = 0
+
+        if not self.has_partition_table():
+            if short_disk_key in self.partclone_info_dict_dict.keys() and 'size' in self.partclone_info_dict_dict[
+                short_disk_key].keys():
+                estimated_size = self.partclone_info_dict_dict[short_disk_key]['size']['bytes']
 
         is_lvm_logical_volume = 'is_lvm_logical_volume' in self.image_format_dict_dict[partition_short_device_node].keys() and \
                 self.image_format_dict_dict[partition_short_device_node]['is_lvm_logical_volume']
