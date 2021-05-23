@@ -604,6 +604,9 @@ msgstr ""
 msgid "You will <b>not</b> be overwriting the partition table."
 msgstr "<b>Δεν</b> θα αντικαταστήσετε τον πίνακα διαμερισμάτων."
 
+msgid "The source does not contain a partition table."
+msgstr ""
+
 msgid "The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table."
 msgstr "Η στήλη \"διαμέρισμα προορισμού\" έχει ενημερωθεί με τις υπάρχουσες πληροφορίες πίνακα διαμερισμάτων της μονάδας δίσκου προορισμού.\n\n<b>Η στήλη διαμερίσματος προορισμού μπορεί να τροποποιηθεί ως αναπτυσσόμενο μενού. Η εσφαλμένη αντιστοίχιση των διαμερισμάτων προορισμού ενδέχεται να προκαλέσει τη μη εκκίνηση.</b> Εάν δεν είστε βέβαιοι για την αντιστοίχιση, εξετάστε εάν είναι πιο κατάλληλο να αντικαταστήσετε τον πίνακα διαμερισμάτων."
 

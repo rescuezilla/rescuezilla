@@ -576,6 +576,9 @@ msgstr ""
 msgid "You will <b>not</b> be overwriting the partition table."
 msgstr "Du vil <b>ikke</b> overskrive partisjonstabellen."
 
+msgid "The source does not contain a partition table."
+msgstr ""
+
 msgid "The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table."
 msgstr ""
 

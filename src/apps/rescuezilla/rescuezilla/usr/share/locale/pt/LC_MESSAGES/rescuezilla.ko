@@ -539,6 +539,9 @@ msgstr "A Coluna \"partição de destino\" foi atualizada utilizando informaçõ
 msgid "You will <b>not</b> be overwriting the partition table."
 msgstr "Você <b>não</b> substituirá a tabela de partição."
 
+msgid "The source does not contain a partition table."
+msgstr ""
+
 msgid "The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table."
 msgstr "A Coluna \"partição de destino\" foi atualizada com as informações de tabelas da partição do drive de destino.\n\n<b>A coluna de partição de destino pode ser modificada como um menu drop-down. Mapeamente incorreto das partições de destino, pode fazer o sistema não relizar mais boot do SO.</b> Se você não tiver certeza do mapeamento, considere se seria mais adequado substituir a tabela de partição."
 
