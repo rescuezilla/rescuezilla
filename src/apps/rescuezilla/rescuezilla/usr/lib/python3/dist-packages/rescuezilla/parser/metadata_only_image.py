@@ -73,11 +73,10 @@ class MetadataOnlyImage:
         self.last_modified_timestamp = format_datetime(datetime.fromtimestamp(statbuf.st_mtime))
         print("Last modified timestamp " + self.last_modified_timestamp)
 
-        self.normalized_sfdisk_dict = {'absolute_path': None, 'sfdisk_dict': {'partitions': {}}, 'file_length': 0}
         process, flat_command_string, failed_message = Utility.run("Get partition table", ["sfdisk", "--dump", partition_long_device_node], use_c_locale=True)
         if process.returncode != 0:
-            self.warning_dict[flat_command_string] = "Could not extract partition table: " + process.stderr
-            return
+            # Expect devices without a partition table to not be able to extract partition table
+            print("Could not extract filesystem using sfdisk: " + process.stderr)
         else:
             sfdisk_string = process.stdout
             f = tempfile.NamedTemporaryFile(mode='w', delete=False)
@@ -87,14 +86,16 @@ class MetadataOnlyImage:
         if 'device' in self.normalized_sfdisk_dict['sfdisk_dict'].keys():
             self.short_device_node_disk_list = [self.normalized_sfdisk_dict['sfdisk_dict']['device']]
 
+        # Get the parted partition table. For convenience, using the bytes unit, not sectors.
         parted_process, flat_command_string, failed_message = Utility.run("Get filesystem information",
-                                                          ["parted", "--script", partition_long_device_node, "unit", "s",
+                                                          ["parted", "--script", partition_long_device_node, "unit", "b",
                                                            "print"], use_c_locale=True)
-        if process.returncode != 0:
-            self.warning_dict[flat_command_string] = "Could not extract filesystem: " + process.stderr
-            return
-        else:
-            self.parted_dict = Parted.parse_parted_output(parted_process.stdout)
+        if parted_process.returncode != 0:
+            # Expect devices without a partition table to not be able to extract partition table
+            print("Could not extract filesystem using parted: " + parted_process.stderr)
+        self.parted_dict = Parted.parse_parted_output(parted_process.stdout)
+        if len(self.short_device_node_disk_list) == 0 and 'long_dev_node' in self.parted_dict.keys():
+            self.short_device_node_disk_list = [self.parted_dict['long_dev_node']]
 
         pp = pprint.PrettyPrinter(indent=4)
         pp.pprint(self.parted_dict)
@@ -135,7 +136,8 @@ class MetadataOnlyImage:
         total_size_estimate = 0
         drive_state_partitions_dict = self.drive_state[self.long_device_node]['partitions']
         for partition_long_device_node in drive_state_partitions_dict:
-            if drive_state_partitions_dict[partition_long_device_node]['type'] == "extended":
+            if 'type' in drive_state_partitions_dict[partition_long_device_node].keys() \
+                    and drive_state_partitions_dict[partition_long_device_node]['type'] == "extended":
                 # Skip extended partitions as they will be handled by the '-ebr' file
                 continue
             self.image_format_dict_dict[partition_long_device_node] = {'type': "raw",
@@ -146,6 +148,8 @@ class MetadataOnlyImage:
         # Estimate the disk size from sfdisk partition table backup
         last_partition_key, last_partition_final_byte = Sfdisk.get_highest_offset_partition(self.normalized_sfdisk_dict)
         self.size_bytes = last_partition_final_byte
+        if self.size_bytes == 0:
+            self.size_bytes = self.parted_dict['capacity']
         # Covert size in bytes to KB/MB/GB/TB as relevant
         self.enduser_readable_size = Utility.human_readable_filesize(int(self.size_bytes))
 
@@ -172,8 +176,12 @@ class MetadataOnlyImage:
         return True
 
     def has_partition_table(self):
-        # Temp
-        return True
+        # Clonezilla images use presence of MBR file, here the partition table is considered present if there is
+        # partitions in the image's sfdisk backup
+        if len(self.normalized_sfdisk_dict['sfdisk_dict']['partitions']) > 0:
+            return True
+        else:
+            return False
 
     def get_absolute_mbr_path(self):
         return None
@@ -188,7 +196,10 @@ class MetadataOnlyImage:
         return flat_string
 
     def _compute_partition_size_byte_estimate(self, long_device_node):
-        return self.normalized_sfdisk_dict['sfdisk_dict']['partitions'][long_device_node]['size'] * 512
+        if long_device_node in self.normalized_sfdisk_dict['sfdisk_dict']['partitions'].keys():
+            return self.normalized_sfdisk_dict['sfdisk_dict']['partitions'][long_device_node]['size'] * 512
+        else:
+            return self.size_bytes
 
     def _get_human_readable_filesystem(self, long_device_node):
         # Prefer estimated size from parted partition table backup, but this requires splitting the device node

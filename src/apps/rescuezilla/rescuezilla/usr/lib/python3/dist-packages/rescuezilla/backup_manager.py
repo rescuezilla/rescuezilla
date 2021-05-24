@@ -339,10 +339,10 @@ class BackupManager:
         # Parted drive information with human-readable "compact" units: KB/MB/GB rather than sectors.
         process, flat_command_string, failed_message = Utility.run("Saving " + compact_parted_filepath, ["parted", "--script", self.selected_drive_key, "unit", "compact", "print"], use_c_locale=True, output_filepath=compact_parted_filepath, logger=self.logger)
         if process.returncode != 0:
-            with self.summary_message_lock:
-                self.summary_message += failed_message
-            GLib.idle_add(self.completed_backup, False, failed_message)
-            return False, failed_message
+            # Human-readable compact units is not that important.
+            print(failed_message)
+            if not self.is_cloning:
+                GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, failed_message)
 
         # Parted drive information with standard sector units. Clonezilla doesn't output easily parsable output using
         # the --machine flag, so for maximum Clonezilla compatibility neither does Rescuezilla.
@@ -352,10 +352,14 @@ class BackupManager:
                                                           ["parted", "--script", self.selected_drive_key, "unit", "s",
                                                            "print"], use_c_locale=True, output_filepath=parted_filepath, logger=self.logger)
         if process.returncode != 0:
-            with self.summary_message_lock:
-                self.summary_message += failed_message
-            GLib.idle_add(self.completed_backup, False, failed_message)
-            return False, failed_message
+            print(failed_message)
+            # Clonezilla doesn't consider non-zero parted return code as fatal. Indeed, RAID md devices without a
+            # partition table returns an error using parted but Clonezilla is happy to continue. Rescuezilla does the
+            # same (but displays the error to the user). For cloning, the not displaying any error message is fine.
+            if not self.is_cloning:
+               with self.summary_message_lock:
+                    self.summary_message += failed_message
+               GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, failed_message)
 
         if os.path.isdir("/sys/firmware/efi/efivars"):
             # Save EFI NVRAM info. What we need is actually the label
@@ -504,10 +508,12 @@ class BackupManager:
             GLib.idle_add(self.display_status, _("Saving: {file}").format(file=sfdisk_filepath), "")
             process, flat_command_string, failed_message = Utility.run("Saving " + sfdisk_filepath, ["sfdisk", "--dump", self.selected_drive_key], output_filepath=sfdisk_filepath, use_c_locale=True, logger=self.logger)
             if process.returncode != 0:
-                with self.summary_message_lock:
-                    self.summary_message += failed_message
-                GLib.idle_add(self.completed_backup, False, failed_message)
-                return False, failed_message
+                print(failed_message)
+                if not self.is_cloning:
+                    with self.summary_message_lock:
+                        self.summary_message += failed_message
+                    # Matches Clonezilla by not considering sfdisk failure as fatal.
+                    GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, failed_message)
 
         filepath = os.path.join(self.dest_dir, short_selected_device_node + "-chs.sf")
         GLib.idle_add(self.display_status, _("Saving: {file}").format(file=filepath), "")
