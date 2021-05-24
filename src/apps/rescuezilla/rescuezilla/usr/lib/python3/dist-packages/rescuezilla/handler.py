@@ -1345,7 +1345,7 @@ class Handler:
         if not self.image_explorer_manager.get_mounted_state() and not compression == "uncompressed":
             AreYouSureModalPopup(self.builder,
                              _(
-                                 "Reminder: Mounting large gzipped-compressed images WILL be UNUSABLY slow.\n\ngzip is the default compression format used by Clonezilla and Rescuezilla. If Rescuezilla doesn't cleanly unmount the image being explored a reboot may be required.\n\nIf you want a good experience with this BETA feature, it is highly recommeded you try an image WITHOUT COMPRESSION (created by Clonezilla's Expert Mode).\n\nAre you sure you want to continue?"),
+                                 "Reminder: Mounting large gzipped-compressed images WILL be UNUSABLY slow.\n\ngzip is the default compression format used by Clonezilla and Rescuezilla. If Rescuezilla doesn't cleanly unmount the image being explored a reboot may be required.\n\nIf you want the best experience with very large images with this BETA feature, it is highly recommeded you make an image WITHOUT COMPRESSION.\n\nAre you sure you want to continue?"),
                              self._mount_partition_confirmation_callback)
         else:
             # Unmounting doesn't need an AreYouSure popup.
