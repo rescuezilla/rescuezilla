@@ -124,6 +124,17 @@ class Handler:
         # No need to translate "SSH" strings (unless the description string is expanded upon)
         self.network_share_protocol_list.append(["SSH", "SSH"])
         self.network_share_protocol_list.append(["NFS", "NFS"])
+
+        # Descriptions adapted from: https://manpages.ubuntu.com/manpages/focal/man8/mount.cifs.8.html
+        self.network_share_protocol_version_list = self.builder.get_object("network_share_protocol_version_list")
+        self.network_share_protocol_version_list.append(["default", _("default") + " " + _("(Negotiate highest SMB2+ supported by client and server)")])
+        self.network_share_protocol_version_list.append(["1.0",     _("1.0 (The classic CIFS/SMBv1 protocol)")])
+        self.network_share_protocol_version_list.append(["2.0",     _("2.0 (Introduced in Vista SP1,  Windows Server 2008)")])
+        self.network_share_protocol_version_list.append(["2.1",     _("2.1 (Introduced in Windows 7,   Windows Server 2008R2)")])
+        self.network_share_protocol_version_list.append(["3",       _("3 (The SMBv3.0 protocol version and above)")])
+        self.network_share_protocol_version_list.append(["3.0",     _("3.0 (Introduced in Windows 8,  Windows Server 2012)")])
+        self.network_share_protocol_version_list.append(["3.0.2",   _("3.0.2 (Introduced in Windows 8.1, Windows Server 2012R2)")])
+        self.network_share_protocol_version_list.append(["3.1.1",   _("3.1.1 (Introduced in Windows 10, Windows Server 2016)")])
         # Manage all network protocol UI widgets
         self.network_protocol_widget_dict = {
             'network_protocol_combobox': {},
@@ -141,7 +152,7 @@ class Handler:
             'network_domain_label': {},
             'network_domain': {},
             'network_version_label': {},
-            'network_version': {},
+            'network_version_combobox': {},
             'network_ssh_idfile': {},
             'network_ssh_idfile_box': {},
             'network_ssh_idfile_label': {},
@@ -153,6 +164,8 @@ class Handler:
                 if object is None:
                     raise ValueError("Could not find: " + id)
                 self.network_protocol_widget_dict[prefix][mode] = object
+            # Initialize the network version dropdown menu
+            self.network_protocol_widget_dict['network_version_combobox'][mode].set_active(0)
 
         self.mount_partition_selection_treeselection_id_dict = {
             Mode.BACKUP: "backup_mount_partition_selection_treeselection",
@@ -1004,7 +1017,7 @@ class Handler:
                 self.network_protocol_widget_dict['network_domain'][mode].set_visible(True)
                 self.network_protocol_widget_dict['network_version_label'][mode].set_visible(True)
                 self.network_protocol_widget_dict['network_version_label'][mode].set_text(_("Version"))
-                self.network_protocol_widget_dict['network_version'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_version_combobox'][mode].set_visible(True)
                 self.network_protocol_widget_dict['network_ssh_idfile_label'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_ssh_idfile_box'][mode].set_visible(False)
         elif network_protocol_key == "SSH":
@@ -1024,7 +1037,7 @@ class Handler:
                 self.network_protocol_widget_dict['network_domain_label'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_domain'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_version_label'][mode].set_visible(False)
-                self.network_protocol_widget_dict['network_version'][mode].set_visible(False)
+                self.network_protocol_widget_dict['network_version_combobox'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_ssh_idfile_label'][mode].set_visible(True)
                 self.network_protocol_widget_dict['network_ssh_idfile_label'][mode].set_text(_("Identity File"))
                 self.network_protocol_widget_dict['network_ssh_idfile_box'][mode].set_visible(True)
@@ -1043,7 +1056,7 @@ class Handler:
                 self.network_protocol_widget_dict['network_domain_label'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_domain'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_version_label'][mode].set_visible(False)
-                self.network_protocol_widget_dict['network_version'][mode].set_visible(False)
+                self.network_protocol_widget_dict['network_version_combobox'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_ssh_idfile_label'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_ssh_idfile_box'][mode].set_visible(False)
 

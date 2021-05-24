@@ -140,6 +140,14 @@
       <column type="gchararray"/>
     </columns>
   </object>
+  <object class="GtkListStore" id="network_share_protocol_version_list">
+    <columns>
+      <!-- column-name smb_cifs_version_key -->
+      <column type="gchararray"/>
+      <!-- column-name enduser_friendly_smb_cifs_version_description -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
   <object class="GtkImage" id="padlock_icon">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -1296,19 +1304,6 @@
                                                             </packing>
                                                             </child>
                                                             <child>
-                                                            <object class="GtkEntry" id="backup_network_version">
-                                                            <property name="visible">True</property>
-                                                            <property name="can_focus">True</property>
-                                                            <property name="invisible_char">●</property>
-                                                            </object>
-                                                            <packing>
-                                                            <property name="left_attach">1</property>
-                                                            <property name="right_attach">2</property>
-                                                            <property name="top_attach">5</property>
-                                                            <property name="bottom_attach">6</property>
-                                                            </packing>
-                                                            </child>
-                                                            <child>
                                                             <object class="GtkLabel" id="backup_network_domain_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
@@ -1402,6 +1397,25 @@
                                                             <property name="right_attach">2</property>
                                                             <property name="top_attach">3</property>
                                                             <property name="bottom_attach">4</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkComboBox" id="backup_network_version_combobox">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">False</property>
+                                                            <property name="model">network_share_protocol_version_list</property>
+                                                            <child>
+                                                            <object class="GtkCellRendererText" id="backup_network_cellrenderertext5"/>
+                                                            <attributes>
+                                                            <attribute name="text">1</attribute>
+                                                            </attributes>
+                                                            </child>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="left_attach">1</property>
+                                                            <property name="right_attach">2</property>
+                                                            <property name="top_attach">5</property>
+                                                            <property name="bottom_attach">6</property>
                                                             </packing>
                                                             </child>
                                                             </object>
@@ -3060,19 +3074,6 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             </packing>
                                                             </child>
                                                             <child>
-                                                            <object class="GtkEntry" id="restore_network_version">
-                                                            <property name="visible">True</property>
-                                                            <property name="can_focus">True</property>
-                                                            <property name="invisible_char">●</property>
-                                                            </object>
-                                                            <packing>
-                                                            <property name="left_attach">1</property>
-                                                            <property name="right_attach">2</property>
-                                                            <property name="top_attach">5</property>
-                                                            <property name="bottom_attach">6</property>
-                                                            </packing>
-                                                            </child>
-                                                            <child>
                                                             <object class="GtkLabel" id="restore_network_domain_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
@@ -3179,6 +3180,25 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <property name="right_attach">2</property>
                                                             <property name="top_attach">3</property>
                                                             <property name="bottom_attach">4</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkComboBox" id="restore_network_version_combobox">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">False</property>
+                                                            <property name="model">network_share_protocol_version_list</property>
+                                                            <child>
+                                                            <object class="GtkCellRendererText" id="backup_network_cellrenderertext6"/>
+                                                            <attributes>
+                                                            <attribute name="text">1</attribute>
+                                                            </attributes>
+                                                            </child>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="left_attach">1</property>
+                                                            <property name="right_attach">2</property>
+                                                            <property name="top_attach">5</property>
+                                                            <property name="bottom_attach">6</property>
                                                             </packing>
                                                             </child>
                                                             </object>
@@ -4961,19 +4981,6 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             </packing>
                                                             </child>
                                                             <child>
-                                                            <object class="GtkEntry" id="verify_network_version">
-                                                            <property name="visible">True</property>
-                                                            <property name="can_focus">True</property>
-                                                            <property name="invisible_char">●</property>
-                                                            </object>
-                                                            <packing>
-                                                            <property name="left_attach">1</property>
-                                                            <property name="right_attach">2</property>
-                                                            <property name="top_attach">5</property>
-                                                            <property name="bottom_attach">6</property>
-                                                            </packing>
-                                                            </child>
-                                                            <child>
                                                             <object class="GtkEntry" id="verify_network_domain">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">True</property>
@@ -5053,6 +5060,25 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <property name="right_attach">2</property>
                                                             <property name="top_attach">3</property>
                                                             <property name="bottom_attach">4</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkComboBox" id="verify_network_version_combobox">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">False</property>
+                                                            <property name="model">network_share_protocol_version_list</property>
+                                                            <child>
+                                                            <object class="GtkCellRendererText" id="backup_network_cellrenderertext9"/>
+                                                            <attributes>
+                                                            <attribute name="text">1</attribute>
+                                                            </attributes>
+                                                            </child>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="left_attach">1</property>
+                                                            <property name="right_attach">2</property>
+                                                            <property name="top_attach">5</property>
+                                                            <property name="bottom_attach">6</property>
                                                             </packing>
                                                             </child>
                                                             </object>
@@ -7504,19 +7530,6 @@ To use the "imaging" wizards, click &lt;b&gt;Back&lt;/b&gt; and select &lt;b&gt;
                                                             </packing>
                                                             </child>
                                                             <child>
-                                                            <object class="GtkEntry" id="image_explorer_network_version">
-                                                            <property name="visible">True</property>
-                                                            <property name="can_focus">True</property>
-                                                            <property name="invisible_char">●</property>
-                                                            </object>
-                                                            <packing>
-                                                            <property name="left_attach">1</property>
-                                                            <property name="right_attach">2</property>
-                                                            <property name="top_attach">5</property>
-                                                            <property name="bottom_attach">6</property>
-                                                            </packing>
-                                                            </child>
-                                                            <child>
                                                             <object class="GtkLabel" id="image_explorer_network_domain_label">
                                                             <property name="visible">True</property>
                                                             <property name="can_focus">False</property>
@@ -7610,6 +7623,25 @@ To use the "imaging" wizards, click &lt;b&gt;Back&lt;/b&gt; and select &lt;b&gt;
                                                             <property name="right_attach">2</property>
                                                             <property name="top_attach">3</property>
                                                             <property name="bottom_attach">4</property>
+                                                            </packing>
+                                                            </child>
+                                                            <child>
+                                                            <object class="GtkComboBox" id="image_explorer_network_version_combobox">
+                                                            <property name="visible">True</property>
+                                                            <property name="can_focus">False</property>
+                                                            <property name="model">network_share_protocol_version_list</property>
+                                                            <child>
+                                                            <object class="GtkCellRendererText" id="backup_network_cellrenderertext8"/>
+                                                            <attributes>
+                                                            <attribute name="text">1</attribute>
+                                                            </attributes>
+                                                            </child>
+                                                            </object>
+                                                            <packing>
+                                                            <property name="left_attach">1</property>
+                                                            <property name="right_attach">2</property>
+                                                            <property name="top_attach">5</property>
+                                                            <property name="bottom_attach">6</property>
                                                             </packing>
                                                             </child>
                                                             </object>
