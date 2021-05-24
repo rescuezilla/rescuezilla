@@ -146,6 +146,24 @@ class CombinedDriveStateTest(unittest.TestCase):
             }
          ]
       },
+      {"kname":"/dev/sdm", "name":"/dev/sdm", "size":1073741824, "type":"disk", "fstype":null, "mountpoint":null, "model":"VBOX_HARDDISK",
+         "children": [
+            {"kname":"/dev/sdm1", "name":"/dev/sdm1", "size":1072693248, "type":"part", "fstype":"linux_raid_member", "mountpoint":null, "model":null,
+               "children": [
+                  {"kname":"/dev/md0", "name":"/dev/md0", "size":1071644672, "type":"raid1", "fstype":"ext4", "mountpoint":null, "model":null}
+               ]
+            }
+         ]
+      },
+      {"kname":"/dev/sdn", "name":"/dev/sdn", "size":1073741824, "type":"disk", "fstype":null, "mountpoint":null, "model":"VBOX_HARDDISK",
+         "children": [
+            {"kname":"/dev/sdn1", "name":"/dev/sdn1", "size":1072693248, "type":"part", "fstype":"linux_raid_member", "mountpoint":null, "model":null,
+               "children": [
+                  {"kname":"/dev/md0", "name":"/dev/md0", "size":1071644672, "type":"raid1", "fstype":"ext4", "mountpoint":null, "model":null}
+               ]
+            }
+         ]
+      },      
       {"kname":"/dev/sr0", "name":"/dev/sr0", "size":805623808, "type":"rom", "fstype":"iso9660", "mountpoint":"/cdrom", "model":"VBOX_CD-ROM"}
    ]
 }"""
@@ -207,7 +225,10 @@ class CombinedDriveStateTest(unittest.TestCase):
 /dev/mapper/vgtest2-lvtest2: UUID="588E895406ECC468" TYPE="ntfs" PTTYPE="dos"
 /dev/sdf15: PARTUUID="43c18652-0f"
 /dev/sdf16: PARTUUID="43c18652-10"
-/dev/sdj3: PARTLABEL="Microsoft reserved partition" PARTUUID="229ef65d-3315-4824-945e-9719feda2f42" """
+/dev/sdj3: PARTLABEL="Microsoft reserved partition" PARTUUID="229ef65d-3315-4824-945e-9719feda2f42"
+/dev/sdm1: UUID="75515f3b-95ea-ef00-e327-c48e2784e416" UUID_SUB="52b46420-82ff-7e66-ff87-4195a846f804" LABEL="ubuntu:0" TYPE="linux_raid_member" PARTUUID="e02572d4-01"
+/dev/sdn1: UUID="75515f3b-95ea-ef00-e327-c48e2784e416" UUID_SUB="5a61afd1-e3eb-d319-f6ca-a0135c0889de" LABEL="ubuntu:0" TYPE="linux_raid_member" PARTUUID="1e066523-01"
+/dev/md0: UUID="42ba6b53-6752-4ca7-b5a7-95a5e766ce97" BLOCK_SIZE="4096" TYPE="ext4" """
         blkid_dict = Blkid.parse_blkid_output(input_blkid_string)
 
         os_prober_contents = """/dev/sdc2@/efi/Microsoft/Boot/bootmgfw.efi:Windows Boot Manager:Windows:efi
@@ -262,6 +283,48 @@ Number  Start        End          Size         Type      File system  Flags
  2      2103443456B  2147483647B  44040192B    primary   ext4"""
         parted_dict_dict['/dev/sdd'] = Parted.parse_parted_output(input_parted_mbr_string)
 
+        input_parted_sdm_string = """Model: ATA VBOX HARDDISK (scsi)
+Disk /dev/sdm: 1073741824B
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start     End          Size         Type     File system  Flags
+ 1      1048576B  1073741823B  1072693248B  primary               raid
+
+"""
+        parted_dict_dict['/dev/sdm'] = Parted.parse_parted_output(input_parted_sdm_string)
+
+        input_parted_sdn_string = """
+Model: ATA VBOX HARDDISK (scsi)
+Disk /dev/sdn: 1073741824B
+Sector size (logical/physical): 512B/512B
+Partition Table: msdos
+Disk Flags:
+
+Number  Start     End          Size         Type     File system  Flags
+ 1      1048576B  1073741823B  1072693248B  primary               raid
+
+"""
+        parted_dict_dict['/dev/sdn'] = Parted.parse_parted_output(input_parted_sdn_string)
+
+        input_sfdisk_sdm_string = """label: dos
+label-id: 0xe02572d4
+device: /dev/sdm
+unit: sectors
+sector-size: 512
+
+/dev/sdm1 : start=        2048, size=     2095104, type=fd"""
+        sfdict_dict_dict['/dev/sdm'] = Sfdisk.parse_sfdisk_dump_output(input_sfdisk_sdm_string)
+
+        input_sfdisk_sdn_string = """label: dos
+label-id: 0x1e066523
+device: /dev/sdn
+unit: sectors
+sector-size: 512
+
+/dev/sdn1 : start=        2048, size=     2095104, type=fd"""
+        sfdict_dict_dict['/dev/sdn'] = Sfdisk.parse_sfdisk_dump_output(input_sfdisk_sdn_string)
 
         input_sfdisk_mbr_string = """label: dos
 label-id: 0x1dbd2bfc
