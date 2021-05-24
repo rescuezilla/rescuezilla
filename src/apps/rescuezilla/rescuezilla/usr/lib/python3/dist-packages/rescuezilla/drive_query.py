@@ -84,7 +84,7 @@ class DriveQuery:
                         # drives identified by a simple digit (eg, drive #3), because they may not understand what a short
                         # device node like "nvme0n1" means.
                         human_friendly_drive_name = "#" + str(index + 1)
-                        if drive['type'] != 'disk' or drive['type'].startswith('raid'):
+                        if (drive['type'] != 'disk' and not drive['type'].startswith("raid")) or drive['has_raid_member_filesystem']:
                             # Hiding LVMs, loop devices etc from initial drive selection list. This should greatly reduce the
                             # risk a user accidentally picks a logical volume (of their say, encrypted Debian system) when they
                             # were actually intending on picking the entire block device (including boot partition etc).
@@ -146,7 +146,7 @@ class DriveQuery:
                             # Display a advanced-user partition name eg, "nvme0n1p1".
                             human_friendly_partition_name = partition_key
                         else:
-                            if self.drive_state[drive_key]['type'] == 'loop':
+                            if self.drive_state[drive_key]['type'] == 'loop' or self.drive_state[drive_key]['has_raid_member_filesystem']:
                                 # Don't display certain non-block device if user has chosen to hide them.
                                 # TODO: Evaluate other partition types to be hidden.
                                 continue
