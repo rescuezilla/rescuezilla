@@ -28,6 +28,9 @@ from parser.sfdisk import Sfdisk
 
 class CombinedDriveStateTest(unittest.TestCase):
     def test_combined_drive_state(self):
+        parted_dict_dict = {}
+        sfdict_dict_dict = {}
+
         lsblk_json_output = """{
    "blockdevices": [
       {"kname":"/dev/loop0", "name":"/dev/loop0", "size":698761216, "type":"loop", "fstype":"squashfs", "mountpoint":"/rofs", "model":null},
@@ -222,7 +225,7 @@ Number  Start        End          Size         File system  Name  Flags
  2      114294784B   181403647B   67108864B    fat32              msftdata
  3      181403648B   2458910719B  2277507072B  ntfs               msftdata
  4      2458910720B  2683305983B  224395264B   ext4"""
-        parted_dict_dict = {'/dev/sde': Parted.parse_parted_output(input_parted_gpt_string)}
+        parted_dict_dict['/dev/sde'] = Parted.parse_parted_output(input_parted_gpt_string)
 
         input_sfdisk_gpt_string = """label: gpt
 label-id: 5FA01E95-F3E8-4B92-845B-843609E4EF0D
@@ -235,7 +238,7 @@ last-lba: 5242846
 /dev/sde2 : start=      223232, size=      131072, type=EBD0A0A2-B9E5-4433-87C0-68B6B72699C7, uuid=BE9F4179-560C-4BC9-8366-AE214F69A16E
 /dev/sde3 : start=      354304, size=     4448256, type=EBD0A0A2-B9E5-4433-87C0-68B6B72699C7, uuid=363BDD4E-D6A1-42E6-A4DA-616CD3E46952
 /dev/sde4 : start=     4802560, size=      438272, type=0FC63DAF-8483-4772-8E79-3D69D8477DE4, uuid=CED0279D-0096-4EBE-8425-4C6C9D46A4D2"""
-        sfdisk_dict_dict = {'/dev/sde': Sfdisk.parse_sfdisk_dump_output(input_sfdisk_gpt_string)}
+        sfdict_dict_dict['/dev/sde'] = Sfdisk.parse_sfdisk_dump_output(input_sfdisk_gpt_string)
 
         input_parted_mbr_string = """Model: ATA VBOX HARDDISK (scsi)
 Disk /dev/sdd: 2147483648B
@@ -278,9 +281,9 @@ unit: sectors
 /dev/sdd12 : start=      610304, size=       36864, type=83
 /dev/sdd13 : start=       94208, size=       57344, type=83
 /dev/sdd14 : start=        4096, size=       88064, type=83 """
-        sfdisk_dict_dict['/dev/sdd'] = Sfdisk.parse_sfdisk_dump_output(input_sfdisk_mbr_string)
+        sfdict_dict_dict['/dev/sdd'] = Sfdisk.parse_sfdisk_dump_output(input_sfdisk_mbr_string)
         pp = pprint.PrettyPrinter(indent=4)
-        combined_drive_state_dict = CombinedDriveState.construct_combined_drive_state_dict(lsblk_json_dict, blkid_dict, osprober_dict, parted_dict_dict, sfdisk_dict_dict)
+        combined_drive_state_dict = CombinedDriveState.construct_combined_drive_state_dict(lsblk_json_dict, blkid_dict, osprober_dict, parted_dict_dict, sfdict_dict_dict)
         pp.pprint(combined_drive_state_dict)
         CombinedDriveState.get_first_partition(combined_drive_state_dict['/dev/sdd']['partitions'])
         #expected_combined_drive_state_dict = {}
