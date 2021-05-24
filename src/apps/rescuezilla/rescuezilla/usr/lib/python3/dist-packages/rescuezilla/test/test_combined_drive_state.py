@@ -163,7 +163,8 @@ class CombinedDriveStateTest(unittest.TestCase):
                ]
             }
          ]
-      },      
+      },
+      {"kname":"/dev/sdo", "name":"/dev/sdo", "size":1610612736, "type":"disk", "fstype":"ext4", "mountpoint":null, "model":"VBOX_HARDDISK"},
       {"kname":"/dev/sr0", "name":"/dev/sr0", "size":805623808, "type":"rom", "fstype":"iso9660", "mountpoint":"/cdrom", "model":"VBOX_CD-ROM"}
    ]
 }"""
@@ -228,7 +229,8 @@ class CombinedDriveStateTest(unittest.TestCase):
 /dev/sdj3: PARTLABEL="Microsoft reserved partition" PARTUUID="229ef65d-3315-4824-945e-9719feda2f42"
 /dev/sdm1: UUID="75515f3b-95ea-ef00-e327-c48e2784e416" UUID_SUB="52b46420-82ff-7e66-ff87-4195a846f804" LABEL="ubuntu:0" TYPE="linux_raid_member" PARTUUID="e02572d4-01"
 /dev/sdn1: UUID="75515f3b-95ea-ef00-e327-c48e2784e416" UUID_SUB="5a61afd1-e3eb-d319-f6ca-a0135c0889de" LABEL="ubuntu:0" TYPE="linux_raid_member" PARTUUID="1e066523-01"
-/dev/md0: UUID="42ba6b53-6752-4ca7-b5a7-95a5e766ce97" BLOCK_SIZE="4096" TYPE="ext4" """
+/dev/md0: UUID="42ba6b53-6752-4ca7-b5a7-95a5e766ce97" BLOCK_SIZE="4096" TYPE="ext4"
+/dev/sdo: UUID="642af36d-7695-4376-a6f9-a35a15552e33" BLOCK_SIZE="4096" TYPE="ext4" """
         blkid_dict = Blkid.parse_blkid_output(input_blkid_string)
 
         os_prober_contents = """/dev/sdc2@/efi/Microsoft/Boot/bootmgfw.efi:Windows Boot Manager:Windows:efi
@@ -307,6 +309,19 @@ Number  Start     End          Size         Type     File system  Flags
 
 """
         parted_dict_dict['/dev/sdn'] = Parted.parse_parted_output(input_parted_sdn_string)
+
+        input_parted_fs_directly_on_disk_string = """
+Model: ATA VBOX HARDDISK (scsi)
+Disk /dev/sdo: 1610612736B
+Sector size (logical/physical): 512B/512B
+Partition Table: loop
+Disk Flags:
+
+Number  Start  End          Size         File system  Flags
+ 1      0B     1610612735B  1610612736B  ext4
+
+"""
+        parted_dict_dict['/dev/sdo'] = Parted.parse_parted_output(input_parted_fs_directly_on_disk_string)
 
         input_sfdisk_sdm_string = """label: dos
 label-id: 0xe02572d4
