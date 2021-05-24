@@ -509,6 +509,7 @@ class BackupManager:
                 GLib.idle_add(self.completed_backup, False, failed_message)
                 return False, failed_message
 
+        filepath = os.path.join(self.dest_dir, short_selected_device_node + "-chs.sf")
         GLib.idle_add(self.display_status, _("Saving: {file}").format(file=filepath), "")
         process, flat_command_string, failed_message = Utility.run("Retreiving disk geometry with sfdisk ", ["sfdisk", "--show-geometry", self.selected_drive_key], use_c_locale=True, logger=self.logger)
         if process.returncode != 0:
