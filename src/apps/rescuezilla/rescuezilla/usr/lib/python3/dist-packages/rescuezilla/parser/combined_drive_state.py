@@ -49,6 +49,7 @@ class CombinedDriveState:
             drive_longdevname = current_block_device['name']
             drive_state[drive_longdevname] = collections.OrderedDict([])
             drive_state[drive_longdevname]['partition_table'] = None
+            drive_state[drive_longdevname]['has_raid_member_filesystem'] = False
 
             # Drive model
             drive_state[drive_longdevname]['model'] = current_block_device['model']
@@ -79,8 +80,10 @@ class CombinedDriveState:
             # If the device has no detected partitions and has no partition table, add itself as a child so that all
             # subsequent logic handles the device as a partition. The base device key (eg /dev/sda) still is suitable
             # for lookup of data from data arrays.
-            if 'children' not in current_block_device.keys() and drive_state[drive_longdevname][
-                'partition_table'] is None:
+            #
+            # The filesystem directly on disk case has a parted dict entry, so use non-null fstype
+            if 'children' not in current_block_device.keys() and (drive_state[drive_longdevname][
+                'partition_table'] is None or current_block_device['fstype'] is not None):
                 rewritten_block_device = copy.deepcopy(current_block_device)
                 # Overwrite the existing type (probably 'disk') so it's treated as a partition.
                 rewritten_block_device['type'] = 'part'
@@ -93,6 +96,9 @@ class CombinedDriveState:
                     partition_longdevname = lsblk_partition_dict['name']
                     drive_state[drive_longdevname]['partitions'][partition_longdevname] = {}
                     partition_state = drive_state[drive_longdevname]['partitions'][partition_longdevname]
+
+                    if lsblk_partition_dict['fstype'] == 'linux_raid_member':
+                        drive_state[drive_longdevname]['has_raid_member_filesystem'] = True
 
                     # Partition size (in bytes)
                     partition_state['size'] = lsblk_partition_dict['size']

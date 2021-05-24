@@ -162,6 +162,7 @@ class Handler:
 
         self.larger_to_smaller_details_msg = _("The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes).")
         self.larger_to_smaller_info_msg = _("Rescuezilla cannot yet automatically shrink partitions to restore from large disks to smaller disks. The final partition currently must always completely reside within the destination disk.\n\nCurrently the only way to restore to disks smaller than original is to first use GParted Partition Editor to shrink the final partition of the original disk before making a new backup image. Please read the following instructions for more information:\n\n{url}").format(url="https://github.com/rescuezilla/rescuezilla/wiki/HOWTO:-Restoring-to-a-smaller-disk.-Eg,-1000GB-HDD-to-500GB-SSD")
+        self.source_contains_raid_member_msg = _("Source drive cannot containing RAID member filesystem. The RAID device may be available as as eg, /dev/md0 or /dev/md127.")
 
         self.requested_shutdown_lock = threading.Lock()
         self.requested_shutdown = False
@@ -311,7 +312,11 @@ class Handler:
                                                                      "drive to backup")
                     else:
                         # Get first column (which is hidden/invisible) containing the drive shortdevname (eg, 'sda')
-                        self.selected_drive_key = list_store.get(iter, 0)[0]
+                        key = list_store.get(iter, 0)[0]
+                        if self.drive_query.drive_state[key]['has_raid_member_filesystem']:
+                            error = ErrorMessageModalPopup(self.builder, self.source_contains_raid_member_msg)
+                            return
+                        self.selected_drive_key = key
                         print("User selected drive: " + self.selected_drive_key)
                         self.drive_query.populate_partition_selection_table(self.selected_drive_key)
 
@@ -406,7 +411,10 @@ class Handler:
                     if iter is None:
                         error = ErrorMessageModalPopup(self.builder, "Please select destination drive to mount")
                     else:
-                        self.restore_destination_drive = list_store.get(iter, 0)[0]
+                        key = list_store.get(iter, 0)[0]
+                        if self.drive_query.drive_state[key]['has_raid_member_filesystem']:
+                            error = ErrorMessageModalPopup(self.builder, "Warning: Destination drive has a RAID member filesystem. Please make sure you understanding implications of this before continuing.")
+                        self.restore_destination_drive = key
                         if self.image_source_partition_key is not None and self.image_source_partition_key.startswith(self.restore_destination_drive):
                             # TODO: Handle this situation more effectively than "startswith" on the device nodes.
                             error = ErrorMessageModalPopup(self.builder, "Destination device cannot be the same as source image device.")
@@ -524,7 +532,11 @@ class Handler:
                                                        _("No source drive selected. Please select source drive to clone"))
                     else:
                         # Get first column (which is hidden/invisible) containing the drive shortdevname (eg, 'sda')
-                        self.clone_source_drive_key = list_store.get(iter, 0)[0]
+                        key = list_store.get(iter, 0)[0]
+                        if self.drive_query.drive_state[key]['has_raid_member_filesystem']:
+                            error = ErrorMessageModalPopup(self.builder, "Backup of RAID member drives is not allowed. Choose another drive such as /dev/md0 or /dev/md127.")
+                            return
+                        self.clone_source_drive_key = key
                         print("User selected source drive: " + self.clone_source_drive_key)
                         self.source_drive_enduser_friendly_drive_number = list_store.get(iter, 1)[0]
                         self.source_drive_capacity = list_store.get(iter, 2)[0]
