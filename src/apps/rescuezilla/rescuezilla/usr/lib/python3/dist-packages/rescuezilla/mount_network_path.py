@@ -41,7 +41,7 @@ class MountNetworkPath:
             # NOT stripping whitespace from the password
             'password': network_widget_dict["network_password"][mode].get_text(),
             'domain': network_widget_dict["network_domain"][mode].get_text().strip(),
-            'version': network_widget_dict["network_version"][mode].get_text().strip(),
+            'version': Utility.get_combobox_key(network_widget_dict["network_version_combobox"][mode]),
             'ssh_idfile': network_widget_dict["network_ssh_idfile"][mode].get_text().strip(),
             'destination_path': destination_path}
 
@@ -109,10 +109,11 @@ class MountNetworkPath:
             if settings['password'] == "":
                     smb_arguments += ",guest"
 
-            if settings['version'] != "":
-                if smb_arguments != "":
-                    smb_arguments += ","
-                smb_arguments += "vers=" + settings['version']
+            # Version is always provided (using "default" string in most cases). Older versions of mount.cifs
+            # potentially may not support 'default' (at least the man pages don't cover it)
+            if smb_arguments != "":
+                smb_arguments += ","
+            smb_arguments += "vers=" + settings['version']
 
             with open(tmp.name, 'w') as f:
                 f.write(credentials_string)
