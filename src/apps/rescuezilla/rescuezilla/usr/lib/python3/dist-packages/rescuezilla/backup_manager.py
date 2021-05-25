@@ -588,7 +588,8 @@ class BackupManager:
             for partition_key in list(self.partitions_to_backup.keys()):
                 for report_dict in vg_state_dict['report']:
                     for vg_dict in report_dict['vg']:
-                        if 'pv_name' in vg_dict.keys() and partition_key == vg_dict['pv_name']:
+                        if 'pv_name' in vg_dict.keys() and (partition_key == vg_dict['pv_name']
+                                                            or self.selected_drive_key == vg_dict['pv_name']):
                             if 'vg_name' in vg_dict.keys():
                                 vg_name = vg_dict['vg_name']
                             else:
@@ -607,7 +608,10 @@ class BackupManager:
                             lvm_vg_dev_list_filepath = os.path.join(self.dest_dir, "lvm_vg_dev.list")
                             GLib.idle_add(self.display_status, _("Saving: {file}").format(file=lvm_vg_dev_list_filepath), "")
                             with open(lvm_vg_dev_list_filepath, 'a+') as filehandle:
-                                filehandle.write(vg_name + " " + partition_key + " " + pv_uuid + "\n")
+                                if partition_key == vg_dict['pv_name']:
+                                   filehandle.write(vg_name + " " + partition_key + " " + pv_uuid + "\n")
+                                elif self.selected_drive_key == vg_dict['pv_name']:
+                                   filehandle.write(vg_name + " " + self.selected_drive_key + " " + pv_uuid + "\n")
 
             lv_state_dict = Lvm.get_logical_volume_state_dict(self.logger)
             for report_dict in lv_state_dict['report']:
