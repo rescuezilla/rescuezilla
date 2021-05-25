@@ -68,6 +68,10 @@ class CloneManager:
         # TODO: This is a crutch that ideally will be removed. It's very bad from an abstraction perspective, and
         # TODO: clear abstractions is important for ensuring correctness of the backup/restore operation
         self.system_drive_state = drive_state
+        self.temp_dir = os.path.join(tempfile.gettempdir(), "rescuezilla.clone.temp.data")
+        print("Selected temp dir " + self.temp_dir)
+        if os.path.exists(self.temp_dir):
+            shutil.rmtree(self.temp_dir)
         with self.clone_in_progress_lock:
             self.clone_in_progress = True
         thread = threading.Thread(target=self.do_clone_wrapper)
@@ -113,11 +117,11 @@ class CloneManager:
 
     def do_clone(self):
         self.requested_stop = False
-
         # Clear proc dictionary
         self.proc.clear()
         self.summary_message_lock = threading.Lock()
         self.summary_message = ""
+
         env = Utility.get_env_C_locale()
 
         if isinstance(self.image, QemuImage):
@@ -136,9 +140,6 @@ class CloneManager:
         #                       post_task_action, completed_callback
 
         partitions_to_backup = self.image.get_partitions_to_backup(self.clone_mapping_dict.keys())
-        self.temp_dir = os.path.join(tempfile.tempdir, "rescuezilla.clone.temp.data")
-        if os.path.exists(self.temp_dir):
-            shutil.rmtree(self.temp_dir)
         is_success, message = self.backup_manager.start_backup(selected_drive_key=self.image.long_device_node,
                                                                partitions_to_backup=partitions_to_backup,
                                                                drive_state=self.system_drive_state,

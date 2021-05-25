@@ -366,6 +366,7 @@ class Handler:
                     self.current_page = Page.BACKUP_PROGRESS
                     self.builder.get_object("backup_tabs").set_current_page(7)
                     self.post_task_action = Utility.get_combobox_key(self.builder.get_object("backup_step7_perform_action_combobox"))
+                    self.backup_manager.update_backup_progress_bar(0)
                     self.backup_manager.start_backup(self.selected_drive_key, self.partitions_to_backup, self.drive_query.drive_state, self.dest_dir, self.backup_notes, self.compression_dict, self.post_task_action, self._on_operation_completed_callback)
                     # Disable back/next button until the restore completes
                     self.builder.get_object("button_next").set_sensitive(False)
@@ -853,11 +854,13 @@ class Handler:
             self.current_page = Page.RESTORE_PROGRESS
             self.builder.get_object("restore_tabs").set_current_page(5)
             if not isinstance(self.selected_image, QemuImage):
+                self.restore_manager.update_progress_bar(0)
                 self.restore_manager.start_restore(self.selected_image, self.restore_destination_drive,
                                                    self.partitions_to_restore, self.is_overwriting_partition_table,
                                                    self.post_task_action,
                                                    self._on_operation_completed_callback)
             else:
+                self.restore_manager.update_progress_bar(0)
                 self.clone_manager.start_clone(image=self.selected_image,
                                                clone_destination_drive=self.restore_destination_drive,
                                                clone_mapping_dict=self.partitions_to_restore,

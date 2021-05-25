@@ -61,6 +61,7 @@ class RestoreManager:
         self.restore_progress_status = self.builder.get_object("restore_progress_status")
         self.clone_progress_status = self.builder.get_object("clone_progress_status")
         self.main_statusbar = self.builder.get_object("main_statusbar")
+        self.logger = None
         # proc dictionary
         self.proc = collections.OrderedDict()
         self.requested_stop = False
@@ -88,6 +89,7 @@ class RestoreManager:
         self.is_overwriting_partition_table = is_overwriting_partition_table
         self.post_task_action = post_task_action
         self.completed_callback = completed_callback
+        self.logger = Logger("/tmp/rescuezilla.log." + datetime.now().strftime("%Y%m%dT%H%M%S") + ".txt")
         GLib.idle_add(self.update_progress_bar, 0)
         with self.restore_in_progress_lock:
             self.restore_in_progress = True
@@ -284,14 +286,11 @@ class RestoreManager:
 
     def do_restore(self):
         self.requested_stop = False
-
         # Clear proc dictionary
         self.proc.clear()
         self.summary_message_lock = threading.Lock()
         self.summary_message = ""
         env = Utility.get_env_C_locale()
-
-        self.logger = Logger("/tmp/rescuezilla.log." + datetime.now().strftime("%Y%m%dT%H%M%S") + ".txt")
 
         with self.summary_message_lock:
             # Could state source image vs source drive depending on cloning/restoring an image of drive
@@ -980,6 +979,7 @@ class RestoreManager:
                         self.summary_message += message + "\n"
                     continue
 
+                filesystem=""
                 if 'filesystem' in self.image.image_format_dict_dict[image_key].keys() \
                         and not self.image.image_format_dict_dict[image_key]['is_lvm_logical_volume']:
                     filesystem = self.image.image_format_dict_dict[image_key]['filesystem']
@@ -1325,7 +1325,8 @@ class RestoreManager:
 
     # Intended to be called via event thread
     def update_progress_bar(self, fraction):
-        self.logger.write("Updating progress bar to " + str(fraction) + "\n")
+        if self.logger is not None:
+            self.logger.write("Updating progress bar to " + str(fraction) + "\n")
         self.restore_progress.set_fraction(fraction)
         self.clone_progress.set_fraction(fraction)
 

@@ -55,6 +55,7 @@ class BackupManager:
         self.main_statusbar = self.builder.get_object("main_statusbar")
         # proc dictionary
         self.proc = collections.OrderedDict()
+        self.logger = None
 
         self.requested_stop = False
 
@@ -142,7 +143,6 @@ class BackupManager:
         self.proc.clear()
         self.summary_message_lock = threading.Lock()
         self.summary_message = ""
-        self.logger = None
 
         env = Utility.get_env_C_locale()
 
@@ -951,7 +951,8 @@ class BackupManager:
 
     # Intended to be called via event thread
     def update_backup_progress_bar(self, fraction):
-        self.logger.write("Updating progress bar to " + str(fraction))
+        if self.logger is not None:
+            self.logger.write("Updating progress bar to " + str(fraction))
         self.backup_progress.set_fraction(fraction)
 
     def completed_backup(self, succeeded, message):
