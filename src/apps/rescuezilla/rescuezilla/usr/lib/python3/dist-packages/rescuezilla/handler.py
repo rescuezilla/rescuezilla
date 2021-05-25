@@ -203,6 +203,7 @@ class Handler:
         self.current_page = Page.WELCOME
 
         self.main_statusbar.push(self.main_statusbar.get_context_id("version"), self.human_readable_version)
+        self.selected_drive_key = None
 
         self.builder.get_object("mode_tabs").set_current_page(0)
         # Disable the forward/previous navigation buttons on the welcome page
@@ -1211,8 +1212,7 @@ class Handler:
         if self.selected_drive_key is not None:
             self.drive_query.populate_partition_selection_table(self.selected_drive_key)
             self.drive_query.populate_mount_partition_table(ignore_drive_key=self.selected_drive_key)
-        else:
-            self.drive_query.populate_drive_selection_table()
+        self.drive_query.populate_drive_selection_table()
 
 
     def open_url_as_non_root(self, button):
