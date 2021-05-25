@@ -605,6 +605,7 @@ class BackupManager:
                                 continue
                             relevant_vg_name_dict[vg_name] = partition_key
                             lvm_vg_dev_list_filepath = os.path.join(self.dest_dir, "lvm_vg_dev.list")
+                            GLib.idle_add(self.display_status, _("Saving: {file}").format(file=lvm_vg_dev_list_filepath), "")
                             with open(lvm_vg_dev_list_filepath, 'a+') as filehandle:
                                 filehandle.write(vg_name + " " + partition_key + " " + pv_uuid + "\n")
 
@@ -631,6 +632,7 @@ class BackupManager:
 
                         output = file_command_process.stdout.split(" ", maxsplit=1)[1].strip()
                         lvm_logv_list_filepath = os.path.join(self.dest_dir, "lvm_logv.list")
+                        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=lvm_logv_list_filepath), "")
                         # Append to file
                         with open(lvm_logv_list_filepath, 'a+') as filehandle:
                             filehandle.write(lv_path + "  " + output + "\n")
