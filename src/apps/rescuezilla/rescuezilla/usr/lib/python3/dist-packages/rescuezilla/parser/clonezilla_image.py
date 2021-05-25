@@ -32,6 +32,7 @@ from parser.ecryptfs import Ecryptfs
 from parser.lvm import Lvm
 from parser.partclone import Partclone
 from parser.parted import Parted
+from parser.proc_mdstat import ProcMdstat
 from parser.sfdisk import Sfdisk
 from parser.swappt import Swappt
 from utility import Utility, _
@@ -313,6 +314,23 @@ class ClonezillaImage:
         else:
             # Non-EFI Clonezilla images don't have this file
             print("Unable to locate " + efi_nvram_dat_filepath)
+
+        # Scan for Clonezilla's RAID information files (currently not used by Clonezilla or Rescuezilla)
+        self.proc_mdstat_dict = {}
+        proc_mdstat_filepath = os.path.join(dir, "mdstat.txt")
+        if isfile(proc_mdstat_filepath):
+            self.proc_mdstat_dict = ProcMdstat.parse_proc_mdstat_string(Utility.read_file_into_string(proc_mdstat_filepath))
+            for raid_key in self.proc_mdstat_dict.keys():
+                expected_raid_file = raid_key + ".txt"
+                if isfile(expected_raid_file):
+                    print("Found: " + expected_raid_file)
+                else:
+                    print("Missing: " + expected_raid_file)
+        self.proc_mdadm_conf_filepath = None
+        mdadm_conf_filepath = os.path.join(dir, "mdadm.conf")
+        if isfile(mdadm_conf_filepath):
+            print("Found" + mdadm_conf_filepath)
+            self.proc_mdadm_conf_filepath = mdadm_conf_filepath
 
         self.partclone_info_dict_dict = collections.OrderedDict([])
         self.image_format_dict_dict = collections.OrderedDict([])
