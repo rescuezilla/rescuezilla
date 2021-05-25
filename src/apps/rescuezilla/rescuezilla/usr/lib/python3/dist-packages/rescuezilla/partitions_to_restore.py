@@ -39,6 +39,7 @@ from parser.redobackup_legacy_image import RedoBackupLegacyImage
 from utility import Utility, ErrorMessageModalPopup, _, PleaseWaitModalPopup
 
 # FIXME: The LVM handling in this class could be vastly improved.
+# FIXME: Better reset state when pressing Back/Next buttons, especially around the 'overwrite partition table' checkbox.
 class PartitionsToRestore:
     def __init__(self, builder):
         self.builder = builder
@@ -70,6 +71,7 @@ class PartitionsToRestore:
                                                              Mode.CLONE: self.builder.get_object("clone_destination_partition_combobox_cell_renderer")}
 
         self.selected_image = None
+        self.please_wait_popup = None
         self.dest_drive_key = ""
         self.dest_drive_node = {}
 
@@ -114,11 +116,6 @@ class PartitionsToRestore:
             overwrite_partition_table_checkbutton.set_sensitive(self.selected_image.has_partition_table())
             overwrite_partition_table_checkbutton.set_active(self.selected_image.has_partition_table())
         self.set_overwriting_partition_warning_label(self.selected_image.has_partition_table())
-
-    def completed_toggle(self):
-        if self.please_wait_popup is not None:
-            self.please_wait_popup.destroy()
-            self.please_wait_popup = None
 
     # Starts LVM and umounts all relevant logical volumes
     # FIXME: Similar code is is duplicated elsewhere in the codebase.
@@ -198,6 +195,11 @@ class PartitionsToRestore:
             self.post_lvm_preparation(is_overwriting_partition_table, True, "")
         else:
             self.win.set_sensitive(False)
+            # Protect against accidentally overwriting the please_wait_popup reference when the checkbox is toggled
+            # FIXME: Improve logic so this is not required
+            if self.please_wait_popup is not None:
+                self.please_wait_popup.destroy()
+                self.please_wait_popup = None
             self.please_wait_popup = PleaseWaitModalPopup(self.builder, title=_("Please wait..."), message=_("Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."))
             self.please_wait_popup.show()
             if 'partitions' in self.dest_drive_dict.keys():
