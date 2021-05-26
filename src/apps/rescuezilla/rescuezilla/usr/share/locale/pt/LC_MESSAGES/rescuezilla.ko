@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Vinicios de Lima Clarindo <vinicioslc@outlook.com>, 2020
 # Submitted at: https://github.com/rescuezilla/rescuezilla/issues/128
-#
+# Vinicios Clarindo <vinicioslc@outlook.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2021-05-21 03:56+0000\n"
+"PO-Revision-Date: 2021-05-23 21:31+0000\n"
 "Last-Translator: Vinicios Clarindo <vinicioslc@outlook.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/pt/>\n"
@@ -115,28 +115,31 @@ msgid "Step 2: Select Source Drive"
 msgstr "Passo 2: Selecione o drive de origem"
 
 msgid "Select the <b>source drive</b> to clone."
-msgstr ""
+msgstr "Selecione o <b>drive origem</b> para clonar."
 
 msgid "Select the <b>destination drive</b> to overwrite."
-msgstr ""
+msgstr "Selecione o <b>drive de destino</b> para sobrescrever."
 
 msgid "Step 4: Select Partitions to Clone"
-msgstr ""
+msgstr "Passo 4: Selecione Partições para Clonar"
 
 msgid "Select which partitions from the source drive to clone, and whether to overwrite the partition table. <b>Leave everything selected to completely clone the source drive to the destination drive.</b>"
 msgstr ""
+"Selecione quais partições do drive de origem clonar, e em qual tabela de "
+"partição será sobrescrito. <b>Deixe todos selecionado para clonar o drive de "
+"origem completamente para o drive de destino.</b>"
 
 msgid "Step 5: Confirm Cloning Configuration"
-msgstr ""
+msgstr "Passo 5: Confirme a Configuração de Clonagem"
 
 msgid "Confirm the following cloning configuration."
-msgstr ""
+msgstr "Confirme as seguintes configurações de clonagem."
 
 msgid "Cloning the following partitions"
-msgstr ""
+msgstr "Clonando as seguintes partições"
 
 msgid "To start cloning, click <b>Next</b>."
-msgstr ""
+msgstr "Para iniciar a clonagem, clique em <b>Próximo</b>."
 
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""

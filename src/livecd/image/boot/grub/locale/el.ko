@@ -4,19 +4,21 @@
 # tkatsageorgis
 # Submitted at: https://github.com/rescuezilla/rescuezilla/issues/171
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-27 14:12+0930\n"
-"PO-Revision-Date: 2021-01-21 HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2021-05-26 04:09+0000\n"
+"Last-Translator: Thanassis Katsageorgis <tkatsageorgis@gmail.com>\n"
+"Language-Team: Greek <https://hosted.weblate.org/projects/rescuezilla/"
+"grub-boot/el/>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.7-dev\n"
 
 msgid "Start Rescuezilla"
 msgstr "Εκκίνηση Rescuezilla"
@@ -34,19 +36,21 @@ msgid "Load USB into RAM"
 msgstr "Φόρτωση USB στη RAM"
 
 msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
-msgstr "Φορτώνει το Rescuezilla στη μνήμη επιτρέποντας στο μέσο εκκίνησης να εκτιναχθεί μετά την εκκίνηση"
+msgstr ""
+"Φορτώνει το Rescuezilla στη μνήμη επιτρέποντας στο μέσο εκκίνησης να εξαχθεί "
+"μετά την εκκίνηση"
 
 msgid "Check USB for defects"
 msgstr "Έλεγχος ελαττωματικών USB"
 
 msgid "Verify integrity of USB drive"
-msgstr "Επαλήθευση ακεραιότητας της μονάδας USB."
+msgstr "Επαλήθευση ακεραιότητας της μονάδας USB"
 
 msgid "Enter BIOS Setup"
-msgstr "Εισαγωγή στις ρυθμίσεις BIOS"
+msgstr "Εισαγωγή στις ρυθμίσεις του BIOS"
 
 msgid "Configure machine's firmware, boot options etc"
-msgstr "Ρυθμίστε το υλικολογισμικό του μηχανήματος, τις επιλογές εκκίνησης κλπ."
+msgstr "Ρυθμίστε το υλικολογισμικό του μηχανήματος, τις επιλογές εκκίνησης κλπ"
 
 msgid "Memory test"
 msgstr "Έλεγχος μνήμης"
