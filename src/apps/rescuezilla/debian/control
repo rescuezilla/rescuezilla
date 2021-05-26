@@ -13,8 +13,9 @@ Architecture: all
 Depends: ${shlibs:Depends}, ${misc:Depends}, smbclient, fsarchiver, partclone, pv, pigz, nmap, os-prober, gvfs, cifs-utils, smbclient, sshfs, sshpass, nfs-common, fsarchiver, file, libnotify-bin, lshw, pciutils, yad, hdparm, pbzip2, lzop, pixz, plzip, lrzip, zstd, fatresize, archivemount, nbd-server, nbd-client, python3-whichcraft, python3-babel, clonezilla, binutils, smartmontools, qemu-utils, nbdkit, efibootmgr
 Recommends: partimage, ecryptfs-utils
 Description: Graphical hard drive backup and restore
- Rescuezilla is an extremely easy-to-use graphical environment for hard drive
- backup and restore. For many people, the alternative open-source tools
- Clonezilla and SysRescueCD, are intimidating and difficult to use, so
- Rescuezilla provides an easy-to-use graphical environment like the leading
- commercial tools, Norton Ghost and Acronis True Image.
+ Rescuezilla is an easy-to-use disk cloning and imaging application that's
+ fully compatible with Clonezilla — the industry-standard trusted by tens
+ of millions. For many people, the alternative open-source tools such as
+ Clonezilla are intimidating and difficult to use, so Rescuezilla provides
+ an easy-to-use graphical environment like the leading commercial tools,
+ Acronis True Image and Macrium Reflect.

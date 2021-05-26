@@ -1,3 +1,12 @@
+rescuezilla (2.2-1) unstable; urgency=low
+
+  * New upstream version.
+  * Added 'Clone', VM image support, support for images created by all known open-source imaging tools
+  * Improved support for RAID, disks without partition table (filesystem directly on disk)
+  * See the upstream CHANGELOG for full details
+
+ -- Shasheen Ediriweera <rescuezilla@gmail.com>  Fri, 4 Jun 2021 12:00:00 +0930
+
 rescuezilla (2.1.3-1) unstable; urgency=low
 
   * New upstream version.
