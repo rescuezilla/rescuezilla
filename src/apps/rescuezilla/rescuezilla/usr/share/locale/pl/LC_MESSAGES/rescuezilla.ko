@@ -404,8 +404,8 @@ msgstr "Format kompresji: "
 msgid "gzip"
 msgstr "gzip"
 
-msgid "(default)"
-msgstr "(domyślny)"
+msgid "default"
+msgstr "domyślny"
 
 msgid "zstandard"
 msgstr "zstandard"

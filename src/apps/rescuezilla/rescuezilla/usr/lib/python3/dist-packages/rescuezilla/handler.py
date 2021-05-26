@@ -103,7 +103,7 @@ class Handler:
 
         # Initialize compression tool option
         self.compression_tool_list = self.builder.get_object("compression_tool_list")
-        self.compression_tool_list.append(["gzip", _("gzip") + " " + _("(default)")])
+        self.compression_tool_list.append(["gzip", _("gzip") + " " + "(" + _("default") + ")"])
         self.compression_tool_list.append(["zstd", _("zstandard")])
         self.compression_tool_list.append(["uncompressed", _("Uncompressed (Suitable for use with Image Explorer)")])
         compression_format_combobox = self.builder.get_object("backup_step6_compression_format_combobox")

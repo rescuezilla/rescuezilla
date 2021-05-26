@@ -398,8 +398,8 @@ msgstr "Kompressionsformat: "
 msgid "gzip"
 msgstr "gzip"
 
-msgid "(default)"
-msgstr "(standard)"
+msgid "default"
+msgstr "standard"
 
 msgid "zstandard"
 msgstr "zstandard"

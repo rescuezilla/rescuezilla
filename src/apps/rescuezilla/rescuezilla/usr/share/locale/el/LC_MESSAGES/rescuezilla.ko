@@ -418,8 +418,8 @@ msgstr "Μορφή συμπίεσης: "
 msgid "gzip"
 msgstr "gzip"
 
-msgid "(default)"
-msgstr "(προεπιλογή)"
+msgid "default"
+msgstr "προεπιλογή"
 
 msgid "zstandard"
 msgstr "zstandard"

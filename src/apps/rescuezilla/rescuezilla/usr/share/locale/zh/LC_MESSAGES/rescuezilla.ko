@@ -1,4 +1,4 @@
-# Chinese translation of Rescuezilla
+ translation of Rescuezilla
 # Copyright (C) 2021
 # This file is distributed under the same license as the PACKAGE package.
 # mzky, 2021
@@ -366,8 +366,8 @@ msgstr "压缩格式： "
 msgid "gzip"
 msgstr "Gzip压缩"
 
-msgid "(default)"
-msgstr "(默认)"
+msgid "default"
+msgstr "默认"
 
 msgid "zstandard"
 msgstr "标准"
