@@ -165,7 +165,7 @@ class Sfdisk:
 
     @staticmethod
     def get_empty_sfdisk_msg():
-        empty_sfdisk_bug_url = "https://github.com/rescuezilla/rescuezilla/wiki/Bugs-in-unofficial-Redo-Backup-updates#bugs-in-louvetchs-ubuntu-1604-releases"
+        empty_sfdisk_bug_url = "https://github.com/rescuezilla/rescuezilla/wiki/Missing-sfdisk-warning-message"
         empty_sfdisk_msg = utility._(
             "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance.").format(
             url=empty_sfdisk_bug_url)
