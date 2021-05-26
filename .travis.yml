@@ -55,6 +55,10 @@ script:
 before_deploy:
   - sudo mv build/rescuezilla.amd64.focal.iso build/rescuezilla-$TRAVIS_TAG-64bit.focal.iso
   - sudo mv build/rescuezilla.amd64.groovy.iso build/rescuezilla-$TRAVIS_TAG-64bit.groovy.iso
+  - rm -f SHA256SUM SHA1SUM MD5SUM
+  - sha256sum build/rescuezilla-$TRAVIS_TAG-64bit.groovy.iso > build/SHA256SUM
+  - sha1sum build/rescuezilla-$TRAVIS_TAG-64bit.groovy.iso > build/SHA1SUM
+  - md5sum build/rescuezilla-$TRAVIS_TAG-64bit.groovy.iso > build/MD5SUM
 
 deploy:
   provider: releases
@@ -63,6 +67,9 @@ deploy:
     - build/rescuezilla-${TRAVIS_TAG}-64bit.focal.iso
     - build/rescuezilla-${TRAVIS_TAG}-64bit.groovy.iso
     - build/rescuezilla_${TRAVIS_TAG}-1_all.deb
+    - build/SHA256SUMS
+    - build/SHA1SUMS
+    - build/MD5SUMS
   draft: true
   cleanup: false
   on:
