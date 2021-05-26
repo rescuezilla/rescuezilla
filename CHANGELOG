@@ -1,4 +1,71 @@
 -------------------------------------------------------------------------------
+  Version 2.2 (2021-06-04) 
+-------------------------------------------------------------------------------
+
+* Implemented cloning (direct 'device-to-device' mode) (#47)
+* Added ability to restore and explore all virtual machine image formats supported by qemu-nbd (#192)
+  (VirtualBox’s VDI, VMWare’s VMDK, Qemu’s QCOW2, HyperV's VHDx, raw .dd/.img and many more) 
+* Added ability to restore and explore images created by all remaining open-source imaging frontends (#194)
+  (Redo Rescue, Foxclone, FSArchiver, Redo v0.9.2 and very-early handling of FOG Project images)
+* Added ability to customize compression format (gzip, zstandard, uncompressed) and compression level (#170)
+* Implemented remaining Clonezilla image restore logic to improve handling of many corner cases: (task #146)
+  * Grows filesystem to fit partition size (but almost always filesystem size is already equal to partition size)
+  * Runs filesystem check on all restored filesystems
+  * Clears the NTFS volume dirty flag, for source during backup/clone and destination for restore/clone
+  * Removes the udev MAC address records (if any) using Clonezilla script
+  * Re-install the syslinux bootloader (if any) using Clonezilla script
+  * Re-install the GRUB bootloader (if any) using Clonezilla script
+  * Update initramfs (if any) using Clonezilla script
+  * Relocates all NTFS filesystems using geometry from sfdisk or (if available) EDD (Enhanced Disk Device)
+  * Restores LVM VG metadata with --force to match a recent Clonezilla patch referring to thin-pool LVs 
+  * Ensures each LVM VG metadata once is only restored once, t support newer versions of vgcfgrestore
+  * Updates EFI NVRAM for the boot device
+* Replaces Ubuntu 20.10 (Groovy) build with build based on Ubuntu 21.04 (Hirsute) for best support of new hardware
+* Added option to shutdown or reboot after operation completes successfully (#165)
+* Added ability to connect to NFS and SSH (SFTP) network shared folders (#81, #118)
+* Added ability to write a description for backup images (#137)
+* Added ability to make a screenshot by pressing Print Screen (#166)
+* Added ability to cancel mount operations by closing the 'please wait' popup
+* Switched SMB/CIFS version number field to dropdown menu to make valid options much more clear (#161)
+* Fixed ability to connect to unauthenticated/anonymous Windows network shares (#190)
+* Improved handling of Clonezilla images that contain multiple disks (#123)
+* Improved ability to double-click on rows during backup to toggle them (instead of going to the next page)
+* Switched from lxterminal to xfce4-terminal for features like select-all and search
+* Switched the compression of ISO image's mksquashfs root filesystem to zstd level 19 (from gzip level 9) (#161)
+* Fixed Image Explorer (beta) "Error: Socket failed: Connection refused" errors by polling nbd device
+* Displays error when trying to restore to disk smaller-than-original if disk not correctly prepared
+* Unmounts '/isodevice' on boot to improve when Rescuezilla ISO is itself installed as GRUB boot menu item (#207)
+* Ignores the common executable files that have names matching backup images: eg /bin/parts, /sbin/parts, partclone.dd
+* Fixed display of keep/overwrite partition table info message without needing to first click the checkbox
+* Added ability to backup CD/DVDs as Clonezilla image containing a raw sector-by-sector dd backup (experimental)
+* Switched error dialog box to be scrollable and resizable
+* Ensured progress bar better reflects the amount of data being copied (#129)
+* Ensured consistent 'last modified' timestamp string across all image formats
+* Ensured ecryptfs-utils, partimage packages are installed as intended
+* Added Firefox bookmarks for Rescuezilla FAQ, Patreon
+* Improved information provided to user during partition table refresh, LVM shutdown, image scan
+* Improved filesystem size estimates for Clonezilla LVM logical volumes
+* Suppressed unnecessary confirmation when mounting uncompressed images using Image Explorer (beta)
+* Fixed slow scanning of legacy Rescuezilla v1.0.5-v1.0.6.1 images
+* Calculated filesystem sizes of Redo Backup v0.9.2-v1.0.4 images based on partclone.info
+* Resets progress bar at the start of backup/restore/clone operation, rather than showing 100% initially
+* Improves warning messages when legacy Redo Backup images are missing image files
+* Improves truncated MBR, missing sfdisk file warning messages
+* Added dependency on the Clonezilla package for access to its udev/syslinux/GRUB/initramfs scripts (see above)
+* Added edd=on kernel boot option to assist with advanced NTFS filesystem geometry relocation
+* Switched to using Weblate to manage translations (#196): https://hosted.weblate.org/projects/rescuezilla
+* Added translations:
+  * Swedish/Svenska (sv-SE) (#186)
+  * Turkish/Türkçe (tr-TR) (#89)
+  * Chinese (Simplified)/中文(简体) (zh-CN) (#191)
+  * Chinese (Traditional)/中文(繁體) (zh-Hant)
+  * Norwegian Bokmål/Norsk Bokmål (nb-NO)
+  * Russian/Русский (ru-RU)
+  * Dansk/Danish (da-DK)
+* Added scrollbar to GRUB boot menu to handle increasing number of languages
+* Removed 'localepurge' whitelist since number of translations is growing
+
+-------------------------------------------------------------------------------
   Version 2.1.3 (2021-01-29) 
 -------------------------------------------------------------------------------
 
