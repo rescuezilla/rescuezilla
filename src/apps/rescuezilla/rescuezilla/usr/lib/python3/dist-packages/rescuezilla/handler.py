@@ -330,6 +330,10 @@ class Handler:
                         if self.drive_query.drive_state[key]['has_raid_member_filesystem']:
                             error = ErrorMessageModalPopup(self.builder, self.source_contains_raid_member_msg)
                             return
+                        elif 'partitions' not in self.drive_query.drive_state[key].keys():
+                            error = ErrorMessageModalPopup(self.builder,
+                                                           "Backup of drives without a partition table *and* no filesystem is not yet supported by current version of Rescuezilla.\n\nSupport for this will be added in a future version.")
+                            return
                         self.selected_drive_key = key
                         print("User selected drive: " + self.selected_drive_key)
                         self.drive_query.populate_partition_selection_table(self.selected_drive_key)
@@ -343,10 +347,6 @@ class Handler:
                         self.builder.get_object("backup_tabs").set_current_page(1)
                 elif self.current_page == Page.BACKUP_SOURCE_PARTITION_SELECTION:
                     partition_list_store = self.builder.get_object("save_partition_list")
-                    if 'partitions' not in self.drive_query.drive_state[self.selected_drive_key].keys():
-                        error = ErrorMessageModalPopup(self.builder,
-                                                       "Backup of drives without a partition table not yet supported by current version of Rescuezilla.\nSupport for this will be added in a future version.\n\nHowever, as a temporary workaround, it is possible to use Clonezilla's 'savedisk' option to backup the drive, and then use Rescuezilla to restore that image.")
-                        return
                     self.partitions_to_backup = collections.OrderedDict()
                     has_atleast_one = False
                     for row in partition_list_store:
@@ -549,6 +549,10 @@ class Handler:
                         key = list_store.get(iter, 0)[0]
                         if self.drive_query.drive_state[key]['has_raid_member_filesystem']:
                             error = ErrorMessageModalPopup(self.builder, "Backup of RAID member drives is not allowed. Choose another drive such as /dev/md0 or /dev/md127.")
+                            return
+                        elif 'partitions' not in self.drive_query.drive_state[key].keys():
+                            error = ErrorMessageModalPopup(self.builder,
+                                                           "Clone of drives without a partition table *and* no filesystem is not yet supported by current version of Rescuezilla.\n\nSupport for this will be added in a future version.")
                             return
                         self.clone_source_drive_key = key
                         print("User selected source drive: " + self.clone_source_drive_key)
