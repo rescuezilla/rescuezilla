@@ -409,8 +409,8 @@ msgstr "Sammenpakkingsformat: "
 msgid "gzip"
 msgstr "Gzip"
 
-msgid "(default)"
-msgstr "(forvalg)"
+msgid "default"
+msgstr "forvalg"
 
 #, fuzzy
 msgid "zstandard"

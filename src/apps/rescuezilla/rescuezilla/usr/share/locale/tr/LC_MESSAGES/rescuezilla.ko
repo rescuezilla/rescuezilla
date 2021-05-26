@@ -408,8 +408,8 @@ msgstr "Sıkıştırma biçimi: "
 msgid "gzip"
 msgstr "gzip"
 
-msgid "(default)"
-msgstr "(öntanımlı)"
+msgid "default"
+msgstr "öntanımlı"
 
 msgid "zstandard"
 msgstr "zstandard"

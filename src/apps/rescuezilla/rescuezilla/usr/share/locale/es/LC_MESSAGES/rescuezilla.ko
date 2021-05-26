@@ -408,8 +408,8 @@ msgstr "Método de compresión: "
 msgid "gzip"
 msgstr "gzip"
 
-msgid "(default)"
-msgstr "(por defecto)"
+msgid "default"
+msgstr "por defecto"
 
 msgid "zstandard"
 msgstr "zstandard"
