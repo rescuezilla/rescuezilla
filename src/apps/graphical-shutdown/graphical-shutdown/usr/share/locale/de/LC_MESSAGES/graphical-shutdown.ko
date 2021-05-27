@@ -1,8 +1,9 @@
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021.
+# Mirko Hanker <Mirko1984@pm.me>, 2021.
 msgid ""
 msgstr ""
 "PO-Revision-Date: 2021-05-27 01:53+0000\n"
-"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
+"Last-Translator: Mirko Hanker <Mirko1984@pm.me>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/rescuezilla/"
 "graphical-shutdown/de/>\n"
 "Language: de\n"
@@ -12,13 +13,13 @@ msgstr ""
 "X-Generator: Weblate 4.7-dev\n"
 
 msgid "End Session"
-msgstr "Logout Rescuezilla session"
+msgstr "Sitzung beenden"
 
 msgid "Cancel"
 msgstr "Abbrechen"
 
 msgid "Shutdown"
-msgstr ""
+msgstr "Herunterfahren"
 
 msgid "Reboot"
 msgstr "Neustarten"
