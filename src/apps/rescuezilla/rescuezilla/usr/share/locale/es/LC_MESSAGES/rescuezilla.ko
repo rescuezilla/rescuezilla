@@ -3,13 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Carlos Luna <caralu74@protonmail.com>, 2019, 2021.
 # Submitted at: https://github.com/rescuezilla/rescuezilla/issues/28
+# Shasheen Ediriweera <shasheene@gmail.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2021-05-27 01:53+0000\n"
-"Last-Translator: caralu74 <caralu74@protonmail.com>\n"
+"PO-Revision-Date: 2021-05-27 03:43+0000\n"
+"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/es/>\n"
 "Language: es\n"
@@ -147,7 +148,7 @@ msgstr "Para iniciar la clonación, haga clic en <b>Siguiente</b>."
 
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
-"¿Está seguro de que quiere clonar la unidad/disco a {unidad_destino}? ¡Al "
+"¿Está seguro de que quiere clonar la unidad/disco a {destination_drive}? ¡Al "
 "hacerlo, se sobrescribirán permanentemente los datos de esta unidad/disco!"
 
 msgid "Step 6: Cloning Disk"
@@ -297,7 +298,7 @@ msgstr ""
 "subcarpetas seleccionadas."
 
 msgid "Scanning: {filename}"
-msgstr "Escaneando: {nombre de archivo}"
+msgstr "Escaneando: {filename}"
 
 msgid "Error processing the following images:"
 msgstr "Error al procesar las siguientes imágenes:"
@@ -469,7 +470,7 @@ msgid "Backing up your system to the location you selected.  This may take an ho
 msgstr "Haciendo una copia de seguridad de su sistema en la ubicación que seleccionó.  Esto puede tardar una hora o más dependiendo de la velocidad de su computador y de la cantidad de datos."
 
 msgid "Saving: {file}"
-msgstr "Guardando: {archivo}"
+msgstr "Guardando: {file}"
 
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
 msgstr "Crear copia de seguridad de {partition_name} que contiene el sistema de archivos {filesystem} en {destination}"
@@ -612,9 +613,9 @@ msgstr ""
 
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
 msgstr ""
-"La partición final de la tabla de partición de origen ({fuente}: "
-"{tamaño_de_fuente} bytes) debe referirse a una región completamente dentro "
-"del disco de destino ({tamaño_de_destino} bytes)."
+"La partición final de la tabla de partición de origen ({source}: "
+"{source_size} bytes) debe referirse a una región completamente dentro del "
+"disco de destino ({destination_size} bytes)."
 
 msgid "Rescuezilla cannot yet automatically shrink partitions to restore from large disks to smaller disks. The final partition currently must always completely reside within the destination disk.\n"
 "\n"
@@ -680,19 +681,16 @@ msgid "Synchronizing disks..."
 msgstr "Sincronizando discos..."
 
 msgid "Querying hard drive geometry of {device}"
-msgstr "Buscando la geometría del disco/unidad {dispositivo}"
+msgstr "Buscando la geometría del disco/unidad {device}"
 
 msgid "Probing {device} with {app}"
-msgstr "Probar {dispositivo} con {app}"
+msgstr "Probar {device} con {app}"
 
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
-msgstr ""
-"Agrandar {partición} ({sistema de archivos}). Esto puede llevar un tiempo..."
+msgstr "Agrandar {partition} ({filesystem}). Esto puede llevar un tiempo..."
 
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
-msgstr ""
-"Redimensionar la partición {partición} ({sistema de archivos}) ha fallado: "
-"{msg}"
+msgstr "Redimensionar la partición {partition} ({filesystem}) ha fallado: {msg}"
 
 msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
 msgstr ""
