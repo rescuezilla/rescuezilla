@@ -6,13 +6,14 @@
 # [2] and: https://sourceforge.net/p/redobackup/discussion/general/thread/07a80bc8/
 #
 # Mirko Hanker <Mirko1984@pm.me>, 2021.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2021-05-27 01:39+0000\n"
-"Last-Translator: Mirko Hanker <Mirko1984@pm.me>\n"
+"PO-Revision-Date: 2021-05-27 01:53+0000\n"
+"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/de/>\n"
 "Language: de\n"
@@ -30,8 +31,8 @@ msgstr "Wähle eine Option"
 
 msgid "Easily create a backup image of your computer, or completely restore from one.  Click an option to begin:"
 msgstr ""
-"Ermöglicht das einfache Erstellen eines Backups oder die Wiederherstellung "
-"deines Computers. Klicke auf eine der Optionen, um zu beginnen:"
+"Erstelle eine Sicherung deines Computers oder stelle ihn von einer solchen "
+"vollständig wieder her.  Wähle eine Option, um zu beginnen:"
 
 msgid "Backup"
 msgstr "Sichern"
@@ -41,14 +42,13 @@ msgstr "Wiederherstellen"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
 msgstr ""
-"Brauchst du Hilfe? Lese dir zunächst die FAQ von Rescuezilla durch und gehe "
-"dann zum Rescuezilla-Forum."
+"Benötigst du Hilfe? Lese zunächst die FAQ. Darüber hinaus erfährst du "
+"Unterstützung im Forum."
 
 msgid "Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed."
 msgstr ""
-"Wir hoffen dir gefällt Rescuezilla. Mit einer Spende von 1 US-Dollar im "
-"Monat auf der Crowdfunding-Webseite Patreon stellst du die Weiterentwicklung "
-"von Rescuezilla sicher. Vielen Dank! :-)"
+"Unterstütze die Weiterentwicklung von Rescuezilla mit einem Beitrag von 1 "
+"USD pro Monat auf der Crowdfunding Webseite Patreon."
 
 msgid "Back"
 msgstr "Zurück"
@@ -57,16 +57,16 @@ msgid "Next >"
 msgstr "Weiter >"
 
 msgid "Please wait..."
-msgstr "Bitte warten..."
+msgstr "Bitte warten ..."
 
 msgid "Identifying disk drives..."
-msgstr "Suche Festplatten..."
+msgstr "Suche Festplatten ..."
 
 msgid "Unmounting: {path}"
-msgstr "{path} wird ausgehängt"
+msgstr "Aushängen: {path}"
 
 msgid "Unable to unmount {path}"
-msgstr "{path} konnte nicht ausgehängt werden"
+msgstr "{path} kann nicht ausgehängt werden"
 
 msgid "Running: {app}"
 msgstr "{app} wird ausgeführt"
@@ -117,16 +117,16 @@ msgstr ""
 "<b>Sicherung</b> oder <b>Wiederherstellung</b>."
 
 msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
-msgstr "Um den Klon-Assistenten zu starten, klicke auf <b>Weiter</b>"
+msgstr "Um den Klon-Assistenten zu starten, klicke <b>Weiter</b>"
 
 msgid "Step 2: Select Source Drive"
-msgstr "Schritt 2: Quell-Laufwerk auswählen"
+msgstr "Schritt 2: Quelllaufwerk auswählen"
 
 msgid "Select the <b>source drive</b> to clone."
-msgstr "Wähle das zu klonende <b>Quell-Laufwerk</b> aus."
+msgstr "Wählen Sie das zu klonende <b>Quelllaufwerk</b> aus."
 
 msgid "Select the <b>destination drive</b> to overwrite."
-msgstr "Wähle das zu überschreibende <b>Ziel-Laufwerk</b> aus."
+msgstr "Wählen Sie das zu überschreibende <b>Ziellaufwerk</b> aus."
 
 msgid "Step 4: Select Partitions to Clone"
 msgstr "Schritt 4: Zu klonende Partitionen auswählen"
@@ -142,13 +142,13 @@ msgid "Step 5: Confirm Cloning Configuration"
 msgstr "Schritt 5: Bestätigung der getroffenen Konfiguration zum Klonen"
 
 msgid "Confirm the following cloning configuration."
-msgstr "Bestätige die nachfolgende Konfiguration für das klonen."
+msgstr "Bestätige die nachfolgende Konfiguration für das Klonen."
 
 msgid "Cloning the following partitions"
 msgstr "Die folgenden Partitionen werden geklont"
 
 msgid "To start cloning, click <b>Next</b>."
-msgstr "Um mit dem Klonen zu beginnen, klicke auf <b>Weiter</b>."
+msgstr "Um mit dem Klonen zu beginnen, klicke <b>Weiter</b>."
 
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
@@ -175,14 +175,14 @@ msgid "Confirm the clone summary."
 msgstr "Bestätige die Klon-Zusammenfassung."
 
 msgid "Unable to shutdown Image Explorer"
-msgstr "Schließen des Abbild-Explorers nicht möglich"
+msgstr "Schließen des Image Explorer nicht möglich"
 
 msgid "Step 1: Select Drive To Backup"
-msgstr "Schritt 1: Quell-Laufwerk auswählen"
+msgstr "Schritt 1: Quelllaufwerk auswählen"
 
 msgid "Select the <b>source drive</b> that you would like to create a backup image from."
 msgstr ""
-"Wähle das <b>Quell-Laufwerk</b> aus, von dem du eine Sicherungskopie "
+"Wähle das <b>Quelllaufwerk</b> aus, von dem du eine Sicherungskopie "
 "erstellen möchtest."
 
 msgid "Drive"
@@ -222,11 +222,11 @@ msgid "Partition {partition_number}"
 msgstr "Partition {partition_number}"
 
 msgid "Step 3: Select Destination Drive"
-msgstr "Schritt 3: Ziel-Laufwerk wählen"
+msgstr "Schritt 3: Ziellaufwerk wählen"
 
 msgid "Click on the box below to select the source drive that you would like to create a backup image from."
 msgstr ""
-"Wähle im unten stehenden Feld, das Laufwerk (Quell-Laufwerk), von dem du ein "
+"Wähle im unten stehenden Feld, das Laufwerk (Quelllaufwerk), von dem du ein "
 "Backup-Image erstellen möchtest."
 
 msgid "Connected directly to my computer"
@@ -236,7 +236,7 @@ msgid "Shared over a network"
 msgstr "Über das Netzwerk verbunden"
 
 msgid "Where would you like to save the image?"
-msgstr "Wo befindet sich das Ziel- Laufwerk?"
+msgstr "Wo befindet sich das Ziellaufwerk?"
 
 msgid "Windows shared folder (SMB/CIFS, Samba)"
 msgstr "SMB/CIFS-Freigabeordner siehe unten"
@@ -278,34 +278,34 @@ msgid "Select network-shared storage location:"
 msgstr "Speicherort mit Netzwerkfreigabe auswählen:"
 
 msgid "Select the partition where the image files will be saved to"
-msgstr "Ziel-Laufwerk wählen:"
+msgstr "Ziellaufwerk auswählen"
 
 msgid "Partition"
 msgstr "Partition"
 
 msgid "Mounting..."
-msgstr "Mounten..."
+msgstr "Einhängen ..."
 
 msgid "Close this popup to cancel the mount operation."
-msgstr "Schließe dieses Fenster um das Einbinden abzubrechen."
+msgstr "Schließe dieses Fenster um das Einhängen abzubrechen."
 
 msgid "Please ensure the username, password and other fields provided are correct, and try again."
 msgstr ""
-"Wenn das Gerät in einem Netzwerk freigegeben ist, so stelle sicher, dass der "
-"Benutzername und das Passwort richtig sind, versuche es danach erneut."
+"Wenn das Gerät in einem Netzwerk freigegeben ist, stelle sicher, dass "
+"Benutzername und Passwort richtig sind und versuche es erneut."
 
 msgid "Must provide either password or SSH identity file."
 msgstr "Passwort oder SSH Identitäts-Datei benötigt."
 
 msgid "Scanning folder for backup images..."
-msgstr "Ordner für Sicherungskopien wird gescannt..."
+msgstr "Ordner für Sicherungskopien wird gescannt ..."
 
 msgid "({timeout_seconds} second timeout)"
 msgstr "({timeout_seconds} second timeout)"
 
 msgid "Close this popup to cancel scanning the selected folder and subfolders."
 msgstr ""
-"Schließe dieses Fenster um das Durchsuchen der ausgewählten Ordner und "
+"Schließe dieses Fenster, um das Durchsuchen der ausgewählten Ordner und "
 "Unterordner abzubrechen."
 
 msgid "Scanning: {filename}"
@@ -318,7 +318,7 @@ msgid "Unable to fully process the image associated with the following partition
 msgstr "Die mit folgenden Partitionen verknüpfte Sicherungskopie kann nicht vollständig verarbeitet werden:"
 
 msgid "Unable to fully process the following image:"
-msgstr "Folgende Sicherungskopie kann nicht vollständig partitioniert werden:"
+msgstr "Folgende Sicherungskopie kann nicht vollständig verarbeitet werden:"
 
 msgid "Cannot find partition's associated partclone image"
 msgstr "Das zugehörige Partclone-Image der Partition kann nicht gefunden werden"
@@ -363,14 +363,15 @@ msgstr ""
 "Wiederherstellung fortfahren?"
 
 msgid "Step 4: Select Destination Folder"
-msgstr "Schritt 4: Ziel-Verzeichnis wählen"
+msgstr "Schritt 4: Zielverzeichnis wählen"
 
 msgid "Click <b>Browse</b> to select the folder on the destination drive where your new backup image will be saved.\n"
 "\n"
 "The folder a backup is saved in is usually a description of the computer, e.g. <b>office1</b> or <b>zack-laptop</b>."
 msgstr ""
-"Klicke auf  <b>Durchsuchen</b> um einen Ordner auszuwählen, in welchem dein "
-"Backup-Image auf dem Ziel-Laufwerk gespeichert werden soll. \n"
+"Klicke <b>Durchsuchen</b>, um einen Ordner auszuwählen, in welchem dein "
+"Backup-Image auf dem Ziellaufwerk gespeichert werden soll.\n"
+"\n"
 "Wähle für die Bezeichnung des Ordners z.B <b>MeinPC</b> oder <b>Pauls-"
 "Laptop</b>."
 
@@ -386,7 +387,7 @@ msgstr ""
 "bereits in diesem Ordner befinden (sofern vorhanden)."
 
 msgid "Browse..."
-msgstr "Durchsuchen..."
+msgstr "Durchsuchen ..."
 
 msgid "Filename"
 msgstr "Dateiname"
@@ -398,7 +399,7 @@ msgid "Last modified"
 msgstr "Letzte Änderung"
 
 msgid "When you are happy with the destination folder, click <b>Next</b>."
-msgstr "Wenn du mit dem Zielordner zufrieden bist, klicke auf <b>Weiter</b>."
+msgstr "Wenn du mit dem Zielordner zufrieden bist, klicke <b>Weiter</b>."
 
 msgid "Step 5: Name Your Backup"
 msgstr "Schritt 5: Backup-Datei benennen"
@@ -417,15 +418,15 @@ msgid "Optional: Provide a short description."
 msgstr "Optional: Füge eine kurze Beschreibung hinzu."
 
 msgid "Step 6: Customize Compression Settings"
-msgstr "Schritt 6: Passe die Komprimierungs-Einstellungen an"
+msgstr "Schritt 6: Passe die Einstellungen zur Komprimierung an"
 
 msgid "Customize image compression settings. <b>Don't make any changes if you are unsure.</b>"
 msgstr ""
-"Passe die Komprimierungs-Einstellungen des Abbildes an. <b>Nehme keine "
-"Veränderungen vor wenn du dir nicht sicher bist was du tust.</b>"
+"Passe die Einstellungen zur Komprimierung des Abbildes an. <b>Nimm keine "
+"Veränderungen vor, wenn du dir nicht sicher bist.</b>"
 
 msgid "Compression format: "
-msgstr "Komprimierungs-Format: "
+msgstr "Komprimierungsmethode: "
 
 msgid "gzip"
 msgstr "gzip"
@@ -437,27 +438,27 @@ msgid "zstandard"
 msgstr "zstandard"
 
 msgid "Uncompressed (Suitable for use with Image Explorer)"
-msgstr "Unkomprimiert (Geeignet zur Nutzung mit dem Abbild-Explorer)"
+msgstr "Unkomprimiert (geeignet zur Nutzung mit dem Image Explorer)"
 
 msgid "Compression level: "
-msgstr "Komprimierungs-Stufe: "
+msgstr "Komprimierungsgrad: "
 
 msgid "Fastest"
 msgstr "Am schnellsten"
 
 msgid "Best"
-msgstr "Optimal"
+msgstr "Am besten"
 
 msgid "When you are happy with the compression settings, click <b>Next</b>."
 msgstr ""
-"Wenn du mit den Komprimierungs-Einstellungen zufrieden bist, klicke "
+"Wenn du mit den Einstellungen zur Komprimierung zufrieden bist, klicke "
 "<b>Weiter</b>."
 
 msgid "Step 7: Confirm Backup Configuration"
 msgstr "Schritt 6: Sicherungskonfiguration bestätigen"
 
 msgid "Source drive"
-msgstr "Quell-Laufwerk"
+msgstr "Quelllaufwerk"
 
 msgid "Backing up the following partition"
 msgstr "Folgende Partition wird gesichert"
@@ -480,7 +481,7 @@ msgid "Shutdown"
 msgstr "Herunterfahren"
 
 msgid "Reboot"
-msgstr "Neu starten"
+msgstr "Neustarten"
 
 msgid "To start the backup, click <b>Next</b>."
 msgstr "Klicke zum Starten des Sicherungsvorgangs auf <b>Weiter</b>."
@@ -554,10 +555,10 @@ msgid "Step 1: Select Image Location"
 msgstr "Schritt 1: Sicherungsort auswählen"
 
 msgid "Where are the image files stored?"
-msgstr "Wo befindet sich das Quell-Laufwerk?"
+msgstr "Wo befindet sich das Quelllaufwerk?"
 
 msgid "Select the partition which contains the image files:"
-msgstr "Quell-Laufwerk wählen:"
+msgstr "Quelllaufwerk wählen:"
 
 msgid "Step 2: Select Backup Image"
 msgstr "Schritt 2: Backup Image-Datei wählen"
@@ -571,13 +572,13 @@ msgid "Select the image file to restore."
 msgstr "Wähle die Sicherungskopie aus, die wiederhergestellt werden soll."
 
 msgid "Step 3: Select Drive To Restore"
-msgstr "Schritt 3: Ziel-Laufwerk wählen"
+msgstr "Schritt 3: Ziellaufwerk wählen"
 
 msgid "Select the destination drive to restore with the selected image."
 msgstr ""
-"Wähle das Ziel-Laufwerk, welches mit Hilfe der ausgewählte Backup-Image "
-"Datei, wiederhergestellt werden soll. Alle evtl. vorhandenen Daten des Ziel-"
-"Laufwerkes werden hierbei gelöscht."
+"Wähle das Ziellaufwerk, welches mit Hilfe der ausgewählte Backup-Image "
+"Datei, wiederhergestellt werden soll. Alle evtl. vorhandenen Daten des "
+"Ziellaufwerkes werden hierbei gelöscht."
 
 msgid "Step 4: Select Partitions to Restore"
 msgstr "Schritt 4: Partitionen zum Wiederherstellen auswählen"
@@ -620,7 +621,7 @@ msgstr ""
 "sicher und hat keinerlei negativen Auswirkungen."
 
 msgid "You will <b>not</b> be overwriting the partition table."
-msgstr "Hiermit wirst du die Partitionstabelle <b>nicht</b> überschreiben."
+msgstr "Hiermit wird die Partitionstabelle <b>nicht</b> überschrieben."
 
 msgid "The source does not contain a partition table."
 msgstr "Die Quelle beinhaltet keine Partitionstabelle."
@@ -645,10 +646,10 @@ msgid "Not restoring this partition"
 msgstr "Diese Partition nicht wiederherstellen"
 
 msgid "When you are ready to continue, click <b>Next</b>."
-msgstr "Wenn du bereit bist fortzufahren, klicke auf <b>Weiter</b>."
+msgstr "Wenn du bereit bist fortzufahren, klicke <b>Weiter</b>."
 
 msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
-msgstr "Duchsuche und hänge Logical Volume Manager (LVM) aus..."
+msgstr "Duchsuche und hänge Logical Volume Manager (LVM) aus ..."
 
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
 msgstr ""
@@ -688,10 +689,10 @@ msgstr ""
 "unwiderruflich überschrieben!"
 
 msgid "Source image"
-msgstr "Quell-Sicherung"
+msgstr "Quellabbild"
 
 msgid "Destination drive"
-msgstr "Ziel-Laufwerk"
+msgstr "Ziellaufwerk"
 
 msgid "Restoring the following partitions"
 msgstr "Folgende Partitionen werden wiederhergestellt"
@@ -703,7 +704,7 @@ msgid "Will <b>NOT</b> be overwriting partition table"
 msgstr "Die Partitionstabelle wird <b>NICHT</b> überschrieben"
 
 msgid "To start the restore, click <b>Next</b>."
-msgstr "Um die Wiederherstellung zu starten klicke auf <b>Weiter</b>."
+msgstr "Um die Wiederherstellung zu starten klicke <b>Weiter</b>."
 
 msgid "Restoring From Backup"
 msgstr "Wiederherstellung aus Backup-Image"
@@ -721,7 +722,7 @@ msgid "Restoring {description} to {destination_partition} ({destination_descript
 msgstr "{description} wird auf {destination_partition} ({destination_description}) wiederhergestellt"
 
 msgid "Synchronizing disks..."
-msgstr "Synchronisiere Laufwerke..."
+msgstr "Synchronisiere Laufwerke ..."
 
 msgid "Querying hard drive geometry of {device}"
 msgstr "Abfrage der Festplattengeometrie von {device}"
@@ -731,8 +732,8 @@ msgstr "Prüfe {device} mit {app}"
 
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
 msgstr ""
-"Lege Dateisystem an {partition} ({filesystem}]. Dies kann eine Weile "
-"dauern..."
+"Lege Dateisystem an {partition} ({filesystem}]. Dies kann eine Weile dauern "
+"..."
 
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
 msgstr ""
@@ -771,7 +772,7 @@ msgid "Successfully updated initramfs"
 msgstr "Aktualisierung von initramfs erfolgreich"
 
 msgid "Updating EFI NVRAM..."
-msgstr "Aktualisiere EFI NVRAM..."
+msgstr "Aktualisiere EFI NVRAM ..."
 
 msgid "Successfully updated EFI NVRAM"
 msgstr "Aktualisierung von EFI NVRAM erfolgreich"
@@ -812,7 +813,7 @@ msgid "Confirm the restore summary."
 msgstr "Bestätige die Zusammenfassung der Wiederherstellung."
 
 msgid "Backup restored successfully."
-msgstr "Wiederherstellung erfolgreich."
+msgstr "Die Wiederherstellung war erfolgreich."
 
 msgid "Image Explorer\n"
 "      (beta)"
@@ -830,12 +831,12 @@ msgid "Step 3: Select Partition to Explore"
 msgstr "Schritt 3: Partition auswählen"
 
 msgid "Select the partition to access files from."
-msgstr "Wähle die Partition, von der auf die Dateien zugegriffen werden sollen."
+msgstr "Wähle die Partition, von der auf die Dateien zugegriffen werden soll."
 
 msgid "Click <b>Mount</b> to mount the backup image (as read-only)."
 msgstr ""
-"Klicke auf <b>Einhängen</b> um das Wiederherstellungs-Image einzuhängen (nur "
-"lesen)."
+"Klicke <b>Einhängen</b>, um das Wiederherstellungs-Image einzuhängen (nur "
+"lesend)."
 
 msgid "Mount"
 msgstr "Einhängen"
@@ -848,8 +849,8 @@ msgstr "Aushängen"
 
 msgid "Once the partition has been mounted, click <b>Open in file manager</b> to access your files."
 msgstr ""
-"Sobald die Partition eingehangen ist, klicke auf <b>Öffnen im Datei-Manager</"
-"b> um auf deine Dateien zuzugreifen."
+"Sobald die Partition eingehangen ist, klicke <b>Öffnen im Dateimanager</b>, "
+"um auf deine Dateien zuzugreifen."
 
 msgid "Open in file manager"
-msgstr "Im Datei-Manager öffnen"
+msgstr "Im Dateimanager öffnen"

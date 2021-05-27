@@ -1,8 +1,15 @@
+# Shasheen Ediriweera <shasheene@gmail.com>, 2021.
 msgid ""
 msgstr ""
+"PO-Revision-Date: 2021-05-27 01:53+0000\n"
+"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
+"Language-Team: German <https://hosted.weblate.org/projects/rescuezilla/"
+"graphical-shutdown/de/>\n"
 "Language: de\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.7-dev\n"
 
 msgid "End Session"
 msgstr "Logout Rescuezilla session"
@@ -14,7 +21,7 @@ msgid "Shutdown"
 msgstr ""
 
 msgid "Reboot"
-msgstr "Neu starten"
+msgstr "Neustarten"
 
 msgid "Choose action."
 msgstr "Wähle eine Option"
