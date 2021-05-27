@@ -4,12 +4,13 @@
 # Zeit 439 <darspr82@gmail.com>
 # Submitted at: https://github.com/rescuezilla/rescuezilla/issues/135
 #
+# Matthaiks <kitynska@gmail.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2021-05-18 21:28+0000\n"
+"PO-Revision-Date: 2021-05-26 10:58+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/pl/>\n"
@@ -576,7 +577,7 @@ msgid "You will <b>not</b> be overwriting the partition table."
 msgstr "<b>Nie</b> będziesz nadpisywać tabeli partycji."
 
 msgid "The source does not contain a partition table."
-msgstr ""
+msgstr "Źródło nie zawiera tabeli partycji."
 
 msgid "The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table."
 msgstr "Kolumna \"partycja docelowa\" została zaktualizowana o istniejące informacje w tabeli partycji dysku docelowego.\n\n<b>Kolumna partycji docelowej może zostać zmodyfikowana jako menu rozwijane. Nieprawidłowe mapowanie partycji docelowych może spowodować, że systemy operacyjne nie będą się już uruchamiać.</b> Jeśli nie masz pewności co do mapowania, zastanów się, czy bardziej odpowiednie jest nadpisanie tabeli partycji."

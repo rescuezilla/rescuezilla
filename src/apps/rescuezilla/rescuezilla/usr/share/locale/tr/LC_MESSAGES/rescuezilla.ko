@@ -1,9 +1,10 @@
+# Oğuz Ersen <oguzersen@protonmail.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2021-05-20 04:02+0000\n"
+"PO-Revision-Date: 2021-05-26 10:58+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/tr/>\n"
@@ -594,7 +595,7 @@ msgid "You will <b>not</b> be overwriting the partition table."
 msgstr "Bölümlendirme tablosunun üzerine <b>yazmayacaksınız</b>."
 
 msgid "The source does not contain a partition table."
-msgstr ""
+msgstr "Kaynak bir bölümlendirme tablosu içermiyor."
 
 msgid "The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table."
 msgstr ""

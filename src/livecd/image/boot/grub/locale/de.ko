@@ -3,52 +3,60 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-27 14:12+0930\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2021-05-27 01:53+0000\n"
+"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
+"Language-Team: German <https://hosted.weblate.org/projects/rescuezilla/"
+"grub-boot/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.7-dev\n"
 
 msgid "Start Rescuezilla"
-msgstr "Rescuezilla"
+msgstr "Starte Rescuezilla"
 
 msgid "If boot fails, reboot and try selecting Graphical fallback instead"
 msgstr ""
+"Sollte das Hochfahren scheitern, starte den Computer neu und wähle dann den "
+"grafischen Rückfallmodus"
 
 msgid "Graphical fallback mode"
-msgstr "Grafischer Fallback-Modus"
+msgstr "Grafischer Rückfallmodus"
 
 msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
 msgstr ""
+"Nutze den Grafiktreiber in geringerer Auflösung wenn der reguläre mit deiner "
+"Hardware nicht funktioniert"
 
 msgid "Load USB into RAM"
-msgstr "USB nach RAM laden"
+msgstr "USB in RAM laden"
 
 msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
 msgstr ""
+"Lädt Rescuezilla in den Speicher, was dir erlaubt, das Bootmedium nach dem "
+"Hochfahren zu entfernen"
 
 msgid "Check USB for defects"
-msgstr "Rescuezilla CD prüfen"
+msgstr "Rescuezilla Medium auf Fehler überprüfen"
 
 msgid "Verify integrity of USB drive"
-msgstr "Prüft die eingelegte Rescuezilla CD auf Defekte."
+msgstr "Prüft das Rescuezilla Medium auf Fehler"
 
 msgid "Enter BIOS Setup"
-msgstr ""
+msgstr "BIOS Setup aufrufen"
 
 msgid "Configure machine's firmware, boot options etc"
-msgstr ""
+msgstr "Die Firmware des Computers überprüfen, die Boot-Optionen, etc"
 
 msgid "Memory test"
-msgstr "(RAM) prüfen"
+msgstr "RAM testen"
 
 msgid "Check computer memory for errors"
 msgstr "Prüft den Arbeitsspeicher (RAM) auf Fehler"

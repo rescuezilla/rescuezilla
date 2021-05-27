@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2021-05-21 10:02+0000\n"
+"PO-Revision-Date: 2021-05-26 08:50+0000\n"
 "Last-Translator: 池边树下 <mzky@163.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "rescuezilla/rescuezilla/zh_Hans/>\n"
@@ -49,19 +49,19 @@ msgid "Next >"
 msgstr "下一步 >"
 
 msgid "Please wait..."
-msgstr "请等待..."
+msgstr "请稍候…"
 
 msgid "Identifying disk drives..."
 msgstr "识别磁盘驱动器..."
 
 msgid "Unmounting: {path}"
-msgstr "解除挂载：{path}"
+msgstr "卸载：{path}"
 
 msgid "Unable to unmount {path}"
 msgstr "无法卸载 {path}"
 
 msgid "Running: {app}"
-msgstr "运行中：{app}"
+msgstr "正在运行：{app}"
 
 msgid "Running {app} on {device}"
 msgstr "在 {device}上运行 {app}"
@@ -79,7 +79,7 @@ msgid "Step 1: Understanding Cloning"
 msgstr "第1步：了解克隆"
 
 msgid "Please understand how \"cloning\" differs from \"imaging\"."
-msgstr "请理解 \"克隆 \"与 \"镜像\"的不同之处。"
+msgstr "请了解 \"克隆 \"与 \"镜像\"的不同之处。"
 
 msgid "This mode is for \"disk cloning\". Cloning means copying one drive and directly overwriting another drive. This is a direct one-step operation with no temporary storage required.\n"
 "\n"
@@ -103,16 +103,16 @@ msgid "Step 2: Select Source Drive"
 msgstr "第2步：选择源磁盘"
 
 msgid "Select the <b>source drive</b> to clone."
-msgstr "选择<b>源驱动器</b>来克隆。"
+msgstr "选择<b>源磁盘</b>来克隆。"
 
 msgid "Select the <b>destination drive</b> to overwrite."
-msgstr "选择要覆盖的<b>目标驱动器</b>。"
+msgstr "选择要覆盖的<b>目标磁盘</b>。"
 
 msgid "Step 4: Select Partitions to Clone"
 msgstr "第4步：选择要克隆的分区"
 
 msgid "Select which partitions from the source drive to clone, and whether to overwrite the partition table. <b>Leave everything selected to completely clone the source drive to the destination drive.</b>"
-msgstr "从源驱动器中选择要克隆的分区，以及是否覆盖分区表。 <b>将根据选择完全克隆源驱动器留到目的地驱动器。</b>"
+msgstr "从源磁盘中选择要克隆的分区，以及是否覆盖分区表。 <b>将根据选择克隆源磁盘到目标磁盘。</b>"
 
 msgid "Step 5: Confirm Cloning Configuration"
 msgstr "第5步：确认克隆配置"
@@ -127,13 +127,13 @@ msgid "To start cloning, click <b>Next</b>."
 msgstr "要开始克隆，点击<b>下一步</b>。"
 
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
-msgstr "您确定要将备份镜像还原到 {destination_drive} 吗？这样做将永久覆盖该驱动器上的数据！"
+msgstr "您确定要将备份镜像还原到 {destination_drive} 吗？这样做将永久覆盖该磁盘上的数据！"
 
 msgid "Step 6: Cloning Disk"
 msgstr "第6步：克隆磁盘"
 
 msgid "Cloning the drive you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
-msgstr "克隆你所选择的驱动器。 这可能需要一个小时或更长时间，取决于你的电脑速度和数据量。"
+msgstr "克隆你所选择的磁盘。 这可能需要一个小时或更长时间，取决于你的电脑速度和数据量。"
 
 msgid "Summary of Clone"
 msgstr "克隆摘要"
@@ -145,10 +145,10 @@ msgid "Confirm the clone summary."
 msgstr "确认克隆摘要。"
 
 msgid "Unable to shutdown Image Explorer"
-msgstr "无法关闭镜像资源管理器"
+msgstr "无法关闭镜像浏览器"
 
 msgid "Step 1: Select Drive To Backup"
-msgstr "第1步：选择要备份的驱动器"
+msgstr "第1步：选择要备份的磁盘"
 
 msgid "Select the <b>source drive</b> that you would like to create a backup image from."
 msgstr "选择需要备份为镜像的<b>源磁盘</b>。"
@@ -190,7 +190,7 @@ msgid "Step 3: Select Destination Drive"
 msgstr "第3步：选择镜像要保存的磁盘"
 
 msgid "Click on the box below to select the source drive that you would like to create a backup image from."
-msgstr "在下边选项中，选择要备份为镜像的磁盘（源磁盘）。"
+msgstr "在下边选项中，选择要备份为镜像的源磁盘。"
 
 msgid "Connected directly to my computer"
 msgstr "直接连接到我的计算机"
@@ -214,7 +214,7 @@ msgid "Share location (UNC path)"
 msgstr "共享位置（UNC路径）"
 
 msgid "Username"
-msgstr "用户名"
+msgstr "帐号"
 
 msgid "Password"
 msgstr "密码"
@@ -238,7 +238,7 @@ msgid "Optional"
 msgstr "可选"
 
 msgid "Select network-shared storage location:"
-msgstr "选择网络共享存储位置:"
+msgstr "选择网络共享存储位置："
 
 msgid "Select the partition where the image files will be saved to"
 msgstr "选择将镜像文件保存到的分区"
@@ -253,7 +253,7 @@ msgid "Close this popup to cancel the mount operation."
 msgstr "关闭此弹出窗口以取消挂载操作。"
 
 msgid "Please ensure the username, password and other fields provided are correct, and try again."
-msgstr "请确保提供的用户名、密码和其他字段正确，然后重试。"
+msgstr "请确保提供的账号、密码和其他字段正确，然后重试。"
 
 msgid "Must provide either password or SSH identity file."
 msgstr "必须提供密码或SSH身份文件。"
@@ -271,7 +271,7 @@ msgid "Scanning: {filename}"
 msgstr "正在扫描：{filename}"
 
 msgid "Error processing the following images:"
-msgstr "处理以下镜像时出错:"
+msgstr "处理以下镜像时出错："
 
 msgid "Unable to fully process the image associated with the following partitions:"
 msgstr "无法完全处理与下列分区相关的镜像："
@@ -299,7 +299,7 @@ msgstr "未知的文件系统"
 
 msgid "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance."
 msgstr ""
-"备份的扩展分区信息为空。如果备份包含一个扩展分区，则无法正确恢复。所有数据仍可完全恢复，但需要人工干预以完全恢复扩展分区内的数据。请咨询{url}获取信息"
+"备份的扩展分区信息为空，如果备份包含一个扩展分区，则无法正确恢复。所有数据仍可完全恢复，但需要人工干预以完全恢复扩展分区内的数据。请咨询{url}获取信息"
 "和帮助。"
 
 msgid "The backup's bootloader data is shorter than expected. If the backup contained certain bootloaders like GRUB, during a restore operation Rescuezilla will try and re-install the bootloader."
@@ -421,7 +421,7 @@ msgid "Step 8: Creating Backup Image"
 msgstr "第8步：创建备份镜像中"
 
 msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
-msgstr "将系统备份到所选位置，这可能需要一个小时或更长时间(取决于计算机的速度和数据量)。"
+msgstr "将系统备份到所选位置，这可能需要一个小时或更长时间，取决于计算机的速度和数据量。"
 
 msgid "Saving: {file}"
 msgstr "保存：{file}"
@@ -463,10 +463,10 @@ msgid "Backup saved successfully."
 msgstr "备份已成功保存。"
 
 msgid "Backup succeeded with some errors:"
-msgstr "备份成功，但出现一些错误:"
+msgstr "备份成功，但出现一些错误："
 
 msgid "Backup operation failed:"
-msgstr "备份操作失败:"
+msgstr "备份操作失败："
 
 msgid "User requested operation to stop."
 msgstr "用户请求停止操作。"
@@ -484,7 +484,7 @@ msgid "Where are the image files stored?"
 msgstr "选择源镜像所在位置？"
 
 msgid "Select the partition which contains the image files:"
-msgstr "选择源磁盘:"
+msgstr "选择源磁盘："
 
 msgid "Step 2: Select Backup Image"
 msgstr "第2步：选择要还原的镜像"
@@ -496,10 +496,10 @@ msgid "Select the image file to restore."
 msgstr "选择要还原的镜像文件。"
 
 msgid "Step 3: Select Drive To Restore"
-msgstr "第3步：选择要还原的镜像"
+msgstr "第3步：选择要还原的磁盘"
 
 msgid "Select the destination drive to restore with the selected image."
-msgstr "选择要覆盖的目标磁盘并将所选映像还原到该驱动器，目标磁盘中现有的数据将被删除。"
+msgstr "选择目标驱动器，用选定的镜像进行恢复。"
 
 msgid "Step 4: Select Partitions to Restore"
 msgstr "第4步：选择要还原的分区"
@@ -574,7 +574,7 @@ msgid "Confirm the following restore configuration."
 msgstr "确认还原配置。"
 
 msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!"
-msgstr "您确定要将备份镜像还原到 {destination_drive} 吗？这样做将永久覆盖该驱动器上的数据！"
+msgstr "您确定要将备份镜像还原到 {destination_drive} 吗？这样做将永久覆盖该磁盘上的数据！"
 
 msgid "Source image"
 msgstr "源镜像"
@@ -610,7 +610,7 @@ msgid "Synchronizing disks..."
 msgstr "同步磁盘..."
 
 msgid "Querying hard drive geometry of {device}"
-msgstr "查询{device}的硬盘驱动器的结构"
+msgstr "查询{device}的磁盘结构"
 
 msgid "Probing {device} with {app}"
 msgstr "用{app}探测{device}"
@@ -658,10 +658,10 @@ msgid "Successfully updated EFI NVRAM"
 msgstr "成功更新了EFI NVRAM"
 
 msgid "Error restoring image: "
-msgstr "还原镜像时出错: "
+msgstr "还原镜像时出错： "
 
 msgid "Could not restore sfdisk partition table as file has zero length: "
-msgstr "由于文件长度为零，因此无法还原sfdisk分区表: "
+msgstr "由于文件长度为零，因此无法还原sfdisk分区表： "
 
 msgid "Successfully restored partition table."
 msgstr "分区表已还原成功。"
@@ -697,7 +697,7 @@ msgid "Image Explorer\n"
 "      (beta)"
 msgstr ""
 "镜像浏览器\n"
-"      （测试版）"
+"（测试版）"
 
 msgid "Image Explorer (beta)"
 msgstr "镜像浏览器（测试版）"
