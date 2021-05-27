@@ -1,16 +1,14 @@
 # Spanish translation of Rescuezilla
 # Copyright (C) 2019
 # This file is distributed under the same license as the PACKAGE package.
-# Carlos Luna <caralu74@protonmail.com>, 2019
+# Carlos Luna <caralu74@protonmail.com>, 2019, 2021.
 # Submitted at: https://github.com/rescuezilla/rescuezilla/issues/28
-#
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2021-05-18 21:28+0000\n"
+"PO-Revision-Date: 2021-05-27 01:53+0000\n"
 "Last-Translator: caralu74 <caralu74@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/es/>\n"
@@ -353,9 +351,12 @@ msgstr "Paso 4: Seleccione la carpeta de destino"
 msgid "Click <b>Browse</b> to select the folder on the destination drive where your new backup image will be saved.\n"
 "\n"
 "The folder a backup is saved in is usually a description of the computer, e.g. <b>office1</b> or <b>zack-laptop</b>."
-msgstr "Haga clic en <b>Examinar</b> o cree una carpeta en la unidad de destino donde se almacenará la imagen de copia de seguridad."
+msgstr ""
+"Haga clic en <b>Examinar</b> o cree una carpeta en la unidad de destino "
+"donde se almacenará la imagen de copia de seguridad.\n"
 "\n"
-"La carpeta en la que se guarda una copia de seguridad suele ser una descripción del computador, e.j. <b>MI_PC</b> o <b>Portatil-Juan</b>."
+"La carpeta en la que se guarda una copia de seguridad suele ser una "
+"descripción del computador, e.j. <b>MI_PC</b> o <b>Portatil-Juan</b>."
 
 msgid "You must select a folder inside {location}"
 msgstr "Debe seleccionar un directorio/carpeta dentro de {location}"
@@ -590,7 +591,7 @@ msgid "You will <b>not</b> be overwriting the partition table."
 msgstr "<b>No</b> se va a sobreescribir la tabla de partición."
 
 msgid "The source does not contain a partition table."
-msgstr ""
+msgstr "La fuente no contiene una tabla de partición."
 
 msgid "The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table."
 msgstr "Se ha actualizado la columna de \"partición de destino\" con la información de la tabla de partición existente en la unidad de destino.\n\n<b>La columna de partición de destino se puede modificar como un menú desplegable. Un mapeo incorrecto de las particiones de destino puede provocar que los sistemas operativos dejen de arrancar.</b> Si no estás seguro del mapeo, piensa si es más adecuado sobreescribir la tabla de partición en lugar de ello."
@@ -780,28 +781,32 @@ msgid "Image Explorer (beta)"
 msgstr "Explorador de imágenes (beta)"
 
 msgid "Select the image file to explore"
-msgstr ""
+msgstr "Seleccione el archivo de imagen a examinar"
 
 msgid "Step 3: Select Partition to Explore"
-msgstr ""
+msgstr "Paso 3: Seleccione la partición a examinar"
 
 msgid "Select the partition to access files from."
-msgstr ""
+msgstr "Seleccione la partición desde la que desea acceder a los archivos."
 
 msgid "Click <b>Mount</b> to mount the backup image (as read-only)."
 msgstr ""
+"Haga clic en <b>Montar</b> para montar la imagen de copia de seguridad (como "
+"solo lectura)."
 
 msgid "Mount"
-msgstr ""
+msgstr "Montar"
 
 msgid "Mounting as read-only..."
-msgstr ""
+msgstr "Montar en solo-lectura..."
 
 msgid "Unmount"
-msgstr ""
+msgstr "Desmontar"
 
 msgid "Once the partition has been mounted, click <b>Open in file manager</b> to access your files."
 msgstr ""
+"Una vez montada la partición, haga clic en <b>Abrir en el administrador de "
+"archivos</b> para acceder a sus archivos."
 
 msgid "Open in file manager"
-msgstr ""
+msgstr "Abrir en el gestor de archivos"
