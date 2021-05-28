@@ -73,7 +73,12 @@ fi
 
 echo "Copy debootstrap package cache"
 rsync --archive "$PKG_CACHE_DIRECTORY/$DEBOOTSTRAP_CACHE_DIRECTORY/" "$BUILD_DIRECTORY/chroot/"
-
+RET=$?
+if [[ $RET -ne 0 ]]; then
+    echo "Failed to copy"
+    exit 1
+fi
+ 
 # debootstrap part 2/2: Bootstrap a Debian root filesystem based on cached packages directory (part 2/2)
 chroot $BUILD_DIRECTORY/chroot/ /bin/bash -c 'DEBOOTSTRAP_DIR="debootstrap" ./debootstrap/debootstrap --second-stage'
 RET=$?
@@ -91,6 +96,11 @@ if [ -d "$PKG_CACHE_DIRECTORY/$APT_PKG_CACHE_DIRECTORY/" ] ; then
     mkdir -p "$BUILD_DIRECTORY/chroot/var/cache/apt/archives/"
     echo "Copy apt package cache"
     rsync --archive "$PKG_CACHE_DIRECTORY/$APT_PKG_CACHE_DIRECTORY/" "$BUILD_DIRECTORY/chroot/var/cache/apt/archives"
+    RET=$?
+    if [[ $RET -ne 0 ]]; then
+        echo "Failed to copy"
+        exit 1
+    fi
 fi
 
 # Copy cached apt indexes, if present, to a temporary directory, to reduce need to download packages from internet.
@@ -98,6 +108,11 @@ if [ -d "$PKG_CACHE_DIRECTORY/$APT_INDEX_CACHE_DIRECTORY/" ] ; then
     mkdir -p "$BUILD_DIRECTORY/chroot/var/lib/apt/"
     echo "Copy apt index cache"
     rsync --archive "$PKG_CACHE_DIRECTORY/$APT_INDEX_CACHE_DIRECTORY/" "$BUILD_DIRECTORY/chroot/var/lib/apt/lists.cache"
+    RET=$?
+    if [[ $RET -ne 0 ]]; then
+        echo "Failed to copy"
+        exit 1
+    fi
 fi
 
 cd "$BUILD_DIRECTORY"
@@ -110,9 +125,21 @@ cp /etc/resolv.conf chroot/etc/resolv.conf
 
 # Copy the CHANGELOG
 rsync --archive "$BASEDIR/CHANGELOG" "$BUILD_DIRECTORY/chroot/usr/share/rescuezilla/"
+RET=$?
+if [[ $RET -ne 0 ]]; then
+    echo "Failed to copy"
+    exit 1
+fi
 
 # Synchronize apt package manager configuration files
 rsync --archive "$BASEDIR/src/livecd/chroot/etc/apt/" "$BUILD_DIRECTORY/chroot/etc/apt"
+RET=$?
+if [[ $RET -ne 0 ]]; then
+    echo "Failed to copy"
+    exit 1
+fi
+
+
 # Renames the apt-preferences file to ensure backports and proposed
 # repositories for the desired code name are never automatically selected.
 pushd "chroot/etc/apt/preferences.d/"
@@ -142,6 +169,11 @@ cd "$BASEDIR"
 # Copy the source FHS filesystem tree onto the build's chroot FHS tree, overwriting the base files where conflicts occur.
 # The only exception the apt package manager configuration files which have already been copied above.
 rsync --archive --exclude "chroot/etc/apt" src/livecd/ "$BUILD_DIRECTORY"
+RET=$?
+if [[ $RET -ne 0 ]]; then
+    echo "Failed to copy"
+    exit 1
+fi
 
 cp --archive $BUILD_DIRECTORY/../*.deb "$BUILD_DIRECTORY/chroot/"
 if [[ $? -ne 0 ]]; then
@@ -210,8 +242,17 @@ if [[ $? -ne 0 ]]; then
 fi
 
 rsync --archive chroot/var.cache.apt.archives/ "$BASEDIR/$PKG_CACHE_DIRECTORY/$APT_PKG_CACHE_DIRECTORY"
+if [[ $? -ne 0 ]]; then
+    echo "Error: Failed to copy."
+    exit 1
+fi
+
 rm -rf chroot/var.cache.apt.archives
 rsync --archive chroot/var.lib.apt.lists/ "$BASEDIR/$PKG_CACHE_DIRECTORY/$APT_INDEX_CACHE_DIRECTORY"
+if [[ $? -ne 0 ]]; then
+    echo "Error: Failed to copy."
+    exit 1
+fi
 rm -rf chroot/var.lib.apt.lists
 
 umount -lf chroot/dev/
