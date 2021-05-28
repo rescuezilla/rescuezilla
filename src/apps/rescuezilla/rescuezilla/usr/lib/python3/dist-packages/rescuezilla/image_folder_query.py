@@ -42,6 +42,7 @@ from wizard_state import MOUNT_DIR
 class ImageFolderQuery:
     def __init__(self, builder, image_list_store):
         self.image_dict = {}
+        self.scanned_folder_set = set()
         # Relying on CPython GIL to communicate between threads.
         self.failed_to_read_image_dict = {}
         self.builder = builder
@@ -159,7 +160,7 @@ class ImageFolderQuery:
             ErrorMessageModalPopup(self.builder,str(traceback_messages), error_heading=_("Error processing the following images:"))
         self.please_wait_popup.destroy()
 
-    def scan_file(self, absolute_path, filename, enduser_filename):
+    def scan_file(self, absolute_path, filename, enduser_filename, is_subfolder):
         print("Scan file " + absolute_path)
         is_image = False
         try:
@@ -181,6 +182,7 @@ class ImageFolderQuery:
                     error_suffix = _(
                         "This can happen when loading images which Clonezilla was unable to completely backup.")
                     error_suffix += " " + _("Any other filesystems within the image should be restorable as normal.")
+                    self.scanned_folder_set.add(basename)
                     is_image = True
                 elif absolute_path.endswith(".backup"):
                     # The legacy Redo Backup and Recovery v0.9.3-v1.0.4 format was adapted and extended Foxclone, so
@@ -199,6 +201,7 @@ class ImageFolderQuery:
                                       _("Scanning: {filename}").format(filename=absolute_path))
                         temp_image_dict = {absolute_path: RedoBackupLegacyImage(absolute_path, enduser_filename, filename)}
                         error_suffix = _("Any other filesystems within the image should be restorable as normal.")
+                        self.scanned_folder_set.add(basename)
                         is_image = True
                 elif absolute_path.endswith(".redo"):
                     # The Redo Rescue format's metadata is a JSON file ending in .redo. Unfortunately this conflicts
@@ -212,6 +215,7 @@ class ImageFolderQuery:
                                       _("Scanning: {filename}").format(filename=absolute_path))
                         temp_image_dict = {absolute_path: RedoRescueImage(absolute_path, enduser_filename, filename)}
                         error_suffix = _("Any other filesystems within the image should be restorable as normal.")
+                        self.scanned_folder_set.add(basename)
                         is_image = True
                     else:
                         print("Found a legacy Redo Backup and Recovery v0.9.2 image " + filename)
@@ -219,6 +223,7 @@ class ImageFolderQuery:
                                       _("Scanning: {filename}").format(filename=absolute_path))
                         temp_image_dict = {absolute_path: RedoBackupLegacyImage(absolute_path, enduser_filename, filename)}
                         error_suffix = _("Any other filesystems within the image should be restorable as normal.")
+                        self.scanned_folder_set.add(basename)
                         is_image = True
                 elif absolute_path.endswith(".partitions") and not absolute_path.endswith(".minimum.partitions"):
                     print("Found FOG Project image " + filename)
@@ -226,6 +231,7 @@ class ImageFolderQuery:
                                   _("Scanning: {filename}").format(filename=absolute_path))
                     temp_image_dict = {absolute_path: FogProjectImage(absolute_path, enduser_filename, filename)}
                     error_suffix = _("Any other filesystems within the image should be restorable as normal.")
+                    self.scanned_folder_set.add(basename)
                     is_image = True
                 elif absolute_path.endswith(".fsa"):
                     print("Found FSArchiver image " + filename)
@@ -233,17 +239,32 @@ class ImageFolderQuery:
                                   _("Scanning: {filename}").format(filename=absolute_path))
                     temp_image_dict = {absolute_path: FsArchiverImage(absolute_path, enduser_filename, filename)}
                     error_suffix = ""
+                    self.scanned_folder_set.add(basename)
                     is_image = True
-                elif QemuImage.is_supported_extension(filename):
-                    print("Found an extension that should be compatible with qemu-nbd: " + filename)
-                    print("Skipping: " + filename)
-                    timeout_seconds = 10
-                    GLib.idle_add(self.please_wait_popup.set_secondary_label_text,
-                                  _("Scanning: {filename}").format(filename=absolute_path)
-                                  + " " + _("({timeout_seconds} second timeout)").format(timeout_seconds=timeout_seconds))
-                    temp_image_dict = {absolute_path: QemuImage(absolute_path, enduser_filename, timeout_seconds)}
-                    error_suffix = _("Support for virtual machine images is still experimental.")
-                    is_image = True
+                # If haven't found an image for this file, try scanning for QemuImages. Due to slow scan, do not look
+                # in subfolders
+                else:
+                    is_qemu_candidate, extension = QemuImage.is_supported_extension(filename)
+                    if is_qemu_candidate:
+                        # TODO: Considering skipping raw images, for speedup.
+                        # is_raw = QemuImage.does_file_extension_refer_to_raw_image(extension)
+                        if not basename in self.scanned_folder_set:
+                            if QemuImage.has_conflict_img_format_in_same_folder(absolute_path, extension):
+                                self.scanned_folder_set.add(basename)
+                            else:
+                                print("Found an extension that should be compatible with qemu-nbd: " + filename)
+                                print("Skipping: " + filename)
+                                timeout_seconds = 10
+                                GLib.idle_add(self.please_wait_popup.set_secondary_label_text,
+                                              _("Scanning: {filename}").format(filename=absolute_path)
+                                              + " " + _("({timeout_seconds} second timeout)").format(timeout_seconds=timeout_seconds))
+                                qemu_img = QemuImage(absolute_path, enduser_filename, timeout_seconds)
+                                if qemu_img.has_initialized:
+                                    temp_image_dict = {absolute_path: QemuImage(absolute_path, enduser_filename, timeout_seconds)}
+
+                                    error_suffix = _("Support for virtual machine images is still experimental.")
+                                    self.scanned_folder_set.add(basename)
+                                    is_image = True
                 if is_image:
                     image_warning_message = ""
                     for key in temp_image_dict.keys():
@@ -264,6 +285,7 @@ class ImageFolderQuery:
 
     def scan_image_directory(self):
         self.image_dict.clear()
+        self.scanned_folder_set.clear()
         self.failed_to_read_image_dict.clear()
         try:
             # list files and directories
@@ -274,7 +296,7 @@ class ImageFolderQuery:
                 print("Scanning " + abs_base_scan_path)
                 if isfile(abs_base_scan_path):
                     print("Scanning file " + abs_base_scan_path)
-                    self.scan_file(abs_base_scan_path, filename, filename)
+                    self.scan_file(abs_base_scan_path, filename, filename, is_subfolder=False)
                 elif isdir(abs_base_scan_path):
                     GLib.idle_add(self.please_wait_popup.set_secondary_label_text,
                                   _("Scanning: {filename}").format(filename=abs_base_scan_path))
@@ -286,7 +308,7 @@ class ImageFolderQuery:
                         enduser_filename = os.path.join(filename, subdir_filename)
                         if isfile(absolute_path):
                             print("Scanning subdir file " + absolute_path)
-                            self.scan_file(absolute_path, subdir_filename, enduser_filename)
+                            self.scan_file(absolute_path, subdir_filename, enduser_filename, is_subfolder=True)
         except Exception as e:
             tb = traceback.format_exc()
             GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
