@@ -65,14 +65,16 @@ class CombinedDriveState:
                 # drive_state[drive_longdevname]['capacity'] = parted_dict_dict['type']
 
             if drive_longdevname in parted_dict_dict.keys():
-                drive_state[drive_longdevname]['model'] = parted_dict_dict[drive_longdevname]['model']
-                drive_state[drive_longdevname]['partition_table'] = parted_dict_dict[drive_longdevname][
-                    'partition_table']
-                drive_state[drive_longdevname]['flags'] = parted_dict_dict[drive_longdevname]['flags']
-                drive_state[drive_longdevname]['logical_sector_size'] = parted_dict_dict[drive_longdevname][
-                    'logical_sector_size']
-                drive_state[drive_longdevname]['physical_sector_size'] = parted_dict_dict[drive_longdevname][
-                    'physical_sector_size']
+                if 'model' in  parted_dict_dict[drive_longdevname].keys():
+                    drive_state[drive_longdevname]['model'] = parted_dict_dict[drive_longdevname]['model']
+                if 'partition_table' in  parted_dict_dict[drive_longdevname].keys():
+                    drive_state[drive_longdevname]['partition_table'] = parted_dict_dict[drive_longdevname]['partition_table']
+                if 'flags' in  parted_dict_dict[drive_longdevname].keys():
+                    drive_state[drive_longdevname]['flags'] = parted_dict_dict[drive_longdevname]['flags']
+                if 'logical_sector_size' in  parted_dict_dict[drive_longdevname].keys():
+                    drive_state[drive_longdevname]['logical_sector_size'] = parted_dict_dict[drive_longdevname]['logical_sector_size']
+                if 'physical_sector_size' in  parted_dict_dict[drive_longdevname].keys():
+                    drive_state[drive_longdevname]['physical_sector_size'] = parted_dict_dict[drive_longdevname]['physical_sector_size']
 
             # drive_state[drive_longdevname]['fstype'] = current_block_device['fstype']
 
