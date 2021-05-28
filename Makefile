@@ -1,8 +1,8 @@
 .DEFAULT_GOAL := focal
-.PHONY: all focal groovy i386 deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-utils partclone-nbd clean-build-dir clean clean-all
+.PHONY: all focal hirsute i386 deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-utils partclone-nbd clean-build-dir clean clean-all
 
 # FIXME: Properly specify the build artifacts to allow the GNU make to actually be smart about what gets built and when.
-# FIXME: This lack of specifying dependency graph means requires eg, `make focal` and `make groovy` has to be done as separate invocations
+# FIXME: This lack of specifying dependency graph means requires eg, `make focal` and `make hirsute` has to be done as separate invocations
 #        and things get recompiled when they don't need to be etc.
 # TODO:  Read the GNU make manual: https://www.gnu.org/software/make/manual/html_node/index.html and update this Makefile accordingly.
 #
@@ -19,13 +19,13 @@ export ARCH CODENAME
 focal: deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-utils partclone-nbd $(buildscripts)
 	./build.sh
 
-# ISO image based on Ubuntu 20.10 Groovy 64bit as a temporary measure to provide a newer Linux kernel for better support for
-# recent hardware because Ubuntu 20.04 Focal doesn't offer a Hardware Enablement / LTS Enablement Linux kernel for 20.04
-# based on the Ubuntu 20.10 kernel (but will for 21.04, 21.10 etc)
-groovy: ARCH=amd64
-groovy: CODENAME=groovy
+# ISO image based on Ubuntu 21.04 Hirsute 64bit as a temporary measure to provide a newer Linux kernel for better support for
+# recent hardware because Ubuntu 20.04 Focal immediately offer a Hardware Enablement / LTS Enablement Linux kernel for those
+# releases.
+hirsute: ARCH=amd64
+hirsute: CODENAME=hirsute
 export ARCH CODENAME
-groovy: deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-utils partclone-nbd $(buildscripts)
+hirsute: deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-utils partclone-nbd $(buildscripts)
 	./build.sh
 
 # ISO image based on Ubuntu 18.04 Bionic LTS (Long Term Support) 32bit (the last 32bit/i386 Ubuntu LTS release)
