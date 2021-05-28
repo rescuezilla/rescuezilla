@@ -8,7 +8,7 @@ A single `make deb` command generates a Rescuezilla package ready for installati
 
 Alternatively, a single `make all` command can generate an AMD64 ISO image and an i386 image, which are complete Ubuntu-based Linux live environments capable of booting from USB sticks, CD, DVD and any EFI firmware, including with EFI Secure Boot switched on.
 
-To construct such an ISO image, an Ubuntu 18.04, or similar Ubuntu-package environment capable of running debootstrap, chroot and bind mounts is currently required. However, it's currently recommended _only_ Ubuntu 18.04 (Bionic) be used to build the ISO image: older debootstrap versions may not have the scripts to bootstrap an Ubuntu 20.04 Focal package environment, and versions of debootstrap newer than v1.0.106 (2018-07-05) currently don't work due to the reasons described in [#72](https://github.com/rescuezilla/rescuezilla/issues/72). Finally, Debian and other non-Canonical package environments will not work (see the "EFI Secure Boot" section below). To build on environments other than Ubuntu 18.04, see the "Build ISO with docker" section below.
+To construct such an ISO image, an Ubuntu 18.04, or similar Ubuntu-package environment capable of running debootstrap, chroot and bind mounts is currently required. It's currently recommended _only_ Ubuntu environments be used to build the ISO image as Debian and other non-Canonical package environments GRUB packages are signed differently (see the "EFI Secure Boot" section below). To build on environments other than Ubuntu 18.04, see the "Build ISO with docker" section below.
 
 ```bash
 sudo apt-get update
