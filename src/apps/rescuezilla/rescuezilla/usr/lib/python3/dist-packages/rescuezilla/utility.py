@@ -336,6 +336,16 @@ class Utility:
             base, partition_number = Utility._split_short_device_on_p(short_device_node)
             base = "loop" + base
             return base, partition_number
+        elif short_device_node.startswith("sr"):
+            # CD/DVD drives: /dev/sr0, /dev/sr1
+            # Such drives tend to have ISO9660 filesystems directly on disks and not support standard partition tables.
+            m = REMatcher(short_device_node)
+            if m.match(r"(sr[0-9]*)"):
+                base_device_node = m.group(1)
+                partition_number = 0
+                return base_device_node, partition_number
+            else:
+                raise ValueError("Unable to split:" + device_node)
         else:
             m = REMatcher(short_device_node)
             # Following comment block copied from Clonezilla "is_partition" function:
