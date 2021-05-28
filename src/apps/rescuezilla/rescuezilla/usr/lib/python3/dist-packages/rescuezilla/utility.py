@@ -708,8 +708,14 @@ class Utility:
             elif file_output.startswith("data"):
                 # Clonezilla -z0 image (no compression)
                 return "uncompressed"
+            else:
+                # A dd image could produce a file output such as "/dev/stdin: DOS/MBR boot sector; GRand Unified
+                # Bootloader, stage1 version 0x79, boot drive 0xbb, stage2 address 0x8e70, 1st sector stage2 0xb8db31c3,
+                # stage2 segment 0x201" in which case assuming uncompressed is reasonable.
+                print("Unable to detect file compression: " + output_of_file_utility_string + " assuming uncompressed")
+                return "uncompressed"
         else:
-            raise Exception("Unable to detect file compression: " + output_of_file_utility_string)
+            raise Exception("Unable to query file compression: " + output_of_file_utility_string)
 
     @staticmethod
     def get_decompression_command_list(compression_type):
