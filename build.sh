@@ -21,6 +21,8 @@ mkdir -p "$BUILD_DIRECTORY/chroot"
 # Ensure the build directory is an absolute path
 BUILD_DIRECTORY=$( readlink -f "$BUILD_DIRECTORY" )
 PKG_CACHE_DIRECTORY=${PKG_CACHE_DIRECTORY:-pkg.cache}
+# Use a recent version of debootstrap from git
+DEBOOTSTRAP_SCRIPT_DIRECTORY=${BASEDIR}/src/third-party/debootstrap
 DEBOOTSTRAP_CACHE_DIRECTORY=debootstrap.$CODENAME.$ARCH
 APT_PKG_CACHE_DIRECTORY=var.cache.apt.archives.$CODENAME.$ARCH
 APT_INDEX_CACHE_DIRECTORY=var.lib.apt.lists.$CODENAME.$ARCH
@@ -57,23 +59,23 @@ if [ ! -d "$PKG_CACHE_DIRECTORY/$DEBOOTSTRAP_CACHE_DIRECTORY" ] ; then
     # URL [1], which means substitution becomes mandatory in-order to build older releases from scratch.
     #
     # [1] http://old-releases.ubuntu.com/ubuntu
-    debootstrap --arch=$ARCH --foreign $CODENAME $PKG_CACHE_DIRECTORY/$DEBOOTSTRAP_CACHE_DIRECTORY http://archive.ubuntu.com/ubuntu/
+    TARGET_FOLDER=`readlink -f $PKG_CACHE_DIRECTORY/$DEBOOTSTRAP_CACHE_DIRECTORY`
+    pushd ${DEBOOTSTRAP_SCRIPT_DIRECTORY}
+    DEBOOTSTRAP_DIR=${DEBOOTSTRAP_SCRIPT_DIRECTORY} ./debootstrap --arch=$ARCH --foreign $CODENAME $TARGET_FOLDER http://archive.ubuntu.com/ubuntu/
     RET=$?
+    popd
     if [[ $RET -ne 0 ]]; then
         echo "debootstrap part 1/2 failed. This may occur if you're using an older version of deboostrap"
         echo "that doesn't have a script for \"$CODENAME\". Please consult the build instructions." 
         exit 1
     fi
 fi
+
 echo "Copy debootstrap package cache"
 rsync --archive "$PKG_CACHE_DIRECTORY/$DEBOOTSTRAP_CACHE_DIRECTORY/" "$BUILD_DIRECTORY/chroot/"
 
-# debootstrap part 2/2: Bootstrap a Debian root filesystem based on cached
-# packages directory (part 2/2) [1] Note DEBOOTSTRAP_DIR is an undocumented
-# environment variable used by debootstrap according to [1].
-#
-# [1] https://unix.stackexchange.com/a/397966
-DEBOOTSTRAP_DIR="$BUILD_DIRECTORY/chroot/debootstrap" debootstrap --second-stage --second-stage-target $(readlink -f "$BUILD_DIRECTORY/chroot/")
+# debootstrap part 2/2: Bootstrap a Debian root filesystem based on cached packages directory (part 2/2)
+chroot $BUILD_DIRECTORY/chroot/ /bin/bash -c 'DEBOOTSTRAP_DIR="debootstrap" ./debootstrap/debootstrap --second-stage'
 RET=$?
 if [[ $RET -ne 0 ]]; then
     echo "debootstrap part 2/2 failed. This may occur if the package cache ($PKG_CACHE_DIRECTORY/$DEBOOTSTRAP_CACHE_DIRECTORY/)"
