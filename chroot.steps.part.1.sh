@@ -87,7 +87,7 @@ pkgs_specific_to_ubuntu2004_focal=("linux-generic-hwe-18.04"
                        "nbdkit"
 )
 
-pkgs_specific_to_ubuntu2010_groovy=(
+pkgs_specific_to_ubuntu2104_hirsute=(
 			"linux-generic"
                         "xserver-xorg"
                         "xserver-xorg-video-all"
@@ -230,8 +230,8 @@ if  [ "$ARCH" == "i386" ]; then
   apt_pkg_list=("${pkgs_specific_to_32bit[@]}" "${common_pkgs[@]}")
 elif  [ "$ARCH" == "amd64" ] && [ "$CODENAME" == "focal" ]; then
   apt_pkg_list=("${pkgs_specific_to_ubuntu2004_focal[@]}" "${common_pkgs[@]}")
-elif  [ "$ARCH" == "amd64" ] && [ "$CODENAME" == "groovy" ]; then
-  apt_pkg_list=("${pkgs_specific_to_ubuntu2010_groovy[@]}" "${common_pkgs[@]}")
+elif  [ "$ARCH" == "amd64" ] && [ "$CODENAME" == "hirsute" ]; then
+  apt_pkg_list=("${pkgs_specific_to_ubuntu2104_hirsute[@]}" "${common_pkgs[@]}")
 else
   echo "Warning: unknown CPU arch $ARCH or Ubuntu release codename $CODENAME"
   exit 1
