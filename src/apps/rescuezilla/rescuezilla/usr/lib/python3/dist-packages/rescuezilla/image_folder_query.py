@@ -276,6 +276,8 @@ class ImageFolderQuery:
                     print("Scanning file " + abs_base_scan_path)
                     self.scan_file(abs_base_scan_path, filename, filename)
                 elif isdir(abs_base_scan_path):
+                    GLib.idle_add(self.please_wait_popup.set_secondary_label_text,
+                                  _("Scanning: {filename}").format(filename=abs_base_scan_path))
                     # List the subdirectory (1 level deep)
                     for subdir_filename in os.listdir(abs_base_scan_path):
                         if self.is_stop_requested():
