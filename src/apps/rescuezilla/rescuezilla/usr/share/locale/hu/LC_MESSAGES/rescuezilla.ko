@@ -1,23 +1,19 @@
-# Artem <KovalevArtem.ru@gmail.com>, 2021.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2021-05-29 02:38+0000\n"
-"Last-Translator: Artem <KovalevArtem.ru@gmail.com>\n"
-"Language-Team: Russian <https://hosted.weblate.org/projects/rescuezilla/"
-"rescuezilla/ru/>\n"
-"Language: ru\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.7-dev\n"
 
 msgid "Welcome"
-msgstr "Добро пожаловать"
+msgstr ""
 
 msgid "Select an Option"
 msgstr ""
@@ -26,10 +22,10 @@ msgid "Easily create a backup image of your computer, or completely restore from
 msgstr ""
 
 msgid "Backup"
-msgstr "Резервное копирование"
+msgstr ""
 
 msgid "Restore"
-msgstr "Восстановить"
+msgstr ""
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
 msgstr ""
@@ -38,13 +34,13 @@ msgid "Consider contributing $1/month on the crowdfunding website Patreon so Res
 msgstr ""
 
 msgid "Back"
-msgstr "Назад"
+msgstr ""
 
 msgid "Next >"
-msgstr "Далее >"
+msgstr ""
 
 msgid "Please wait..."
-msgstr "Пожалуйста, подождите..."
+msgstr ""
 
 msgid "Identifying disk drives..."
 msgstr ""
@@ -68,7 +64,7 @@ msgid "Error querying drives: "
 msgstr ""
 
 msgid "Clone"
-msgstr "Клонировать"
+msgstr ""
 
 msgid "Step 1: Understanding Cloning"
 msgstr ""
@@ -151,7 +147,7 @@ msgid "Drive Model"
 msgstr ""
 
 msgid "Partitions"
-msgstr "Разделы"
+msgstr ""
 
 msgid "Show hidden devices (for advanced users)"
 msgstr ""
@@ -389,7 +385,7 @@ msgid "Do nothing"
 msgstr ""
 
 msgid "Shutdown"
-msgstr "Выключение"
+msgstr ""
 
 msgid "Reboot"
 msgstr ""

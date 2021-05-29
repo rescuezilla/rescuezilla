@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2021-05-26 10:58+0000\n"
+"PO-Revision-Date: 2021-05-29 02:38+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/pl/>\n"
@@ -32,7 +32,7 @@ msgid "Easily create a backup image of your computer, or completely restore from
 msgstr "W prosty sposób stwórz kopię zapasową obrazu swojego komputera lub przywróć ją całkowicie z jednego.  Kliknij opcję, aby rozpocząć:"
 
 msgid "Backup"
-msgstr "Kopia"
+msgstr "Utwórz kopię"
 
 msgid "Restore"
 msgstr "Przywróć"
@@ -54,10 +54,10 @@ msgid "Next >"
 msgstr "Dalej >"
 
 msgid "Please wait..."
-msgstr "Proszę zaczekać..."
+msgstr "Proszę czekać..."
 
 msgid "Identifying disk drives..."
-msgstr "Identyfikacja napędów dyskowych ..."
+msgstr "Identyfikacja napędów dyskowych..."
 
 msgid "Unmounting: {path}"
 msgstr "Odmontowywanie: {path}"
@@ -69,7 +69,7 @@ msgid "Running: {app}"
 msgstr "Uruchomiono: {app}"
 
 msgid "Running {app} on {device}"
-msgstr "Uruchomiono {app} w {device}"
+msgstr "Uruchomiono {app} na {device}"
 
 msgid "Failed to run command: "
 msgstr "Nie udało się uruchomić polecenia: "
@@ -107,7 +107,7 @@ msgstr ""
 "przywrócić.\n"
 "\n"
 "Aby użyć kreatorów \"obrazowania\", kliknij <b>Powrót</b> i wybierz "
-"<b>Kopia</b> lub <b>Przywróć</b>."
+"<b>Utwórz kopię</b> lub <b>Przywróć</b>."
 
 msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
 msgstr "Aby rozpocząć kreator \"klonowania\", kliknij <b>Dalej</b>"
@@ -144,7 +144,7 @@ msgstr "Aby rozpocząć klonowanie, kliknij <b>Dalej</b>."
 
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
-"Czy na pewno chcesz sklonować dysk do {destination_drive}? Zrobienie tego "
+"Czy na pewno chcesz sklonować dysk na {destination_drive}? Zrobienie tego "
 "trwale nadpisze dane na tym dysku!"
 
 msgid "Step 6: Cloning Disk"
@@ -217,13 +217,15 @@ msgid "Step 3: Select Destination Drive"
 msgstr "Krok 3: Wybierz dysk docelowy"
 
 msgid "Click on the box below to select the source drive that you would like to create a backup image from."
-msgstr "Kliknij na poniższe pole, aby wybrać dysk źródłowy, z którego chcesz utworzyć obraz kopii zapasowej."
+msgstr ""
+"Kliknij poniższe pole, aby wybrać dysk źródłowy, z którego chcesz utworzyć "
+"obraz kopii zapasowej."
 
 msgid "Connected directly to my computer"
 msgstr "Podłączony bezpośrednio do mojego komputera"
 
 msgid "Shared over a network"
-msgstr "Współdzielone przez sieć"
+msgstr "Współdzielony przez sieć"
 
 msgid "Where would you like to save the image?"
 msgstr "Gdzie chcesz zapisać obraz?"
@@ -265,7 +267,7 @@ msgid "Optional"
 msgstr "Opcjonalnie"
 
 msgid "Select network-shared storage location:"
-msgstr "Wybierz lokalizację pamięci masowej współdzielonej przez sieć :"
+msgstr "Wybierz lokalizację pamięci masowej współdzielonej przez sieć:"
 
 msgid "Select the partition where the image files will be saved to"
 msgstr "Wybierz partycję, na której zostaną zapisane pliki obrazów"
@@ -280,16 +282,18 @@ msgid "Close this popup to cancel the mount operation."
 msgstr "Zamknij to okienko, aby anulować operację montowania."
 
 msgid "Please ensure the username, password and other fields provided are correct, and try again."
-msgstr "Proszę upewnić się, że nazwa użytkownika, hasło i inne podane pola są poprawne i spróbować ponownie.."
+msgstr ""
+"Proszę upewnić się, że nazwa użytkownika, hasło i inne podane pola są "
+"poprawne i spróbować ponownie."
 
 msgid "Must provide either password or SSH identity file."
 msgstr "Musisz podać hasło lub plik tożsamości SSH."
 
 msgid "Scanning folder for backup images..."
-msgstr "Folder kopii zapasowej obrazu ..."
+msgstr "Skanowanie folderu w poszukiwaniu obrazów kopii zapasowych..."
 
 msgid "({timeout_seconds} second timeout)"
-msgstr "({timeout_seconds} sekundowy limit czasu)"
+msgstr "({timeout_seconds}-sekundowy limit czasu)"
 
 msgid "Close this popup to cancel scanning the selected folder and subfolders."
 msgstr ""
@@ -437,7 +441,7 @@ msgstr "Tworzenie kopii zapasowej następującej partycji"
 
 msgid "The backup image will be written into folder {dest_dir} on {description}"
 msgstr ""
-"Kopia zapasowa obrazu zostanie zapisana w folderze {dest_dir} na "
+"Obraz kopii zapasowej zostanie zapisany w folderze {dest_dir} na "
 "{description}"
 
 msgid "Confirm the following backup configuration."
@@ -459,16 +463,20 @@ msgid "To start the backup, click <b>Next</b>."
 msgstr "Aby rozpocząć tworzenie kopii zapasowej, kliknij <b>Dalej</b>."
 
 msgid "Step 8: Creating Backup Image"
-msgstr "Krok 7: Tworzenie kopii zapasowej obrazu"
+msgstr "Krok 8: Tworzenie obrazu kopii zapasowej"
 
 msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
-msgstr "Tworzenie kopii zapasowej systemu na wybranej lokalizacji.  Może to potrwać godzinę lub więcej, w zależności od szybkości komputera i ilości danych.."
+msgstr ""
+"Tworzenie kopii zapasowej systemu w wybranej lokalizacji.  Może to potrwać "
+"godzinę lub więcej, w zależności od szybkości komputera i ilości danych."
 
 msgid "Saving: {file}"
 msgstr "Zapisywanie: {file}"
 
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
-msgstr "Kopia {partition_name} zawierająca system plików {filesystem} do {destination}"
+msgstr ""
+"Kopia {partition_name} zawierająca system plików {filesystem} na "
+"{destination}"
 
 msgid "Summary of Backup"
 msgstr "Podsumowanie tworzenia kopii zapasowej"
@@ -497,19 +505,19 @@ msgid "Successful backup of swap partition {partition_name}"
 msgstr "Pomyślne utworzenie kopii zapasowej partycji wymiany {partition_name}"
 
 msgid "<b>Failed to backup partition</b> {partition_name}"
-msgstr "<b>Błąd kopii zapasowej partycji</b> {partition_name}"
+msgstr "<b>Nie udało się utworzyć kopii zapasowej partycji</b> {partition_name}"
 
 msgid "Successful backup of partition {partition_name}"
 msgstr "Udane utworzenie kopii zapasowej partycji {partition_name}"
 
 msgid "Backup saved successfully."
-msgstr "Kopia zapisana pomyślnie."
+msgstr "Kopia zapasowa zapisana pomyślnie."
 
 msgid "Backup succeeded with some errors:"
-msgstr "Kopia zakończyła się sukcesem z pewnymi błędami:"
+msgstr "Tworzenie kopii zapasowej zakończyło się sukcesem z pewnymi błędami:"
 
 msgid "Backup operation failed:"
-msgstr "Operacja kopii zapasowej nie powiodła się:"
+msgstr "Operacja tworzenia kopii zapasowej nie powiodła się:"
 
 msgid "User requested operation to stop."
 msgstr "Użytkownik zażądał zatrzymania operacji."
@@ -625,13 +633,13 @@ msgid "Step 5: Confirm Restore Configuration"
 msgstr "Krok 5: Potwierdź konfigurację przywracania"
 
 msgid "Confirm the following restore configuration."
-msgstr "Potwierdzić konfigurację przywracania."
+msgstr "Potwierdź następującą konfigurację przywracania."
 
 msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr "Jesteś pewien, że chcesz przywrócić kopię zapasową na {destination_drive}? Zrobienie tego na stałe nadpisze dane na tym dysku!"
 
 msgid "Source image"
-msgstr "Wybór obrazu"
+msgstr "Obraz źródłowy"
 
 msgid "Destination drive"
 msgstr "Dysk docelowy"
@@ -658,7 +666,9 @@ msgid "Refreshing partition table"
 msgstr "Odświeżenie tabeli partycji"
 
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
-msgstr "Przywrócenie {description} do {destination_partition} ({destination_description})"
+msgstr ""
+"Przywrócenie {description} na {destination_partition} "
+"({destination_description})"
 
 msgid "Synchronizing disks..."
 msgstr "Synchronizowanie dysków..."
@@ -737,10 +747,10 @@ msgid "This may occur if Clonezilla was originally unable to backup this partiti
 msgstr "Może to nastąpić, jeśli Clonezilla nie była w stanie wykonać kopii zapasowej tej partycji."
 
 msgid "Error restoring partition {image_key} to {destination_partition}."
-msgstr "Błąd przywracania partycji {image_key} do {destination_partition}."
+msgstr "Błąd przywracania partycji {image_key} na {destination_partition}."
 
 msgid "Successfully restored image partition {image} to {destination_partition}"
-msgstr "Pomyślnie przywrócono obraz partycji {image} do {destination_partition}"
+msgstr "Pomyślnie przywrócono obraz partycji {image} na {destination_partition}"
 
 msgid "Summary of Restore"
 msgstr "Podsumowanie przywracania"
