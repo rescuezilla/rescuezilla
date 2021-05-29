@@ -3,9 +3,10 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2021-05-27 05:10+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2021-05-29 02:38+0000\n"
+"Last-Translator: 池边树下 <mzky@163.com>\n"
+"Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
+"rescuezilla/grub-boot/zh_Hant/>\n"
 "Language: zh_Hant\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -14,37 +15,37 @@ msgstr ""
 "X-Generator: Weblate 4.7-dev\n"
 
 msgid "Start Rescuezilla"
-msgstr ""
+msgstr "启动Rescuezilla"
 
 msgid "If boot fails, reboot and try selecting Graphical fallback instead"
-msgstr ""
+msgstr "如果啟動失敗，重新啟動並嘗試選擇圖形回退"
 
 msgid "Graphical fallback mode"
-msgstr ""
+msgstr "圖形回退模式"
 
 msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
-msgstr ""
+msgstr "如果標準模式不適合您的硬體，請使用低解析度回退圖形驅動程式"
 
 msgid "Load USB into RAM"
-msgstr ""
+msgstr "將USB載入到RAM中"
 
 msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
-msgstr ""
+msgstr "將救援齊拉載入到記憶體中，允許啟動後彈出引導介質"
 
 msgid "Check USB for defects"
-msgstr ""
+msgstr "檢查 USB 是否有缺陷"
 
 msgid "Verify integrity of USB drive"
-msgstr ""
+msgstr "驗證USB驅動器的完整性"
 
 msgid "Enter BIOS Setup"
-msgstr ""
+msgstr "進入BIOS設置"
 
 msgid "Configure machine's firmware, boot options etc"
-msgstr ""
+msgstr "配置機器的固件和引導選項等"
 
 msgid "Memory test"
-msgstr ""
+msgstr "記憶體測試"
 
 msgid "Check computer memory for errors"
-msgstr ""
+msgstr "檢查計算機記憶體是否有錯誤"

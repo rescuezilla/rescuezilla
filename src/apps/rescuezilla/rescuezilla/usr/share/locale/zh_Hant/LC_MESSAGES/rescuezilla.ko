@@ -1,76 +1,80 @@
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021.
+# 池边树下 <mzky@163.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2021-05-29 02:38+0000\n"
+"Last-Translator: 池边树下 <mzky@163.com>\n"
+"Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
+"rescuezilla/rescuezilla/zh_Hant/>\n"
 "Language: zh_Hant\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.7-dev\n"
 
 msgid "Welcome"
-msgstr ""
+msgstr "歡迎"
 
 msgid "Select an Option"
-msgstr ""
+msgstr "選擇選項"
 
 msgid "Easily create a backup image of your computer, or completely restore from one.  Click an option to begin:"
-msgstr ""
+msgstr "輕鬆創建電腦的備份圖像，或從計算機中完全恢復。 點選選項開始："
 
 msgid "Backup"
-msgstr ""
+msgstr "備份"
 
 msgid "Restore"
-msgstr ""
+msgstr "恢復"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
-msgstr ""
+msgstr "需要説明嗎？首先檢查救援隊經常提出的問題，然後前往救援會。"
 
 msgid "Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed."
-msgstr ""
+msgstr "考慮在眾籌網站 Patreon 上每月捐款 1 美元， 以便救援齊拉可以繼續開發。"
 
 msgid "Back"
-msgstr ""
+msgstr "後退"
 
 msgid "Next >"
-msgstr ""
+msgstr "下一個>"
 
 msgid "Please wait..."
-msgstr ""
+msgstr "請稍候…"
 
 msgid "Identifying disk drives..."
-msgstr ""
+msgstr "識別磁碟機..."
 
 msgid "Unmounting: {path}"
-msgstr ""
+msgstr "卸載：{path}"
 
 msgid "Unable to unmount {path}"
-msgstr ""
+msgstr "無法卸載 {path}"
 
 msgid "Running: {app}"
-msgstr ""
+msgstr "正在執行：{app}"
 
 msgid "Running {app} on {device}"
-msgstr ""
+msgstr "在{device}上運行{app}"
 
 msgid "Failed to run command: "
-msgstr ""
+msgstr "無法執行指令： "
 
 msgid "Error querying drives: "
-msgstr ""
+msgstr "錯誤查詢驅動程式： "
 
 msgid "Clone"
-msgstr ""
+msgstr "複製"
 
 msgid "Step 1: Understanding Cloning"
-msgstr ""
+msgstr "第1步：瞭解克隆"
 
 msgid "Please understand how \"cloning\" differs from \"imaging\"."
-msgstr ""
+msgstr "請瞭解\"克隆\"與\"成像\"有何不同。"
 
 msgid "This mode is for \"disk cloning\". Cloning means copying one drive and directly overwriting another drive. This is a direct one-step operation with no temporary storage required.\n"
 "\n"
@@ -79,451 +83,472 @@ msgid "This mode is for \"disk cloning\". Cloning means copying one drive and di
 ""
 "To use the \"imaging\" wizards, click <b>Back</b> and select <b>Backup</b> or <b>Restore</b>."
 msgstr ""
+"此模式用於\"磁碟克隆\"。克隆意味著複製一個驅動器並直接覆蓋另一個驅動器。這是一個直接的一步操作，無需臨時存儲。\n"
+"\n"
+"克隆與\"磁碟成像\"不同。成像意味著將一切從一個驅動器複製到存儲在外部驅動器上資料夾內的非常大的檔中。多個圖像可以保存在同一外驅動器上。這些圖像可以恢復"
+"回原始磁碟，或恢復到其他磁碟。換句話說，要\"成像\"，備份操作將驅動器複製到 <i> 檔 </i>，這些檔至少需要暫時存儲在驅動器上才能恢復。\n"
+"\n"
+"要使用\"成像\"嚮導，請單擊 <b> Back </b>並選擇 <b> 備份 </b> 或 <b> 恢復 </b>。"
 
 msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
-msgstr ""
+msgstr "要開始\"克隆\"嚮導，請單擊 <b> 下一個 </b>"
 
 msgid "Step 2: Select Source Drive"
-msgstr ""
+msgstr "第 2 步：選擇源驅動器"
 
 msgid "Select the <b>source drive</b> to clone."
-msgstr ""
+msgstr "選擇 <b> 源驅動器 </b> 進行克隆。"
 
 msgid "Select the <b>destination drive</b> to overwrite."
-msgstr ""
+msgstr "選擇 <b> 目的地驅動器 </b> 以覆蓋。"
 
 msgid "Step 4: Select Partitions to Clone"
-msgstr ""
+msgstr "第4步：選擇克隆分區"
 
 msgid "Select which partitions from the source drive to clone, and whether to overwrite the partition table. <b>Leave everything selected to completely clone the source drive to the destination drive.</b>"
-msgstr ""
+msgstr "選擇從源驅動器到克隆的分區，以及是否覆蓋分區表。<b>將選擇的一切完全克隆源驅動器留到目的地驅動器。</b>"
 
 msgid "Step 5: Confirm Cloning Configuration"
-msgstr ""
+msgstr "第 5 步：確認克隆配置"
 
 msgid "Confirm the following cloning configuration."
-msgstr ""
+msgstr "確認以下克隆配置。"
 
 msgid "Cloning the following partitions"
-msgstr ""
+msgstr "克隆以下分區"
 
 msgid "To start cloning, click <b>Next</b>."
-msgstr ""
+msgstr "要開始克隆，請單擊 <b>下一個 </b>。"
 
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
-msgstr ""
+msgstr "您是否確定要將驅動器克隆到{destination_drive}？這樣做將永久覆蓋此驅動器上的資料！"
 
 msgid "Step 6: Cloning Disk"
-msgstr ""
+msgstr "第 6 步：克隆磁碟"
 
 msgid "Cloning the drive you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
-msgstr ""
+msgstr "複製您選擇的驅動器。 這可能需要一個小時或更長的時間，具體取決於計算機的速度和數據量。"
 
 msgid "Summary of Clone"
-msgstr ""
+msgstr "克隆的摘要"
 
 msgid "Clone Summary"
-msgstr ""
+msgstr "克隆摘要"
 
 msgid "Confirm the clone summary."
-msgstr ""
+msgstr "確認克隆摘要。"
 
 msgid "Unable to shutdown Image Explorer"
-msgstr ""
+msgstr "無法關閉圖像資源瀏覽器"
 
 msgid "Step 1: Select Drive To Backup"
-msgstr ""
+msgstr "第 1 步：選擇驅動器進行備份"
 
 msgid "Select the <b>source drive</b> that you would like to create a backup image from."
-msgstr ""
+msgstr "選擇要建立備份圖像的 <b> 源驅動器 </b>。"
 
 msgid "Drive"
-msgstr ""
+msgstr "驅動器"
 
 msgid "Capacity"
-msgstr ""
+msgstr "容量"
 
 msgid "Drive Model"
-msgstr ""
+msgstr "驅動模型"
 
 msgid "Partitions"
-msgstr ""
+msgstr "分區"
 
 msgid "Show hidden devices (for advanced users)"
-msgstr ""
+msgstr "顯示隱藏裝置 （用於進階使用者 ）"
 
 msgid "Step 2: Select Partitions to Save"
-msgstr ""
+msgstr "第 2 步：選擇分區以保存"
 
 msgid "Select which partitions to create a backup of. <b>Leave all partitions selected if you are unsure.</b>"
-msgstr ""
+msgstr "選擇創建備份的分區。<b>如果您不確定，請保留選擇的所有分區。</b>"
 
 msgid "Save"
-msgstr ""
+msgstr "儲存"
 
 msgid "Description"
-msgstr ""
+msgstr "說明"
 
 msgid "Drive {drive_number}"
-msgstr ""
+msgstr "驅動器{drive_number}"
 
 msgid "Partition {partition_number}"
-msgstr ""
+msgstr "分區[partition_number}"
 
 msgid "Step 3: Select Destination Drive"
-msgstr ""
+msgstr "第 3 步：選擇目的地驅動器"
 
 msgid "Click on the box below to select the source drive that you would like to create a backup image from."
-msgstr ""
+msgstr "按下下面的框以選擇要建立備份圖像的源驅動器。"
 
 msgid "Connected directly to my computer"
-msgstr ""
+msgstr "直接連接到我的電腦"
 
 msgid "Shared over a network"
-msgstr ""
+msgstr "通過網路共用"
 
 msgid "Where would you like to save the image?"
-msgstr ""
+msgstr "您想將圖像保存在哪裡？"
 
 msgid "Windows shared folder (SMB/CIFS, Samba)"
-msgstr ""
+msgstr "視窗共用資料夾（SMB/CIFS，Samba）"
 
 msgid "Search network"
-msgstr ""
+msgstr "搜索網路"
 
 msgid "Server"
-msgstr ""
+msgstr "伺服器"
 
 msgid "Share location (UNC path)"
-msgstr ""
+msgstr "分享位置 （UNC 路徑）"
 
 msgid "Username"
-msgstr ""
+msgstr "帳號"
 
 msgid "Password"
-msgstr ""
+msgstr "密碼"
 
 msgid "Domain"
-msgstr ""
+msgstr "域"
 
 msgid "Version"
-msgstr ""
+msgstr "版本"
 
 msgid "Remote path"
-msgstr ""
+msgstr "遠端路徑"
 
 msgid "Exported path"
-msgstr ""
+msgstr "匯出路徑"
 
 msgid "Identity File"
-msgstr ""
+msgstr "身份檔"
 
 msgid "Optional"
-msgstr ""
+msgstr "自選"
 
 msgid "Select network-shared storage location:"
-msgstr ""
+msgstr "選擇網路分享儲存位置："
 
 msgid "Select the partition where the image files will be saved to"
-msgstr ""
+msgstr "選擇將影像檔保存到的分區"
 
 msgid "Partition"
-msgstr ""
+msgstr "分區"
 
 msgid "Mounting..."
-msgstr ""
+msgstr "掛載..."
 
 msgid "Close this popup to cancel the mount operation."
-msgstr ""
+msgstr "關閉此彈出視窗以取消安裝操作。"
 
 msgid "Please ensure the username, password and other fields provided are correct, and try again."
-msgstr ""
+msgstr "請確保提供的賬號、密碼和其他欄位正確，然後重試。"
 
 msgid "Must provide either password or SSH identity file."
-msgstr ""
+msgstr "必須提供密碼或SSH身份檔。"
 
 msgid "Scanning folder for backup images..."
-msgstr ""
+msgstr "掃描資料夾以檢視備份影像..."
 
 msgid "({timeout_seconds} second timeout)"
-msgstr ""
+msgstr "（[timeout_seconds]第二次超時）"
 
 msgid "Close this popup to cancel scanning the selected folder and subfolders."
-msgstr ""
+msgstr "關閉此彈出視窗以取消掃描選擇的資料夾和子資料夾。"
 
 msgid "Scanning: {filename}"
-msgstr ""
+msgstr "掃描：{filename}"
 
 msgid "Error processing the following images:"
-msgstr ""
+msgstr "錯誤處理以下影像："
 
 msgid "Unable to fully process the image associated with the following partitions:"
-msgstr ""
+msgstr "無法完全處理與以下分割區相關的影像："
 
 msgid "Unable to fully process the following image:"
-msgstr ""
+msgstr "無法完全處理以下影像："
 
 msgid "Cannot find partition's associated partclone image"
-msgstr ""
+msgstr "找不到分區的相關部分圖像"
 
 msgid "This can happen when loading images which Clonezilla was unable to completely backup."
-msgstr ""
+msgstr "當載入克隆齊拉無法完全備份的圖像時，可能會發生這種情況。"
 
 msgid "Note: This image format cannot distinguish between failed partclone backup and a user who chose not to backup a partition."
-msgstr ""
+msgstr "注意：此圖像格式無法區分失敗的部分備份和選擇不備份分區的使用者。"
 
 msgid "Any other filesystems within the image should be restorable as normal."
-msgstr ""
+msgstr "圖像中的任何其他文件系統應正常恢復。"
 
 msgid "Needs decryption"
-msgstr ""
+msgstr "需要解密"
 
 msgid "Unknown filesystem"
-msgstr ""
+msgstr "未知檔案系統"
 
 msgid "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance."
 msgstr ""
+"備份的擴展分區資訊為空。如果備份包含擴展分區，則無法正確恢復。所有數據仍完全可恢復，但需要人工干預才能在擴展分區內完全恢復數據。請諮詢[網址]以獲取資訊和"
+"説明。"
 
 msgid "The backup's bootloader data is shorter than expected. If the backup contained certain bootloaders like GRUB, during a restore operation Rescuezilla will try and re-install the bootloader."
-msgstr ""
+msgstr "備份的引導載入器數據比預期的要短。如果備份包含某些引導載入器（如 GRUB），則在恢復操作期間，救援團隊將嘗試重新安裝引導載入器。"
 
 msgid "Step 4: Select Destination Folder"
-msgstr ""
+msgstr "第 4 步：選擇目的地資料夾"
 
 msgid "Click <b>Browse</b> to select the folder on the destination drive where your new backup image will be saved.\n"
 "\n"
 "The folder a backup is saved in is usually a description of the computer, e.g. <b>office1</b> or <b>zack-laptop</b>."
 msgstr ""
+"按下 <b>流覽 </b> 以選擇將保存新備份圖像的目的地驅動器上的資料夾。\n"
+"\n"
+"保存在備份的資料夾通常是計算機的描述，例如 <b> office1 </b> 或 <b> zack-laptop </b>。"
 
 msgid "You must select a folder inside {location}"
-msgstr ""
+msgstr "您必須選擇內部的資料夾{location}"
 
 msgid "Please select a different folder."
-msgstr ""
+msgstr "請選擇其他資料夾。"
 
 msgid "The table below lists the backup images that are already in this folder (if any)."
-msgstr ""
+msgstr "下表列出了該資料夾中已出現的備份圖像（如果有）。"
 
 msgid "Browse..."
-msgstr ""
+msgstr "流覽..."
 
 msgid "Filename"
-msgstr ""
+msgstr "檔名"
 
 msgid "Size"
-msgstr ""
+msgstr "大小"
 
 msgid "Last modified"
-msgstr ""
+msgstr "上次修改"
 
 msgid "When you are happy with the destination folder, click <b>Next</b>."
-msgstr ""
+msgstr "當您對目的地資料夾滿意時，請單擊 <b>下一個</b>。"
 
 msgid "Step 5: Name Your Backup"
-msgstr ""
+msgstr "第 5 步：命名備份"
 
 msgid "Provide a unique name for this backup image, such as the date.  Today's date is automatically entered for you below.\n"
 "\n"
 "You may only use letters, numbers, and dashes in your backup name."
 msgstr ""
+"為此備份圖像（如日期）提供唯一名稱。 今天的日期自動輸入如下。\n"
+"\n"
+"您只能在備份名稱中使用字母、數位和破折號。"
 
 msgid "Optional: Provide a short description."
-msgstr ""
+msgstr "可選：提供簡短的描述。"
 
 msgid "Step 6: Customize Compression Settings"
-msgstr ""
+msgstr "第 6 步：自定義壓縮設置"
 
 msgid "Customize image compression settings. <b>Don't make any changes if you are unsure.</b>"
-msgstr ""
+msgstr "自定義圖像壓縮設置。<b>如果您不確定，請不要做任何更改。</b>"
 
 msgid "Compression format: "
-msgstr ""
+msgstr "壓縮格式： "
 
 msgid "gzip"
-msgstr ""
+msgstr "Gzip壓縮"
 
 msgid "default"
-msgstr ""
+msgstr "默認"
 
 msgid "zstandard"
-msgstr ""
+msgstr "zstandard壓縮"
 
 msgid "Uncompressed (Suitable for use with Image Explorer)"
-msgstr ""
+msgstr "未壓縮（適合與影像資源管理員使用）"
 
 msgid "Compression level: "
-msgstr ""
+msgstr "壓縮等級： "
 
 msgid "Fastest"
-msgstr ""
+msgstr "最快的"
 
 msgid "Best"
-msgstr ""
+msgstr "最好"
 
 msgid "When you are happy with the compression settings, click <b>Next</b>."
-msgstr ""
+msgstr "當您對壓縮設置感到滿意時，請單擊 <b>下一個</b>。"
 
 msgid "Step 7: Confirm Backup Configuration"
-msgstr ""
+msgstr "第 7 步：確認備份配置"
 
 msgid "Source drive"
-msgstr ""
+msgstr "源驅動器"
 
 msgid "Backing up the following partition"
-msgstr ""
+msgstr "備份以下分區"
 
 msgid "The backup image will be written into folder {dest_dir} on {description}"
-msgstr ""
+msgstr "備份影像將寫入資料夾{dest_dir}在{description}"
 
 msgid "Confirm the following backup configuration."
-msgstr ""
+msgstr "確認以下備份配置。"
 
 msgid "On successful completion of the task, perform the following action: "
-msgstr ""
+msgstr "工作完成後，執行以下操作： "
 
 msgid "Do nothing"
-msgstr ""
+msgstr "什麼都不做"
 
 msgid "Shutdown"
-msgstr ""
+msgstr "關閉"
 
 msgid "Reboot"
-msgstr ""
+msgstr "重新啟動"
 
 msgid "To start the backup, click <b>Next</b>."
-msgstr ""
+msgstr "要啟動備份，請單擊 <b>下一個</b>。"
 
 msgid "Step 8: Creating Backup Image"
-msgstr ""
+msgstr "第 8 步：創建備份圖像"
 
 msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
-msgstr ""
+msgstr "將系統備份到您選擇的位置。 這可能需要一個小時或更長的時間，具體取決於計算機的速度和數據量。"
 
 msgid "Saving: {file}"
-msgstr ""
+msgstr "儲存：{檔案}"
 
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
-msgstr ""
+msgstr "備份[partition_name}包含檔案系統{檔案系統}到{目的地}"
 
 msgid "Summary of Backup"
-msgstr ""
+msgstr "備份摘要"
 
 msgid "Confirm the backup summary."
-msgstr ""
+msgstr "確認備份摘要。"
 
 msgid "Backup Summary"
-msgstr ""
+msgstr "備份摘要"
 
 msgid "An operation is in progress. Do you wish to cancel?"
-msgstr ""
+msgstr "操作正在進行中。你想取消嗎？"
 
 msgid "Operation cancelled by user."
-msgstr ""
+msgstr "使用者取消操作。"
 
 msgid "Error creating backup: "
-msgstr ""
+msgstr "建立備份的錯誤： "
 
 msgid "Failed to write destination file. Please confirm it is valid to create the provided file path, and try again."
-msgstr ""
+msgstr "未能編寫目標檔。請確認創建所提供的文件路徑有效，並重試。"
 
 msgid "Successful backup of swap partition {partition_name}"
-msgstr ""
+msgstr "交換分割區的成功備份[partition_name}"
 
 msgid "<b>Failed to backup partition</b> {partition_name}"
-msgstr ""
+msgstr "<b>未能備份分割區</b>[partition_name}"
 
 msgid "Successful backup of partition {partition_name}"
-msgstr ""
+msgstr "分割區的成功備份[partition_name}"
 
 msgid "Backup saved successfully."
-msgstr ""
+msgstr "備份保存成功。"
 
 msgid "Backup succeeded with some errors:"
-msgstr ""
+msgstr "備份成功，但出現一些錯誤："
 
 msgid "Backup operation failed:"
-msgstr ""
+msgstr "備份操作失敗："
 
 msgid "User requested operation to stop."
-msgstr ""
+msgstr "使用者要求停止操作。"
 
 msgid "Operation took {num_minutes} minutes."
-msgstr ""
+msgstr "操作花了[num_minutes]分鐘。"
 
 msgid "To start a new session, click <b>Next</b>"
-msgstr ""
+msgstr "要開始新會話，請單擊 <b> 下一個 </b>"
 
 msgid "Step 1: Select Image Location"
-msgstr ""
+msgstr "第 1 步：選擇圖像位置"
 
 msgid "Where are the image files stored?"
-msgstr ""
+msgstr "圖像檔存儲在哪裡？"
 
 msgid "Select the partition which contains the image files:"
-msgstr ""
+msgstr "選擇包含影像檔案的分割區："
 
 msgid "Step 2: Select Backup Image"
-msgstr ""
+msgstr "第 2 步：選擇備份圖像"
 
 msgid "Click <b>Browse</b> to select the folder containing image files."
-msgstr ""
+msgstr "按下 <b>流覽 </b> 以選擇包含圖像檔的資料夾。"
 
 msgid "Select the image file to restore."
-msgstr ""
+msgstr "選擇要還原的圖像檔。"
 
 msgid "Step 3: Select Drive To Restore"
-msgstr ""
+msgstr "第 3 步：選擇恢復驅動器"
 
 msgid "Select the destination drive to restore with the selected image."
-msgstr ""
+msgstr "選擇目的地驅動器，用選定的圖像恢復。"
 
 msgid "Step 4: Select Partitions to Restore"
-msgstr ""
+msgstr "第4步：選擇分區以恢復"
 
 msgid "Select which partitions from the backup image to restore, and whether to overwrite the partition table. <b>Leave everything selected to completely restore the destination drive.</b>"
-msgstr ""
+msgstr "選擇備份圖像中的哪些分區以恢復，以及是否覆蓋分區表。<b>保留所選擇的一切以完全恢復目標驅動器。</b>"
 
 msgid "Selected image"
-msgstr ""
+msgstr "選定的圖像"
 
 msgid "Destination device"
-msgstr ""
+msgstr "目的地設備"
 
 msgid "Destination partition"
-msgstr ""
+msgstr "目的地分區"
 
 msgid "Overwrite partition table"
-msgstr ""
+msgstr "覆蓋分區表"
 
 msgid "You will be overwriting the partition table."
-msgstr ""
+msgstr "您將覆蓋分割區表。"
 
 msgid "The \"destination partition\" column has been updated using the information stored within the backup image.\n\n<b>If partitions have been resized, new partitions added, or additional operating systems installed <i>since the backup image was created</i>, then the destination drive's partition table will not match the backup image, and overwriting the destination drive's partition table will render these resized and additional partitions permanently inaccessible.</b> If you have not modified the partition table in such a way since creating this backup then overwriting the partition table is completely safe and will have no negative effects."
 msgstr ""
+"“目標分區”列已使用備份映射中存儲的資訊進行了更新。\n"
+"\n"
+"<b>如果在創建備份映射後已調整分區大小、添加了新分區或安裝了其他作業系統， <i>則目標驅動器的分區表將與備份映射不匹配</i>，覆蓋目標驅動器的分區表"
+"將使這些已調整大小的分區和其他分區永久不可訪問。</b>如果在創建此備份後未以這種管道修改分區表，則覆蓋分區表是完全安全的，不會產生任何負面影響。"
 
 msgid "You will <b>not</b> be overwriting the partition table."
-msgstr ""
+msgstr "您將<b>不</b>覆蓋分區表。"
 
 msgid "The source does not contain a partition table."
-msgstr ""
+msgstr "源不包含分區表。"
 
 msgid "The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table."
 msgstr ""
+"\"目的地分區\"列已更新目的地驅動器的現有分區表資訊。\n"
+"\n"
+"<b>目的地分區列可修改為下拉菜單。錯誤地映射目標分區可能導致操作系統不再啟動。</b> 如果您不確定映射，請考慮是否更適合覆蓋分區表。"
 
 msgid "No destination partition selected. Use the destination partition drop-down menu to select the destination"
-msgstr ""
+msgstr "未選擇目標分區。使用目的地分區下拉選單選擇目的地"
 
 msgid "Not restoring this partition"
-msgstr ""
+msgstr "不恢復此分區"
 
 msgid "When you are ready to continue, click <b>Next</b>."
-msgstr ""
+msgstr "準備好繼續使用時，請單擊 <b>下一個</b>。"
 
 msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
-msgstr ""
+msgstr "掃描和卸載任何邏輯卷管理器（LVM）邏輯卷。。。"
 
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
-msgstr ""
+msgstr "源分區表的最終分區（[源]：[source_size]位元組）必須完全指目的地磁碟內的區域（[destination_size] 位元組）。"
 
 msgid "Rescuezilla cannot yet automatically shrink partitions to restore from large disks to smaller disks. The final partition currently must always completely reside within the destination disk.\n"
 "\n"
@@ -531,163 +556,170 @@ msgid "Rescuezilla cannot yet automatically shrink partitions to restore from la
 "\n"
 "{url}"
 msgstr ""
+"救援齊拉還不能自動收縮分區，從大磁盤恢復到較小的磁碟。當前的最終分區必須始終完全位於目的地磁碟中。\n"
+"\n"
+"當前恢復到小於原始磁碟的唯一方法是首先使用 GParted 分區編輯器在製作新的備份圖像之前縮小原始磁碟的最終分區。有關更多資訊，請閱讀以下說明：\n"
+"\n"
+"{url}"
 
 msgid "Step 5: Confirm Restore Configuration"
-msgstr ""
+msgstr "第 5 步：確認恢復配置"
 
 msgid "Confirm the following restore configuration."
-msgstr ""
+msgstr "確認以下恢復配置。"
 
 msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!"
-msgstr ""
+msgstr "您是否確定要將備份恢復為{destination_drive}？這樣做將永久覆蓋此驅動器上的資料！"
 
 msgid "Source image"
-msgstr ""
+msgstr "源映像"
 
 msgid "Destination drive"
-msgstr ""
+msgstr "目的地驅動器"
 
 msgid "Restoring the following partitions"
-msgstr ""
+msgstr "恢復以下分區"
 
 msgid "WILL BE OVERWRITING PARTITION TABLE"
-msgstr ""
+msgstr "將覆蓋分區表"
 
 msgid "Will <b>NOT</b> be overwriting partition table"
-msgstr ""
+msgstr "將 <b> 不會 </b> 覆蓋分區表"
 
 msgid "To start the restore, click <b>Next</b>."
-msgstr ""
+msgstr "要開始恢復，請單擊 <b>下一個 </b>。"
 
 msgid "Restoring From Backup"
-msgstr ""
+msgstr "從備份恢復"
 
 msgid "Restoring your system from the image you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
-msgstr ""
+msgstr "從您選擇的影像中恢復系統。 這可能需要一個小時或更長的時間，具體取決於計算機的速度和數據量。"
 
 msgid "Refreshing partition table"
-msgstr ""
+msgstr "刷新分區表"
 
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
-msgstr ""
+msgstr "將{description} 恢復為{destination_partition} ({destination_description})"
 
 msgid "Synchronizing disks..."
-msgstr ""
+msgstr "同步磁碟..."
 
 msgid "Querying hard drive geometry of {device}"
-msgstr ""
+msgstr "查詢{device}的磁碟幾何形狀"
 
 msgid "Probing {device} with {app}"
-msgstr ""
+msgstr "用{app}探测{device}"
 
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
-msgstr ""
+msgstr "不斷增長的檔案系統{partition}({filesystem})。這可能需要一段時間..."
 
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
-msgstr ""
+msgstr "調整分割區{partition}({filesystem}) 失敗：{msg}"
 
 msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
-msgstr ""
+msgstr "使用{geometry_source}中的值成功調整了 {ntfs_device} NTFS文件系統幾何形狀"
 
 msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
-msgstr ""
+msgstr "無法調整 NTFS 檔案系統幾何形狀 {ntfs_device}"
 
 msgid "Removing udev MAC address records (if any)"
-msgstr ""
+msgstr "移除 udev MAC 位址記錄（如果有）"
 
 msgid "Re-installing syslinux (if any)"
-msgstr ""
+msgstr "重新安裝syslinux （如果有）"
 
 msgid "Successfully re-installed syslinux bootloader"
-msgstr ""
+msgstr "成功重新安裝syslinux引導載入器"
 
 msgid "Re-installing GRUB bootloader (if any)"
-msgstr ""
+msgstr "重新安裝 GRUB 匯接載入程式（如果有）"
 
 msgid "Successfully re-installed GRUB bootloader"
-msgstr ""
+msgstr "成功重新安裝GRUB引導載入器"
 
 msgid "Did not update GRUB bootloader (if any)"
-msgstr ""
+msgstr "未更新GRUB引導載入器（如果有）"
 
 msgid "Updating initramfs (if any)"
-msgstr ""
+msgstr "更新initramfs（如果有）"
 
 msgid "Successfully updated initramfs"
-msgstr ""
+msgstr "成功更新了initramfs"
 
 msgid "Updating EFI NVRAM..."
-msgstr ""
+msgstr "更新EFI NVRAM..."
 
 msgid "Successfully updated EFI NVRAM"
-msgstr ""
+msgstr "成功更新了EFI NVRAM"
 
 msgid "Error restoring image: "
-msgstr ""
+msgstr "錯誤還原影像： "
 
 msgid "Could not restore sfdisk partition table as file has zero length: "
-msgstr ""
+msgstr "無法回復sfdisk分割區表，因為檔案的長度為零： "
 
 msgid "Successfully restored partition table."
-msgstr ""
+msgstr "成功恢復分區表。"
 
 msgid "Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."
-msgstr ""
+msgstr "未能刷新設備的分區表。如果另一個過程正在訪問分區表，則可能發生這種情況。"
 
 msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
-msgstr ""
+msgstr "無法恢復分區{destination_partition} ，因為沒有與之相關的保存圖像： {description}。"
 
 msgid "This may occur if Clonezilla was originally unable to backup this partition."
-msgstr ""
+msgstr "如果Clonezilla無法備份此分區，則可能發生這種情況。"
 
 msgid "Error restoring partition {image_key} to {destination_partition}."
-msgstr ""
+msgstr "錯誤復原分割區 {image_key} 到{destination_partition}。"
 
 msgid "Successfully restored image partition {image} to {destination_partition}"
-msgstr ""
+msgstr "成功復原影像分區{image}至{destination_partition}"
 
 msgid "Summary of Restore"
-msgstr ""
+msgstr "恢復摘要"
 
 msgid "Restore Summary"
-msgstr ""
+msgstr "恢復摘要"
 
 msgid "Confirm the restore summary."
-msgstr ""
+msgstr "確認恢復摘要。"
 
 msgid "Backup restored successfully."
-msgstr ""
+msgstr "備份已成功恢復。"
 
 msgid "Image Explorer\n"
 "      (beta)"
 msgstr ""
+"圖像資源管理員\n"
+"    （測試版）"
 
 msgid "Image Explorer (beta)"
-msgstr ""
+msgstr "影像資源瀏覽器（測試版）"
 
 msgid "Select the image file to explore"
-msgstr ""
+msgstr "選擇要探索的圖像檔"
 
 msgid "Step 3: Select Partition to Explore"
-msgstr ""
+msgstr "第 3 步：選擇分區進行探索"
 
 msgid "Select the partition to access files from."
-msgstr ""
+msgstr "選擇分區以訪問檔。"
 
 msgid "Click <b>Mount</b> to mount the backup image (as read-only)."
-msgstr ""
+msgstr "單擊 <b>掛載</b> 以安裝備份圖像（僅限閱讀）。"
 
 msgid "Mount"
-msgstr ""
+msgstr "掛載"
 
 msgid "Mounting as read-only..."
-msgstr ""
+msgstr "安裝為唯讀..."
 
 msgid "Unmount"
-msgstr ""
+msgstr "卸載"
 
 msgid "Once the partition has been mounted, click <b>Open in file manager</b> to access your files."
-msgstr ""
+msgstr "安裝分割區後，單擊 <b> 在檔案管理器</b> 中打開以訪問您的檔。"
 
 msgid "Open in file manager"
-msgstr ""
+msgstr "在檔案管理員中打開"
