@@ -26,9 +26,12 @@ import sys
 
 import gi
 
+from utility import Utility, ErrorMessageModalPopup
+
 gi.require_version("Gtk", "3.0")
 
-from gi.repository import Gtk
+from gi.repository import Gtk, GLib
+
 
 from handler import Handler
 
@@ -74,6 +77,11 @@ def main():
     # Display the main GTK window
     win = builder.get_object("main_window")
     win.show()
+
+    nbd_module_missing_msg = "The 'nbd' (Network Block Device) kernel module is not loaded.\n\nRescuezilla will load it with modprobe, but it appears to take time to fully initialize.\n\nFor the best experience, add 'nbd' to /etc/modules and reboot before using Rescuezilla."
+    process, flat_command_string, fail_description = Utility.run("Querying for NBD module", ["lsmod"], use_c_locale=True)
+    if "nbd" not in process.stdout:
+        GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, builder, nbd_module_missing_msg)
 
     # Set the background color of the Rescuezilla banner box (using CSS) [1] to the same dark blue background color
     # used by the fixed-sized banner image, so that the banner looks good even when resizing the window.
