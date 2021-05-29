@@ -310,7 +310,9 @@ echo "https://rescuezilla.com" > release_notes_url
 cd ../..
 
 rm -rf image/casper/filesystem.squashfs "$RESCUEZILLA_ISO_FILENAME"
-mksquashfs chroot image/casper/filesystem.squashfs -e boot -e /sys
+echo "Compressing squashfs using zstandard rather than default gzip. Using max compression of 19. The compression time is greatly increased,"
+echo "but the decompression time same as gzip (though uses more memory). The benefit is the compression ratio is improved over gzip."
+mksquashfs chroot image/casper/filesystem.squashfs -comp zstd -b 1M -Xcompression-level 19 -e boot -e /sys
 printf $(sudo du -sx --block-size=1 chroot | cut -f1) > image/casper/filesystem.size
 cd image
 
