@@ -6,7 +6,7 @@ os: linux
 # provides the primary host environment for the build. However, a more recent
 # OS provides a more recent Docker release, which means additional Docker
 # functionality.
-dist: bionic
+dist: focal
 
 services:
   - docker
