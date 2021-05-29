@@ -1155,7 +1155,7 @@ class RestoreManager:
 
                 # "Updating EFI NVRAM for the boot device"
                 if self.image.efi_nvram_dat_absolute_path and 'label' in self.image.normalized_sfdisk_dict['sfdisk_dict'].keys() and "gpt" == self.image.normalized_sfdisk_dict['sfdisk_dict']['label']:
-                    if len(Parted.get_partitions_containing_flag(self.image.parted_dict[self.image.short_disk_device_node], "bios_grub")) > 0:
+                    if len(Parted.get_partitions_containing_flag(self.image.parted_dict, "bios_grub")) > 0:
                         self.logger.write("Found bios_grub flag! Skipping EFI NVRAM update.")
                     else:
                         if shutil.which("update-efi-nvram-boot-entry") is None:

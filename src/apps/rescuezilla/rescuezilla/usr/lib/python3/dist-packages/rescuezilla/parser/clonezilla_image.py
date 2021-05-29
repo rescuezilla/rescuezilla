@@ -640,10 +640,10 @@ class ClonezillaImage:
         if not is_lvm_logical_volume:
             # Prefer estimated size from parted partition table backup, but this requires splitting the device node
             image_base_device_node, image_partition_number = Utility.split_device_string(partition_short_device_node)
-            if short_disk_key in self.parted_dict.keys() and image_partition_number in \
-                self.parted_dict[short_disk_key]['partitions'].keys():
-                estimated_size = self.parted_dict[short_disk_key]['partitions'][image_partition_number]['size'] * \
-                                 self.parted_dict[short_disk_key]['logical_sector_size']
+            if 'partitions' in self.parted_dict.keys() and image_partition_number in \
+                self.parted_dict['partitions'].keys():
+                estimated_size = self.parted_dict['partitions'][image_partition_number]['size'] * \
+                                 self.parted_dict['logical_sector_size']
 
         if estimated_size == 0:
             # If the information wasn't in the parted backup, try the sfdisk partition table backup
