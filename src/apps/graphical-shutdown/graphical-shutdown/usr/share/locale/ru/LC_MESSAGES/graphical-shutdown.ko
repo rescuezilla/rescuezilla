@@ -1,6 +1,7 @@
+# Artem <KovalevArtem.ru@gmail.com>, 2021.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2021-05-19 03:18+0000\n"
+"PO-Revision-Date: 2021-05-29 02:38+0000\n"
 "Last-Translator: Artem <KovalevArtem.ru@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/rescuezilla/"
 "graphical-shutdown/ru/>\n"
@@ -12,13 +13,13 @@ msgstr ""
 "X-Generator: Weblate 4.7-dev\n"
 
 msgid "End Session"
-msgstr ""
+msgstr "Окончание сессии"
 
 msgid "Cancel"
 msgstr "Отмена"
 
 msgid "Shutdown"
-msgstr ""
+msgstr "Выключение"
 
 msgid "Reboot"
 msgstr "Перезагрузить"
