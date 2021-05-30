@@ -950,6 +950,16 @@ class Handler:
     def exit_app(self):
         print("Exiting Rescuezilla.")
         try:
+            returncode, failed_message = ImageExplorerManager._do_unmount(IMAGE_EXPLORER_DIR,
+                                                                          is_deassociate_qemu_nbd_device=False)
+            if not returncode:
+                print(failed_message)
+
+            returncode, failed_message = ImageExplorerManager._do_unmount(RESCUEZILLA_MOUNT_TMP_DIR,
+                                                                          is_deassociate_qemu_nbd_device=False)
+            if not returncode:
+                print(failed_message)
+
             # Launch subprocess to unmount target directory. Subprocess is detached so it doesn't block Rescuezilla's
             # shutdown.
             subprocess.Popen(["umount", MOUNT_DIR])
