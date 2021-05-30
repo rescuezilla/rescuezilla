@@ -123,6 +123,17 @@ class Sfdisk:
             return temp_tuple_list[0]
 
     @staticmethod
+    def has_dos_partition_table(normalized_sfdisk_dict):
+        if 'label' not in normalized_sfdisk_dict['sfdisk_dict']:
+            # Older versions of sfdisk did not support GPT but also didn't have the label field. So all these disks
+            # can be assumed to have a DOS partition table.
+            return True
+        elif 'dos' == normalized_sfdisk_dict['sfdisk_dict']['label']:
+            return True
+        else:
+            return False
+
+    @staticmethod
     def generate_normalized_sfdisk_dict(sfdisk_absolute_path, image):
         sfdisk_filename = os.path.basename(sfdisk_absolute_path)
         normalized_sfdisk_dict = {'absolute_path': None, 'sfdisk_dict': {'partitions': {}}, 'file_length': 0}
