@@ -511,9 +511,9 @@ class RestoreManager:
 
                 # There is a maximum of 1 post-MBR gap per drive (but there can be many drives)
                 post_mbr_gap_dict = None
-                for key in self.image.post_mbr_gap_absolute_path.keys():
+                for key in self.image.post_mbr_gap_dict.keys():
                     if key.startswith(short_selected_image_drive_node):
-                        post_mbr_gap_dict = self.image.post_mbr_gap_absolute_path[key]
+                        post_mbr_gap_dict = self.image.post_mbr_gap_dict[key]
                 if post_mbr_gap_dict is not None:
                     process, flat_command_string, failed_message = Utility.run("Restore post mbr gap",
                                                                                ["dd", "if=" + post_mbr_gap_dict['absolute_path'],

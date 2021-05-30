@@ -64,7 +64,7 @@ class RedoBackupLegacyImage:
         self.is_needs_decryption = False
         self.normalized_sfdisk_dict = {'absolute_path': None, 'sfdisk_dict': {'partitions': {}}, 'file_length': 0}
         self.parted_dict = {'partitions': {}}
-        self.post_mbr_gap_absolute_path = {}
+        self.post_mbr_gap_dict = {}
 
         self.compression = "gzip"
         if filename.endswith(".redo"):

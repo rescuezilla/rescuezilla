@@ -538,7 +538,7 @@ class BackupManager:
                 GLib.idle_add(self.completed_backup, False, failed_message)
                 return False, failed_message
             if self.is_cloning:
-                self.metadata_only_image_to_annotate.post_mbr_gap_absolute_path['absolute_path'] = hidden_mbr_data_filepath
+                self.metadata_only_image_to_annotate.post_mbr_gap_dict['absolute_path'] = hidden_mbr_data_filepath
 
         else:
             self.logger.write("Partition table is: " + partition_table)
