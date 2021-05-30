@@ -243,7 +243,7 @@ class ClonezillaImage:
 
         self.parted_dict = {}
         self._mbr_absolute_path = {}
-        self.post_mbr_gap_absolute_path = {}
+        self.post_mbr_gap_dict = {}
         self.size_bytes = 0
         self.enduser_readable_size = "unknown"
         self.size_bytes = 0
@@ -295,7 +295,7 @@ class ClonezillaImage:
                 # situation Rescuezilla v2.1+ creates a 1MB post-MBR  gap backup *and* a notes.txt file.
                 self.warning_dict[short_disk_device_node + "mbr"] = "Backup is missing the \"post-MBR gap\" backup, most likely due to Clonezilla detecting a >1024MB gap between the MBR partition table and the first partition. Any GRUB bootloaders present will not restore correctly. In order to boot after restoring this backup, Clonezilla happens to workaround this situation by automatically re-installing GRUB, but current version of Rescuezilla does not implement this (but will in a future version). Clonezilla is available from within the Rescuezilla live environment by running `clonezilla` in a Terminal. See the following link for more information: https://github.com/rescuezilla/rescuezilla/issues/146"
             else:
-                self.post_mbr_gap_absolute_path = {'absolute_path': absolute_post_mbr_gap_filepath}
+                self.post_mbr_gap_dict = {'absolute_path': absolute_post_mbr_gap_filepath}
 
         # There is a maximum of 1 EBR per drive (there can be many drives). Extended Boot Record (EBR) is never
         # listed in 'parts' list. The asterisk is needed here because unlike the MBR case, the ebr file is eg,

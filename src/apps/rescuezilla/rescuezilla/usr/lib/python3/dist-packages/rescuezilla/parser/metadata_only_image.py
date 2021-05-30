@@ -67,7 +67,7 @@ class MetadataOnlyImage:
         self.enduser_readable_size = ""
         self.is_needs_decryption = False
         self.parted_dict = {'partitions': {}}
-        self.post_mbr_gap_absolute_path = {}
+        self.post_mbr_gap_dict = {}
 
         statbuf = os.stat(self.absolute_path)
         self.last_modified_timestamp = format_datetime(datetime.fromtimestamp(statbuf.st_mtime))

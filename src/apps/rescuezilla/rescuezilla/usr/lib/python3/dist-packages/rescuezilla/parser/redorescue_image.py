@@ -58,7 +58,7 @@ class RedoRescueImage:
         self.enduser_readable_size = ""
         self.is_needs_decryption = False
         self.parted_dict = {'partitions': {}}
-        self.post_mbr_gap_absolute_path = {}
+        self.post_mbr_gap_dict = {}
 
         if filename.endswith(".redo"):
             prefix = filename.split(".redo")[0]
