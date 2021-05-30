@@ -394,12 +394,12 @@ class RestoreManager:
                     GLib.idle_add(self.completed_restore, False, message)
                     return False, message
 
-                if self.image.get_absolute_mbr_path():
-                    # FIXME: The description here doesn't match what the code is doing
+                absolute_mbr_path = self.image.get_absolute_mbr_path()
+                if absolute_mbr_path:
                     process, flat_command_string, failed_message = Utility.run("Restoring the first 446 bytes of MBR data (executable code area) for " + self.restore_destination_drive,
                                                                                ["dd", "if=" +
-                                                                                self.image.get_absolute_mbr_path(),
-                                                                                "of=" + self.restore_destination_drive, "bs=446"],
+                                                                                absolute_mbr_path,
+                                                                                "of=" + self.restore_destination_drive, "bs=446", "count=1"],
                                                                                use_c_locale=False, logger=self.logger)
                     if process.returncode != 0:
                         with self.summary_message_lock:
@@ -507,41 +507,66 @@ class RestoreManager:
                 # The nature of accepting a partition table overwrite means there's no risk of overwriting data that
                 # the user didn't intend on overwriting: all partitions are coming from a backup image so eg,
                 # calculating offsets to the first partition and comparing it to the post-MBR gap file size prevent
-                # accidentally overwriting it is NOT required here.
+                # accidentally overwriting it is NOT required here. The only gotcha is GPT disks, where overwriting the
+                # post-MBR gap can cause an inconsistent state, at least on FOG Project images.
+                if Sfdisk.has_dos_partition_table(self.image.normalized_sfdisk_dict):
+                    print("Found DOS partition table.")
+                    restore_post_mbr_gap_cmd_list = []
+                    post_mbr_gap_restore_msg = ""
+                    if 'absolute_path' in self.image.post_mbr_gap_dict.keys():
+                        post_mbr_gap_restore_msg = "Restoring post-MBR gap using " + self.image.post_mbr_gap_dict['absolute_path']
+                        # If we have a post-MBR gap file (like Clonezilla), just use it.
+                        restore_post_mbr_gap_cmd_list = ["dd", "if=" + self.image.post_mbr_gap_dict['absolute_path'],
+                                                         "of=" + self.restore_destination_drive,
+                                                         # Write to 1 block into the destination device
+                                                         "seek=1",
+                                                         "bs=512"]
+                    else:
+                        mbr_size = int(os.stat(absolute_mbr_path).st_size)
+                        if mbr_size > 512:
+                            post_mbr_gap_restore_msg = "Restoring post-MBR gap by carefully using MBR file (" + absolute_mbr_path + "), as it's larger than 512 bytes: " + str(mbr_size)
+                            # For image formats that combine the MBR and post-MBR gap together, carefully use dd write
+                            # the post-MBR gap into the correct place
+                            restore_post_mbr_gap_cmd_list = ["dd", "if=" + absolute_mbr_path,
+                                                             "of=" + self.restore_destination_drive,
+                                                             # Read from 1 block into the source file
+                                                             "skip=1",
+                                                             # Write to 1 block into the destination device
+                                                             "seek=1",
+                                                             "bs=512"]
+                        else:
+                            print("No post-MBR gap file found.")
 
-                if 'absolute_path' in self.image.post_mbr_gap_dict.keys():
-                    process, flat_command_string, failed_message = Utility.run("Restore post mbr gap",
-                                                                               ["dd", "if=" + self.image.post_mbr_gap_dict['absolute_path'],
-                                                                                "of=" + self.restore_destination_drive,
-                                                                                "seek=1",
-                                                                                "bs=512"],
-                                                                               use_c_locale=False, logger=self.logger)
-                    if process.returncode != 0:
-                        with self.summary_message_lock:
-                            self.summary_message += failed_message
-                        GLib.idle_add(self.completed_restore, False, failed_message)
-                        return False, failed_message
+                    if len(restore_post_mbr_gap_cmd_list) > 0:
+                        process, flat_command_string, failed_message = Utility.run(post_mbr_gap_restore_msg,
+                                                                                   restore_post_mbr_gap_cmd_list,
+                                                                                   use_c_locale=False, logger=self.logger)
+                        if process.returncode != 0:
+                            with self.summary_message_lock:
+                                self.summary_message += failed_message
+                            GLib.idle_add(self.completed_restore, False, failed_message)
+                            return False, failed_message
 
-                    if self.requested_stop:
-                        GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
-                        return False, _("User requested operation to stop.")
+                        if self.requested_stop:
+                            GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
+                            return False, _("User requested operation to stop.")
 
-                    if not self.update_kernel_partition_table(wait_for_partition=True):
-                        failed_message = _(
-                                          "Failed to refresh kernel partition table. This can happen if another process is accessing the partition table.")
-                        GLib.idle_add(self.completed_restore, False, failed_message)
-                        return False, failed_message
+                        if not self.update_kernel_partition_table(wait_for_partition=True):
+                            failed_message = _(
+                                              "Failed to refresh kernel partition table. This can happen if another process is accessing the partition table.")
+                            GLib.idle_add(self.completed_restore, False, failed_message)
+                            return False, failed_message
 
-                    # Shutdown the Logical Volume Manager (LVM) again -- it seems the volume groups re-activate after partition table restored for some reason.
-                    # FIXME: Look into this.
-                    is_successfully_shutdown, message = self._shutdown_lvm()
-                    if not is_successfully_shutdown:
-                        GLib.idle_add(self.completed_restore, False, message)
-                        return False, message
+                        # Shutdown the Logical Volume Manager (LVM) again -- it seems the volume groups re-activate after partition table restored for some reason.
+                        # FIXME: Look into this.
+                        is_successfully_shutdown, message = self._shutdown_lvm()
+                        if not is_successfully_shutdown:
+                            GLib.idle_add(self.completed_restore, False, message)
+                            return False, message
 
-                    if self.requested_stop:
-                        GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
-                        return False, _("User requested operation to stop.")
+                        if self.requested_stop:
+                            GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
+                            return False, _("User requested operation to stop.")
 
                 # The Extended Boot Record (EBR) information is already captured in the .sfdisk file, which provides
                 # greater flexibility around destination hard drive sizes. The '-ebr' image files in the Clonezilla
@@ -717,29 +742,6 @@ class RestoreManager:
                 if self.requested_stop:
                     GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
                     return False, _("User requested operation to stop.")
-
-                # TODO: Reinstall whole MBR (512 bytes)
-                # FIXME: Already done above, double check if Clonezilla has mistaken duplication?
-                # process, flat_command_string = Utility.run("Restore MBR",
-                #                      ["dd", "if="$target_dir_fullpath/$(to_filename ${ihd})-mbr, "of=" + self.restore_destination_drived bs=512 count=1"])
-                # if process.returncode != 0:
-                #    print("Error running dd to restore ebr")
-                #    GLib.idle_add(self.completed_restore, False, "Error restoring EBR")
-                #    return
-                """      # Ref: http://en.wikipedia.org/wiki/Master_boot_record
-      # Master Boot Record (MBR) is the 512-byte boot sector:
-      # 446 bytes (executable code area) + 64 bytes (table of primary partitions) + 2 bytes (MBR signature; # 0xAA55) = 512 bytes.
-      # However, some people also call executable code area (first 446 bytes in MBR) as MBR.
-      echo -n "Restoring the MBR data (512 bytes), image_number.e. executable code area + table of primary partitions + MBR signature, for $ihd... " | tee --append $OCS_LOGFILE
-      dd if=$target_dir_fullpath/$(to_filename ${ihd})-mbr of=/dev/$ihd bs=512 count=1 &>/dev/null
-      echo "done." | tee --append $OCS_LOGFILE
-      echo -n "Making kernel re-read the partition table of /dev/$ihd... " | tee --append $OCS_LOGFILE
-      inform_kernel_partition_table_changed mbr /dev/$ihd | tee --append ${OCS_LOGFILE}
-      echo "done." | tee --append $OCS_LOGFILE
-      echo "The partition table of /dev/$ihd is:" | tee --append $OCS_LOGFILE
-      fdisk -l /dev/$ihd
-      echo $msg_delimiter_star_line | tee --append $OCS_LOGFILE
-"""
 
                 filesystem_restore_message = _(
                     "Restoring {description} to {destination_partition} ({destination_description})").format(
@@ -1122,7 +1124,7 @@ class RestoreManager:
 
             if self.is_overwriting_partition_table:
                 # "Reinstall whole MBR (512 bytes)"
-                if self.image.get_absolute_mbr_path():
+                if absolute_mbr_path:
                     process, flat_command_string, failed_message = Utility.run(
                         "Restoring the MBR data (512 bytes), i.e. executable code area + table of primary partitions + MBR signature, for " + self.restore_destination_drive,
                         ["dd", "if=" + self.image.get_absolute_mbr_path(),
