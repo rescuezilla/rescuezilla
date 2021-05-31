@@ -68,6 +68,7 @@ class MetadataOnlyImage:
         self.is_needs_decryption = False
         self.parted_dict = {'partitions': {}}
         self.post_mbr_gap_dict = {}
+        self._mbr_absolute_path = None
 
         statbuf = os.stat(self.absolute_path)
         self.last_modified_timestamp = format_datetime(datetime.fromtimestamp(statbuf.st_mtime))
@@ -184,7 +185,7 @@ class MetadataOnlyImage:
             return False
 
     def get_absolute_mbr_path(self):
-        return None
+        return self._mbr_absolute_path
 
     def flatten_partition_string(self, long_device_node):
         flat_string = ""
