@@ -33,6 +33,7 @@ import gi
 
 from image_explorer_manager import ImageExplorerManager
 from parser.chs_utilities import ChsUtilities
+from parser.clonezilla_image import ClonezillaImage
 from parser.fsarchiver_image import FsArchiverImage
 from parser.metadata_only_image import MetadataOnlyImage
 from parser.parted import Parted
@@ -700,8 +701,14 @@ class RestoreManager:
                     else:
                         # Delete the temp copy
                         os.remove(lvm_vg_conf_filepath_tmp_copy)
-            # Start the Logical Volume Manager (LVM). Caller raises Exception on failure
-            Lvm.start_lvm2(self.logger)
+
+            # Currently Rescuezilla's native formats (Clonezilla and MetadataOnlyImage) are the only image format that
+            # handles LVMs as anything other than a raw dd device so after restoring the configuration, start the LVM
+            # for these formats only.
+            if isinstance(self.image, ClonezillaImage) or isinstance(self.image, MetadataOnlyImage):
+                self.display_status(_("Starting Logical Volume Manager (LVM) Logical Volumes..."), "")
+                # Start the Logical Volume Manager (LVM). Caller raises Exception on failure
+                Lvm.start_lvm2(self.logger)
 
             # Sanity check block devices
             target_block_devices_exist = False
@@ -1036,6 +1043,13 @@ class RestoreManager:
                     else:
                         with self.summary_message_lock:
                             self.summary_message += message + "\n"
+
+            # After restoring all partitions we can start LVM for all other formats, so that post-processing
+            # steps have a chance of operating on logical volumes.
+            if not (isinstance(self.image, ClonezillaImage) or isinstance(self.image, MetadataOnlyImage)):
+                self.display_status(_("Starting Logical Volume Manager (LVM) Logical Volumes..."), "")
+                # Start the Logical Volume Manager (LVM). Caller raises Exception on failure
+                Lvm.start_lvm2(self.logger)
 
             # Clonezilla bash scripts take partition list without leading /dev/, and as a single argument string.
             restore_destination_drive_short_dev_node = re.sub('/dev/', '', self.restore_destination_drive)
