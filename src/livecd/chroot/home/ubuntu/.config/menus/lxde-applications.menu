@@ -12,12 +12,19 @@
         </Include>
         <!-- added by LibFM -->
         <Include>
-            <Filename>lxterminal.desktop</Filename>
+            <Filename>xfce4-terminal.desktop</Filename>
         </Include>
         <!-- deleted by LibFM -->
         <Exclude>
+            <Filename>exo-terminal-emulator.desktop</Filename>
+        </Exclude>
+        <Exclude>
+            <Filename>exo-file-manager.desktop</Filename>
+        </Exclude>
+        <Exclude>
             <Filename>org.gnome.DiskUtility.desktop</Filename>
         </Exclude>
+
     </Menu>
     <Menu>
         <Name>System</Name>
@@ -54,7 +61,7 @@
         <Name>DesktopSettings</Name>
         <!-- deleted by LibFM -->
         <Exclude>
-            <Filename>lxterminal.desktop</Filename>
+            <Filename>xfce4-terminal-settings.desktop</Filename>
         </Exclude>
         <!-- deleted by LibFM -->
         <Exclude>
@@ -80,6 +87,9 @@
         </Exclude>
         <Exclude>
             <Filename>lshw-gtk.desktop</Filename>
+        </Exclude>
+        <Exclude>
+            <Filename>exo-preferred-applications.desktop</Filename>
         </Exclude>
     </Menu>
     <Menu>
@@ -124,6 +134,15 @@
         </Exclude>
         <Exclude>
             <Filename>drive.reset.desktop</Filename>
+        </Exclude>
+        <Exclude>
+            <Filename>exo-mail-reader.desktop</Filename>
+        </Exclude>
+        <Exclude>
+            <Filename>exo-terminal-emulator.desktop</Filename>
+        </Exclude>
+        <Exclude>
+            <Filename>exo-web-browser.desktop</Filename>
         </Exclude>
     </Menu>
     <Layout>

@@ -1,2 +1,0 @@
-#!/bin/sh
-pkexec "/usr/bin/lxterminal" "$@"
