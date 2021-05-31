@@ -1,0 +1,2 @@
+#!/bin/sh
+pkexec "/usr/bin/xfce4-terminal" "$@"

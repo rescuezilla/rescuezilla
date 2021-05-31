@@ -5,17 +5,17 @@
 
     <vendor>Rescuezilla</vendor>
     <vendor_url>https://rescuezilla.com/</vendor_url>
-    <icon_name>lxterminal</icon_name>
-    <action id="com.rescuezilla.lxterminal">
+    <icon_name>xfce4-terminal</icon_name>
+    <action id="com.rescuezilla.xfce4-terminal">
 
-        <description gettext-domain="rescuezilla">Run lxterminal as root</description>
-        <message gettext-domain="rescuezilla">Authentication is required to run lxterminal as root</message>
+        <description gettext-domain="rescuezilla">Run xfce4-terminal as root</description>
+        <message gettext-domain="rescuezilla">Authentication is required to run xfce4-terminal as root</message>
         <defaults>
             <allow_any>auth_admin</allow_any>
             <allow_inactive>auth_admin</allow_inactive>
             <allow_active>auth_admin</allow_active>
         </defaults>
-        <annotate key="org.freedesktop.policykit.exec.path">/usr/bin/lxterminal</annotate>
+        <annotate key="org.freedesktop.policykit.exec.path">/usr/bin/xfce4-terminal</annotate>
         <annotate key="org.freedesktop.policykit.exec.allow_gui">true</annotate>
 
     </action>
