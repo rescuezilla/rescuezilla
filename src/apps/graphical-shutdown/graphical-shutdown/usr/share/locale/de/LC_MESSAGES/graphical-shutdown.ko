@@ -2,7 +2,7 @@
 # Mirko Hanker <Mirko1984@pm.me>, 2021.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2021-05-29 02:38+0000\n"
+"PO-Revision-Date: 2021-06-01 03:33+0000\n"
 "Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/rescuezilla/"
 "graphical-shutdown/de/>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "X-Generator: Weblate 4.7-dev\n"
 
 msgid "End Session"
-msgstr "Rescuezilla Sitzung beenden"
+msgstr "Rescuezilla beenden"
 
 msgid "Cancel"
 msgstr "Abbrechen"
