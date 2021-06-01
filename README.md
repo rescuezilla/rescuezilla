@@ -28,6 +28,7 @@ Rescuezilla is an fork of _Redo Backup and Recovery_ (now called _Redo Rescue_) 
 
 Rescuezilla has been translated into the following languages:
 
+* Dansk (da-DK) (Translation in-progress)
 * Deutsch (de-DE)
 * Ελληνικά (el-GR)
 * English (en-US)
