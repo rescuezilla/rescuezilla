@@ -794,6 +794,7 @@ class RestoreManager:
                                       partition_summary)
                         continue
                     if self.is_cloning:
+                        # FIXME: Remove this ugly hacky approach of making cat and decompression a no-op
                         cat_cmd_list = ["true"]
                         decompression_cmd_list = ["true"]
                     else:
@@ -883,12 +884,12 @@ class RestoreManager:
                         self.proc['cat_' + image_key] = subprocess.Popen(cat_cmd_list, stdout=subprocess.PIPE,
                                                                          env=env,
                                                                          encoding='utf-8')
-                        self.proc['decompression_' + image_key] = subprocess.Popen(decompression_cmd_list,
+                        restore_stdin_proc_key = 'decompression_' + image_key
+                        self.proc[restore_stdin_proc_key] = subprocess.Popen(decompression_cmd_list,
                                                                                    stdin=self.proc[
                                                                                        'cat_' + image_key].stdout,
                                                                                    stdout=subprocess.PIPE, env=env,
                                                                                    encoding='utf-8')
-                        restore_stdin_proc_key = 'decompression_' + image_key
                     """else:
                         flat_command_string = Utility.print_cli_friendly(image_type + " command ",
                                                    [cat_cmd_list, restore_command_list])
