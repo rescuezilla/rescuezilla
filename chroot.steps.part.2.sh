@@ -57,8 +57,13 @@ apt-get clean
 rm /etc/systemd/system/systemd-timesyncd.service
 ln -s /dev/null /etc/systemd/system/systemd-timesyncd.service
 
+# Replace host system's resolv.conf with Google DNS
+cat << EOF > /etc/resolv.conf
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+EOF
+
 rm -rf /tmp/*
-rm /etc/resolv.conf
 rm -rf /var/lib/apt/lists/????????*
 umount -lf /proc
 umount -lf /sys
