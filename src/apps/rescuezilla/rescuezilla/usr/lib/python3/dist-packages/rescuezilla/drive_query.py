@@ -85,7 +85,7 @@ class DriveQuery:
                         # device node like "nvme0n1" means.
                         human_friendly_drive_name = "#" + str(index + 1)
                         if (drive['type'] != 'disk' and not drive['type'].startswith("raid"))\
-                                or drive['has_raid_member_filesystem']:
+                                or drive['has_raid_member_filesystem'] or 'nbd' in drive_key :
                             # Hiding LVMs, loop devices, empty drives etc from initial drive selection list. This
                             # should greatly reduce the risk a user accidentally picks a logical volume (of their
                             # say, encrypted Debian system) when they were actually intending on picking the entire
@@ -138,7 +138,7 @@ class DriveQuery:
         index = 0
         for drive_key in self.drive_state.keys():
             try:
-                if drive_key == ignore_drive_key:
+                if drive_key == ignore_drive_key or 'nbd' in drive_key:
                     continue
                 if 'partitions' not in self.drive_state[drive_key].keys():
                     continue
