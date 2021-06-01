@@ -116,33 +116,34 @@ class FoxcloneImage:
             # "1, 10, 2, 3" issues), and partclone manages this when the number of digits is no longer fixed (see
             # above)
             abs_partclone_image_list.sort()
-            if len(abs_partclone_image_list) == 0:
+            if len(abs_partclone_image_list) == 0 and filesystem != "swap":
                 self.warning_dict[short_device_node] = _(
                     "Cannot find partition's associated partclone image") + "\n        " + image_match_string
                 continue
-            # Foxclone only supports gzip as of writing, but this presumably may change in future.
-            detected_compression = Utility.detect_compression(abs_partclone_image_list)
-            if filesystem != "<unknown>":
+
+            if filesystem == "swap":
+                self.image_format_dict_dict[short_device_node] = {'type': "swap",
+                                                                  # TODO: Make the fact the UUID gets placed in 'type' field less confusing.
+                                                                  'uuid':  self.foxclone_dict['partitions'][short_device_node]['type'],
+                                                                  'label': "",
+                                                                  "prefix": prefix,
+                                                                  'is_lvm_logical_volume': False}
+            elif filesystem != "<unknown>":
+                # Detect compression because while Foxclone only supports gzip as of writing, but this presumably may change in future.
                 self.image_format_dict_dict[short_device_node] = {'type': "partclone",
                                                                   'absolute_filename_glob_list': abs_partclone_image_list,
-                                                                  'compression': detected_compression,
+                                                                  'compression': Utility.detect_compression(abs_partclone_image_list),
                                                                   'filesystem': filesystem,
                                                                   # Assumption that binary is valid.
                                                                   'binary': "partclone." + filesystem,
                                                                   "prefix": prefix,
                                                                   'is_lvm_logical_volume': False}
             else:
+                # Detect compression because while Foxclone only supports gzip as of writing, but this presumably may change in future.
                 self.image_format_dict_dict[short_device_node] = {'type': "dd",
                                                                   'absolute_filename_glob_list': abs_partclone_image_list,
-                                                                  'compression': detected_compression,
+                                                                  'compression': Utility.detect_compression(abs_partclone_image_list),
                                                                   'binary': "partclone.dd",
-                                                                  "prefix": prefix,
-                                                                  'is_lvm_logical_volume': False}
-
-            if type == "swap":
-                self.image_format_dict_dict[short_device_node] = {'type': "swap",
-                                                                  'uuid':  self.foxclone_dict['partitions'][short_device_node]['third_field'],
-                                                                  'label': "",
                                                                   "prefix": prefix,
                                                                   'is_lvm_logical_volume': False}
 
@@ -216,6 +217,8 @@ class FoxcloneImage:
 
         initial_split = dot_backup_contents.split('\n', 1)
         dot_backup_dict['timestamp'] = initial_split[0]
+        if len(initial_split) < 2:
+            raise Exception("Could not split: " + dot_backup_contents)
 
         for line in initial_split[1].splitlines():
             print("Processing foxclone backup line: " + str(line))
@@ -244,6 +247,7 @@ class FoxcloneImage:
                         dot_backup_dict['partitions'][short_device_node] = {'type': second_field}
                     else:
                         third_field = split[3].strip()
+                        # TODO: Figure out how Foxclone handles swap partitions as logical partitions, if at all.
                         dot_backup_dict['partitions'][short_device_node] = {'fs': second_field, 'type': third_field}
                     # The rest of this line is the human-readable used-space, human-readable percentage used,
                     # description and boot flags the boot flags are already saved in the sfdisk partition backup so
