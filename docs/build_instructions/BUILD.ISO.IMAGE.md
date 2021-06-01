@@ -12,9 +12,11 @@ Alternatively, a single `make all` command can generate an AMD64 ISO image and a
 To construct such an ISO image, an Ubuntu 18.04, or similar Ubuntu-package environment capable of running debootstrap, chroot and bind mounts is currently required. It's currently recommended _only_ Ubuntu environments be used to build the ISO image as Debian and other non-Canonical package environments GRUB packages are signed differently (see the "EFI Secure Boot" section below). To build on environments other than Ubuntu 18.04, see the "Build ISO with docker" section below.
 
 ```bash
+# Please note: the following instructions are based on the Dockerfile and the .travis.yml file, which gets frequently
+# executed by Rescuezilla's TravisCI build bot automatically so is contantly being tested. The exact instructions below
+# sometimes gets out-of-date, especially if your build environment is based on a different version of Debian or Ubuntu.
+
 sudo apt-get update
-# The AMD64 version of Rescuezilla is based on Ubuntu 20.04 Focal, so you may find you need a more
-# recent version of debootstrap (from the backports repository) to bootstrap a Focal environment.
 sudo apt-get install git-lfs git make sudo \
                      rsync debootstrap gettext squashfs-tools dosfstools mtools xorriso \
                      memtest86+ devscripts debhelper checkinstall cmake \
