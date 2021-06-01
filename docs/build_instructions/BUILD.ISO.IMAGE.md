@@ -1,10 +1,11 @@
 ## Building a bootable ISO image
 
-Note: [You can download the latest Rescuezilla ISO image here](https://github.com/rescuezilla/rescuezilla/releases/latest). This page is intended for developers.
+Note: [You can download the latest Rescuezilla ISO image here](https://github.com/rescuezilla/rescuezilla/releases/latest).  This page is intended for developers.
+For Debian/Ubuntu/Linux Mint users there is also a [standalone deb package](https://github.com/rescuezilla/rescuezilla/wiki/Installing-Rescuezilla-from-the-standalone-deb-package).
  
 ### Build without docker
 
-A single `make deb` command generates a Rescuezilla package ready for installation.
+A single `make deb` command generates a Rescuezilla package ready for installation. (You can also [download](https://github.com/rescuezilla/rescuezilla/wiki/Installing-Rescuezilla-from-the-standalone-deb-package) a standalone deb package of the latest release)
 
 Alternatively, a single `make all` command can generate an AMD64 ISO image and an i386 image, which are complete Ubuntu-based Linux live environments capable of booting from USB sticks, CD, DVD and any EFI firmware, including with EFI Secure Boot switched on.
 
