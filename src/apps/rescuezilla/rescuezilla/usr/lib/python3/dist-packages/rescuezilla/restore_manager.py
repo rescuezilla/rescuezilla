@@ -779,6 +779,11 @@ class RestoreManager:
                                           failed_message)
                             GLib.idle_add(self.completed_restore, False, failed_message)
                             return False, failed_message
+                        else:
+                            with self.summary_message_lock:
+                                self.summary_message += _(
+                                    "Successfully restored image partition {image} to {destination_partition}").format(
+                                    image=image_key, destination_partition=dest_part['dest_key']) + ".\n"
                         continue
                     if image_type == 'missing':
                         image_base_device_node, image_partition_number = Utility.split_device_string(image_key)
