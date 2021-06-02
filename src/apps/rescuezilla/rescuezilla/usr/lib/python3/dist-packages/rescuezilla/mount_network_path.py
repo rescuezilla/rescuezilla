@@ -80,10 +80,18 @@ class MountNetworkPath:
             if not os.path.exists(destination_path) and not os.path.isdir(destination_path):
                 os.mkdir(destination_path, 0o755)
 
+            if self.is_stop_requested():
+                GLib.idle_add(self.callback, False, _("Operation cancelled by user."))
+                return
+
             is_unmounted, message = Utility.umount_warn_on_busy(destination_path)
             if not is_unmounted:
                 GLib.idle_add(self.please_wait_popup.destroy)
                 GLib.idle_add(self.callback, False, message)
+                return
+
+            if self.is_stop_requested():
+                GLib.idle_add(self.callback, False, _("Operation cancelled by user."))
                 return
 
             smb_arguments = ""
