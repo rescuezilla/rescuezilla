@@ -260,7 +260,7 @@ class ImageFolderQuery:
                                               + " " + _("({timeout_seconds} second timeout)").format(timeout_seconds=timeout_seconds))
                                 qemu_img = QemuImage(absolute_path, enduser_filename, timeout_seconds)
                                 if qemu_img.has_initialized:
-                                    temp_image_dict = {absolute_path: QemuImage(absolute_path, enduser_filename, timeout_seconds)}
+                                    temp_image_dict = {absolute_path: qemu_img}
 
                                     error_suffix = _("Support for virtual machine images is still experimental.")
                                     self.scanned_folder_set.add(basename)
