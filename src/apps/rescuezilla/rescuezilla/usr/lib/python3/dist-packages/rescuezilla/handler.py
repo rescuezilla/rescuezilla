@@ -18,6 +18,7 @@
 # ----------------------------------------------------------------------
 import collections
 import os
+import shutil
 import subprocess
 import threading
 import traceback
@@ -1363,7 +1364,13 @@ class Handler:
         self.builder.get_object("button_mount").set_sensitive(True)
 
     def open_file_manager(self, button):
-        Utility.open_path_in_filemanager_as_non_root("ubuntu", IMAGE_EXPLORER_DIR)
+        user = "ubuntu"
+        if shutil.which("pcmanfm") is None:
+            error = ErrorMessageModalPopup(self.builder, "Cannot launch pcmanfm file manager as user '" + user + "'.\n\n"
+                                           + "Please manually navigate to the following path using a file manager: "
+                                           + IMAGE_EXPLORER_DIR)
+        else:
+            Utility.open_path_in_filemanager_as_non_root(user, IMAGE_EXPLORER_DIR)
 
     # Callback for double click (row-activate).
     def row_activated_partition_selected(self, treeview, path, view_column):
