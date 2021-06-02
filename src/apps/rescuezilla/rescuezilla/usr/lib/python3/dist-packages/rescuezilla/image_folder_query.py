@@ -250,10 +250,10 @@ class ImageFolderQuery:
                         # is_raw = QemuImage.does_file_extension_refer_to_raw_image(extension)
                         if not basename in self.scanned_folder_set:
                             if QemuImage.has_conflict_img_format_in_same_folder(absolute_path, extension):
+                                print("Not considering " + filename + " as QemuImage as found exiting image it probably belongs to")
                                 self.scanned_folder_set.add(basename)
                             else:
                                 print("Found an extension that should be compatible with qemu-nbd: " + filename)
-                                print("Skipping: " + filename)
                                 timeout_seconds = 10
                                 GLib.idle_add(self.please_wait_popup.set_secondary_label_text,
                                               _("Scanning: {filename}").format(filename=absolute_path)
