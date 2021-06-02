@@ -133,8 +133,9 @@ class QemuImage(MetadataOnlyImage):
         self.long_device_node = nbd_device
         is_raw_img = QemuImage.does_file_extension_refer_to_raw_image(self.absolute_path)
         if not is_raw_img:
-            # Does NOT mount images read-only to provide the ability to ntfsfix partitions as the standard Clonezilla
-            # behavior is to eg, ntfsfix hibernated NTFS partitions during a restore.
+            # Does NOT associate images read-only to provide the ability to ntfsfix partitions as the standard
+            # Clonezilla behavior is to eg, run ntfsfix during a restore to fix common NTFS issues including
+            # detecting hibernated NTFS partitions.
             qemu_nbd_cmd_list = ["qemu-nbd", "--connect=" + nbd_device, self.absolute_path]
         else:
             # Specifies raw format so qemu-nbd doesn't provide a non-zero error code. Read-only for safety.
