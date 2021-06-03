@@ -31,6 +31,7 @@ from clone_manager import CloneManager
 from image_explorer_manager import ImageExplorerManager
 from mount_local_path import MountLocalPath
 from mount_network_path import MountNetworkPath
+from parser.fogproject_image import FogProjectImage
 from parser.metadata_only_image import MetadataOnlyImage
 from parser.qemu_image import QemuImage
 from restore_manager import RestoreManager
@@ -419,6 +420,9 @@ class Handler:
                             error = ErrorMessageModalPopup(self.builder,
                                                            "Ecryptfs encrypted images are not supported by current version of Rescuezilla.\n\nSupport for ecryptfs will be improved in a future version.\n\nHowever, as a temporary workaround, it is possible to carefully use the mount command line utility to decrypt the image, and then point Rescuezilla to this ecryptfs mount point and then use Rescuezilla to restore the image as normal.")
                         else:
+                            if isinstance(image, FogProjectImage):
+                                error = ErrorMessageModalPopup(self.builder, "WARNING: Support for restoring images from FOG Project is still EXPERIMENTAL and NOT RECOMMENDED.\n\nWindows MBR and GPT disks will restore and boot fine.\n\nLinux environments using GRUB will restore fine BUT after booting GRUB they won't boot further. It looks like FOG might be modifying unique UUID identifiers etc.\n\nCompatibility with FOG Project images will be improved in a future version.")
+                                # Not returning here to allow user to continue.
                             self.current_page = Page.RESTORE_DESTINATION_DRIVE_SELECTION
                             self.builder.get_object("restore_tabs").set_current_page(2)
                 elif self.current_page == Page.RESTORE_DESTINATION_DRIVE_SELECTION:
