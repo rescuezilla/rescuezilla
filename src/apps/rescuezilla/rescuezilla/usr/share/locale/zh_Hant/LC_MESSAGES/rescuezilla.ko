@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2021-05-29 02:38+0000\n"
-"Last-Translator: 池边树下 <mzky@163.com>\n"
+"PO-Revision-Date: 2021-06-03 14:45+0000\n"
+"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
 "rescuezilla/rescuezilla/zh_Hant/>\n"
 "Language: zh_Hant\n"
@@ -418,10 +418,10 @@ msgid "Backing up your system to the location you selected.  This may take an ho
 msgstr "將系統備份到您選擇的位置。 這可能需要一個小時或更長的時間，具體取決於計算機的速度和數據量。"
 
 msgid "Saving: {file}"
-msgstr "儲存：{檔案}"
+msgstr "儲存：{file}"
 
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
-msgstr "備份[partition_name}包含檔案系統{檔案系統}到{目的地}"
+msgstr "備份{partition_name}包含檔案系統{filesystem}到{destination}"
 
 msgid "Summary of Backup"
 msgstr "備份摘要"

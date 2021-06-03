@@ -5,13 +5,14 @@
 # Submitted at: https://github.com/rescuezilla/rescuezilla/issues/186
 #
 # OerjanS <oerjan.snell@gmail.com>, 2021.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2021-05-22 05:28+0000\n"
-"Last-Translator: OerjanS <oerjan.snell@gmail.com>\n"
+"PO-Revision-Date: 2021-06-03 14:45+0000\n"
+"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/sv/>\n"
 "Language: sv\n"
@@ -430,7 +431,7 @@ msgid "Backing up the following partition"
 msgstr "Säkerhetskopiera följande partition"
 
 msgid "The backup image will be written into folder {dest_dir} on {description}"
-msgstr "Säkerhetskopian skrivs i katalogen {dest_dir} på {beskrivning}"
+msgstr "Säkerhetskopian skrivs i katalogen {dest_dir} på {description}"
 
 msgid "Confirm the following backup configuration."
 msgstr "Bekräfta följande säkerhetskopiering."
