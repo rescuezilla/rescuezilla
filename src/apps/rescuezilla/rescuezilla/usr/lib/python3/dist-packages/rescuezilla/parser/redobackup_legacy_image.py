@@ -172,7 +172,6 @@ class RedoBackupLegacyImage:
                                                                   'estimated_size_bytes': 0,
                                                                   'is_lvm_logical_volume': False}
                 continue
-            self.image_format_dict_dict[short_device_node] = {'abs_image_glob': abs_partclone_image_list}
 
             command = "partclone"
             filesystem = "<unknown>"
@@ -275,6 +274,6 @@ class RedoBackupLegacyImage:
         if estimated_size == 0:
             # Not all compressed images can be queried for uncompressed size (eg, gzip). So worst-case get the size
             # from the compressed split image size (which is 0 bytes if the file is missing).
-            return Utility.count_total_size_of_files_on_disk(self.image_format_dict_dict[short_device_node]['abs_image_glob'], "gzip")
+            return Utility.count_total_size_of_files_on_disk(self.image_format_dict_dict[short_device_node]['absolute_filename_glob_list'], "gzip")
 
         return estimated_size
