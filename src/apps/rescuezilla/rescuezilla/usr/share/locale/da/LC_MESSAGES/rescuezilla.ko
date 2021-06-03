@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2021-06-01 03:33+0000\n"
+"PO-Revision-Date: 2021-06-03 14:45+0000\n"
 "Last-Translator: Bolle Barnewitz <detlef@sol.dk>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/da/>\n"
@@ -20,25 +20,31 @@ msgid "Welcome"
 msgstr "Velkommen"
 
 msgid "Select an Option"
-msgstr ""
+msgstr "Vælg en opgave"
 
 msgid "Easily create a backup image of your computer, or completely restore from one.  Click an option to begin:"
 msgstr ""
+"Lav en backup af din computer eller lav en fuldstændig gendannelse af "
+"computeren. Vælg en handling:"
 
 msgid "Backup"
-msgstr ""
+msgstr "Backup"
 
 msgid "Restore"
-msgstr ""
+msgstr "Gendan"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
 msgstr ""
+"Brug for hjælp? Læs først Rescuezillas FAQ . Du kan få hjælp i Rescuezillas "
+"forum."
 
 msgid "Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed."
 msgstr ""
+"Støt udviklingen af Rescuezilla med $1 pr. måned via crowfunding-hjemmesiden "
+"Patreon."
 
 msgid "Back"
-msgstr ""
+msgstr "Tilbage"
 
 msgid "Next >"
 msgstr "Næste>"
@@ -47,34 +53,34 @@ msgid "Please wait..."
 msgstr "Vent venligst..."
 
 msgid "Identifying disk drives..."
-msgstr ""
+msgstr "Søger efter drev..."
 
 msgid "Unmounting: {path}"
-msgstr ""
+msgstr "Afmonterer: {path}"
 
 msgid "Unable to unmount {path}"
-msgstr ""
+msgstr "Kunne ikke afmontere {path}"
 
 msgid "Running: {app}"
-msgstr ""
+msgstr "Udfører: {app}"
 
 msgid "Running {app} on {device}"
-msgstr ""
+msgstr "Udfører {app} på {device}"
 
 msgid "Failed to run command: "
-msgstr ""
+msgstr "Kunne ikke udføre kommandoen: "
 
 msgid "Error querying drives: "
-msgstr ""
+msgstr "Fejl ved søgning efter drev: "
 
 msgid "Clone"
 msgstr "Klon"
 
 msgid "Step 1: Understanding Cloning"
-msgstr ""
+msgstr "Trin 1: Forstå kloning"
 
 msgid "Please understand how \"cloning\" differs from \"imaging\"."
-msgstr ""
+msgstr "Forstå forskellen mellem \"kloning\" og \"backup\"."
 
 msgid "This mode is for \"disk cloning\". Cloning means copying one drive and directly overwriting another drive. This is a direct one-step operation with no temporary storage required.\n"
 "\n"
@@ -83,165 +89,191 @@ msgid "This mode is for \"disk cloning\". Cloning means copying one drive and di
 ""
 "To use the \"imaging\" wizards, click <b>Back</b> and select <b>Backup</b> or <b>Restore</b>."
 msgstr ""
+"Denne proces er til \"kloning\" af et drev. Kloning betyder, at et drev "
+"kopieres direkte til et andet drev. Processen udføres i ét trin uden behov "
+"for en buffer.\n"
+"\n"
+"Kloning er forskellig fra en \"diskafbildning\" aka backup. Ved en backup "
+"kopieres alt indhold fra et drev til store filer ind i en mappe eller et "
+"eksternt drev. Flere backupper kan gemmes på samme eksterne drev. Disse "
+"backupper kan gendannes til oprindelige kildedisk eller til andre diske. Med "
+"andre ord: Backup-handlingen kopierer dit drev til <i>filer</i>, som skal "
+"gemmes midlertidigt på et drev, før drevets indhold kan gendannes.\n"
+"\n"
+"For at bruge backup-guiden, klik på <b>Tilbage</b> og vælg <b>Backup</b> "
+"eller <b>Gendan</b>."
 
 msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
-msgstr ""
+msgstr "Klik på <b>Næste</b> for at starte kloningsguiden"
 
 msgid "Step 2: Select Source Drive"
-msgstr ""
+msgstr "Trin 2: Vælg kildedrevet"
 
 msgid "Select the <b>source drive</b> to clone."
-msgstr ""
+msgstr "Vælg det <b>kildedrev</b>, der skal klones."
 
 msgid "Select the <b>destination drive</b> to overwrite."
-msgstr ""
+msgstr "Vælg det <b>destinationsdrev</b>, som skal overskrives."
 
 msgid "Step 4: Select Partitions to Clone"
-msgstr ""
+msgstr "Trin 4: Vælg partitioner, der skal klones"
 
 msgid "Select which partitions from the source drive to clone, and whether to overwrite the partition table. <b>Leave everything selected to completely clone the source drive to the destination drive.</b>"
 msgstr ""
+"Vælg de partitioner fra kildedrevet, som skal klones og om "
+"partitionstabellen skal overskrives. <b>Markér alt for at klone hele "
+"kildedrevet til destinationsdrevet.</b>"
 
 msgid "Step 5: Confirm Cloning Configuration"
-msgstr ""
+msgstr "Trin 5: Bekræft kloningens konfiguration"
 
 msgid "Confirm the following cloning configuration."
-msgstr ""
+msgstr "Bekræft følgende konfiguration af kloningen."
 
 msgid "Cloning the following partitions"
-msgstr ""
+msgstr "Disse partitioner klones"
 
 msgid "To start cloning, click <b>Next</b>."
-msgstr ""
+msgstr "For at starte kloningen; klik <b>Næste</b>."
 
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
+"Er du sikker på at ville klone drevet til {destination_drive}? Hvis du "
+"fortsætter, bliver alle data på det drev overskrevet!"
 
 msgid "Step 6: Cloning Disk"
-msgstr ""
+msgstr "Trin 6: Kloner disk"
 
 msgid "Cloning the drive you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
+"Kloner det valgte drev. Afhængigt af din computers hastighed og mængden af "
+"data kan det tage en time eller mere."
 
 msgid "Summary of Clone"
-msgstr ""
+msgstr "Sammenfatning af kloningen"
 
 msgid "Clone Summary"
-msgstr ""
+msgstr "Sammenfatning af kloningen"
 
 msgid "Confirm the clone summary."
-msgstr ""
+msgstr "Bekræft sammenfatningen af kloningen."
 
 msgid "Unable to shutdown Image Explorer"
-msgstr ""
+msgstr "Kan ikke lukke Image Explorer'en"
 
 msgid "Step 1: Select Drive To Backup"
-msgstr ""
+msgstr "Trin 1: Vælg drevet, som du vil tage backup af"
 
 msgid "Select the <b>source drive</b> that you would like to create a backup image from."
-msgstr ""
+msgstr "Vælg <b>kildedrevet</b>, som du vil tage en backup af."
 
 msgid "Drive"
-msgstr ""
+msgstr "Drev"
 
 msgid "Capacity"
-msgstr ""
+msgstr "Størrelse"
 
 msgid "Drive Model"
-msgstr ""
+msgstr "Drevnavn/-model"
 
 msgid "Partitions"
-msgstr ""
+msgstr "Partitioner"
 
 msgid "Show hidden devices (for advanced users)"
-msgstr ""
+msgstr "Vis skjulte enheder (for erfarne brugere))"
 
 msgid "Step 2: Select Partitions to Save"
-msgstr ""
+msgstr "Trin 2: Vælg de partitioner, der skal gemmes"
 
 msgid "Select which partitions to create a backup of. <b>Leave all partitions selected if you are unsure.</b>"
 msgstr ""
+"Vælg de partitioner, som der skal tages en backup af. <b>Lad alle "
+"partitioner være markeret, hvis du er usikker.</b>"
 
 msgid "Save"
-msgstr ""
+msgstr "Gem"
 
 msgid "Description"
-msgstr ""
+msgstr "Beskrivelse"
 
 msgid "Drive {drive_number}"
-msgstr ""
+msgstr "Drev {drive_number}"
 
 msgid "Partition {partition_number}"
-msgstr ""
+msgstr "Partition {partition_number}"
 
 msgid "Step 3: Select Destination Drive"
-msgstr ""
+msgstr "Trin 3: Vælg destinationsdrev"
 
 msgid "Click on the box below to select the source drive that you would like to create a backup image from."
 msgstr ""
+"Klik på felterne nedenfor for at vælge kildedrevet, som du vil tage en "
+"backup af."
 
 msgid "Connected directly to my computer"
-msgstr ""
+msgstr "På en enhed forbundet direkte til min computer"
 
 msgid "Shared over a network"
-msgstr ""
+msgstr "På en enhed forbundet til et delt netværk"
 
 msgid "Where would you like to save the image?"
-msgstr ""
+msgstr "Hvor vil du gemme backuppen?"
 
 msgid "Windows shared folder (SMB/CIFS, Samba)"
-msgstr ""
+msgstr "Windows delt mappe (SMB/CIFS, Samba)"
 
 msgid "Search network"
-msgstr ""
+msgstr "Søger efter netværk"
 
 msgid "Server"
-msgstr ""
+msgstr "Server"
 
 msgid "Share location (UNC path)"
-msgstr ""
+msgstr "Share-placering (UNC-sti)"
 
 msgid "Username"
-msgstr ""
+msgstr "Brugernavn"
 
 msgid "Password"
-msgstr ""
+msgstr "Adgangskode"
 
 msgid "Domain"
-msgstr ""
+msgstr "Domæne"
 
 msgid "Version"
-msgstr ""
+msgstr "Version"
 
 msgid "Remote path"
-msgstr ""
+msgstr "Fjernsti"
 
 msgid "Exported path"
-msgstr ""
+msgstr "Eksporteret sti"
 
 msgid "Identity File"
 msgstr ""
 
 msgid "Optional"
-msgstr ""
+msgstr "Valgfri"
 
 msgid "Select network-shared storage location:"
-msgstr ""
+msgstr "Vælg det netværksdelte lagers placering:"
 
 msgid "Select the partition where the image files will be saved to"
-msgstr ""
+msgstr "Vælg partitionen for, hvor backuppen skal gemmes"
 
 msgid "Partition"
-msgstr ""
+msgstr "Partition"
 
 msgid "Mounting..."
-msgstr ""
+msgstr "Monterer..."
 
 msgid "Close this popup to cancel the mount operation."
-msgstr ""
+msgstr "Luk vinduet for at afbryde monteringen."
 
 msgid "Please ensure the username, password and other fields provided are correct, and try again."
 msgstr ""
+"Kontrollér venligst at brugernavn, adgangskode og øvrige felter er udfyldt "
+"korrekt. Prøv derefter igen."
 
 msgid "Must provide either password or SSH identity file."
 msgstr ""
