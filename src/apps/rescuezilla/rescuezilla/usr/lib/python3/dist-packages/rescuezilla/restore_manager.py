@@ -688,7 +688,8 @@ class RestoreManager:
                     # Clonezilla codebase suggests remote disks may not be able to mmap the file, so make a temp copy.
                     lvm_vg_conf_filepath_tmp_copy = RestoreManager.create_temporary_copy(lvm_vg_conf_filepath,
                                                                                          "temp.lvm_" + volume_group_key + ".conf")
-                    vgcreate_cmd_list = ["vgcfgrestore", "--file", lvm_vg_conf_filepath_tmp_copy, volume_group_key]
+                    # "Add --force to force metadata restore even with thin pool LVs"
+                    vgcreate_cmd_list = ["vgcfgrestore", "--force", "--file", lvm_vg_conf_filepath_tmp_copy, volume_group_key]
                     process, flat_command_string, failed_message = Utility.run(
                         "Restore Logical Volume Manager (LVM) Volume Group (VG) configuration", vgcreate_cmd_list,
                         use_c_locale=False, logger=self.logger)
