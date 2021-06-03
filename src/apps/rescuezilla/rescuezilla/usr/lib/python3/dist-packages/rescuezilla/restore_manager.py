@@ -680,6 +680,18 @@ class RestoreManager:
                             os.remove(lvm_vg_conf_filepath_tmp_copy)
 
                 for volume_group_key in self.image.lvm_vg_dev_dict.keys():
+                    # Check if vg already exists. From Clonezilla:
+                    # //NOTE// VG might exist in more than one PV. If so, we only have to create it once.
+                    # E.g.,
+                    # centos7 /dev/sda2 UUID
+                    # centos7 /dev/sda3 UUID
+                    # Ref: https://sourceforge.net/p/clonezilla/discussion/Help/thread/13f8ed6643/?limit=25#4ae4
+                    process, flat_command_string, failed_message = Utility.run( "Checking if VG already exists",
+                        ["vgs", volume_group_key], use_c_locale=False, logger=self.logger)
+                    if process.returncode == 0:
+                        # VG exists
+                        continue
+
                     # Handle multiple disk case
                     if not self.image.is_volume_group_in_pv(volume_group_key):
                         print("Volume group key" + volume_group_key + " not in current device's physical volume list")
