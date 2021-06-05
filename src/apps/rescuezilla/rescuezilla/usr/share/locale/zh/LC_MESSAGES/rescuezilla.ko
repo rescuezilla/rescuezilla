@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2021-05-29 02:38+0000\n"
+"PO-Revision-Date: 2021-06-05 04:33+0000\n"
 "Last-Translator: 池边树下 <mzky@163.com>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "rescuezilla/rescuezilla/zh_Hans/>\n"
@@ -43,7 +43,7 @@ msgid "Consider contributing $1/month on the crowdfunding website Patreon so Res
 msgstr "在众筹网站Patreon上每月捐赠1美元，以便支持Rescuezilla持续发展。"
 
 msgid "Back"
-msgstr "返回"
+msgstr "后退"
 
 msgid "Next >"
 msgstr "下一步 >"
