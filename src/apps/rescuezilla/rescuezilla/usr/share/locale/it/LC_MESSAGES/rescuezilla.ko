@@ -4,19 +4,22 @@
 # AlexTux87
 # Submitted at: https://github.com/rescuezilla/rescuezilla/issues/154
 #
-#, fuzzy
+# Shasheen Ediriweera <shasheene@gmail.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2020-12-12 00:00+0000\n"
-"Last-Translator: AlexTux87\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2021-06-05 04:33+0000\n"
+"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
+"Language-Team: Italian <https://hosted.weblate.org/projects/rescuezilla/"
+"rescuezilla/it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.7-dev\n"
 
 msgid "Welcome"
 msgstr "Benvenuto"
@@ -48,35 +51,35 @@ msgstr "Avanti >"
 msgid "Please wait..."
 msgstr "Per favore attendi..."
 
-msgid "Identifying disk drives..." 
+msgid "Identifying disk drives..."
 msgstr "Identificazione delle unità disco..."
 
 msgid "Unmounting: {path}"
-msgstr ""
+msgstr "Smonta {path}"
 
 msgid "Unable to unmount {path}"
-msgstr ""
+msgstr "Incapace di smontare  {path}"
 
 msgid "Running: {app}"
-msgstr ""
+msgstr "Avvio; {app}"
 
 msgid "Running {app} on {device}"
-msgstr ""
+msgstr "Avvio {app} in {device}"
 
 msgid "Failed to run command: "
-msgstr ""
+msgstr "Avvio fallito comando: "
 
 msgid "Error querying drives: "
-msgstr ""
+msgstr "Errore interrogazione drives: "
 
 msgid "Clone"
-msgstr ""
+msgstr "Clona"
 
 msgid "Step 1: Understanding Cloning"
 msgstr ""
 
 msgid "Please understand how \"cloning\" differs from \"imaging\"."
-msgstr ""
+msgstr "Prego capire come \"clonazione\" differisce da \"immagine\"."
 
 msgid "This mode is for \"disk cloning\". Cloning means copying one drive and directly overwriting another drive. This is a direct one-step operation with no temporary storage required.\n"
 "\n"
@@ -85,10 +88,6 @@ msgid "This mode is for \"disk cloning\". Cloning means copying one drive and di
 ""
 "To use the \"imaging\" wizards, click <b>Back</b> and select <b>Backup</b> or <b>Restore</b>."
 msgstr ""
-""
-""
-""
-""
 ""
 
 msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
@@ -547,9 +546,6 @@ msgid "Rescuezilla cannot yet automatically shrink partitions to restore from la
 "{url}"
 msgstr ""
 ""
-""
-""
-""
 
 msgid "Step 5: Confirm Restore Configuration"
 msgstr "Fase 5: Conferma la configurazione di ripristino"
@@ -675,7 +671,7 @@ msgid "Confirm the restore summary."
 msgstr "Conferma il riepilogo del ripristino."
 
 msgid "Backup restored successfully."
-msgstr "Backup ripristinato con successo." 
+msgstr "Backup ripristinato con successo."
 
 msgid "Image Explorer\n"
 "      (beta)"
