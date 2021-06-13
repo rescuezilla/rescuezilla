@@ -21,7 +21,7 @@
       },
       {
         "Title": "Help",
-        "URL": "https://rescuezilla.com/help.html",
+        "URL": "https://rescuezilla.com/help",
         "Placement": "toolbar"
       }],
     "DisplayBookmarksToolbar": true,

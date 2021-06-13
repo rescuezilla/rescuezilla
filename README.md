@@ -102,7 +102,7 @@ Rescuezilla features are prioritized according to the [roadmap](https://github.c
 
 ## Support
 
-If you need help, start by checking the [frequently asked questions](https://rescuezilla.com/help.html), then proceed to the [Rescuezilla forum](https://sourceforge.net/p/rescuezilla/discussion/).
+If you need help, start by checking the [frequently asked questions](https://rescuezilla.com/help), then proceed to the [Rescuezilla forum](https://sourceforge.net/p/rescuezilla/discussion/).
 
 ## Downloads
 

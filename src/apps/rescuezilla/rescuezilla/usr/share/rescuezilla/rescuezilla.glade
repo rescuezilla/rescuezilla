@@ -474,7 +474,7 @@
                                         <property name="receives_default">True</property>
                                         <property name="halign">center</property>
                                         <property name="relief">none</property>
-                                        <property name="uri">https://rescuezilla.com/help.html</property>
+                                        <property name="uri">https://rescuezilla.com/help</property>
                                         <signal name="pressed" handler="open_url_as_non_root" swapped="no"/>
                                       </object>
                                       <packing>
@@ -2609,7 +2609,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                             <property name="receives_default">True</property>
                                             <property name="halign">center</property>
                                             <property name="relief">none</property>
-                                            <property name="uri">https://rescuezilla.com/help.html</property>
+                                            <property name="uri">https://rescuezilla.com/help</property>
                                             <signal name="pressed" handler="open_url_as_non_root" swapped="no"/>
                                           </object>
                                           <packing>
@@ -4482,7 +4482,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                 <property name="receives_default">True</property>
                                                 <property name="halign">center</property>
                                                 <property name="relief">none</property>
-                                                <property name="uri">https://rescuezilla.com/help.html</property>
+                                                <property name="uri">https://rescuezilla.com/help</property>
                                                 <signal name="pressed" handler="open_url_as_non_root" swapped="no"/>
                                               </object>
                                               <packing>
@@ -5725,7 +5725,7 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                 <property name="receives_default">True</property>
                                                 <property name="halign">center</property>
                                                 <property name="relief">none</property>
-                                                <property name="uri">https://rescuezilla.com/help.html</property>
+                                                <property name="uri">https://rescuezilla.com/help</property>
                                                 <signal name="pressed" handler="open_url_as_non_root" swapped="no"/>
                                               </object>
                                               <packing>
@@ -7053,7 +7053,7 @@ To use the "imaging" wizards, click &lt;b&gt;Back&lt;/b&gt; and select &lt;b&gt;
                                             <property name="receives_default">True</property>
                                             <property name="halign">center</property>
                                             <property name="relief">none</property>
-                                            <property name="uri">https://rescuezilla.com/help.html</property>
+                                            <property name="uri">https://rescuezilla.com/help</property>
                                           </object>
                                           <packing>
                                             <property name="expand">False</property>
@@ -8293,7 +8293,7 @@ Did you know: Rescuezilla works with virtual machine images used by VirtualBox, 
                                                 <property name="receives_default">True</property>
                                                 <property name="halign">center</property>
                                                 <property name="relief">none</property>
-                                                <property name="uri">https://rescuezilla.com/help.html</property>
+                                                <property name="uri">https://rescuezilla.com/help</property>
                                               </object>
                                               <packing>
                                                 <property name="expand">False</property>
