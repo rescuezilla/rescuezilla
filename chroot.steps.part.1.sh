@@ -231,9 +231,9 @@ common_pkgs=("discover"
 
 if  [ "$ARCH" == "i386" ]; then
   apt_pkg_list=("${pkgs_specific_to_32bit[@]}" "${common_pkgs[@]}")
-elif  [ "$ARCH" == "amd64" ] && [ "$CODENAME" == "focal" ]; then
+elif  [ "$ARCH" == "arm64" ] && [ "$CODENAME" == "focal" ]; then
   apt_pkg_list=("${pkgs_specific_to_ubuntu2004_focal[@]}" "${common_pkgs[@]}")
-elif  [ "$ARCH" == "amd64" ] && [ "$CODENAME" == "hirsute" ]; then
+elif  [ "$ARCH" == "arm64" ] && [ "$CODENAME" == "hirsute" ]; then
   apt_pkg_list=("${pkgs_specific_to_ubuntu2104_hirsute[@]}" "${common_pkgs[@]}")
 else
   echo "Warning: unknown CPU arch $ARCH or Ubuntu release codename $CODENAME"
