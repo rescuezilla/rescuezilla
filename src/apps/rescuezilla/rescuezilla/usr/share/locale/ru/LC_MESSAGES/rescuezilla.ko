@@ -1,12 +1,13 @@
 # Artem <KovalevArtem.ru@gmail.com>, 2021.
 # yesinmsg <yesinmsg@gmail.com>, 2021.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2021-06-06 04:48+0000\n"
-"Last-Translator: yesinmsg <yesinmsg@gmail.com>\n"
+"PO-Revision-Date: 2021-06-06 04:49+0000\n"
+"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/ru/>\n"
 "Language: ru\n"
@@ -21,10 +22,12 @@ msgid "Welcome"
 msgstr "Добро пожаловать"
 
 msgid "Select an Option"
-msgstr ""
+msgstr "Выберите действие"
 
 msgid "Easily create a backup image of your computer, or completely restore from one.  Click an option to begin:"
 msgstr ""
+"Создать резервный образ вашего компьютера или восстановить компьютер из "
+"резервного образа. Выберите с чего начать:"
 
 msgid "Backup"
 msgstr "Резервное копирование"
@@ -34,9 +37,13 @@ msgstr "Восстановить"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
 msgstr ""
+"Нужна помощь? Начните с часто задаваемых вопросов либо перейдите на форум "
+"Rescuezilla."
 
 msgid "Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed."
 msgstr ""
+"Рассмотреть возможность пожертвования 1$ в месяц на краудфаундиговой "
+"площадке Patreon для того, чтобы Rescuezilla могла продолжать разработку."
 
 msgid "Back"
 msgstr "Назад"
@@ -48,34 +55,36 @@ msgid "Please wait..."
 msgstr "Пожалуйста, подождите..."
 
 msgid "Identifying disk drives..."
-msgstr ""
+msgstr "Определяем диски"
 
 msgid "Unmounting: {path}"
-msgstr ""
+msgstr "Размонтируем: {path}"
 
 msgid "Unable to unmount {path}"
-msgstr ""
+msgstr "Не удалось размонтировать: {path}"
 
 msgid "Running: {app}"
-msgstr ""
+msgstr "Выполняется: {app}"
 
 msgid "Running {app} on {device}"
-msgstr ""
+msgstr "Выполняется {app} на {device}"
 
 msgid "Failed to run command: "
-msgstr ""
+msgstr "Не удалось выполнить команду: "
 
 msgid "Error querying drives: "
-msgstr ""
+msgstr "Ошибка при опросе дисков: "
 
 msgid "Clone"
 msgstr "Клонировать"
 
 msgid "Step 1: Understanding Cloning"
-msgstr ""
+msgstr "Шаг 1: Объяснение понятия - клонирование"
 
 msgid "Please understand how \"cloning\" differs from \"imaging\"."
 msgstr ""
+"Пожалуйста имейте ввиду, что понятия \"клонирование\" и \"создание образа\" "
+"отличаются"
 
 msgid "This mode is for \"disk cloning\". Cloning means copying one drive and directly overwriting another drive. This is a direct one-step operation with no temporary storage required.\n"
 "\n"
