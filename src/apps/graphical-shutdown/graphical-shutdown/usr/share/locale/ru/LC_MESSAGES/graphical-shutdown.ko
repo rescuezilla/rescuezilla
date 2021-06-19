@@ -1,8 +1,9 @@
 # Artem <KovalevArtem.ru@gmail.com>, 2021.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2021.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2021-05-29 02:38+0000\n"
-"Last-Translator: Artem <KovalevArtem.ru@gmail.com>\n"
+"PO-Revision-Date: 2021-06-08 11:15+0000\n"
+"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/rescuezilla/"
 "graphical-shutdown/ru/>\n"
 "Language: ru\n"
@@ -22,7 +23,7 @@ msgid "Shutdown"
 msgstr "Выключение"
 
 msgid "Reboot"
-msgstr "Перезагрузить"
+msgstr "Перезагрузка"
 
 msgid "Choose action."
 msgstr "Выберите действие."

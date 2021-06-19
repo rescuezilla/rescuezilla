@@ -2,7 +2,7 @@
 # Mirko Hanker <Mirko1984@pm.me>, 2021.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2021-06-01 03:33+0000\n"
+"PO-Revision-Date: 2021-06-11 07:17+0000\n"
 "Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/rescuezilla/"
 "graphical-shutdown/de/>\n"
@@ -25,4 +25,4 @@ msgid "Reboot"
 msgstr "Neustarten"
 
 msgid "Choose action."
-msgstr "Wähle eine Option"
+msgstr "Wähle eine Option."
