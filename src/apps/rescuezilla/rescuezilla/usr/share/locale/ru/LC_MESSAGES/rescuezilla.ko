@@ -1,11 +1,13 @@
 # Artem <KovalevArtem.ru@gmail.com>, 2021.
+# yesinmsg <yesinmsg@gmail.com>, 2021.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2021-05-29 02:38+0000\n"
-"Last-Translator: Artem <KovalevArtem.ru@gmail.com>\n"
+"PO-Revision-Date: 2021-06-08 11:15+0000\n"
+"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/ru/>\n"
 "Language: ru\n"
@@ -20,10 +22,12 @@ msgid "Welcome"
 msgstr "Добро пожаловать"
 
 msgid "Select an Option"
-msgstr ""
+msgstr "Выберите действие"
 
 msgid "Easily create a backup image of your computer, or completely restore from one.  Click an option to begin:"
 msgstr ""
+"Создать резервный образ вашего компьютера или восстановить компьютер из "
+"резервного образа. Выберите с чего начать:"
 
 msgid "Backup"
 msgstr "Резервное копирование"
@@ -33,9 +37,13 @@ msgstr "Восстановить"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
 msgstr ""
+"Нужна помощь? Начните с часто задаваемых вопросов либо перейдите на форум "
+"Rescuezilla."
 
 msgid "Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed."
 msgstr ""
+"Рассмотреть возможность пожертвования 1$ в месяц на краудфаундиговой "
+"площадке Patreon для того, чтобы Rescuezilla могла продолжать разработку."
 
 msgid "Back"
 msgstr "Назад"
@@ -47,34 +55,36 @@ msgid "Please wait..."
 msgstr "Пожалуйста, подождите..."
 
 msgid "Identifying disk drives..."
-msgstr ""
+msgstr "Определяем диски..."
 
 msgid "Unmounting: {path}"
-msgstr ""
+msgstr "Размонтируем: {path}"
 
 msgid "Unable to unmount {path}"
-msgstr ""
+msgstr "Не удалось размонтировать: {path}"
 
 msgid "Running: {app}"
-msgstr ""
+msgstr "Выполняется: {app}"
 
 msgid "Running {app} on {device}"
-msgstr ""
+msgstr "Выполняется {app} на {device}"
 
 msgid "Failed to run command: "
-msgstr ""
+msgstr "Не удалось выполнить команду: "
 
 msgid "Error querying drives: "
-msgstr ""
+msgstr "Ошибка при опросе дисков: "
 
 msgid "Clone"
 msgstr "Клонировать"
 
 msgid "Step 1: Understanding Cloning"
-msgstr ""
+msgstr "Шаг 1: Объяснение понятия - клонирование"
 
 msgid "Please understand how \"cloning\" differs from \"imaging\"."
 msgstr ""
+"Пожалуйста имейте ввиду, что понятия \"клонирование\" и \"создание образа\" "
+"отличаются."
 
 msgid "This mode is for \"disk cloning\". Cloning means copying one drive and directly overwriting another drive. This is a direct one-step operation with no temporary storage required.\n"
 "\n"
@@ -83,448 +93,538 @@ msgid "This mode is for \"disk cloning\". Cloning means copying one drive and di
 ""
 "To use the \"imaging\" wizards, click <b>Back</b> and select <b>Backup</b> or <b>Restore</b>."
 msgstr ""
+"Этот режим предназначен для \"клонирования диска\". Клонирование означает "
+"прямое копирование одного носителя на другой. Это прямая одноэтапная "
+"операция без временного хранения.\n"
+"\n"
+"Клонирование отличается от \"создания образа\". Создание образов означает "
+"процесс копирования всех файлов с диска в объемный резервный образ, "
+"хранящийся в папке на внешнем накопителе. На одном внешнем накопителе можно "
+"сохранить несколько резервных образов. Эти образы можно восстановить на "
+"исходный диск или на другие диски. Другими словами, для «создания образа» "
+"операция резервного копирования копирует ваш диск в <i> файлы </i>, которые "
+"необходимо временно сохранить на диске, с возможностью восстановления в "
+"будущем.\n"
+"\n"
+"Чтобы использовать мастера создания образов, нажмите <b> Назад </b> и "
+"выберите <b> Резервное копирование </b> или <b> Восстановить </b>."
 
 msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
-msgstr ""
+msgstr "Для запуска инструмента \"клонирования\", нажмите <b>Далее</b>"
 
 msgid "Step 2: Select Source Drive"
-msgstr ""
+msgstr "Шаг 2: Выберите исходный диск"
 
 msgid "Select the <b>source drive</b> to clone."
-msgstr ""
+msgstr "Выберите <b>исходный диск</b> для клонирования."
 
 msgid "Select the <b>destination drive</b> to overwrite."
-msgstr ""
+msgstr "Выберите <b>целевой диск</b> для перезаписи."
 
 msgid "Step 4: Select Partitions to Clone"
-msgstr ""
+msgstr "Шаг 4: Выберите разделы для клонирования"
 
 msgid "Select which partitions from the source drive to clone, and whether to overwrite the partition table. <b>Leave everything selected to completely clone the source drive to the destination drive.</b>"
 msgstr ""
+"Выберите, какие разделы исходного диска нужно клонировать и следует ли "
+"перезаписывать таблицу разделов. <b> Оставьте все выделенным, чтобы "
+"полностью клонировать исходный диск на целевой. </b>"
 
 msgid "Step 5: Confirm Cloning Configuration"
-msgstr ""
+msgstr "Шаг 5: Подтверждение конфигурации клонирования"
 
 msgid "Confirm the following cloning configuration."
-msgstr ""
+msgstr "Подтвердить следующие настройки клонирования."
 
 msgid "Cloning the following partitions"
-msgstr ""
+msgstr "Клонирование следующих разделов"
 
 msgid "To start cloning, click <b>Next</b>."
-msgstr ""
+msgstr "Запуск клонирования, нажмите <b>Далее</b>."
 
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
+"Вы уверенны что хотите клонировать диск на {destination_drive}? Эта операция "
+"сотрёт все данные с этого диска!"
 
 msgid "Step 6: Cloning Disk"
-msgstr ""
+msgstr "Шаг 6: Клонирование диска"
 
 msgid "Cloning the drive you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
+"Клонирование выбранного диска. Этот процесс займёт некоторое время, ты "
+"можешь попить чаю и немного размяться."
 
 msgid "Summary of Clone"
-msgstr ""
+msgstr "Всего скопировано"
 
 msgid "Clone Summary"
-msgstr ""
+msgstr "Сводка по копированию"
 
 msgid "Confirm the clone summary."
-msgstr ""
+msgstr "Подтвердите сводку по копированию."
 
 msgid "Unable to shutdown Image Explorer"
-msgstr ""
+msgstr "Невозможно завершить работу инструмента Image Explorer"
 
 msgid "Step 1: Select Drive To Backup"
-msgstr ""
+msgstr "Шаг 1: Выберите устройство для резервного копирования"
 
 msgid "Select the <b>source drive</b> that you would like to create a backup image from."
 msgstr ""
+"Выберите<b>исходный диск</b> с которого вы хотели бы сделать резервный образ."
 
 msgid "Drive"
-msgstr ""
+msgstr "Диск"
 
 msgid "Capacity"
-msgstr ""
+msgstr "Ёмкость"
 
 msgid "Drive Model"
-msgstr ""
+msgstr "Модель устройства"
 
 msgid "Partitions"
 msgstr "Разделы"
 
 msgid "Show hidden devices (for advanced users)"
-msgstr ""
+msgstr "Показать скрытые устройства (для продвинутых пользователей)"
 
 msgid "Step 2: Select Partitions to Save"
-msgstr ""
+msgstr "Шаг 2: Выберите какие разделы сохранить"
 
 msgid "Select which partitions to create a backup of. <b>Leave all partitions selected if you are unsure.</b>"
 msgstr ""
+"Выберите разделы с которых нужно создать резервную копию. <b> Если вы не "
+"уверены, оставьте по умолчанию. </b>"
 
 msgid "Save"
-msgstr ""
+msgstr "Сохранить"
 
 msgid "Description"
-msgstr ""
+msgstr "Название"
 
 msgid "Drive {drive_number}"
-msgstr ""
+msgstr "Диск {drive_number}"
 
 msgid "Partition {partition_number}"
-msgstr ""
+msgstr "Раздел {partition_number}"
 
 msgid "Step 3: Select Destination Drive"
-msgstr ""
+msgstr "Шаг 3: Выберите целевое устройство"
 
 msgid "Click on the box below to select the source drive that you would like to create a backup image from."
 msgstr ""
+"Нажмите на поле ниже, чтобы выбрать исходный диск, с которого вы хотите "
+"создать резервную копию."
 
 msgid "Connected directly to my computer"
-msgstr ""
+msgstr "Прямое подключение к моему компьютеру"
 
 msgid "Shared over a network"
-msgstr ""
+msgstr "Поделиться через сеть"
 
 msgid "Where would you like to save the image?"
-msgstr ""
+msgstr "Где вы желаете сохранить образ ?"
 
 msgid "Windows shared folder (SMB/CIFS, Samba)"
-msgstr ""
+msgstr "Windows общая папка (SMB/CIFS, Samba)"
 
 msgid "Search network"
-msgstr ""
+msgstr "Поиск сети"
 
 msgid "Server"
-msgstr ""
+msgstr "Сервер"
 
 msgid "Share location (UNC path)"
-msgstr ""
+msgstr "Поделиться местоположением (UNC путь)"
 
 msgid "Username"
-msgstr ""
+msgstr "Логин"
 
 msgid "Password"
-msgstr ""
+msgstr "Пароль"
 
 msgid "Domain"
-msgstr ""
+msgstr "Домен"
 
 msgid "Version"
-msgstr ""
+msgstr "Версия"
 
 msgid "Remote path"
-msgstr ""
+msgstr "Удалённый путь"
 
 msgid "Exported path"
-msgstr ""
+msgstr "Экспортированный путь"
 
 msgid "Identity File"
-msgstr ""
+msgstr "Указанный файл"
 
 msgid "Optional"
-msgstr ""
+msgstr "Опционально"
 
 msgid "Select network-shared storage location:"
-msgstr ""
+msgstr "Укажите путь сетевого хранилища:"
 
 msgid "Select the partition where the image files will be saved to"
-msgstr ""
+msgstr "Укажите раздел в котором будет храниться файлы образа"
 
 msgid "Partition"
-msgstr ""
+msgstr "Раздел"
 
 msgid "Mounting..."
-msgstr ""
+msgstr "Монтирование..."
 
 msgid "Close this popup to cancel the mount operation."
-msgstr ""
+msgstr "Закройте это окно для отмены операции монтирования."
 
 msgid "Please ensure the username, password and other fields provided are correct, and try again."
-msgstr ""
+msgstr "Убедитесь что логин и пароль указаны верно и повторите попытку."
 
 msgid "Must provide either password or SSH identity file."
-msgstr ""
+msgstr "Необходимо указать пароль или файл SSH."
 
 msgid "Scanning folder for backup images..."
-msgstr ""
+msgstr "Поиск резервных образов..."
 
 msgid "({timeout_seconds} second timeout)"
-msgstr ""
+msgstr "({timeout_seconds} сек. ожидания)"
 
 msgid "Close this popup to cancel scanning the selected folder and subfolders."
-msgstr ""
+msgstr "Закройте это окно для отмены сканирования выбранной папки и директорий."
 
 msgid "Scanning: {filename}"
-msgstr ""
+msgstr "Сканирование: {filename}"
 
 msgid "Error processing the following images:"
-msgstr ""
+msgstr "Ошибка при обработке следующих образов:"
 
 msgid "Unable to fully process the image associated with the following partitions:"
 msgstr ""
+"Невозможно полностью обработать образ, связанный со следующими разделами:"
 
 msgid "Unable to fully process the following image:"
-msgstr ""
+msgstr "Невозможно полностью обработать следующий образ:"
 
 msgid "Cannot find partition's associated partclone image"
-msgstr ""
+msgstr "Не удается найти связанный с разделом образ partclone"
 
 msgid "This can happen when loading images which Clonezilla was unable to completely backup."
 msgstr ""
+"Это может произойти при загрузке образов, которые Clonezilla неудачно "
+"скопировала."
 
 msgid "Note: This image format cannot distinguish between failed partclone backup and a user who chose not to backup a partition."
 msgstr ""
+"Примечание. Этот формат образа не видит разницы между неудачным резервным "
+"копированием partclone и отсутствующей резервной копией раздела."
 
 msgid "Any other filesystems within the image should be restorable as normal."
 msgstr ""
+"Любые другие файловые системы в образе должны быть восстановлены в обычном "
+"режиме."
 
 msgid "Needs decryption"
-msgstr ""
+msgstr "Требуется шифрование"
 
 msgid "Unknown filesystem"
-msgstr ""
+msgstr "Неизвестная файловая система"
 
 msgid "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance."
 msgstr ""
+"Информация о расширенном разделе резервной копии пуста. Если резервная копия "
+"содержит расширенный раздел, она не будет восстановлена правильно. Все "
+"данные по-прежнему можно полностью восстановить, но для полного "
+"восстановления данных в расширенном разделе требуется вмешательство "
+"пользователя. Для получения справки перейдите на {url}."
 
 msgid "The backup's bootloader data is shorter than expected. If the backup contained certain bootloaders like GRUB, during a restore operation Rescuezilla will try and re-install the bootloader."
 msgstr ""
+"Резервная копия загрузчика меньше чем ожидалось. Если резервная копия "
+"содержала загрузчик GRUB, во время операции восстановления Rescuezilla "
+"попытается переустановить загрузчик."
 
 msgid "Step 4: Select Destination Folder"
-msgstr ""
+msgstr "Шаг 4: Выберите целевую папку"
 
 msgid "Click <b>Browse</b> to select the folder on the destination drive where your new backup image will be saved.\n"
 "\n"
 "The folder a backup is saved in is usually a description of the computer, e.g. <b>office1</b> or <b>zack-laptop</b>."
 msgstr ""
+"Нажмите <b> Обзор </b>, чтобы выбрать папку на целевом диске, в которой "
+"будет сохранена ваша новая резервная копия.\n"
+"\n"
+"Папка, в которой сохраняется резервная копия, обычно представляет собой "
+"название компьютера, например <b> office1 </b> или <b> zack-laptop </b>."
 
 msgid "You must select a folder inside {location}"
-msgstr ""
+msgstr "Вы должны выбрать папку внутри {location}"
 
 msgid "Please select a different folder."
-msgstr ""
+msgstr "Пожалуйста, выберите другую папку."
 
 msgid "The table below lists the backup images that are already in this folder (if any)."
 msgstr ""
+"В таблице ниже указаны резервные копии, которые уже находятся в этой папке ("
+"если есть)."
 
 msgid "Browse..."
-msgstr ""
+msgstr "Обзор..."
 
 msgid "Filename"
-msgstr ""
+msgstr "Название"
 
 msgid "Size"
-msgstr ""
+msgstr "Размер"
 
 msgid "Last modified"
-msgstr ""
+msgstr "Последнее изменение"
 
 msgid "When you are happy with the destination folder, click <b>Next</b>."
-msgstr ""
+msgstr "Если вы выбрали целевую папку, нажмите <b> Далее </b>."
 
 msgid "Step 5: Name Your Backup"
-msgstr ""
+msgstr "Шаг 5: Имя вашей резервной копии"
 
 msgid "Provide a unique name for this backup image, such as the date.  Today's date is automatically entered for you below.\n"
 "\n"
 "You may only use letters, numbers, and dashes in your backup name."
 msgstr ""
+"Назначьте уникальное имя для данного резервного образа, например добавив "
+"дату. Текущая дата была автоматически добавлена в поле ниже.\n"
+"\n"
+"В имени файла можно использовать буквы, цифры и символы тире и дефис."
 
 msgid "Optional: Provide a short description."
-msgstr ""
+msgstr "Необязательно: Добавьте краткое описание."
 
 msgid "Step 6: Customize Compression Settings"
-msgstr ""
+msgstr "Шаг 6: Настройте параметры сжатия"
 
 msgid "Customize image compression settings. <b>Don't make any changes if you are unsure.</b>"
 msgstr ""
+"Настройте параметры сжатия образа. <b>Не изменяйте настройки если не "
+"уверены.</b>"
 
 msgid "Compression format: "
-msgstr ""
+msgstr "Формат сжатия: "
 
 msgid "gzip"
-msgstr ""
+msgstr "gzip"
 
 msgid "default"
-msgstr ""
+msgstr "по умолчанию"
 
 msgid "zstandard"
-msgstr ""
+msgstr "zstandard"
 
 msgid "Uncompressed (Suitable for use with Image Explorer)"
-msgstr ""
+msgstr "Без сжатия (Подходит для использования с Image Explorer)"
 
 msgid "Compression level: "
-msgstr ""
+msgstr "Уровень сжатия: "
 
 msgid "Fastest"
-msgstr ""
+msgstr "Быстрейший"
 
 msgid "Best"
-msgstr ""
+msgstr "Лучший"
 
 msgid "When you are happy with the compression settings, click <b>Next</b>."
-msgstr ""
+msgstr "Если Вас устраивают настройки сжатия, нажмите <b>Далее</b>."
 
 msgid "Step 7: Confirm Backup Configuration"
-msgstr ""
+msgstr "Шаг 7: Подтвердите настройки резервного копирования"
 
 msgid "Source drive"
-msgstr ""
+msgstr "Исходный диск"
 
 msgid "Backing up the following partition"
-msgstr ""
+msgstr "Резервное копирование следующих разделов"
 
 msgid "The backup image will be written into folder {dest_dir} on {description}"
-msgstr ""
+msgstr "Резервный образ будет записан в папку {dest_dir} на {description}"
 
 msgid "Confirm the following backup configuration."
-msgstr ""
+msgstr "Подтвердите следующие параметры резервного копирования."
 
 msgid "On successful completion of the task, perform the following action: "
-msgstr ""
+msgstr "В случае удачного завершения выполнить следующее действие: "
 
 msgid "Do nothing"
-msgstr ""
+msgstr "Ничего не делать"
 
 msgid "Shutdown"
 msgstr "Выключение"
 
 msgid "Reboot"
-msgstr ""
+msgstr "Перезагрузка"
 
 msgid "To start the backup, click <b>Next</b>."
-msgstr ""
+msgstr "Для начала резервного копирования нажмите <b>Далее</b>."
 
 msgid "Step 8: Creating Backup Image"
-msgstr ""
+msgstr "Шаг 8: Создание резервного образа"
 
 msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
+"Идет сохранение Вашей системы в выбранное расположение.  Это может занять "
+"один час или более в зависимости от скорости Вашего компьютера и объема "
+"копируемых данных."
 
 msgid "Saving: {file}"
-msgstr ""
+msgstr "Сохранение файла: {file}"
 
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
 msgstr ""
+"Резервное копирование {partition_name} содержащего {filesystem} в "
+"{destination}"
 
 msgid "Summary of Backup"
-msgstr ""
+msgstr "Результаты резервного копирования"
 
 msgid "Confirm the backup summary."
-msgstr ""
+msgstr "Проверьте результаты резервного копирования."
 
 msgid "Backup Summary"
-msgstr ""
+msgstr "Результаты резервного копирования"
 
 msgid "An operation is in progress. Do you wish to cancel?"
-msgstr ""
+msgstr "Идет выполнение операции. Вы хотите ее отменить?"
 
 msgid "Operation cancelled by user."
-msgstr ""
+msgstr "Операция отменена пользователем."
 
 msgid "Error creating backup: "
-msgstr ""
+msgstr "Ошибка создания резервной копии: "
 
 msgid "Failed to write destination file. Please confirm it is valid to create the provided file path, and try again."
 msgstr ""
+"Не удалось записать целевой файл. Пожалуйста убедитесь в корректности "
+"указанного пути файла и попробуйте еще раз."
 
 msgid "Successful backup of swap partition {partition_name}"
-msgstr ""
+msgstr "Успешное резервное копирование раздела подкачки {partition_name}"
 
 msgid "<b>Failed to backup partition</b> {partition_name}"
 msgstr ""
+"<b>Не удалось выполнить резервное копирование раздела</b> {partition_name}"
 
 msgid "Successful backup of partition {partition_name}"
-msgstr ""
+msgstr "Успешное резервное копирование раздела {partition_name}"
 
 msgid "Backup saved successfully."
-msgstr ""
+msgstr "Резервная копия успешно сохранена."
 
 msgid "Backup succeeded with some errors:"
-msgstr ""
+msgstr "Резервное копирование удалось выполнить со следующими ошибками:"
 
 msgid "Backup operation failed:"
-msgstr ""
+msgstr "Резервное копирование не удалось:"
 
 msgid "User requested operation to stop."
-msgstr ""
+msgstr "Пользователь запросил завершение операции."
 
 msgid "Operation took {num_minutes} minutes."
-msgstr ""
+msgstr "Операция заняла {num_minutes} минут."
 
 msgid "To start a new session, click <b>Next</b>"
-msgstr ""
+msgstr "Для начала нового сеанса нажмите <b>Далее</b>"
 
 msgid "Step 1: Select Image Location"
-msgstr ""
+msgstr "Шаг 1: Выберите расположение образа"
 
 msgid "Where are the image files stored?"
-msgstr ""
+msgstr "Где расположены файлы с образом?"
 
 msgid "Select the partition which contains the image files:"
-msgstr ""
+msgstr "Выберите раздел содержащий файлы образа:"
 
 msgid "Step 2: Select Backup Image"
-msgstr ""
+msgstr "Шаг 2: Выберите резервную копию"
 
 msgid "Click <b>Browse</b> to select the folder containing image files."
 msgstr ""
+"Нажмите <b>Обзор</b> для того, чтобы выбрать папку, содержащую файлы с "
+"образами."
 
 msgid "Select the image file to restore."
-msgstr ""
+msgstr "Выберите файл образа для восстановления."
 
 msgid "Step 3: Select Drive To Restore"
-msgstr ""
+msgstr "Шаг 3: Выберите диск куда восстанавливать"
 
 msgid "Select the destination drive to restore with the selected image."
 msgstr ""
+"Выберите целевой диск, на который будет выполнено восстановление образа."
 
 msgid "Step 4: Select Partitions to Restore"
-msgstr ""
+msgstr "Шаг 4: Выберите разделы для восстановления"
 
 msgid "Select which partitions from the backup image to restore, and whether to overwrite the partition table. <b>Leave everything selected to completely restore the destination drive.</b>"
 msgstr ""
+"Выберите какие из разделов необходимо восстановить и надо ли перезаписать "
+"таблицу разделов. <b>Выберите все для полного восстановления выбранного "
+"диска.</b>"
 
 msgid "Selected image"
-msgstr ""
+msgstr "Выбранный образ"
 
 msgid "Destination device"
-msgstr ""
+msgstr "Целевое устройство"
 
 msgid "Destination partition"
-msgstr ""
+msgstr "Целевой раздел"
 
 msgid "Overwrite partition table"
-msgstr ""
+msgstr "Перезаписать таблицу разделов"
 
 msgid "You will be overwriting the partition table."
-msgstr ""
+msgstr "Таблица разделов будет перезаписана."
 
 msgid "The \"destination partition\" column has been updated using the information stored within the backup image.\n\n<b>If partitions have been resized, new partitions added, or additional operating systems installed <i>since the backup image was created</i>, then the destination drive's partition table will not match the backup image, and overwriting the destination drive's partition table will render these resized and additional partitions permanently inaccessible.</b> If you have not modified the partition table in such a way since creating this backup then overwriting the partition table is completely safe and will have no negative effects."
 msgstr ""
+"Колонка \"Целевой раздел\" обновлена в соответствии с информацией, "
+"полученной из образа.\n"
+"\n"
+"<b>Если <i>с момента создания образа</i> размеры разделов были изменены, "
+"новые разделы были добавлены или была установлена дополнительная "
+"операционная система, то, в таком случае, таблица разделов на устройстве не "
+"будет соответствовать таблице разделов из образа и перезапись таблицы "
+"разделов сделает измененные и добавленные разделы необратимо недоступными.</"
+"b> Если вы не изменяли таблицу разделов подобным образом с момента создания "
+"данной резервной копии, то можно безопасно перезаписать таблицу разделов без "
+"негативных последствий."
 
 msgid "You will <b>not</b> be overwriting the partition table."
-msgstr ""
+msgstr "Таблица разделов <b>не</b> будет перезаписана."
 
 msgid "The source does not contain a partition table."
-msgstr ""
+msgstr "Источник не содержит таблицу разделов."
 
 msgid "The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table."
 msgstr ""
+"Колонка \"Целевой раздел\" была обновлена в соответствии с таблице разделов "
+"на целевом устройстве.\n"
+"\n"
+"<b>Колонку целевой раздел можно редактировать с помощью выпадающего меню. "
+"Неправильное сопоставление целевых разделов может вызвать невозможность "
+"загрузить операционную систему.</b> Если вы не уверены как правильно "
+"сопоставить разделы, рассмотрите возможность перезаписи таблицы разделов."
 
 msgid "No destination partition selected. Use the destination partition drop-down menu to select the destination"
 msgstr ""
+"Целевой раздел не выбран. Используйте выпадающее меню в колонке Целевой "
+"раздел для выбора целевого раздела"
 
 msgid "Not restoring this partition"
-msgstr ""
+msgstr "Не восстанавливать данный раздел"
 
 msgid "When you are ready to continue, click <b>Next</b>."
-msgstr ""
+msgstr "Когда Вы будете готовы продолжить, нажмите <b>Далее</b>."
 
 msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
 msgstr ""
+"Поиск и размонтирование логических томов Менеджера Логических Томов (LVM)..."
 
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
 msgstr ""
@@ -537,7 +637,7 @@ msgid "Rescuezilla cannot yet automatically shrink partitions to restore from la
 msgstr ""
 
 msgid "Step 5: Confirm Restore Configuration"
-msgstr ""
+msgstr "Шаг 5: Подтвердите параметры восстановления"
 
 msgid "Confirm the following restore configuration."
 msgstr ""
@@ -694,4 +794,4 @@ msgid "Once the partition has been mounted, click <b>Open in file manager</b> to
 msgstr ""
 
 msgid "Open in file manager"
-msgstr ""
+msgstr "Открыть в Проводнике"

@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2021-06-05 04:33+0000\n"
+"PO-Revision-Date: 2021-06-19 12:22+0000\n"
 "Last-Translator: Bolle Barnewitz <detlef@sol.dk>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/da/>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.7\n"
 
 msgid "Welcome"
 msgstr "Velkommen"
@@ -40,8 +40,8 @@ msgstr ""
 
 msgid "Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed."
 msgstr ""
-"Støt udviklingen af Rescuezilla med $1 pr. måned via crowfunding-hjemmesiden "
-"Patreon."
+"Støt udviklingen af Rescuezilla med $1 pr. måned via crowdfunding-"
+"hjemmesiden Patreon."
 
 msgid "Back"
 msgstr "Tilbage"
@@ -126,10 +126,10 @@ msgstr ""
 "kildedrevet til destinationsdrevet.</b>"
 
 msgid "Step 5: Confirm Cloning Configuration"
-msgstr "Trin 5: Bekræft kloningens konfiguration"
+msgstr "Trin 5: Bekræft kloningens indstilling"
 
 msgid "Confirm the following cloning configuration."
-msgstr "Bekræft følgende konfigurering af kloningen."
+msgstr "Bekræft følgende indstilling af kloningen."
 
 msgid "Cloning the following partitions"
 msgstr "Disse partitioner klones"
@@ -147,8 +147,8 @@ msgstr "Trin 6: Kloner disk"
 
 msgid "Cloning the drive you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
-"Kloner det valgte drev. Afhængigt af din computers hastighed og mængden af "
-"data kan det tage en time eller mere."
+"Kloner det valgte drev. Det kan tage en time eller mere afhængigt af din "
+"computers hastighed og datamængden."
 
 msgid "Summary of Clone"
 msgstr "Sammenfatning af kloningen"
@@ -189,7 +189,7 @@ msgstr "Trin 2: Vælg de partitioner, der skal gemmes"
 msgid "Select which partitions to create a backup of. <b>Leave all partitions selected if you are unsure.</b>"
 msgstr ""
 "Vælg de partitioner, der skal sikkerhedskopieres. <b>Lad alle partitioner "
-"være markeret, hvis du er usikker.</b>"
+"være markeret, hvis du er i tvivl.</b>"
 
 msgid "Save"
 msgstr "Gem"
@@ -382,210 +382,251 @@ msgstr ""
 "Når du er tilfreds med destinationsmappen, skal du klikke på <b>Næste</b>."
 
 msgid "Step 5: Name Your Backup"
-msgstr ""
+msgstr "Trin 5: Navngiv sikkerhedskopien"
 
 msgid "Provide a unique name for this backup image, such as the date.  Today's date is automatically entered for you below.\n"
 "\n"
 "You may only use letters, numbers, and dashes in your backup name."
 msgstr ""
+"Angiv et unikt navn til sikkerhedskopien, f.eks. datoen. Dagens dato "
+"indsættes automatisk for dig nedenfor.\n"
+"\n"
+"Kun bogstaver, tal og bindestreger må anvendes i backupnavnet."
 
 msgid "Optional: Provide a short description."
-msgstr ""
+msgstr "Valgfrit: Giv en kort beskrivelse."
 
 msgid "Step 6: Customize Compression Settings"
-msgstr ""
+msgstr "Trin 6: Indstil komprimering"
 
 msgid "Customize image compression settings. <b>Don't make any changes if you are unsure.</b>"
 msgstr ""
+"Indstil sikkerhedskopiens komprimering. <b> Foretag ingen ændringer, hvis du "
+"er i tvivl. </b>"
 
 msgid "Compression format: "
-msgstr ""
+msgstr "Komprimeringsmetode: "
 
 msgid "gzip"
-msgstr ""
+msgstr "gzip"
 
 msgid "default"
-msgstr ""
+msgstr "standard"
 
 msgid "zstandard"
-msgstr ""
+msgstr "zstandard"
 
 msgid "Uncompressed (Suitable for use with Image Explorer)"
-msgstr ""
+msgstr "Ingen komprimering (egnet til brug med Image Explorer)"
 
 msgid "Compression level: "
-msgstr ""
+msgstr "Komprimeringsniveau: "
 
 msgid "Fastest"
-msgstr ""
+msgstr "Lavt - men hurtigst"
 
 msgid "Best"
-msgstr ""
+msgstr "Højt - men langsomst"
 
 msgid "When you are happy with the compression settings, click <b>Next</b>."
 msgstr ""
+"Når du er tilfreds med indstillingen af komprimeringen, så klik <b>Næste</b>."
 
 msgid "Step 7: Confirm Backup Configuration"
-msgstr ""
+msgstr "Trin 7: Bekræft indstillingen af sikkerhedskopien"
 
 msgid "Source drive"
-msgstr ""
+msgstr "Kildedrev"
 
 msgid "Backing up the following partition"
-msgstr ""
+msgstr "Følgende partitioner sikkerhedskopieres"
 
 msgid "The backup image will be written into folder {dest_dir} on {description}"
-msgstr ""
+msgstr "Sikkerhedskopien vil blive lagret i mappen {dest_dir} på {description}"
 
 msgid "Confirm the following backup configuration."
-msgstr ""
+msgstr "Bekræft indstillingen af følgende sikkerhedskopi."
 
 msgid "On successful completion of the task, perform the following action: "
-msgstr ""
+msgstr "Når handlingen er færdig, så udfør følgende: "
 
 msgid "Do nothing"
-msgstr ""
+msgstr "Gør ingenting"
 
 msgid "Shutdown"
-msgstr ""
+msgstr "Sluk PC"
 
 msgid "Reboot"
-msgstr ""
+msgstr "Genstart"
 
 msgid "To start the backup, click <b>Next</b>."
-msgstr ""
+msgstr "For at starte sikkerhedskopieringen; klik <b>Næste</b>."
 
 msgid "Step 8: Creating Backup Image"
-msgstr ""
+msgstr "Trin 8: Starter sikkerhedskopieringen"
 
 msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
+"Sikkerhedskopierer dit system til den valgte placering. Det kan tage en time "
+"eller mere afhængigt af din computers hastighed og datamængden."
 
 msgid "Saving: {file}"
-msgstr ""
+msgstr "Gemmer: {file}"
 
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
 msgstr ""
+"Sikkerhedskopierer {partition_name} indeholdende filsystem {filesystem} til "
+"{destination}"
 
 msgid "Summary of Backup"
-msgstr ""
+msgstr "Sammenfatning af sikkerhedskopien"
 
 msgid "Confirm the backup summary."
-msgstr ""
+msgstr "Bekræft sammenfatningen af sikkerhedskopieringen."
 
 msgid "Backup Summary"
-msgstr ""
+msgstr "Sammenfatning af sikkerhedskopieringen"
 
 msgid "An operation is in progress. Do you wish to cancel?"
-msgstr ""
+msgstr "En operation er i gang. Ønsker du at annullere?"
 
 msgid "Operation cancelled by user."
-msgstr ""
+msgstr "Handlingen annulleret af brugeren."
 
 msgid "Error creating backup: "
-msgstr ""
+msgstr "Fejl ved oprettelse af sikkerhedskopi: "
 
 msgid "Failed to write destination file. Please confirm it is valid to create the provided file path, and try again."
 msgstr ""
+"Kunne ikke skrive destinationsfilen. Bekræft, at den angivne filsti er "
+"gyldig og prøv igen."
 
 msgid "Successful backup of swap partition {partition_name}"
-msgstr ""
+msgstr "Sikkerhedskopiering af swap-partionen {partition_name} lykkedes"
 
 msgid "<b>Failed to backup partition</b> {partition_name}"
-msgstr ""
+msgstr "<b>Kunne ikke sikkerhedskopiere partition</b> {partition_name}"
 
 msgid "Successful backup of partition {partition_name}"
-msgstr ""
+msgstr "Sikkerhedskopiering af partitionen {partition_name} lykkedes"
 
 msgid "Backup saved successfully."
-msgstr ""
+msgstr "Sikkerhedskopien blev gemt."
 
 msgid "Backup succeeded with some errors:"
-msgstr ""
+msgstr "Sikkerhedskopieringen lykkedes med nogle fejl:"
 
 msgid "Backup operation failed:"
-msgstr ""
+msgstr "Sikkerhedskopieringen mislykkedes:"
 
 msgid "User requested operation to stop."
-msgstr ""
+msgstr "Brugeren har annulleret handlingen."
 
 msgid "Operation took {num_minutes} minutes."
-msgstr ""
+msgstr "Handlingen tog {num_minutes} minnuter."
 
 msgid "To start a new session, click <b>Next</b>"
-msgstr ""
+msgstr "For at starte en ny opgave; klik <b>Næste</b>"
 
 msgid "Step 1: Select Image Location"
-msgstr ""
+msgstr "Trin 1: Vælg placering af sikkerhedskopien"
 
 msgid "Where are the image files stored?"
-msgstr ""
+msgstr "Hvor er sikkerhedskopien placeret?"
 
 msgid "Select the partition which contains the image files:"
-msgstr ""
+msgstr "Vælg partitionen, som indeholder sikkerhedskopien:"
 
 msgid "Step 2: Select Backup Image"
-msgstr ""
+msgstr "Trin 2: Vælg sikkerhedskopi"
 
 msgid "Click <b>Browse</b> to select the folder containing image files."
 msgstr ""
+"Klik på <b>Gennemse</b> for at vælge mappen, der indeholder sikkerhedskopien."
 
 msgid "Select the image file to restore."
-msgstr ""
+msgstr "Vælg sikkerhedskopien, der skal gendannes."
 
 msgid "Step 3: Select Drive To Restore"
-msgstr ""
+msgstr "Trin 3: Vælg destinationsdrevet"
 
 msgid "Select the destination drive to restore with the selected image."
 msgstr ""
+"Vælg destinationsdrevet, som skal gendannes med den valgte sikkerhedskopi."
 
 msgid "Step 4: Select Partitions to Restore"
-msgstr ""
+msgstr "Trin 4: Vælg partitioner, der skal gendannes"
 
 msgid "Select which partitions from the backup image to restore, and whether to overwrite the partition table. <b>Leave everything selected to completely restore the destination drive.</b>"
 msgstr ""
+"Vælg de partitioner fra sikkerhedskopien, der skal gendannes og om "
+"partitionstabellen skal overskrives. <b>Markér alt for at lave en "
+"fuldstændig gendannelse på destinationsdrevet.</b>"
 
 msgid "Selected image"
-msgstr ""
+msgstr "Valgte sikkerhedskopi"
 
 msgid "Destination device"
-msgstr ""
+msgstr "Destinationsdrev"
 
 msgid "Destination partition"
-msgstr ""
+msgstr "Destinationspartition"
 
 msgid "Overwrite partition table"
-msgstr ""
+msgstr "Overskriv partitionstabel"
 
 msgid "You will be overwriting the partition table."
-msgstr ""
+msgstr "Du overskriver partitionstabellen."
 
 msgid "The \"destination partition\" column has been updated using the information stored within the backup image.\n\n<b>If partitions have been resized, new partitions added, or additional operating systems installed <i>since the backup image was created</i>, then the destination drive's partition table will not match the backup image, and overwriting the destination drive's partition table will render these resized and additional partitions permanently inaccessible.</b> If you have not modified the partition table in such a way since creating this backup then overwriting the partition table is completely safe and will have no negative effects."
 msgstr ""
+"Kolonnen \"destinationspartition\" er blevet opdateret på baggrund af de "
+"oplysninger, der er gemt i sikkerhedskopien.\n"
+"\n"
+"<b> Hvis størrelsen på partitioner er blevet ændret, nye partitioner "
+"tilføjet eller der er installeret yderligere operativsystemer <i> siden "
+"sikkerhedskopien blev taget</i>, vil destinationsdrevets partitionstabel "
+"ikke passe med sikkerhedskopiens og overskrivning af destinationsdrevets "
+"partitionstabel gør disse forstørrede/formindskede partitioner permanent "
+"utilgængelige. </b> Hvis du ikke har ændret partitionstabellen på omtalte "
+"måde, siden du oprettede sikkerhedskopien, er overskrivning af "
+"partitionstabellen helt sikker og har ingen negative konsekvenser."
 
 msgid "You will <b>not</b> be overwriting the partition table."
-msgstr ""
+msgstr "Du overskriver <b>ikke</b> partitionstabellen."
 
 msgid "The source does not contain a partition table."
-msgstr ""
+msgstr "Kilden indeholder ingen partitionstabel."
 
 msgid "The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table."
 msgstr ""
+"Kolonnen \"destinationspartition\" er blevet opdateret med "
+"destinationsdrevets eksisterende partitionstabeloplysninger.\n"
+"\n"
+"<b> Destinationspartitionskolonnen kan ændres som en rullemenu. Forkert "
+"tildeling af destinationspartitionerne kan medføre, at operativsystemer ikke "
+"længere kan starte. </b> Hvis du er i tvivl om tildelingen, bør du overveje "
+"i stedet at overskrive partitionstabellen."
 
 msgid "No destination partition selected. Use the destination partition drop-down menu to select the destination"
 msgstr ""
+"Ingen destinationspartition valgt. Brug rullemenuen for "
+"destinationspartition for at vælge destinationen"
 
 msgid "Not restoring this partition"
-msgstr ""
+msgstr "Gendan ikke denne partition"
 
 msgid "When you are ready to continue, click <b>Next</b>."
-msgstr ""
+msgstr "Når du er klar til at fortsætte, skal du klikke på <b>Næste</b>."
 
 msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
-msgstr ""
+msgstr "Skanner og afmonterer alle Logical Volume Manager (LVM)..."
 
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
 msgstr ""
+"Kildepartitionstabellens sidste partition ({source}: {source_size} bytes) "
+"skal henvise til et område, som ligger fuldstændigt indenfor "
+"destinationsdiskens størrelse ({destination_size} bytes)."
 
 msgid "Rescuezilla cannot yet automatically shrink partitions to restore from large disks to smaller disks. The final partition currently must always completely reside within the destination disk.\n"
 "\n"
@@ -593,163 +634,197 @@ msgid "Rescuezilla cannot yet automatically shrink partitions to restore from la
 "\n"
 "{url}"
 msgstr ""
+"Rescuezilla kan ikke - p.t. - automatisk formindske partitioner for at "
+"gendanne store diske på mindre diske. Den sidste partition skal - med "
+"nuværende version - altid være fuldstændigt placeret på destinationsdisken.\n"
+"\n"
+"I øjeblikket er den eneste måde at gendanne til diske, der er mindre end "
+"originalen, først at bruge GParted Partition Editor til at formindske den "
+"endelige partition på den originale disk, inden du laver en ny "
+"sikkerhedskopi. Læs følgende instruktioner for mere information:\n"
+"\n"
+"{url}"
 
 msgid "Step 5: Confirm Restore Configuration"
-msgstr ""
+msgstr "Trin 5: Bekræft indstillingen af gendannelsen"
 
 msgid "Confirm the following restore configuration."
-msgstr ""
+msgstr "Bekræft indstillingen af følgende gendannelse."
 
 msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
+"Er du sikker på at ville gendanne sikkerhedskopien på {destination_drive}? "
+"Derved bliver data på det drev overskrevet permanent!"
 
 msgid "Source image"
-msgstr ""
+msgstr "Sikkerhedskopien"
 
 msgid "Destination drive"
-msgstr ""
+msgstr "Destinationsdrev"
 
 msgid "Restoring the following partitions"
-msgstr ""
+msgstr "Gendanner følgende partitioner"
 
 msgid "WILL BE OVERWRITING PARTITION TABLE"
-msgstr ""
+msgstr "PARTITIONSTABELLEN BLIVER OVERSKREVET"
 
 msgid "Will <b>NOT</b> be overwriting partition table"
-msgstr ""
+msgstr "Partitionstabellen bliver <b>IKKE</b> overskrevet"
 
 msgid "To start the restore, click <b>Next</b>."
-msgstr ""
+msgstr "For at starte gendannelsen; klik <b>Næste</b>."
 
 msgid "Restoring From Backup"
-msgstr ""
+msgstr "Gendanner fra sikkerhedskopi"
 
 msgid "Restoring your system from the image you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
+"Gendanner dit system fra den valgte sikkerhedskopi. Det kan tage en time "
+"eller mere afhængigt af din computers hastighed og datamængden."
 
 msgid "Refreshing partition table"
-msgstr ""
+msgstr "Opdaterer partitionstabel"
 
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
 msgstr ""
+"{description} gendannes på {destination_partition} "
+"({destination_description})"
 
 msgid "Synchronizing disks..."
-msgstr ""
+msgstr "Synkroniserer diske..."
 
 msgid "Querying hard drive geometry of {device}"
-msgstr ""
+msgstr "Forespørger harddiskens geometri af {device}"
 
 msgid "Probing {device} with {app}"
-msgstr ""
+msgstr "Undersøger {device} med {app}"
 
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
 msgstr ""
+"Opretter filsystem {partition} ({filsystem}). Dette kan tage et stykke tid..."
 
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
 msgstr ""
+"Ændring af størrelse på partition {partition} ({filesystem}) mislykkedes: "
+"{msg}"
 
 msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
 msgstr ""
+"NTFS-filsystem fra {ntfs_device} er blevet tilpasset baseret på værdierne "
+"fra {geometry_source}"
 
 msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
-msgstr ""
+msgstr "Kunne ikke justere NTFS-filsystemgeometrien for {ntfs_device}"
 
 msgid "Removing udev MAC address records (if any)"
-msgstr ""
+msgstr "Fjerner udev MAC-adresseoptegnelser (hvis til stede)"
 
 msgid "Re-installing syslinux (if any)"
-msgstr ""
+msgstr "Geninstallerer syslinux (hvis til stede)"
 
 msgid "Successfully re-installed syslinux bootloader"
-msgstr ""
+msgstr "Geninstalleringen af syslinux-bootloader lykkedes"
 
 msgid "Re-installing GRUB bootloader (if any)"
-msgstr ""
+msgstr "Geninstalleringen af GRUB-bootloader (hvis til stede) lykkedes"
 
 msgid "Successfully re-installed GRUB bootloader"
-msgstr ""
+msgstr "Geninstalleringen af GRUB-bootloader lykkedes"
 
 msgid "Did not update GRUB bootloader (if any)"
-msgstr ""
+msgstr "GRUB-bootloader (hvis til stede) blev ikke opdateret"
 
 msgid "Updating initramfs (if any)"
-msgstr ""
+msgstr "Opdaterer initramfs (hvis til stede)"
 
 msgid "Successfully updated initramfs"
-msgstr ""
+msgstr "Opdateringen af initramfs lykkedes"
 
 msgid "Updating EFI NVRAM..."
-msgstr ""
+msgstr "Opdaterer EFI NVRAM..."
 
 msgid "Successfully updated EFI NVRAM"
-msgstr ""
+msgstr "Opdateringen af EFI NVRAM lykkedes"
 
 msgid "Error restoring image: "
-msgstr ""
+msgstr "Fejl ved gendannelse af sikkerhedskopi: "
 
 msgid "Could not restore sfdisk partition table as file has zero length: "
-msgstr ""
+msgstr "Kunne ikke gendanne sfdisk partitionstabel, da filen er tom: "
 
 msgid "Successfully restored partition table."
-msgstr ""
+msgstr "Gendannelsen af partitionstabellen lykkedes."
 
 msgid "Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."
 msgstr ""
+"Kunne ikke opdatere drevets partitionstabel. Dette kan ske, hvis en anden "
+"proces har adgang til partitionstabellen."
 
 msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
 msgstr ""
+"Kunne ikke gendanne partitionen {destination_partition}, fordi der ikke er "
+"nogen sikkerhedskopi knyttet til: {beskrivelse}."
 
 msgid "This may occur if Clonezilla was originally unable to backup this partition."
 msgstr ""
+"Dette kan forekomme, hvis Clonezilla oprindeligt ikke kunne "
+"sikkerhedskopiere denne partition."
 
 msgid "Error restoring partition {image_key} to {destination_partition}."
 msgstr ""
+"Fejl ved gendannelse af partition {image_key} til {destination_partition}."
 
 msgid "Successfully restored image partition {image} to {destination_partition}"
 msgstr ""
+"Gendannelsen af partitionen {image} til {destination_partition} lykkedes"
 
 msgid "Summary of Restore"
-msgstr ""
+msgstr "Sammenfatning af gendannelsen"
 
 msgid "Restore Summary"
-msgstr ""
+msgstr "Sammenfatning af gendannelsen"
 
 msgid "Confirm the restore summary."
-msgstr ""
+msgstr "Bekræft sammenfatningen af gendannelsen."
 
 msgid "Backup restored successfully."
-msgstr ""
+msgstr "Sikkerhedskopien blev gendannet."
 
 msgid "Image Explorer\n"
 "      (beta)"
 msgstr ""
+"Image Explorer\n"
+"      (beta)"
 
 msgid "Image Explorer (beta)"
-msgstr ""
+msgstr "Image Explorer (beta)"
 
 msgid "Select the image file to explore"
-msgstr ""
+msgstr "Vælg sikkerhedskopi"
 
 msgid "Step 3: Select Partition to Explore"
-msgstr ""
+msgstr "Trin 3: Vælg sikkerhedskopi"
 
 msgid "Select the partition to access files from."
-msgstr ""
+msgstr "Vælg den partition, som sikkerhedskopien skal åbnes fra."
 
 msgid "Click <b>Mount</b> to mount the backup image (as read-only)."
 msgstr ""
+"Klik <b>Montér</b> for at montere sikkerhedskopien (som skrivebeskyttet)."
 
 msgid "Mount"
-msgstr ""
+msgstr "Montér"
 
 msgid "Mounting as read-only..."
-msgstr ""
+msgstr "Monterer som skrivebeskyttet..."
 
 msgid "Unmount"
-msgstr ""
+msgstr "Afmonterer"
 
 msgid "Once the partition has been mounted, click <b>Open in file manager</b> to access your files."
 msgstr ""
+"Når partitionen er monteret, skal du klikke på <b> Åbn i filhåndtering </b> "
+"for at få adgang til dine filer."
 
 msgid "Open in file manager"
-msgstr ""
+msgstr "Åbn i filhåndtering"

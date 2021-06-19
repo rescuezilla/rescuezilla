@@ -1,26 +1,28 @@
 # Artem <KovalevArtem.ru@gmail.com>, 2021.
+# Bolle Barnewitz <detlef@sol.dk>, 2021.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2021-05-29 02:38+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2021-06-19 12:22+0000\n"
+"Last-Translator: Bolle Barnewitz <detlef@sol.dk>\n"
+"Language-Team: Danish <https://hosted.weblate.org/projects/rescuezilla/"
+"graphical-shutdown/da/>\n"
 "Language: da\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.7\n"
 
 msgid "End Session"
-msgstr ""
+msgstr "Afslut sessionen"
 
 msgid "Cancel"
-msgstr ""
+msgstr "Annullér"
 
 msgid "Shutdown"
-msgstr ""
+msgstr "Sluk PC"
 
 msgid "Reboot"
-msgstr ""
+msgstr "Genstart"
 
 msgid "Choose action."
-msgstr ""
+msgstr "Vælg en handling."
