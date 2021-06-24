@@ -38,13 +38,14 @@ Note: Rescuezilla does NOT yet _automatically_ shrink partitions to restore to d
 
 Rescuezilla has been translated into the following languages:
 
-* Dansk (da-DK) (Translation in-progress)
+* Dansk (da-DK) (Translation complete, available in next release)
 * Deutsch (de-DE)
 * Ελληνικά (el-GR)
 * English (en-US)
 * Español (es-ES)
 * Français (fr-FR)
 * Italiano (it-IT)
+* עִברִית (he-IL) (Translation complete, available in next release)
 * 日本語 (ja-JP)
 * Norsk Bokmål (nb-NO) (Translation in-progress)
 * Polski (pl-PL)
