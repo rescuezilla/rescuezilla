@@ -1,76 +1,87 @@
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021.
+# Yaron Shahrabani <sh.yaron@gmail.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2021-06-23 21:45+0000\n"
+"Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
+"Language-Team: Hebrew <https://hosted.weblate.org/projects/rescuezilla/"
+"rescuezilla/he/>\n"
 "Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
+"n % 10 == 0) ? 2 : 3));\n"
+"X-Generator: Weblate 4.7.1-dev\n"
 
 msgid "Welcome"
-msgstr ""
+msgstr "ברוך בואך"
 
 msgid "Select an Option"
-msgstr ""
+msgstr "נא לבחור אפשרות"
 
 msgid "Easily create a backup image of your computer, or completely restore from one.  Click an option to begin:"
 msgstr ""
+"ניתן ליצור דמות של המחשב שלך או לשחזר מאחת כזאת. יש ללחוץ על אחת האפשרויות "
+"כדי להתחיל:"
 
 msgid "Backup"
-msgstr ""
+msgstr "גיבוי"
 
 msgid "Restore"
-msgstr ""
+msgstr "שחזור"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
 msgstr ""
+"אפשר להציע לך עזרה? כדאי להתחיל מהשאלות הנפוצות של Rescuezilla ואז להמשיך "
+"לפורום של Rescuezilla."
 
 msgid "Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed."
 msgstr ""
+"אפשר גם לתרום לנו דולר בחודש באתר מימון ההמונים Patreon כדי לתמוך בהמשך "
+"הפיתוח של Rescuezilla."
 
 msgid "Back"
-msgstr ""
+msgstr "חזרה"
 
 msgid "Next >"
-msgstr ""
+msgstr "הבא >"
 
 msgid "Please wait..."
-msgstr ""
+msgstr "נא להמתין…"
 
 msgid "Identifying disk drives..."
-msgstr ""
+msgstr "הכוננים הקשיחים מזוהים…"
 
 msgid "Unmounting: {path}"
-msgstr ""
+msgstr "העיגון מנותק: {path}"
 
 msgid "Unable to unmount {path}"
-msgstr ""
+msgstr "לא ניתן לנתק את העיגון {path}"
 
 msgid "Running: {app}"
-msgstr ""
+msgstr "מופעל: {app}"
 
 msgid "Running {app} on {device}"
-msgstr ""
+msgstr "{app} מופעל על {device}"
 
 msgid "Failed to run command: "
-msgstr ""
+msgstr "הפעלת הפקודה נכשלה: "
 
 msgid "Error querying drives: "
-msgstr ""
+msgstr "תשאול הכוננים נתקל בשגיאה: "
 
 msgid "Clone"
-msgstr ""
+msgstr "שכפול"
 
 msgid "Step 1: Understanding Cloning"
-msgstr ""
+msgstr "שלב 1: הסבר על שכפול"
 
 msgid "Please understand how \"cloning\" differs from \"imaging\"."
-msgstr ""
+msgstr "ממליצים להתעמק בהבדל שבין „שכפול” ל„יצירת דמות”."
 
 msgid "This mode is for \"disk cloning\". Cloning means copying one drive and directly overwriting another drive. This is a direct one-step operation with no temporary storage required.\n"
 "\n"
@@ -79,451 +90,510 @@ msgid "This mode is for \"disk cloning\". Cloning means copying one drive and di
 ""
 "To use the \"imaging\" wizards, click <b>Back</b> and select <b>Backup</b> or <b>Restore</b>."
 msgstr ""
+"מצב זה מיועד לטובת „שכפול כוננים”. שכפול משמעו העתקת כונן אחד ישירות תוך "
+"שכתוב על כונן אחר. זאת פעולה ישירה בשלב אחד שאינה דורשת אחסון ביניים.\n"
+"\n"
+"שכפול שונה מ„לכידת דמות”. לכידת דמות כונן משמעה להעתיק הכול מכונן אחד לתוך "
+"קובץ גדול מאוד שמאוחסן בתיקייה על כונן חיצוני. ניתן לשמור מגוון קובצי דמות "
+"באותו הכונן החיצוני. את קובצי הדמות האלו ניתן לשחזר לכונן המקורי או לכוננים "
+"נוספים. במילים אחרות, במצב „לכידת דמות” פעולת הגיבוי מעתיקה את הכונן שלך "
+"לתוך <i>קבצים</i> שיש לאחסן בכונן, לפחות באופן זמני, בטרם השחזור.\n"
+"\n"
+"כדי להשתמש באשפי „לכידת דמות” יש ללחוץ על <b>חזרה</b> ולבחור ב<b>גיבוי</b> "
+"או ב<b>שחזור</b>."
 
 msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
-msgstr ""
+msgstr "כדי להתחיל את אשף ה„שכפול”, יש ללחוץ על <b>הבא</b>"
 
 msgid "Step 2: Select Source Drive"
-msgstr ""
+msgstr "שלב 2: נא לבחור כונן מקור"
 
 msgid "Select the <b>source drive</b> to clone."
-msgstr ""
+msgstr "יש לבחור את <b>כונן המקור</b> לשכפול."
 
 msgid "Select the <b>destination drive</b> to overwrite."
-msgstr ""
+msgstr "נא לבחור את <b>כונן היעד</b> לשכתוב."
 
 msgid "Step 4: Select Partitions to Clone"
-msgstr ""
+msgstr "שלב 4: נא לבחור מחיצות לשכפול"
 
 msgid "Select which partitions from the source drive to clone, and whether to overwrite the partition table. <b>Leave everything selected to completely clone the source drive to the destination drive.</b>"
 msgstr ""
+"יש לבחור מחיצות מכונן המקור לשכפול והאם לשכתב את טבלת המחיצות. <b>יש להשאיר "
+"את הכול מסומן כדי לשכפל את כונן המקור אל כונן המקור במלואו.</b>"
 
 msgid "Step 5: Confirm Cloning Configuration"
-msgstr ""
+msgstr "שלב 5: אימות הגדרות השכפול"
 
 msgid "Confirm the following cloning configuration."
-msgstr ""
+msgstr "נא לאשר את הגדרות השכפול הבאות."
 
 msgid "Cloning the following partitions"
-msgstr ""
+msgstr "המחיצות הבאות משוכפלות"
 
 msgid "To start cloning, click <b>Next</b>."
-msgstr ""
+msgstr "כדי להתחיל בשכפול, יש ללחוץ על <b>הבא</b>."
 
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
+"לשכפל את הכונן אל {destination_drive}? פעולה זו תשכתב לצמיתות את כל הנתונים "
+"שעל הכונן הזה!"
 
 msgid "Step 6: Cloning Disk"
-msgstr ""
+msgstr "שלב 6: שכפול כונן"
 
 msgid "Cloning the drive you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
+"הכונן שבחרת משוכפל. פעולה זו עשויה לארוך שעה ויותר בהתאם למהירות המחשב שלך "
+"וכמות הנתונים."
 
 msgid "Summary of Clone"
-msgstr ""
+msgstr "סיכום השכפול"
 
 msgid "Clone Summary"
-msgstr ""
+msgstr "סיכום השכפול"
 
 msgid "Confirm the clone summary."
-msgstr ""
+msgstr "סיכום השכפול לאישורך."
 
 msgid "Unable to shutdown Image Explorer"
-msgstr ""
+msgstr "לא ניתן לכבות את חוקר קובצי הדמות"
 
 msgid "Step 1: Select Drive To Backup"
-msgstr ""
+msgstr "שלב 1: נא לבחור כונן לגיבוי"
 
 msgid "Select the <b>source drive</b> that you would like to create a backup image from."
-msgstr ""
+msgstr "נא לבחור את <b>כונן המקור</b> ממנו ברצונך לגבות קובץ דמות."
 
 msgid "Drive"
-msgstr ""
+msgstr "כונן"
 
 msgid "Capacity"
-msgstr ""
+msgstr "נפח"
 
 msgid "Drive Model"
-msgstr ""
+msgstr "דגם הכונן"
 
 msgid "Partitions"
-msgstr ""
+msgstr "מחיצות"
 
 msgid "Show hidden devices (for advanced users)"
-msgstr ""
+msgstr "להציג התקנים נסתרים (למשתמשים מתקדמים)"
 
 msgid "Step 2: Select Partitions to Save"
-msgstr ""
+msgstr "שלב 2: נא לבחור מחיצות לשמירה"
 
 msgid "Select which partitions to create a backup of. <b>Leave all partitions selected if you are unsure.</b>"
 msgstr ""
+"יש לבחור אילו מחיצות לגבות. <b>יש להשאיר את כל המחיצות מסומנות במקרה של "
+"ספק.</b>"
 
 msgid "Save"
-msgstr ""
+msgstr "שמירה"
 
 msgid "Description"
-msgstr ""
+msgstr "תיאור"
 
 msgid "Drive {drive_number}"
-msgstr ""
+msgstr "כונן {drive_number}"
 
 msgid "Partition {partition_number}"
-msgstr ""
+msgstr "מחיצה {partition_number}"
 
 msgid "Step 3: Select Destination Drive"
-msgstr ""
+msgstr "שלב 3: נא לבחור את כונן היעד"
 
 msgid "Click on the box below to select the source drive that you would like to create a backup image from."
-msgstr ""
+msgstr "יש ללחוץ על התיבה שלהלן כדי לבחור את כונן המקור לגיבוי לקובץ דמות."
 
 msgid "Connected directly to my computer"
-msgstr ""
+msgstr "מחובר ישירות למחשב שלי"
 
 msgid "Shared over a network"
-msgstr ""
+msgstr "משותף דרך הרשת"
 
 msgid "Where would you like to save the image?"
-msgstr ""
+msgstr "איפה לשמור את קובץ הדמות?"
 
 msgid "Windows shared folder (SMB/CIFS, Samba)"
-msgstr ""
+msgstr "תיקייה משותפת של Windows‏ (SMB/CIFS,‏ Samba)"
 
 msgid "Search network"
-msgstr ""
+msgstr "חיפוש ברשת"
 
 msgid "Server"
-msgstr ""
+msgstr "שרת"
 
 msgid "Share location (UNC path)"
-msgstr ""
+msgstr "מיקום השיתוף (נתיב UNC)"
 
 msgid "Username"
-msgstr ""
+msgstr "שם משתמש"
 
 msgid "Password"
-msgstr ""
+msgstr "ססמה"
 
 msgid "Domain"
-msgstr ""
+msgstr "שם תחום"
 
 msgid "Version"
-msgstr ""
+msgstr "גרסה"
 
 msgid "Remote path"
-msgstr ""
+msgstr "נתיב מרוחק"
 
 msgid "Exported path"
-msgstr ""
+msgstr "נתיב מיוצא"
 
 msgid "Identity File"
-msgstr ""
+msgstr "קובץ זהות"
 
 msgid "Optional"
-msgstr ""
+msgstr "רשות"
 
 msgid "Select network-shared storage location:"
-msgstr ""
+msgstr "נא לבחור מיקום אחסון משותף ברשת:"
 
 msgid "Select the partition where the image files will be saved to"
-msgstr ""
+msgstr "נא לבחור את המחיצה אליה יישמרו קובצי הדמות"
 
 msgid "Partition"
-msgstr ""
+msgstr "מחיצה"
 
 msgid "Mounting..."
-msgstr ""
+msgstr "מתבצע עיגון…"
 
 msgid "Close this popup to cancel the mount operation."
-msgstr ""
+msgstr "סגירת החלונית הזאת תבטל את פעולת העיגון."
 
 msgid "Please ensure the username, password and other fields provided are correct, and try again."
-msgstr ""
+msgstr "נא לוודא ששם המשתמש, הססמה ושאר השדות שצוינו נכונים ולנסות שוב."
 
 msgid "Must provide either password or SSH identity file."
-msgstr ""
+msgstr "יש לספק ססמה או קובץ זהות SSH."
 
 msgid "Scanning folder for backup images..."
-msgstr ""
+msgstr "התיקייה נסרקת לאיתור קובצי דמות לגיבוי…"
 
 msgid "({timeout_seconds} second timeout)"
-msgstr ""
+msgstr "({timeout_seconds} שניות לסיום)"
 
 msgid "Close this popup to cancel scanning the selected folder and subfolders."
-msgstr ""
+msgstr "סגירת החלונית הזאת תבטל את סריקת התיקייה הנבחרת על תת־תיקיותיה."
 
 msgid "Scanning: {filename}"
-msgstr ""
+msgstr "בסריקה: {filename}"
 
 msgid "Error processing the following images:"
-msgstr ""
+msgstr "שגיאה בעיבוד קובצי הדמות הבאים:"
 
 msgid "Unable to fully process the image associated with the following partitions:"
-msgstr ""
+msgstr "לא ניתן לעבד את קובץ הדמות המשויך למחיצות הבאות במלואו:"
 
 msgid "Unable to fully process the following image:"
-msgstr ""
+msgstr "לא ניתן לעבד את קובץ הדמות הבא במלואו:"
 
 msgid "Cannot find partition's associated partclone image"
-msgstr ""
+msgstr "לא ניתן למצוא את קובץ הדמות מסוג partclone המשויך למחיצה"
 
 msgid "This can happen when loading images which Clonezilla was unable to completely backup."
 msgstr ""
+"מצב זה יכול לקרות עקב טעינת קובצי דמות של־Clonezilla לא הייתה אפשרות לגבות "
+"באופן מלא."
 
 msgid "Note: This image format cannot distinguish between failed partclone backup and a user who chose not to backup a partition."
 msgstr ""
+"לתשומת לבך: תצורת קובצי דמות זו לא יכולה להבדיל בין גיבוי partclone שנכשל "
+"לבין משתמש שבחר לא לגבות מחיצה."
 
 msgid "Any other filesystems within the image should be restorable as normal."
-msgstr ""
+msgstr "כל מערכת קבצים אחרת בקובץ הדמות אמורה להיות זמינה לשחזור כרגיל."
 
 msgid "Needs decryption"
-msgstr ""
+msgstr "נדרש פענוח"
 
 msgid "Unknown filesystem"
-msgstr ""
+msgstr "מערכת קבצים לא ידועה"
 
 msgid "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance."
 msgstr ""
+"פרטי המחיצה המורחבת של הגיבוי ריקים. אם הגיבוי מכיל מחיצה מורחבת היא לא "
+"תשוחזר כראוי. כל הנתונים עדיין ניתנים לשחזור אך נדרשת התערבות ידנית כדי "
+"לשחזר את הנתונים שבמחיצה המורחבת. נא להתייעץ מול {url} לקבלת מידע וסיוע."
 
 msgid "The backup's bootloader data is shorter than expected. If the backup contained certain bootloaders like GRUB, during a restore operation Rescuezilla will try and re-install the bootloader."
 msgstr ""
+"נתוני מנהל האתחול של הגיבוי קצרים מהצפוי. אם הגיבוי הכיל מנהלי אתחול מסוימים "
+"כגון GRUB, במהלך פעולת השחזור ינסה Rescuezilla להתקין את מנהל האתחול מחדש."
 
 msgid "Step 4: Select Destination Folder"
-msgstr ""
+msgstr "שלב 4: נא לבחור תיקיית יעד"
 
 msgid "Click <b>Browse</b> to select the folder on the destination drive where your new backup image will be saved.\n"
 "\n"
 "The folder a backup is saved in is usually a description of the computer, e.g. <b>office1</b> or <b>zack-laptop</b>."
 msgstr ""
+"לחיצה על <b>עיון</b> תוביל אותך לבחירת כונן היעד אליו קובץ דמות הגיבוי שלך "
+"מיועד להישמר.\n"
+"\n"
+"התיקייה אליה נשמר הגיבוי היא בדרך כלל תיאור המחשב, למשל: <b>משרד1</b> או "
+"<b>הלפטופ-של-צחי</b>."
 
 msgid "You must select a folder inside {location}"
-msgstr ""
+msgstr "עליך לבחור בתיקייה מתוך {location}"
 
 msgid "Please select a different folder."
-msgstr ""
+msgstr "נא לבחור בתיקייה אחרת."
 
 msgid "The table below lists the backup images that are already in this folder (if any)."
 msgstr ""
+"הטבלה שלהלן מציגה את קובצי דמויות הגיבוי שכבר נמצאים בתיקייה הזאת (אם בכלל)."
 
 msgid "Browse..."
-msgstr ""
+msgstr "עיון…"
 
 msgid "Filename"
-msgstr ""
+msgstr "שם קובץ"
 
 msgid "Size"
-msgstr ""
+msgstr "גודל"
 
 msgid "Last modified"
-msgstr ""
+msgstr "שינוי אחרון"
 
 msgid "When you are happy with the destination folder, click <b>Next</b>."
-msgstr ""
+msgstr "כשתיקיית היעד נושאת חן בעיניך, יש ללחוץ על <b>הבא</b>."
 
 msgid "Step 5: Name Your Backup"
-msgstr ""
+msgstr "שלב 5: נא לתת לגיבוי שלך שם"
 
 msgid "Provide a unique name for this backup image, such as the date.  Today's date is automatically entered for you below.\n"
 "\n"
 "You may only use letters, numbers, and dashes in your backup name."
 msgstr ""
+"יש לספק שם ייחודי לקובץ דמות הגיבוי הזה, כמו למשל התאריך. התאריך של היום "
+"הוזן עבורך להלן.\n"
+"\n"
+"מותר להשתמש באותיות, מספרים ומינוסים בשם הגיבוי שלך."
 
 msgid "Optional: Provide a short description."
-msgstr ""
+msgstr "רשות: לספק תיאור קצר."
 
 msgid "Step 6: Customize Compression Settings"
-msgstr ""
+msgstr "שלב 6: התאמת הגדרות הדחיסה"
 
 msgid "Customize image compression settings. <b>Don't make any changes if you are unsure.</b>"
-msgstr ""
+msgstr "התאמת הגדרות דחיסת קובץ הדמות. <b>לא לבצע שינויים במקרה של ספק.</b>"
 
 msgid "Compression format: "
-msgstr ""
+msgstr "תצורת הדחיסה: "
 
 msgid "gzip"
-msgstr ""
+msgstr "gzip"
 
 msgid "default"
-msgstr ""
+msgstr "בררת מחדל"
 
 msgid "zstandard"
-msgstr ""
+msgstr "zstandard"
 
 msgid "Uncompressed (Suitable for use with Image Explorer)"
-msgstr ""
+msgstr "ללא דחיסה (מתאים לשימוש עם חוקר קובצי הדמות)"
 
 msgid "Compression level: "
-msgstr ""
+msgstr "רמת הדחיסה: "
 
 msgid "Fastest"
-msgstr ""
+msgstr "המהירה ביותר"
 
 msgid "Best"
-msgstr ""
+msgstr "הטובה ביותר"
 
 msgid "When you are happy with the compression settings, click <b>Next</b>."
-msgstr ""
+msgstr "כשהגדרות הדחיסה נושאות חן בעיניך, יש ללחוץ על <b>הבא</b>."
 
 msgid "Step 7: Confirm Backup Configuration"
-msgstr ""
+msgstr "שלב 7: אישור הגדרות הגיבוי"
 
 msgid "Source drive"
-msgstr ""
+msgstr "כונן המקור"
 
 msgid "Backing up the following partition"
-msgstr ""
+msgstr "המחיצה הבאה מגובית"
 
 msgid "The backup image will be written into folder {dest_dir} on {description}"
-msgstr ""
+msgstr "קובץ דמות הגיבוי תיכתב לתיקייה {dest_dir} על גבי {description}"
 
 msgid "Confirm the following backup configuration."
-msgstr ""
+msgstr "זו תצורת הגיבוי לאישורך."
 
 msgid "On successful completion of the task, perform the following action: "
-msgstr ""
+msgstr "עם השלמת המשימה בהצלחה, יש לבצע את הפעולה הבאה: "
 
 msgid "Do nothing"
-msgstr ""
+msgstr "לא לעשות כלום"
 
 msgid "Shutdown"
-msgstr ""
+msgstr "כיבוי"
 
 msgid "Reboot"
-msgstr ""
+msgstr "הפעלה מחדש"
 
 msgid "To start the backup, click <b>Next</b>."
-msgstr ""
+msgstr "כדי להתחיל את הגיבוי, יש ללחוץ על <b>הבא</b>."
 
 msgid "Step 8: Creating Backup Image"
-msgstr ""
+msgstr "שלב 8: יצירת קובץ דמות הגיבוי"
 
 msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
+"המערכת שלך מגובה למיקום שבחרת. פעולה זו עשויה לארוך שעה ויותר כתלות במהירות "
+"המחשב שלך וכמות הנתונים."
 
 msgid "Saving: {file}"
-msgstr ""
+msgstr "מתבצעת שמירה: {file}"
 
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
 msgstr ""
+"{partition_name} המכילה את מערכת הקבצים {filesystem} מגובה אל {destination}"
 
 msgid "Summary of Backup"
-msgstr ""
+msgstr "סיכום הגיבוי"
 
 msgid "Confirm the backup summary."
-msgstr ""
+msgstr "סיכום הגיבוי לאישורך."
 
 msgid "Backup Summary"
-msgstr ""
+msgstr "סיכום הגיבוי"
 
 msgid "An operation is in progress. Do you wish to cancel?"
-msgstr ""
+msgstr "מתבצעת פעולה ברקע. לבטל?"
 
 msgid "Operation cancelled by user."
-msgstr ""
+msgstr "הפעולה בוטלה על ידי המשתמש."
 
 msgid "Error creating backup: "
-msgstr ""
+msgstr "יצירת הגיבוי נתקלה בשגיאה: "
 
 msgid "Failed to write destination file. Please confirm it is valid to create the provided file path, and try again."
 msgstr ""
+"הכתיבה לקובץ היעד נכשלה. נא לאשר שאפשר ליצור את נתיב הקובץ שסופק ולנסות שוב."
 
 msgid "Successful backup of swap partition {partition_name}"
-msgstr ""
+msgstr "גיבוי מוצלח של מחיצת ההחלפה {partition_name}"
 
 msgid "<b>Failed to backup partition</b> {partition_name}"
-msgstr ""
+msgstr "<b>גיבוי המחיצה</b> {partition_name} נכשל"
 
 msgid "Successful backup of partition {partition_name}"
-msgstr ""
+msgstr "גיבוי מוצלח של המחיצה {partition_name}"
 
 msgid "Backup saved successfully."
-msgstr ""
+msgstr "הגיבוי נשמר בהצלחה."
 
 msgid "Backup succeeded with some errors:"
-msgstr ""
+msgstr "הגיבוי הצליח על אף כמה שגיאות:"
 
 msgid "Backup operation failed:"
-msgstr ""
+msgstr "פעולת הגיבוי נכשלה:"
 
 msgid "User requested operation to stop."
-msgstr ""
+msgstr "הפעולה נעצרה לבקשת המשתמש."
 
 msgid "Operation took {num_minutes} minutes."
-msgstr ""
+msgstr "הפעולה ארכה {num_minutes} דקות."
 
 msgid "To start a new session, click <b>Next</b>"
-msgstr ""
+msgstr "כדי להתחיל הפעלה חדשה, יש ללחוץ על <b>הבא</b>"
 
 msgid "Step 1: Select Image Location"
-msgstr ""
+msgstr "שלב 1: נא לבחור את מיקום קובץ הדמות"
 
 msgid "Where are the image files stored?"
-msgstr ""
+msgstr "איפה קובצי הדמות מאוחסנים?"
 
 msgid "Select the partition which contains the image files:"
-msgstr ""
+msgstr "נא לבחור את המחיצה שמכילה את קובצי הדמות:"
 
 msgid "Step 2: Select Backup Image"
-msgstr ""
+msgstr "שלב 2: נא לבחור את קובץ דמות הגיבוי"
 
 msgid "Click <b>Browse</b> to select the folder containing image files."
-msgstr ""
+msgstr "יש ללחוץ על <b>עיון</b> כדי לבחור את התיקייה שמכילה את קובצי הדמות."
 
 msgid "Select the image file to restore."
-msgstr ""
+msgstr "נא לבחור את קובץ הדמות לשחזור."
 
 msgid "Step 3: Select Drive To Restore"
-msgstr ""
+msgstr "שלב 3: נא לבחור כונן לשחזור"
 
 msgid "Select the destination drive to restore with the selected image."
-msgstr ""
+msgstr "יש לבחור את כונן היעד לשחזור עם קובץ הדמות הנבחר."
 
 msgid "Step 4: Select Partitions to Restore"
-msgstr ""
+msgstr "שלב 4: נא לבחור מחיצות לשחזור"
 
 msgid "Select which partitions from the backup image to restore, and whether to overwrite the partition table. <b>Leave everything selected to completely restore the destination drive.</b>"
 msgstr ""
+"יש לבחור את המחיצות מקובץ דמות הגיבוי לשחזור והאם לשכתב את טבלת המחיצות. "
+"<b>יש להשאיר את הכול מסומן כדי לשחזר את כונן היעד במלואו.</b>"
 
 msgid "Selected image"
-msgstr ""
+msgstr "קובץ הדמות הנבחר"
 
 msgid "Destination device"
-msgstr ""
+msgstr "התקן היעד"
 
 msgid "Destination partition"
-msgstr ""
+msgstr "מחיצת היעד"
 
 msgid "Overwrite partition table"
-msgstr ""
+msgstr "שכתוב טבלת המחיצות"
 
 msgid "You will be overwriting the partition table."
-msgstr ""
+msgstr "טבלת המחיצות תשוכתב."
 
 msgid "The \"destination partition\" column has been updated using the information stored within the backup image.\n\n<b>If partitions have been resized, new partitions added, or additional operating systems installed <i>since the backup image was created</i>, then the destination drive's partition table will not match the backup image, and overwriting the destination drive's partition table will render these resized and additional partitions permanently inaccessible.</b> If you have not modified the partition table in such a way since creating this backup then overwriting the partition table is completely safe and will have no negative effects."
 msgstr ""
+"העמודה „מחיצת היעד” עודכנה בעזרת המידע שמאוחסן בדמות הגיבוי.\n"
+"\n"
+"<b>אם גודלן של מחיצות השתנה, נוספו מחיצות חדשות או שהותקנו מערכות הפעלה "
+"חדשות <i>מאז שקובץ דמות הגיבוי נוצרה</i> אז טבלת המחיצות של כונן היעד לא "
+"תתאים לקובץ דמות הגיבוי ושכתוב על טבלת המחיצות של כונן היעד תהפוך את המחיצות "
+"שגודל השתנה ואת המחיצות שנוספו לבלתי נגישות לצמיתות.</b> אם לא שינית את טבלת "
+"המחיצות באופן שכזה מאז יצירת הגיבוי הזה אז שכתוב על טבלת המחיצות היא פעולה "
+"בטוחה ולא אמורות להיות לה השלכות שליליות."
 
 msgid "You will <b>not</b> be overwriting the partition table."
-msgstr ""
+msgstr "טבלת המחיצות <b>לא</b> תשוכתב."
 
 msgid "The source does not contain a partition table."
-msgstr ""
+msgstr "המקור לא מכיל טבלת מחיצות."
 
 msgid "The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table."
 msgstr ""
+"העמודה „מחיצת היעד” עודכנה ממידע על טבלת המחיצות הקיימת של כונן היעד.\n"
+"\n"
+"<b>ניתן לשנות את עמודת מחיצת היעד בעזרת תפריט נפתח. מיפוי שגוי של מחיצות "
+"היעד עלול לגרום למערכות ההפעלה להפסיק להיטען.</b> במקרה של ספק בנוגע למיפוי, "
+"כדאי לשקול האם מצב זה מתאים יותר מאשר לשכתב את טבלת המחיצות."
 
 msgid "No destination partition selected. Use the destination partition drop-down menu to select the destination"
-msgstr ""
+msgstr "לא נבחרה מחיצת יעד. יש להשתמש בתפריט הנפתח לכדי לבחור את היעד"
 
 msgid "Not restoring this partition"
-msgstr ""
+msgstr "מחיצה זו לא תשוחזר"
 
 msgid "When you are ready to continue, click <b>Next</b>."
-msgstr ""
+msgstr "כשסיימת להתכונן, יש ללחוץ על <b>הבא</b>."
 
 msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
-msgstr ""
+msgstr "מתבצעת סריקה וניתוק עיגון של כרכים לוגיים ממנהל הכרכים הלוגיים (LVM)…"
 
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
 msgstr ""
+"המחיצה האחרונה של טבלת המחיצות המקורית ({source}: {source_size} בתים) חייבת "
+"להתייחס לאזור שכולו בתוך כונן היעד ({destination_size} בתים)."
 
 msgid "Rescuezilla cannot yet automatically shrink partitions to restore from large disks to smaller disks. The final partition currently must always completely reside within the destination disk.\n"
 "\n"
@@ -531,163 +601,186 @@ msgid "Rescuezilla cannot yet automatically shrink partitions to restore from la
 "\n"
 "{url}"
 msgstr ""
+"ל־Rescuezilla אין עדיין אפשרות לכווץ מחיצות כדי לשחזר כוננים גדולים לכוננים "
+"קטנים. המחיצה הסופית חייבת להיות קטנה או בגודל כונן היעד.\n"
+"\n"
+"נכון לעכשיו, הדרך היחידה לשחזר לכוננים קטנים מהמקור היא קודם כל להשתמש בעורך "
+"המחיצות GParted כדי לכווץ את המחיצה הסופית של הכונן המקורי בטרם יצירת קובץ "
+"דמות גיבוי חדש. נא לקרוא את ההנחיות שלהלן למידע נוסף.\n"
+"\n"
+"{url}"
 
 msgid "Step 5: Confirm Restore Configuration"
-msgstr ""
+msgstr "שלב 5: נא לאשר את הגדרות השחזור"
 
 msgid "Confirm the following restore configuration."
-msgstr ""
+msgstr "הגדרות השחזור הבאות לאישורך."
 
 msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
+"לשחזר את הגיבוי אל {destination_drive}? פעולה זו תשכתב את כל הנתונים שבכונן "
+"הזה!"
 
 msgid "Source image"
-msgstr ""
+msgstr "קובץ דמות מקור"
 
 msgid "Destination drive"
-msgstr ""
+msgstr "כונן יעד"
 
 msgid "Restoring the following partitions"
-msgstr ""
+msgstr "המחיצות הבאות משוחזרות"
 
 msgid "WILL BE OVERWRITING PARTITION TABLE"
-msgstr ""
+msgstr "תשכתב את טבלת המחיצות"
 
 msgid "Will <b>NOT</b> be overwriting partition table"
-msgstr ""
+msgstr "<b>לא</b> תשכתב את טבלת המחיצות"
 
 msgid "To start the restore, click <b>Next</b>."
-msgstr ""
+msgstr "כדי להתחיל בשחזור, יש ללחוץ על <b>הבא</b>."
 
 msgid "Restoring From Backup"
-msgstr ""
+msgstr "מתבצע שחזור מהגיבוי"
 
 msgid "Restoring your system from the image you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
+"המערכת שלך משוחזר מקובץ הדמות שבחרת. פעולה זו עשויה לארוך שעה ויותר כתלות "
+"במהירות המחשב שלך וכמות הנתונים."
 
 msgid "Refreshing partition table"
-msgstr ""
+msgstr "טבלת המחיצות מתרעננת"
 
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
 msgstr ""
+"{description} משוחזר אל {destination_partition} ({destination_description})"
 
 msgid "Synchronizing disks..."
-msgstr ""
+msgstr "הכוננים מסונכרנים…"
 
 msgid "Querying hard drive geometry of {device}"
-msgstr ""
+msgstr "תשתית הכונן הקשיח {device} נבדקת"
 
 msgid "Probing {device} with {app}"
-msgstr ""
+msgstr "מתבצע תשאול מול {device} עם {app}"
 
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
-msgstr ""
+msgstr "מערכת הקבצים {partition} ({filesystem}) מתרחבת. זה עלול לקחת זמן מה…"
 
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
-msgstr ""
+msgstr "שינוי גודל המחיצה {partition} ({filesystem}) נכשל: {msg}"
 
 msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
 msgstr ""
+"תשתית מערכת הקבצים NTFS של {ntfs_device} הותאמה בהצלחה בעזרת הערכים מתוך "
+"{geometry_source}"
 
 msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
-msgstr ""
+msgstr "התאמת תשתית מערכת הקבצים של {ntfs_device} מסוג NTFS נכשלה"
 
 msgid "Removing udev MAC address records (if any)"
-msgstr ""
+msgstr "רשומות כתובות MAC נמחקות מה־udev (אם קיימות)"
 
 msgid "Re-installing syslinux (if any)"
-msgstr ""
+msgstr "syslinux מותקן מחדש (אם קיים)"
 
 msgid "Successfully re-installed syslinux bootloader"
-msgstr ""
+msgstr "מנהל האתחול syslinux הותקן מחדש בהצלחה"
 
 msgid "Re-installing GRUB bootloader (if any)"
-msgstr ""
+msgstr "מנהל האתחול GRUB יותקן מחדש (אם קיים)"
 
 msgid "Successfully re-installed GRUB bootloader"
-msgstr ""
+msgstr "מנהל האתחול GRUB הותקן מחדש בהצלחה"
 
 msgid "Did not update GRUB bootloader (if any)"
-msgstr ""
+msgstr "מנהל האתחול GRUB לא עודכן (אם קיים)"
 
 msgid "Updating initramfs (if any)"
-msgstr ""
+msgstr "initramfs מעודכן (אם קיים)"
 
 msgid "Successfully updated initramfs"
-msgstr ""
+msgstr "initramfs עודכן בהצלחה"
 
 msgid "Updating EFI NVRAM..."
-msgstr ""
+msgstr "ה־NVRAM של ה־EFI מתעדכן…"
 
 msgid "Successfully updated EFI NVRAM"
-msgstr ""
+msgstr "ה־NVRAM של ה־EFI עודכן בהצלחה"
 
 msgid "Error restoring image: "
-msgstr ""
+msgstr "שחזור קובץ הדמות נתקל בשגיאה: "
 
 msgid "Could not restore sfdisk partition table as file has zero length: "
-msgstr ""
+msgstr "לא ניתן לשחזר את טבלת המחיצות בתצורת sfdisk כיוון שגודל הקובץ הוא אפס: "
 
 msgid "Successfully restored partition table."
-msgstr ""
+msgstr "טבלת המחיצות שוחזרה בהצלחה."
 
 msgid "Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."
 msgstr ""
+"רענון טבלת המחיצות של המכשיר נכשל. פעולה זו יכולה לקרות אם תהליך אחר מנסה "
+"לגשת לטבלת המחיצות."
 
 msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
 msgstr ""
+"לא ניתן לשחזר את המחיצה {destination_partition} כיוון שאין קובץ דמות שמור "
+"שמשויך אל: {description}."
 
 msgid "This may occur if Clonezilla was originally unable to backup this partition."
-msgstr ""
+msgstr "מצב זה יכול לקרות אם ל־Clonezilla לא הייתה אפשרות את המחיצה הזו במקור."
 
 msgid "Error restoring partition {image_key} to {destination_partition}."
-msgstr ""
+msgstr "שחזור המחיצה {image_key} אל {destination_partition} נתקל בשגיאה."
 
 msgid "Successfully restored image partition {image} to {destination_partition}"
-msgstr ""
+msgstr "קובץ דמות המחיצה {image} שוחזר בהצלחה אל {destination_partition}"
 
 msgid "Summary of Restore"
-msgstr ""
+msgstr "סיכום השחזור"
 
 msgid "Restore Summary"
-msgstr ""
+msgstr "סיכום השחזור"
 
 msgid "Confirm the restore summary."
-msgstr ""
+msgstr "סיכום השחזור לאישורך."
 
 msgid "Backup restored successfully."
-msgstr ""
+msgstr "הגיבוי שוחזר בהצלחה."
 
 msgid "Image Explorer\n"
 "      (beta)"
 msgstr ""
+"חוקר קובצי הדמות\n"
+"      (ניסיוני)"
 
 msgid "Image Explorer (beta)"
-msgstr ""
+msgstr "חוקר קובצי הדמות (ניסיוני)"
 
 msgid "Select the image file to explore"
-msgstr ""
+msgstr "נא לבחור את קובץ הדמות לחקירה"
 
 msgid "Step 3: Select Partition to Explore"
-msgstr ""
+msgstr "שלב 3: נא לבחור את המחיצה לחקירה"
 
 msgid "Select the partition to access files from."
-msgstr ""
+msgstr "יש לבחור את המחיצה שלקבצים שלה ברצונך לגשת."
 
 msgid "Click <b>Mount</b> to mount the backup image (as read-only)."
-msgstr ""
+msgstr "לחיצה על <b>עיגון</b> תעגן את קובץ דמות הגיבוי (לקריאה בלבד)."
 
 msgid "Mount"
-msgstr ""
+msgstr "עיגון"
 
 msgid "Mounting as read-only..."
-msgstr ""
+msgstr "מתבצע עיגון לקריאה בלבד…"
 
 msgid "Unmount"
-msgstr ""
+msgstr "ניתוק עיגון"
 
 msgid "Once the partition has been mounted, click <b>Open in file manager</b> to access your files."
 msgstr ""
+"לאחר שהמחיצה עוגנה, יש ללחוץ על <b>פתיחה במנהל הקבצים</b> כדי לגשת לקבצים "
+"שלך."
 
 msgid "Open in file manager"
-msgstr ""
+msgstr "פתיחה במנהל הקבצים"
