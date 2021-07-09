@@ -1,7 +1,8 @@
 # Yaron Shahrabani <sh.yaron@gmail.com>, 2021.
+# Mike Kolesnik <mkolesni@redhat.com>, 2021.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2021-06-23 21:45+0000\n"
+"PO-Revision-Date: 2021-07-09 13:28+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/rescuezilla/"
 "graphical-shutdown/he/>\n"
@@ -10,7 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Weblate 4.7.1-dev\n"
+"X-Generator: Weblate 4.8-dev\n"
 
 msgid "End Session"
 msgstr "סיום ההפעלה"
@@ -19,10 +20,10 @@ msgid "Cancel"
 msgstr "ביטול"
 
 msgid "Shutdown"
-msgstr "כיבוי"
+msgstr "כיבוי המחשב"
 
 msgid "Reboot"
-msgstr "הפעלה מחדש"
+msgstr "הפעלת המחשב מחדש"
 
 msgid "Choose action."
 msgstr "נא לבחור פעולה."

@@ -1,6 +1,7 @@
+# Allan Nordhøy <epost@anotheragency.no>, 2021.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2021-05-20 04:02+0000\n"
+"PO-Revision-Date: 2021-07-09 13:28+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "rescuezilla/graphical-shutdown/nb_NO/>\n"
@@ -8,7 +9,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.8-dev\n"
 
 msgid "End Session"
 msgstr "Sluttfør økt"
@@ -19,6 +20,7 @@ msgstr "Avbryt"
 msgid "Shutdown"
 msgstr "Slå av"
 
+#, fuzzy
 msgid "Reboot"
 msgstr "Start på ny"
 
