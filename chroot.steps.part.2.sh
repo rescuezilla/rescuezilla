@@ -63,6 +63,12 @@ nameserver 8.8.8.8
 nameserver 8.8.4.4
 EOF
 
+# Leave pigz installed in the chroot but revert the system back to regular gzip
+update-alternatives --remove gzip /bin/pigz
+update-alternatives --remove gzip /bin/real_gzip
+
+mv /bin/real_gzip /bin/gzip
+
 rm -rf /tmp/*
 rm -rf /var/lib/apt/lists/????????*
 umount -lf /proc
