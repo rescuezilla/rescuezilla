@@ -36,6 +36,10 @@ git submodule init
 git submodule update --recursive
 # Optional: Build only the standalone deb packages without bothering with the live environment
 make deb
+## Optional : set the configure_mirrors.sh file as executable
+chmod +x configure_mirror.sh
+# run the file - this will isntall netselect and should configure Ubuntu mirrors to be the fastest and closest to you
+sudo ./configure_mirror.sh
 # Optional: Move build environment to RAMDISK for increased build perfomance
 # This process is manual as not everyone will want to do this.
 # First check that your build system has a minimum of 8Gb available ram then
