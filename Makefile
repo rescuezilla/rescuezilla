@@ -10,6 +10,9 @@
 
 BASE_BUILD_DIRECTORY ?= $(shell pwd)/build
 
+# Set threads variable to N-1 cpu cores.
+THREADS = `cat /proc/cpuinfo | grep process | tail -1 | cut -d":" -f2 | cut -d" " -f2`
+
 all: focal
 
 buildscripts = build.sh chroot.steps.part.1.sh chroot.steps.part.2.sh
@@ -58,7 +61,7 @@ sfdisk.v2.20.1.amd64:
 	mkdir --parents $(UTIL_LINUX_BUILD_DIR) $(AMD64_BUILD_DIR)/chroot/usr/sbin/
 	cd $(UTIL_LINUX_BUILD_DIR) && $(SRC_DIR)/autogen.sh
 	cd $(UTIL_LINUX_BUILD_DIR) && $(SRC_DIR)/configure --without-ncurses
-	cd $(UTIL_LINUX_BUILD_DIR) && make
+	cd $(UTIL_LINUX_BUILD_DIR) && make CC='ccache cc' -j $(THREADS)
 	mv $(UTIL_LINUX_BUILD_DIR)/fdisk/sfdisk $(AMD64_BUILD_DIR)/chroot/usr/sbin/sfdisk.v2.20.1.64bit
 
 partclone.restore.v0.2.43.amd64: SRC_DIR=$(shell pwd)/src/third-party/partclone
@@ -83,7 +86,7 @@ partclone.restore.v0.2.43.amd64:
 	# [1] https://free.nchc.org.tw/drbl-core/pool/drbl/dev/
 	# [2] For complete details, see: https://github.com/rescuezilla/rescuezilla/issues/77
 	cd $(PARTCLONE_BUILD_DIR) && $(SRC_DIR)/configure --enable-static --enable-extfs --enable-reiser4 --enable-hfsp --enable-fat --enable-ntfs --enable-btrfs
-	cd $(PARTCLONE_BUILD_DIR) && make
+	cd $(PARTCLONE_BUILD_DIR) && make CC='ccache cc' -j $(THREADS)
 	mv $(PARTCLONE_BUILD_DIR)/src/partclone.restore $(AMD64_BUILD_DIR)/chroot/usr/sbin/partclone.restore.v0.2.43.64bit
 	# FIXME: Building out-of-tree modifies two files in the source directory during the TravisCI docker build (but works fine on a local build)
 	cd $(SRC_DIR) && git checkout -- config.h.in configure
@@ -99,7 +102,7 @@ partclone-utils:
 	cd $(PARTCLONE_UTILS_BUILD_DIR) && autoreconf -i
 	cd $(PARTCLONE_UTILS_BUILD_DIR) && ./configure
 	# Create deb package from a standard Makefile's `make install` using the checkinstall tool (for cleaner uninstall)
-	cd $(PARTCLONE_UTILS_BUILD_DIR) && checkinstall --install=no --pkgname partclone-utils --pkgversion 0.4.2 --pkgrelease 1 --maintainer 'rescuezilla@gmail.com' -D --default  make install
+	cd $(PARTCLONE_UTILS_BUILD_DIR) && checkinstall --install=no --pkgname partclone-utils --pkgversion 0.4.2 --pkgrelease 1 --maintainer 'rescuezilla@gmail.com' -D --default  make CC='ccache cc' -j $(THREADS) install
 	mv $(PARTCLONE_UTILS_BUILD_DIR)/partclone-utils_0.4.2-1_amd64.deb $(AMD64_BUILD_DIR)/chroot/
 
 # Builds partclone-nbd, a competitor project to partclone-utils that's also able to mount partclone images.
@@ -110,7 +113,7 @@ partclone-nbd:
 	mkdir --parents $(PARTCLONE_NBD_BUILD_DIR) $(AMD64_BUILD_DIR)/chroot/
 	cd $(PARTCLONE_NBD_BUILD_DIR) && cmake ${SRC_DIR}
 	# Create deb package from a standard Makefile's `make install` using the checkinstall tool (for cleaner uninstall)
-	cd $(PARTCLONE_NBD_BUILD_DIR) && checkinstall --install=no --pkgname partclone-nbd --pkgversion 0.0.3 --pkgrelease 1 --maintainer 'rescuezilla@gmail.com' -D --default  make install
+	cd $(PARTCLONE_NBD_BUILD_DIR) && checkinstall --install=no --pkgname partclone-nbd --pkgversion 0.0.3 --pkgrelease 1 --maintainer 'rescuezilla@gmail.com' -D --default  make CC='ccache cc' -j $(THREADS) install
 	mv $(PARTCLONE_NBD_BUILD_DIR)/partclone-nbd_0.0.3-1_amd64.deb $(AMD64_BUILD_DIR)/chroot/
 
 clean-build-dir:

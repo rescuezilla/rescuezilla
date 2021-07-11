@@ -27,7 +27,7 @@ sudo apt-get install git-lfs git make sudo \
                      libncursesw5-dev libntfs-3g88 libreadline-gplv2-dev libreadline5 \
                      libreiser4-dev libtinfo-dev libxslt1.1 nilfs-tools ntfs-3g ntfs-3g-dev \
                      quilt sgml-base uuid-dev vmfs-tools xfslibs-dev xfsprogs xml-core \
-                     xsltproc
+                     xsltproc ccache
 
 git lfs clone https://github.com/rescuezilla/rescuezilla
 cd rescuezilla/
