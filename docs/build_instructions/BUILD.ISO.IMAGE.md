@@ -24,10 +24,10 @@ sudo apt-get install git-lfs git make sudo \
                      shim-signed grub-efi-amd64-signed \
                      libtool-bin gawk pkg-config comerr-dev docbook-xsl e2fslibs-dev fuse \
                      libaal-dev libblkid-dev libbsd-dev libext2fs-dev libncurses5-dev \
-                     libncursesw5-dev libntfs-3g88 libreadline-gplv2-dev libreadline5 \
+                     libncursesw5-dev libntfs-3g883 libreadline-gplv2-dev libreadline5 \
                      libreiser4-dev libtinfo-dev libxslt1.1 nilfs-tools ntfs-3g ntfs-3g-dev \
                      quilt sgml-base uuid-dev vmfs-tools xfslibs-dev xfsprogs xml-core \
-                     xsltproc
+                     xsltproc ccache
 
 git lfs clone https://github.com/rescuezilla/rescuezilla
 cd rescuezilla/
@@ -36,6 +36,16 @@ git submodule init
 git submodule update --recursive
 # Optional: Build only the standalone deb packages without bothering with the live environment
 make deb
+# Optional: Move build environment to RAMDISK for increased build perfomance
+# This process is manual as not everyone will want to do this.
+# First check that your build system has a minimum of 8Gb available ram then
+# Make sure you remember to clean the environment copy and ISO produced
+# and move everything back to disk when you are done.
+sudo mount -t tmpfs -o rw,size=7G tmpfs /mnt/ramdisk/
+# Next rsync the working rescuezilla directories into the ramdisk
+# Adjust paths as needed
+rsync -av /home/*USER*/rescuezilla /mnt/ramdisk/
+# cd /mnt/ramdisk/rescuezilla and work from there.
 # Build the amd64 ISO image based on Ubuntu 20.04 (Focal), and the deb files.
 # This should work on Ubuntu or Ubuntu-derived distributions, but is _not_ recommended
 # Debian or Debian-derived environments (see "EFI Secure Boot" section below).
