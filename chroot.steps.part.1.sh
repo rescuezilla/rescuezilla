@@ -48,6 +48,26 @@ ln -s /bin/true /sbin/initctl
 
 perl -p -i -e 's/^set compatible$/set nocompatible/g' /etc/vim/vimrc.tiny
 
+# Make sure that pigz and gzip are installed into the chroot environment
+# 
+pgiz_pkgs=("pigz"
+           "gzip"
+)
+
+apt-get install --yes --no-install-recommends "${pigz_pkgs[@]}"
+if [[ $? -ne 0 ]]; then
+    echo "Error: Failed to install pigz."
+    exit 1
+fi
+
+# Rename gzip binary so we can use pigz transparently.
+mv /bin/gzip /bin/real_gzip
+# Use update-alternatives so the OS can use pigz and fall back to gzip if needed.
+update-alternatives --install /bin/gzip gzip /bin/pigz 100
+update-alternatives --install /bin/gzip gzip /bin/real_gzip 50
+
+# End of pigz back to the regular script
+
 apt-get upgrade --yes
 
 # Ensure initramfs configuration file matches package maintainer's version during
