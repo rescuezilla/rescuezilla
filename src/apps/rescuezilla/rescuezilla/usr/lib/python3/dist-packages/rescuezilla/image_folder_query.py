@@ -24,6 +24,7 @@ from os.path import join, isfile, isdir
 
 import gi
 
+from parser.apart_gtk_image import ApartGtkImage
 from parser.fogproject_image import FogProjectImage
 from parser.foxclone_image import FoxcloneImage
 from parser.fsarchiver_image import FsArchiverImage
@@ -70,6 +71,9 @@ class ImageFolderQuery:
                                                                                                   GdkPixbuf.InterpType.BILINEAR),
             "FSARCHIVER_FORMAT": self.builder.get_object("fsarchiver_placeholder_icon").get_pixbuf().scale_simple(32, 32,
                                                                                                           GdkPixbuf.InterpType.BILINEAR),
+            "APART_GTK_FORMAT": self.builder.get_object("apart_gtk_icon").get_pixbuf().scale_simple(32,
+                                                                                                                  32,
+                                                                                                                  GdkPixbuf.InterpType.BILINEAR),
             "warning": self.builder.get_object("warning_icon").get_pixbuf().scale_simple(32, 32,
                                                                                          GdkPixbuf.InterpType.BILINEAR),
             "padlock": self.builder.get_object("padlock_icon").get_pixbuf().scale_simple(32, 32,
@@ -239,6 +243,18 @@ class ImageFolderQuery:
                                   _("Scanning: {filename}").format(filename=absolute_path))
                     temp_image_dict = {absolute_path: FsArchiverImage(absolute_path, enduser_filename, filename)}
                     error_suffix = ""
+                    self.scanned_folder_set.add(basename)
+                    is_image = True
+                elif ".apt." in absolute_path:
+                    # Apart GTK images within a single folder are combined into one ApartGTKImage instance, so ensure
+                    # the folder hasn't already been scanned.
+                    print("Found Apart GTK image " + filename + " (will include other images in the same folder)")
+                    GLib.idle_add(self.please_wait_popup.set_secondary_label_text,
+                                  _("Scanning: {filename}").format(filename=absolute_path))
+                    temp_image_dict = {absolute_path: ApartGtkImage(absolute_path)}
+                    error_suffix = _("Any other filesystems within the image should be restorable as normal.")
+                    # Only 1 Apart GTK image per folder (which may contain a huge number of images, often of the
+                    # same partition)
                     self.scanned_folder_set.add(basename)
                     is_image = True
                 # If haven't found an image for this file, try scanning for QemuImages. Due to slow scan, do not look

@@ -31,6 +31,7 @@ from time import sleep
 import gi
 
 import utility
+from parser.apart_gtk_image import ApartGtkImage
 from parser.fogproject_image import FogProjectImage
 from parser.foxclone_image import FoxcloneImage
 from parser.fsarchiver_image import FsArchiverImage
@@ -112,7 +113,7 @@ class ImageExplorerManager:
         self.selected_image = selected_image
         if isinstance(self.selected_image, ClonezillaImage) or isinstance(self.selected_image, RedoBackupLegacyImage)\
                 or isinstance(self.selected_image, FogProjectImage) or isinstance(self.selected_image, RedoRescueImage)\
-                or isinstance(self.selected_image, FoxcloneImage):
+                or isinstance(self.selected_image, FoxcloneImage) or isinstance(self.selected_image, ApartGtkImage):
             for image_format_dict_key in self.selected_image.image_format_dict_dict.keys():
                 print("ClonezillaImage contains partition " + image_format_dict_key)
                 if self.selected_image.does_image_key_belong_to_device(image_format_dict_key):
@@ -120,6 +121,9 @@ class ImageExplorerManager:
                         human_friendly_partition_name = image_format_dict_key
                         flat_description = "Logical Volume " + image_format_dict_key + ": "\
                                            + self.selected_image.flatten_partition_string(image_format_dict_key)
+                    elif isinstance(self.selected_image, ApartGtkImage):
+                        human_friendly_partition_name = image_format_dict_key
+                        flat_description = image_format_dict_key + ": " + self.selected_image.flatten_partition_string(image_format_dict_key)
                     else:
                         image_base_device_node, image_partition_number = Utility.split_device_string(
                             image_format_dict_key)
@@ -402,7 +406,7 @@ class ImageExplorerManager:
             image_file_list = []
             if isinstance(self.selected_image, ClonezillaImage) or isinstance(self.selected_image, RedoBackupLegacyImage) \
                     or isinstance(self.selected_image, FogProjectImage) or isinstance(self.selected_image, RedoRescueImage) \
-                    or isinstance(self.selected_image, FoxcloneImage):
+                    or isinstance(self.selected_image, FoxcloneImage) or isinstance(self.selected_image, ApartGtkImage):
                 # Clonezilla images support gzip bzip2 lzo lzma xz lzip lrzip lz4 zstd and uncompressed.
                 if 'absolute_filename_glob_list' not in image.image_format_dict_dict[partition_key].keys():
                     GLib.idle_add(callback, False, "No associated image files found")

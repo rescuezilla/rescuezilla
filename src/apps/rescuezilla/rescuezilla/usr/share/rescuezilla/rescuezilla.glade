@@ -68,6 +68,11 @@
     <property name="can_focus">False</property>
     <property name="pixbuf">fogproject_icon.png</property>
   </object>
+  <object class="GtkImage" id="apart_gtk_icon">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixbuf">apart_gtk_icon.png</property>
+  </object>
   <object class="GtkImage" id="foxclone_icon">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
