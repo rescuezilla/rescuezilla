@@ -45,6 +45,7 @@ Rescuezilla has been translated into the following languages:
 * Español (es-ES)
 * Français (fr-FR)
 * Italiano (it-IT)
+* Bahasa Indonesia (id-ID) (Translation in-progress)
 * עִברִית (he-IL) (Translation complete, available in next release)
 * 日本語 (ja-JP)
 * Norsk Bokmål (nb-NO) (Translation in-progress)
