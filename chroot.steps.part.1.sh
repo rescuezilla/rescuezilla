@@ -120,6 +120,7 @@ lang_codes=(
              "ru"
              "sv"
              "tr"
+             "uk"
              "vi"
              "zh-hans"
              "zh-hant"
