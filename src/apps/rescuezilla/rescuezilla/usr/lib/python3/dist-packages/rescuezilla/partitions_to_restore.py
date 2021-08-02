@@ -22,6 +22,7 @@ import traceback
 
 import gi
 
+from parser.apart_gtk_image import ApartGtkImage
 from parser.fogproject_image import FogProjectImage
 from parser.foxclone_image import FoxcloneImage
 from parser.fsarchiver_image import FsArchiverImage
@@ -303,6 +304,9 @@ class PartitionsToRestore:
                 self.partition_selection_list.append(
                     [fs_key, True, flat_description, dest_partition, flat_description, dest_partition,
                      flat_description])
+        elif isinstance(self.selected_image, ApartGtkImage):
+            # Shouldn't be called because ApartGTK images don't have a partition table
+            print("Error: Images created with apart-gtk don't have partition tables")
 
         for mode in self.mode_list:
             self.destination_partition_combobox_cell_renderer_dict[mode].set_sensitive(False)
@@ -330,11 +334,17 @@ class PartitionsToRestore:
         # Populate image partition selection list (left-hand side column)
         if isinstance(self.selected_image, ClonezillaImage) or isinstance(self.selected_image, RedoBackupLegacyImage) or \
                 isinstance(self.selected_image, FogProjectImage) or isinstance(self.selected_image, RedoRescueImage) or \
-                isinstance(self.selected_image, FoxcloneImage) or isinstance(self.selected_image, MetadataOnlyImage):
+                isinstance(self.selected_image, FoxcloneImage) or isinstance(self.selected_image, ApartGtkImage) or \
+                isinstance(self.selected_image, MetadataOnlyImage):
             for image_format_dict_key in self.selected_image.image_format_dict_dict.keys():
                 if self.selected_image.does_image_key_belong_to_device(image_format_dict_key):
                     if self.selected_image.image_format_dict_dict[image_format_dict_key]['is_lvm_logical_volume']:
                         flat_image_part_description = "Logical Volume " + image_format_dict_key + ": "\
+                                                      + self.selected_image.flatten_partition_string(image_format_dict_key)
+                    elif isinstance(self.selected_image, ApartGtkImage):
+                        # ApartGtkImage may contain multiple partitions, so the key contains the timestamp too. Therefore
+                        # need to make sure the split device string function doesn't get called
+                        flat_image_part_description = image_format_dict_key + ": "\
                                                       + self.selected_image.flatten_partition_string(image_format_dict_key)
                     else:
                         image_base_device_node, image_partition_number = Utility.split_device_string(image_format_dict_key)
