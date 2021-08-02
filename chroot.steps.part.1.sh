@@ -103,6 +103,37 @@ pkgs_specific_to_ubuntu2104_hirsute=(
                        "nbdkit"
 )
 
+# Languages on the system
+lang_codes=(
+             "da"
+             "de"
+             "el"
+             "es"
+             "fr"
+             "id"
+             "it"
+             "he"
+             "ja"
+             "nb"
+             "pl"
+             "pt"
+             "ru"
+             "sv"
+             "tr"
+             "vi"
+             "zh-hans"
+             "zh-hant"
+)
+
+# Prepare list of language packs to install
+language_pack_gnome_base_pkgs=()
+firefox_locale_pkgs=()
+for lang in "${lang_codes[@]}"
+do
+     firefox_locale_pkgs+=("firefox-locale-$lang")
+     language_pack_gnome_base_pkg+=("language-pack-gnome-$lang-base")
+done
+
 # Packages common to both  32-bit and 64-bit build
 # TODO: Documentation each package with why these particular packages are present,
 # TODO: and what they do.
@@ -127,24 +158,7 @@ common_pkgs=("discover"
              #"gvfs-backends"
              #"gvfs-fuse"
              "firefox"
-             "firefox-locale-fr"
-             "firefox-locale-da"
-             "firefox-locale-de"
-             "firefox-locale-es"
-             "firefox-locale-he"
-             "firefox-locale-pt"
-             "firefox-locale-pl"
-             "firefox-locale-id"
-             "firefox-locale-it"
-             "firefox-locale-el"
-             "firefox-locale-ja"
-             "firefox-locale-sv"
-             "firefox-locale-tr"
-             "firefox-locale-ru"
-             "firefox-locale-nb"
-             "firefox-locale-vi"
-             "firefox-locale-zh-hans"
-             "firefox-locale-zh-hant"
+             "${firefox_locale_pkgs[@]}"
               # Japanese font
              "fonts-takao-mincho"
              "ibus-anthy"
@@ -213,24 +227,7 @@ common_pkgs=("discover"
              "udftools"
              "grub-pc-bin"
              "grub2-common"
-             "language-pack-gnome-fr-base"
-             "language-pack-gnome-da-base"
-             "language-pack-gnome-de-base"
-             "language-pack-gnome-es-base"
-             "language-pack-gnome-he-base"
-             "language-pack-gnome-pt-base"
-             "language-pack-gnome-pl-base"
-             "language-pack-gnome-id-base"
-             "language-pack-gnome-it-base"
-             "language-pack-gnome-el-base"
-             "language-pack-gnome-ja-base"
-             "language-pack-gnome-sv-base"
-             "language-pack-gnome-zh-hans"
-             "language-pack-gnome-zh-hant"
-             "language-pack-gnome-tr-base"
-             "language-pack-gnome-ru-base"
-             "language-pack-gnome-nb-base"
-             "language-pack-gnome-vi-base"
+             "${language_pack_gnome_base_pkg[@]}"
              "qemu-utils"
              "xfce4-screenshooter"
 )
