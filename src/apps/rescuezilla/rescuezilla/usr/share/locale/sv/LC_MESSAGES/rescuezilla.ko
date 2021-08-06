@@ -6,13 +6,14 @@
 #
 # OerjanS <oerjan.snell@gmail.com>, 2021.
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021.
+# Allan Nordhøy <epost@anotheragency.no>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2021-06-11 07:17+0000\n"
-"Last-Translator: OerjanS <oerjan.snell@gmail.com>\n"
+"PO-Revision-Date: 2021-08-06 05:34+0000\n"
+"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/sv/>\n"
 "Language: sv\n"
@@ -20,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.8-dev\n"
 
 msgid "Welcome"
 msgstr "Välkommen"
@@ -657,7 +658,7 @@ msgid "Probing {device} with {app}"
 msgstr "Undersöker {device} med {app}"
 
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
-msgstr "Växande filsystem {partition} ({filesystem}). Det här kan ta ett tag..."
+msgstr "Växer filsystem {partition} ({filesystem}). Det här kan ta ett tag..."
 
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
 msgstr ""
