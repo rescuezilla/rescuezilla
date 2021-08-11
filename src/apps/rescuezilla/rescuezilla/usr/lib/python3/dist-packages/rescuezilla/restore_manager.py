@@ -256,11 +256,11 @@ class RestoreManager:
         # Stop the Logical Volume Manager (LVM)
         failed_logical_volume_list, failed_volume_group_list = Lvm.shutdown_lvm2(self.builder, self.logger)
         for failed_volume_group in failed_volume_group_list:
-            message = "Failed to shutdown Logical Volume Manager (LVM) Volume Group (VG): " + failed_volume_group[0] + "\n\n" + failed_volume_group[1].stderr
+            message = "Failed to shutdown Logical Volume Manager (LVM) Volume Group (VG): " + failed_volume_group[0] + "\n\n" + failed_volume_group[1]
             return False, message
 
         for failed_logical_volume in failed_logical_volume_list:
-            message = "Failed to shutdown Logical Volume Manager (LVM) Logical Volume (LV): " + failed_logical_volume[0] + "\n\n" + failed_logical_volume[1].stderr
+            message = "Failed to shutdown Logical Volume Manager (LVM) Logical Volume (LV): " + failed_logical_volume[0] + "\n\n" + failed_logical_volume[1]
             return False, message
         return True, ""
 

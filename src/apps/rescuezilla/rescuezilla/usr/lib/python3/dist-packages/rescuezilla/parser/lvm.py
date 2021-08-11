@@ -125,6 +125,7 @@ class Lvm:
     @staticmethod
     def shutdown_lvm2(builder, logger):
         print("Shutting down the Logical Volume Manager (LVM)")
+        # Using list here because its doesn't appear to be guaranteed that the keys are unique
         failed_lv_shutdown_list = []
         failed_vg_shutdown_list = []
         # Shutdown logical volumes
@@ -154,7 +155,7 @@ class Lvm:
                             lvchange_process, flat_command_string, failed_message = Utility.run(
                                 "Shutting down logical volume: " + to_shutdown_lv, lvchange_cmd_list, use_c_locale=True, logger=logger)
                             if lvchange_process.returncode != 0:
-                                failed_lv_shutdown_list.append([to_shutdown_lv, lvchange_process])
+                                failed_lv_shutdown_list.append([to_shutdown_lv, failed_message])
 
         # Shutdown volume groups
         vgs_dict = Lvm.get_volume_group_state_dict(logger)
@@ -180,7 +181,7 @@ class Lvm:
                             vgchange_process, flat_command_string, failed_message = Utility.run(
                                 "Shutting down volume group: " + to_shutdown_vg, vgchange_cmd_list, use_c_locale=True, logger=logger)
                             if vgchange_process.returncode != 0:
-                                failed_vg_shutdown_list.append([to_shutdown_vg, vgchange_process])
+                                failed_vg_shutdown_list.append([to_shutdown_vg, failed_message])
 
         # Checking if volume groups shutdown correctly
         vgs_dict = Lvm.get_volume_group_state_dict(logger)
