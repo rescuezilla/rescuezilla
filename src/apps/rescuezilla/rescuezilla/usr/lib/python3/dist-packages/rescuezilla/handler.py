@@ -373,11 +373,16 @@ class Handler:
                 elif self.current_page == Page.BACKUP_IMAGE_NAME_SELECTION:
                     selected_directory = self.builder.get_object("backup_folder_label").get_text()
                     folder_name = self.builder.get_object("backup_name").get_text()
-                    self.dest_dir = os.path.join(selected_directory, folder_name)
-                    self.backup_notes = self.builder.get_object("backup_notes").get_text()
-                    print ("going to write to" + str(self.dest_dir))
-                    self.current_page = Page.BACKUP_COMPRESSION_CUSTOMIZATION
-                    self.builder.get_object("backup_tabs").set_current_page(5)
+                    dest_dir = os.path.join(selected_directory, folder_name)
+                    if os.path.exists(dest_dir):
+                        # TODO: Find best wording, then add to translation files
+                        error = ErrorMessageModalPopup(self.builder, "There already exists a folder with the same name: {folder}\n\nPlease select a different name for the backup image.".format(folder=folder_name))
+                    else:
+                        print("User selected: " + dest_dir)
+                        self.dest_dir = dest_dir
+                        self.backup_notes = self.builder.get_object("backup_notes").get_text()
+                        self.current_page = Page.BACKUP_COMPRESSION_CUSTOMIZATION
+                        self.builder.get_object("backup_tabs").set_current_page(5)
                 elif self.current_page == Page.BACKUP_COMPRESSION_CUSTOMIZATION:
                     self.compression_dict = self.get_compression_dict()
                     self.confirm_backup_configuration()
