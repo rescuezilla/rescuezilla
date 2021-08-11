@@ -1,27 +1,29 @@
 # Artem <KovalevArtem.ru@gmail.com>, 2021.
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021.
+# Reza Almanda <rezaalmanda27@gmail.com>, 2021.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2021-06-08 11:15+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2021-08-03 13:32+0000\n"
+"Last-Translator: Reza Almanda <rezaalmanda27@gmail.com>\n"
+"Language-Team: Indonesian <https://hosted.weblate.org/projects/rescuezilla/"
+"graphical-shutdown/id/>\n"
 "Language: id\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.8-dev\n"
 
 msgid "End Session"
-msgstr ""
+msgstr "Akhiri Sesi"
 
 msgid "Cancel"
 msgstr ""
 
 msgid "Shutdown"
-msgstr ""
+msgstr "Matikan"
 
 msgid "Reboot"
 msgstr ""
 
 msgid "Choose action."
-msgstr ""
+msgstr "Pilih tindakan."
