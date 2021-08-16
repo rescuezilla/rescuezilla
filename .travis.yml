@@ -37,6 +37,8 @@ script:
 - git clean -dfX && git clean -dfx
   # DANGER: Do *not* use this on your working dir
 - git reset --hard HEAD
+  # Runs unit tests
+- docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make test
   # List any working directory files to help debug any unclean working directory issues
 - docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make status
   # Execute the Makefile's hirsute target within the docker container. This step

@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := focal
-.PHONY: all focal hirsute i386 deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-utils partclone-nbd install clean-build-dir clean clean-all
+.PHONY: all focal hirsute i386 deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-utils partclone-nbd install test clean-build-dir clean clean-all
 
 # FIXME: Properly specify the build artifacts to allow the GNU make to actually be smart about what gets built and when.
 # FIXME: This lack of specifying dependency graph means requires eg, `make focal` and `make hirsute` has to be done as separate invocations
@@ -138,6 +138,10 @@ install: BASE_BUILD_DIR=$(shell pwd)/build/deb/
 install: partclone-nbd deb
 	DEBIAN_FRONTEND=noninteractive gdebi --non-interactive $(AMD64_BUILD_DIR)/chroot/partclone-nbd_0.0.3-1_amd64.deb
 	DEBIAN_FRONTEND=noninteractive gdebi --non-interactive $(BASE_BUILD_DIR)/../rescuezilla_*.deb
+
+test: RESCUEZILLA_TEST_DIR=$(shell pwd)/src/apps/rescuezilla/rescuezilla/usr/lib/python3/dist-packages/rescuezilla
+test:
+	python3 -m unittest discover -s $(RESCUEZILLA_TEST_DIR) -p 'test_*.py'
 
 clean: clean-build-dir
 	$(info )
