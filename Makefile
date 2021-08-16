@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := focal
-.PHONY: all focal hirsute i386 deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-utils partclone-nbd clean-build-dir clean clean-all
+.PHONY: all focal hirsute i386 deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-utils partclone-nbd install clean-build-dir clean clean-all
 
 # FIXME: Properly specify the build artifacts to allow the GNU make to actually be smart about what gets built and when.
 # FIXME: This lack of specifying dependency graph means requires eg, `make focal` and `make hirsute` has to be done as separate invocations
@@ -90,7 +90,7 @@ partclone-utils: SRC_DIR=$(shell pwd)/src/third-party/partclone-utils
 partclone-utils: AMD64_BUILD_DIR=$(shell pwd)/build/$(CODENAME).$(ARCH)
 partclone-utils: PARTCLONE_UTILS_BUILD_DIR=$(AMD64_BUILD_DIR)/partclone-utils
 partclone-utils:
-	mkdir --parents $(PARTCLONE_UTILS_BUILD_DIR)
+	mkdir --parents $(PARTCLONE_UTILS_BUILD_DIR) $(AMD64_BUILD_DIR)/chroot/
 	# FIXME: Want to build out-of-tree (in a build folder), but autotools doesn't make this easy like CMake, so copy the entire source folder to be the build folder.
 	cp -r $(SRC_DIR)/* $(PARTCLONE_UTILS_BUILD_DIR)
 	cd $(PARTCLONE_UTILS_BUILD_DIR) && autoreconf -i
@@ -104,7 +104,7 @@ partclone-nbd: SRC_DIR=$(shell pwd)/src/third-party/partclone-nbd
 partclone-nbd: AMD64_BUILD_DIR=$(shell pwd)/build/$(CODENAME).$(ARCH)
 partclone-nbd: PARTCLONE_NBD_BUILD_DIR=$(AMD64_BUILD_DIR)/partclone-nbd
 partclone-nbd:
-	mkdir --parents $(PARTCLONE_NBD_BUILD_DIR)
+	mkdir --parents $(PARTCLONE_NBD_BUILD_DIR) $(AMD64_BUILD_DIR)/chroot/
 	cd $(PARTCLONE_NBD_BUILD_DIR) && cmake ${SRC_DIR}
 	# Create deb package from a standard Makefile's `make install` using the checkinstall tool (for cleaner uninstall)
 	cd $(PARTCLONE_NBD_BUILD_DIR) && checkinstall --install=no --pkgname partclone-nbd --pkgversion 0.0.3 --pkgrelease 1 --maintainer 'rescuezilla@gmail.com' -D --default  make install
@@ -131,6 +131,13 @@ status:
 	cd $(UTIL_LINUX_SRC_DIR) && git status
 	$(info * partclone git submodule status.)
 	cd $(PARTCLONE_SRC_DIR) && git status
+
+install: AMD64_BUILD_DIR=$(shell pwd)/build/$(CODENAME).$(ARCH)
+install: PARTCLONE_NBD_BUILD_DIR=$(AMD64_BUILD_DIR)/partclone-nbd
+install: BASE_BUILD_DIR=$(shell pwd)/build/deb/
+install: partclone-nbd deb
+	DEBIAN_FRONTEND=noninteractive gdebi --non-interactive $(AMD64_BUILD_DIR)/chroot/partclone-nbd_0.0.3-1_amd64.deb
+	DEBIAN_FRONTEND=noninteractive gdebi --non-interactive $(BASE_BUILD_DIR)/../rescuezilla_*.deb
 
 clean: clean-build-dir
 	$(info )
