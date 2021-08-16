@@ -21,7 +21,7 @@ import unittest
 from parser.lsblk import Lsblk
 
 
-class BlkidTest(unittest.TestCase):
+class LsblkTest(unittest.TestCase):
     def test_lsblk_json_parsing(self):
         # The output of `sudo lsblk -o KNAME,NAME,SIZE,TYPE,FSTYPE,MOUNTPOINT,MODEL --paths --bytes --json` is superior
         # to what is used by the Clonezilla format in the unit test below:
@@ -85,23 +85,23 @@ sde2  ├─sde2   244M part ext2
 sde3  └─sde3   7.3G part crypto_LUKS
 sr0   sr0    764.4M rom  iso9660     /cdrom     VBOX_CD-ROM"""
         lsblk_dict = Lsblk.parse_lsblk_output(input_lsblk_string)
-        expected_lsblk_dict = collections.OrderedDict([('loop0', {'name': 'loop0', 'size': '663M', 'type': 'loop', 'fstype': 'squashfs', 'mountpoint': '/rofs', 'model': ''}),
-                                                       ('sda', {'name': 'sda', 'size': '32G', 'type': 'disk', 'fstype': '', 'mountpoint': '', 'model': 'VBOX_HARDDISK'}),
-                                                       ('sdb', {'name': 'sdb', 'size': '1G', 'type': 'disk', 'fstype': '', 'mountpoint': '', 'model': 'VBOX_HARDDISK'}),
-                                                       ('sdc', {'name': 'sdc', 'size': '2G', 'type': 'disk', 'fstype': '', 'mountpoint': '', 'model': 'VBOX_HARDDISK'}),
-                                                       ('sdc1', {'name': 'sdc1', 'size': '61M', 'type': 'part', 'fstype': 'ext4', 'mountpoint': '', 'model': ''}),
-                                                       ('sdc2', {'name': 'sdc2', 'size': '115M', 'type': 'part', 'fstype': 'vfat', 'mountpoint': '', 'model': ''}),
-                                                       ('sdc3', {'name': 'sdc3', 'size': '116M', 'type': 'part', 'fstype': 'ntfs', 'mountpoint': '', 'model': ''}),
-                                                       ('sdc4', {'name': 'sdc4', 'size': '32M', 'type': 'part', 'fstype': 'xfs', 'mountpoint': '', 'model': ''}),
-                                                       ('sdc5', {'name': 'sdc5', 'size': '190M', 'type': 'part', 'fstype': 'reiser4', 'mountpoint': '', 'model': ''}),
-                                                       ('sdc6', {'name': 'sdc6', 'size': '46M', 'type': 'part', 'fstype': 'hfsplus', 'mountpoint': '', 'model': ''}),
-                                                       ('sdc7', {'name': 'sdc7', 'size': '33M', 'type': 'part', 'fstype': 'swap', 'mountpoint': '', 'model': ''}),
-                                                       ('sdc8', {'name': 'sdc8', 'size': '1.4G', 'type': 'part', 'fstype': 'ntfs', 'mountpoint': '', 'model': ''}),
-                                                       ('sdd', {'name': 'sdd', 'size': '3G', 'type': 'disk', 'fstype': '', 'mountpoint': '', 'model': 'VBOX_HARDDISK'}),
-                                                       ('sde', {'name': 'sde', 'size': '8G', 'type': 'disk', 'fstype': '', 'mountpoint': '', 'model': 'VBOX_HARDDISK'}),
-                                                       ('sde1', {'name': 'sde1', 'size': '512M', 'type': 'part', 'fstype': 'vfat', 'mountpoint': '', 'model': ''}),
-                                                       ('sde2', {'name': 'sde2', 'size': '244M', 'type': 'part', 'fstype': 'ext2', 'mountpoint': '', 'model': ''}),
-                                                       ('sde3', {'name': 'sde3', 'size': '7.3G', 'type': 'part', 'fstype': 'crypto_LUKS', 'mountpoint': '', 'model': ''}),
-                                                       ('sr0', {'name': 'sr0', 'size': '764.4M', 'type': 'rom', 'fstype': 'iso9660', 'mountpoint': '/cdrom', 'model': 'VBOX_CD-ROM'})])
+        expected_lsblk_dict = collections.OrderedDict([('loop0', {'kname': 'loop0', 'size': '663M', 'type': 'loop', 'fstype': 'squashfs', 'mountpoint': '/rofs', 'model': ''}),
+                                                       ('sda', {'kname': 'sda', 'size': '32G', 'type': 'disk', 'fstype': '', 'mountpoint': '', 'model': 'VBOX_HARDDISK'}),
+                                                       ('sdb', {'kname': 'sdb', 'size': '1G', 'type': 'disk', 'fstype': '', 'mountpoint': '', 'model': 'VBOX_HARDDISK'}),
+                                                       ('sdc', {'kname': 'sdc', 'size': '2G', 'type': 'disk', 'fstype': '', 'mountpoint': '', 'model': 'VBOX_HARDDISK'}),
+                                                       ('sdc1', {'kname': 'sdc1', 'size': '61M', 'type': 'part', 'fstype': 'ext4', 'mountpoint': '', 'model': ''}),
+                                                       ('sdc2', {'kname': 'sdc2', 'size': '115M', 'type': 'part', 'fstype': 'vfat', 'mountpoint': '', 'model': ''}),
+                                                       ('sdc3', {'kname': 'sdc3', 'size': '116M', 'type': 'part', 'fstype': 'ntfs', 'mountpoint': '', 'model': ''}),
+                                                       ('sdc4', {'kname': 'sdc4', 'size': '32M', 'type': 'part', 'fstype': 'xfs', 'mountpoint': '', 'model': ''}),
+                                                       ('sdc5', {'kname': 'sdc5', 'size': '190M', 'type': 'part', 'fstype': 'reiser4', 'mountpoint': '', 'model': ''}),
+                                                       ('sdc6', {'kname': 'sdc6', 'size': '46M', 'type': 'part', 'fstype': 'hfsplus', 'mountpoint': '', 'model': ''}),
+                                                       ('sdc7', {'kname': 'sdc7', 'size': '33M', 'type': 'part', 'fstype': 'swap', 'mountpoint': '', 'model': ''}),
+                                                       ('sdc8', {'kname': 'sdc8', 'size': '1.4G', 'type': 'part', 'fstype': 'ntfs', 'mountpoint': '', 'model': ''}),
+                                                       ('sdd', {'kname': 'sdd', 'size': '3G', 'type': 'disk', 'fstype': '', 'mountpoint': '', 'model': 'VBOX_HARDDISK'}),
+                                                       ('sde', {'kname': 'sde', 'size': '8G', 'type': 'disk', 'fstype': '', 'mountpoint': '', 'model': 'VBOX_HARDDISK'}),
+                                                       ('sde1', {'kname': 'sde1', 'size': '512M', 'type': 'part', 'fstype': 'vfat', 'mountpoint': '', 'model': ''}),
+                                                       ('sde2', {'kname': 'sde2', 'size': '244M', 'type': 'part', 'fstype': 'ext2', 'mountpoint': '', 'model': ''}),
+                                                       ('sde3', {'kname': 'sde3', 'size': '7.3G', 'type': 'part', 'fstype': 'crypto_LUKS', 'mountpoint': '', 'model': ''}),
+                                                       ('sr0', {'kname': 'sr0', 'size': '764.4M', 'type': 'rom', 'fstype': 'iso9660', 'mountpoint': '/cdrom', 'model': 'VBOX_CD-ROM'})])
 
         self.assertDictEqual(expected_lsblk_dict, lsblk_dict)
