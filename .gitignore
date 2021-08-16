@@ -5,3 +5,4 @@ pkg.cache/*
 /**/*#
 /**/*.swp
 /**/__pycache__
+/**/*.pyc
