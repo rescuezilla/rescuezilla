@@ -33,7 +33,7 @@ from utility import Utility, _
 # Sourceforge forum creating several forks [1]. Each of the forks have their own quirks and bugs.
 #
 # To unify all the Redo Backup and Recovery forks under the Rescuezilla banner, and provide the best end-user
-# experience, all Redo Backup and Recovery formats are supported as far as practical.
+# experience, all Redo Backup and Recovery formats are supported.
 #
 # Redo Backup and Recovery only supported /dev/sdX device nodes, and Rescuezilla 1.0.5 images supported /dev/sdX and
 # /dev/nvmeAnBp3 nodes
