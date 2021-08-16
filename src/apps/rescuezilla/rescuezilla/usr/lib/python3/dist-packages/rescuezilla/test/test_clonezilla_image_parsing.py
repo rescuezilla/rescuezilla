@@ -18,6 +18,7 @@
 import unittest
 
 from parser.clonezilla_image import ClonezillaImage
+from utility import Utility
 
 
 class ClonezillaImageParsingTest(unittest.TestCase):
@@ -50,13 +51,13 @@ sectors=2"""
         self.assertEqual(dev_fs_dict, expected_dict)
 
     def test_compression_detection(self):
-        self.assertEqual("gzip", ClonezillaImage.extract_image_compression_from_file_utility("sdf1.dd-ptcl-img.gz.aa: gzip compressed data, max speed, from Unix, original size modulo 2^32 268435456 gzip compressed data, reserved method, from FAT filesystem (MS-DOS, OS/2, NT), original size modulo 2^32 268435456"))
-        self.assertEqual("bzip2", ClonezillaImage.extract_image_compression_from_file_utility("sdd1.ext4-ptcl-img.bz2.aa: bzip2 compressed data, block size = 300k"))
-        self.assertEqual("lzo", ClonezillaImage.extract_image_compression_from_file_utility("sdb1.ext4-ptcl-img.lzo.aa: lzop compressed data - version 1.040, LZO1X-1, os: Unix"))
-        self.assertEqual("lzma", ClonezillaImage.extract_image_compression_from_file_utility("sdd1.ext4-ptcl-img.lzma.aa: LZMA compressed data, streamed"))
-        self.assertEqual("xz", ClonezillaImage.extract_image_compression_from_file_utility("sdb1.ext4-ptcl-img.xz.aa: XZ compressed data:"))
-        self.assertEqual("lzip", ClonezillaImage.extract_image_compression_from_file_utility("sdb1.ext4-ptcl-img.lzip.aa: lzip compressed data, version: 1"))
-        self.assertEqual("lrzip", ClonezillaImage.extract_image_compression_from_file_utility("sdb1.ext4-ptcl-img.lrz.aa: LRZIP compressed data - version 0.6"))
-        self.assertEqual("lz4", ClonezillaImage.extract_image_compression_from_file_utility("sdb1.ext4-ptcl-img.lz4.aa: LZ4 compressed data (v1.4+)"))
-        self.assertEqual("zstd", ClonezillaImage.extract_image_compression_from_file_utility("sdb1.ext4-ptcl-img.zst.aa: Zstandard compressed data (v0.8+), Dictionary ID: None"))
-        self.assertEqual("uncompressed", ClonezillaImage.extract_image_compression_from_file_utility("sdb1.ext4-ptcl-img.uncomp.aa: data"))
+        self.assertEqual("gzip", Utility.extract_image_compression_from_file_utility("sdf1.dd-ptcl-img.gz.aa: gzip compressed data, max speed, from Unix, original size modulo 2^32 268435456 gzip compressed data, reserved method, from FAT filesystem (MS-DOS, OS/2, NT), original size modulo 2^32 268435456"))
+        self.assertEqual("bzip2", Utility.extract_image_compression_from_file_utility("sdd1.ext4-ptcl-img.bz2.aa: bzip2 compressed data, block size = 300k"))
+        self.assertEqual("lzo", Utility.extract_image_compression_from_file_utility("sdb1.ext4-ptcl-img.lzo.aa: lzop compressed data - version 1.040, LZO1X-1, os: Unix"))
+        self.assertEqual("lzma", Utility.extract_image_compression_from_file_utility("sdd1.ext4-ptcl-img.lzma.aa: LZMA compressed data, streamed"))
+        self.assertEqual("xz", Utility.extract_image_compression_from_file_utility("sdb1.ext4-ptcl-img.xz.aa: XZ compressed data:"))
+        self.assertEqual("lzip", Utility.extract_image_compression_from_file_utility("sdb1.ext4-ptcl-img.lzip.aa: lzip compressed data, version: 1"))
+        self.assertEqual("lrzip", Utility.extract_image_compression_from_file_utility("sdb1.ext4-ptcl-img.lrz.aa: LRZIP compressed data - version 0.6"))
+        self.assertEqual("lz4", Utility.extract_image_compression_from_file_utility("sdb1.ext4-ptcl-img.lz4.aa: LZ4 compressed data (v1.4+)"))
+        self.assertEqual("zstd", Utility.extract_image_compression_from_file_utility("sdb1.ext4-ptcl-img.zst.aa: Zstandard compressed data (v0.8+), Dictionary ID: None"))
+        self.assertEqual("uncompressed", Utility.extract_image_compression_from_file_utility("sdb1.ext4-ptcl-img.uncomp.aa: data"))
