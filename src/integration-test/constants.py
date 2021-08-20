@@ -23,6 +23,9 @@ from pathlib import Path
 HOST_SHARED_FOLDER = "/mnt/rescuezilla.shared.folder"
 VIRTUAL_BOX_FOLDER = os.path.join(Path.home(), "VirtualBox VMs/Rescuezilla.Integration.Test.Suite.VDIs")
 
+# Note: VirtualBox doesn't provide any way to create a specific interface. It create increments until the first unused interface
+VIRTUAL_BOX_HOSTONLYIFS="vboxnet0"
+
 DRIVE_DICT = {
     'image.repository': {'size_gigabyte': 12*1024, 'uuid': "00000000-0000-0000-0000-000000000001"},
     '1gb': {'size_gigabyte': 1, 'uuid': "11111111-1111-1111-1111-111111111111"},
@@ -37,21 +40,21 @@ DRIVE_DICT = {
 
 MACHINE_DICT = {"Rescuezilla.Development": {
     'hd_list': ['image.repository', '1gb', '2gb', '8gb', '16gb', '50gb', '2tb.primary', '2tb.secondary',
-                '1.9tb']},
+                '1.9tb'], 'ip': "192.168.60.2"},
     "Rescuezilla.Integration.Test.Suite.Controller": {
         'hd_list': ['image.repository', '1gb', '2gb', '8gb', '16gb', '50gb', '2tb.primary', '2tb.secondary',
-                    '1.9tb']},
-    "Rescuezilla.8gb.MBR": {'hd_list': ['8gb']},
-    "Rescuezilla.8gb.GPT": {'hd_list': ['8gb']},
-    "Rescuezilla.16gb.MBR": {'hd_list': ['16gb']},
-    "Rescuezilla.50gb.MBR": {'hd_list': ['50gb']},
-    "Rescuezilla.50gb.GPT": {'hd_list': ['50gb']},
-    "Rescuezilla.2tb.Primary.MBR": {'hd_list': ['2tb.primary']},
-    "Rescuezilla.2tb.Primary.GPT": {'hd_list': ['2tb.primary']},
-    "Rescuezilla.2tb.Secondary.MBR": {'hd_list': ['2tb.secondary']},
-    "Rescuezilla.2tb.Secondary.GPT": {'hd_list': ['2tb.secondary']},
-    "Rescuezilla.1.9tb.MBR": {'hd_list': ['1.9tb']},
-    "Rescuezilla.1.9tb.GPT": {'hd_list': ['1.9tb']}
+                    '1.9tb'], 'ip': "192.168.60.3"},
+    "Rescuezilla.8gb.MBR": {'hd_list': ['8gb'], 'ip': "192.168.60.100"},
+    "Rescuezilla.8gb.GPT": {'hd_list': ['8gb'], 'ip': "192.168.60.101"},
+    "Rescuezilla.16gb.MBR": {'hd_list': ['16gb'], 'ip': "192.168.60.102"},
+    "Rescuezilla.50gb.MBR": {'hd_list': ['50gb'], 'ip': "192.168.60.103"},
+    "Rescuezilla.50gb.GPT": {'hd_list': ['50gb'], 'ip': "192.168.60.104"},
+    "Rescuezilla.2tb.Primary.MBR": {'hd_list': ['2tb.primary'], 'ip': "192.168.60.105"},
+    "Rescuezilla.2tb.Primary.GPT": {'hd_list': ['2tb.primary'], 'ip': "192.168.60.106"},
+    "Rescuezilla.2tb.Secondary.MBR": {'hd_list': ['2tb.secondary'], 'ip': "192.168.60.107"},
+    "Rescuezilla.2tb.Secondary.GPT": {'hd_list': ['2tb.secondary'], 'ip': "192.168.60.108"},
+    "Rescuezilla.1.9tb.MBR": {'hd_list': ['1.9tb'], 'ip': "192.168.60.109"},
+    "Rescuezilla.1.9tb.GPT": {'hd_list': ['1.9tb'], 'ip': "192.168.60.110"}
 }
 
 # Preprepared VDI images that can be copied in, for ease of testing.

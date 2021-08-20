@@ -28,7 +28,8 @@ import sys
 from pathlib import Path
 from time import sleep
 
-from constants import DRIVE_DICT, MACHINE_DICT, VIRTUAL_BOX_FOLDER, DEPLOY_DICT, HOST_SHARED_FOLDER
+from constants import DRIVE_DICT, MACHINE_DICT, VIRTUAL_BOX_FOLDER, DEPLOY_DICT, VIRTUAL_BOX_HOSTONLYIFS, \
+    HOST_SHARED_FOLDER
 
 
 # Create VMs
@@ -38,6 +39,24 @@ def initialize_vms(hd_key_list, machine_key_list):
         print("First create it with: sudo mkdir " + HOST_SHARED_FOLDER)
         exit()
 
+    print("Removing host-only interface: " + VIRTUAL_BOX_HOSTONLYIFS)
+    remove_hostonlyif_cmd_list = ["VBoxManage", "hostonlyif", "remove", VIRTUAL_BOX_HOSTONLYIFS]
+    subprocess.run(remove_hostonlyif_cmd_list, encoding='utf-8')
+
+    print("Add new host-only interface, which will automatically populate lowest free interface, ie " + VIRTUAL_BOX_HOSTONLYIFS)
+    hostonlyif_create_cmd_list = ["VBoxManage", "hostonlyif", "create"]
+    subprocess.run(hostonlyif_create_cmd_list, encoding='utf-8')
+
+    print("Set IP address on VirtualBox DHCP server" + VIRTUAL_BOX_HOSTONLYIFS)
+    hostonlyif_create_cmd_list = ["VBoxManage", "hostonlyif", "ipconfig", VIRTUAL_BOX_HOSTONLYIFS, "--ip", "192.168.60.1", "--netmask", "255.255.255.0"]
+    subprocess.run(hostonlyif_create_cmd_list, encoding='utf-8')
+
+    print("Add dhcp server on interface: " + VIRTUAL_BOX_HOSTONLYIFS)
+    add_dhcp_server_cmd_list = ["VBoxManage", "dhcpserver", "add", "--interface", VIRTUAL_BOX_HOSTONLYIFS,
+                                "--server-ip", "192.168.60.1", "--netmask", "255.255.255.0", "--lower-ip",
+                                "192.168.60.2", "--upper-ip", "192.168.60.200", "--enable"]
+    subprocess.run(add_dhcp_server_cmd_list, encoding='utf-8')
+
     for hd_prefix in hd_key_list:
         create_hd(hd_prefix, DRIVE_DICT[hd_prefix]['size_gigabyte'])
 
@@ -46,6 +65,14 @@ def initialize_vms(hd_key_list, machine_key_list):
 
 
 def deinitialize_vms(hd_key_list, machine_key_list):
+    print("Remove DHCP server associated with host-only interface " + VIRTUAL_BOX_HOSTONLYIFS)
+    remove_dhcpserver_cmd_list = ["VBoxManage", "dhcpserver", "remove", "--interface", VIRTUAL_BOX_HOSTONLYIFS]
+    subprocess.run(remove_dhcpserver_cmd_list, encoding='utf-8')
+
+    print("Remove host-only interface: " + VIRTUAL_BOX_HOSTONLYIFS)
+    remove_hostonlyif_cmd_list = ["VBoxManage", "hostonlyif", "remove", VIRTUAL_BOX_HOSTONLYIFS]
+    subprocess.run(remove_hostonlyif_cmd_list, encoding='utf-8')
+
     for vm_name in machine_key_list:
         print("Removing " + vm_name)
         sata_port = 0
@@ -208,6 +235,19 @@ def create_vm(vm_name, hd_to_attach):
     disable_audio_cmd_list = ["VBoxManage", "modifyvm", vm_name, "--audio", "none"]
     subprocess.run(disable_audio_cmd_list, encoding='utf-8')
 
+    # Configure first network interface to use host-only adapter
+    print("Configure first network interface to use host-only NIC: " + VIRTUAL_BOX_HOSTONLYIFS)
+    hostonly_nic_cmd_list = ["VBoxManage", "modifyvm", vm_name, "--nic1", "hostonly", "--hostonlyadapter1",
+                             VIRTUAL_BOX_HOSTONLYIFS]
+    subprocess.run(hostonly_nic_cmd_list, encoding='utf-8')
+
+    print("Configure DHCP server on " + VIRTUAL_BOX_HOSTONLYIFS + " with a static lease (reserved IP address) of " + MACHINE_DICT[vm_name]['ip'] +
+                                                                  " associated with the MAC address of the first "
+                                                                  "interface of the VM.")
+    reserve_ip_address_cmd_list = ["VBoxManage", "dhcpserver", "modify", "--interface", VIRTUAL_BOX_HOSTONLYIFS, "--vm",
+                                   vm_name, "--nic", "1", "--fixed-address", MACHINE_DICT[vm_name]['ip']]
+    subprocess.run(reserve_ip_address_cmd_list, encoding='utf-8')
+
 
 def start_vms(machine_key_list):
     for vm_name in machine_key_list:
@@ -342,9 +382,11 @@ def main():
         dest="command")
 
     command_dict = {
-        'init': {'help': "Create a large number of VirtualBox VMs and blank drives",
-                 'vm_help': "Initialize specific machine(s)", "hd_help": "Initialize specific drive(s)"},
-        'deinit': {'help': "Remove the test suite's VirtualBox VMs and drives created by the 'init' command", 'vm_help': "Remove specific machine(s)",
+        'init': {
+            'help': "Create a large number of VirtualBox VMs and blank drives. Note: this replaces network interface vboxnet0",
+            'vm_help': "Initialize specific machine(s)", "hd_help": "Initialize specific drive(s)"},
+        'deinit': {'help': "Remove the test suite's VirtualBox VMs and drives created by the 'init' command. Note: this deletes network interface vboxnet0",
+                   'vm_help': "Remove specific machine(s)",
                    "hd_help": "Remove specific drive(s)"},
         'reset': {'help': "Overwrite test suite's VirtualBox drives with blank drive",
                   'vm_help': "Resets drives in specific machine(s) (note drives may be shared with other machines)",
@@ -363,7 +405,8 @@ def main():
         'check': {'help': "Connect to an open port to see if the OS booted as expected", 'vm_help': ""},
 
 
-        'run': {'help': "Run end-to-end integration test to test backup, restore and boot", 'vm_help': "Run test on machine(s)"},
+        'run': {'help': "Run end-to-end integration test to test backup, restore and boot",
+                'vm_help': "Run test on machine(s)"},
     }
 
     parser_dict = {}
@@ -372,7 +415,7 @@ def main():
         parser_dict[command_key].set_defaults(func=handle_command)
         if 'vm_help' in command_dict[command_key].keys():
             parser_dict[command_key].add_argument('--vm', nargs='*', help=command_dict[command_key]['vm_help'],
-                                              default="all")
+                                                  default="all")
         if 'hd_help' in command_dict[command_key].keys():
             parser_dict[command_key].add_argument('--hd', nargs='*', help=command_dict[command_key]['hd_help'],
                                               default="all")
