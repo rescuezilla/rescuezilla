@@ -220,6 +220,10 @@ def create_vm(vm_name, hd_to_attach):
             subprocess.run(attach_storage_cmd_list, encoding='utf-8')
         sata_port += 1
 
+    # Set firmware
+    boot_order_cmd_list = ["VBoxManage", "modifyvm", vm_name, "--firmware", MACHINE_DICT[vm_name]['firmware']]
+    subprocess.run(boot_order_cmd_list, encoding='utf-8')
+
     # Configure boot order
     boot_order_cmd_list = ["VBoxManage", "modifyvm", vm_name, "--boot1", "dvd", "--boot2", "disk", "--boot3", "none",
                            "--boot4", "none"]
