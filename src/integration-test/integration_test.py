@@ -351,6 +351,16 @@ def handle_command(args):
 
     if args.command == "init":
         initialize_vms(hd_key_list, machine_key_list)
+    elif args.command == "listvm":
+        for vm_key in machine_key_list:
+            if set(MACHINE_DICT[vm_key]['hd_list']).intersection(set(hd_key_list)):
+                print(vm_key)
+    elif args.command == "listhd":
+        hd_set = set()
+        for vm_key in machine_key_list:
+            hd_set.update(set(MACHINE_DICT[vm_key]['hd_list']))
+        for hd_key in hd_set:
+            print(hd_key)
     elif args.command == "deinit":
         deinitialize_vms(hd_key_list, machine_key_list)
     elif args.command == "reset":
@@ -386,6 +396,10 @@ def main():
         dest="command")
 
     command_dict = {
+        'listvm': {'help': "List VirtualBox VMs",
+                 'vm_help': "List specific machine(s)", "hd_help": "Filter to only VMs containing specific drive(s)"},
+        'listhd': {'help': "List VirtualBox HDs",
+                   'vm_help': "List HDs associated with specific machine(s)"},
         'init': {
             'help': "Create a large number of VirtualBox VMs and blank drives. Note: this replaces network interface vboxnet0",
             'vm_help': "Initialize specific machine(s)", "hd_help": "Initialize specific drive(s)"},
