@@ -21,6 +21,7 @@ import os
 from pathlib import Path
 
 HOST_SHARED_FOLDER = "/mnt/rescuezilla.shared.folder"
+CHECK_SOCKET=9999
 VIRTUAL_BOX_FOLDER = os.path.join(Path.home(), "VirtualBox VMs/Rescuezilla.Integration.Test.Suite.VDIs")
 
 # Note: VirtualBox doesn't provide any way to create a specific interface. It create increments until the first unused interface

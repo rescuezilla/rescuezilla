@@ -22,13 +22,14 @@
 import os
 import re
 import shutil
+import socket
 import subprocess
 import argparse
 import sys
 from pathlib import Path
 from time import sleep
 
-from constants import DRIVE_DICT, MACHINE_DICT, VIRTUAL_BOX_FOLDER, DEPLOY_DICT, VIRTUAL_BOX_HOSTONLYIFS, \
+from constants import DRIVE_DICT, MACHINE_DICT, VIRTUAL_BOX_FOLDER, DEPLOY_DICT, VIRTUAL_BOX_HOSTONLYIFS, CHECK_SOCKET, \
     HOST_SHARED_FOLDER
 
 
@@ -292,11 +293,29 @@ def stop_vms(machine_key_list):
             subprocess.run(poweroff_vm_cmd_list, encoding='utf-8')
 
 
-def check_vms(machine_key_list):
-    for vm_name in machine_key_list:
-        print("Run " + vm_name)
-        run_vm_cmd_list = ["VBoxHeadless", "--startvm", vm_name]
-        subprocess.run(run_vm_cmd_list, encoding='utf-8')
+def check_vm(vm_name):
+    timeout_ticks = 2
+    print("Waiting for VM to confirm successful boot: ", end="")
+    while timeout_ticks > 0:
+        print(str(timeout_ticks) + " ", end="")
+        if _is_shutdown_aborted(vm_name):
+            print("\nNot running: " + vm_name)
+            return False
+        else:
+            try:
+                print("\nConnecting to: " + vm_name + " on " + MACHINE_DICT[vm_name]['ip'])
+                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                s.connect((MACHINE_DICT[vm_name]['ip'], CHECK_SOCKET))
+                print("Connected: ", s)
+                data = s.recv(1000)
+                s.close()
+                print("received data: ", data.decode('utf8'))
+                return True
+            except (ConnectionRefusedError, OSError, TimeoutError):
+                print ("Unable to connect.")
+        timeout_ticks = timeout_ticks - 1
+        sleep(1)
+    return False
 
 
 def insertdvd_vm(vm_name, path_to_dvd):
@@ -376,6 +395,11 @@ def handle_command(args):
         start_vms(machine_key_list)
     elif args.command == "stop":
         stop_vms(machine_key_list)
+    elif args.command == "check":
+        all_success = True
+        for vm_name in machine_key_list:
+            all_success = all_success and check_vm(vm_name)
+        _exit(all_success)
     elif args.command == "insertdvd":
         all_success = True
         for vm_name in machine_key_list:
@@ -425,7 +449,7 @@ def main():
             "hd_help": "Replace a specific drive"},
         'start': {'help': "Start VM", 'vm_help': "Start machine(s)"},
         'stop': {'help': "Stop a VirtualBox VM", 'vm_help': "Stop machine(s)"},
-        'check': {'help': "Connect to an open port to see if the OS booted as expected", 'vm_help': ""},
+        'check': {'help': "Connect to an open port to see if the OS booted as expected, and receives preconfigured string. Requires server installed on machine.", 'vm_help': ""},
 
 
         'run': {'help': "Run end-to-end integration test to test backup, restore and boot",
