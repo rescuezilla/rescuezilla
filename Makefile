@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := focal
-.PHONY: all focal hirsute i386 deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-utils partclone-nbd install test clean-build-dir clean clean-all
+.PHONY: all focal hirsute i386 deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-utils partclone-nbd install test integration-test clean-build-dir clean clean-all
 
 # FIXME: Properly specify the build artifacts to allow the GNU make to actually be smart about what gets built and when.
 # FIXME: This lack of specifying dependency graph means requires eg, `make focal` and `make hirsute` has to be done as separate invocations
@@ -142,6 +142,26 @@ install: partclone-nbd deb
 test: RESCUEZILLA_TEST_DIR=$(shell pwd)/src/apps/rescuezilla/rescuezilla/usr/lib/python3/dist-packages/rescuezilla
 test:
 	python3 -m unittest discover -s $(RESCUEZILLA_TEST_DIR) -p 'test_*.py'
+
+# Launch Rescuezilla's Integration Test Suite for end-to-end testing of Rescuezilla using VirtualBox and preprepared test images.
+# Read the README file in the integration test folder for more information about how this works.
+#
+# Note: This command creates a large number of VirtualBox VMs as the current user.
+# Note: Also the Rescuezilla ISO image to be built using `IS_INTEGRATION_TEST=true make`
+integration-test: RESCUEZILLA_INTEGRATION_TEST_DIR=$(shell pwd)/src/integration-test
+integration-test: INTEGRATION_TEST_LOG_DIR=$(shell pwd)/build/integration-test-log-files/$(shell date +"%Y_%m_%d_%I_%M_%p")/
+integration-test: INIT_LOG=$(INTEGRATION_TEST_LOG_DIR)/init.txt
+# Number of threads with GNU Parallel (Consider setting to 1 when debugging). From man page:
+# -P N     Number of jobslots on each machine. Run up to N jobs in parallel.  0 means as many as possible. Default is 100% which will run one job per CPU core on each machine.
+# Currently keeping number of threads to 1 until an apparent problem with the interaction of GNU Parallel/TTYs and partclone is resolved.
+integration-test: THREADS=1
+integration-test:
+	mkdir --parents $(INTEGRATION_TEST_LOG_DIR)
+	$(RESCUEZILLA_INTEGRATION_TEST_DIR)/integration_test.py stop 2>&1 | tee $(INIT_LOG)
+	$(RESCUEZILLA_INTEGRATION_TEST_DIR)/integration_test.py deinit 2>&1 | tee $(INIT_LOG)
+	$(RESCUEZILLA_INTEGRATION_TEST_DIR)/integration_test.py init 2>&1 | tee $(INIT_LOG)
+	$(info * Run all tests, return number of failures. Follow the log files using: tail -f $(INTEGRATION_TEST_LOG_DIR)/[...].txt)
+	cd "$(RESCUEZILLA_INTEGRATION_TEST_DIR)/tests/" && ls test.*.sh | parallel -P$(THREADS) --tty "bash {} | tee \"$(INTEGRATION_TEST_LOG_DIR)/{}.log_file.txt\""
 
 clean: clean-build-dir
 	$(info )
