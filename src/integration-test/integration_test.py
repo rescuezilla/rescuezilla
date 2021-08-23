@@ -361,6 +361,9 @@ def handle_command(args):
             hd_set.update(set(MACHINE_DICT[vm_key]['hd_list']))
         for hd_key in hd_set:
             print(hd_key)
+    elif args.command == "listip":
+        for vm_key in machine_key_list:
+            print(MACHINE_DICT[vm_key]['ip'])
     elif args.command == "deinit":
         deinitialize_vms(hd_key_list, machine_key_list)
     elif args.command == "reset":
@@ -400,6 +403,8 @@ def main():
                  'vm_help': "List specific machine(s)", "hd_help": "Filter to only VMs containing specific drive(s)"},
         'listhd': {'help': "List VirtualBox HDs",
                    'vm_help': "List HDs associated with specific machine(s)"},
+        'listip': {'help': "List IP addresses configured for VirtualBox HDs",
+                   'vm_help': "List IP addresses associated with specific machine(s)"},
         'init': {
             'help': "Create a large number of VirtualBox VMs and blank drives. Note: this replaces network interface vboxnet0",
             'vm_help': "Initialize specific machine(s)", "hd_help": "Initialize specific drive(s)"},
