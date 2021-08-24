@@ -318,6 +318,26 @@ def check_vm(vm_name):
     return False
 
 
+def ping_vm(vm_name):
+    timeout_ticks = 60
+    print("Waiting for VM to reply to ping: ", end="")
+    while timeout_ticks > 0:
+        print(str(timeout_ticks) + " ", end="")
+        if _is_shutdown_aborted(vm_name):
+            print("\nNot running: " + vm_name)
+            return False
+        else:
+            print("\nPinging: " + vm_name + " on " + MACHINE_DICT[vm_name]['ip'])
+            response = os.system("ping -c 1 -w2 " + MACHINE_DICT[vm_name]['ip'] + " > /dev/null 2>&1")
+            # and then check the response...
+            if response == 0:
+                print("Successfully pinged!")
+                return True
+        timeout_ticks = timeout_ticks - 1
+        sleep(1)
+    return False
+
+
 def insertdvd_vm(vm_name, path_to_dvd):
     abs_path_to_dvd = os.path.abspath(path_to_dvd)
     print("Inserting DVD " + abs_path_to_dvd + " into " + vm_name)
@@ -400,6 +420,11 @@ def handle_command(args):
         for vm_name in machine_key_list:
             all_success = all_success and check_vm(vm_name)
         _exit(all_success)
+    elif args.command == "ping":
+        all_success = True
+        for vm_name in machine_key_list:
+            all_success = all_success and ping_vm(vm_name)
+        _exit(all_success)
     elif args.command == "insertdvd":
         all_success = True
         for vm_name in machine_key_list:
@@ -450,7 +475,7 @@ def main():
         'start': {'help': "Start VM", 'vm_help': "Start machine(s)"},
         'stop': {'help': "Stop a VirtualBox VM", 'vm_help': "Stop machine(s)"},
         'check': {'help': "Connect to an open port to see if the OS booted as expected, and receives preconfigured string. Requires server installed on machine.", 'vm_help': ""},
-
+        'ping': {'help': "Ping VM to see if the OS booted as expected. Similar to 'check' but doesn't require a configured server. UNlike 'check', cannot distinguish between different operating systems", 'vm_help': ""},
 
         'run': {'help': "Run end-to-end integration test to test backup, restore and boot",
                 'vm_help': "Run test on machine(s)"},
