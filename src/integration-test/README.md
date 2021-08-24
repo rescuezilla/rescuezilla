@@ -83,12 +83,4 @@ A brief description of the usage is presented below. It may be out of date, so p
 
 ## Example
 
-./integration_test.py init --vm  Rescuezilla.16gb.MBR
-./integration_test.py deploy --vm  Rescuezilla.16gb.MBR
-./integration_test.py run --vm  Rescuezilla.16gb.MBR
-# If wanting to use the VM without being headless, launch VirtualBox, and double-click on the VM:
-virtualbox
-# Confirm the VM has successfully booted ()
-./integration_test.py check --vm  Rescuezilla.16gb.MBR
-# If there is an issue, the VM can be shutdown using the GUI or the command-line
-./integration_test.py stop --vm  Rescuezilla.16gb.MBR
+See the test case scripts (in the tests/ folder) to see clear examples on how to use the integration test Python application.
