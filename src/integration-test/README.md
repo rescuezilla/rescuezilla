@@ -60,8 +60,8 @@ A brief description of the usage is presented below. It may be out of date, so p
 ./integration_test.py stop  [--vm vm_name]
     Stop the specified VM(s)
 
-./integration_test.py check [--vm vm_name]
-    Check VM(s) have booted by trying to connect on a specific TCP port
+./integration_test.py check [--vm vm_name] [--contains expected_string]
+    Check VM(s) have booted by trying to connect on a specific TCP port, and returns success if the received data contains expected_string (default: empty string).
 
 ## Example
 

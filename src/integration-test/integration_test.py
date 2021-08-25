@@ -293,8 +293,8 @@ def stop_vms(machine_key_list):
             subprocess.run(poweroff_vm_cmd_list, encoding='utf-8')
 
 
-def check_vm(vm_name):
-    timeout_ticks = 2
+def check_vm(vm_name, contains):
+    timeout_ticks = 60
     print("Waiting for VM to confirm successful boot: ", end="")
     while timeout_ticks > 0:
         print(str(timeout_ticks) + " ", end="")
@@ -309,8 +309,15 @@ def check_vm(vm_name):
                 print("Connected: ", s)
                 data = s.recv(1000)
                 s.close()
-                print("received data: ", data.decode('utf8'))
-                return True
+                string = data.decode('utf8').strip()
+
+                print("received data: ", string)
+                if contains in string:
+                    print("Found " + contains + " within received data " + string)
+                    return True
+                else:
+                    print("Did not find " + contains + " within received data " + string)
+                    return False
             except (ConnectionRefusedError, OSError, TimeoutError):
                 print ("Unable to connect.")
         timeout_ticks = timeout_ticks - 1
@@ -418,7 +425,7 @@ def handle_command(args):
     elif args.command == "check":
         all_success = True
         for vm_name in machine_key_list:
-            all_success = all_success and check_vm(vm_name)
+            all_success = all_success and check_vm(vm_name, args.contains)
         _exit(all_success)
     elif args.command == "ping":
         all_success = True
@@ -493,6 +500,7 @@ def main():
                                               default="all")
     parser_dict['commit'].add_argument('--force', help='Confirm overwrite the pre-configured OS VDI image(s)', action='store_true')
     parser_dict['insertdvd'].add_argument('--path-to-dvd', help='DVD to insert', metavar="path_to_dvd", type=str, required=True)
+    parser_dict['check'].add_argument('--contains', help='Return success if the provided string is within the received string', metavar="contains", type=str, default="")
 
     args = parser.parse_args()
     if hasattr(args, 'func'):
