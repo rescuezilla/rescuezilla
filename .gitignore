@@ -1,6 +1,5 @@
 build/*
 pkg.cache/*
-/shared/*
 /**/.idea/*
 /**/*~
 /**/*#
