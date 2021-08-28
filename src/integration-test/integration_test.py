@@ -307,7 +307,14 @@ def check_vm(vm_name, contains):
                 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 s.connect((MACHINE_DICT[vm_name]['ip'], CHECK_SOCKET))
                 print("Connected: ", s)
-                data = s.recv(1000)
+
+                # Read from socket until EOF
+                data = bytearray()
+                while True:
+                    message = s.recv(100)
+                    if not message:
+                        break
+                    data.extend(message)
                 s.close()
                 string = data.decode('utf8').strip()
 
