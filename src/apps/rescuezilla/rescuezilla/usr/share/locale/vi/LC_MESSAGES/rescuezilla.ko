@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2021-08-02 12:36+0000\n"
+"PO-Revision-Date: 2021-08-30 06:19+0000\n"
 "Last-Translator: Long Nguyễn Khánh <khanhlong17112000@gmail.com>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/vi/>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.8-dev\n"
+"X-Generator: Weblate 4.8.1-dev\n"
 
 msgid "Welcome"
 msgstr "Chào mừng"
@@ -56,10 +56,10 @@ msgid "Identifying disk drives..."
 msgstr "Đang nhận dạng các ổ đĩa..."
 
 msgid "Unmounting: {path}"
-msgstr "Huỷ mount ổ đĩa: {path}"
+msgstr "Huỷ kết nối ổ đĩa: {path}"
 
 msgid "Unable to unmount {path}"
-msgstr "Không thể huỷ mount ổ đĩa {path}"
+msgstr "Không thể huỷ kết nối ổ đĩa {path}"
 
 msgid "Running: {app}"
 msgstr "Đang chạy: {app}"
@@ -74,13 +74,13 @@ msgid "Error querying drives: "
 msgstr "Lỗi khi truy vấn ổ đĩa: "
 
 msgid "Clone"
-msgstr "Sao chép ổ đĩa"
+msgstr "Nhân bản ổ đĩa"
 
 msgid "Step 1: Understanding Cloning"
-msgstr "Bước 1: Hiểu về sao chép ổ đĩa"
+msgstr "Bước 1: Hiểu về nhân bản ổ đĩa"
 
 msgid "Please understand how \"cloning\" differs from \"imaging\"."
-msgstr "Vui lòng hiểu rằng việc \"sao chép\" khác với \"sao lưu\" như thế nào."
+msgstr "Vui lòng hiểu rằng việc \"nhân bản\" khác với \"sao lưu\" như thế nào."
 
 msgid "This mode is for \"disk cloning\". Cloning means copying one drive and directly overwriting another drive. This is a direct one-step operation with no temporary storage required.\n"
 "\n"
@@ -89,310 +89,359 @@ msgid "This mode is for \"disk cloning\". Cloning means copying one drive and di
 ""
 "To use the \"imaging\" wizards, click <b>Back</b> and select <b>Backup</b> or <b>Restore</b>."
 msgstr ""
+"Chế độ này là chế độ \"nhân bản ổ\". Nhân bản nghĩa là sao chép một ổ và ghi "
+"đè trực tiếp vào ổ khác. Đó là quá trình chỉ có một bước trực tiếp mà không "
+"yêu cầu bộ nhớ tạm thời.\n"
+"\n"
+"Việc \"nhân bản ổ\" khác với \"sao lưu\". Sao lưu là sao chép tất cả mọi thứ "
+"từ một ổ vào một tập tin dung lượng lớn. Nhiều bản sao lưu có thể lưu cùng "
+"một chỗ ở ổ cứng. Các bản đóng gói ấy có thể được dùng khôi phục ổ gốc hoặc "
+"ổ ngoài. Nói một cách khác, việc \"sao lưu\" sẽ sao lưu ổ của bạn vào <i>tập "
+"tin</i>.\n"
+"\n"
+"Để sử dụng trình sao lưu, Nhấn vào <b>Quay lại</b> và chọn <b>Sao lưu</b> "
+"hoặc <b>Khôi phục</b>."
 
 msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
-msgstr ""
+msgstr "Để bắt đầu trình nhân bản ổ đĩa, nhấp vào <b>Tiếp theo</b>"
 
 msgid "Step 2: Select Source Drive"
-msgstr ""
+msgstr "Bước 2: Chọn ổ nguồn"
 
 msgid "Select the <b>source drive</b> to clone."
-msgstr ""
+msgstr "Chọn <b>ổ nguồn</b> để sao chép."
 
 msgid "Select the <b>destination drive</b> to overwrite."
-msgstr ""
+msgstr "Chọn <b>ổ đĩa đích</b> để ghi đè."
 
 msgid "Step 4: Select Partitions to Clone"
-msgstr ""
+msgstr "Bước 4: Chọn phân vùng để sao chép"
 
 msgid "Select which partitions from the source drive to clone, and whether to overwrite the partition table. <b>Leave everything selected to completely clone the source drive to the destination drive.</b>"
 msgstr ""
+"Chọn các phân vùng cần sao chép trên ổ nguồn. <b>Nếu muốn sao chép toàn bộ ổ "
+"thì chọn hết.</b>"
 
 msgid "Step 5: Confirm Cloning Configuration"
-msgstr ""
+msgstr "Bước 5: Xác nhận Cấu hình Nhân bản"
 
 msgid "Confirm the following cloning configuration."
-msgstr ""
+msgstr "Xác nhận Cấu hình Nhân bản sau."
 
 msgid "Cloning the following partitions"
-msgstr ""
+msgstr "Đang thực hiện nhân bản các phân vùng sau đây"
 
 msgid "To start cloning, click <b>Next</b>."
-msgstr ""
+msgstr "Để bắt đầu nhân bản, Chọn <b>Tiếp theo</b>."
 
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
+"Bạn có chắc chắn sẽ sao chép vào ổ {destination_drive}? Nếu làm thì toàn bộ "
+"dữ liệu của ổ này sẽ bị ghi đè!"
 
 msgid "Step 6: Cloning Disk"
-msgstr ""
+msgstr "Bước 6: Thực hiện nhân bản ổ đĩa"
 
 msgid "Cloning the drive you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
+"Đang thực hiện nhân bản ổ đĩa đã chọn. Việc này sẽ mất vài tiếng hoặc nhiều "
+"hơn dựa vào hiệu năng của máy tính bạn và số lượng dữ liệu."
 
 msgid "Summary of Clone"
-msgstr ""
+msgstr "Báo cáo quá trình nhân bản"
 
 msgid "Clone Summary"
-msgstr ""
+msgstr "Báo cáo Nhân bản"
 
 msgid "Confirm the clone summary."
-msgstr ""
+msgstr "Xác nhận báo cáo nhân bản."
 
 msgid "Unable to shutdown Image Explorer"
-msgstr ""
+msgstr "Không thể tắt Trình xem bản đóng gói"
 
 msgid "Step 1: Select Drive To Backup"
-msgstr ""
+msgstr "Bước 1: Chọn ổ để sao lưu"
 
 msgid "Select the <b>source drive</b> that you would like to create a backup image from."
-msgstr ""
+msgstr "Chọn <b>ổ nguồn</b> mà bạn muốn sao lưu."
 
 msgid "Drive"
-msgstr ""
+msgstr "Ổ đĩa"
 
 msgid "Capacity"
-msgstr ""
+msgstr "Dung lượng"
 
 msgid "Drive Model"
-msgstr ""
+msgstr "Model ổ cứng"
 
 msgid "Partitions"
-msgstr ""
+msgstr "Các phân vùng"
 
 msgid "Show hidden devices (for advanced users)"
-msgstr ""
+msgstr "Hiện các ổ đĩa ẩn (dành cho người dùng nâng cao)"
 
 msgid "Step 2: Select Partitions to Save"
-msgstr ""
+msgstr "Bước 2: Chọn phân vùng để lưu"
 
 msgid "Select which partitions to create a backup of. <b>Leave all partitions selected if you are unsure.</b>"
 msgstr ""
+"Chọn các phân vùng bạn cần sao lưu. <b>Nếu không chắc chắn thì có thể chọn "
+"hết</b>"
 
 msgid "Save"
-msgstr ""
+msgstr "Lưu"
 
 msgid "Description"
-msgstr ""
+msgstr "Mô tả"
 
 msgid "Drive {drive_number}"
-msgstr ""
+msgstr "Ổ {drive_number}"
 
 msgid "Partition {partition_number}"
-msgstr ""
+msgstr "Phân vùng {partition_number}"
 
 msgid "Step 3: Select Destination Drive"
-msgstr ""
+msgstr "Bước 3: Chọn ổ đĩa đích"
 
 msgid "Click on the box below to select the source drive that you would like to create a backup image from."
 msgstr ""
+"Nhấn chọn các hộp dưới đây để chọn các ỗ nguồn bạn muốn tạo bản sao lưu."
 
 msgid "Connected directly to my computer"
-msgstr ""
+msgstr "Kết nối trực tiếp vào máy tính"
 
 msgid "Shared over a network"
-msgstr ""
+msgstr "Chia sẻ qua mạng"
 
 msgid "Where would you like to save the image?"
-msgstr ""
+msgstr "Bạn muốn lưu bản sao lưu ở đâu?"
 
 msgid "Windows shared folder (SMB/CIFS, Samba)"
-msgstr ""
+msgstr "Thư mục chia sẻ của Windows (SMB/CIFS, Samba)"
 
 msgid "Search network"
-msgstr ""
+msgstr "Tìm mạng"
 
 msgid "Server"
-msgstr ""
+msgstr "Máy chủ"
 
 msgid "Share location (UNC path)"
-msgstr ""
+msgstr "Đường dẫn chia sẻ (đường dẫn UNC)"
 
 msgid "Username"
-msgstr ""
+msgstr "Tên đăng nhập"
 
 msgid "Password"
-msgstr ""
+msgstr "Mật khẩu"
 
 msgid "Domain"
-msgstr ""
+msgstr "Domain"
 
 msgid "Version"
-msgstr ""
+msgstr "Phiên bản"
 
 msgid "Remote path"
-msgstr ""
+msgstr "Đường dẫn kết nối từ xa"
 
 msgid "Exported path"
-msgstr ""
+msgstr "Đường dẫn xuất"
 
 msgid "Identity File"
-msgstr ""
+msgstr "Tập tin nhận dạng"
 
 msgid "Optional"
-msgstr ""
+msgstr "Tùy chọn khác"
 
 msgid "Select network-shared storage location:"
-msgstr ""
+msgstr "Chọn đường dẫn ổ lưu trữ chia sẻ mạng:"
 
 msgid "Select the partition where the image files will be saved to"
-msgstr ""
+msgstr "Chọn phân vùng để lưu bản sao lưu"
 
 msgid "Partition"
-msgstr ""
+msgstr "Phân vùng"
 
 msgid "Mounting..."
-msgstr ""
+msgstr "Đang kết nối..."
 
 msgid "Close this popup to cancel the mount operation."
-msgstr ""
+msgstr "Tắt cửa sổ này để hủy việc kết nối."
 
 msgid "Please ensure the username, password and other fields provided are correct, and try again."
 msgstr ""
+"Kiểm tra lại tên đăng nhập, mật khẩu và các trường khác có đúng không, và "
+"thử lại."
 
 msgid "Must provide either password or SSH identity file."
-msgstr ""
+msgstr "Phải nhập cả mật khẩu và tập tin nhận dạng SSH."
 
 msgid "Scanning folder for backup images..."
-msgstr ""
+msgstr "Đang quét các thư mục để sao lưu..."
 
 msgid "({timeout_seconds} second timeout)"
-msgstr ""
+msgstr "(Thời gian chờ còn {timeout_seconds} giây)"
 
 msgid "Close this popup to cancel scanning the selected folder and subfolders."
-msgstr ""
+msgstr "Đóng cửa sổ này để hủy việc quét các thư mục và thư mục phụ đã chọn."
 
 msgid "Scanning: {filename}"
-msgstr ""
+msgstr "Đang quét file: {filename}"
 
 msgid "Error processing the following images:"
-msgstr ""
+msgstr "Lỗi khi xử lý các bản sao lưu sau:"
 
 msgid "Unable to fully process the image associated with the following partitions:"
-msgstr ""
+msgstr "Không thể xử lý hoàn toàn bản sao lưu liên quan các phân vùng sau đây:"
 
 msgid "Unable to fully process the following image:"
-msgstr ""
+msgstr "Không thể xử lý hoàn toàn bản sao lưu sau:"
 
 msgid "Cannot find partition's associated partclone image"
-msgstr ""
+msgstr "Không thể tìm thấy bản sao lưu liên quan đến phân vùng"
 
 msgid "This can happen when loading images which Clonezilla was unable to completely backup."
 msgstr ""
+"Việc này có thể xảy ra khi đang tải các bản sao lưu khiến cho Clonezilla "
+"không thể hoàn thành việc sao lưu."
 
 msgid "Note: This image format cannot distinguish between failed partclone backup and a user who chose not to backup a partition."
 msgstr ""
+"Lưu ý: Định dạng này của bản sao lưu không thể phân biệt giữa các bản sao "
+"lưu không thành công với các phân vùng không được chọn sao lưu."
 
 msgid "Any other filesystems within the image should be restorable as normal."
 msgstr ""
+"Bất cứ hệ thống tập tin nào khác của bản sao lưu sẽ được khôi phục bình "
+"thường."
 
 msgid "Needs decryption"
-msgstr ""
+msgstr "Cần giải mã"
 
 msgid "Unknown filesystem"
-msgstr ""
+msgstr "Hệ thống tập tin không xác định"
 
 msgid "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance."
 msgstr ""
+"Thông tin phân vùng mở rộng của bản sao lưu hiện đang trống. Nếu bản sao lưu "
+"chứa phân vùng mở rộng, điều này khiến việc khôi phục sẽ không chính xác. "
+"Tất cả dữ liệu vẫn có thể khôi phục hoàn toàn nhưng cần phải có sự can thiệp "
+"thủ công để khôi phục hoàn toàn dữ liệu trong phân vùng mở rộng. Vui lòng "
+"tham khảo {url} để biết thông tin và được trợ giúp."
 
 msgid "The backup's bootloader data is shorter than expected. If the backup contained certain bootloaders like GRUB, during a restore operation Rescuezilla will try and re-install the bootloader."
 msgstr ""
+"Dữ liệu bộ nạp khởi động của bản sao lưu ít hơn dự kiến. Nếu bản sao lưu "
+"chứa một số bộ nạp khởi động nhất định như GRUB, trong quá trình khôi phục, "
+"Rescuezilla sẽ thử và cài đặt lại bộ nạp khởi động."
 
 msgid "Step 4: Select Destination Folder"
-msgstr ""
+msgstr "Bước 4: Chọn thư mục đích"
 
 msgid "Click <b>Browse</b> to select the folder on the destination drive where your new backup image will be saved.\n"
 "\n"
 "The folder a backup is saved in is usually a description of the computer, e.g. <b>office1</b> or <b>zack-laptop</b>."
 msgstr ""
+"Nhấn vào <b>Duyệt</b> để chọn thư mục tại đường dẫn ổ đĩa đích lưu bản sao "
+"lưu.\n"
+"\n"
+"Thư mục sao lưu thường được lưu với tên liên quan máy tính như <b>vanphong1</"
+"b>, <b>laptop-anh-a</b>. Vui lòng không đặt tên sử dụng dấu câu hay ký tự lạ."
 
 msgid "You must select a folder inside {location}"
-msgstr ""
+msgstr "Bạn phải chọn thư mục trong {location}"
 
 msgid "Please select a different folder."
-msgstr ""
+msgstr "Hãy chọn thư mục khác."
 
 msgid "The table below lists the backup images that are already in this folder (if any)."
-msgstr ""
+msgstr "Bảng dưới đây hiện danh sách các bản sao lưu có sẵn trong thư mục."
 
 msgid "Browse..."
-msgstr ""
+msgstr "Duyệt..."
 
 msgid "Filename"
-msgstr ""
+msgstr "Tên file"
 
 msgid "Size"
-msgstr ""
+msgstr "Kích thước"
 
 msgid "Last modified"
-msgstr ""
+msgstr "Chỉnh sửa lần cuối"
 
 msgid "When you are happy with the destination folder, click <b>Next</b>."
-msgstr ""
+msgstr "Nếu bạn hài lòng với thư mục đích bạn chọn, nhấn vào <b>Tiếp theo</b>."
 
 msgid "Step 5: Name Your Backup"
-msgstr ""
+msgstr "Bước 5: Đặt tên bản sao lưu"
 
 msgid "Provide a unique name for this backup image, such as the date.  Today's date is automatically entered for you below.\n"
 "\n"
 "You may only use letters, numbers, and dashes in your backup name."
 msgstr ""
+"Đặt tên duy nhất cho bản sao lưu này, ví dụ như ngày tháng. Ngày tháng hiện "
+"tại được nhập sẵn dưới đây.\n"
+"\n"
+"Bạn chỉ có thể sử dụng các chữ cái không dấu, số và dấu gạch ngang trong tên "
+"dự phòng của mình."
 
 msgid "Optional: Provide a short description."
-msgstr ""
+msgstr "Tùy chọn: Nhập thông tin mô tả ngắn gọn."
 
 msgid "Step 6: Customize Compression Settings"
-msgstr ""
+msgstr "Bước 6: Tùy chỉnh các cài đặt nén"
 
 msgid "Customize image compression settings. <b>Don't make any changes if you are unsure.</b>"
 msgstr ""
+"Tùy chỉnh các cài đặt nén của bản sao lưu. <b>Đừng táy máy vào nếu bạn không "
+"rõ về nó.</b>"
 
 msgid "Compression format: "
-msgstr ""
+msgstr "Định dạng nén: "
 
 msgid "gzip"
-msgstr ""
+msgstr "gzip"
 
 msgid "default"
-msgstr ""
+msgstr "mặc định"
 
 msgid "zstandard"
-msgstr ""
+msgstr "zstandard"
 
 msgid "Uncompressed (Suitable for use with Image Explorer)"
-msgstr ""
+msgstr "Không nén (Phù hợp với việc sử dụng trình xem bản sao lưu)"
 
 msgid "Compression level: "
-msgstr ""
+msgstr "Mức độ nén: "
 
 msgid "Fastest"
-msgstr ""
+msgstr "Nhanh nhất"
 
 msgid "Best"
-msgstr ""
+msgstr "Tốt nhất"
 
 msgid "When you are happy with the compression settings, click <b>Next</b>."
-msgstr ""
+msgstr "Nếu bạn hài lòng với cấu hình cài đặt nén, nhấn vào <b>Tiếp theo</b>."
 
 msgid "Step 7: Confirm Backup Configuration"
-msgstr ""
+msgstr "Bước 7: Xác nhận cấu hình sao lưu"
 
 msgid "Source drive"
-msgstr ""
+msgstr "Ổ nguồn"
 
 msgid "Backing up the following partition"
-msgstr ""
+msgstr "Đang sao lưu các phân vùng sau"
 
 msgid "The backup image will be written into folder {dest_dir} on {description}"
-msgstr ""
+msgstr "Bản sao lưu sẽ ghi vào thư mục {dest_dir} ở {description}"
 
 msgid "Confirm the following backup configuration."
-msgstr ""
+msgstr "Xác nhận cấu hình sao lưu sau đây."
 
 msgid "On successful completion of the task, perform the following action: "
-msgstr ""
+msgstr "Sau khi hoàn thành, sẽ thực hiện việc: "
 
 msgid "Do nothing"
-msgstr ""
+msgstr "Không làm gì"
 
 msgid "Shutdown"
 msgstr "Tắt máy"
@@ -401,139 +450,168 @@ msgid "Reboot"
 msgstr "Khởi động lại"
 
 msgid "To start the backup, click <b>Next</b>."
-msgstr ""
+msgstr "Để bắt đầu sao lưu, nhấn <b>Tiếp theo</b>."
 
 msgid "Step 8: Creating Backup Image"
-msgstr ""
+msgstr "Bước 8: Tạo bản sao lưu"
 
 msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
+"Đang sao lưu hệ thống vào đường dẫn bạn chọn. Việc này có thể mất cả tiếng "
+"hoặc hơn tùy theo hiệu năng máy tính của bạn và số lường dữ liệu."
 
 msgid "Saving: {file}"
-msgstr ""
+msgstr "Đang lưu: {file}"
 
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
 msgstr ""
+"Sao lưu phân vùng {partition_name} chứa tập tin hệ thống {filesystem} vào "
+"{destination}"
 
 msgid "Summary of Backup"
-msgstr ""
+msgstr "Báo cáo việc Sao lưu"
 
 msgid "Confirm the backup summary."
-msgstr ""
+msgstr "Xác nhận báo cáo sao lưu."
 
 msgid "Backup Summary"
-msgstr ""
+msgstr "Báo cáo sao lưu"
 
 msgid "An operation is in progress. Do you wish to cancel?"
-msgstr ""
+msgstr "Tiến trình hiện đang được thực hiện. Bạn có muốn dừng lại?"
 
 msgid "Operation cancelled by user."
-msgstr ""
+msgstr "Tiến trình bị hủy bởi người dùng."
 
 msgid "Error creating backup: "
-msgstr ""
+msgstr "Lỗi khi đang tạo bản sao lưu: "
 
 msgid "Failed to write destination file. Please confirm it is valid to create the provided file path, and try again."
 msgstr ""
+"Lỗi khi ghi tệp đích. Vui lòng xác nhận đường dẫn tệp là hợp lệ và thử lại."
 
 msgid "Successful backup of swap partition {partition_name}"
-msgstr ""
+msgstr "Sao lưu thành công phân vùng swap {partition_name}"
 
 msgid "<b>Failed to backup partition</b> {partition_name}"
-msgstr ""
+msgstr "<b>Lỗi khi sao lưu phân vùng</b> {partition_name}"
 
 msgid "Successful backup of partition {partition_name}"
-msgstr ""
+msgstr "Sao lưu thành công phân vùng {partition_name}"
 
 msgid "Backup saved successfully."
-msgstr ""
+msgstr "Bản sao lưu đã được lưu thành công."
 
 msgid "Backup succeeded with some errors:"
-msgstr ""
+msgstr "Bản sao lưu được lưu thành công với một vài lỗi:"
 
 msgid "Backup operation failed:"
-msgstr ""
+msgstr "Thất bại ở quá trình lưu:"
 
 msgid "User requested operation to stop."
-msgstr ""
+msgstr "Người dùng đã yêu cầu tiến trình dừng lại."
 
 msgid "Operation took {num_minutes} minutes."
-msgstr ""
+msgstr "Tiến trình này tốn {num_minutes} phút."
 
 msgid "To start a new session, click <b>Next</b>"
-msgstr ""
+msgstr "Để bắt đầu phiên làm việc mới, nhấn <b>Tiếp theo</b>"
 
 msgid "Step 1: Select Image Location"
-msgstr ""
+msgstr "Bước 1: Chọn vị trí bản sao lưu"
 
 msgid "Where are the image files stored?"
-msgstr ""
+msgstr "Tập tin sao lưu được lưu ở đâu?"
 
 msgid "Select the partition which contains the image files:"
-msgstr ""
+msgstr "Chọn phân vùng chứa tập tin sao lưu:"
 
 msgid "Step 2: Select Backup Image"
-msgstr ""
+msgstr "Bước 2: Chọn bản sao lưu"
 
 msgid "Click <b>Browse</b> to select the folder containing image files."
-msgstr ""
+msgstr "Chọn <b>Duyệt</b> để chọn thư mục chứa tập tin sao lưu."
 
 msgid "Select the image file to restore."
-msgstr ""
+msgstr "Chọn tập tin sao lưu để khôi phục."
 
 msgid "Step 3: Select Drive To Restore"
-msgstr ""
+msgstr "Bước 3: Chọn ổ để khôi phục"
 
 msgid "Select the destination drive to restore with the selected image."
-msgstr ""
+msgstr "Chọn ổ đĩa đích để khôi phục bằng bản sao lưu đã chọn."
 
 msgid "Step 4: Select Partitions to Restore"
-msgstr ""
+msgstr "Bước 4: Chọn các phân vùng để khôi phục"
 
 msgid "Select which partitions from the backup image to restore, and whether to overwrite the partition table. <b>Leave everything selected to completely restore the destination drive.</b>"
 msgstr ""
+"Chọn các phân vùng bạn muốn khôi phục ở bản sao lưu, và chọn có ghi đè phân "
+"vùng không. <b>Nếu muốn khôi phục toàn bộ ổ đĩa thì chọn hết</b>"
 
 msgid "Selected image"
-msgstr ""
+msgstr "Bản sao lưu đã chọn"
 
 msgid "Destination device"
-msgstr ""
+msgstr "Ổ đĩa đích"
 
 msgid "Destination partition"
-msgstr ""
+msgstr "Phân vùng đích"
 
 msgid "Overwrite partition table"
-msgstr ""
+msgstr "Ghi đè bảng phân vùng"
 
 msgid "You will be overwriting the partition table."
-msgstr ""
+msgstr "Bạn sẽ ghi đè bản phân vùng."
 
 msgid "The \"destination partition\" column has been updated using the information stored within the backup image.\n\n<b>If partitions have been resized, new partitions added, or additional operating systems installed <i>since the backup image was created</i>, then the destination drive's partition table will not match the backup image, and overwriting the destination drive's partition table will render these resized and additional partitions permanently inaccessible.</b> If you have not modified the partition table in such a way since creating this backup then overwriting the partition table is completely safe and will have no negative effects."
 msgstr ""
+"Cột \"phân vùng đích\" đã được cập nhật bằng cách sử dụng thông tin được lưu "
+"trữ trong bản sao lưu.\n"
+"\n"
+"<b> Nếu phân vùng đã được thay đổi kích thước, phân vùng mới được thêm hoặc "
+"hệ điều hành được cài đặt <i> kể từ khi bản sao lưu được tạo </i>, thì bảng "
+"phân vùng của ổ đĩa đích sẽ không khớp với hình ảnh sao lưu và ghi đè lên ổ "
+"đĩa đích bảng phân vùng sẽ hiển thị các phân vùng đã thay đổi kích thước và "
+"bổ sung này vĩnh viễn không thể truy cập được. </b> Nếu bạn không sửa đổi "
+"bảng phân vùng theo cách như vậy kể từ khi tạo bản sao lưu này thì việc ghi "
+"đè lên bảng phân vùng là hoàn toàn an toàn và sẽ không có tác động tiêu cực."
 
 msgid "You will <b>not</b> be overwriting the partition table."
-msgstr ""
+msgstr "Bạn sẽ <b>không thể</b> ghi đè bảng phân vùng."
 
 msgid "The source does not contain a partition table."
-msgstr ""
+msgstr "Nguồn không chứa bảng phân vùng."
 
 msgid "The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table."
 msgstr ""
+"Cột \"phân vùng đích\" đã được cập nhật với thông tin bảng phân vùng hiện có "
+"của ổ đĩa đích.\n"
+"\n"
+"<b>Cột phân vùng đích có thể được sửa đổi dưới dạng bảng chọn. Việc ánh xạ "
+"không chính xác các phân vùng đích có thể khiến hệ điều hành không khởi động "
+"được nữa</b> Nếu bạn không chắc chắn về ánh xạ, hãy cân nhắc xem nó có phù "
+"hợp không để thay vào đó là ghi đè bảng phân vùng."
 
 msgid "No destination partition selected. Use the destination partition drop-down menu to select the destination"
 msgstr ""
+"Không có phân vùng đích nào được chọn. Sử dụng bảng chọn của phân vùng đích "
+"để chọn đường dẫn"
 
 msgid "Not restoring this partition"
-msgstr ""
+msgstr "Không khôi phục phân vùng này"
 
 msgid "When you are ready to continue, click <b>Next</b>."
-msgstr ""
+msgstr "Nếu bạn đã sẵn sàng để tiếp tục, hãy nhấp vào <b>Tiếp theo</b>."
 
 msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
-msgstr ""
+msgstr "Quét và ngắt kết nối các ổ Logical Volume Manager (LVM)..."
 
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
 msgstr ""
+"Phân vùng sao lưu của bảng phân vùng nguồn ({source}: {source_size} bytes) "
+"phải tham chiếu đến một vùng nằm hoàn toàn trong ổ đĩa đích "
+"({destination_size} bytes)."
 
 msgid "Rescuezilla cannot yet automatically shrink partitions to restore from large disks to smaller disks. The final partition currently must always completely reside within the destination disk.\n"
 "\n"
@@ -541,163 +619,201 @@ msgid "Rescuezilla cannot yet automatically shrink partitions to restore from la
 "\n"
 "{url}"
 msgstr ""
+"Rescuezilla chưa thể tự động thu nhỏ các phân vùng để khôi phục từ phân vùng "
+"lớn sang phân vùng nhỏ hơn. Phân vùng sao lưu phải luôn nằm hoàn toàn trong "
+"ổ đĩa đích.\n"
+"\n"
+"Hiện tại cách duy nhất để khôi phục các phân vùng nhỏ hơn là trước đó phải "
+"sử dụng trình chỉnh sửa phân vùng GParted để thu nhỏ phân vùng sao lưu của ổ "
+"gốc trước khi làm bản sao lưu mới. Vui lòng đọc hướng dẫn sau để biết thêm "
+"thông tin:\n"
+"\n"
+"{url}"
 
 msgid "Step 5: Confirm Restore Configuration"
-msgstr ""
+msgstr "Bước 5: Xác nhận cấu hình khôi phục"
 
 msgid "Confirm the following restore configuration."
-msgstr ""
+msgstr "Xác nhận các cấu hình khôi phục sau đây."
 
 msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
+"Bạn có muốn khôi phục bản sao lưu vào ổ {destination_drive}? Việc này sẽ ghi "
+"đè dữ liệu của ổ cứng này!"
 
 msgid "Source image"
-msgstr ""
+msgstr "Nguồn bản sao lưu"
 
 msgid "Destination drive"
-msgstr ""
+msgstr "Ổ cứng đích"
 
 msgid "Restoring the following partitions"
-msgstr ""
+msgstr "Đang khôi phục các phân vùng sau"
 
 msgid "WILL BE OVERWRITING PARTITION TABLE"
-msgstr ""
+msgstr "SẼ GHI ĐÈ BẢNG PHÂN VÙNG"
 
 msgid "Will <b>NOT</b> be overwriting partition table"
-msgstr ""
+msgstr "Sẽ <b>KHÔNG</b> ghi đè bảng phân vùng"
 
 msgid "To start the restore, click <b>Next</b>."
-msgstr ""
+msgstr "Để bắt đầu quá trình khôi phục, nhấn vào <b>Tiếp theo</b>."
 
 msgid "Restoring From Backup"
-msgstr ""
+msgstr "Đang khôi phục từ bản sao lưu"
 
 msgid "Restoring your system from the image you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
+"Khôi phục hệ thống của bạn từ bản sao lưu bạn đã chọn. Quá trình này có thể "
+"mất cả tiếng hoặc hơn tùy thuộc vào hiệu năng máy tính của bạn và lượng dữ "
+"liệu."
 
 msgid "Refreshing partition table"
-msgstr ""
+msgstr "Làm mới bảng phân vùng"
 
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
 msgstr ""
+"Đang khôi phục {description} vào phân vùng {destination_partition} "
+"({destination_description})"
 
 msgid "Synchronizing disks..."
-msgstr ""
+msgstr "Đang đồng bộ hóa các ổ ..."
 
 msgid "Querying hard drive geometry of {device}"
-msgstr ""
+msgstr "Truy vấn hình dạng ổ cứng của {device}"
 
 msgid "Probing {device} with {app}"
-msgstr ""
+msgstr "Kiểm tra ổ {device} với {app}"
 
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
 msgstr ""
+"Đang phát triển hệ thống tập tin {partition} ({filesystem}). Việc này có thể "
+"mất một lúc..."
 
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
 msgstr ""
+"Thay đổi kích thước phân vùng {partition} ({filesystem}) không thành công: "
+"{msg}"
 
 msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
 msgstr ""
+"Đã điều chỉnh thành công hình dạng hệ thống tập tin NTFS của {ntfs_device} "
+"bằng cách sử dụng các giá trị từ {geometry_source}"
 
 msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
-msgstr ""
+msgstr "Lỗi khi điều chỉnh hình dạng hệ thống tập tin NTFS của {ntfs_device}"
 
 msgid "Removing udev MAC address records (if any)"
-msgstr ""
+msgstr "Xóa bản ghi địa chỉ MAC udev (nếu có)"
 
 msgid "Re-installing syslinux (if any)"
-msgstr ""
+msgstr "Cài đặt lại syslinux (nếu có)"
 
 msgid "Successfully re-installed syslinux bootloader"
-msgstr ""
+msgstr "Cài đặt lại bộ nạp khởi động syslinux thành công"
 
 msgid "Re-installing GRUB bootloader (if any)"
-msgstr ""
+msgstr "Cài đặt lại bộ nạp khởi động GRUB (nếu có)"
 
 msgid "Successfully re-installed GRUB bootloader"
-msgstr ""
+msgstr "Cài đặt lại bộ nạp khởi động GRUB thành công"
 
 msgid "Did not update GRUB bootloader (if any)"
-msgstr ""
+msgstr "Không cập nhật bộ nạp khởi động GRUB (nếu có)"
 
 msgid "Updating initramfs (if any)"
-msgstr ""
+msgstr "Cập nhật initramfs (nếu có)"
 
 msgid "Successfully updated initramfs"
-msgstr ""
+msgstr "Cập nhật initramfs thành công"
 
 msgid "Updating EFI NVRAM..."
-msgstr ""
+msgstr "Cập nhật EFI NVRAM..."
 
 msgid "Successfully updated EFI NVRAM"
-msgstr ""
+msgstr "Đã cập nhật EFI NVRAM thành công"
 
 msgid "Error restoring image: "
-msgstr ""
+msgstr "Lôi khi khôi phục bản sao lưu: "
 
 msgid "Could not restore sfdisk partition table as file has zero length: "
 msgstr ""
+"Không thể khôi phục bảng phân vùng sfdisk vì tập tin có độ dài bằng không: "
 
 msgid "Successfully restored partition table."
-msgstr ""
+msgstr "Đã khôi phục thành công bảng phân vùng."
 
 msgid "Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."
 msgstr ""
+"Lỗi khi làm mới bảng phân vùng ổ. Điều này có thể xảy ra nếu một quá trình "
+"khác đang truy cập bảng phân vùng."
 
 msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
 msgstr ""
+"Không thể khôi phục phân vùng {destination_partition} vì không có bản sao "
+"lưu nào được liên kết với: {description}."
 
 msgid "This may occur if Clonezilla was originally unable to backup this partition."
 msgstr ""
+"Điều này có thể xảy ra nếu Clonezilla ban đầu không thể sao lưu phân vùng "
+"này."
 
 msgid "Error restoring partition {image_key} to {destination_partition}."
 msgstr ""
+"Lỗi khi khôi phục phân vùng {image_key} vào phân vùng "
+"{destination_partition}."
 
 msgid "Successfully restored image partition {image} to {destination_partition}"
 msgstr ""
+"Đã khôi phục thành công phân vùng bản sao lưu {image} vào phân vùng "
+"{destination_partition}"
 
 msgid "Summary of Restore"
-msgstr ""
+msgstr "Báo cáo về việc khôi phục"
 
 msgid "Restore Summary"
-msgstr ""
+msgstr "Xác nhận khôi phục"
 
 msgid "Confirm the restore summary."
-msgstr ""
+msgstr "Xác nhận báo cáo về việc khôi phục."
 
 msgid "Backup restored successfully."
-msgstr ""
+msgstr "Khôi phục bản sao lưu thành công."
 
 msgid "Image Explorer\n"
 "      (beta)"
 msgstr ""
+"Trình xem bản sao lưu\n"
+"      (thử nghiệm beta)"
 
 msgid "Image Explorer (beta)"
-msgstr ""
+msgstr "Trình xem bản sao lưu (bản thử nghiệm beta)"
 
 msgid "Select the image file to explore"
-msgstr ""
+msgstr "Chọn bản sao lưu để xem"
 
 msgid "Step 3: Select Partition to Explore"
-msgstr ""
+msgstr "Bước 3: Chọn phân vùng để xem"
 
 msgid "Select the partition to access files from."
-msgstr ""
+msgstr "Chọn phân vùng để truy cập các tập tin từ đó."
 
 msgid "Click <b>Mount</b> to mount the backup image (as read-only)."
-msgstr ""
+msgstr "Nhấn <b>Kết nối</b> để gắn bản sao lưu (ở chế độ chỉ đọc)."
 
 msgid "Mount"
-msgstr ""
+msgstr "Kết nối"
 
 msgid "Mounting as read-only..."
-msgstr ""
+msgstr "Kết nối ở chế độ chỉ đọc..."
 
 msgid "Unmount"
-msgstr ""
+msgstr "Ngắt kết nối"
 
 msgid "Once the partition has been mounted, click <b>Open in file manager</b> to access your files."
 msgstr ""
+"Một khi phân vùng đã được kết nối, hãy nhấn <b>Mở trong trình quản lý tệp</"
+"b> để truy cập các tập tin của bạn."
 
 msgid "Open in file manager"
-msgstr ""
+msgstr "Mở trong trình quản lý tệp"
