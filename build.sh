@@ -3,6 +3,16 @@
 # Echo each command
 set -x
 
+# Flag to enable integration test mode [1]. Disabled by default.
+#
+# Images built with this flag include an SSH server, a simple netcat TCP query server,
+# and other changes to support Rescuezilla's automated end-to-end integration test suite [1].
+#
+# This flag is obviously never enabled in production builds, and users are able to easily
+# audit that no SSH server or netcat TCP query server is ever installed.
+#
+# [1] See src/integration-test/README.md for more information.
+#
 IS_INTEGRATION_TEST="${IS_INTEGRATION_TEST=:false}"
 
 # Set the default base operating system, using the Ubuntu release's shortened code name [1].
