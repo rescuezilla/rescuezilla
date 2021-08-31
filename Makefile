@@ -35,10 +35,11 @@ export ARCH CODENAME
 i386: deb $(buildscripts)
 	./build.sh
 
-deb: BASE_BUILD_DIR=$(shell pwd)/build/deb/
+deb: DEB_BUILD_DIR=$(shell pwd)/build/deb
 deb:
-	cd src/apps/rescuezilla/ && BUILD_DIR=$(BASE_BUILD_DIR) $(MAKE) && mv $(BASE_BUILD_DIR)/rescuezilla_*.deb  $(BASE_BUILD_DIR)/../
-	cd src/apps/graphical-shutdown/ && BUILD_DIR=$(BASE_BUILD_DIR) $(MAKE) && mv $(BASE_BUILD_DIR)/graphical-shutdown_*.deb  $(BASE_BUILD_DIR)/../
+	mkdir --parents $(DEB_BUILD_DIR)
+	cd src/apps/rescuezilla/ && DEB_BUILD_DIR=$(DEB_BUILD_DIR) $(MAKE) && mv $(DEB_BUILD_DIR)/rescuezilla_*.deb  $(DEB_BUILD_DIR)/../
+	cd src/apps/graphical-shutdown/ && DEB_BUILD_DIR=$(DEB_BUILD_DIR) $(MAKE) && mv $(DEB_BUILD_DIR)/graphical-shutdown_*.deb  $(DEB_BUILD_DIR)/../
 
 # Build AMD64 binaries for the version of 'sfdisk' and 'partclone' used on Redo Backup v1.0.4, to maximize backwards compatibility
 # when restoring backups created with Redo Backup v1.0.4, because both those applications appear to have broken backwards compatibility. [1]
@@ -134,10 +135,10 @@ status:
 
 install: AMD64_BUILD_DIR=$(shell pwd)/build/$(CODENAME).$(ARCH)
 install: PARTCLONE_NBD_BUILD_DIR=$(AMD64_BUILD_DIR)/partclone-nbd
-install: BASE_BUILD_DIR=$(shell pwd)/build/deb/
+install: DEB_BUILD_DIR=$(shell pwd)/build/deb/
 install: partclone-nbd deb
 	DEBIAN_FRONTEND=noninteractive gdebi --non-interactive $(AMD64_BUILD_DIR)/chroot/partclone-nbd_0.0.3-1_amd64.deb
-	DEBIAN_FRONTEND=noninteractive gdebi --non-interactive $(BASE_BUILD_DIR)/../rescuezilla_*.deb
+	DEBIAN_FRONTEND=noninteractive gdebi --non-interactive $(DEB_BUILD_DIR)/../rescuezilla_*.deb
 
 test: RESCUEZILLA_TEST_DIR=$(shell pwd)/src/apps/rescuezilla/rescuezilla/usr/lib/python3/dist-packages/rescuezilla
 test:

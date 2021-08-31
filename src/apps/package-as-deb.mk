@@ -2,9 +2,9 @@
 # Makefile to create deb packages for Rescuezilla app suite.
 #
 # From another Makefile, set the below variables then include this file and call a target.
-BUILD_DIR?=build
+DEB_BUILD_DIR?=build
 # Absolute path for cleaner script
-ABS_BUILD_PATH=$(abspath $(BUILD_DIR))
+ABS_BUILD_PATH=$(abspath $(DEB_BUILD_DIR))
 APP_NAME?=NO_APP_NAME_SET
 
 # TODO: When GNU Make 4.2 becomes available in build environment, use $(.SHELLSTATUS) [1]
@@ -24,8 +24,8 @@ VERSION_STRING=$(shell git describe --tags --dirty)
 GIT_COMMIT_DATE=$(shell date +"%Y-%m-%dT%H%M%S" --date=@$(shell git show --no-patch --format=%ct HEAD))
 
 
-WORKING_DIR=$(abspath $(BUILD_DIR)/build_script_modified_source)
-PACKING_DIR=$(abspath $(BUILD_DIR)/$(APP_NAME)-$(LAST_TAGGED_VERSION))
+WORKING_DIR=$(abspath $(DEB_BUILD_DIR)/build_script_modified_source)
+PACKING_DIR=$(abspath $(DEB_BUILD_DIR)/$(APP_NAME)-$(LAST_TAGGED_VERSION))
 
 all:	embed-version deb
 
