@@ -8,6 +8,9 @@ set -x
 # Images built with this flag include an SSH server, a simple netcat TCP query server,
 # and other changes to support Rescuezilla's automated end-to-end integration test suite [1].
 #
+# The flag is very useful for development and debugging too.  The SSH server is handy, as is
+# the lower compression ratio on the squashfs root filesystem (for faster builds during development).
+#
 # This flag is obviously never enabled in production builds, and users are able to easily
 # audit that no SSH server or netcat TCP query server is ever installed.
 #
@@ -334,9 +337,18 @@ echo "https://rescuezilla.com" > release_notes_url
 cd ../..
 
 rm -rf image/casper/filesystem.squashfs "$RESCUEZILLA_ISO_FILENAME"
-echo "Compressing squashfs using zstandard rather than default gzip. Using max compression of 19. The compression time is greatly increased,"
-echo "but the decompression time same as gzip (though uses more memory). The benefit is the compression ratio is improved over gzip."
-mksquashfs chroot image/casper/filesystem.squashfs -comp zstd -b 1M -Xcompression-level 19 -e boot -e /sys
+
+echo "Compressing squashfs using zstandard (rather than default gzip)."
+if  [ "$IS_INTEGRATION_TEST" == "true" ]; then
+    echo "Using lowest possible compression level of 1 to speed up compression for debug builds." 
+    COMPRESSION_LEVEL=1
+else
+    echo "Using max compression level of 19. The compression time is greatly increased, but the decompression time "
+    echo "is the same as gzip (though uses more memory). The benefit is the compression ratio is improved over gzip."
+    COMPRESSION_LEVEL=19
+fi
+
+mksquashfs chroot image/casper/filesystem.squashfs -comp zstd -b 1M -Xcompression-level "${COMPRESSION_LEVEL}" -e boot -e /sys
 printf $(sudo du -sx --block-size=1 chroot | cut -f1) > image/casper/filesystem.size
 cd image
 
