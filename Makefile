@@ -8,6 +8,8 @@
 #
 # FIXME: Somewhat related -- Improve build environment's ability to compile software (https://github.com/rescuezilla/rescuezilla/issues/150)
 
+BASE_BUILD_DIRECTORY ?= $(shell pwd)/build
+
 all: focal
 
 buildscripts = build.sh chroot.steps.part.1.sh chroot.steps.part.2.sh
@@ -17,7 +19,7 @@ focal: ARCH=amd64
 focal: CODENAME=focal
 export ARCH CODENAME
 focal: deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-utils partclone-nbd $(buildscripts)
-	./build.sh
+	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) ./build.sh
 
 # ISO image based on Ubuntu 21.04 Hirsute 64bit as a temporary measure to provide a newer Linux kernel for better support for
 # recent hardware because Ubuntu 20.04 Focal immediately offer a Hardware Enablement / LTS Enablement Linux kernel for those
@@ -26,16 +28,16 @@ hirsute: ARCH=amd64
 hirsute: CODENAME=hirsute
 export ARCH CODENAME
 hirsute: deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-utils partclone-nbd $(buildscripts)
-	./build.sh
+	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) ./build.sh
 
 # ISO image based on Ubuntu 18.04 Bionic LTS (Long Term Support) 32bit (the last 32bit/i386 Ubuntu LTS release)
 i386: ARCH=i386
 i386: CODENAME=bionic
 export ARCH CODENAME
 i386: deb $(buildscripts)
-	./build.sh
+	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) ./build.sh
 
-deb: DEB_BUILD_DIR=$(shell pwd)/build/deb
+deb: DEB_BUILD_DIR=$(abspath $(BASE_BUILD_DIRECTORY))/deb
 deb:
 	mkdir --parents $(DEB_BUILD_DIR)
 	cd src/apps/rescuezilla/ && DEB_BUILD_DIR=$(DEB_BUILD_DIR) $(MAKE) && mv $(DEB_BUILD_DIR)/rescuezilla_*.deb  $(DEB_BUILD_DIR)/../
@@ -50,7 +52,7 @@ deb:
 # [1] For full details, see: https://github.com/rescuezilla/rescuezilla/issues/77
 
 sfdisk.v2.20.1.amd64: SRC_DIR=$(shell pwd)/src/third-party/util-linux
-sfdisk.v2.20.1.amd64: AMD64_BUILD_DIR=$(shell pwd)/build/$(CODENAME).$(ARCH)
+sfdisk.v2.20.1.amd64: AMD64_BUILD_DIR=$(BASE_BUILD_DIRECTORY)/$(CODENAME).$(ARCH)
 sfdisk.v2.20.1.amd64: UTIL_LINUX_BUILD_DIR=$(AMD64_BUILD_DIR)/util-linux
 sfdisk.v2.20.1.amd64:
 	mkdir --parents $(UTIL_LINUX_BUILD_DIR) $(AMD64_BUILD_DIR)/chroot/usr/sbin/
@@ -60,7 +62,7 @@ sfdisk.v2.20.1.amd64:
 	mv $(UTIL_LINUX_BUILD_DIR)/fdisk/sfdisk $(AMD64_BUILD_DIR)/chroot/usr/sbin/sfdisk.v2.20.1.64bit
 
 partclone.restore.v0.2.43.amd64: SRC_DIR=$(shell pwd)/src/third-party/partclone
-partclone.restore.v0.2.43.amd64: AMD64_BUILD_DIR=$(shell pwd)/build/$(CODENAME).$(ARCH)
+partclone.restore.v0.2.43.amd64: AMD64_BUILD_DIR=$(BASE_BUILD_DIRECTORY)/$(CODENAME).$(ARCH)
 partclone.restore.v0.2.43.amd64: PARTCLONE_BUILD_DIR=$(AMD64_BUILD_DIR)/partclone
 partclone.restore.v0.2.43.amd64:
 	mkdir --parents $(PARTCLONE_BUILD_DIR) $(AMD64_BUILD_DIR)/chroot/usr/sbin/
@@ -88,7 +90,7 @@ partclone.restore.v0.2.43.amd64:
 
 # Builds partclone-utils, which contains some very useful utilities for working with partclone images.
 partclone-utils: SRC_DIR=$(shell pwd)/src/third-party/partclone-utils
-partclone-utils: AMD64_BUILD_DIR=$(shell pwd)/build/$(CODENAME).$(ARCH)
+partclone-utils: AMD64_BUILD_DIR=$(BASE_BUILD_DIRECTORY)/$(CODENAME).$(ARCH)
 partclone-utils: PARTCLONE_UTILS_BUILD_DIR=$(AMD64_BUILD_DIR)/partclone-utils
 partclone-utils:
 	mkdir --parents $(PARTCLONE_UTILS_BUILD_DIR) $(AMD64_BUILD_DIR)/chroot/
@@ -102,7 +104,7 @@ partclone-utils:
 
 # Builds partclone-nbd, a competitor project to partclone-utils that's also able to mount partclone images.
 partclone-nbd: SRC_DIR=$(shell pwd)/src/third-party/partclone-nbd
-partclone-nbd: AMD64_BUILD_DIR=$(shell pwd)/build/$(CODENAME).$(ARCH)
+partclone-nbd: AMD64_BUILD_DIR=$(BASE_BUILD_DIRECTORY)/$(CODENAME).$(ARCH)
 partclone-nbd: PARTCLONE_NBD_BUILD_DIR=$(AMD64_BUILD_DIR)/partclone-nbd
 partclone-nbd:
 	mkdir --parents $(PARTCLONE_NBD_BUILD_DIR) $(AMD64_BUILD_DIR)/chroot/
@@ -113,14 +115,14 @@ partclone-nbd:
 
 clean-build-dir:
 	$(info * Unmounting chroot bind mounts)
-	for dir in build/*; do \
+	for dir in "$(BASE_BUILD_DIRECTORY)"/*; do \
           umount $$dir/chroot/dev/pts || true ; \
           umount $$dir/chroot/dev/    || true ; \
           umount $$dir/chroot/proc/   || true ; \
           umount $$dir/chroot/sys/    || true ; \
         done
-	$(info * Deleting build/ directory)
-	rm -rf build/
+	$(info * Deleting $(BASE_BUILD_DIRECTORY)/ directory)
+	rm -rf "$(BASE_BUILD_DIRECTORY)"
 
 # Print git status for all git submodules, to help debug when the working directory is non-pristine.
 status: UTIL_LINUX_SRC_DIR=$(shell pwd)/src/third-party/util-linux
@@ -133,9 +135,9 @@ status:
 	$(info * partclone git submodule status.)
 	cd $(PARTCLONE_SRC_DIR) && git status
 
-install: AMD64_BUILD_DIR=$(shell pwd)/build/$(CODENAME).$(ARCH)
+install: AMD64_BUILD_DIR=$(BASE_BUILD_DIRECTORY)/$(CODENAME).$(ARCH)
 install: PARTCLONE_NBD_BUILD_DIR=$(AMD64_BUILD_DIR)/partclone-nbd
-install: DEB_BUILD_DIR=$(shell pwd)/build/deb/
+install: DEB_BUILD_DIR=$(BASE_BUILD_DIRECTORY)/deb
 install: partclone-nbd deb
 	DEBIAN_FRONTEND=noninteractive gdebi --non-interactive $(AMD64_BUILD_DIR)/chroot/partclone-nbd_0.0.3-1_amd64.deb
 	DEBIAN_FRONTEND=noninteractive gdebi --non-interactive $(DEB_BUILD_DIR)/../rescuezilla_*.deb
@@ -150,7 +152,7 @@ test:
 # Note: This command creates a large number of VirtualBox VMs as the current user.
 # Note: Also the Rescuezilla ISO image to be built using `IS_INTEGRATION_TEST=true make`
 integration-test: RESCUEZILLA_INTEGRATION_TEST_DIR=$(shell pwd)/src/integration-test
-integration-test: INTEGRATION_TEST_LOG_DIR=$(shell pwd)/build/integration-test-log-files/$(shell date +"%Y_%m_%d_%I_%M_%p")/
+integration-test: INTEGRATION_TEST_LOG_DIR=$(BASE_BUILD_DIRECTORY)/integration-test-log-files/$(shell date +"%Y_%m_%d_%I_%M_%p")/
 integration-test: INIT_LOG=$(INTEGRATION_TEST_LOG_DIR)/init.txt
 # Number of threads with GNU Parallel (Consider setting to 1 when debugging). From man page:
 # -P N     Number of jobslots on each machine. Run up to N jobs in parallel.  0 means as many as possible. Default is 100% which will run one job per CPU core on each machine.

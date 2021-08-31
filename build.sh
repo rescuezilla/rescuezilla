@@ -17,8 +17,9 @@ ARCH="${ARCH:-INVALID}"
 BASEDIR=$(dirname $(readlink -f "$0"))
 
 RESCUEZILLA_ISO_FILENAME=rescuezilla.$ARCH.$CODENAME.iso
-# The build directory is "build/", unless overridden by an environment variable
-BUILD_DIRECTORY=${BUILD_DIRECTORY:-build/${CODENAME}.${ARCH}}
+# The base build directory is "build/", unless overridden by an environment variable
+BASE_BUILD_DIRECTORY=${BASE_BUILD_DIRECTORY:-build/${BASE_BUILD_DIRECTORY}}
+BUILD_DIRECTORY=${BUILD_DIRECTORY:-${BASE_BUILD_DIRECTORY}/${CODENAME}.${ARCH}}
 mkdir -p "$BUILD_DIRECTORY/chroot"
 # Ensure the build directory is an absolute path
 BUILD_DIRECTORY=$( readlink -f "$BUILD_DIRECTORY" )
