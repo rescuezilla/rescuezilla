@@ -38,7 +38,7 @@ RUN apt-get install --yes \
                           make rsync sudo debootstrap squashfs-tools xorriso memtest86+ git gettext \
                           dosfstools mtools checkinstall cmake \
                           shim-signed grub-efi-amd64-signed grub-efi-amd64-bin grub-efi-ia32-bin grub-pc-bin \
-                          devscripts debhelper \
+                          devscripts debhelper ccache \
                           # Dependencies for "sfdisk" and "partclone.restore" build.
                           libtool-bin gawk pkg-config comerr-dev docbook-xsl e2fslibs-dev fuse \
                           libaal-dev libblkid-dev libbsd-dev libext2fs-dev libncurses5-dev \
