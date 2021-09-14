@@ -24,9 +24,16 @@ import gettext
 import os
 import sys
 
+import argparse
 import gi
 
+from backup_manager import BackupManager
+from cli.args import parse_arguments
+from clone_manager import CloneManager
+from image_explorer_manager import ImageExplorerManager
+from restore_manager import RestoreManager
 from utility import Utility, ErrorMessageModalPopup
+from verify_manager import VerifyManager
 
 gi.require_version("Gtk", "3.0")
 
@@ -38,6 +45,13 @@ from handler import Handler
 
 def is_root():
     return os.geteuid() == 0
+
+
+def _exit(is_success):
+    if is_success:
+        exit(0)
+    else:
+        exit(1)
 
 
 def main():
@@ -52,6 +66,65 @@ def main():
     # Query the translation
     gettext.textdomain('rescuezilla')
 
+    print("WARNING: Rescuezilla's command-line interface should be considered as EXPERIMENTAL and UNSTABLE")
+    print("WARNING: Command-line interface behavior may change between versions without notice.")
+    parser = argparse.ArgumentParser(prog="rescuezillapy", description="Rescuezilla")
+    args = parse_arguments(parser=parser)
+    if args.command is None:
+        # No arguments
+        launch_gui()
+    else:
+        cli_mode(args)
+
+
+def cli_mode(args: argparse.Namespace):
+        print(str(args))
+        if args.command == "backup":
+            backup_manager = BackupManager(human_readable_version)
+            drive_state = {}
+            backup_manager.start_backup(selected_drive_key=args.source,
+                                        partitions_to_backup=args.partitions,
+                                        drive_state=drive_state,
+                                        dest_dir=args=args.destination,
+                                        backup_notes=args.description,
+                                        compression_dict={"format": args.compression, "level": args.compression_level},
+                                        is_rescue=args.rescue,
+                                        completed_backup_callback,
+                                        metadata_only_image_to_annotate=None,
+                                        on_separate_thread=False)
+        elif args.command == "restore":
+            restore_manager = RestoreManager()
+            restore_manager.start_restore(image,
+                                          restore_destination_drive,
+                                          restore_mapping_dict,
+                                          is_overwriting_partition_table,
+                                          is_rescue,
+                                          completed_callback,
+                                          on_separate_thread=False)
+        elif args.command == "clone":
+            clone_manager = CloneManager(backup_manager, restore_manager)
+            clone_manager.start_clone(image,
+                                      clone_destination_drive,
+                                      clone_mapping_dict,
+                                      drive_state,
+                                      is_overwriting_partition_table,
+                                      is_rescue,
+                                      on_separate_thread=False)
+        elif args.command == "verify":
+            verify_manager = VerifyManager()
+            verify_manager.start_verify(image_list=args.source,
+                                        completed_callback,
+                                        on_separate_thread=False)
+        elif args.command == "mount":
+            image_explorer_manager = ImageExplorerManager()
+            image_explorer_manager.mount_partition(selected_partition_key=args.partitions)
+        elif args.command == "umount":
+            image_explorer_manager = ImageExplorerManager()
+            image_explorer_manager.umount_partition(selected_partition_key=args.partitions)
+        else:
+            print("unknown mode")
+
+def launch_gui():
     builder = Gtk.Builder()
     builder.set_translation_domain('rescuezilla')
     # Use the GTKBuilder to dynamically construct all the UI widget objects as defined in the GTKBuilder .glade XML
