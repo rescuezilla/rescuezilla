@@ -4,7 +4,7 @@
 
 Rescuezilla is an easy-to-use disk cloning and imaging application that's fully compatible with Clonezilla — the industry-standard trusted by tens of millions.
 
-Yes, Rescuezilla is the Clonezilla GUI (graphical user interface) that you might have been looking for.
+Yes, Rescuezilla is the Clonezilla GUI (graphical user interface) that you might have been looking for. But Rescuezilla is more than a Clonezilla GUI!
 
 Disk imaging is the process of making a backup of your computer's hard drive which is managed as files stored on an external hard drive, and 'disk cloning' is the process of making a direct copy without needing a third drive for temporary storage.
 
@@ -14,7 +14,7 @@ It's worth noting that hard drive imaging and cloning is a very specialized task
 
 Rescuezilla can be booted on any PC or Mac from a USB stick, and has been carefully developed to be fully interoperable with the Clonezilla. This means Rescuezilla can restore backups created by Clonezilla, and backups created by Rescuezilla can be restored using Clonezilla!
 
-Rescuezilla is an fork of _Redo Backup and Recovery_ (now called _Redo Rescue_) after it had been abandoned for 7 years.
+Rescuezilla is an fork of _Redo Backup and Recovery_ (now called _Redo Rescue_) after it had been abandoned for 7 years. Rescuezilla is more than a trivial fork: it has been carefully rebuilt from the ground up to be fully compatible with the industry-standard Clonezilla.
 
 ## Features
 
