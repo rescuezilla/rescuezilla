@@ -1,13 +1,14 @@
 # Artem <KovalevArtem.ru@gmail.com>, 2021.
 # yesinmsg <yesinmsg@gmail.com>, 2021.
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021.
+# ttt113326 <tonio_k@mail.ru>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2021-09-04 01:35+0000\n"
-"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
+"PO-Revision-Date: 2021-10-14 02:16+0000\n"
+"Last-Translator: ttt113326 <tonio_k@mail.ru>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/ru/>\n"
 "Language: ru\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.8.1-dev\n"
+"X-Generator: Weblate 4.9-dev\n"
 
 msgid "Welcome"
 msgstr "Добро пожаловать"
@@ -628,6 +629,9 @@ msgstr ""
 
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
 msgstr ""
+"В исходной таблице разделов Последний раздел ({source}: {source_size} байтов)"
+" должен полностью относиться к области на целевом диске ({destination_size} "
+"байтов)."
 
 msgid "Rescuezilla cannot yet automatically shrink partitions to restore from large disks to smaller disks. The final partition currently must always completely reside within the destination disk.\n"
 "\n"
@@ -635,6 +639,16 @@ msgid "Rescuezilla cannot yet automatically shrink partitions to restore from la
 "\n"
 "{url}"
 msgstr ""
+"Rescuezilla не может автоматически восстановить образ больших дисков на "
+"диски меньшего размера. Восстанавливаемый раздел должен полностью умещаться "
+"на целевом диске.\n"
+"\n"
+"Пока единственный способ восстановить образ на диски меньшего размера, это "
+"при помощи редактора разделов GParted перед созданием нового образа "
+"резервной копии сжать раздел исходного диска. Пожалуйста, прочтите следующие "
+"инструкции для получения дополнительной информации:\n"
+"\n"
+"{url}"
 
 msgid "Step 5: Confirm Restore Configuration"
 msgstr "Шаг 5: Подтвердите параметры восстановления"
@@ -648,10 +662,10 @@ msgstr ""
 "Это приведет к безвозвратной перезаписи данных на этом диске!"
 
 msgid "Source image"
-msgstr ""
+msgstr "Исходный образ"
 
 msgid "Destination drive"
-msgstr ""
+msgstr "Целевой диск"
 
 msgid "Restoring the following partitions"
 msgstr "Восстановление следующих разделов"
@@ -660,109 +674,126 @@ msgid "WILL BE OVERWRITING PARTITION TABLE"
 msgstr "БУДЕТ ПЕРЕЗАПИСАНА ТАБЛИЦА РАЗДЕЛОВ"
 
 msgid "Will <b>NOT</b> be overwriting partition table"
-msgstr ""
+msgstr "<b> НЕ </b> будет перезаписана таблица разделов"
 
 msgid "To start the restore, click <b>Next</b>."
-msgstr ""
+msgstr "Для запуска восстановления нажмите <b>Далее</b>."
 
 msgid "Restoring From Backup"
 msgstr "Восстановление из резервной копии"
 
 msgid "Restoring your system from the image you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
+"Запущен процесс восстановления вашей системы. Это может занять час или "
+"больше времени в зависимости от скорости вашего компьютера и размера "
+"выбранного вами образа дисков."
 
 msgid "Refreshing partition table"
-msgstr ""
+msgstr "Обновление разделов таблицы"
 
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
 msgstr ""
+"Восстановление {description} в {destination_partition} "
+"({destination_description})"
 
 msgid "Synchronizing disks..."
-msgstr ""
+msgstr "Синхронизация дисков..."
 
 msgid "Querying hard drive geometry of {device}"
-msgstr ""
+msgstr "Запрос геометрии жёсткого диска {device}"
 
 msgid "Probing {device} with {app}"
-msgstr ""
+msgstr "Исследование {device} с помощью {app}"
 
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
 msgstr ""
+"Расширение файловой системы {partition} ({filesystem}). Это может занять "
+"время..."
 
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
-msgstr ""
+msgstr "Изменение размера раздела {partition} ({filesystem}) Ошибка: {msg}"
 
 msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
 msgstr ""
+"Успешно скорректирована геометрия файловой системы NTFS для {ntfs_device} с "
+"использованием значений из {geometry_source}"
 
 msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
-msgstr ""
+msgstr "Не удалось настроить геометрию файловой системы NTFS для {ntfs_device}"
 
 msgid "Removing udev MAC address records (if any)"
-msgstr ""
+msgstr "Удаление udev записей MAC-адресов (если есть)"
 
 msgid "Re-installing syslinux (if any)"
-msgstr ""
+msgstr "Переустановка syslinux (если есть)"
 
 msgid "Successfully re-installed syslinux bootloader"
-msgstr ""
+msgstr "Загрузчик syslinux успешно переустановлен"
 
 msgid "Re-installing GRUB bootloader (if any)"
-msgstr ""
+msgstr "Переустановка загрузчика GRUB (если есть)"
 
 msgid "Successfully re-installed GRUB bootloader"
-msgstr ""
+msgstr "Загрузчик GRUB успешно переустановлен"
 
 msgid "Did not update GRUB bootloader (if any)"
-msgstr ""
+msgstr "Не обновляется загрузчик GRUB (если есть)"
 
 msgid "Updating initramfs (if any)"
-msgstr ""
+msgstr "Обновление initramfs (если есть)"
 
 msgid "Successfully updated initramfs"
-msgstr ""
+msgstr "initramfs успешно обновлен"
 
 msgid "Updating EFI NVRAM..."
-msgstr ""
+msgstr "Обновление EFI NVRAM ..."
 
 msgid "Successfully updated EFI NVRAM"
-msgstr ""
+msgstr "EFI NVRAM успешно обновлен"
 
 msgid "Error restoring image: "
-msgstr ""
+msgstr "Ошибка восстановления образа: "
 
 msgid "Could not restore sfdisk partition table as file has zero length: "
 msgstr ""
+"Не удалось восстановить таблицу разделов sfdisk, так как файл имеет нулевую "
+"длину: "
 
 msgid "Successfully restored partition table."
-msgstr ""
+msgstr "Таблица разделов восстановлена."
 
 msgid "Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."
 msgstr ""
+"Не удалось обновить таблицу разделов устройств. Это может произойти, если "
+"другой процесс обращается к таблице разделов."
 
 msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
 msgstr ""
+"Невозможно восстановить раздел {destination_partition}, потому что нет "
+"сохраненного образа, связанного с: {description}."
 
 msgid "This may occur if Clonezilla was originally unable to backup this partition."
 msgstr ""
+"Это может произойти, если Clonezilla изначально не смогла создать резервную "
+"копию этого раздела."
 
 msgid "Error restoring partition {image_key} to {destination_partition}."
-msgstr ""
+msgstr "Ошибка восстановления раздела {image_key} в {destination_partition}."
 
 msgid "Successfully restored image partition {image} to {destination_partition}"
-msgstr ""
+msgstr "Образ {image} успешно восстановлен в {destination_partition}"
 
 msgid "Summary of Restore"
-msgstr ""
+msgstr "Результат восстановления"
 
 msgid "Restore Summary"
-msgstr ""
+msgstr "Сводка по восстановлению"
 
 msgid "Confirm the restore summary."
-msgstr ""
+msgstr "Подтвердите сводку по восстановлению"
 
 msgid "Backup restored successfully."
-msgstr ""
+msgstr "Резервная копия успешно восстановлена."
 
 msgid "Image Explorer\n"
 "      (beta)"
@@ -778,10 +809,12 @@ msgid "Step 3: Select Partition to Explore"
 msgstr ""
 
 msgid "Select the partition to access files from."
-msgstr ""
+msgstr "Выберите раздел для доступа к файлам."
 
 msgid "Click <b>Mount</b> to mount the backup image (as read-only)."
 msgstr ""
+"Нажмите <b> Подключить </b>, чтобы подключить образ резервной копии (только "
+"для чтения)."
 
 msgid "Mount"
 msgstr ""
