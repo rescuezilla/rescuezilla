@@ -8,7 +8,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
 "PO-Revision-Date: 2021-10-14 02:16+0000\n"
-"Last-Translator: ttt113326 <tonio_k@mail.ru>\n"
+"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/ru/>\n"
 "Language: ru\n"
@@ -798,15 +798,17 @@ msgstr "Резервная копия успешно восстановлена.
 msgid "Image Explorer\n"
 "      (beta)"
 msgstr ""
+"Проводник изображений\n"
+"      (бета-версия)"
 
 msgid "Image Explorer (beta)"
-msgstr ""
+msgstr "Проводник изображений (бета-версия)"
 
 msgid "Select the image file to explore"
-msgstr ""
+msgstr "Выберите файл изображения для изучения"
 
 msgid "Step 3: Select Partition to Explore"
-msgstr ""
+msgstr "Шаг 3: Выберите раздел для изучения"
 
 msgid "Select the partition to access files from."
 msgstr "Выберите раздел для доступа к файлам."
@@ -817,16 +819,18 @@ msgstr ""
 "для чтения)."
 
 msgid "Mount"
-msgstr ""
+msgstr "Гора"
 
 msgid "Mounting as read-only..."
-msgstr ""
+msgstr "Монтирование в режиме \"только для чтения\"..."
 
 msgid "Unmount"
-msgstr ""
+msgstr "Размонтировать"
 
 msgid "Once the partition has been mounted, click <b>Open in file manager</b> to access your files."
 msgstr ""
+"После того, как раздел будет смонтирован, нажмите <b> Open in file manager ("
+"Открыть в файловом менеджере) </b>, чтобы получить доступ к файлам."
 
 msgid "Open in file manager"
 msgstr "Открыть в Проводнике"
