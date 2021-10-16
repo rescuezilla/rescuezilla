@@ -56,50 +56,120 @@ check_primary_os_boots() {
     return $CHECK_STATUS
 }
 
+_backup_with_rescuezilla_cli() {
+    TARGET_IP="$1"
+    IMAGE_NAME="$2"
+    IMAGE_PATH="/mnt/rescuezilla.shared.folder/$IMAGE_NAME"
+
+    echo "Delete previous Rescuezilla image from within the VM $IMAGE_PATH"
+    run_cmd_in_rescuezilla_vm $TARGET_IP "rm -rf $IMAGE_PATH"
+    run_cmd_in_rescuezilla_vm $TARGET_IP "rescuezillapy backup --source /dev/sda --destination $IMAGE_PATH"
+}
+
+_restore_with_rescuezilla_cli() {
+    TARGET_IP="$1"
+    IMAGE_NAME="$2"
+    IMAGE_PATH="/mnt/rescuezilla.shared.folder/$IMAGE_NAME"
+
+    run_cmd_in_rescuezilla_vm $TARGET_IP "rescuezillapy restore --source $IMAGE_PATH --destination /dev/sda"
+}
+
+_backup_with_clonezilla_cli() {
+    TARGET_IP="$1"
+    IMAGE_NAME="$2"
+    IMAGE_PATH="/mnt/rescuezilla.shared.folder/$IMAGE_NAME"
+
+    echo "Delete previous Clonezilla image from within the VM $IMAGE_PATH"
+    run_cmd_in_rescuezilla_vm $TARGET_IP "rm -rf $IMAGE_PATH"
+    run_cmd_in_rescuezilla_vm $TARGET_IP "ocs_live_batch=yes /usr/sbin/ocs-sr -q2 -j2 -z1 -i 4096 -sfsck -senc -p command savedisk $IMAGE_NAME sda"
+}
+
+_restore_with_clonezilla_cli() {
+    TARGET_IP="$1"
+    IMAGE_NAME="$2"
+    IMAGE_PATH="/mnt/rescuezilla.shared.folder/$IMAGE_NAME"
+    # Command copied from ChatGPT
+    run_cmd_in_rescuezilla_vm $TARGET_IP "sudo ocs-sr -g auto -e1 auto -e2 -j2 -r restoredisk source $IMAGE_PATH/parts --destination /dev/sda"
+}
+
+_stop_vm_reset_disk_and_boot_dvd() {
+    VM_NAME="$1"
+    ISO_PATH="$2"
+    ISO_CHECK_MATCH="$3"
+
+    ./integration_test.py stop --vm $VM_NAME
+    ./integration_test.py reset --vm $VM_NAME
+    boot_dvd "$VM_NAME" "$ISO_PATH" "$ISO_CHECK_MATCH"
+}
+
+_print_summary() {
+    SUCCESS=$1
+    VM_INFO=$2
+    EXTRA_INFO=$3
+    EXIT_ON_FAILURE=$4
+
+    if [ $SUCCESS -eq 0 ]; then
+        printf "Test success: $VM_INFO -- $EXTRA_INFO\n\n"
+    else
+        printf "Test failed: $VM_INFO -- $EXTRA_INFO\n\n"
+        if $EXIT_ON_FAILURE; then
+             exit $SUCCESS
+        fi
+    fi
+}
+
 backup_restore_test() {
     TEST_PREFIX="$1"
-    CLONEZILLA_IMAGE_NAME="Clonezilla.$TEST_PREFIX.Image"
     VM_NAME="$2"
     ISO_PATH="$3"
     ISO_CHECK_MATCH="$4"
     PRIMARY_OS_CHECK_MATCH="$5"
+
+    RESCUEZILLA_IMAGE_NAME="Rescuezilla.$TEST_PREFIX.Image"
+    CLONEZILLA_IMAGE_NAME="Clonezilla.$TEST_PREFIX.Image"
+
     TARGET_IP=`./integration_test.py listip --vm $VM_NAME`
 
-    VM_INFO="\"$VM_NAME\" ($CLONEZILLA_IMAGE_NAME) with boot check: \"$PRIMARY_OS_CHECK_MATCH\""
+    VM_INFO="\"$VM_NAME\" ($CLONEZILLA_IMAGE_NAME and $RESCUEZILLA_IMAGE_NAME) with boot check: \"$PRIMARY_OS_CHECK_MATCH\""
     echo "Starting backup/restore test for $VM_INFO"
 
-    # Reset VM state to working CentOS environment
+    echo "Redeploy primary OS"
     ./integration_test.py stop --vm $VM_NAME
     ./integration_test.py reset --vm $VM_NAME
     ./integration_test.py deploy --vm $VM_NAME
+    echo "Sanity check primary OS boots, and correctly configured for integration test to confirm"
+    check_primary_os_boots "$VM_NAME" "$PRIMARY_OS_CHECK_MATCH"
+    _print_summary $? "$VM_INFO" "Sanity check primary OS configuration before doing any operation" true
 
-    boot_dvd "$VM_NAME"
-
-    CLONEZILLA_IMAGE_PATH="/mnt/rescuezilla.shared.folder/$CLONEZILLA_IMAGE_NAME"
-    echo "Delete previous Clonezilla image from within the VM $CLONEZILLA_IMAGE_PATH"
-    run_cmd_in_rescuezilla_vm $TARGET_IP "rm -rf $CLONEZILLA_IMAGE_PATH"
-    # Backup using Clonezilla
-    run_cmd_in_rescuezilla_vm $TARGET_IP "ocs_live_batch=yes /usr/sbin/ocs-sr -q2 -j2 -z1 -i 4096 -sfsck -senc -p command savedisk $CLONEZILLA_IMAGE_NAME sda"
-
-    # Stop and reset VM to zeroed disk
-    ./integration_test.py stop --vm $VM_NAME
-    ./integration_test.py reset --vm $VM_NAME
-
-    # Boot Rescuezilla
+    # Boot into Rescuezilla DVD to begin tests
     boot_dvd "$VM_NAME" "$ISO_PATH" "$ISO_CHECK_MATCH"
 
-    # Restore using Clonezilla
-    run_cmd_in_rescuezilla_vm $TARGET_IP "ocs_live_batch=yes /usr/sbin/ocs-sr -g auto -e1 auto -e2 -r -j2 -p cmd restoredisk $CLONEZILLA_IMAGE_NAME sda"
+    echo "Creating backup image using Rescuezilla CLI"
+    _backup_with_rescuezilla_cli "$TARGET_IP" "$RESCUEZILLA_IMAGE_NAME"
+    echo "Creating backup image using Clonezilla CLI"
+    _backup_with_clonezilla_cli "$TARGET_IP" "$CLONEZILLA_IMAGE_NAME"
 
-    # Check primary OS boots
+    echo "Testing restore of Rescuezilla image with Rescuezilla CLI"
+    _stop_vm_reset_disk_and_boot_dvd "$VM_NAME" "$ISO_PATH" "$ISO_CHECK_MATCH" true
+    _restore_with_rescuezilla_cli "$TARGET_IP" "$RESCUEZILLA_IMAGE_NAME"
     check_primary_os_boots "$VM_NAME" "$PRIMARY_OS_CHECK_MATCH"
-    RC=$?
-    if [ $? -eq 0 ]; then
-        echo "Test success: $VM_INFO"
-        exit 0
-    else
-        echo "Test failed: $VM_INFO"
-        exit 1
-    fi
-}
+    _print_summary $? "$VM_INFO" "Restore attempt of Rescuezilla image using Rescuezilla CLI" true
 
+    echo "Testing restore of Clonezilla image with Rescuezilla CLI"
+    _stop_vm_reset_disk_and_boot_dvd "$VM_NAME" "$ISO_PATH" "$ISO_CHECK_MATCH" false
+    _restore_with_rescuezilla_cli "$TARGET_IP" "$CLONEZILLA_IMAGE_NAME"
+    check_primary_os_boots "$VM_NAME" "$PRIMARY_OS_CHECK_MATCH"
+    _print_summary $? "$VM_INFO" "Restore attempt of Clonezilla image using Rescuezilla CLI" true
+
+    echo "Testing restore of Rescuezilla image with Clonezilla CLI"
+    _stop_vm_reset_disk_and_boot_dvd "$VM_NAME" "$ISO_PATH" "$ISO_CHECK_MATCH" false
+    _restore_with_clonezilla_cli "$TARGET_IP" "$CLONEZILLA_IMAGE_NAME"
+    check_primary_os_boots "$VM_NAME" "$PRIMARY_OS_CHECK_MATCH"
+    _print_summary $? "$VM_INFO" "Restore attempt of Rescuezilla image using Clonezilla CLI" true
+
+    echo "Testing restore of Clonezilla image with Clonezilla CLI (to identify any regressions within Clonezilla)"
+    _stop_vm_reset_disk_and_boot_dvd "$VM_NAME" "$ISO_PATH" "$ISO_CHECK_MATCH" false
+    _restore_with_clonezilla_cli "$TARGET_IP" "$CLONEZILLA_IMAGE_NAME"
+    check_primary_os_boots "$VM_NAME" "$PRIMARY_OS_CHECK_MATCH"
+    _print_summary $? "$VM_INFO" "Restore attempt of Clonezilla image using Clonezilla CLI" false
+}
