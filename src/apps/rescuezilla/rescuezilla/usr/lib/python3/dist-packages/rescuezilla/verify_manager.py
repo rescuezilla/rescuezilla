@@ -18,24 +18,30 @@
 # ----------------------------------------------------------------------
 import collections
 import os
+import subprocess
 import threading
 import traceback
 from datetime import datetime
-from time import sleep
 
 import gi
-
 gi.require_version("Gtk", "3.0")
 from gi.repository import GObject, GLib
 
 from logger import Logger
-from parser.clonezilla_image import ClonezillaImage
-from parser.redobackup_legacy_image import RedoBackupLegacyImage
+
+from parser.partclone import Partclone
+from parser.fsarchiver_image import FsArchiverImage
 from utility import ErrorMessageModalPopup, Utility, _
 
 
 # Signals should automatically propagate to processes called with subprocess.run().
 
+# Rescuezilla's verify logic is loosely based on Clonezilla's "sbin/ocs-chkimg", which simply runs partclone.chkimg
+# on Partclone images (after streaming decompression), and also does basic checks on the presence of various partition
+# table backups.
+#
+# TODO: Check veracity of the LVM configuration here (rather than a basic scan during the image scan step),
+# TODO: implement ocs-chkimg's basic content of the dd images.
 class VerifyManager:
     def __init__(self, builder):
         self.verify_in_progress_lock = threading.Lock()
@@ -52,9 +58,9 @@ class VerifyManager:
         with self.verify_in_progress_lock:
             return self.verify_in_progress
 
-    def start_verify(self, image, completed_callback):
+    def start_verify(self, image_list, completed_callback):
         self.verify_timestart = datetime.now()
-        self.image = image
+        self.image_list = image_list
         self.completed_callback = completed_callback
 
         with self.verify_in_progress_lock:
@@ -94,6 +100,8 @@ class VerifyManager:
             GLib.idle_add(self.completed_verify, False, _("Error restoring image: ") + tb)
             return
 
+    # TODO: Ideally find ways to consolidate the overlap between this function and aspects of Restore Manager's
+    # TODO: do_restore() function
     def do_verify(self):
         self.requested_stop = False
 
@@ -106,25 +114,202 @@ class VerifyManager:
         self.logger = Logger("/tmp/rescuezilla.log." + datetime.now().strftime("%Y%m%dT%H%M%S") + ".txt")
         GLib.idle_add(self.update_progress_bar, 0)
 
-        with self.summary_message_lock:
-            self.summary_message += self.image.absolute_path + "\n"
+        # Calculate the size across all selected images
+        all_images_total_size_estimate = 0
+        all_images_num_partitions = 0
+        for image in self.image_list:
+            # Determine the size of all partition across all images. This is used for the weighted progress bar.
+            all_images_total_size_estimate += image.size_bytes
+            all_images_num_partitions += len(image.image_format_dict_dict.keys())
 
-        for i in range(1, 10):
-            sleep(2)
-            GLib.idle_add(self.update_progress_bar, (i*10) / 100.0)
+        cumulative_bytes = 0
+        image_number = 0
+        for image in self.image_list:
+            image_number += 1
+            image_verify_message = _("Verifying {image_name}").format(image_name=image.absolute_path)
+            self.logger.write(image_verify_message)
+            GLib.idle_add(self.display_status, image_verify_message, image_verify_message)
 
-        if isinstance(self.image, ClonezillaImage):
-            self.logger.write("Detected ClonezillaImage")
-            image_dir = os.path.dirname(self.image.absolute_path)
-            # TODO: Handle multidisk Clonezilla images
-            short_selected_image_drive_node = self.image.short_device_node_disk_list[0]
             if self.requested_stop:
                 GLib.idle_add(self.completed_verify, False, _("User requested operation to stop."))
                 return
-        elif isinstance(self.image, RedoBackupLegacyImage):
-            self.logger.write("Detected RedoBackupLegacyImage")
+
+            with self.summary_message_lock:
+                self.summary_message += image.absolute_path + "\n"
+
+            if isinstance(image, FsArchiverImage):
+                self.summary_message += _("⚠") + " " + "Verifying FsArchiver images not supported by current version of Rescuezilla\n"
+                continue
+            else:
+                for partition_key in image.image_format_dict_dict.keys():
+                    estimated_size_bytes = 0
+                    if 'estimated_size_bytes' in image.image_format_dict_dict[partition_key].keys():
+                        estimated_size_bytes = image.image_format_dict_dict[partition_key]['estimated_size_bytes']
+
+            if image.has_partition_table():
+                mbr_path = image.get_absolute_mbr_path()
+                mbr_size = int(os.stat(mbr_path).st_size)
+                if mbr_size <= 512:
+                    self.summary_message += _("❌") + " " + _("The backup's bootloader data is shorter than expected. If the backup contained certain bootloaders like GRUB, during a restore operation Rescuezilla will try and re-install the bootloader.") + "\n"
+                else:
+                    self.summary_message += _("✔") + " " + _("MBR backup appears correct.") + "\n"
+            else:
+                self.summary_message += _("No partition table found.") + "\n"
+
+            if image.normalized_sfdisk_dict['file_length'] == 0:
+                self.summary_message += _("❌") + " " + _("Sfdisk partition table file is empty or missing.") + "\n"
+            else:
+                self.summary_message += _("✔") + " " + _("Sfdisk partition table file is present.") + "\n"
+
+            for partition_key in image.image_format_dict_dict.keys():
+                if self.requested_stop:
+                    GLib.idle_add(self.completed_verify, False, _("User requested operation to stop."))
+                    return
+
+                filesystem_verify_message = _("Partition {partition}").format(partition=partition_key)
+                self.logger.write(image_verify_message)
+                GLib.idle_add(self.display_status, image_verify_message + " " + filesystem_verify_message,
+                              filesystem_verify_message)
+
+                total_progress_float = Utility.calculate_progress_ratio(current_partition_completed_percentage=0,
+                                                                        current_partition_bytes=
+                                                                        image.image_format_dict_dict[partition_key][
+                                                                            'estimated_size_bytes'],
+                                                                        cumulative_bytes=cumulative_bytes,
+                                                                        total_bytes=all_images_total_size_estimate,
+                                                                        image_number=image_number,
+                                                                        num_partitions=all_images_num_partitions)
+                GLib.idle_add(self.update_progress_bar, total_progress_float)
+                cumulative_bytes += image.image_format_dict_dict[partition_key]['estimated_size_bytes']
+
+                if 'type' in image.image_format_dict_dict[partition_key].keys():
+                    image_type = image.image_format_dict_dict[partition_key]['type']
+                    if image_type == 'swap':
+                        self.summary_message += _("⚠") + " " + partition_key + ": verifying swap partition images not yet supported.\n"
+                        continue
+                    if image_type == 'missing':
+                        self.summary_message += _("❌") + " " + partition_key + ": partition is missing.\n"
+                        continue
+                    if 'dd' == image_type or image.image_format_dict_dict[partition_key]['binary'] == "partclone.dd":
+                        self.summary_message += _("⚠") + " " + partition_key + ": verifying raw dd images not yet supported.\n"
+                        continue
+                    elif 'partclone' == image_type:
+                        cat_cmd_list = ["cat"] + image.image_format_dict_dict[partition_key][
+                            'absolute_filename_glob_list']
+                        decompression_cmd_list = Utility.get_decompression_command_list(
+                            image.image_format_dict_dict[partition_key]['compression'])
+                        verify_command_list = ["partclone.chkimg", "--source", "-"]
+                    elif 'partimage' == image_type:
+                        self.summary_message += _("⚠") + " " + partition_key + ": verifying PartImage images not supported by current version of Rescuezilla.\n"
+                        continue
+                    elif 'ntfsclone' == image_type:
+                        self.summary_message += _("⚠") + " " + partition_key + ": Verifying NTFSclone images not supported by current version of Rescuezilla.\n"
+                        continue
+                    elif "unknown" != image_type:
+                        self.summary_message += _("❌") + " " + partition_key + ": unknown image type.\n"
+                        continue
+                    else:
+                        message = "Unhandled type" + image_type + " from " + partition_key
+                        self.logger.write(message)
+                        with self.summary_message_lock:
+                            self.summary_message += message + "\n"
+                        continue
+
+                    flat_command_string = Utility.print_cli_friendly(image_type + " command ",
+                                                                     [cat_cmd_list, decompression_cmd_list,
+                                                                      verify_command_list])
+                    verify_cat_proc_key = 'cat_' + partition_key
+                    self.proc[verify_cat_proc_key] = subprocess.Popen(cat_cmd_list, stdout=subprocess.PIPE,
+                                                                      env=env, encoding='utf-8')
+                    verify_decompression_proc_key = 'decompression_' + image.absolute_path + "_" + partition_key
+                    self.proc[verify_decompression_proc_key] = subprocess.Popen(decompression_cmd_list,
+                                                                                stdin=self.proc[
+                                                                                    verify_cat_proc_key].stdout,
+                                                                                stdout=subprocess.PIPE, env=env,
+                                                                                encoding='utf-8')
+
+                    verify_chkimg_proc_key = image_type + '_verify_' + image.absolute_path + "_" + partition_key
+                    self.proc[verify_chkimg_proc_key] = subprocess.Popen(verify_command_list,
+                                                                         stdin=self.proc[
+                                                                             verify_decompression_proc_key].stdout,
+                                                                         stdout=subprocess.PIPE,
+                                                                         stderr=subprocess.PIPE, env=env,
+                                                                         encoding='utf-8')
+
+                    # Process partclone output. Partclone outputs an update every 3 seconds, so processing the data
+                    # on the current thread, for simplicity.
+                    # Poll process.stdout to show stdout live
+                    proc_stdout = ""
+                    proc_stderr = ""
+                    while True:
+                        if self.requested_stop:
+                            GLib.idle_add(self.completed_verify, False, _("User requested operation to stop."))
+                            return False, _("User requested operation to stop.")
+
+                        output = self.proc[verify_chkimg_proc_key].stderr.readline()
+                        proc_stderr += output
+                        if self.proc[verify_chkimg_proc_key].poll() is not None:
+                            break
+                        if output and ("partclone" == image_type or "dd" == image_type):
+                            temp_dict = Partclone.parse_partclone_output(output)
+                            if 'completed' in temp_dict.keys():
+                                total_progress_float = Utility.calculate_progress_ratio(
+                                    current_partition_completed_percentage=temp_dict['completed'] / 100.0,
+                                    current_partition_bytes=image.image_format_dict_dict[partition_key][
+                                        'estimated_size_bytes'],
+                                    cumulative_bytes=cumulative_bytes,
+                                    total_bytes=all_images_total_size_estimate,
+                                    image_number=image_number,
+                                    num_partitions=len(image.image_format_dict_dict[partition_key].keys()))
+                                GLib.idle_add(self.update_progress_bar, total_progress_float)
+                            if 'remaining' in temp_dict.keys():
+                                GLib.idle_add(self.update_verify_progress_status,
+                                              filesystem_verify_message + "\n\n" + output)
+                        elif "partimage" == image_type:
+                            self.display_status("partimage: " + filesystem_verify_message, "")
+                        elif "ntfsclone" == image_type:
+                            self.display_status("ntfsclone: " + filesystem_verify_message, "")
+
+                        rc = self.proc[verify_chkimg_proc_key].poll()
+
+                    self.proc[verify_cat_proc_key].stdout.close()  # Allow p1 to receive a SIGPIPE if p2 exits.
+                    if "unknown" != image_type:
+                        self.proc[
+                            verify_decompression_proc_key].stdout.close()  # Allow p2 to receive a SIGPIPE if p3 exits.
+                    stdout, stderr = self.proc[verify_chkimg_proc_key].communicate()
+                    rc = self.proc[verify_chkimg_proc_key].returncode
+                    proc_stdout += stdout
+                    proc_stderr += stderr
+                    self.logger.write("Exit output " + str(rc) + ": " + str(proc_stdout) + "stderr " + str(proc_stderr))
+                    if self.proc[verify_chkimg_proc_key].returncode != 0:
+                        partition_summary = _("❌") + " " + _("Unable to verify.") + partition_key + "\n"
+                        extra_info = "\nThe command used internally was:\n\n" + flat_command_string + "\n\n" + "The output of the command was: " + str(
+                            proc_stdout) + "\n\n" + str(proc_stderr)
+                        decompression_stderr = self.proc[verify_decompression_proc_key].stderr
+                        if decompression_stderr is not None and decompression_stderr != "":
+                            extra_info += "\n\n" + decompression_cmd_list[0] + " stderr: " + decompression_stderr
+                        GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
+                                      partition_summary + extra_info)
+                        with self.summary_message_lock:
+                            self.summary_message += partition_summary
+                        continue
+                    else:
+                        self.summary_message += _("✔") + partition_key + ": " + "Successfully verified.\n"
+                        continue
+
+            with self.summary_message_lock:
+                self.summary_message += "\n\n"
+
         GLib.idle_add(self.completed_verify, True, "")
         return
+
+    def display_status(self, msg1, msg2):
+        GLib.idle_add(self.update_verify_progress_status, msg1 + "\n" + msg2)
+        if msg2 != "":
+            status_bar_msg = msg1 + ": " + msg2
+        else:
+            status_bar_msg = msg1
+        GLib.idle_add(self.update_main_statusbar, status_bar_msg)
 
     # Intended to be called via event thread
     def update_main_statusbar(self, message):
@@ -156,7 +341,8 @@ class VerifyManager:
             error = ErrorMessageModalPopup(self.builder, message)
             print("Failure")
         with self.summary_message_lock:
-            self.summary_message += "\n" + _("Operation took {num_minutes} minutes.").format(num_minutes=duration_minutes) + "\n"
+            self.summary_message += "\n" + _("Operation took {num_minutes} minutes.").format(
+                num_minutes=duration_minutes) + "\n"
         self.populate_summary_page()
         self.logger.close()
         self.completed_callback(succeeded)

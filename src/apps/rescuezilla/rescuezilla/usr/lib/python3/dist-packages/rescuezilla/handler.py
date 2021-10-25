@@ -529,10 +529,16 @@ class Handler:
                     if len(iters) == 0:
                         error = ErrorMessageModalPopup(self.builder, "No image selected")
                     else:
-                        self.selected_image_absolute_path = list_store.get(iters[0], 0)[0]
-                        print("User image: " + self.selected_image_absolute_path)
-                        image = self.image_folder_query.image_dict[self.selected_image_absolute_path]
-                        if image.is_needs_decryption:
+                        image_list = []
+                        is_needs_decryption = False
+                        # Gather images for multiple selection case
+                        for iterator in iters:
+                            image_absolute_path = list_store.get(iterator, 0)[0]
+                            print("User image: " + image_absolute_path)
+                            image = self.image_folder_query.image_dict[image_absolute_path]
+                            image_list += [image]
+                            is_needs_decryption = is_needs_decryption & image.is_needs_decryption
+                        if is_needs_decryption:
                             error = ErrorMessageModalPopup(self.builder,
                                                            "Ecryptfs encrypted images are not supported by current version of Rescuezilla.\n\nSupport for ecryptfs will be improved in a future version.\n\nHowever, as a temporary workaround, it is possible to carefully use the mount command line utility to decrypt the image, and then point Rescuezilla to this ecryptfs mount point and then use Rescuezilla to restore the image as normal.")
                         else:
@@ -540,7 +546,7 @@ class Handler:
                             self.builder.get_object("verify_tabs").set_current_page(2)
                             self.builder.get_object("button_back").set_sensitive(False)
                             self.builder.get_object("button_next").set_sensitive(False)
-                            self.verify_manager.start_verify(image, self._on_operation_completed_callback)
+                            self.verify_manager.start_verify(image_list, self._on_operation_completed_callback)
                 elif self.current_page == Page.VERIFY_PROGRESS:
                     self.current_page = Page.VERIFY_SUMMARY_SCREEN
                     self.builder.get_object("verify_tabs").set_current_page(3)

@@ -2,6 +2,11 @@
 <!-- Generated with glade 3.22.1 -->
 <interface>
   <requires lib="gtk+" version="3.2"/>
+  <object class="GtkImage" id="apart_gtk_icon">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixbuf">apart_gtk_icon.png</property>
+  </object>
   <object class="GtkImage" id="backup_mode_button">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -67,11 +72,6 @@
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="pixbuf">fogproject_icon.png</property>
-  </object>
-  <object class="GtkImage" id="apart_gtk_icon">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="pixbuf">apart_gtk_icon.png</property>
   </object>
   <object class="GtkImage" id="foxclone_icon">
     <property name="visible">True</property>
@@ -227,14 +227,6 @@
       <!-- column-name partition_description -->
       <column type="gchararray"/>
     </columns>
-  </object>
-  <object class="GtkImage" id="verify_mode_button">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="xpad">5</property>
-    <property name="ypad">5</property>
-    <property name="pixbuf">button_verify.png</property>
-    <property name="icon_size">6</property>
   </object>
   <object class="GtkWindow" id="main_window">
     <property name="can_focus">False</property>
@@ -401,14 +393,15 @@
                                         <property name="spacing">20</property>
                                         <property name="layout_style">center</property>
                                         <child>
-                                          <object class="GtkButton" id="welcome_button_verify">
-                                            <property name="label" translatable="yes">Verify Image</property>
-                                            <property name="can_focus">False</property>
+                                          <object class="GtkButton" id="welcome_button_clone">
+                                            <property name="label" translatable="yes">Clone</property>
+                                            <property name="visible">True</property>
+                                            <property name="can_focus">True</property>
                                             <property name="focus_on_click">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="image">verify_mode_button</property>
+                                            <property name="image">clone_mode_button</property>
                                             <property name="image_position">top</property>
-                                            <signal name="clicked" handler="display_verify_wizard" swapped="no"/>
+                                            <signal name="clicked" handler="display_clone_wizard" swapped="no"/>
                                           </object>
                                           <packing>
                                             <property name="expand">False</property>
@@ -417,15 +410,15 @@
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkButton" id="welcome_button_clone">
-                                            <property name="label" translatable="yes">Clone</property>
+                                          <object class="GtkButton" id="welcome_button_verify">
+                                            <property name="label" translatable="yes">Verify Image</property>
                                             <property name="visible">True</property>
-                                            <property name="can_focus">False</property>
+                                            <property name="can_focus">True</property>
                                             <property name="focus_on_click">False</property>
                                             <property name="receives_default">False</property>
-                                            <property name="image">clone_mode_button</property>
+                                            <property name="image">verify_mode_button</property>
                                             <property name="image_position">top</property>
-                                            <signal name="clicked" handler="display_clone_wizard" swapped="no"/>
+                                            <signal name="clicked" handler="display_verify_wizard" swapped="no"/>
                                           </object>
                                           <packing>
                                             <property name="expand">False</property>
@@ -5282,7 +5275,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="ypad">20</property>
-                                                <property name="label" translatable="yes">Select the image file to verify</property>
+                                                <property name="label" translatable="yes">Select one or more image(s) to verify.</property>
                                                 <property name="use_markup">True</property>
                                                 <property name="wrap">True</property>
                                                 <property name="yalign">1</property>
@@ -5310,7 +5303,9 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                     <property name="enable_grid_lines">both</property>
                                                     <signal name="row-activated" handler="row_activated_next_tab" swapped="no"/>
                                                     <child internal-child="selection">
-                                                      <object class="GtkTreeSelection" id="verify_image_selection_treeselection"/>
+                                                      <object class="GtkTreeSelection" id="verify_image_selection_treeselection">
+                                                        <property name="mode">multiple</property>
+                                                      </object>
                                                     </child>
                                                     <child>
                                                       <object class="GtkTreeViewColumn">
@@ -5497,7 +5492,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="ypad">20</property>
-                                                <property name="label" translatable="yes">Verifying the image you selected.</property>
+                                                <property name="label" translatable="yes">Verifying the selected image(s).</property>
                                                 <property name="use_markup">True</property>
                                                 <property name="wrap">True</property>
                                                 <property name="yalign">1</property>
@@ -5569,7 +5564,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                           <object class="GtkLabel" id="verify_step3_subtitle">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
-                                            <property name="label" translatable="yes">Verifying Backup</property>
+                                            <property name="label" translatable="yes">Verifying Image</property>
                                             <attributes>
                                               <attribute name="weight" value="bold"/>
                                               <attribute name="scale" value="1.5"/>
@@ -5696,7 +5691,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                 <property name="visible">True</property>
                                                 <property name="can_focus">False</property>
                                                 <property name="ypad">20</property>
-                                                <property name="label" translatable="yes">To verify another backup, click &lt;b&gt;Back&lt;/b&gt;.
+                                                <property name="label" translatable="yes">To verify another image, click &lt;b&gt;Back&lt;/b&gt;.
 
 To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                 <property name="use_markup">True</property>
@@ -8463,6 +8458,14 @@ Did you know: Rescuezilla works with virtual machine images used by VirtualBox, 
         </child>
       </object>
     </child>
+  </object>
+  <object class="GtkImage" id="verify_mode_button">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="xpad">5</property>
+    <property name="ypad">5</property>
+    <property name="pixbuf">button_verify.png</property>
+    <property name="icon_size">6</property>
   </object>
   <object class="GtkImage" id="warning_icon">
     <property name="visible">True</property>
