@@ -309,26 +309,34 @@ class Handler:
             error = ErrorMessageModalPopup(self.builder, message)
             self.display_welcome_page()
 
-    def get_row(self, id):
+    # Convenience function to get the model and iterators using a TreeSelection.
+    # In other words, selecting one or more rows from a table.
+    #
+    # Returns
+    # list_store: GTK ListStore
+    # iters: List of iterators
+    def get_rows(self, id):
         treeselection = self.builder.get_object(id)
+        iters = []
         list_store, tree_path_list = treeselection.get_selected_rows()
         if len(list_store) == 0 or len(tree_path_list) == 0:
             return list_store, None
-        iter = list_store.get_iter(tree_path_list[0])
-        return list_store, iter
+        for tree_path in tree_path_list:
+            iters += [list_store.get_iter(tree_path)]
+        return list_store, iters
 
     def next_tab(self, button):
         try:
             print("Currently mode=" + str(self.mode) + " on page " + str(self.current_page))
             if self.mode == Mode.BACKUP:
                 if self.current_page == Page.BACKUP_SOURCE_DRIVE_SELECTION:
-                    list_store, iter = self.get_row("backup_drive_selection_treeselection")
-                    if iter is None:
+                    list_store, iters = self.get_rows("backup_drive_selection_treeselection")
+                    if len(iters) == 0:
                         error = ErrorMessageModalPopup(self.builder, "No source drive selected. Please select source "
                                                                      "drive to backup")
                     else:
                         # Get first column (which is hidden/invisible) containing the drive shortdevname (eg, 'sda')
-                        key = list_store.get(iter, 0)[0]
+                        key = list_store.get(iters[0], 0)[0]
                         if self.drive_query.drive_state[key]['has_raid_member_filesystem']:
                             error = ErrorMessageModalPopup(self.builder, self.source_contains_raid_member_msg)
                             return
@@ -340,10 +348,10 @@ class Handler:
                         print("User selected drive: " + self.selected_drive_key)
                         self.drive_query.populate_partition_selection_table(self.selected_drive_key)
 
-                        self.selected_drive_enduser_friendly_drive_number = list_store.get(iter, 1)[0]
-                        self.selected_drive_capacity = list_store.get(iter, 2)[0]
+                        self.selected_drive_enduser_friendly_drive_number = list_store.get(iters[0], 1)[0]
+                        self.selected_drive_capacity = list_store.get(iters[0], 2)[0]
                         # FIXME: May be None for devices like /dev/md127
-                        self.selected_drive_model = list_store.get(iter, 3)[0]
+                        self.selected_drive_model = list_store.get(iters[0], 3)[0]
 
                         self.current_page = Page.BACKUP_SOURCE_PARTITION_SELECTION
                         self.builder.get_object("backup_tabs").set_current_page(1)
@@ -413,12 +421,11 @@ class Handler:
                 if self.current_page == Page.RESTORE_SOURCE_LOCATION_SELECTION:
                     self.image_source_partition_key, description = self.handle_mount_local_or_remote()
                 elif self.current_page == Page.RESTORE_SOURCE_IMAGE_SELECTION:
-
-                    list_store, iter = self.get_row("restore_image_selection_treeselection")
-                    if iter is None:
+                    list_store, iters = self.get_rows("restore_image_selection_treeselection")
+                    if len(iters) == 0:
                         error = ErrorMessageModalPopup(self.builder, "No image selected")
                     else:
-                        self.selected_image_absolute_path = list_store.get(iter, 0)[0]
+                        self.selected_image_absolute_path = list_store.get(iters[0], 0)[0]
                         print("User image: " + self.selected_image_absolute_path)
                         image = self.image_folder_query.image_dict[self.selected_image_absolute_path]
                         if image.is_needs_decryption:
@@ -431,11 +438,11 @@ class Handler:
                             self.current_page = Page.RESTORE_DESTINATION_DRIVE_SELECTION
                             self.builder.get_object("restore_tabs").set_current_page(2)
                 elif self.current_page == Page.RESTORE_DESTINATION_DRIVE_SELECTION:
-                    list_store, iter = self.get_row("restore_step3_drive_selection_treeselection")
-                    if iter is None:
+                    list_store, iters = self.get_rows("restore_step3_drive_selection_treeselection")
+                    if len(iters) == 0:
                         error = ErrorMessageModalPopup(self.builder, "Please select destination drive to mount")
                     else:
-                        key = list_store.get(iter, 0)[0]
+                        key = list_store.get(iters[0], 0)[0]
                         if self.drive_query.drive_state[key]['has_raid_member_filesystem']:
                             error = ErrorMessageModalPopup(self.builder, "Warning: Destination drive has a RAID member filesystem. Please make sure you understanding implications of this before continuing.")
                         self.restore_destination_drive = key
@@ -444,8 +451,8 @@ class Handler:
                             error = ErrorMessageModalPopup(self.builder, "Destination device cannot be the same as source image device.")
                             return
                         # Set a nice description like "sdc: 8.00 GB (TOSHIBA USB DRV)
-                        self.restore_destination_drive_desc = list_store.get(iter, 1)[0] + ": " + list_store.get(iter, 2)[0]
-                        drive_model = list_store.get(iter, 3)[0]
+                        self.restore_destination_drive_desc = list_store.get(iters[0], 1)[0] + ": " + list_store.get(iters[0], 2)[0]
+                        drive_model = list_store.get(iters[0], 3)[0]
                         if drive_model is not None:
                             # Some devices, such as RAID devices /dev/md127 don't set the drive model field.
                             self.restore_destination_drive_desc += " (" + drive_model + ")"
@@ -518,11 +525,11 @@ class Handler:
                 if self.current_page == Page.VERIFY_SOURCE_LOCATION_SELECTION:
                     image_source_partition_key, description = self.handle_mount_local_or_remote()
                 elif self.current_page == Page.VERIFY_SOURCE_IMAGE_SELECTION:
-                    list_store, iter = self.get_row("verify_image_selection_treeselection")
-                    if iter is None:
+                    list_store, iters = self.get_rows("verify_image_selection_treeselection")
+                    if len(iters) == 0:
                         error = ErrorMessageModalPopup(self.builder, "No image selected")
                     else:
-                        self.selected_image_absolute_path = list_store.get(iter, 0)[0]
+                        self.selected_image_absolute_path = list_store.get(iters[0], 0)[0]
                         print("User image: " + self.selected_image_absolute_path)
                         image = self.image_folder_query.image_dict[self.selected_image_absolute_path]
                         if image.is_needs_decryption:
@@ -550,13 +557,13 @@ class Handler:
                     self.current_page = Page.CLONE_SOURCE_DRIVE_SELECTION
                     self.builder.get_object("clone_tabs").set_current_page(1)
                 elif self.current_page == Page.CLONE_SOURCE_DRIVE_SELECTION:
-                    list_store, iter = self.get_row("clone_source_drive_selection_treeselection")
-                    if iter is None:
+                    list_store, iters = self.get_rows("clone_source_drive_selection_treeselection")
+                    if len(iters) == 0:
                         error = ErrorMessageModalPopup(self.builder,
                                                        _("No source drive selected. Please select source drive to clone"))
                     else:
                         # Get first column (which is hidden/invisible) containing the drive shortdevname (eg, 'sda')
-                        key = list_store.get(iter, 0)[0]
+                        key = list_store.get(iters[0], 0)[0]
                         if self.drive_query.drive_state[key]['has_raid_member_filesystem']:
                             error = ErrorMessageModalPopup(self.builder, "Backup of RAID member drives is not allowed. Choose another drive such as /dev/md0 or /dev/md127.")
                             return
@@ -566,10 +573,10 @@ class Handler:
                             return
                         self.clone_source_drive_key = key
                         print("User selected source drive: " + self.clone_source_drive_key)
-                        self.source_drive_enduser_friendly_drive_number = list_store.get(iter, 1)[0]
-                        self.source_drive_capacity = list_store.get(iter, 2)[0]
+                        self.source_drive_enduser_friendly_drive_number = list_store.get(iters[0], 1)[0]
+                        self.source_drive_capacity = list_store.get(iters[0], 2)[0]
                         # FIXME: May be None for devices like /dev/md127
-                        self.source_drive_model = list_store.get(iter, 3)[0]
+                        self.source_drive_model = list_store.get(iters[0], 3)[0]
                         # Make metaimage
                         # FIXME: Do on separate thread, with please wait popup. Like eg, mounting paths
                         print("Creating MetadataOnlyImage (currently temporarily done on UI thread). This may take a moment...")
@@ -585,18 +592,18 @@ class Handler:
                             self.current_page = Page.CLONE_DESTINATION_DRIVE_SELECTION
                             self.builder.get_object("clone_tabs").set_current_page(2)
                 elif self.current_page == Page.CLONE_DESTINATION_DRIVE_SELECTION:
-                    list_store, iter = self.get_row("clone_step3_destination_drive_selection_treeselection")
-                    if iter is None:
+                    list_store, iters = self.get_rows("clone_step3_destination_drive_selection_treeselection")
+                    if len(iters) == 0:
                         error = ErrorMessageModalPopup(self.builder,
                                                        _("No destination drive selected. Please select destination drive to overwrite"))
                     else:
-                        self.clone_destination_drive = list_store.get(iter, 0)[0]
+                        self.clone_destination_drive = list_store.get(iters[0], 0)[0]
                         if self.clone_source_drive_key == self.clone_destination_drive:
                             error = ErrorMessageModalPopup(self.builder, "Destination device cannot be the same as source device.")
                             return
                         # Set a nice description like "sdc: 8.00 GB (TOSHIBA USB DRV)
-                        self.clone_destination_drive_desc = list_store.get(iter, 1)[0] + ": " + list_store.get(iter, 2)[0]
-                        drive_model = list_store.get(iter, 3)[0]
+                        self.clone_destination_drive_desc = list_store.get(iters[0], 1)[0] + ": " + list_store.get(iters[0], 2)[0]
+                        drive_model = list_store.get(iters[0], 3)[0]
                         if drive_model is not None:
                             # Some devices, such as RAID devices /dev/md127 don't set the drive model field.
                             self.clone_destination_drive_desc += " (" + drive_model + ")"
@@ -673,11 +680,11 @@ class Handler:
                 if self.current_page == Page.IMAGE_EXPLORER_SOURCE_LOCATION_SELECTION:
                     image_source_partition_key, description = self.handle_mount_local_or_remote()
                 elif self.current_page == Page.IMAGE_EXPLORER_SOURCE_IMAGE_SELECTION:
-                    list_store, iter = self.get_row("image_explorer_image_selection_treeselection")
-                    if iter is None:
+                    list_store, iters = self.get_rows("image_explorer_image_selection_treeselection")
+                    if len(iters) == 0:
                         error = ErrorMessageModalPopup(self.builder, "No image selected")
                     else:
-                        self.selected_image_absolute_path = list_store.get(iter, 0)[0]
+                        self.selected_image_absolute_path = list_store.get(iters[0], 0)[0]
                         print("User image: " + self.selected_image_absolute_path)
                         image = self.image_folder_query.image_dict[self.selected_image_absolute_path]
                         if image.image_format == "FSARCHIVER_FORMAT":
@@ -953,9 +960,9 @@ class Handler:
     # Callback for double click (row-activate) on backup mode partitions to backup toggle
     # TODO: Directly call save_partition_toggled from above, to reduce duplication
     def row_activated_backup_partition_toggle(self, treeview, path, view_column):
-        list_store, iter = self.get_row("backup_partitions_treeselection")
-        state = list_store.get(iter, 1)[0]
-        list_store.set_value(iter, 1, not state)
+        list_store, iters = self.get_rows("backup_partitions_treeselection")
+        state = list_store.get(iters[0], 1)[0]
+        list_store.set_value(iters[0], 1, not state)
 
     def exit_app(self):
         print("Exiting Rescuezilla.")
@@ -1170,13 +1177,13 @@ class Handler:
         selected_partition_key = None
         partition_description = None
         if self.network_protocol_widget_dict['network_use_local_radiobutton'][self.mode].get_active():
-            list_store, iter = self.get_row(self.mount_partition_selection_treeselection_id_dict[self.mode])
-            if iter is None:
+            list_store, iters = self.get_rows(self.mount_partition_selection_treeselection_id_dict[self.mode])
+            if len(iters) == 0:
                 error = ErrorMessageModalPopup(self.builder, "Please select drive to mount")
             else:
                 # Get first column (which is hidden/invisible) containing the drive shortdevname (eg, 'sda')
-                selected_partition_key = list_store.get(iter, 0)[0]
-                partition_description = list_store.get(iter, 3)[0]
+                selected_partition_key = list_store.get(iters[0], 0)[0]
+                partition_description = list_store.get(iters[0], 3)[0]
                 print("User selected partition: " + selected_partition_key)
                 # Callback determines whether wizard proceeds
                 MountLocalPath(self.builder, self._post_mount_callback, selected_partition_key,
@@ -1199,16 +1206,16 @@ class Handler:
     # Callback for double click (row-activate) on restore partition mapping toggle
     # TODO: Directly call restore_partition_toggled from above, to reduce duplication
     def row_activated_restore_partition_toggle(self, treeview, path, view_column):
-        list_store, iter = self.get_row("restore_step4_image_partition_treeview_treeselection")
-        new_state = not list_store.get(iter, 1)[0]
-        self.backup_image.toggle_restore_of_row(iter, new_state)
+        list_store, iters = self.get_rows("restore_step4_image_partition_treeview_treeselection")
+        new_state = not list_store.get(iters[0], 1)[0]
+        self.backup_image.toggle_restore_of_row(iters[0], new_state)
 
     # Callback for double click (row-activate) on restore partition mapping toggle
     # TODO: Directly call restore_partition_toggled from above, to reduce duplication
     def row_activated_clone_partition_toggle(self, treeview, path, view_column):
-        list_store, iter = self.get_row("clone_step4_image_partition_treeview_treeselection")
-        new_state = not list_store.get(iter, 1)[0]
-        self.backup_image.toggle_restore_of_row(iter, new_state)
+        list_store, iters = self.get_rows("clone_step4_image_partition_treeview_treeselection")
+        new_state = not list_store.get(iters[0], 1)[0]
+        self.backup_image.toggle_restore_of_row(iters[0], new_state)
 
     def destination_partition_node_changed(self, cell_renderer_combo, path, cell_render_combo_iter):
         # Retrieve the selected string from the CellRendererCombo combo widget.
@@ -1395,13 +1402,13 @@ class Handler:
     # Called via AreYouSure prompt
     def _mount_partition_confirmation_callback(self, is_affirmative):
         if is_affirmative:
-            list_store, iter = self.get_row("image_explorer_image_partition_treeselection")
-            selected_partition_key = list_store.get(iter, 0)[0]
+            list_store, iters = self.get_rows("image_explorer_image_partition_treeselection")
+            selected_partition_key = list_store.get(iters[0], 0)[0]
             self.image_explorer_manager.mount_partition(selected_partition_key)
 
     def mount_partition(self, button):
-        list_store, iter = self.get_row("image_explorer_image_partition_treeselection")
-        selected_partition_key = list_store.get(iter, 0)[0]
+        list_store, iters = self.get_rows("image_explorer_image_partition_treeselection")
+        selected_partition_key = list_store.get(iters[0], 0)[0]
 
         error_message = ""
         compression = self.image_explorer_manager.get_partition_compression(selected_partition_key)
