@@ -951,11 +951,11 @@ class Handler:
 
     def save_partition_toggled(self, cellrendertoggle, path):
         print("Backup partition toggled: " + str(path))
-        iter = self.save_partition_list_store.get_iter(path)
+        iterator = self.save_partition_list_store.get_iter(path)
         # Get the first column
-        state = self.save_partition_list_store.get(iter, 1)[0]
+        state = self.save_partition_list_store.get(iterator, 1)[0]
         # invert toggle
-        self.save_partition_list_store.set_value(iter, 1, not state)
+        self.save_partition_list_store.set_value(iterator, 1, not state)
 
     # Callback for double click (row-activate) on backup mode partitions to backup toggle
     # TODO: Directly call save_partition_toggled from above, to reduce duplication
@@ -1194,9 +1194,9 @@ class Handler:
         return selected_partition_key, partition_description
 
     def restore_partition_toggled(self, cell_render_toggle, path):
-        iter = self.partition_selection_list.get_iter(path)
-        new_state = not self.partition_selection_list.get(iter, 1)[0]
-        self.backup_image.toggle_restore_of_row(iter, new_state)
+        iterator = self.partition_selection_list.get_iter(path)
+        new_state = not self.partition_selection_list.get(iterator, 1)[0]
+        self.backup_image.toggle_restore_of_row(iterator, new_state)
 
     # Same function for restore case, but with clear function name.
     # TODO: Rename the original function to remove need for this alias.
