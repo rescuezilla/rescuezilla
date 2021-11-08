@@ -264,8 +264,7 @@ class Utility:
 
     @staticmethod
     def open_path_in_filemanager_as_non_root(target_user, path):
-        # TODO: Handle file managers other than pcmanfm
-        Utility.open_app_as_target_user(target_user, ["pcmanfm", path])
+        Utility.open_app_as_target_user(target_user, ["xdg-open", path])
 
     @staticmethod
     def read_file_into_string(file_path):
