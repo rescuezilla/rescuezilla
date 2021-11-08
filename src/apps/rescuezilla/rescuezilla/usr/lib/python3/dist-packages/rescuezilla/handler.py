@@ -1374,8 +1374,8 @@ class Handler:
 
     def open_file_manager(self, button):
         user = "ubuntu"
-        if shutil.which("pcmanfm") is None:
-            error = ErrorMessageModalPopup(self.builder, "Cannot launch pcmanfm file manager as user '" + user + "'.\n\n"
+        if shutil.which("xdg-open") is None:
+            error = ErrorMessageModalPopup(self.builder, "Cannot launch file manager (using xdg-open) as user '" + user + "'.\n\n"
                                            + "Please manually navigate to the following path using a file manager: "
                                            + IMAGE_EXPLORER_DIR)
         else:
