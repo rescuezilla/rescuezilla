@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Action
+Name=Open root file manager
+Profiles=profile-zero;
+Icon=system-file-manager
+
+[X-Action-Profile profile-zero]
+MimeTypes=inode/directory;
+Exec=/usr/local/bin/xdg-open-pkexec %f
+Name=Default profile
