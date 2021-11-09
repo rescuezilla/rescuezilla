@@ -1238,10 +1238,12 @@ class Handler:
             self.drive_query.populate_mount_partition_table(ignore_drive_key=self.selected_drive_key)
         self.drive_query.populate_drive_selection_table()
 
-
     def open_url_as_non_root(self, button):
-        Utility.open_url_as_non_root("ubuntu", button.get_uri())
-        return
+        uri = button.get_uri()
+        target_user = "ubuntu"
+        is_success, failed_message = Utility.open_url_as_user(target_user, uri)
+        if not is_success:
+            ErrorMessageModalPopup.display_nonfatal_warning_message(self.builder, failed_message)
 
     def select_image_folder(self, button):
         folder_selection_popup = BrowseSelectionPopup(self.builder, callback=self.selected_image_folder, default_directory=MOUNT_DIR, is_allow_selecting_folder_outside_mount=True)
@@ -1373,13 +1375,18 @@ class Handler:
         self.builder.get_object("button_mount").set_sensitive(True)
 
     def open_file_manager(self, button):
-        user = "ubuntu"
         if shutil.which("xdg-open") is None:
-            error = ErrorMessageModalPopup(self.builder, "Cannot launch file manager (using xdg-open) as user '" + user + "'.\n\n"
-                                           + "Please manually navigate to the following path using a file manager: "
+            error = ErrorMessageModalPopup(self.builder, "Cannot launch file manager using xdg-open."
+                                                         "Please manually navigate to the following path using a file manager: "
                                            + IMAGE_EXPLORER_DIR)
         else:
-            Utility.open_path_in_filemanager_as_non_root(user, IMAGE_EXPLORER_DIR)
+            target_user = "ubuntu"
+            if not Utility.is_user_valid(target_user):
+                print(target_user + " does not exist, using root")
+                target_user = "root"
+            is_success, failed_message = Utility.open_app_as_target_user(target_user, ["xdg-open", IMAGE_EXPLORER_DIR])
+            if not is_success:
+                error = ErrorMessageModalPopup(self.builder, failed_message)
 
     # Callback for double click (row-activate).
     def row_activated_partition_selected(self, treeview, path, view_column):
