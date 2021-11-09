@@ -232,6 +232,14 @@ class Utility:
             finally:
                 locale.setlocale(locale.LC_ALL, saved)
 
+    @staticmethod
+    def is_user_valid(target_user):
+        try:
+            pwd.getpwnam(target_user)
+            return True
+        except KeyError:
+            return False
+
     # Background: The Rescuezilla frontend uses PolKit to elevate from the standard user to root user, as is required to
     # access harddrive block devices. To open graphical tools from an application running as root as a non-privileged
     # user requires this wrapper.
@@ -239,18 +247,16 @@ class Utility:
     def open_app_as_target_user(target_user, process_list):
         current_user = pwd.getpwuid(os.getuid()).pw_name
         print("Current user is '" + current_user + "'. As user '" + target_user + "' launching: " + str(process_list))
-        try:
-            pwd.getpwnam(target_user)
-            does_target_user_exists = True
-        except KeyError:
-            print("Launching app " + str(process_list) + " as non-root user failed. Target user: " + target_user + " does not not exist.")
-            return
-
-        if does_target_user_exists:
+        if Utility.is_user_valid(target_user):
             # Launch detached subprocess as target user
             sudo_process_list = ["sudo", "-u", target_user] + process_list
+            print("Running " + str(process_list))
             subprocess.Popen(sudo_process_list, start_new_session=True)
-        return
+            # TODO: Check return code of otherwise forking process
+            return True, ""
+        else:
+            error_message = "Launching " + str(process_list) + " failed. " + target_user + " does not exist."
+            return False, error_message
 
     # Opens URL in web browser using non-root user, for users that need to click on a link within the Rescuezilla
     # frontend (eg, to access the Rescuezilla forum to receive support).
@@ -258,13 +264,9 @@ class Utility:
     # browser as root user (which modern web browsers do not allow). Fortunately most end-users will be running the X
     # Windowing System session as a non-root user,
     @staticmethod
-    def open_url_as_non_root(target_user, url):
+    def open_url_as_user(target_user, url):
         # Default web browser symlink as configured by the Debian Alternatives System configured web browser.
-        Utility.open_app_as_target_user(target_user, ["x-www-browser", url])
-
-    @staticmethod
-    def open_path_in_filemanager_as_non_root(target_user, path):
-        Utility.open_app_as_target_user(target_user, ["xdg-open", path])
+        return Utility.open_app_as_target_user(target_user, ["x-www-browser", url])
 
     @staticmethod
     def read_file_into_string(file_path):
