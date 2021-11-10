@@ -265,8 +265,9 @@ class Utility:
     # Windowing System session as a non-root user,
     @staticmethod
     def open_url_as_user(target_user, url):
-        # Default web browser symlink as configured by the Debian Alternatives System configured web browser.
-        return Utility.open_app_as_target_user(target_user, ["x-www-browser", url])
+        # Default web browser symlink as configured by X Desktop Group's standard command (rather than Debian
+        # Alternatives System configured web browser).
+        return Utility.open_app_as_target_user(target_user, ["xdg-open", url])
 
     @staticmethod
     def read_file_into_string(file_path):
