@@ -23,6 +23,10 @@ done
 # Delete the now-installed deb files from the chroot filesystem
 rm /*.deb
 
+# Add reasonable xdg-open MIME associations based on Ubuntu user file
+mkdir --parents /root/.local/share/applications/
+rsync -aP /home/ubuntu/.local/share/applications/mimeapps.list /root/.local/share/applications/
+
 update-alternatives --set x-terminal-emulator /usr/bin/xfce4-terminal
 update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/rescuezilla-logo/rescuezilla-logo.plymouth 100
 update-alternatives --set default.plymouth /usr/share/plymouth/themes/rescuezilla-logo/rescuezilla-logo.plymouth
