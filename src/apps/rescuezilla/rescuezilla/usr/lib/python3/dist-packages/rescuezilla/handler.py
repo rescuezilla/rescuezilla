@@ -45,7 +45,7 @@ from drive_query import DriveQuery
 from image_folder_query import ImageFolderQuery
 from parser.sfdisk import Sfdisk
 from utility import ErrorMessageModalPopup, BrowseSelectionPopup, Utility, AreYouSureModalPopup, _
-from wizard_state import Mode, Page, MOUNT_DIR, IMAGE_EXPLORER_DIR, NETWORK_UI_WIDGET_MODES
+from wizard_state import Mode, Page, MOUNT_DIR, IMAGE_EXPLORER_DIR, NETWORK_UI_WIDGET_MODES, RESCUEZILLA_MOUNT_TMP_DIR
 
 
 class Handler:
