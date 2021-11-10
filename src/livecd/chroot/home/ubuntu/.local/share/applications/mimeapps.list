@@ -1,20 +1,7 @@
 
 [Added Associations]
-video/ogg=gnome-mplayer.desktop
-image/png=mirage.desktop;
-text/html=chromium-browser.desktop;mousepad.desktop;
-application/zip=file-roller.desktop;
-audio/mpeg=deadbeef.desktop;
-application/x-compressed-tar=file-roller.desktop;
+text/html=mousepad.desktop;
 text/x-readme=mousepad.desktop;
 text/x-python=mousepad.desktop;
-application/pdf=evince.desktop;
 text/plain=mousepad.desktop;
-image/jpeg=mirage.desktop;
-video/x-flv=gnome-mplayer.desktop;
-video/mp4=gnome-mplayer.desktop;
-video/x-msvideo=gnome-mplayer.desktop;
-video/mpeg=gnome-mplayer.desktop;
-video/quicktime=gnome-mplayer.desktop;
-audio/x-vorbis+ogg=deadbeef.desktop;
 inode/directory=pcmanfm.desktop;
