@@ -247,15 +247,18 @@ class Utility:
     def open_app_as_target_user(target_user, process_list):
         current_user = pwd.getpwuid(os.getuid()).pw_name
         print("Current user is '" + current_user + "'. As user '" + target_user + "' launching: " + str(process_list))
+        # Launch detached subprocess as target user
+        sudo_process_list = ["sudo", "-u", target_user] + process_list
         if Utility.is_user_valid(target_user):
-            # Launch detached subprocess as target user
-            sudo_process_list = ["sudo", "-u", target_user] + process_list
             print("Running " + str(process_list))
             subprocess.Popen(sudo_process_list, start_new_session=True)
             # TODO: Check return code of otherwise forking process
             return True, ""
         else:
-            error_message = "Launching " + str(process_list) + " failed. " + target_user + " does not exist."
+            # TODO: Find a way to arbitrarily launch graphical applications as the local non-root user from Rescuezilla's root process.
+            error_message = "Cannot run: " + str(sudo_process_list)
+            error_message += "\n\nThe user named \"" + target_user + "\" does not exist. Are you using Rescuezilla outside the official live environment?"
+            error_message += "\n\nPlease navigate to the specified location manually."
             return False, error_message
 
     # Opens URL in web browser using non-root user, for users that need to click on a link within the Rescuezilla
