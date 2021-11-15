@@ -282,7 +282,16 @@ class ImageExplorerManager:
         return True, ""
 
     def get_partition_compression(self, selected_partition_key):
-        return self.selected_image.image_format_dict_dict[selected_partition_key]['compression']
+        if 'compression' in self.selected_image.image_format_dict_dict[selected_partition_key].keys():
+            return self.selected_image.image_format_dict_dict[selected_partition_key]['compression']
+        else:
+            return None
+
+    def get_partition_type(self, selected_partition_key):
+        if 'type' in self.selected_image.image_format_dict_dict[selected_partition_key].keys():
+            return self.selected_image.image_format_dict_dict[selected_partition_key]['type']
+        else:
+            return None
 
     def mount_partition(self, selected_partition_key):
         self.image_explorer_in_progress = True

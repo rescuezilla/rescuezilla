@@ -1402,7 +1402,23 @@ class Handler:
     def mount_partition(self, button):
         list_store, iter = self.get_row("image_explorer_image_partition_treeselection")
         selected_partition_key = list_store.get(iter, 0)[0]
+
+        error_message = ""
         compression = self.image_explorer_manager.get_partition_compression(selected_partition_key)
+        image_type = self.image_explorer_manager.get_partition_type(selected_partition_key)
+        if image_type == "swap":
+            error_message += "Swap partitions cannot be mounted.\n"
+        elif image_type == "missing":
+            # This shouldn't be printed because missing partitions should being filtered out.
+            error_message += "There are no saved image associated with this partition {key}.".format(
+                            key=selected_partition_key) + "\n\n"\
+                             + _("This may occur if Clonezilla was originally unable to backup this partition.") + "\n"
+        if compression is None:
+            error_message += "Could not extract image compression.\n"
+        if error_message != "":
+            error = ErrorMessageModalPopup(self.builder, error_message)
+            return
+
         # Don't show reminder when unmounting or if the image is uncompressed.
         if not self.image_explorer_manager.get_mounted_state() and not compression == "uncompressed":
             AreYouSureModalPopup(self.builder,
