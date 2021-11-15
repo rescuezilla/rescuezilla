@@ -5555,6 +5555,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                 <property name="halign">center</property>
                                                 <property name="relief">none</property>
                                                 <property name="uri">https://www.patreon.com/join/rescuezilla</property>
+                                                <signal name="pressed" handler="open_url_as_non_root" swapped="no"/>
                                               </object>
                                               <packing>
                                                 <property name="expand">False</property>
@@ -6887,6 +6888,7 @@ To use the "imaging" wizards, click &lt;b&gt;Back&lt;/b&gt; and select &lt;b&gt;
                                             <property name="halign">center</property>
                                             <property name="relief">none</property>
                                             <property name="uri">https://www.patreon.com/join/rescuezilla</property>
+                                            <signal name="pressed" handler="open_url_as_non_root" swapped="no"/>
                                           </object>
                                           <packing>
                                             <property name="expand">False</property>
@@ -7046,6 +7048,7 @@ To use the "imaging" wizards, click &lt;b&gt;Back&lt;/b&gt; and select &lt;b&gt;
                                             <property name="halign">center</property>
                                             <property name="relief">none</property>
                                             <property name="uri">https://www.patreon.com/join/rescuezilla</property>
+                                            <signal name="pressed" handler="open_url_as_non_root" swapped="no"/>
                                           </object>
                                           <packing>
                                             <property name="expand">False</property>
@@ -7061,6 +7064,7 @@ To use the "imaging" wizards, click &lt;b&gt;Back&lt;/b&gt; and select &lt;b&gt;
                                             <property name="halign">center</property>
                                             <property name="relief">none</property>
                                             <property name="uri">https://rescuezilla.com/help</property>
+                                            <signal name="pressed" handler="open_url_as_non_root" swapped="no"/>
                                           </object>
                                           <packing>
                                             <property name="expand">False</property>
@@ -8301,6 +8305,7 @@ Did you know: Rescuezilla works with virtual machine images used by VirtualBox, 
                                                 <property name="halign">center</property>
                                                 <property name="relief">none</property>
                                                 <property name="uri">https://rescuezilla.com/help</property>
+                                                <signal name="pressed" handler="open_url_as_non_root" swapped="no"/>
                                               </object>
                                               <packing>
                                                 <property name="expand">False</property>
@@ -8316,6 +8321,7 @@ Did you know: Rescuezilla works with virtual machine images used by VirtualBox, 
                                                 <property name="halign">center</property>
                                                 <property name="relief">none</property>
                                                 <property name="uri">https://www.patreon.com/join/rescuezilla</property>
+                                                <signal name="pressed" handler="open_url_as_non_root" swapped="no"/>
                                               </object>
                                               <packing>
                                                 <property name="expand">False</property>
