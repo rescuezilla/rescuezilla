@@ -882,13 +882,13 @@ class RestoreManager:
                                                 "restore", dest_part['dest_key'], "stdin"]
                         restore_stdin_proc_key = 'cat_' + image_key
                         env['TERM'] = "xterm"
-                    elif 'ntfsclone' == self.image.image_format_dict_dict[image_key]['type']:
+                    elif 'ntfsclone' == image_type:
                         # TODO: Evaluate $ntfsclone_restore_extra_opt_def
                         restore_command_list = [restore_binary, "--restore-image", "--overwrite", dest_part['dest_key'],
                                                 "-"]
                     else:
-                        self.logger.write("Unhandled type" + image_type + " from " + image_key)
                         message = "Unhandled type" + image_type + " from " + image_key
+                        self.logger.write(message)
                         GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, message)
                         with self.summary_message_lock:
                             self.summary_message += message + "\n"
