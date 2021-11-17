@@ -381,7 +381,7 @@ class RestoreManager:
 
             if self.is_overwriting_partition_table:
                 process, flat_command_string, failed_message = Utility.run(
-                    "Delete any existing the MBR and GPT partition table on the destination disk: " + self.restore_destination_drive,
+                    "Delete any existing MBR and GPT partition table on the destination disk: " + self.restore_destination_drive,
                     ["sgdisk", "--zap-all", self.restore_destination_drive], use_c_locale=False, logger=self.logger)
                 if process.returncode != 0:
                     self.logger.write("sgdisk --zap-all failed (This is expected on a blank disk).")
