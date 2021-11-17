@@ -156,6 +156,11 @@ class FoxcloneImage:
         self.size_bytes = last_partition_final_byte
         # Covert size in bytes to KB/MB/GB/TB as relevant
         self.enduser_readable_size = Utility.human_readable_filesize(int(self.size_bytes))
+
+        for image_format_dict_key in self.image_format_dict_dict.keys():
+            estimated_size_bytes = self._compute_partition_size_byte_estimate(image_format_dict_key)
+            self.image_format_dict_dict[image_format_dict_key]['estimated_size_bytes'] = estimated_size_bytes
+
         self.is_needs_decryption = False
 
     def get_enduser_friendly_partition_description(self):
