@@ -41,10 +41,10 @@ script:
 - docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make test
   # List any working directory files to help debug any unclean working directory issues
 - docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make status
-  # Execute the Makefile's hirsute target within the docker container. This step
+  # Execute the Makefile's impish target within the docker container. This step
   # may take some time. Hundreds of megabytes of packages are downloaded from the
   # Ubuntu mirror during a build.
-- docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make hirsute
+- docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make impish
   # List any working directory files to help debug any unclean working directory issues
 - docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make status
   # Build focal target
@@ -56,17 +56,17 @@ script:
 
 before_deploy:
   - sudo mv build/rescuezilla.amd64.focal.iso build/rescuezilla-$TRAVIS_TAG-64bit.focal.iso
-  - sudo mv build/rescuezilla.amd64.hirsute.iso build/rescuezilla-$TRAVIS_TAG-64bit.hirsute.iso
+  - sudo mv build/rescuezilla.amd64.impish.iso build/rescuezilla-$TRAVIS_TAG-64bit.impish.iso
   - rm -f SHA256SUM SHA1SUM MD5SUM
-  - sha256sum build/rescuezilla-$TRAVIS_TAG-64bit.hirsute.iso build/rescuezilla-$TRAVIS_TAG-64bit.focal.iso > SHA256SUM
-  - sha1sum build/rescuezilla-$TRAVIS_TAG-64bit.hirsute.iso build/rescuezilla-$TRAVIS_TAG-64bit.focal.iso > SHA1SUM
-  - md5sum build/rescuezilla-$TRAVIS_TAG-64bit.hirsute.iso build/rescuezilla-$TRAVIS_TAG-64bit.focal.iso > MD5SUM
+  - sha256sum build/rescuezilla-$TRAVIS_TAG-64bit.impish.iso build/rescuezilla-$TRAVIS_TAG-64bit.focal.iso > SHA256SUM
+  - sha1sum build/rescuezilla-$TRAVIS_TAG-64bit.impish.iso build/rescuezilla-$TRAVIS_TAG-64bit.focal.iso > SHA1SUM
+  - md5sum build/rescuezilla-$TRAVIS_TAG-64bit.impish.iso build/rescuezilla-$TRAVIS_TAG-64bit.focal.iso > MD5SUM
 
 deploy:
   provider: releases
   token: $GITHUB_TOKEN
   file:
-    - build/rescuezilla-${TRAVIS_TAG}-64bit.hirsute.iso
+    - build/rescuezilla-${TRAVIS_TAG}-64bit.impish.iso
     - build/rescuezilla-${TRAVIS_TAG}-64bit.focal.iso
     - build/rescuezilla_${TRAVIS_TAG}-1_all.deb
     - SHA256SUMS

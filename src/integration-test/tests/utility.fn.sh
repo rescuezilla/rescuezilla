@@ -27,8 +27,8 @@ run_cmd_in_rescuezilla_vm() {
 # Boot Rescuezilla
 boot_dvd() {
      VM="$1"
-     ISO_PATH="${2:-$INTEGRATION_TEST_FOLDER/../../build/rescuezilla.amd64.hirsute.iso}"
-     ISO_CHECK_MATCH="${3:-Ubuntu 21.04}"
+     ISO_PATH="${2:-$INTEGRATION_TEST_FOLDER/../../build/rescuezilla.amd64.impish.iso}"
+     ISO_CHECK_MATCH="${3:-Ubuntu 21.10}"
      ./integration_test.py stop --vm $VM
      ./integration_test.py insertdvd --vm $VM --path-to-dvd "$ISO_PATH"
      ./integration_test.py start --vm $VM

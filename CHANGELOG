@@ -20,7 +20,7 @@
   * Restores LVM VG metadata with --force to match a recent Clonezilla patch referring to thin-pool LVs 
   * Ensures each LVM VG metadata once is only restored once, to support newer versions of vgcfgrestore
   * Updates EFI NVRAM for the boot device
-* Replaces Ubuntu 20.10 (Groovy) build with build based on Ubuntu 21.04 (Hirsute) for best support of new hardware
+* Replaces Ubuntu 20.10 (Groovy) build with build based on Ubuntu 21.10 (Impish) for best support of new hardware
 * Added option to shutdown or reboot after operation completes successfully (#165)
 * Added ability to connect to NFS and SSH (SFTP) network shared folders (#81, #118)
 * Added ability to write a description for backup images (#137)
