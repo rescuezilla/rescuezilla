@@ -467,6 +467,12 @@ msgstr "Выключение"
 msgid "Reboot"
 msgstr "Перезагрузка"
 
+msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
+msgstr ""
+
+msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
+msgstr ""
+
 msgid "To start the backup, click <b>Next</b>."
 msgstr "Для начала резервного копирования нажмите <b>Далее</b>."
 
@@ -501,6 +507,9 @@ msgstr "Идет выполнение операции. Вы хотите ее �
 
 msgid "Operation cancelled by user."
 msgstr "Операция отменена пользователем."
+
+msgid "Rescue option is enabled."
+msgstr ""
 
 msgid "Error creating backup: "
 msgstr "Ошибка создания резервной копии: "

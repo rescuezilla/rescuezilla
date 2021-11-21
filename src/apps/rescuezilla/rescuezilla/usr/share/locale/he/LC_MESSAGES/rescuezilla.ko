@@ -447,6 +447,12 @@ msgstr "כיבוי המחשב"
 msgid "Reboot"
 msgstr "הפעלת המחשב מחדש"
 
+msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
+msgstr ""
+
+msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
+msgstr ""
+
 msgid "To start the backup, click <b>Next</b>."
 msgstr "כדי להתחיל את הגיבוי, יש ללחוץ על <b>הבא</b>."
 
@@ -480,6 +486,9 @@ msgstr "מתבצעת פעולה ברקע. לבטל?"
 
 msgid "Operation cancelled by user."
 msgstr "הפעולה בוטלה על ידי המשתמש."
+
+msgid "Rescue option is enabled."
+msgstr ""
 
 msgid "Error creating backup: "
 msgstr "יצירת הגיבוי נתקלה בשגיאה: "

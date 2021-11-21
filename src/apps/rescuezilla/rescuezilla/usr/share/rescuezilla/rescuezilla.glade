@@ -2254,6 +2254,38 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                           </packing>
                                         </child>
                                         <child>
+                                          <object class="GtkCheckButton" id="backup_step7_rescue_checkbutton">
+                                            <property name="label" translatable="yes">Rescue: Ignore filesystem inconsistencies and bad sectors</property>
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">True</property>
+                                            <property name="receives-default">False</property>
+                                            <property name="halign">center</property>
+                                            <property name="draw-indicator">True</property>
+                                            <signal name="toggled" handler="rescue_toggle" swapped="no"/>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">False</property>
+                                            <property name="position">2</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkLabel" id="backup_step7_rescue_warning_label">
+                                            <property name="can-focus">False</property>
+                                            <property name="ypad">10</property>
+                                            <property name="label" translatable="yes">&lt;b&gt;Enabling "Rescue" may suppress important errors. Use with caution.&lt;/b&gt;</property>
+                                            <property name="use-markup">True</property>
+                                            <property name="wrap">True</property>
+                                            <property name="track-visited-links">False</property>
+                                            <property name="yalign">1</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">False</property>
+                                            <property name="position">3</property>
+                                          </packing>
+                                        </child>
+                                        <child>
                                           <object class="GtkBox">
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
@@ -2293,7 +2325,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                           <packing>
                                             <property name="expand">False</property>
                                             <property name="fill">False</property>
-                                            <property name="position">2</property>
+                                            <property name="position">4</property>
                                           </packing>
                                         </child>
                                         <child>
@@ -2309,7 +2341,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                           <packing>
                                             <property name="expand">False</property>
                                             <property name="fill">True</property>
-                                            <property name="position">3</property>
+                                            <property name="position">5</property>
                                           </packing>
                                         </child>
                                       </object>
@@ -4134,6 +4166,38 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                               </packing>
                                             </child>
                                             <child>
+                                              <object class="GtkCheckButton" id="restore_step5_rescue_checkbutton">
+                                                <property name="label" translatable="yes">Rescue: Ignore filesystem inconsistencies and bad sectors</property>
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">True</property>
+                                                <property name="receives-default">False</property>
+                                                <property name="halign">center</property>
+                                                <property name="draw-indicator">True</property>
+                                                <signal name="toggled" handler="rescue_toggle" swapped="no"/>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">False</property>
+                                                <property name="position">2</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkLabel" id="restore_step5_rescue_warning_label">
+                                                <property name="can-focus">False</property>
+                                                <property name="ypad">10</property>
+                                                <property name="label" translatable="yes">&lt;b&gt;Enabling "Rescue" may suppress important errors. Use with caution.&lt;/b&gt;</property>
+                                                <property name="use-markup">True</property>
+                                                <property name="wrap">True</property>
+                                                <property name="track-visited-links">False</property>
+                                                <property name="yalign">1</property>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">False</property>
+                                                <property name="position">3</property>
+                                              </packing>
+                                            </child>
+                                            <child>
                                               <object class="GtkBox">
                                                 <property name="visible">True</property>
                                                 <property name="can-focus">False</property>
@@ -4173,7 +4237,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                               <packing>
                                                 <property name="expand">False</property>
                                                 <property name="fill">False</property>
-                                                <property name="position">2</property>
+                                                <property name="position">4</property>
                                               </packing>
                                             </child>
                                             <child>
@@ -4189,7 +4253,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                               <packing>
                                                 <property name="expand">False</property>
                                                 <property name="fill">True</property>
-                                                <property name="position">3</property>
+                                                <property name="position">5</property>
                                               </packing>
                                             </child>
                                           </object>
@@ -6772,6 +6836,38 @@ To use the "imaging" wizards, click &lt;b&gt;Back&lt;/b&gt; and select &lt;b&gt;
                                           </packing>
                                         </child>
                                         <child>
+                                          <object class="GtkCheckButton" id="clone_step5_rescue_checkbutton">
+                                            <property name="label" translatable="yes">Rescue: Ignore filesystem inconsistencies and bad sectors</property>
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">True</property>
+                                            <property name="receives-default">False</property>
+                                            <property name="halign">center</property>
+                                            <property name="draw-indicator">True</property>
+                                            <signal name="toggled" handler="rescue_toggle" swapped="no"/>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">False</property>
+                                            <property name="position">2</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                          <object class="GtkLabel" id="clone_step5_rescue_warning_label">
+                                            <property name="can-focus">False</property>
+                                            <property name="ypad">10</property>
+                                            <property name="label" translatable="yes">&lt;b&gt;Enabling "Rescue" may suppress important errors. Use with caution.&lt;/b&gt;</property>
+                                            <property name="use-markup">True</property>
+                                            <property name="wrap">True</property>
+                                            <property name="track-visited-links">False</property>
+                                            <property name="yalign">1</property>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">False</property>
+                                            <property name="position">3</property>
+                                          </packing>
+                                        </child>
+                                        <child>
                                           <object class="GtkBox">
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
@@ -6811,7 +6907,7 @@ To use the "imaging" wizards, click &lt;b&gt;Back&lt;/b&gt; and select &lt;b&gt;
                                           <packing>
                                             <property name="expand">False</property>
                                             <property name="fill">False</property>
-                                            <property name="position">2</property>
+                                            <property name="position">4</property>
                                           </packing>
                                         </child>
                                         <child>
@@ -6827,7 +6923,7 @@ To use the "imaging" wizards, click &lt;b&gt;Back&lt;/b&gt; and select &lt;b&gt;
                                           <packing>
                                             <property name="expand">False</property>
                                             <property name="fill">True</property>
-                                            <property name="position">3</property>
+                                            <property name="position">5</property>
                                           </packing>
                                         </child>
                                       </object>

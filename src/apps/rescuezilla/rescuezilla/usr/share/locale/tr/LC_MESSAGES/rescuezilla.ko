@@ -464,6 +464,12 @@ msgstr "Kapat"
 msgid "Reboot"
 msgstr "Yeniden başlat"
 
+msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
+msgstr ""
+
+msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
+msgstr ""
+
 msgid "To start the backup, click <b>Next</b>."
 msgstr "Yedeklemeyi başlatmak için <b>İleri</b> düğmesine tıklayın."
 
@@ -497,6 +503,9 @@ msgstr "Devam eden bir işlem var. İptal etmek istiyor musunuz?"
 
 msgid "Operation cancelled by user."
 msgstr "İşlem kullanıcı tarafından iptal edildi."
+
+msgid "Rescue option is enabled."
+msgstr ""
 
 msgid "Error creating backup: "
 msgstr "Yedek oluşturulurken hata oluştu: "

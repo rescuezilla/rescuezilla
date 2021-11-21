@@ -465,6 +465,12 @@ msgstr "Zamknij"
 msgid "Reboot"
 msgstr "Restartuj"
 
+msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
+msgstr ""
+
+msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
+msgstr ""
+
 msgid "To start the backup, click <b>Next</b>."
 msgstr "Aby rozpocząć tworzenie kopii zapasowej, kliknij <b>Dalej</b>."
 
@@ -498,6 +504,9 @@ msgstr "Trwa operacja. Czy chcesz anulować?"
 
 msgid "Operation cancelled by user."
 msgstr "Operacja anulowana przez użytkownika."
+
+msgid "Rescue option is enabled."
+msgstr ""
 
 msgid "Error creating backup: "
 msgstr "Błąd tworzenia kopii zapasowej: "

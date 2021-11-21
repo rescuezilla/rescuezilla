@@ -71,6 +71,7 @@ class BackupManager:
                      dest_dir,
                      backup_notes,
                      compression_dict,
+                     is_rescue,
                      post_task_action,
                      completed_backup_callback,
                      metadata_only_image_to_annotate=None,
@@ -81,6 +82,7 @@ class BackupManager:
         self.dest_dir = dest_dir
         self.backup_notes = backup_notes
         self.compression_dict = compression_dict
+        self.is_rescue = is_rescue
         self.post_task_action = post_task_action
         self.partitions_to_backup = partitions_to_backup
         # Entire machine's drive state
@@ -144,6 +146,10 @@ class BackupManager:
         self.proc.clear()
         self.summary_message_lock = threading.Lock()
         self.summary_message = ""
+
+        if self.is_rescue and not self.is_cloning:
+            with self.summary_message_lock:
+                self.summary_message += _("Rescue option is enabled.") + "\n"
 
         env = Utility.get_env_C_locale()
 
@@ -800,13 +806,13 @@ class BackupManager:
             # TODO: Re-enable APFS support -- currently partclone Apple Filesystem is not used because it's too unstable [1]
             # [1] https://github.com/rescuezilla/rescuezilla/issues/65
             if shutil.which("partclone." + filesystem) is not None and filesystem != "apfs":
-                partclone_cmd_list = ["partclone." + filesystem, "--logfile", "/var/log/partclone.log", "--clone",
+                partclone_cmd_list = ["partclone." + filesystem] + Utility.get_partclone_rescue_options(self.is_rescue) + ["--logfile", "/var/log/partclone.log", "--clone",
                                       "--source", partition_key, "--output", "-"]
                 filepath = os.path.join(self.dest_dir,
                                         short_device_node + "." + filesystem + "-ptcl-img." + compression_suffix + ".")
                 split_cmd_list = ["split", "--suffix-length=2", "--bytes=" + split_size, "-", filepath]
             elif shutil.which("partclone.dd") is not None:
-                partclone_cmd_list = ["partclone.dd", "--buffer_size=" + partclone_dd_bs, "--logfile",
+                partclone_cmd_list = ["partclone.dd"]  + Utility.get_partclone_rescue_options(self.is_rescue) + ["--buffer_size=" + partclone_dd_bs, "--logfile",
                                       "/var/log/partclone.log", "--source", partition_key, "--output", "-"]
                 filepath = os.path.join(self.dest_dir, short_device_node + ".dd-ptcl-img." + compression_suffix + ".")
                 split_cmd_list = ["split", "--suffix-length=2", "--bytes=" + split_size, "-", filepath]

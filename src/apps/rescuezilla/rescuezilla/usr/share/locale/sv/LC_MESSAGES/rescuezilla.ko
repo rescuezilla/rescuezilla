@@ -455,6 +455,12 @@ msgstr "Stäng av"
 msgid "Reboot"
 msgstr "Starta om"
 
+msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
+msgstr ""
+
+msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
+msgstr ""
+
 msgid "To start the backup, click <b>Next</b>."
 msgstr "Klicka på <b>Nästa</b> för att starta säkerhetskopian."
 
@@ -484,6 +490,9 @@ msgstr "En process pågår. Vill du avbryta?"
 
 msgid "Operation cancelled by user."
 msgstr "Säkerhetskopieringen avbröts av användaren."
+
+msgid "Rescue option is enabled."
+msgstr ""
 
 msgid "Error creating backup: "
 msgstr "Fel vid säkerhetskopiering: "

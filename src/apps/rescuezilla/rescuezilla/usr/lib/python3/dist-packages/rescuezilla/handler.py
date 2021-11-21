@@ -179,6 +179,16 @@ class Handler:
         self.larger_to_smaller_info_msg = _("Rescuezilla cannot yet automatically shrink partitions to restore from large disks to smaller disks. The final partition currently must always completely reside within the destination disk.\n\nCurrently the only way to restore to disks smaller than original is to first use GParted Partition Editor to shrink the final partition of the original disk before making a new backup image. Please read the following instructions for more information:\n\n{url}").format(url="https://github.com/rescuezilla/rescuezilla/wiki/HOWTO:-Restoring-to-a-smaller-disk.-Eg,-1000GB-HDD-to-500GB-SSD")
         self.source_contains_raid_member_msg = _("Source drive cannot containing RAID member filesystem. The RAID device may be available as as eg, /dev/md0 or /dev/md127.")
 
+        self.rescue_checkbutton_dict = {
+            Mode.BACKUP: self.builder.get_object("backup_step7_rescue_checkbutton"),
+            Mode.RESTORE: self.builder.get_object("restore_step5_rescue_checkbutton"),
+            Mode.CLONE: self.builder.get_object("clone_step5_rescue_checkbutton")}
+
+        self.rescue_warning_label_dict = {
+            Mode.BACKUP: self.builder.get_object("backup_step7_rescue_warning_label"),
+            Mode.RESTORE: self.builder.get_object("restore_step5_rescue_warning_label"),
+            Mode.CLONE: self.builder.get_object("clone_step5_rescue_warning_label")}
+
         self.requested_shutdown_lock = threading.Lock()
         self.requested_shutdown = False
         self.display_welcome_page()
@@ -401,7 +411,8 @@ class Handler:
                     self.builder.get_object("backup_tabs").set_current_page(7)
                     self.post_task_action = Utility.get_combobox_key(self.builder.get_object("backup_step7_perform_action_combobox"))
                     self.backup_manager.update_backup_progress_bar(0)
-                    self.backup_manager.start_backup(self.selected_drive_key, self.partitions_to_backup, self.drive_query.drive_state, self.dest_dir, self.backup_notes, self.compression_dict, self.post_task_action, self._on_operation_completed_callback)
+                    is_rescue = self.get_rescue_state()
+                    self.backup_manager.start_backup(self.selected_drive_key, self.partitions_to_backup, self.drive_query.drive_state, self.dest_dir, self.backup_notes, self.compression_dict, is_rescue, self.post_task_action, self._on_operation_completed_callback)
                     # Disable back/next button until the restore completes
                     self.builder.get_object("button_next").set_sensitive(False)
                     self.builder.get_object("button_back").set_sensitive(False)
@@ -903,10 +914,12 @@ class Handler:
         if is_affirmative:
             self.current_page = Page.RESTORE_PROGRESS
             self.builder.get_object("restore_tabs").set_current_page(5)
+            is_rescue = self.get_rescue_state()
             if not isinstance(self.selected_image, QemuImage):
                 self.restore_manager.update_progress_bar(0)
                 self.restore_manager.start_restore(self.selected_image, self.restore_destination_drive,
                                                    self.partitions_to_restore, self.is_overwriting_partition_table,
+                                                   is_rescue,
                                                    self.post_task_action,
                                                    self._on_operation_completed_callback)
             else:
@@ -916,6 +929,7 @@ class Handler:
                                                clone_mapping_dict=self.partitions_to_restore,
                                                drive_state=self.drive_query.drive_state,
                                                is_overwriting_partition_table=self.is_overwriting_partition_table,
+                                               is_rescue=is_rescue,
                                                post_task_action=self.post_task_action,
                                                completed_callback=self._on_operation_completed_callback)
             # Display the Patreon call-to-action.
@@ -928,11 +942,13 @@ class Handler:
         if is_affirmative:
             self.current_page = Page.CLONE_PROGRESS
             self.builder.get_object("clone_tabs").set_current_page(5)
+            is_rescue = self.get_rescue_state()
             self.clone_manager.start_clone(image=self.source_drive_metadata_only_image,
                                            clone_destination_drive=self.clone_destination_drive,
                                            clone_mapping_dict=self.partitions_to_clone,
                                            drive_state=self.drive_query.drive_state,
                                            is_overwriting_partition_table=self.is_overwriting_partition_table,
+                                           is_rescue=self.is_rescue,
                                            post_task_action=self.post_task_action,
                                            completed_callback=self._on_operation_completed_callback)
             # Display the Patreon call-to-action.
@@ -956,7 +972,7 @@ class Handler:
         # Not using index = path.get_indices()[0], as the next button could also be used not double-click.
 
     def save_partition_toggled(self, cellrendertoggle, path):
-        print("Backup partition toggled: " + str(path))
+        print("Backup partition oggled: " + str(path))
         iterator = self.save_partition_list_store.get_iter(path)
         # Get the first column
         state = self.save_partition_list_store.get(iterator, 1)[0]
@@ -1171,6 +1187,12 @@ class Handler:
         compression_dict = {"format": compression_key, "level": level}
 
         return compression_dict
+
+    def get_rescue_state(self):
+        return self.rescue_checkbutton_dict[self.mode].get_active()
+
+    def rescue_toggle(self, toggle_button):
+        self.rescue_warning_label_dict[self.mode].set_visible(toggle_button.get_active())
 
     # GtkToggleButton handler for switching the image location selection between local folder, and network share.
     def image_location_toggle(self, toggle_button):

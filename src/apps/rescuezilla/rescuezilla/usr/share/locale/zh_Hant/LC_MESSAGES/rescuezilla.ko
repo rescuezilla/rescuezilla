@@ -414,6 +414,12 @@ msgstr "關閉"
 msgid "Reboot"
 msgstr "重新啟動"
 
+msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
+msgstr ""
+
+msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
+msgstr ""
+
 msgid "To start the backup, click <b>Next</b>."
 msgstr "要啟動備份，請單擊 <b>下一個</b>。"
 
@@ -443,6 +449,9 @@ msgstr "操作正在進行中。你想取消嗎？"
 
 msgid "Operation cancelled by user."
 msgstr "使用者取消操作。"
+
+msgid "Rescue option is enabled."
+msgstr ""
 
 msgid "Error creating backup: "
 msgstr "建立備份的錯誤： "

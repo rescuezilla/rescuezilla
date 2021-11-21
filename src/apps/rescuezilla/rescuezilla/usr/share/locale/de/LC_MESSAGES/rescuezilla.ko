@@ -484,6 +484,12 @@ msgstr "Herunterfahren"
 msgid "Reboot"
 msgstr "Neustarten"
 
+msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
+msgstr ""
+
+msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
+msgstr ""
+
 msgid "To start the backup, click <b>Next</b>."
 msgstr "Klicke zum Starten des Sicherungsvorgangs auf <b>Weiter</b>."
 
@@ -516,6 +522,9 @@ msgstr "Ein Vorgang wird noch ausgeführt. Möchtest du ihn beenden?"
 
 msgid "Operation cancelled by user."
 msgstr "Sicherung vom Benutzer abgebrochen."
+
+msgid "Rescue option is enabled."
+msgstr ""
 
 msgid "Error creating backup: "
 msgstr "Fehler beim Erstellen der Sicherungskopie: "

@@ -477,6 +477,12 @@ msgstr "Τερματισμός"
 msgid "Reboot"
 msgstr "Επανεκκίνηση"
 
+msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
+msgstr ""
+
+msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
+msgstr ""
+
 msgid "To start the backup, click <b>Next</b>."
 msgstr "Για την εκκίνηση της δημιουργίας αντιγράφου ασφαλείας, επιλέξτε <b>Επόμενο</b>."
 
@@ -506,6 +512,9 @@ msgstr "Μια λειτουργία βρίσκεται σε εξέλιξη. Θέ
 
 msgid "Operation cancelled by user."
 msgstr "Η διαδικασία των Αντιγράφου Ασφαλείας ακυρώθηκε από τον χρήστη."
+
+msgid "Rescue option is enabled."
+msgstr ""
 
 msgid "Error creating backup: "
 msgstr "Παρουσιάστηκε σφάλμα κατά τη δημιουργία αντιγράφου ασφαλείας: "

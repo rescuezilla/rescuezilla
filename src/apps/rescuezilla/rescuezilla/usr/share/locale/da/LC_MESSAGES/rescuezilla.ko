@@ -466,6 +466,12 @@ msgstr "Sluk PC"
 msgid "Reboot"
 msgstr "Genstart"
 
+msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
+msgstr ""
+
+msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
+msgstr ""
+
 msgid "To start the backup, click <b>Next</b>."
 msgstr "For at starte sikkerhedskopieringen; klik <b>Næste</b>."
 
@@ -499,6 +505,9 @@ msgstr "En operation er i gang. Ønsker du at annullere?"
 
 msgid "Operation cancelled by user."
 msgstr "Handlingen annulleret af brugeren."
+
+msgid "Rescue option is enabled."
+msgstr ""
 
 msgid "Error creating backup: "
 msgstr "Fejl ved oprettelse af sikkerhedskopi: "

@@ -55,12 +55,13 @@ class CloneManager:
             return self.clone_in_progress
 
     def start_clone(self, image, clone_destination_drive, clone_mapping_dict, drive_state,
-                    is_overwriting_partition_table, post_task_action, completed_callback):
+                    is_overwriting_partition_table, is_rescue, post_task_action, completed_callback):
         self.clone_timestart = datetime.now()
         self.image = image
         self.clone_destination_drive = clone_destination_drive
         self.clone_mapping_dict = clone_mapping_dict
         self.is_overwriting_partition_table = is_overwriting_partition_table
+        self.is_rescue = is_rescue
         self.post_task_action = post_task_action
         self.completed_callback = completed_callback
         GLib.idle_add(self.restore_manager.update_progress_bar, 0)
@@ -121,6 +122,9 @@ class CloneManager:
         self.proc.clear()
         self.summary_message_lock = threading.Lock()
         self.summary_message = ""
+        if self.is_rescue:
+            with self.summary_message_lock:
+                self.summary_message += _("Rescue option is enabled.") + "\n"
 
         env = Utility.get_env_C_locale()
 
@@ -146,6 +150,7 @@ class CloneManager:
                                                                dest_dir=self.temp_dir,
                                                                backup_notes="",
                                                                compression_dict={"format": "uncompressed", "level": None},
+                                                               is_rescue=self.is_rescue,
                                                                post_task_action="DO_NOTHING",
                                                                completed_backup_callback=CloneManager._ignore_suboperation_callback,
                                                                metadata_only_image_to_annotate = self.image,
@@ -166,6 +171,7 @@ class CloneManager:
                                            restore_destination_drive=self.clone_destination_drive,
                                            restore_mapping_dict=self.clone_mapping_dict,
                                            is_overwriting_partition_table=self.is_overwriting_partition_table,
+                                           is_rescue=self.is_rescue,
                                            post_task_action="DO_NOTHING",
                                            completed_callback = CloneManager._ignore_suboperation_callback,
                                            on_separate_thread = False)

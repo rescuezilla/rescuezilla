@@ -487,6 +487,12 @@ msgid "Reboot"
 msgstr "Start på ny"
 
 #, fuzzy
+msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
+msgstr ""
+
+msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
+msgstr ""
+
 msgid "To start the backup, click <b>Next</b>."
 msgstr "For å starte sikkerhetskopieringen, klikk <b>Neste</b>."
 
@@ -526,6 +532,9 @@ msgid "Operation cancelled by user."
 msgstr "Operasjon avbrutt av bruker."
 
 #, fuzzy
+msgid "Rescue option is enabled."
+msgstr ""
+
 msgid "Error creating backup: "
 msgstr "Kunne ikke opprette sikkerhetskopi: "
 

@@ -76,6 +76,7 @@ class RestoreManager:
                       restore_destination_drive,
                       restore_mapping_dict,
                       is_overwriting_partition_table,
+                      is_rescue,
                       post_task_action,
                       completed_callback,
                       on_separate_thread=True):
@@ -88,6 +89,7 @@ class RestoreManager:
         self.restore_destination_drive = restore_destination_drive
         self.restore_mapping_dict = restore_mapping_dict
         self.is_overwriting_partition_table = is_overwriting_partition_table
+        self.is_rescue = is_rescue
         self.post_task_action = post_task_action
         self.completed_callback = completed_callback
         self.logger = Logger("/tmp/rescuezilla.log." + datetime.now().strftime("%Y%m%dT%H%M%S") + ".txt")
@@ -296,6 +298,10 @@ class RestoreManager:
         with self.summary_message_lock:
             # Could state source image vs source drive depending on cloning/restoring an image of drive
             self.summary_message += _("Source image") + ": " + self.image.absolute_path + "\n"
+
+        if self.is_rescue and not self.is_cloning:
+            with self.summary_message_lock:
+                self.summary_message += _("Rescue option is enabled.") + "\n"
 
         returncode, failed_message = ImageExplorerManager._do_unmount(IMAGE_EXPLORER_DIR, is_deassociate_qemu_nbd_device=False)
         if not returncode:
@@ -855,26 +861,26 @@ class RestoreManager:
                         # 16MB partclone dd blocksize (from Clonezilla)
                         partclone_dd_blocksize = "16777216"
                         if self.is_cloning:
-                            restore_command_list = [restore_binary, "--buffer_size", partclone_dd_blocksize, "--logfile",
+                            restore_command_list = [restore_binary] + Utility.get_partclone_rescue_options(self.is_rescue) + ["--buffer_size", partclone_dd_blocksize, "--logfile",
                                                 log_filepath, "--source", image_key, "--overwrite",
                                                 dest_part['dest_key']]
                         else:
-                            restore_command_list = [restore_binary, "--buffer_size", partclone_dd_blocksize, "--logfile",
+                            restore_command_list = [restore_binary] + Utility.get_partclone_rescue_options(self.is_rescue) + ["--buffer_size", partclone_dd_blocksize, "--logfile",
                                                 log_filepath, "--source", "-", "--overwrite",
                                                 dest_part['dest_key']]
                     elif 'partclone' == image_type:
                         if use_old_partclone:
-                            restore_command_list = [restore_binary, "--logfile", log_filepath,
+                            restore_command_list = [restore_binary] + Utility.get_partclone_rescue_options(self.is_rescue) + ["--logfile", log_filepath,
                                                     "--overwrite", dest_part['dest_key']]
                         else:
                             if self.is_cloning:
                                 # Partclone images require --dev-to-dev when cloning device-to-device. Except dd images,
                                 # which don't need it. (Note: Clonezilla's ptcl-img dd image is different to its dd-img)
-                                restore_command_list = [restore_binary, "--dev-to-dev", "--logfile", log_filepath, "--source",
+                                restore_command_list = [restore_binary] + Utility.get_partclone_rescue_options(self.is_rescue) + ["--dev-to-dev", "--logfile", log_filepath, "--source",
                                                     image_key, "--overwrite", dest_part['dest_key']]
                             else:
                                 # TODO: $PARTCLONE_RESTORE_OPT
-                                restore_command_list = [restore_binary, "--logfile", log_filepath, "--source",
+                                restore_command_list = [restore_binary] + Utility.get_partclone_rescue_options(self.is_rescue) + ["--logfile", log_filepath, "--source",
                                                         "-", "--restore", "--overwrite", dest_part['dest_key']]
                     elif 'partimage' == image_type:
                         # TODO: partimage will put header in 2nd and later volumes, so we have to uncompress it, then strip it before pipe them to partimage

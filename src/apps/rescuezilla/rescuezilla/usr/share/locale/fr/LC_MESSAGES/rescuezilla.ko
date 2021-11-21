@@ -412,6 +412,12 @@ msgstr "Arrêter"
 msgid "Reboot"
 msgstr "Redémarrer"
 
+msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
+msgstr ""
+
+msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
+msgstr ""
+
 msgid "To start the backup, click <b>Next</b>."
 msgstr "Pour débuter la sauvegarde, cliquez sur <b>Suivant</b>."
 
@@ -441,6 +447,9 @@ msgstr ""
 
 msgid "Operation cancelled by user."
 msgstr "Sauvegarde annulée par l'utilisateur."
+
+msgid "Rescue option is enabled."
+msgstr ""
 
 msgid "Error creating backup: "
 msgstr "Erreur de création de la sauvegarde :"

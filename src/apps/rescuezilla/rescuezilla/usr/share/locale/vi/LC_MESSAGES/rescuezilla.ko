@@ -455,6 +455,12 @@ msgstr "Tắt máy"
 msgid "Reboot"
 msgstr "Khởi động lại"
 
+msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
+msgstr ""
+
+msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
+msgstr ""
+
 msgid "To start the backup, click <b>Next</b>."
 msgstr "Để bắt đầu sao lưu, nhấn <b>Tiếp theo</b>."
 
@@ -488,6 +494,9 @@ msgstr "Tiến trình hiện đang được thực hiện. Bạn có muốn dừ
 
 msgid "Operation cancelled by user."
 msgstr "Tiến trình bị hủy bởi người dùng."
+
+msgid "Rescue option is enabled."
+msgstr ""
 
 msgid "Error creating backup: "
 msgstr "Lỗi khi đang tạo bản sao lưu: "

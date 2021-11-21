@@ -917,3 +917,12 @@ class Utility:
     @staticmethod
     def get_cannot_distinguish_msg():
         return _("Note: This image format cannot distinguish between failed partclone backup and a user who chose not to backup a partition.")
+
+    # Options for partclone to ignore filesystem inconsistencies, bad sectors and other drive read errors
+    # [1] https://github.com/rescuezilla/rescuezilla/issues/237
+    @staticmethod
+    def get_partclone_rescue_options(is_rescue):
+        if is_rescue:
+            return ["--force", "--rescue"]
+        else:
+            return []

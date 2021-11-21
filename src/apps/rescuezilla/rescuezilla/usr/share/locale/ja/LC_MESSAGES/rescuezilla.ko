@@ -411,6 +411,12 @@ msgstr "シャットダウン"
 msgid "Reboot"
 msgstr "再起動"
 
+msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
+msgstr ""
+
+msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
+msgstr ""
+
 msgid "To start the backup, click <b>Next</b>."
 msgstr "バックアップを開始するには、[<b>次へ</b>]をクリックします。"
 
@@ -440,6 +446,9 @@ msgstr ""
 
 msgid "Operation cancelled by user."
 msgstr "ユーザーによってバックアップがキャンセルされました。"
+
+msgid "Rescue option is enabled."
+msgstr ""
 
 msgid "Error creating backup: "
 msgstr "バックアップの作成中にエラーが発生しました:"
