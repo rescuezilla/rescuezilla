@@ -1,3 +1,11 @@
+rescuezilla (2.3-1) unstable; urgency=low
+
+  * New upstream version.
+  * Added 'Verify'
+  * See the upstream CHANGELOG for full details
+
+ -- Shasheen Ediriweera <rescuezilla@gmail.com>  Fri, 24 Dec 2021 12:00:00 -0800
+
 rescuezilla (2.2-1) unstable; urgency=low
 
   * New upstream version.

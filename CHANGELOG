@@ -1,4 +1,31 @@
 -------------------------------------------------------------------------------
+  Version 2.3 (2021-12-24) 
+-------------------------------------------------------------------------------
+
+* Implemented initial image verification feature (#30)
+* Adds "Rescue" option to ignore filesystem inconsistencies and bad sectors (#237)
+* Replaces Ubuntu 21.04 (Hirsute) build with build based on Ubuntu 21.10 (Impish) for best support of new hardware
+* Added ability to restore and explore images created by "Apart" partclone GUI (#230)
+* Improved image scanning to try to fix report of where some images not scanning except with Browse (#251)
+* Fixed display of LVM shutdown error message (#250)
+* Displayed error message on duplicate image name (#283)
+* Displayed error message when mounting swap partition attempted (#259)
+* Displayed serial number of drives in response to feedback (#227)
+* Added lxappearance package to make it easy to set the dark theme (#275)
+* Added ability to open file manager as root using right-click (#281)
+* Added user-provided Intel Xorg conf file to hopefully stop screen tearing (#281)
+* Fixed issue preventing restoring of images created by FSArchiver/qtfsarchiver (#255)
+* Fixed ability to click certain URLs and open a web browser
+* Listed 'lvm2' as a dependency to assist installing Rescuezilla as standalone package
+* Switched to "xdg-open" to launch file manager and web browser, rather than hardcoding pcmanfm and Firefox
+* Added (or significantly updated) translations:
+  * Hebrew/עִברִית (he-IL) (#244)
+  * Tiếng Việt (vi-VN) (#263)
+  * Danish/Dansk (da-DK) (#248)
+  * Russian/Русский (ru-RU) (#270)
+  * Indonesian/Bahasa Indonesia (id-ID) (in-progress)
+
+-------------------------------------------------------------------------------
   Version 2.2 (2021-06-04) 
 -------------------------------------------------------------------------------
 
