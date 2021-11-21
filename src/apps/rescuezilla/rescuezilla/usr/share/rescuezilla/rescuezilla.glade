@@ -64,6 +64,8 @@
       <column type="gchararray"/>
       <!-- column-name drive_model -->
       <column type="gchararray"/>
+      <!-- column-name drive_serial_number -->
+      <column type="gchararray"/>
       <!-- column-name description_of_all_partitions -->
       <column type="gchararray"/>
     </columns>
@@ -654,11 +656,23 @@
                                                 <child>
                                                   <object class="GtkTreeViewColumn">
                                                     <property name="resizable">True</property>
-                                                    <property name="title" translatable="yes">Partitions</property>
+                                                    <property name="title" translatable="yes">Serial Number</property>
                                                     <child>
                                                       <object class="GtkCellRendererText"/>
                                                       <attributes>
                                                         <attribute name="text">4</attribute>
+                                                      </attributes>
+                                                    </child>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkTreeViewColumn">
+                                                    <property name="resizable">True</property>
+                                                    <property name="title" translatable="yes">Partitions</property>
+                                                    <child>
+                                                      <object class="GtkCellRendererText"/>
+                                                      <attributes>
+                                                        <attribute name="text">5</attribute>
                                                       </attributes>
                                                     </child>
                                                   </object>
@@ -3696,11 +3710,23 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                     <child>
                                                       <object class="GtkTreeViewColumn">
                                                         <property name="resizable">True</property>
-                                                        <property name="title" translatable="yes">Partitions</property>
+                                                        <property name="title" translatable="yes">Serial Number</property>
                                                         <child>
                                                           <object class="GtkCellRendererText"/>
                                                           <attributes>
                                                             <attribute name="text">4</attribute>
+                                                          </attributes>
+                                                        </child>
+                                                      </object>
+                                                    </child>
+                                                    <child>
+                                                      <object class="GtkTreeViewColumn">
+                                                        <property name="resizable">True</property>
+                                                        <property name="title" translatable="yes">Partitions</property>
+                                                        <child>
+                                                          <object class="GtkCellRendererText"/>
+                                                          <attributes>
+                                                            <attribute name="text">5</attribute>
                                                           </attributes>
                                                         </child>
                                                       </object>
@@ -6080,11 +6106,23 @@ To use the "imaging" wizards, click &lt;b&gt;Back&lt;/b&gt; and select &lt;b&gt;
                                                 <child>
                                                   <object class="GtkTreeViewColumn">
                                                     <property name="resizable">True</property>
-                                                    <property name="title" translatable="yes">Partitions</property>
+                                                    <property name="title" translatable="yes">Serial Number</property>
                                                     <child>
                                                       <object class="GtkCellRendererText"/>
                                                       <attributes>
                                                         <attribute name="text">4</attribute>
+                                                      </attributes>
+                                                    </child>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkTreeViewColumn">
+                                                    <property name="resizable">True</property>
+                                                    <property name="title" translatable="yes">Partitions</property>
+                                                    <child>
+                                                      <object class="GtkCellRendererText"/>
+                                                      <attributes>
+                                                        <attribute name="text">5</attribute>
                                                       </attributes>
                                                     </child>
                                                   </object>
@@ -6279,11 +6317,23 @@ To use the "imaging" wizards, click &lt;b&gt;Back&lt;/b&gt; and select &lt;b&gt;
                                                 <child>
                                                   <object class="GtkTreeViewColumn">
                                                     <property name="resizable">True</property>
-                                                    <property name="title" translatable="yes">Partitions</property>
+                                                    <property name="title" translatable="yes">Serial Number</property>
                                                     <child>
                                                       <object class="GtkCellRendererText"/>
                                                       <attributes>
                                                         <attribute name="text">4</attribute>
+                                                      </attributes>
+                                                    </child>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkTreeViewColumn">
+                                                    <property name="resizable">True</property>
+                                                    <property name="title" translatable="yes">Partitions</property>
+                                                    <child>
+                                                      <object class="GtkCellRendererText"/>
+                                                      <attributes>
+                                                        <attribute name="text">5</attribute>
                                                       </attributes>
                                                     </child>
                                                   </object>

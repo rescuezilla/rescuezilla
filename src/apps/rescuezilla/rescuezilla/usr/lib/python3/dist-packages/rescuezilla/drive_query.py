@@ -109,7 +109,8 @@ class DriveQuery:
                 flattened_partition_list = CombinedDriveState.flatten_partition_list(drive)
                 print("For key " + drive_key + ", flattened partition list is " + flattened_partition_list)
                 enduser_readable_capacity = Utility.human_readable_filesize(int(drive['capacity']))
-                self.drive_list_store.append([drive_key, human_friendly_drive_name, enduser_readable_capacity, drive['model'], flattened_partition_list])
+                self.drive_list_store.append([drive_key, human_friendly_drive_name, enduser_readable_capacity,
+                                              drive['model'], drive['serial'], flattened_partition_list])
                 index = index + 1
             except Exception as e:
                 traceback.print_exc(file=sys.stdout)

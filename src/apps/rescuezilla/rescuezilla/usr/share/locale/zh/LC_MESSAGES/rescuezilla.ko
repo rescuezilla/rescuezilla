@@ -162,6 +162,9 @@ msgstr "容量"
 msgid "Drive Model"
 msgstr "磁盘类型"
 
+msgid "Serial Number"
+msgstr ""
+
 msgid "Partitions"
 msgstr "分区"
 
