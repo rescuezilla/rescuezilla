@@ -328,7 +328,7 @@ class VerifyManager:
     # Expected to run on GTK event thread
     def completed_verify(self, succeeded, message):
         verify_timeend = datetime.now()
-        duration_minutes = (verify_timeend - self.verify_timestart).total_seconds() / 60.0
+        duration_minutes = Utility.get_human_readable_minutes_seconds((verify_timeend - self.verify_timestart).total_seconds())
 
         self.main_statusbar.remove_all(self.main_statusbar.get_context_id("verify"))
         with self.verify_in_progress_lock:
