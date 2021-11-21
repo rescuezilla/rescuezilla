@@ -53,6 +53,7 @@ class CombinedDriveState:
 
             # Drive model
             drive_state[drive_longdevname]['model'] = current_block_device['model']
+            drive_state[drive_longdevname]['serial'] = current_block_device['serial']
             # Drive capacity (in bytes)
             drive_state[drive_longdevname]['capacity'] = current_block_device['size']
             if drive_state[drive_longdevname]['capacity'] == "":

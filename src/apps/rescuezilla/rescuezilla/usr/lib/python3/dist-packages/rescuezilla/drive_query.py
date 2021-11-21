@@ -224,7 +224,7 @@ class DriveQuery:
             GLib.idle_add(self.error_message_callback, False, _("Operation cancelled by user."))
             return
 
-        lsblk_cmd_list = ["lsblk", "-o", "KNAME,NAME,SIZE,TYPE,FSTYPE,MOUNTPOINT,MODEL", "--paths", "--bytes", "--json"]
+        lsblk_cmd_list = ["lsblk", "-o", "KNAME,NAME,SIZE,TYPE,FSTYPE,MOUNTPOINT,MODEL,SERIAL", "--paths", "--bytes", "--json"]
         blkid_cmd_list = ["blkid"]
         os_prober_cmd_list = ["os-prober"]
 

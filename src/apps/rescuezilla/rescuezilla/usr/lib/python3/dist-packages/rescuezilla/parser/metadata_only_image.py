@@ -109,7 +109,7 @@ class MetadataOnlyImage:
             print("Failed to get drive capacity from device node")
 
         # Create a CombinedDriveState structure for the MetadataOnlyImage, which may otherwise not be populated.
-        lsblk_cmd_list = ["lsblk", "-o", "KNAME,NAME,SIZE,TYPE,FSTYPE,MOUNTPOINT,MODEL", "--paths", "--bytes",
+        lsblk_cmd_list = ["lsblk", "-o", "KNAME,NAME,SIZE,TYPE,FSTYPE,MOUNTPOINT,MODEL,SERIAL", "--paths", "--bytes",
                           "--json", self.long_device_node]
         process, flat_command_string, fail_description = Utility.run("lsblk", lsblk_cmd_list, use_c_locale=True)
         lsblk_json_dict = json.loads(process.stdout)
