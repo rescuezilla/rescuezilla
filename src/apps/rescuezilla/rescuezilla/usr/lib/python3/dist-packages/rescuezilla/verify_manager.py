@@ -180,7 +180,6 @@ class VerifyManager:
                                                                         image_number=image_number,
                                                                         num_partitions=all_images_num_partitions)
                 GLib.idle_add(self.update_progress_bar, total_progress_float)
-                cumulative_bytes += image.image_format_dict_dict[partition_key]['estimated_size_bytes']
 
                 if 'type' in image.image_format_dict_dict[partition_key].keys():
                     image_type = image.image_format_dict_dict[partition_key]['type']
@@ -296,6 +295,8 @@ class VerifyManager:
                     else:
                         self.summary_message += _("✔") + _("{partition}: filesystem image successfully verified.").format(partition=partition_key) + "\n"
                         continue
+
+                cumulative_bytes += image.image_format_dict_dict[partition_key]['estimated_size_bytes']
 
             with self.summary_message_lock:
                 self.summary_message += "\n\n"
