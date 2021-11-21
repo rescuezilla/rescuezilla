@@ -38,7 +38,7 @@ Note: Rescuezilla does NOT yet _automatically_ shrink partitions to restore to d
 
 Rescuezilla has been translated into the following languages:
 
-* Dansk (da-DK) (Translation complete, available in next release)
+* Dansk (da-DK)
 * Deutsch (de-DE)
 * Ελληνικά (el-GR)
 * English (en-US)
@@ -46,16 +46,16 @@ Rescuezilla has been translated into the following languages:
 * Français (fr-FR)
 * Italiano (it-IT)
 * Bahasa Indonesia (id-ID) (Translation in-progress)
-* עִברִית (he-IL) (Translation complete, available in next release)
+* עִברִית (he-IL)
 * 日本語 (ja-JP)
 * Norsk Bokmål (nb-NO) (Translation in-progress)
 * Polski (pl-PL)
 * Português brasileiro (pt-BR)
-* Русский (ru-RU) (Translation complete, available in next release)
+* Русский (ru-RU)
 * Svenska (sv-SE)
 * Türkçe (tr-TR)
 * Українська (uk-UA) (Translation in-progress)
-* Tiếng Việt (vi-VN) (Translation complete, available in next release)
+* Tiếng Việt (vi-VN)
 * 中文(简体) (zh-CN)
 * 中文(繁體) (zh-Hant)
 
@@ -80,7 +80,8 @@ Below table shows an abridged history of Rescuezilla. For more information, see 
 
 | Release             | Release Date | Operating System | Notes |
 | ------------------- | ---------- | ---------------- | ---------------------------------- |
-| Rescuezilla 2.2     | 2021-06-04 | Ubuntu 21.04     | Added 'Clone', VM image support. [Download page](https://github.com/rescuezilla/rescuezilla/releases/latest)
+| Rescuezilla 2.3     | 2021-12-24 | Ubuntu 21.10     | Added 'Verify Image' [Download page](https://github.com/rescuezilla/rescuezilla/releases/latest)
+| Rescuezilla 2.2     | 2021-06-04 | Ubuntu 21.04     | Added 'Clone', VM image support.
 | Rescuezilla 2.1     | 2020-12-12 | Ubuntu 20.10     | Added Image Explorer (beta)
 | Rescuezilla 2.0     | 2020-10-14 | Ubuntu 20.04     | Added Clonezilla image support
 | Rescuezilla 1.0.6   | 2020-06-17 | Ubuntu 20.04     |
