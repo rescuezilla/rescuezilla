@@ -294,7 +294,7 @@ class VerifyManager:
                             self.summary_message += partition_summary
                         continue
                     else:
-                        self.summary_message += _("✔") + partition_key + ": " + "Successfully verified.\n"
+                        self.summary_message += _("✔") + _("{partition}: filesystem image successfully verified.").format(partition=partition_key) + "\n"
                         continue
 
             with self.summary_message_lock:
