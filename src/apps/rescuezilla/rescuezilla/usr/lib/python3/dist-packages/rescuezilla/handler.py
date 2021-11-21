@@ -1018,6 +1018,7 @@ class Handler:
 
         if not has_already_requested_shutdown and (self.backup_manager.is_backup_in_progress()
                                                    or self.restore_manager.is_restore_in_progress()
+                                                   or self.verify_manager.is_verify_in_progress()
                                                    or self.clone_manager.is_clone_in_progress()):
             print("An operation is in progress. Do you wish to cancel?")
             AreYouSureModalPopup(self.builder, _("An operation is in progress. Do you wish to cancel?"),
