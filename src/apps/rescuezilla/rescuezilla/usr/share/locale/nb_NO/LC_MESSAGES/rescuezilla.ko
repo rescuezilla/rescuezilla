@@ -32,6 +32,9 @@ msgstr "Sikkerhetskopiering"
 msgid "Restore"
 msgstr "Gjenoppretting"
 
+msgid "Verify Image"
+msgstr ""
+
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
 msgstr ""
 "Trenger du hjelp? Start med å sjekke ofte stilte spørsmål, og fortsett "
@@ -897,3 +900,57 @@ msgstr ""
 
 msgid "Open in file manager"
 msgstr "Åpne i filbehandler"
+
+msgid "Verify"
+msgstr ""
+
+msgid "Select one or more image(s) to verify."
+msgstr ""
+
+msgid "To begin verification, click <b>Next</b>."
+msgstr ""
+
+msgid "Verifying Image"
+msgstr ""
+
+msgid "Verifying the selected image(s)."
+msgstr ""
+
+msgid "Verifying {image_name}"
+msgstr ""
+
+msgid "Summary of Verification"
+msgstr ""
+
+msgid "Confirm the verification summary."
+msgstr ""
+
+msgid "Verification Summary"
+msgstr ""
+
+msgid "To verify another image, click <b>Back</b>."
+msgstr ""
+
+msgid "✔"
+msgstr "✔"
+
+msgid "❌"
+msgstr "❌"
+
+msgid "MBR backup appears correct."
+msgstr ""
+
+msgid "No partition table found."
+msgstr ""
+
+msgid "Sfdisk partition table file is empty or missing."
+msgstr ""
+
+msgid "Sfdisk partition table file is present."
+msgstr ""
+
+msgid "Unable to verify."
+msgstr ""
+
+msgid "{partition}: filesystem image successfully verified."
+msgstr ""

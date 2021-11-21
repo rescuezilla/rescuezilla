@@ -36,6 +36,9 @@ msgstr "备份"
 msgid "Restore"
 msgstr "还原"
 
+msgid "Verify Image"
+msgstr ""
+
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
 msgstr "如需帮助，请先查阅Rescuezilla常见问题（FAQ），或进入Rescuezilla论坛寻找帮助。"
 
@@ -731,3 +734,57 @@ msgstr "挂载分区后，单击<b>在文件管理器中打开</b>以访问您�
 
 msgid "Open in file manager"
 msgstr "在文件管理器中打开"
+
+msgid "Verify"
+msgstr ""
+
+msgid "Select one or more image(s) to verify."
+msgstr ""
+
+msgid "To begin verification, click <b>Next</b>."
+msgstr ""
+
+msgid "Verifying Image"
+msgstr ""
+
+msgid "Verifying the selected image(s)."
+msgstr ""
+
+msgid "Verifying {image_name}"
+msgstr ""
+
+msgid "Summary of Verification"
+msgstr ""
+
+msgid "Confirm the verification summary."
+msgstr ""
+
+msgid "Verification Summary"
+msgstr ""
+
+msgid "To verify another image, click <b>Back</b>."
+msgstr ""
+
+msgid "✔"
+msgstr "✔"
+
+msgid "❌"
+msgstr "❌"
+
+msgid "MBR backup appears correct."
+msgstr ""
+
+msgid "No partition table found."
+msgstr ""
+
+msgid "Sfdisk partition table file is empty or missing."
+msgstr ""
+
+msgid "Sfdisk partition table file is present."
+msgstr ""
+
+msgid "Unable to verify."
+msgstr ""
+
+msgid "{partition}: filesystem image successfully verified."
+msgstr ""
