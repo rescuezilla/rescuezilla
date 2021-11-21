@@ -5718,13 +5718,11 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkLabel" id="verify_step4_new_session_text">
+                                              <object class="GtkLabel" id="verify_step4_verify_another_image_text">
                                                 <property name="visible">True</property>
                                                 <property name="can-focus">False</property>
                                                 <property name="ypad">20</property>
-                                                <property name="label" translatable="yes">To verify another image, click &lt;b&gt;Back&lt;/b&gt;.
-
-To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
+                                                <property name="label" translatable="yes">To verify another image, click &lt;b&gt;Back&lt;/b&gt;.</property>
                                                 <property name="use-markup">True</property>
                                                 <property name="justify">center</property>
                                                 <property name="wrap">True</property>
@@ -5737,9 +5735,26 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                               </packing>
                                             </child>
                                             <child>
+                                              <object class="GtkLabel" id="verify_step4_new_session_text">
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">False</property>
+                                                <property name="ypad">20</property>
+                                                <property name="label" translatable="yes">To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
+                                                <property name="use-markup">True</property>
+                                                <property name="justify">center</property>
+                                                <property name="wrap">True</property>
+                                                <property name="yalign">1</property>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">3</property>
+                                              </packing>
+                                            </child>
+                                            <child>
                                               <object class="GtkLinkButton" id="verify_step4_patreon_linkbutton">
                                                 <property name="label" translatable="yes">Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed.</property>
-                                                <property name="can-focus">False</property>
+                                                <property name="can-focus">True</property>
                                                 <property name="receives-default">True</property>
                                                 <property name="halign">center</property>
                                                 <property name="relief">none</property>
@@ -5749,13 +5764,13 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                               <packing>
                                                 <property name="expand">False</property>
                                                 <property name="fill">True</property>
-                                                <property name="position">3</property>
+                                                <property name="position">4</property>
                                               </packing>
                                             </child>
                                             <child>
                                               <object class="GtkLinkButton" id="verify_step4_support_linkbutton">
                                                 <property name="label" translatable="yes">Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum.</property>
-                                                <property name="can-focus">False</property>
+                                                <property name="can-focus">True</property>
                                                 <property name="receives-default">True</property>
                                                 <property name="halign">center</property>
                                                 <property name="relief">none</property>
@@ -5765,7 +5780,7 @@ To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                               <packing>
                                                 <property name="expand">False</property>
                                                 <property name="fill">True</property>
-                                                <property name="position">4</property>
+                                                <property name="position">5</property>
                                               </packing>
                                             </child>
                                           </object>
