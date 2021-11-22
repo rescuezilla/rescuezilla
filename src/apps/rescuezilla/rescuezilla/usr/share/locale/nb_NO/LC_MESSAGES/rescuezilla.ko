@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2021-07-09 13:28+0000\n"
+"PO-Revision-Date: 2021-11-22 01:02+0000\n"
 "Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "rescuezilla/rescuezilla/nb_NO/>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.8-dev\n"
+"X-Generator: Weblate 4.10-dev\n"
 
 msgid "Welcome"
 msgstr "Velkommen"
@@ -33,7 +33,7 @@ msgid "Restore"
 msgstr "Gjenoppretting"
 
 msgid "Verify Image"
-msgstr ""
+msgstr "Bekreft avtrykk"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
 msgstr ""
@@ -187,7 +187,7 @@ msgid "Drive Model"
 msgstr "Enhetsmodell"
 
 msgid "Serial Number"
-msgstr ""
+msgstr "Serienummer"
 
 msgid "Partitions"
 msgstr "Partisjoner"
@@ -902,34 +902,35 @@ msgid "Open in file manager"
 msgstr "Åpne i filbehandler"
 
 msgid "Verify"
-msgstr ""
+msgstr "Bekreft"
 
 msgid "Select one or more image(s) to verify."
-msgstr ""
+msgstr "Velg ett eller flere avtrykk å bekrefte."
 
 msgid "To begin verification, click <b>Next</b>."
-msgstr ""
+msgstr "Trykk <b>Neste</b> for å begynne."
 
+#, fuzzy
 msgid "Verifying Image"
-msgstr ""
+msgstr "Bekrefting av avtrykk"
 
 msgid "Verifying the selected image(s)."
-msgstr ""
+msgstr "Bekrefter valgt(e) avtrykk."
 
 msgid "Verifying {image_name}"
-msgstr ""
+msgstr "Bekrefter {image_name} …"
 
 msgid "Summary of Verification"
-msgstr ""
+msgstr "Sammendrag av bekreftelse"
 
 msgid "Confirm the verification summary."
-msgstr ""
+msgstr "Bekreft sammendraget"
 
 msgid "Verification Summary"
-msgstr ""
+msgstr "Bekreftelsessammendrag"
 
 msgid "To verify another image, click <b>Back</b>."
-msgstr ""
+msgstr "Trykk <b>Tilbake</b> for å bekrefte et nytt avtrykk."
 
 msgid "✔"
 msgstr "✔"
@@ -938,19 +939,19 @@ msgid "❌"
 msgstr "❌"
 
 msgid "MBR backup appears correct."
-msgstr ""
+msgstr "MBR-sikkerhetskopi ser ut til å være korrekt."
 
 msgid "No partition table found."
-msgstr ""
+msgstr "Fant ikke noen partisjonstabell …"
 
 msgid "Sfdisk partition table file is empty or missing."
-msgstr ""
+msgstr "Sfdisk-partisjonstabellfil mangler eller er tom."
 
 msgid "Sfdisk partition table file is present."
-msgstr ""
+msgstr "Sfdisk-partisjonstabellfil eksisterer."
 
 msgid "Unable to verify."
-msgstr ""
+msgstr "Kunne ikke utføre bekreftelse."
 
 msgid "{partition}: filesystem image successfully verified."
-msgstr ""
+msgstr "{partition}: filesystemsavtrykk bekreftet."
