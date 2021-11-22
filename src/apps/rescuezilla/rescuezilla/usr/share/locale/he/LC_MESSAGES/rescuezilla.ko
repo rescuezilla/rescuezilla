@@ -426,7 +426,7 @@ msgstr "שלב 7: אישור הגדרות הגיבוי"
 msgid "Source drive"
 msgstr "כונן המקור"
 
-msgid "Backing up the following partition"
+msgid "Backing up the following partition(s)"
 msgstr "המחיצות האלו יגובו"
 
 msgid "The backup image will be written into folder {dest_dir} on {description}"

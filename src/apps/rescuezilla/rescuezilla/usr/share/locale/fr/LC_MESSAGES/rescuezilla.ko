@@ -391,7 +391,7 @@ msgstr "Étape 6 : confirmez la configuration de sauvegarde"
 msgid "Source drive"
 msgstr "Disque source"
 
-msgid "Backing up the following partition"
+msgid "Backing up the following partition(s)"
 msgstr "Sauvegarde de la partition suivante"
 
 msgid "The backup image will be written into folder {dest_dir} on {description}"

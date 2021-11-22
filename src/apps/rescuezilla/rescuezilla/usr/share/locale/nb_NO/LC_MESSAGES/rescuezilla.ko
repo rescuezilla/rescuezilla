@@ -460,7 +460,7 @@ msgstr "Steg 7: Bekreft sikkerhetskopioppsett"
 msgid "Source drive"
 msgstr "Kildeenhet"
 
-msgid "Backing up the following partition"
+msgid "Backing up the following partition(s)"
 msgstr "Sikkerhetskopierer følgende partisjoner"
 
 #, fuzzy

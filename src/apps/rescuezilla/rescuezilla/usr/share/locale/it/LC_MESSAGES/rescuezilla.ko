@@ -392,7 +392,7 @@ msgstr "Fase 6: Conferma le configurazioni del backup"
 msgid "Source drive"
 msgstr "Unità di origine"
 
-msgid "Backing up the following partition"
+msgid "Backing up the following partition(s)"
 msgstr "Backup della seguente partizione"
 
 msgid "The backup image will be written into folder {dest_dir} on {description}"

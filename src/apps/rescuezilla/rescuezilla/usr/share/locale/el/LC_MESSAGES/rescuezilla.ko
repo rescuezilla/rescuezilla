@@ -453,7 +453,7 @@ msgstr "Βήμα 6: Επιβεβαιώστε τη ρύθμιση παραμέτ�
 msgid "Source drive"
 msgstr "Μονάδα δίσκου προέλευσης"
 
-msgid "Backing up the following partition"
+msgid "Backing up the following partition(s)"
 msgstr "Δημιουργία αντιγράφου ασφαλείας για το ακόλουθο διαμέρισμα"
 
 msgid "The backup image will be written into folder {dest_dir} on {description}"

@@ -410,7 +410,7 @@ msgstr "Passo 6: Confirme a Configuração de Backup"
 msgid "Source drive"
 msgstr "Drive de origem"
 
-msgid "Backing up the following partition"
+msgid "Backing up the following partition(s)"
 msgstr "Fazendo backup da seguinte partição"
 
 msgid "The backup image will be written into folder {dest_dir} on {description}"

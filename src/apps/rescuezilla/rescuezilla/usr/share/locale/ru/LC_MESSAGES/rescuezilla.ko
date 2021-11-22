@@ -446,7 +446,7 @@ msgstr "Шаг 7: Подтвердите настройки резервного
 msgid "Source drive"
 msgstr "Исходный диск"
 
-msgid "Backing up the following partition"
+msgid "Backing up the following partition(s)"
 msgstr "Резервное копирование следующих разделов"
 
 msgid "The backup image will be written into folder {dest_dir} on {description}"

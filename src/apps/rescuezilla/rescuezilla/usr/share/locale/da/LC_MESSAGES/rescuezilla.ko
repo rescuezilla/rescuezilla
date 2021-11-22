@@ -445,7 +445,7 @@ msgstr "Trin 7: Bekræft indstillingen af sikkerhedskopien"
 msgid "Source drive"
 msgstr "Kildedrev"
 
-msgid "Backing up the following partition"
+msgid "Backing up the following partition(s)"
 msgstr "Følgende partitioner sikkerhedskopieres"
 
 msgid "The backup image will be written into folder {dest_dir} on {description}"

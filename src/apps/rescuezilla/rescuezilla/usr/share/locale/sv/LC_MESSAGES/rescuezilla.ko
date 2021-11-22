@@ -434,7 +434,7 @@ msgstr "Steg 6: Bekräfta konfigurationen"
 msgid "Source drive"
 msgstr "Källenhet"
 
-msgid "Backing up the following partition"
+msgid "Backing up the following partition(s)"
 msgstr "Säkerhetskopiera följande partition"
 
 msgid "The backup image will be written into folder {dest_dir} on {description}"

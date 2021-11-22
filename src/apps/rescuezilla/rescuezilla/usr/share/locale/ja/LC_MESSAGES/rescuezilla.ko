@@ -390,7 +390,7 @@ msgstr "ステップ 6: バックアップの構成を確認します"
 msgid "Source drive"
 msgstr "ソースドライブ"
 
-msgid "Backing up the following partition"
+msgid "Backing up the following partition(s)"
 msgstr "次のパーティションをバックアップします"
 
 msgid "The backup image will be written into folder {dest_dir} on {description}"

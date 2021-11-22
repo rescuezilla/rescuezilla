@@ -445,7 +445,7 @@ msgstr "Paso 6: confirma la copia de seguridad de la configuración"
 msgid "Source drive"
 msgstr "Unidad de origen"
 
-msgid "Backing up the following partition"
+msgid "Backing up the following partition(s)"
 msgstr "Se va a hacer una copia de seguridad de la siguiente partición"
 
 msgid "The backup image will be written into folder {dest_dir} on {description}"

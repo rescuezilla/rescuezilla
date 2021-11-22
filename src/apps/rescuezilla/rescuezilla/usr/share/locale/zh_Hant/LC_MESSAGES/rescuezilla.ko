@@ -393,7 +393,7 @@ msgstr "第 7 步：確認備份配置"
 msgid "Source drive"
 msgstr "源驅動器"
 
-msgid "Backing up the following partition"
+msgid "Backing up the following partition(s)"
 msgstr "備份以下分區"
 
 msgid "The backup image will be written into folder {dest_dir} on {description}"

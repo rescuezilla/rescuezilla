@@ -434,7 +434,7 @@ msgstr "Bước 7: Xác nhận cấu hình sao lưu"
 msgid "Source drive"
 msgstr "Ổ nguồn"
 
-msgid "Backing up the following partition"
+msgid "Backing up the following partition(s)"
 msgstr "Đang sao lưu các phân vùng sau"
 
 msgid "The backup image will be written into folder {dest_dir} on {description}"

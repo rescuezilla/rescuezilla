@@ -384,7 +384,7 @@ msgstr ""
 msgid "Source drive"
 msgstr ""
 
-msgid "Backing up the following partition"
+msgid "Backing up the following partition(s)"
 msgstr ""
 
 msgid "The backup image will be written into folder {dest_dir} on {description}"

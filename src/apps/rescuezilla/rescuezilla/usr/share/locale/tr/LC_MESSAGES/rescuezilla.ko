@@ -443,7 +443,7 @@ msgstr "7. Adım: Yedekleme Yapılandırmasını Onaylayın"
 msgid "Source drive"
 msgstr "Kaynak disk"
 
-msgid "Backing up the following partition"
+msgid "Backing up the following partition(s)"
 msgstr "Aşağıdaki bölüm yedekleniyor"
 
 msgid "The backup image will be written into folder {dest_dir} on {description}"

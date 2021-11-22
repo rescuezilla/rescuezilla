@@ -399,7 +399,7 @@ msgstr "第7步：确认备份配置"
 msgid "Source drive"
 msgstr "源磁盘"
 
-msgid "Backing up the following partition"
+msgid "Backing up the following partition(s)"
 msgstr "将备份以下分区"
 
 msgid "The backup image will be written into folder {dest_dir} on {description}"

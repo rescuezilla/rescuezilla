@@ -461,7 +461,7 @@ msgstr "Schritt 7: Bestätigung der Konfiguration zur Sicherungskopie"
 msgid "Source drive"
 msgstr "Quelllaufwerk"
 
-msgid "Backing up the following partition"
+msgid "Backing up the following partition(s)"
 msgstr "Folgende Partition wird gesichert"
 
 msgid "The backup image will be written into folder {dest_dir} on {description}"

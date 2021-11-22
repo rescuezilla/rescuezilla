@@ -442,7 +442,7 @@ msgstr "Krok 6: Potwierdzenie konfiguracji kopii zapasowej"
 msgid "Source drive"
 msgstr "Wybierz dysk"
 
-msgid "Backing up the following partition"
+msgid "Backing up the following partition(s)"
 msgstr "Tworzenie kopii zapasowej następującej partycji"
 
 msgid "The backup image will be written into folder {dest_dir} on {description}"
