@@ -5737,7 +5737,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                               <object class="GtkLabel" id="verify_step4_verify_another_image_text">
                                                 <property name="visible">True</property>
                                                 <property name="can-focus">False</property>
-                                                <property name="ypad">20</property>
+                                                <property name="ypad">10</property>
                                                 <property name="label" translatable="yes">To verify another image, click &lt;b&gt;Back&lt;/b&gt;.</property>
                                                 <property name="use-markup">True</property>
                                                 <property name="justify">center</property>
@@ -5754,7 +5754,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                               <object class="GtkLabel" id="verify_step4_new_session_text">
                                                 <property name="visible">True</property>
                                                 <property name="can-focus">False</property>
-                                                <property name="ypad">20</property>
+                                                <property name="ypad">10</property>
                                                 <property name="label" translatable="yes">To start a new session, click &lt;b&gt;Next&lt;/b&gt;</property>
                                                 <property name="use-markup">True</property>
                                                 <property name="justify">center</property>
