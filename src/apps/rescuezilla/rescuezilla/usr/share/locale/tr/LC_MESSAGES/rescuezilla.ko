@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2021-05-26 10:58+0000\n"
+"PO-Revision-Date: 2021-11-22 01:02+0000\n"
 "Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/tr/>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.10-dev\n"
 
 msgid "Welcome"
 msgstr "Hoş Geldiniz"
@@ -33,7 +33,7 @@ msgid "Restore"
 msgstr "Geri Yükle"
 
 msgid "Verify Image"
-msgstr ""
+msgstr "Kalıbı Doğrula"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
 msgstr ""
@@ -183,7 +183,7 @@ msgid "Drive Model"
 msgstr "Disk Modeli"
 
 msgid "Serial Number"
-msgstr ""
+msgstr "Seri Numarası"
 
 msgid "Partitions"
 msgstr "Bölümler"
@@ -601,7 +601,7 @@ msgid "You will <b>not</b> be overwriting the partition table."
 msgstr "Bölümlendirme tablosunun üzerine <b>yazmayacaksınız</b>."
 
 msgid "The source does not contain a partition table."
-msgstr "Kaynak bir bölümlendirme tablosu içermiyor."
+msgstr "Kaynak, bir bölümlendirme tablosu içermiyor."
 
 msgid "The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table."
 msgstr ""
@@ -840,34 +840,34 @@ msgid "Open in file manager"
 msgstr "Dosya yöneticisinde aç"
 
 msgid "Verify"
-msgstr ""
+msgstr "Doğrula"
 
 msgid "Select one or more image(s) to verify."
-msgstr ""
+msgstr "Doğrulamak için bir veya daha fazla kalıp seçin."
 
 msgid "To begin verification, click <b>Next</b>."
-msgstr ""
+msgstr "Doğrulamayı başlatmak için <b>İleri</b> düğmesine tıklayın."
 
 msgid "Verifying Image"
-msgstr ""
+msgstr "Kalıp Doğrulanıyor"
 
 msgid "Verifying the selected image(s)."
-msgstr ""
+msgstr "Seçilen görüntü(ler) doğrulanıyor."
 
 msgid "Verifying {image_name}"
-msgstr ""
+msgstr "{image_name} doğrulanıyor"
 
 msgid "Summary of Verification"
-msgstr ""
+msgstr "Doğrulama Özeti"
 
 msgid "Confirm the verification summary."
-msgstr ""
+msgstr "Doğrulama özetini onaylayın."
 
 msgid "Verification Summary"
-msgstr ""
+msgstr "Doğrulama Özeti"
 
 msgid "To verify another image, click <b>Back</b>."
-msgstr ""
+msgstr "Başka bir kalıbı doğrulamak için <b>Geri</b> düğmesine tıklayın."
 
 msgid "✔"
 msgstr "✔"
@@ -876,19 +876,19 @@ msgid "❌"
 msgstr "❌"
 
 msgid "MBR backup appears correct."
-msgstr ""
+msgstr "MBR yedeklemesi doğru görünüyor."
 
 msgid "No partition table found."
-msgstr ""
+msgstr "Bölümlendirme tablosu bulunamadı."
 
 msgid "Sfdisk partition table file is empty or missing."
-msgstr ""
+msgstr "Sfdisk bölümlendirme tablosu dosyası boş veya eksik."
 
 msgid "Sfdisk partition table file is present."
-msgstr ""
+msgstr "Sfdisk bölümlendirme tablosu dosyası var."
 
 msgid "Unable to verify."
-msgstr ""
+msgstr "Doğrulanamadı."
 
 msgid "{partition}: filesystem image successfully verified."
-msgstr ""
+msgstr "{partition}: dosya sistemi kalıbı başarıyla doğrulandı."
