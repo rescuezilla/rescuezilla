@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2021-05-29 02:38+0000\n"
+"PO-Revision-Date: 2021-11-22 01:02+0000\n"
 "Last-Translator: Matthaiks <kitynska@gmail.com>\n"
 "Language-Team: Polish <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/pl/>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.10-dev\n"
 
 msgid "Welcome"
 msgstr "Witamy"
@@ -38,7 +38,7 @@ msgid "Restore"
 msgstr "Przywróć"
 
 msgid "Verify Image"
-msgstr ""
+msgstr "Zweryfikuj obraz"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
 msgstr ""
@@ -188,7 +188,7 @@ msgid "Drive Model"
 msgstr "Model dysku"
 
 msgid "Serial Number"
-msgstr ""
+msgstr "Numer seryjny"
 
 msgid "Partitions"
 msgstr "Partycje"
@@ -811,34 +811,34 @@ msgid "Open in file manager"
 msgstr "Otwórz w menedżerze plików"
 
 msgid "Verify"
-msgstr ""
+msgstr "Zweryfikuj"
 
 msgid "Select one or more image(s) to verify."
-msgstr ""
+msgstr "Wybierz jeden lub więcej obrazów do zweryfikowania."
 
 msgid "To begin verification, click <b>Next</b>."
-msgstr ""
+msgstr "Aby rozpocząć weryfikację, kliknij przycisk <b>Dalej</b>."
 
 msgid "Verifying Image"
-msgstr ""
+msgstr "Weryfikowanie obrazu"
 
 msgid "Verifying the selected image(s)."
-msgstr ""
+msgstr "Weryfikowanie wybranego obrazu lub obrazów."
 
 msgid "Verifying {image_name}"
-msgstr ""
+msgstr "Weryfikowanie {image_name}"
 
 msgid "Summary of Verification"
-msgstr ""
+msgstr "Podsumowanie weryfikacji"
 
 msgid "Confirm the verification summary."
-msgstr ""
+msgstr "Potwierdź podsumowanie weryfikacji."
 
 msgid "Verification Summary"
-msgstr ""
+msgstr "Podsumowanie weryfikacji"
 
 msgid "To verify another image, click <b>Back</b>."
-msgstr ""
+msgstr "Aby zweryfikować inny obraz, kliknij <b>Powrót</b>."
 
 msgid "✔"
 msgstr "✔"
@@ -847,19 +847,19 @@ msgid "❌"
 msgstr "❌"
 
 msgid "MBR backup appears correct."
-msgstr ""
+msgstr "Kopia zapasowa MBR wydaje się poprawna."
 
 msgid "No partition table found."
-msgstr ""
+msgstr "Nie znaleziono tabeli partycji."
 
 msgid "Sfdisk partition table file is empty or missing."
-msgstr ""
+msgstr "Plik tabeli partycji sfdisk jest pusty lub go brakuje."
 
 msgid "Sfdisk partition table file is present."
-msgstr ""
+msgstr "Plik tabeli partycji sfdisk jest obecny."
 
 msgid "Unable to verify."
-msgstr ""
+msgstr "Nie można zweryfikować."
 
 msgid "{partition}: filesystem image successfully verified."
-msgstr ""
+msgstr "{partition}: pomyślnie zweryfikowano obraz systemu plików."

@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2021-07-09 13:28+0000\n"
+"PO-Revision-Date: 2021-11-22 01:02+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/he/>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Weblate 4.8-dev\n"
+"X-Generator: Weblate 4.10-dev\n"
 
 msgid "Welcome"
 msgstr "ברוך בואך"
@@ -36,7 +36,7 @@ msgid "Restore"
 msgstr "שחזור"
 
 msgid "Verify Image"
-msgstr ""
+msgstr "אימות דמות"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
 msgstr ""
@@ -180,7 +180,7 @@ msgid "Drive Model"
 msgstr "דגם הכונן"
 
 msgid "Serial Number"
-msgstr ""
+msgstr "מספר סידורי"
 
 msgid "Partitions"
 msgstr "מחיצות"
@@ -795,34 +795,34 @@ msgid "Open in file manager"
 msgstr "פתיחה במנהל הקבצים"
 
 msgid "Verify"
-msgstr ""
+msgstr "אימות"
 
 msgid "Select one or more image(s) to verify."
-msgstr ""
+msgstr "נא לבחור דמות אחת או יותר לאימות."
 
 msgid "To begin verification, click <b>Next</b>."
-msgstr ""
+msgstr "כדי להתחיל באימות יש ללחוץ על <b>הבא</b>."
 
 msgid "Verifying Image"
-msgstr ""
+msgstr "הדמות עוברת אימות"
 
 msgid "Verifying the selected image(s)."
-msgstr ""
+msgstr "הדמויות הנבחרות עוברות אימות."
 
 msgid "Verifying {image_name}"
-msgstr ""
+msgstr "{image_name} עוברת אימות"
 
 msgid "Summary of Verification"
-msgstr ""
+msgstr "תקציר האימות"
 
 msgid "Confirm the verification summary."
-msgstr ""
+msgstr "נא לאשר את סיכום האימות."
 
 msgid "Verification Summary"
-msgstr ""
+msgstr "סיכום האימות"
 
 msgid "To verify another image, click <b>Back</b>."
-msgstr ""
+msgstr "כדי לאמת דמות נוספת, יש ללחוץ על <b>חזרה</b>."
 
 msgid "✔"
 msgstr "✔"
@@ -831,19 +831,19 @@ msgid "❌"
 msgstr "❌"
 
 msgid "MBR backup appears correct."
-msgstr ""
+msgstr "גיבוי ה־MBR נראה תקין."
 
 msgid "No partition table found."
-msgstr ""
+msgstr "לא נמצאה טבלת מחיצות."
 
 msgid "Sfdisk partition table file is empty or missing."
-msgstr ""
+msgstr "קובץ טבלת המחיצות Sfdisk ריק או חסר."
 
 msgid "Sfdisk partition table file is present."
-msgstr ""
+msgstr "קובץ טבלת המחיצות Sfdisk קיים."
 
 msgid "Unable to verify."
-msgstr ""
+msgstr "לא ניתן לאמת."
 
 msgid "{partition}: filesystem image successfully verified."
-msgstr ""
+msgstr "{partition}: דמות מערכת הקבצים אומתה בהצלחה."
