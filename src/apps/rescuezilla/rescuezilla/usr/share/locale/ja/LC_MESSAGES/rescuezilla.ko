@@ -4,19 +4,22 @@
 # AE720, 2021
 # Submitted at: https://github.com/rescuezilla/rescuezilla/issues/176
 #
-#, fuzzy
+# Shasheen Ediriweera <shasheene@gmail.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2021-01-24 00:00+0000\n"
-"Last-Translator: AE720\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2021-11-23 15:21+0000\n"
+"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
+"Language-Team: Japanese <https://hosted.weblate.org/projects/rescuezilla/"
+"rescuezilla/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.10-dev\n"
 
 msgid "Welcome"
 msgstr "ようこそ"
@@ -51,7 +54,7 @@ msgstr "次へ >"
 msgid "Please wait..."
 msgstr "お待ちください..."
 
-msgid "Identifying disk drives..." 
+msgid "Identifying disk drives..."
 msgstr "ディスクドライブを認識中..."
 
 msgid "Unmounting: {path}"
@@ -88,10 +91,6 @@ msgid "This mode is for \"disk cloning\". Cloning means copying one drive and di
 ""
 "To use the \"imaging\" wizards, click <b>Back</b> and select <b>Backup</b> or <b>Restore</b>."
 msgstr ""
-""
-""
-""
-""
 ""
 
 msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
@@ -562,9 +561,6 @@ msgid "Rescuezilla cannot yet automatically shrink partitions to restore from la
 "{url}"
 msgstr ""
 ""
-""
-""
-""
 
 msgid "Step 5: Confirm Restore Configuration"
 msgstr "ステップ 5: レストアの構成を確認します"
@@ -690,7 +686,7 @@ msgid "Confirm the restore summary."
 msgstr "レストアの概要を確認してください。"
 
 msgid "Backup restored successfully."
-msgstr "バックアップのレストアは成功しました。" 
+msgstr "バックアップのレストアは成功しました。"
 
 msgid "Image Explorer\n"
 "      (beta)"
@@ -758,10 +754,10 @@ msgid "To verify another image, click <b>Back</b>."
 msgstr ""
 
 msgid "✔"
-msgstr "✔"
+msgstr ""
 
 msgid "❌"
-msgstr "❌"
+msgstr ""
 
 msgid "MBR backup appears correct."
 msgstr ""
