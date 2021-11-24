@@ -143,7 +143,13 @@ class VerifyManager:
             if image.has_partition_table():
                 mbr_path = image.get_absolute_mbr_path()
                 mbr_size = int(os.stat(mbr_path).st_size)
-                if mbr_size <= 512:
+
+                # Some image formats (like Clonezilla) have post MBR gap separate from the actual MBR
+                post_mbr_size = 0
+                if 'absolute_path' in image.post_mbr_gap_dict.keys():
+                    post_mbr_size += int(os.stat(image.post_mbr_gap_dict['absolute_path']).st_size)
+
+                if (mbr_size + post_mbr_size) <= 512:
                     self.summary_message += _("❌") + " " + _("The backup's bootloader data is shorter than expected. If the backup contained certain bootloaders like GRUB, during a restore operation Rescuezilla will try and re-install the bootloader.") + "\n"
                 else:
                     self.summary_message += _("✔") + " " + _("MBR backup appears correct.") + "\n"
