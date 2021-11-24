@@ -1314,7 +1314,7 @@ class Handler:
         compression_string = "<b>" + _("Compression format: ") + "</b>" + self.compression_dict['format'] + ", " + _("Compression level: ") + str(self.compression_dict['level'])
 
         source_drive_heading = GObject.markup_escape_text(_("Source drive"))
-        backup_partitions_heading = GObject.markup_escape_text(_("Backing up the following partition"))
+        backup_partitions_heading = GObject.markup_escape_text(_("Backing up the following partition(s)"))
         backup_image_destination_heading = GObject.markup_escape_text(_("The backup image will be written into folder {dest_dir} on {description}").format(dest_dir=self.dest_dir, description=description))
 
         text_to_display = f"""
