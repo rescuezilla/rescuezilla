@@ -89,7 +89,7 @@ class VerifyManager:
                     print("Error killing process. (Maybe already dead?)")
         with self.verify_in_progress_lock:
             self.verify_in_progress = False
-        self.completed_verify(False, _("Restore cancelled by user."))
+        self.completed_verify(False, _("Verify cancelled by user."))
 
     def do_verify_wrapper(self):
         try:
@@ -97,7 +97,7 @@ class VerifyManager:
         except Exception as exception:
             tb = traceback.format_exc()
             traceback.print_exc()
-            GLib.idle_add(self.completed_verify, False, _("Error restoring image: ") + tb)
+            GLib.idle_add(self.completed_verify, False, _("Error verifying image: ") + tb)
             return
 
     # TODO: Ideally find ways to consolidate the overlap between this function and aspects of Restore Manager's
