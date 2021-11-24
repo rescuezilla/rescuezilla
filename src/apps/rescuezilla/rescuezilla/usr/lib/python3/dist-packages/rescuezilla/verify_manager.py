@@ -140,12 +140,6 @@ class VerifyManager:
             if isinstance(image, FsArchiverImage):
                 self.summary_message += _("⚠") + " " + "Verifying FsArchiver images not supported by current version of Rescuezilla\n"
                 continue
-            else:
-                for partition_key in image.image_format_dict_dict.keys():
-                    estimated_size_bytes = 0
-                    if 'estimated_size_bytes' in image.image_format_dict_dict[partition_key].keys():
-                        estimated_size_bytes = image.image_format_dict_dict[partition_key]['estimated_size_bytes']
-
             if image.has_partition_table():
                 mbr_path = image.get_absolute_mbr_path()
                 mbr_size = int(os.stat(mbr_path).st_size)
@@ -166,15 +160,18 @@ class VerifyManager:
                     GLib.idle_add(self.completed_verify, False, _("User requested operation to stop."))
                     return
 
+                if 'estimated_size_bytes' in image.image_format_dict_dict[partition_key].keys():
+                    partition_estimated_size_bytes = image.image_format_dict_dict[partition_key]['estimated_size_bytes']
+                else:
+                    partition_estimated_size_bytes = 0
+
                 filesystem_verify_message = _("Partition {partition}").format(partition=partition_key)
                 self.logger.write(image_verify_message)
                 GLib.idle_add(self.display_status, image_verify_message + " " + filesystem_verify_message,
                               filesystem_verify_message)
 
                 total_progress_float = Utility.calculate_progress_ratio(current_partition_completed_percentage=0,
-                                                                        current_partition_bytes=
-                                                                        image.image_format_dict_dict[partition_key][
-                                                                            'estimated_size_bytes'],
+                                                                        current_partition_bytes=partition_estimated_size_bytes,
                                                                         cumulative_bytes=cumulative_bytes,
                                                                         total_bytes=all_images_total_size_estimate,
                                                                         image_number=image_number,
@@ -254,8 +251,7 @@ class VerifyManager:
                             if 'completed' in temp_dict.keys():
                                 total_progress_float = Utility.calculate_progress_ratio(
                                     current_partition_completed_percentage=temp_dict['completed'] / 100.0,
-                                    current_partition_bytes=image.image_format_dict_dict[partition_key][
-                                        'estimated_size_bytes'],
+                                    current_partition_bytes=partition_estimated_size_bytes,
                                     cumulative_bytes=cumulative_bytes,
                                     total_bytes=all_images_total_size_estimate,
                                     image_number=image_number,
@@ -296,7 +292,7 @@ class VerifyManager:
                         self.summary_message += _("✔") + _("{partition}: filesystem image successfully verified.").format(partition=partition_key) + "\n"
                         continue
 
-                cumulative_bytes += image.image_format_dict_dict[partition_key]['estimated_size_bytes']
+                cumulative_bytes += partition_estimated_size_bytes
 
             with self.summary_message_lock:
                 self.summary_message += "\n\n"
