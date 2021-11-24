@@ -151,6 +151,11 @@ class VerifyManager:
                     self.summary_message += _("⚠") + " " + "Verifying VM images not supported by current version of Rescuezilla\n"
                 continue
 
+            if image.is_needs_decryption:
+                with self.summary_message_lock:
+                    self.summary_message += _("⚠") + " " + "Verifying encrypted images not supported by current version of Rescuezilla\n"
+                continue
+
             if image.has_partition_table():
                 mbr_path = image.get_absolute_mbr_path()
                 mbr_size = int(os.stat(mbr_path).st_size)
