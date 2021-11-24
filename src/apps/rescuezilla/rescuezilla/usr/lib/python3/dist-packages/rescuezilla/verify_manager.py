@@ -307,7 +307,7 @@ class VerifyManager:
                     proc_stderr += stderr
                     self.logger.write("Exit output " + str(rc) + ": " + str(proc_stdout) + "stderr " + str(proc_stderr))
                     if self.proc[verify_chkimg_proc_key].returncode != 0:
-                        partition_summary = _("❌") + " " + _("Unable to verify.") + partition_key + "\n"
+                        partition_summary = _("❌") + " " + _("Unable to verify.") + _("Partition {partition_number}").format(partition_number=partition_key) + "\n"
                         extra_info = "\nThe command used internally was:\n\n" + flat_command_string + "\n\n" + "The output of the command was: " + str(
                             proc_stdout) + "\n\n" + str(proc_stderr)
                         decompression_stderr = self.proc[verify_decompression_proc_key].stderr
