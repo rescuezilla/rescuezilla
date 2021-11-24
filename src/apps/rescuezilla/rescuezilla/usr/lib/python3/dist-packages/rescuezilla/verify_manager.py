@@ -127,6 +127,7 @@ class VerifyManager:
 
         cumulative_bytes = 0
         image_number = 0
+        total_partition_number = 0
         for image in self.image_list:
             image_number += 1
             image_verify_message = _("Verifying {image_name}").format(image_name=image.absolute_path)
@@ -173,12 +174,17 @@ class VerifyManager:
                 self.summary_message += _("✔") + " " + _("Sfdisk partition table file is present.") + "\n"
 
             for partition_key in image.image_format_dict_dict.keys():
+                total_partition_number += 1
                 if self.requested_stop:
                     GLib.idle_add(self.completed_verify, False, _("User requested operation to stop."))
                     return
 
                 if 'estimated_size_bytes' in image.image_format_dict_dict[partition_key].keys():
                     partition_estimated_size_bytes = image.image_format_dict_dict[partition_key]['estimated_size_bytes']
+                elif 'absolute_filename_glob_list' in image.image_format_dict_dict[partition_key].keys():
+                    # TODO: Move this to the image scanning step.
+                    print("Calculating estimated size from file size")
+                    partition_estimated_size_bytes = Utility.count_total_size_of_files_on_disk(image.image_format_dict_dict[partition_key]['absolute_filename_glob_list'], "uncompressed")
                 else:
                     partition_estimated_size_bytes = 0
 
@@ -191,7 +197,7 @@ class VerifyManager:
                                                                         current_partition_bytes=partition_estimated_size_bytes,
                                                                         cumulative_bytes=cumulative_bytes,
                                                                         total_bytes=all_images_total_size_estimate,
-                                                                        image_number=image_number,
+                                                                        image_number=total_partition_number,
                                                                         num_partitions=all_images_num_partitions)
                 GLib.idle_add(self.update_progress_bar, total_progress_float)
 
@@ -199,12 +205,15 @@ class VerifyManager:
                     image_type = image.image_format_dict_dict[partition_key]['type']
                     if image_type == 'swap':
                         self.summary_message += _("⚠") + " " + partition_key + ": verifying swap partition images not yet supported.\n"
+                        cumulative_bytes += partition_estimated_size_bytes
                         continue
                     if image_type == 'missing':
                         self.summary_message += _("❌") + " " + partition_key + ": partition is missing.\n"
+                        cumulative_bytes += partition_estimated_size_bytes
                         continue
                     if 'dd' == image_type or image.image_format_dict_dict[partition_key]['binary'] == "partclone.dd":
                         self.summary_message += _("⚠") + " " + partition_key + ": verifying raw dd images not yet supported.\n"
+                        cumulative_bytes += partition_estimated_size_bytes
                         continue
                     elif 'partclone' == image_type:
                         cat_cmd_list = ["cat"] + image.image_format_dict_dict[partition_key][
@@ -214,18 +223,22 @@ class VerifyManager:
                         verify_command_list = ["partclone.chkimg", "--source", "-"]
                     elif 'partimage' == image_type:
                         self.summary_message += _("⚠") + " " + partition_key + ": verifying PartImage images not supported by current version of Rescuezilla.\n"
+                        cumulative_bytes += partition_estimated_size_bytes
                         continue
                     elif 'ntfsclone' == image_type:
                         self.summary_message += _("⚠") + " " + partition_key + ": Verifying NTFSclone images not supported by current version of Rescuezilla.\n"
+                        cumulative_bytes += partition_estimated_size_bytes
                         continue
                     elif "unknown" != image_type:
                         self.summary_message += _("❌") + " " + partition_key + ": unknown image type.\n"
+                        cumulative_bytes += partition_estimated_size_bytes
                         continue
                     else:
                         message = "Unhandled type" + image_type + " from " + partition_key
                         self.logger.write(message)
                         with self.summary_message_lock:
                             self.summary_message += message + "\n"
+                        cumulative_bytes += partition_estimated_size_bytes
                         continue
 
                     flat_command_string = Utility.print_cli_friendly(image_type + " command ",
@@ -271,7 +284,7 @@ class VerifyManager:
                                     current_partition_bytes=partition_estimated_size_bytes,
                                     cumulative_bytes=cumulative_bytes,
                                     total_bytes=all_images_total_size_estimate,
-                                    image_number=image_number,
+                                    image_number=total_partition_number,
                                     num_partitions=len(image.image_format_dict_dict[partition_key].keys()))
                                 GLib.idle_add(self.update_progress_bar, total_progress_float)
                             if 'remaining' in temp_dict.keys():
@@ -304,9 +317,11 @@ class VerifyManager:
                                       partition_summary + extra_info)
                         with self.summary_message_lock:
                             self.summary_message += partition_summary
+                        cumulative_bytes += partition_estimated_size_bytes
                         continue
                     else:
                         self.summary_message += _("✔") + _("{partition}: filesystem image successfully verified.").format(partition=partition_key) + "\n"
+                        cumulative_bytes += partition_estimated_size_bytes
                         continue
 
                 cumulative_bytes += partition_estimated_size_bytes
