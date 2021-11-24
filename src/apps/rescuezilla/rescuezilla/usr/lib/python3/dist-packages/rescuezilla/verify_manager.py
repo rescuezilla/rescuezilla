@@ -121,9 +121,10 @@ class VerifyManager:
         all_images_total_size_estimate = 0
         all_images_num_partitions = 0
         for image in self.image_list:
-            # Determine the size of all partition across all images. This is used for the weighted progress bar.
-            all_images_total_size_estimate += image.size_bytes
-            all_images_num_partitions += len(image.image_format_dict_dict.keys())
+            if not isinstance(image, FsArchiverImage):
+                # Determine the size of all partition across all images. This is used for the weighted progress bar.
+                all_images_total_size_estimate += image.size_bytes
+                all_images_num_partitions += len(image.image_format_dict_dict.keys())
 
         cumulative_bytes = 0
         image_number = 0
@@ -133,8 +134,6 @@ class VerifyManager:
             image_verify_message = _("Verifying {image_name}").format(image_name=image.absolute_path)
             self.logger.write(image_verify_message)
             GLib.idle_add(self.display_status, image_verify_message, image_verify_message)
-
-
 
             if self.requested_stop:
                 GLib.idle_add(self.completed_verify, False, _("User requested operation to stop."))
