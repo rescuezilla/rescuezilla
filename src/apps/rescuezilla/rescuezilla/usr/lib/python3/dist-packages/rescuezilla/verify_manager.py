@@ -24,6 +24,9 @@ import traceback
 from datetime import datetime
 
 import gi
+
+from parser.metadata_only_image import MetadataOnlyImage
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import GObject, GLib
 
@@ -130,6 +133,8 @@ class VerifyManager:
             self.logger.write(image_verify_message)
             GLib.idle_add(self.display_status, image_verify_message, image_verify_message)
 
+
+
             if self.requested_stop:
                 GLib.idle_add(self.completed_verify, False, _("User requested operation to stop."))
                 return
@@ -138,8 +143,14 @@ class VerifyManager:
                 self.summary_message += image.absolute_path + "\n"
 
             if isinstance(image, FsArchiverImage):
-                self.summary_message += _("⚠") + " " + "Verifying FsArchiver images not supported by current version of Rescuezilla\n"
+                with self.summary_message_lock:
+                    self.summary_message += _("⚠") + " " + "Verifying FsArchiver images not supported by current version of Rescuezilla\n"
                 continue
+            if isinstance(image, MetadataOnlyImage):
+                with self.summary_message_lock:
+                    self.summary_message += _("⚠") + " " + "Verifying VM images not supported by current version of Rescuezilla\n"
+                continue
+
             if image.has_partition_table():
                 mbr_path = image.get_absolute_mbr_path()
                 mbr_size = int(os.stat(mbr_path).st_size)
