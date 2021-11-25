@@ -26,6 +26,7 @@ from datetime import datetime
 import gi
 
 from parser.metadata_only_image import MetadataOnlyImage
+from parser.sfdisk import Sfdisk
 
 gi.require_version("Gtk", "3.0")
 from gi.repository import GObject, GLib
@@ -166,7 +167,8 @@ class VerifyManager:
                     post_mbr_size += int(os.stat(image.post_mbr_gap_dict['absolute_path']).st_size)
 
                 if (mbr_size + post_mbr_size) <= 512:
-                    self.summary_message += _("❌") + " " + _("The backup's bootloader data is shorter than expected. If the backup contained certain bootloaders like GRUB, during a restore operation Rescuezilla will try and re-install the bootloader.") + "\n"
+                    if Sfdisk.has_dos_partition_table(image.normalized_sfdisk_dict):
+                        self.summary_message += _("❌") + " " + _("The backup's bootloader data is shorter than expected. If the backup contained certain bootloaders like GRUB, during a restore operation Rescuezilla will try and re-install the bootloader.") + "\n"
                 else:
                     self.summary_message += _("✔") + " " + _("MBR backup appears correct.") + "\n"
             else:
