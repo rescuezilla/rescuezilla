@@ -145,16 +145,16 @@ class VerifyManager:
 
             if isinstance(image, FsArchiverImage):
                 with self.summary_message_lock:
-                    self.summary_message += _("⚠") + " " + "Verifying FsArchiver images not supported by current version of Rescuezilla\n"
+                    self.summary_message += _("⚠") + " " + "Verifying FsArchiver images not yet supported\n"
                 continue
             if isinstance(image, MetadataOnlyImage):
                 with self.summary_message_lock:
-                    self.summary_message += _("⚠") + " " + "Verifying VM images not supported by current version of Rescuezilla\n"
+                    self.summary_message += _("⚠") + " " + "Verifying VM images not yet supported\n"
                 continue
 
             if image.is_needs_decryption:
                 with self.summary_message_lock:
-                    self.summary_message += _("⚠") + " " + "Verifying encrypted images not supported by current version of Rescuezilla\n"
+                    self.summary_message += _("⚠") + " " + "Verifying encrypted images not supported. Carefully decrypting on the command-line may be a temporary workaround.\n"
                 continue
 
             if image.has_partition_table():
@@ -228,11 +228,11 @@ class VerifyManager:
                             image.image_format_dict_dict[partition_key]['compression'])
                         verify_command_list = ["partclone.chkimg", "--source", "-"]
                     elif 'partimage' == image_type:
-                        self.summary_message += _("⚠") + " " + partition_key + ": verifying PartImage images not supported by current version of Rescuezilla.\n"
+                        self.summary_message += _("⚠") + " " + partition_key + ": verifying PartImage images not yet supported.\n"
                         cumulative_bytes += partition_estimated_size_bytes
                         continue
                     elif 'ntfsclone' == image_type:
-                        self.summary_message += _("⚠") + " " + partition_key + ": Verifying NTFSclone images not supported by current version of Rescuezilla.\n"
+                        self.summary_message += _("⚠") + " " + partition_key + ": Verifying NTFSclone images not yet supported.\n"
                         cumulative_bytes += partition_estimated_size_bytes
                         continue
                     elif "unknown" != image_type:
