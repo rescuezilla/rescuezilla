@@ -330,7 +330,7 @@ class Handler:
         iters = []
         list_store, tree_path_list = treeselection.get_selected_rows()
         if len(list_store) == 0 or len(tree_path_list) == 0:
-            return list_store, None
+            return list_store, iters
         for tree_path in tree_path_list:
             iters += [list_store.get_iter(tree_path)]
         return list_store, iters
