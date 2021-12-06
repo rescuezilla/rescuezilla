@@ -25,7 +25,7 @@ class Swappt:
     @staticmethod
     def get_short_device_from_swappt_info_filename(swap_partition_info_abs_path):
         m = utility.REMatcher(os.path.basename(swap_partition_info_abs_path))
-        if m.match("swappt-([a-zA-Z0-9-+]+).info"):
+        if m.match("swappt-([a-zA-Z0-9-+_]+).info"):
             short_device_node = m.group(1)
         else:
             raise Exception("Unable to extract short device node from " + swap_partition_info_abs_path)

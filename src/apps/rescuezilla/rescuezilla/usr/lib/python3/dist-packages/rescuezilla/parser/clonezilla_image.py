@@ -635,15 +635,18 @@ class ClonezillaImage:
                 short_disk_key].keys():
                 estimated_size = self.partclone_info_dict_dict[short_disk_key]['size']['bytes']
 
-        is_lvm_logical_volume = 'is_lvm_logical_volume' in self.image_format_dict_dict[partition_short_device_node].keys() and \
-                self.image_format_dict_dict[partition_short_device_node]['is_lvm_logical_volume']
-        if not is_lvm_logical_volume:
-            # Prefer estimated size from parted partition table backup, but this requires splitting the device node
-            image_base_device_node, image_partition_number = Utility.split_device_string(partition_short_device_node)
-            if 'partitions' in self.parted_dict.keys() and image_partition_number in \
-                self.parted_dict['partitions'].keys():
-                estimated_size = self.parted_dict['partitions'][image_partition_number]['size'] * \
-                                 self.parted_dict['logical_sector_size']
+        is_swap = 'type' in self.image_format_dict_dict[partition_short_device_node].keys() and \
+                  self.image_format_dict_dict[partition_short_device_node]['type'] == 'swap'
+        if not is_swap:
+            is_lvm_logical_volume = 'is_lvm_logical_volume' in self.image_format_dict_dict[partition_short_device_node].keys() and \
+                    self.image_format_dict_dict[partition_short_device_node]['is_lvm_logical_volume']
+            if not is_lvm_logical_volume:
+                # Prefer estimated size from parted partition table backup, but this requires splitting the device node
+                image_base_device_node, image_partition_number = Utility.split_device_string(partition_short_device_node)
+                if 'partitions' in self.parted_dict.keys() and image_partition_number in \
+                    self.parted_dict['partitions'].keys():
+                    estimated_size = self.parted_dict['partitions'][image_partition_number]['size'] * \
+                                     self.parted_dict['logical_sector_size']
 
         if estimated_size == 0:
             # If the information wasn't in the parted backup, try the sfdisk partition table backup
