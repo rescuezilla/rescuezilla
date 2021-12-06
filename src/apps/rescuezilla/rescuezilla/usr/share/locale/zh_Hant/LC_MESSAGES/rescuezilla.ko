@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2021-06-03 14:45+0000\n"
-"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
+"PO-Revision-Date: 2021-12-03 02:51+0000\n"
+"Last-Translator: 池边树下 <mzky@163.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
 "rescuezilla/rescuezilla/zh_Hant/>\n"
 "Language: zh_Hant\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.10-dev\n"
 
 msgid "Welcome"
 msgstr "歡迎"
@@ -32,7 +32,7 @@ msgid "Restore"
 msgstr "恢復"
 
 msgid "Verify Image"
-msgstr ""
+msgstr "驗證映像"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
 msgstr "需要説明嗎？首先檢查救援隊經常提出的問題，然後前往救援會。"
@@ -160,7 +160,7 @@ msgid "Drive Model"
 msgstr "驅動模型"
 
 msgid "Serial Number"
-msgstr ""
+msgstr "序列號"
 
 msgid "Partitions"
 msgstr "分區"
@@ -415,10 +415,10 @@ msgid "Reboot"
 msgstr "重新啟動"
 
 msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
-msgstr ""
+msgstr "救援：忽略文件系統不一致和壞扇區"
 
 msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
-msgstr ""
+msgstr "<b>啟用“救援”可能會抑制重要錯誤。謹慎使用。 </b>"
 
 msgid "To start the backup, click <b>Next</b>."
 msgstr "要啟動備份，請單擊 <b>下一個</b>。"
@@ -451,7 +451,7 @@ msgid "Operation cancelled by user."
 msgstr "使用者取消操作。"
 
 msgid "Rescue option is enabled."
-msgstr ""
+msgstr "救援選項已啟用。"
 
 msgid "Error creating backup: "
 msgstr "建立備份的錯誤： "
@@ -740,34 +740,34 @@ msgid "Open in file manager"
 msgstr "在檔案管理員中打開"
 
 msgid "Verify"
-msgstr ""
+msgstr "驗證"
 
 msgid "Select one or more image(s) to verify."
-msgstr ""
+msgstr "選擇要驗證的一個或多個映像。"
 
 msgid "To begin verification, click <b>Next</b>."
-msgstr ""
+msgstr "要開始驗證，請單擊 <b> 下一步 </b>。"
 
 msgid "Verifying Image"
-msgstr ""
+msgstr "驗證映像"
 
 msgid "Verifying the selected image(s)."
-msgstr ""
+msgstr "驗證所選映像。"
 
 msgid "Verifying {image_name}"
-msgstr ""
+msgstr "正在驗證 {image_name}"
 
 msgid "Summary of Verification"
-msgstr ""
+msgstr "驗證摘要"
 
 msgid "Confirm the verification summary."
-msgstr ""
+msgstr "確認驗證摘要。"
 
 msgid "Verification Summary"
-msgstr ""
+msgstr "驗證摘要"
 
 msgid "To verify another image, click <b>Back</b>."
-msgstr ""
+msgstr "要驗證其它映像，請單擊 <b> 返回 </b>。"
 
 msgid "✔"
 msgstr "✔"
@@ -776,19 +776,19 @@ msgid "❌"
 msgstr "❌"
 
 msgid "MBR backup appears correct."
-msgstr ""
+msgstr "MBR 備份顯示正確。"
 
 msgid "No partition table found."
-msgstr ""
+msgstr "未找到分區表。"
 
 msgid "Sfdisk partition table file is empty or missing."
-msgstr ""
+msgstr "Sfdisk 分區表檔為空或丟失。"
 
 msgid "Sfdisk partition table file is present."
-msgstr ""
+msgstr "存在 Sfdisk 分區表檔。"
 
 msgid "Unable to verify."
-msgstr ""
+msgstr "無法驗證。"
 
 msgid "{partition}: filesystem image successfully verified."
-msgstr ""
+msgstr "{partition}：文件系統映像已成功驗證。"
