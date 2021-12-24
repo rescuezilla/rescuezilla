@@ -46,6 +46,8 @@ RUN apt-get install --yes \
                           libreiser4-dev libtinfo-dev libxslt1.1 nilfs-tools ntfs-3g ntfs-3g-dev \
                           quilt sgml-base uuid-dev vmfs-tools xfslibs-dev xfsprogs xml-core \
                           xsltproc \
+                          # Select runtime dependencies required for running the unit tests
+                          python3-gi libgtk-3-dev python3-whichcraft python3-babel \
                           # Install optional dependencies for quality-of-life when debugging
                           tmux vim
 
