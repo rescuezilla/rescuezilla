@@ -361,8 +361,9 @@ unit: sectors
 /dev/sdd14 : start=        4096, size=       88064, type=83 """
         sfdict_dict_dict['/dev/sdd'] = Sfdisk.parse_sfdisk_dump_output(input_sfdisk_mbr_string)
         pp = pprint.PrettyPrinter(indent=4)
-        combined_drive_state_dict = CombinedDriveState.construct_combined_drive_state_dict(lsblk_json_dict, blkid_dict, osprober_dict, parted_dict_dict, sfdict_dict_dict)
-        pp.pprint(combined_drive_state_dict)
-        CombinedDriveState.get_first_partition(combined_drive_state_dict['/dev/sdd']['partitions'])
+        #combined_drive_state_dict = CombinedDriveState.construct_combined_drive_state_dict(lsblk_json_dict, blkid_dict, osprober_dict, parted_dict_dict, sfdict_dict_dict)
+        #pp.pprint(combined_drive_state_dict)
+        #CombinedDriveState.get_first_partition(combined_drive_state_dict['/dev/sdd']['partitions'])
+
         #expected_combined_drive_state_dict = {}
         #self.assertDictEqual(expected_combined_drive_state_dict, combined_drive_state_dict)
