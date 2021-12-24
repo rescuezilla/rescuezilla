@@ -39,6 +39,10 @@ script:
 - git reset --hard HEAD
   # Runs unit tests
 - docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make test
+  # Ensure Travis-CI no-output timeout is much larger than 10 minutes, using workaround [1]
+  # to prevent squashfs compression step from timing out the build on Travis-CI
+  # https://github.com/travis-ci/travis-ci/issues/6934#issue-191692434
+- travis_wait 180 sleep infinity &
   # List any working directory files to help debug any unclean working directory issues
 - docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make status
   # Execute the Makefile's impish target within the docker container. This step
