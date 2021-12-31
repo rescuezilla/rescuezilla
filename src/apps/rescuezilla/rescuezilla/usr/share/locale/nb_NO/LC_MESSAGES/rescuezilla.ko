@@ -1,11 +1,12 @@
 # Allan Nordhøy <epost@anotheragency.no>, 2021.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2021-11-22 01:02+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"PO-Revision-Date: 2021-12-26 23:37+0000\n"
+"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "rescuezilla/rescuezilla/nb_NO/>\n"
 "Language: nb_NO\n"
@@ -13,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.10-dev\n"
+"X-Generator: Weblate 4.10.1\n"
 
 msgid "Welcome"
 msgstr "Velkommen"
@@ -51,9 +52,8 @@ msgstr "Tilbake"
 msgid "Next >"
 msgstr "Neste >"
 
-#, fuzzy
 msgid "Please wait..."
-msgstr "Vent …"
+msgstr "Vennligst vent …"
 
 msgid "Identifying disk drives..."
 msgstr "Identifiserer diskenheter …"
@@ -70,14 +70,12 @@ msgstr "Kjører: {app}"
 msgid "Running {app} on {device}"
 msgstr "Kjører {app} på {device}"
 
-#, fuzzy
 msgid "Failed to run command: "
 msgstr "Klarte ikke å kjøre kommandoen: "
 
 msgid "Error querying drives: "
 msgstr "Kunne ikke utføre spørring av disker: "
 
-#, fuzzy
 msgid "Clone"
 msgstr "Klon"
 
@@ -142,11 +140,10 @@ msgstr "Kloner følgende partisjoner"
 msgid "To start cloning, click <b>Next</b>."
 msgstr "Trykk <b>Neste</b> for å starte kloningen."
 
-#, fuzzy
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
 "Vil du klone enheten til {destination_drive}? Å gjøre dette vil overskrive "
-"dataen på målenheten for godt!"
+"dataene på målenheten for godt!"
 
 msgid "Step 6: Cloning Disk"
 msgstr "Steg 6: Kloning av disk"
@@ -165,9 +162,8 @@ msgstr "Kloningssammendrag"
 msgid "Confirm the clone summary."
 msgstr "Bekreft kloningssammendraget."
 
-#, fuzzy
 msgid "Unable to shutdown Image Explorer"
-msgstr "Kunne ikke slå av avtrykksutforskeren"
+msgstr "Kunne ikke slå av bilde-utforskeren"
 
 msgid "Step 1: Select Drive To Backup"
 msgstr "Steg 1: Velg enhet å sikkerhetskopiere"
@@ -232,20 +228,17 @@ msgstr "Delt over et nettverk"
 msgid "Where would you like to save the image?"
 msgstr "Hvor ønsker du å lagre avtrykket?"
 
-#, fuzzy
 msgid "Windows shared folder (SMB/CIFS, Samba)"
-msgstr "Windows-deling (SMB/CIFS, Samba)"
+msgstr "Windows-delingsmappe (SMB/CIFS, Samba)"
 
-#, fuzzy
 msgid "Search network"
 msgstr "Søk på nettverket"
 
 msgid "Server"
 msgstr "Tjener"
 
-#, fuzzy
 msgid "Share location (UNC path)"
-msgstr "Delingsplassering (UNC-sti)"
+msgstr "Sti til delingsområde (UNC-sti)"
 
 msgid "Username"
 msgstr "Brukernavn"
@@ -280,20 +273,17 @@ msgstr "Velg partisjonen å lagre avtrykksfilene til"
 msgid "Partition"
 msgstr "Partisjon"
 
-#, fuzzy
 msgid "Mounting..."
 msgstr "Monterer …"
 
-#, fuzzy
 msgid "Close this popup to cancel the mount operation."
-msgstr "Lukk dette oppsprettet for å avbryte monteringsoperasjonen."
+msgstr "Lukk dette sprettopp-vinduet for å avbryte monteringsoperasjonen."
 
 msgid "Please ensure the username, password and other fields provided are correct, and try again."
 msgstr ""
 "Forsikre deg om at brukernavn, passord, og at andre angitte felter stemmer, "
 "og prøv igjen."
 
-#, fuzzy
 msgid "Must provide either password or SSH identity file."
 msgstr "Enten passord eller SSH-identitetsfil må angis."
 
@@ -314,9 +304,8 @@ msgstr "Skanner: {filename}"
 msgid "Error processing the following images:"
 msgstr "Klarte ikke å behandle følgende avtrykk:"
 
-#, fuzzy
 msgid "Unable to fully process the image associated with the following partitions:"
-msgstr "Kunne ikke behandle avtrykket tilknyttet følgende partisjoner:"
+msgstr "Kunne ikke behandle bildefil tilknyttet følgende partisjoner:"
 
 msgid "Unable to fully process the following image:"
 msgstr "Kunne ikke behandle avtrykket i sin helhet:"
@@ -338,9 +327,8 @@ msgid "Any other filesystems within the image should be restorable as normal."
 msgstr ""
 "Alle andre filsystemer i dette avtrykket bør kunne gjenopprettes som normalt."
 
-#, fuzzy
 msgid "Needs decryption"
-msgstr "Behøver å dekrypteres"
+msgstr "Må dekrypteres"
 
 msgid "Unknown filesystem"
 msgstr "Ukjent filsystem"
@@ -353,12 +341,11 @@ msgstr ""
 "fullt ut gjenopprette data i den utvidede partisjonen. Sjekk {url} for info "
 "og hjelp."
 
-#, fuzzy
 msgid "The backup's bootloader data is shorter than expected. If the backup contained certain bootloaders like GRUB, during a restore operation Rescuezilla will try and re-install the bootloader."
 msgstr ""
 "Sikkerhetskopi-oppstartslasterens data er kortere enn forventet. Hvis "
-"sikkerhetskopien inneholder oppstartslastere som GRUB vil Rescuezilla prøve "
-"å reinstallere den under gjenopprettingsoperasjonen."
+"sikkerhetskopien inneholder oppstartslastere som GRUB, vil Rescuezilla prøve "
+"å reinstallere oppstartslaster under gjenopprettingsoperasjonen."
 
 msgid "Step 4: Select Destination Folder"
 msgstr "Steg 4: Velg målmappe"
@@ -384,7 +371,6 @@ msgstr ""
 "Tabellen nedenfor lister opp alle sikkerhetskopiavtrykkene som om mulig "
 "allerede finnes i denne mappen."
 
-#, fuzzy
 msgid "Browse..."
 msgstr "Utforsk …"
 
@@ -426,16 +412,14 @@ msgstr ""
 msgid "Compression format: "
 msgstr "Sammenpakkingsformat: "
 
-#, fuzzy
 msgid "gzip"
-msgstr "Gzip"
+msgstr "gzip"
 
 msgid "default"
 msgstr "forvalg"
 
-#, fuzzy
 msgid "zstandard"
-msgstr "Zstandard"
+msgstr "zstandard"
 
 msgid "Uncompressed (Suitable for use with Image Explorer)"
 msgstr "Ukomprimert (passende for bruk med avtrykksutforsker)"
@@ -449,10 +433,9 @@ msgstr "Raskest"
 msgid "Best"
 msgstr "Best"
 
-#, fuzzy
 msgid "When you are happy with the compression settings, click <b>Next</b>."
 msgstr ""
-"Når du er tilfreds med sammenpakkingsinnstillingene klikker du <b>Neste</b>."
+"Når du er fornøyd med komprimeringsinnstillingene klikker du <b>Neste</b>."
 
 msgid "Step 7: Confirm Backup Configuration"
 msgstr "Steg 7: Bekreft sikkerhetskopioppsett"
@@ -463,18 +446,14 @@ msgstr "Kildeenhet"
 msgid "Backing up the following partition(s)"
 msgstr "Sikkerhetskopierer følgende partisjoner"
 
-#, fuzzy
 msgid "The backup image will be written into folder {dest_dir} on {description}"
-msgstr ""
-"Sikkerhetskopiavtrykket vil bli skrevet inn i mappen {dest_dir} på "
-"{description}"
+msgstr "Sikkerhetskopi vil bli lagret i mappen {dest_dir} på {description}"
 
 msgid "Confirm the following backup configuration."
 msgstr "Bekreft følgende sikkerhetskopi-oppsett."
 
-#, fuzzy
 msgid "On successful completion of the task, perform the following action: "
-msgstr "Utfør følgende handling ved vellykket fullførelse av oppgaven: "
+msgstr "Når handlingen er ferdig, utfør følgende: "
 
 msgid "Do nothing"
 msgstr "Gjør ikke noe"
@@ -482,16 +461,16 @@ msgstr "Gjør ikke noe"
 msgid "Shutdown"
 msgstr "Slå av"
 
-#, fuzzy
 msgid "Reboot"
-msgstr "Start på ny"
+msgstr "Start på nytt"
 
-#, fuzzy
 msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
-msgstr ""
+msgstr "Redning: Ignorer inkonsekvenser i filsystem og dårlige disksektorer"
 
 msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
 msgstr ""
+"<b>Med \"Redning\" påslått, kan viktige feilmeldinger bli undertrykt. Bruk "
+"med forsiktighet.</b>"
 
 msgid "To start the backup, click <b>Next</b>."
 msgstr "For å starte sikkerhetskopieringen, klikk <b>Neste</b>."
@@ -499,18 +478,15 @@ msgstr "For å starte sikkerhetskopieringen, klikk <b>Neste</b>."
 msgid "Step 8: Creating Backup Image"
 msgstr "Steg 8: Oppretting av sikkerhetskopiavtrykk"
 
-#, fuzzy
 msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
 "Sikkerhetskopierer systemet ditt til stedet du har valgt. Dette kan ta "
 "opptil en time eller mer avhengig av hastigheten på datamaskinen din og "
 "mengden data."
 
-#, fuzzy
 msgid "Saving: {file}"
 msgstr "Lagrer: {file}"
 
-#, fuzzy
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
 msgstr ""
 "Sikkerhetskopier {partition_name} som inneholder filsystemet {filesystem} "
@@ -531,35 +507,29 @@ msgstr "En operasjon pågår. Ønsker du å avbryte?"
 msgid "Operation cancelled by user."
 msgstr "Operasjon avbrutt av bruker."
 
-#, fuzzy
 msgid "Rescue option is enabled."
-msgstr ""
+msgstr "Redningsopsjon påslått"
 
 msgid "Error creating backup: "
 msgstr "Kunne ikke opprette sikkerhetskopi: "
 
-#, fuzzy
 msgid "Failed to write destination file. Please confirm it is valid to create the provided file path, and try again."
 msgstr ""
 "Klarte ikke å skrive målfil. Bekreft at den er gyldig for å opprette angitt "
 "filsti, og prøv igjen."
 
-#, fuzzy
 msgid "Successful backup of swap partition {partition_name}"
 msgstr "Sikkerhetskopierte sidevekslingspartisjonen {partition_name}"
 
-#, fuzzy
 msgid "<b>Failed to backup partition</b> {partition_name}"
 msgstr "<b>Klarte ikke å sikkerhetskopiere partisjonen </b> {partition_name}"
 
 msgid "Successful backup of partition {partition_name}"
 msgstr "Sikkerhetskopierte partisjonen {partition_name}"
 
-#, fuzzy
 msgid "Backup saved successfully."
 msgstr "Sikkerhetskopi lagret."
 
-#, fuzzy
 msgid "Backup succeeded with some errors:"
 msgstr "Sikkerhetskopi utført med noen feil:"
 
@@ -593,11 +563,9 @@ msgstr "Klikk <b>Utforsk</b> for å velge mappen som inneholder avtrykksfilene."
 msgid "Select the image file to restore."
 msgstr "Velg avtrykksfilen å gjenopprette."
 
-#, fuzzy
 msgid "Step 3: Select Drive To Restore"
 msgstr "Steg 3: Velg disk å gjenopprette"
 
-#, fuzzy
 msgid "Select the destination drive to restore with the selected image."
 msgstr "Velg målenhet å gjenopprette med valgt avtrykk."
 

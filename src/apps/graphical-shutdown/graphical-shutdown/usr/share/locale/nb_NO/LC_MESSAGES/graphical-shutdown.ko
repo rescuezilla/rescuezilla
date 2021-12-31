@@ -1,15 +1,16 @@
 # Allan Nordhøy <epost@anotheragency.no>, 2021.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2021.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2021-07-09 13:28+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"PO-Revision-Date: 2021-12-26 23:37+0000\n"
+"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "rescuezilla/graphical-shutdown/nb_NO/>\n"
 "Language: nb_NO\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.8-dev\n"
+"X-Generator: Weblate 4.10.1\n"
 
 msgid "End Session"
 msgstr "Sluttfør økt"
@@ -20,9 +21,8 @@ msgstr "Avbryt"
 msgid "Shutdown"
 msgstr "Slå av"
 
-#, fuzzy
 msgid "Reboot"
-msgstr "Start på ny"
+msgstr "Start på nytt"
 
 msgid "Choose action."
 msgstr "Velg handling."
