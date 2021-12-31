@@ -948,7 +948,7 @@ class Handler:
                                            clone_mapping_dict=self.partitions_to_clone,
                                            drive_state=self.drive_query.drive_state,
                                            is_overwriting_partition_table=self.is_overwriting_partition_table,
-                                           is_rescue=self.is_rescue,
+                                           is_rescue=is_rescue,
                                            post_task_action=self.post_task_action,
                                            completed_callback=self._on_operation_completed_callback)
             # Display the Patreon call-to-action.
