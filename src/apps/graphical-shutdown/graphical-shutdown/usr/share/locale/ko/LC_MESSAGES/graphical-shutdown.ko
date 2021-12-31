@@ -1,25 +1,27 @@
+# Jiwoon Kim <budaestew@gmail.com>, 2021.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2021-05-19 03:18+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2021-12-26 16:52+0000\n"
+"Last-Translator: Jiwoon Kim <budaestew@gmail.com>\n"
+"Language-Team: Korean <https://hosted.weblate.org/projects/rescuezilla/"
+"graphical-shutdown/ko/>\n"
 "Language: ko\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.10.1\n"
 
 msgid "End Session"
-msgstr ""
+msgstr "세션 종료"
 
 msgid "Cancel"
-msgstr ""
+msgstr "취소"
 
 msgid "Shutdown"
-msgstr ""
+msgstr "시스템 종료"
 
 msgid "Reboot"
-msgstr ""
+msgstr "다시 시작"
 
 msgid "Choose action."
-msgstr ""
+msgstr "작업을 선택하세요."
