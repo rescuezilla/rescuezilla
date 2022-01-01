@@ -1,79 +1,83 @@
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021.
+# Jiwoon Kim <budaestew@gmail.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2021-12-31 19:52+0000\n"
+"Last-Translator: Jiwoon Kim <budaestew@gmail.com>\n"
+"Language-Team: Korean <https://hosted.weblate.org/projects/rescuezilla/"
+"rescuezilla/ko/>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.10.1\n"
 
 msgid "Welcome"
-msgstr ""
+msgstr "환영합니다"
 
 msgid "Select an Option"
-msgstr ""
+msgstr "작업 선택"
 
 msgid "Easily create a backup image of your computer, or completely restore from one.  Click an option to begin:"
-msgstr ""
+msgstr "손쉽게 컴퓨터의 백업 이미지를 만들거나 완전히 복원할 수 있습니다. 시작할 작업을 선택하세요:"
 
 msgid "Backup"
-msgstr ""
+msgstr "백업"
 
 msgid "Restore"
-msgstr ""
+msgstr "복원"
 
 msgid "Verify Image"
-msgstr ""
+msgstr "이미지 확인"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
-msgstr ""
+msgstr "도움이 필요한가요? 먼저 Rescuezilla의 자주 묻는 질문을 찾아보고 포럼에 문의하세요."
 
 msgid "Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed."
-msgstr ""
+msgstr "Rescuezilla가 유용하다면 계속 개발될 수 있도록 Patreon에서 월 $1씩 기부할 수 있습니다."
 
 msgid "Back"
-msgstr ""
+msgstr "뒤로"
 
 msgid "Next >"
-msgstr ""
+msgstr "다음 >"
 
 msgid "Please wait..."
-msgstr ""
+msgstr "잠시만 기다리세요..."
 
 msgid "Identifying disk drives..."
-msgstr ""
+msgstr "디스크 드라이브 식별 중..."
 
 msgid "Unmounting: {path}"
-msgstr ""
+msgstr "마운트 해제: {path}"
 
 msgid "Unable to unmount {path}"
-msgstr ""
+msgstr "마운트 해제할 수 없음: {path}"
 
 msgid "Running: {app}"
-msgstr ""
+msgstr "실행 중: {app}"
 
 msgid "Running {app} on {device}"
-msgstr ""
+msgstr "{device} 에서 {app} 실행 중"
 
 msgid "Failed to run command: "
-msgstr ""
+msgstr "명령 실행 실패: "
 
 msgid "Error querying drives: "
-msgstr ""
+msgstr "장치 조회 오류: "
 
 msgid "Clone"
-msgstr ""
+msgstr "복제"
 
 msgid "Step 1: Understanding Cloning"
-msgstr ""
+msgstr "1 단계: 복제 이해하기"
 
 msgid "Please understand how \"cloning\" differs from \"imaging\"."
-msgstr ""
+msgstr "\"복제\"와 \"이미징\"이 어떻게 다른지 이해해야 합니다."
 
 msgid "This mode is for \"disk cloning\". Cloning means copying one drive and directly overwriting another drive. This is a direct one-step operation with no temporary storage required.\n"
 "\n"
@@ -82,575 +86,623 @@ msgid "This mode is for \"disk cloning\". Cloning means copying one drive and di
 ""
 "To use the \"imaging\" wizards, click <b>Back</b> and select <b>Backup</b> or <b>Restore</b>."
 msgstr ""
+"현재 모드는 \"디스크 복제\"입니다. 복제는 한 드라이브를 복사하여 다른 드라이브로 바로 덮어 씌우는 것을 의미하는데, 다른 임시 "
+"저장소가 필요하지 않은 단 하나의 작업입니다.\n"
+"\n"
+"복제는 \"디스크 이미징\"과 다릅니다. 이미징은 한 드라이브를 통째로 복사하여 외부 드라이브의 폴더 내부에 거대한 파일로 만들어 "
+"저장하는 것을 의미합니다. 같은 외부 드라이브 내에 여러 개의 이미지 파일을 저장할 수 있고, 이미지 파일들은 다시 원래 디스크나 다른 "
+"디스크로 복원될 수 있습니다. 다시 말해, \"이미징\"의 백업 작업에서는 복원을 위해 나의 드라이브를 복사한 <i>파일</i>을 최소 "
+"임시라도 저장 할 수 있는 드라이브가 필요합니다.\n"
+"\n"
+"\"이미징\" 마법사를 사용하려면 <b>뒤로</b>를 클릭하고 <b>백업</b>이나 <b>복원</b>을 선택하세요."
 
 msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
-msgstr ""
+msgstr "\"복제\" 마법사를 시작하려면 <b>다음</b>을 클릭하세요"
 
 msgid "Step 2: Select Source Drive"
-msgstr ""
+msgstr "2 단계: 원본 드라이브 선택"
 
 msgid "Select the <b>source drive</b> to clone."
-msgstr ""
+msgstr "복제할 <b>원본 드라이브</b>를 선택하세요."
 
 msgid "Select the <b>destination drive</b> to overwrite."
-msgstr ""
+msgstr "덮어 씌어질 <b>대상 드라이브</b>를 선택하세요."
 
 msgid "Step 4: Select Partitions to Clone"
-msgstr ""
+msgstr "4 단계: 복제할 파티션 선택"
 
 msgid "Select which partitions from the source drive to clone, and whether to overwrite the partition table. <b>Leave everything selected to completely clone the source drive to the destination drive.</b>"
 msgstr ""
+"복제할 원본 드라이브의 파티션을 선택하고 파티션 테이블을 덮어쓸지 선택하세요. <b>원본 드라이브를 대상 드라이브로 완전히 복제하려면 "
+"모든 항목을 선택된 상태로 두세요.</b>"
 
 msgid "Step 5: Confirm Cloning Configuration"
-msgstr ""
+msgstr "5 단계: 복제 구성 확인"
 
 msgid "Confirm the following cloning configuration."
-msgstr ""
+msgstr "다음 복제 구성을 확인하세요."
 
 msgid "Cloning the following partitions"
-msgstr ""
+msgstr "다음 파티션을 복제"
 
 msgid "To start cloning, click <b>Next</b>."
-msgstr ""
+msgstr "복제를 시작하려면 <b>다음</b>을 클릭하세요."
 
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
+"정말 드라이브를 {destination_drive} 에 복제하시겠습니까? 계속하면 현재 드라이브의 데이터를 영구적으로 덮어씁니다!"
 
 msgid "Step 6: Cloning Disk"
-msgstr ""
+msgstr "6 단계: 디스크 복제"
 
 msgid "Cloning the drive you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
-msgstr ""
+msgstr "선택한 드라이브를 복제합니다.  컴퓨터의 속도와 데이터의 양에 따라 1시간 이상이 소요될 수 있습니다."
 
 msgid "Summary of Clone"
-msgstr ""
+msgstr "복제 요약"
 
 msgid "Clone Summary"
-msgstr ""
+msgstr "복제 요약"
 
 msgid "Confirm the clone summary."
-msgstr ""
+msgstr "복제 요약을 확인하세요."
 
 msgid "Unable to shutdown Image Explorer"
-msgstr ""
+msgstr "이미지 탐색기를 종료할 수 없음"
 
 msgid "Step 1: Select Drive To Backup"
-msgstr ""
+msgstr "1 단계: 백업할 드라이브 선택"
 
 msgid "Select the <b>source drive</b> that you would like to create a backup image from."
-msgstr ""
+msgstr "백업 이미지를 만들려는 <b>원본 드라이브</b>를 선택하세요."
 
 msgid "Drive"
-msgstr ""
+msgstr "드라이브"
 
 msgid "Capacity"
-msgstr ""
+msgstr "용량"
 
 msgid "Drive Model"
-msgstr ""
+msgstr "드라이브 모델"
 
 msgid "Serial Number"
-msgstr ""
+msgstr "일련 번호"
 
 msgid "Partitions"
-msgstr ""
+msgstr "파티션"
 
 msgid "Show hidden devices (for advanced users)"
-msgstr ""
+msgstr "숨겨진 장치 표시 (고급 사용자용)"
 
 msgid "Step 2: Select Partitions to Save"
-msgstr ""
+msgstr "2 단계: 저장할 파티션 선택"
 
 msgid "Select which partitions to create a backup of. <b>Leave all partitions selected if you are unsure.</b>"
-msgstr ""
+msgstr "백업을 만들 파티션을 선택하세요. <b>잘 모르겠다면 모든 파티션을 선택된 상태로 두세요.</b>"
 
 msgid "Save"
-msgstr ""
+msgstr "저장"
 
 msgid "Description"
-msgstr ""
+msgstr "설명"
 
 msgid "Drive {drive_number}"
-msgstr ""
+msgstr "드라이브 {drive_number}"
 
 msgid "Partition {partition_number}"
-msgstr ""
+msgstr "파티션 {partition_number}"
 
 msgid "Step 3: Select Destination Drive"
-msgstr ""
+msgstr "3 단계: 대상 드라이브 선택"
 
 msgid "Click on the box below to select the source drive that you would like to create a backup image from."
-msgstr ""
+msgstr "아래 상자를 클릭하여 백업 이미지를 만드려는 원본 드라이브를 선택하세요."
 
 msgid "Connected directly to my computer"
-msgstr ""
+msgstr "내 컴퓨터에 직접 연결"
 
 msgid "Shared over a network"
-msgstr ""
+msgstr "네트워크를 통해 공유"
 
 msgid "Where would you like to save the image?"
-msgstr ""
+msgstr "이미지를 어디에 저장하시겠습니까?"
 
 msgid "Windows shared folder (SMB/CIFS, Samba)"
-msgstr ""
+msgstr "윈도우 공유 폴더 (SMB/CIFS, Samba)"
 
 msgid "Search network"
-msgstr ""
+msgstr "네트워크 검색"
 
 msgid "Server"
-msgstr ""
+msgstr "서버"
 
 msgid "Share location (UNC path)"
-msgstr ""
+msgstr "공유 위치 (UNC 경로)"
 
 msgid "Username"
-msgstr ""
+msgstr "사용자 이름"
 
 msgid "Password"
-msgstr ""
+msgstr "비밀번호"
 
 msgid "Domain"
-msgstr ""
+msgstr "도메인"
 
 msgid "Version"
-msgstr ""
+msgstr "버전"
 
 msgid "Remote path"
-msgstr ""
+msgstr "원격 경로"
 
 msgid "Exported path"
-msgstr ""
+msgstr "내보내질 경로"
 
 msgid "Identity File"
-msgstr ""
+msgstr "키 파일"
 
 msgid "Optional"
-msgstr ""
+msgstr "선택 사항"
 
 msgid "Select network-shared storage location:"
-msgstr ""
+msgstr "네트워크 공유 저장소 위치 선택:"
 
 msgid "Select the partition where the image files will be saved to"
-msgstr ""
+msgstr "이미지 파일이 저장될 파티션 선택하세요"
 
 msgid "Partition"
-msgstr ""
+msgstr "파티션"
 
 msgid "Mounting..."
-msgstr ""
+msgstr "마운트 중..."
 
 msgid "Close this popup to cancel the mount operation."
-msgstr ""
+msgstr "마운트 작업을 취소하려면 현재 팝업을 닫으세요."
 
 msgid "Please ensure the username, password and other fields provided are correct, and try again."
-msgstr ""
+msgstr "입력한 사용자 이름, 비밀번호 및 다른 항목이 올바른지 확인하고 다시 시도하세요."
 
 msgid "Must provide either password or SSH identity file."
-msgstr ""
+msgstr "비밀번호 또는 SSH 키 파일이 필요합니다."
 
 msgid "Scanning folder for backup images..."
-msgstr ""
+msgstr "백업 이미지에 대한 폴더 탐색 중..."
 
 msgid "({timeout_seconds} second timeout)"
-msgstr ""
+msgstr "(타임아웃 {timeout_seconds}초)"
 
 msgid "Close this popup to cancel scanning the selected folder and subfolders."
-msgstr ""
+msgstr "선택한 폴더 및 하위 폴더 탐색을 취소하려면 현재 팝업을 닫으세요."
 
 msgid "Scanning: {filename}"
-msgstr ""
+msgstr "탐색 중: {filename}"
 
 msgid "Error processing the following images:"
-msgstr ""
+msgstr "다음 이미지를 처리하는 중 오류 발생:"
 
 msgid "Unable to fully process the image associated with the following partitions:"
-msgstr ""
+msgstr "다음 파티션과 연결된 이미지를 완전히 처리할 수 없음:"
 
 msgid "Unable to fully process the following image:"
-msgstr ""
+msgstr "다음 이미지를 완전히 처리할 수 없음:"
 
 msgid "Cannot find partition's associated partclone image"
-msgstr ""
+msgstr "파티션의 연결된 partclone 이미지를 찾을 수 없음"
 
 msgid "This can happen when loading images which Clonezilla was unable to completely backup."
-msgstr ""
+msgstr "Clonezilla가 완전히 백업하지 못한 이미지를 불러올 때 이런 상황이 발생할 수 있습니다."
 
 msgid "Note: This image format cannot distinguish between failed partclone backup and a user who chose not to backup a partition."
-msgstr ""
+msgstr "참고: 현재 이미지 형식은 실패한 partclone 백업과 파티션 백업을 선택하지 않은 사용자를 구별할 수 없습니다."
 
 msgid "Any other filesystems within the image should be restorable as normal."
-msgstr ""
+msgstr "이미지 내의 다른 파일 시스템은 정상적으로 복원할 수 있어야 합니다."
 
 msgid "Needs decryption"
-msgstr ""
+msgstr "암호 해독 필요"
 
 msgid "Unknown filesystem"
-msgstr ""
+msgstr "알 수 없는 파일 시스템"
 
 msgid "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance."
 msgstr ""
+"백업의 확장 파티션 정보가 비어있습니다. 백업에 확장 파티션이 포함되어 있으면 올바르게 복원되지 않습니다. 모든 데이터는 아직 완전히 "
+"복구할 수 있지만 확장 파티션 내의 데이터도 완전히 복원하려면 수동으로 조정해야 합니다."
 
 msgid "The backup's bootloader data is shorter than expected. If the backup contained certain bootloaders like GRUB, during a restore operation Rescuezilla will try and re-install the bootloader."
 msgstr ""
+"백업의 부트로더 데이터가 예상보다 짧습니다. 백업에 GRUB과 같은 특정 부트로더가 포함되어 있으면 복원 작업 중에 "
+"Rescuezilla가 부트로더를 다시 설치하려고 시도할 것입니다."
 
 msgid "Step 4: Select Destination Folder"
-msgstr ""
+msgstr "4 단계: 대상 폴더 선택"
 
 msgid "Click <b>Browse</b> to select the folder on the destination drive where your new backup image will be saved.\n"
 "\n"
 "The folder a backup is saved in is usually a description of the computer, e.g. <b>office1</b> or <b>zack-laptop</b>."
 msgstr ""
+"<b>찾아보기</b>를 클릭하여 새로운 백업 이미지가 저장될 대상 드라이브의 폴더를 선택하세요.\n"
+"\n"
+"백업이 저장될 폴더의 이름은 보통 <b>office1</b> 또는 <b>zack-laptop</b>과 같은 컴퓨터의 이름입니다."
 
 msgid "You must select a folder inside {location}"
-msgstr ""
+msgstr "{location} 내에서 폴더를 선택해야 합니다"
 
 msgid "Please select a different folder."
-msgstr ""
+msgstr "다른 폴더를 선택하세요."
 
 msgid "The table below lists the backup images that are already in this folder (if any)."
-msgstr ""
+msgstr "현재 폴더에 백업 이미지가 이미 존재하는 경우 아래 목록에 표시됩니다."
 
 msgid "Browse..."
-msgstr ""
+msgstr "찾아보기..."
 
 msgid "Filename"
-msgstr ""
+msgstr "파일 이름"
 
 msgid "Size"
-msgstr ""
+msgstr "크기"
 
 msgid "Last modified"
-msgstr ""
+msgstr "수정한 날짜"
 
 msgid "When you are happy with the destination folder, click <b>Next</b>."
-msgstr ""
+msgstr "대상 폴더가 마음에 들면 <b>다음</b>을 클릭하세요."
 
 msgid "Step 5: Name Your Backup"
-msgstr ""
+msgstr "5 단계: 백업 이름 지정"
 
 msgid "Provide a unique name for this backup image, such as the date.  Today's date is automatically entered for you below.\n"
 "\n"
 "You may only use letters, numbers, and dashes in your backup name."
 msgstr ""
+"백업 이미지의 이름에 날짜와 같은 고유한 이름을 입력하세요.  오늘의 날짜는 자동으로 아래에 입력됩니다.\n"
+"\n"
+"이름에는 문자, 숫자 및 대시(-)만 사용할 수 있습니다."
 
 msgid "Optional: Provide a short description."
-msgstr ""
+msgstr "선택 사항: 간단한 설명을 입력하세요."
 
 msgid "Step 6: Customize Compression Settings"
-msgstr ""
+msgstr "6 단계: 압축 설정 사용자 지정"
 
 msgid "Customize image compression settings. <b>Don't make any changes if you are unsure.</b>"
-msgstr ""
+msgstr "이미지 압축 설정을 지정합니다. <b>잘 모르겠다면 그대로 두세요.</b>"
 
 msgid "Compression format: "
-msgstr ""
+msgstr "압축 형식: "
 
 msgid "gzip"
-msgstr ""
+msgstr "gzip"
 
 msgid "default"
-msgstr ""
+msgstr "기본"
 
 msgid "zstandard"
-msgstr ""
+msgstr "zstandard"
 
 msgid "Uncompressed (Suitable for use with Image Explorer)"
-msgstr ""
+msgstr "압축 하지 않음 (이미지 탐색기와 사용 시 적합)"
 
 msgid "Compression level: "
-msgstr ""
+msgstr "압축 수준: "
 
 msgid "Fastest"
-msgstr ""
+msgstr "빠름"
 
 msgid "Best"
-msgstr ""
+msgstr "최고"
 
 msgid "When you are happy with the compression settings, click <b>Next</b>."
-msgstr ""
+msgstr "압축 설정이 마음에 들면 <b>다음</b>을 클릭하세요."
 
 msgid "Step 7: Confirm Backup Configuration"
-msgstr ""
+msgstr "7 단계 백업 구성 확인"
 
 msgid "Source drive"
-msgstr ""
+msgstr "원본 드라이브"
 
 msgid "Backing up the following partition(s)"
-msgstr ""
+msgstr "다음 파티션 백업"
 
 msgid "The backup image will be written into folder {dest_dir} on {description}"
-msgstr ""
+msgstr "백업 이미지는 {description}의 {dest_dir} 폴더에 기록됩니다"
 
 msgid "Confirm the following backup configuration."
-msgstr ""
+msgstr "다음 백업 구성을 확인하세요."
 
 msgid "On successful completion of the task, perform the following action: "
-msgstr ""
+msgstr "작업이 성공적으로 완료되면 수행할 작업: "
 
 msgid "Do nothing"
-msgstr ""
+msgstr "아무 것도 하지 않음"
 
 msgid "Shutdown"
-msgstr ""
+msgstr "시스템 종료"
 
 msgid "Reboot"
-msgstr ""
+msgstr "다시 시작"
 
 msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
-msgstr ""
+msgstr "복구: 파일 시스템 불일치 및 배드 섹터 무시하기"
 
 msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
-msgstr ""
+msgstr "<b>\"복구\"를 활성화하면 중요한 오류가 숨겨질 수 있습니다. 주의해서 사용해야 합니다.</b>"
 
 msgid "To start the backup, click <b>Next</b>."
-msgstr ""
+msgstr "백업을 시작하려면 <b>다음</b>을 클릭하세요."
 
 msgid "Step 8: Creating Backup Image"
-msgstr ""
+msgstr "8 단계: 백업 이미지 만들기"
 
 msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
-msgstr ""
+msgstr "선택한 위치로 시스템을 백업합니다.  컴퓨터의 속도와 데이터의 양에 따라 1시간 이상이 소요될 수 있습니다."
 
 msgid "Saving: {file}"
-msgstr ""
+msgstr "저장 중: {file}"
 
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
-msgstr ""
+msgstr "{partition_name} ({filesystem}) 파티션을 다음 위치로 백업: {destination}"
 
 msgid "Summary of Backup"
-msgstr ""
+msgstr "백업 요약"
 
 msgid "Confirm the backup summary."
-msgstr ""
+msgstr "백업 요약을 확인하세요."
 
 msgid "Backup Summary"
-msgstr ""
+msgstr "백업 요약"
 
 msgid "An operation is in progress. Do you wish to cancel?"
-msgstr ""
+msgstr "작업이 진행 중입니다. 취소하시겠습니까?"
 
 msgid "Operation cancelled by user."
-msgstr ""
+msgstr "사용자가 작업을 취소했습니다."
 
 msgid "Rescue option is enabled."
-msgstr ""
+msgstr "복구 옵션이 활성화되었습니다."
 
 msgid "Error creating backup: "
-msgstr ""
+msgstr "백업을 만드는 중 오류: "
 
 msgid "Failed to write destination file. Please confirm it is valid to create the provided file path, and try again."
-msgstr ""
+msgstr "대상 파일을 쓰지 못했습니다. 만들 수 있는 파일 경로를 입력했는지 확인하고 다시 시도하세요."
 
 msgid "Successful backup of swap partition {partition_name}"
-msgstr ""
+msgstr "{partition_name} 스왑 파티션 백업 성공"
 
 msgid "<b>Failed to backup partition</b> {partition_name}"
-msgstr ""
+msgstr "<b>파티션 백업 실패</b> {partition_name}"
 
 msgid "Successful backup of partition {partition_name}"
-msgstr ""
+msgstr "{partition_name} 파티션 백업 성공"
 
 msgid "Backup saved successfully."
-msgstr ""
+msgstr "백업이 성공적으로 저장되었습니다."
 
 msgid "Backup succeeded with some errors:"
-msgstr ""
+msgstr "백업이 성공했지만 일부 오류가 발생했습니다:"
 
 msgid "Backup operation failed:"
-msgstr ""
+msgstr "백업 작업 실패:"
 
 msgid "User requested operation to stop."
-msgstr ""
+msgstr "사용자가 작업 중지를 요청했습니다."
 
 msgid "Operation took {num_minutes} minutes."
-msgstr ""
+msgstr "작업에 소요된 시간은 {num_minutes}분 입니다."
 
 msgid "To start a new session, click <b>Next</b>"
-msgstr ""
+msgstr "새로운 세션을 시작하려면 <b>다음</b>을 클릭하세요"
 
 msgid "Step 1: Select Image Location"
-msgstr ""
+msgstr "1 단계: 이미지 위치 선택"
 
 msgid "Where are the image files stored?"
-msgstr ""
+msgstr "이미지 파일은 어디에 저장되어있나요?"
 
 msgid "Select the partition which contains the image files:"
-msgstr ""
+msgstr "이미지 파일이 포함된 파티션을 선택하세요:"
 
 msgid "Step 2: Select Backup Image"
-msgstr ""
+msgstr "2 단계: 백업 이미지 선택"
 
 msgid "Click <b>Browse</b> to select the folder containing image files."
-msgstr ""
+msgstr "<b>찾아보기</b>를 클릭하여 이미지 파일이 포함된 폴더를 선택하세요."
 
 msgid "Select the image file to restore."
-msgstr ""
+msgstr "복원할 이미지 파일을 선택하세요."
 
 msgid "Step 3: Select Drive To Restore"
-msgstr ""
+msgstr "3 단계: 복원할 드라이브 선택"
 
 msgid "Select the destination drive to restore with the selected image."
-msgstr ""
+msgstr "선택한 이미지로 복원할 대상 드라이브를 선택하세요."
 
 msgid "Step 4: Select Partitions to Restore"
-msgstr ""
+msgstr "4 단계: 복원할 파티션 선택"
 
 msgid "Select which partitions from the backup image to restore, and whether to overwrite the partition table. <b>Leave everything selected to completely restore the destination drive.</b>"
 msgstr ""
+"백업 이미지에서 복원할 파티션과 파티션 테이블을 덮어쓸지 여부를 선택합니다. <b>대상 드라이브를 완전히 복원하려면 모든 항목을 선택된 "
+"상태로 두세요.</b>"
 
 msgid "Selected image"
-msgstr ""
+msgstr "선택한 이미지"
 
 msgid "Destination device"
-msgstr ""
+msgstr "대상 장치"
 
 msgid "Destination partition"
-msgstr ""
+msgstr "대상 파티션"
 
 msgid "Overwrite partition table"
-msgstr ""
+msgstr "파티션 테이블 덮어쓰기"
 
 msgid "You will be overwriting the partition table."
-msgstr ""
+msgstr "파티션 테이블을 덮어쓰게 됩니다."
 
 msgid "The \"destination partition\" column has been updated using the information stored within the backup image.\n\n<b>If partitions have been resized, new partitions added, or additional operating systems installed <i>since the backup image was created</i>, then the destination drive's partition table will not match the backup image, and overwriting the destination drive's partition table will render these resized and additional partitions permanently inaccessible.</b> If you have not modified the partition table in such a way since creating this backup then overwriting the partition table is completely safe and will have no negative effects."
 msgstr ""
+"백업 이미지에 저장된 정보를 사용하여 \"대상 파티션\" 열이 업데이트 되었습니다.\n"
+"\n"
+"<b><i>백업 이미지가 생성된 이후</i> 파티션 크기가 조정되었거나 새로운 파티션 추가 또는 추가 운영체제가 설치된 경우 대상 "
+"드라이브의 파티션 테이블은 백업 이미지와 일치하지 않으므로 대상 드라이브의 파티션 테이블을 덮어쓰면 크기가 조정되고 추가 파티션에 "
+"영구적으로 접근할 수 없게 됩니다.</b> 현재 백업 이미지를 만든 이후 파티션 테이블이 변경되지 않았다면 파티션 테이블을 덮어써도 "
+"별다른 문제 없이 완전히 안전합니다."
 
 msgid "You will <b>not</b> be overwriting the partition table."
-msgstr ""
+msgstr "파티션 테이블을 덮어쓰지 <b>않습니다</b>."
 
 msgid "The source does not contain a partition table."
-msgstr ""
+msgstr "원본에 파티션 테이블이 포함되어 있지 않습니다."
 
 msgid "The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table."
 msgstr ""
+"대상 드라이브의 존재하는 파티션 테이블 정보를 사용하여 \"대상 파티션\" 열이 업데이트 되었습니다.\n"
+"\n"
+"<b>대상 파티션 열은 드롭다운 메뉴로 수정할 수 있습니다. 대상 파티션을 잘못 수정하면 운영체제가 더 이상 부팅되지 않을 수도 "
+"있습니다.</b> 확실하지 않다면 파티션 테이블 덮어쓰기가 더 적합한지 고려해보세요."
 
 msgid "No destination partition selected. Use the destination partition drop-down menu to select the destination"
-msgstr ""
+msgstr "선택한 대상 파티션이 없습니다. 대상 파티션 드롭다운 메뉴를 사용하여 대상을 선택하세요"
 
 msgid "Not restoring this partition"
-msgstr ""
+msgstr "이 파티션을 복원하지 않음"
 
 msgid "When you are ready to continue, click <b>Next</b>."
-msgstr ""
+msgstr "계속할 준비가 되면 <b>다음</b>을 클릭하세요."
 
 msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
-msgstr ""
+msgstr "논리 볼륨 관리자(LVM)을 탐색하고 장착 해제 중..."
 
+#, fuzzy
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
 msgstr ""
+"원본 파티션 테이블의 최종 파티션({source}: {source_size} 바이트)은 대상 디스크({destination_size} "
+"바이트)의 영역 내에 완전히 들어가야 합니다."
 
+#, fuzzy
 msgid "Rescuezilla cannot yet automatically shrink partitions to restore from large disks to smaller disks. The final partition currently must always completely reside within the destination disk.\n"
 "\n"
 "Currently the only way to restore to disks smaller than original is to first use GParted Partition Editor to shrink the final partition of the original disk before making a new backup image. Please read the following instructions for more information:\n"
 "\n"
 "{url}"
 msgstr ""
+"Rescuezilla는 아직 자동으로 파티션을 축소하여 큰 디스크에서 작은 디스크로 복원할 수 없습니다. 최종 파티션은 항상 대상 디스크 "
+"내에 완전히 들어갈 수 있어야 합니다.\n"
+"\n"
+"현재 원본보다 작은 디스크로 복원하는 유일한 방법은 백업 이미지를 새로 만들기 전에 먼저 GParted 파티션 편집기를 사용하여 원본 "
+"디스크의 최종 파티션을 축소하는 것입니다. 자세한 내용은 다음 설명을 참조하세요.\n"
+"\n"
+"{url}"
 
 msgid "Step 5: Confirm Restore Configuration"
-msgstr ""
+msgstr "5 단계: 복원 구성 확인"
 
 msgid "Confirm the following restore configuration."
-msgstr ""
+msgstr "다음 복원 구성을 확인하세요."
 
 msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!"
-msgstr ""
+msgstr "정말 백업을 {destination_drive} 에 복원하시겠습니까? 계속하면 현재 드라이브의 데이터를 영구적으로 덮어씁니다!"
 
 msgid "Source image"
-msgstr ""
+msgstr "원본 이미지"
 
 msgid "Destination drive"
-msgstr ""
+msgstr "대상 드라이브"
 
 msgid "Restoring the following partitions"
-msgstr ""
+msgstr "다음 파티션을 복원"
 
 msgid "WILL BE OVERWRITING PARTITION TABLE"
-msgstr ""
+msgstr "파티션 테이블을 덮어쓰게 됩니다"
 
 msgid "Will <b>NOT</b> be overwriting partition table"
-msgstr ""
+msgstr "파티션 테이블을 덮어쓰지 <b>않습니다</b>"
 
 msgid "To start the restore, click <b>Next</b>."
-msgstr ""
+msgstr "복원을 시작하려면 <b>다음</b>을 클릭하세요."
 
 msgid "Restoring From Backup"
-msgstr ""
+msgstr "백업에서 복원"
 
 msgid "Restoring your system from the image you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
-msgstr ""
+msgstr "선택한 이미지에서 시스템을 복원합니다.  컴퓨터의 속도와 데이터의 양에 따라 1시간 이상이 소요될 수 있습니다."
 
 msgid "Refreshing partition table"
-msgstr ""
+msgstr "파티션 테이블 새로 고침"
 
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
 msgstr ""
+"{description} 원본을 {destination_partition} ({destination_description}) 대상에 복원"
 
 msgid "Synchronizing disks..."
-msgstr ""
+msgstr "디스크 동기화..."
 
 msgid "Querying hard drive geometry of {device}"
-msgstr ""
+msgstr "{device}의 하드 드라이브 구조 조회"
 
 msgid "Probing {device} with {app}"
-msgstr ""
+msgstr "{app} 명령으로 {device} 확인"
 
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
-msgstr ""
+msgstr "파일 시스템 {partition} ({filesystem}) 확장 중. 시간이 좀 걸릴 수 있습니다..."
 
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
-msgstr ""
+msgstr "{partition} ({filesystem}) 파티션 크기 조정 실패: {msg}"
 
 msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
 msgstr ""
+"{ntfs_device} 의 NTFS 파일 시스템 구조 정보를 {geometry_source} 의 값을 사용하여 성공적으로 조정했습니다"
 
 msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
-msgstr ""
+msgstr "{ntfs_device} 의 NTFS 파일 시스템 구조 정보를 조정하지 못했습니다"
 
 msgid "Removing udev MAC address records (if any)"
-msgstr ""
+msgstr "udev MAC 주소 레코드 제거 (있는 경우)"
 
 msgid "Re-installing syslinux (if any)"
-msgstr ""
+msgstr "syslinux 다시 설치 (있는 경우)"
 
 msgid "Successfully re-installed syslinux bootloader"
-msgstr ""
+msgstr "syslinux 부트로더를 성공적으로 다시 설치했습니다"
 
 msgid "Re-installing GRUB bootloader (if any)"
-msgstr ""
+msgstr "GRUB 부트로더를 다시 설치 (있는 경우)"
 
 msgid "Successfully re-installed GRUB bootloader"
-msgstr ""
+msgstr "GRUB 부트로더를 성공적으로 다시 설치했습니다"
 
 msgid "Did not update GRUB bootloader (if any)"
-msgstr ""
+msgstr "GRUB 부트로더를 업데이트 하지 않았습니다 (있는 경우)"
 
 msgid "Updating initramfs (if any)"
-msgstr ""
+msgstr "initramfs 업데이트 (있는 경우)"
 
 msgid "Successfully updated initramfs"
-msgstr ""
+msgstr "initramfs를 성공적으로 업데이트했습니다"
 
 msgid "Updating EFI NVRAM..."
-msgstr ""
+msgstr "EFI NVRAM 업데이트..."
 
 msgid "Successfully updated EFI NVRAM"
-msgstr ""
+msgstr "EFI NVRAM을 성공적으로 업데이트했습니다"
 
 msgid "Error restoring image: "
-msgstr ""
+msgstr "이미지 복원 오류: "
 
 msgid "Could not restore sfdisk partition table as file has zero length: "
-msgstr ""
+msgstr "파일 길이가 0이기 때문에 sfdisk 파티션 테이블을 복원할 수 없습니다: "
 
 msgid "Successfully restored partition table."
-msgstr ""
+msgstr "파티션 테이블을 성공적으로 복원했습니다."
 
 msgid "Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."
-msgstr ""
+msgstr "장치의 파티션 테이블을 새로 고치지 못했습니다. 다른 프로세스가 파티션 테이블에 접근하기 때문일 수 있습니다."
 
+#, fuzzy
 msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
-msgstr ""
+msgstr "{description} 에 관련된 이미지가 없어 {destination_partition} 파티션을 복원할 수 없습니다:."
 
 msgid "This may occur if Clonezilla was originally unable to backup this partition."
 msgstr ""

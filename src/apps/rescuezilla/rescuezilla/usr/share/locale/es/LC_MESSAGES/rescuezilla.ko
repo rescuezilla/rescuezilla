@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2021-05-27 03:43+0000\n"
-"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
+"PO-Revision-Date: 2021-12-31 19:52+0000\n"
+"Last-Translator: caralu74 <caralu74@protonmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/es/>\n"
 "Language: es\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.10.1\n"
 
 msgid "Welcome"
 msgstr "Bienvenido"
@@ -36,7 +36,7 @@ msgid "Restore"
 msgstr "Restaurar"
 
 msgid "Verify Image"
-msgstr ""
+msgstr "Verificar imagen"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
 msgstr ""
@@ -192,7 +192,7 @@ msgid "Drive Model"
 msgstr "Modelo de la unidad/disco"
 
 msgid "Serial Number"
-msgstr ""
+msgstr "Número serial"
 
 msgid "Partitions"
 msgstr "Particiones"
@@ -218,7 +218,7 @@ msgid "Drive {drive_number}"
 msgstr "Disque {drive_number}"
 
 msgid "Partition {partition_number}"
-msgstr "partition {partition_number}"
+msgstr "Partición {partition_number}"
 
 msgid "Step 3: Select Destination Drive"
 msgstr "Paso 3: Seleccione la unidad/disco de destino"
@@ -449,7 +449,9 @@ msgid "Backing up the following partition(s)"
 msgstr "Se va a hacer una copia de seguridad de la siguiente partición"
 
 msgid "The backup image will be written into folder {dest_dir} on {description}"
-msgstr "La copia de seguridad de la imagen se escribirá en la carpeta {dest_dir} de {description}"
+msgstr ""
+"La imagen  de respaldo/seguridad se escribirá en la carpeta {dest_dir} de "
+"{description}"
 
 msgid "Confirm the following backup configuration."
 msgstr "Confirma la siguiente configuración de copia de seguridad."
@@ -468,9 +470,12 @@ msgstr "Reiniciar"
 
 msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
 msgstr ""
+"Rescue: ignore inconsistencias del sistema de archivos y sectores defectuosos"
 
 msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
 msgstr ""
+"<b>Habilitar \"Rescue\" puede omitir errores importantes. Uselo con "
+"cuidado.</b>"
 
 msgid "To start the backup, click <b>Next</b>."
 msgstr "Para iniciar la copia de seguridad, haz clic en <b>Siguiente</b>."
@@ -503,7 +508,7 @@ msgid "Operation cancelled by user."
 msgstr "Copia de seguridad cancelada por el usuario."
 
 msgid "Rescue option is enabled."
-msgstr ""
+msgstr "La opción Rescue esta habilitada."
 
 msgid "Error creating backup: "
 msgstr "Error al crear la copia de seguridad: "
@@ -825,34 +830,34 @@ msgid "Open in file manager"
 msgstr "Abrir en el gestor de archivos"
 
 msgid "Verify"
-msgstr ""
+msgstr "Verificar"
 
 msgid "Select one or more image(s) to verify."
-msgstr ""
+msgstr "Seleccione una o más imagenes para verificar."
 
 msgid "To begin verification, click <b>Next</b>."
-msgstr ""
+msgstr "Para iniciar la verificación, click<b>Siguiente</b>."
 
 msgid "Verifying Image"
-msgstr ""
+msgstr "Verificar imagen"
 
 msgid "Verifying the selected image(s)."
-msgstr ""
+msgstr "Verificar la imagen seleccionada."
 
 msgid "Verifying {image_name}"
-msgstr ""
+msgstr "Verificando {image_name}"
 
 msgid "Summary of Verification"
-msgstr ""
+msgstr "Resumen de la verificación"
 
 msgid "Confirm the verification summary."
-msgstr ""
+msgstr "Confirmar el resumen de la verificación."
 
 msgid "Verification Summary"
-msgstr ""
+msgstr "Resumen de la verificación"
 
 msgid "To verify another image, click <b>Back</b>."
-msgstr ""
+msgstr "Para verificar otra imagen, click<b>Atras</b>."
 
 msgid "✔"
 msgstr "✔"
@@ -861,19 +866,21 @@ msgid "❌"
 msgstr "❌"
 
 msgid "MBR backup appears correct."
-msgstr ""
+msgstr "La copia de respaldo/seguridad del MBR parece correcta."
 
 msgid "No partition table found."
-msgstr ""
+msgstr "No se encontró la tabla de particiones."
 
 msgid "Sfdisk partition table file is empty or missing."
 msgstr ""
+"El archivo de la tabla de partición de Sfdisk está vacío o desaparecido."
 
 msgid "Sfdisk partition table file is present."
-msgstr ""
+msgstr "El archivo de la tabla de partición de Sfdisk está presente."
 
 msgid "Unable to verify."
-msgstr ""
+msgstr "No se puede verificar."
 
 msgid "{partition}: filesystem image successfully verified."
 msgstr ""
+"{partition}:La imagen del sistema e archivos fue verificada exitosamente."
