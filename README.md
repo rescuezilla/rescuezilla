@@ -44,7 +44,7 @@ Rescuezilla has been translated into the following languages:
 * English (en-US)
 * Español (es-ES)
 * Français (fr-FR)
-* 한국어 (ko-KR) (available next release)
+* 한국어 (ko-KR)
 * Italiano (it-IT)
 * Bahasa Indonesia (id-ID) (Translation in-progress)
 * עִברִית (he-IL)
@@ -81,7 +81,7 @@ Below table shows an abridged history of Rescuezilla. For more information, see 
 
 | Release             | Release Date | Operating System | Notes |
 | ------------------- | ---------- | ---------------- | ---------------------------------- |
-| Rescuezilla 2.3     | 2021-12-24 | Ubuntu 21.10     | Added 'Verify Image' [Download page](https://github.com/rescuezilla/rescuezilla/releases/latest)
+| Rescuezilla 2.3.1   | 2022-01-02 | Ubuntu 21.10     | Added 'Verify Image' [Download page](https://github.com/rescuezilla/rescuezilla/releases/latest)
 | Rescuezilla 2.2     | 2021-06-04 | Ubuntu 21.04     | Added 'Clone', VM image support.
 | Rescuezilla 2.1     | 2020-12-12 | Ubuntu 20.10     | Added Image Explorer (beta)
 | Rescuezilla 2.0     | 2020-10-14 | Ubuntu 20.04     | Added Clonezilla image support
