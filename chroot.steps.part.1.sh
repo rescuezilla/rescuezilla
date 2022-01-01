@@ -110,6 +110,7 @@ lang_codes=(
              "el"
              "es"
              "fr"
+             "ko"
              "id"
              "it"
              "he"
@@ -165,6 +166,8 @@ common_pkgs=("discover"
              "ibus-anthy"
              # Chinese font
              "fonts-wqy-zenhei"
+             # Korean font
+             "fonts-unfonts-core"
              "breeze-gtk-theme"
              "gtk3-engines-breeze"
              "gnome-icon-theme"
