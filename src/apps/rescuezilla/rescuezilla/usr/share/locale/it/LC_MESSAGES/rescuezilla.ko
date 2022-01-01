@@ -4,15 +4,15 @@
 # AlexTux87
 # Submitted at: https://github.com/rescuezilla/rescuezilla/issues/154
 #
-# Shasheen Ediriweera <shasheene@gmail.com>, 2021.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
 # Pierfrancesco Passerini <p.passerini@gmail.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2021-12-26 16:52+0000\n"
-"Last-Translator: Pierfrancesco Passerini <p.passerini@gmail.com>\n"
+"PO-Revision-Date: 2022-01-01 20:49+0000\n"
+"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/it/>\n"
 "Language: it\n"
@@ -807,7 +807,7 @@ msgstr "Errore durante il ripristino della partizione {image_key} su {destinatio
 msgid "Successfully restored image partition {image} to {destination_partition}"
 msgstr ""
 "Ripristinata con successo l'immagine della partizione {image} su "
-"{destinazione_partition}"
+"{destination_partition}"
 
 msgid "Summary of Restore"
 msgstr "Riepilogo del Ripristino"
