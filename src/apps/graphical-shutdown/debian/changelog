@@ -1,3 +1,9 @@
+graphical-shutdown (2.3.1-1) unstable; urgency=low
+
+  * New upstream version.
+
+ -- Shasheen Ediriweera <rescuezilla@gmail.com>  Sun, 02 Dec 2022 12:00:00 -0800
+
 graphical-shutdown (2.3-1) unstable; urgency=low
 
   * New upstream version.
