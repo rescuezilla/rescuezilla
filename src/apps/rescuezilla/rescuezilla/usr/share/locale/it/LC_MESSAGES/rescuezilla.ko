@@ -5,14 +5,14 @@
 # Submitted at: https://github.com/rescuezilla/rescuezilla/issues/154
 #
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
-# Pierfrancesco Passerini <p.passerini@gmail.com>, 2021.
+# Pierfrancesco Passerini <p.passerini@gmail.com>, 2021, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2022-01-01 20:49+0000\n"
-"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
+"PO-Revision-Date: 2022-01-02 18:00+0000\n"
+"Last-Translator: Pierfrancesco Passerini <p.passerini@gmail.com>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/it/>\n"
 "Language: it\n"
@@ -204,7 +204,7 @@ msgstr "Fase 2: Seleziona le Partizioni da Salvare"
 msgid "Select which partitions to create a backup of. <b>Leave all partitions selected if you are unsure.</b>"
 msgstr ""
 "Seleziona le partizioni di cui creare un backup. <b>Se non sei sicuro, "
-"lascia tutte le partizioni selezionate</b>."
+"lascia tutte le partizioni selezionate.</b>"
 
 msgid "Save"
 msgstr "Salva"
@@ -227,10 +227,10 @@ msgstr ""
 "si desidera creare l'immagine di backup."
 
 msgid "Connected directly to my computer"
-msgstr "Collegato direttamente al mio computer"
+msgstr "Collegata direttamente al mio computer"
 
 msgid "Shared over a network"
-msgstr "Condiviso in rete"
+msgstr "Condivisa in rete"
 
 msgid "Where would you like to save the image?"
 msgstr "Dove vorresti salvare l'immagine?"
@@ -238,9 +238,8 @@ msgstr "Dove vorresti salvare l'immagine?"
 msgid "Windows shared folder (SMB/CIFS, Samba)"
 msgstr "Cartella condivisa di Windows (SMB/CIFS, Samba)"
 
-#, fuzzy
 msgid "Search network"
-msgstr "Ricerca in rete"
+msgstr "Cerca in rete"
 
 msgid "Server"
 msgstr "Server"
@@ -298,9 +297,8 @@ msgstr "Deve fornire una password od una chiave SSH."
 msgid "Scanning folder for backup images..."
 msgstr "Scansione cartella alla ricerca di immagini di backup..."
 
-#, fuzzy
 msgid "({timeout_seconds} second timeout)"
-msgstr "({timeout_seconds} secondi timeout)"
+msgstr "({timeout_seconds} secondi al termine)"
 
 msgid "Close this popup to cancel scanning the selected folder and subfolders."
 msgstr ""
@@ -480,7 +478,7 @@ msgstr "Recupero: ignora inconsistenza del filesystem e/o settori danneggiati"
 msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
 msgstr ""
 "<b>L'uso di \"Rescue\" può sopprimere errori importanti. Usare con "
-"cautela</b>."
+"cautela.</b>"
 
 msgid "To start the backup, click <b>Next</b>."
 msgstr "Per avviare il backup, clicca su <b>Avanti</b>."
@@ -672,9 +670,9 @@ msgstr ""
 "finale deve sempre risiedere completamente nel disco di destinazione.\n"
 "\n"
 "Per ora, l'unico modo per eseguire il ripristino su dischi più piccoli "
-"dell'originale è utilizzare GParted Partition Editor riducendo la partizione "
-"finale del disco sorgente prima di creare una nuova immagine di backup. Per "
-"maggiori informazioni leggere le seguenti istruzioni:\n"
+"dell'originale è utilizzare GParted Partition Editor riducendo la fine della "
+"partizione del disco sorgente prima di creare una nuova immagine di backup. "
+"Per maggiori informazioni leggere le seguenti istruzioni:\n"
 "\n"
 "{url}"
 
@@ -738,7 +736,8 @@ msgstr ""
 
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
 msgstr ""
-"Ridimensionamento della partizione {partition} ({filesystem}) fallito: {msg}"
+"Ridimensionamento della partizione {partition} ({filesystem}) non riuscito: "
+"{msg}"
 
 msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
 msgstr ""
@@ -780,10 +779,12 @@ msgid "Successfully updated EFI NVRAM"
 msgstr "NVRAM EFI aggiornata con successo"
 
 msgid "Error restoring image: "
-msgstr "Errore durante il ripristino dell'immagine:"
+msgstr "Errore durante il ripristino dell'immagine: "
 
 msgid "Could not restore sfdisk partition table as file has zero length: "
-msgstr "Impossibile ripristinare la tabella delle partizioni sfdisk poiché il file ha lunghezza zero:"
+msgstr ""
+"Impossibile ripristinare la tabella delle partizioni sfdisk poiché il file "
+"ha lunghezza zero: "
 
 msgid "Successfully restored partition table."
 msgstr "Tabella delle partizioni ripristinata con successo."
