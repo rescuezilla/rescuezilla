@@ -14,7 +14,7 @@ It's worth noting that hard drive imaging and cloning is a very specialized task
 
 Rescuezilla can be booted on any PC or Mac from a USB stick, and has been carefully developed to be fully interoperable with the Clonezilla. This means Rescuezilla can restore backups created by Clonezilla, and backups created by Rescuezilla can be restored using Clonezilla!
 
-Rescuezilla is an fork of _Redo Backup and Recovery_ (now called _Redo Rescue_) after it had been abandoned for 7 years. Rescuezilla is more than a trivial fork: it has been carefully rebuilt from the ground up to be fully compatible with the industry-standard Clonezilla.
+Rescuezilla was forked from _Redo Backup and Recovery_ (now called Redo Rescue) because it had been abandoned for 7 years. Rescuezilla is more than a trivial fork: it has been carefully rebuilt from the ground up to be fully compatible with the industry-standard Clonezilla.
 
 ## Features
 
