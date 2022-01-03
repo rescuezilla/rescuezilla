@@ -4,13 +4,13 @@
 # tkatsageorgis
 # Submitted at: https://github.com/rescuezilla/rescuezilla/issues/171
 #
-# Thanassis Katsageorgis <tkatsageorgis@gmail.com>, 2021.
+# Thanassis Katsageorgis <tkatsageorgis@gmail.com>, 2021, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2021-05-26 04:09+0000\n"
+"PO-Revision-Date: 2022-01-03 15:44+0000\n"
 "Last-Translator: Thanassis Katsageorgis <tkatsageorgis@gmail.com>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/el/>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.10.1\n"
 
 msgid "Welcome"
 msgstr "Καλωσήρθατε"
@@ -37,7 +37,7 @@ msgid "Restore"
 msgstr "Επαναφορά"
 
 msgid "Verify Image"
-msgstr ""
+msgstr "Επαλήθευση Εικόνας"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
 msgstr ""
@@ -197,7 +197,7 @@ msgid "Drive Model"
 msgstr "Μοντέλο Μονάδας Δίσκου"
 
 msgid "Serial Number"
-msgstr ""
+msgstr "Αύξων αριθμός"
 
 msgid "Partitions"
 msgstr "Διαμερίσματα"
@@ -479,9 +479,13 @@ msgstr "Επανεκκίνηση"
 
 msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
 msgstr ""
+"Διάσωση: Αγνοήστε τις ασυνέπειες του συστήματος αρχείων και τους "
+"προβληματικούς τομείς"
 
 msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
 msgstr ""
+"<b>Η ενεργοποίηση της \"Διάσωσης\" μπορεί να καταστείλει σημαντικά λάθη. "
+"Χρησιμοποιήστε με προσοχή.</b>"
 
 msgid "To start the backup, click <b>Next</b>."
 msgstr "Για την εκκίνηση της δημιουργίας αντιγράφου ασφαλείας, επιλέξτε <b>Επόμενο</b>."
@@ -514,7 +518,7 @@ msgid "Operation cancelled by user."
 msgstr "Η διαδικασία των Αντιγράφου Ασφαλείας ακυρώθηκε από τον χρήστη."
 
 msgid "Rescue option is enabled."
-msgstr ""
+msgstr "Η επιλογή διάσωσης είναι ενεργοποιημένη."
 
 msgid "Error creating backup: "
 msgstr "Παρουσιάστηκε σφάλμα κατά τη δημιουργία αντιγράφου ασφαλείας: "
@@ -620,7 +624,7 @@ msgid "You will <b>not</b> be overwriting the partition table."
 msgstr "<b>Δεν</b> θα αντικαταστήσετε τον πίνακα διαμερισμάτων."
 
 msgid "The source does not contain a partition table."
-msgstr ""
+msgstr "Η προέλευση δεν περιέχει πίνακα διαμερισμάτων."
 
 msgid "The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table."
 msgstr "Η στήλη \"διαμέρισμα προορισμού\" έχει ενημερωθεί με τις υπάρχουσες πληροφορίες πίνακα διαμερισμάτων της μονάδας δίσκου προορισμού.\n\n<b>Η στήλη διαμερίσματος προορισμού μπορεί να τροποποιηθεί ως αναπτυσσόμενο μενού. Η εσφαλμένη αντιστοίχιση των διαμερισμάτων προορισμού ενδέχεται να προκαλέσει τη μη εκκίνηση.</b> Εάν δεν είστε βέβαιοι για την αντιστοίχιση, εξετάστε εάν είναι πιο κατάλληλο να αντικαταστήσετε τον πίνακα διαμερισμάτων."
@@ -837,34 +841,34 @@ msgid "Open in file manager"
 msgstr "Άνοιγμα στη διαχείριση αρχείων"
 
 msgid "Verify"
-msgstr ""
+msgstr "Επαλήθευση"
 
 msgid "Select one or more image(s) to verify."
-msgstr ""
+msgstr "Επιλέξτε μία ή περισσότερες εικόνες για επαλήθευση."
 
 msgid "To begin verification, click <b>Next</b>."
-msgstr ""
+msgstr "Για να ξεκινήσετε την επαλήθευση, κάντε κλικ στο<b>Next</b>."
 
 msgid "Verifying Image"
-msgstr ""
+msgstr "Επαλήθευση Εικόνας"
 
 msgid "Verifying the selected image(s)."
-msgstr ""
+msgstr "Επαλήθευση των επιλεγμένων εικόνων."
 
 msgid "Verifying {image_name}"
-msgstr ""
+msgstr "Επαλήθευση {image_name}"
 
 msgid "Summary of Verification"
-msgstr ""
+msgstr "Περίληψη Επαλήθευσης"
 
 msgid "Confirm the verification summary."
-msgstr ""
+msgstr "Επιβεβαιώστε τη σύνοψη επαλήθευσης."
 
 msgid "Verification Summary"
-msgstr ""
+msgstr "Σύνοψη επαλήθευσης"
 
 msgid "To verify another image, click <b>Back</b>."
-msgstr ""
+msgstr "Για να επαληθεύσετε μια άλλη εικόνα, κάντε κλικ στο <b>Back</b>."
 
 msgid "✔"
 msgstr "✔"
@@ -873,19 +877,19 @@ msgid "❌"
 msgstr "❌"
 
 msgid "MBR backup appears correct."
-msgstr ""
+msgstr "Το αντίγραφο ασφαλείας MBR φαίνεται σωστό."
 
 msgid "No partition table found."
-msgstr ""
+msgstr "Δεν βρέθηκε πίνακας διαμερισμάτων."
 
 msgid "Sfdisk partition table file is empty or missing."
-msgstr ""
+msgstr "Το αρχείο πίνακα διαμερισμάτων Sfdisk είναι κενό ή λείπει."
 
 msgid "Sfdisk partition table file is present."
-msgstr ""
+msgstr "Το αρχείο πίνακα διαμερισμάτων Sfdisk υπάρχει."
 
 msgid "Unable to verify."
-msgstr ""
+msgstr "Δεν είναι δυνατή η επαλήθευση."
 
 msgid "{partition}: filesystem image successfully verified."
-msgstr ""
+msgstr "{partition}: Η εικόνα του συστήματος αρχείων επαληθεύτηκε με επιτυχία."
