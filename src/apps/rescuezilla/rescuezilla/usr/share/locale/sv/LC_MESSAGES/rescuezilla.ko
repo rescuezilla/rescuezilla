@@ -7,13 +7,14 @@
 # OerjanS <oerjan.snell@gmail.com>, 2021.
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021.
 # Allan Nordhøy <epost@anotheragency.no>, 2021.
+# Luna Jernberg <droidbittin@gmail.com>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2021-08-06 05:34+0000\n"
-"Last-Translator: Allan Nordhøy <epost@anotheragency.no>\n"
+"PO-Revision-Date: 2022-01-13 12:52+0000\n"
+"Last-Translator: Luna Jernberg <droidbittin@gmail.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/sv/>\n"
 "Language: sv\n"
@@ -21,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.8-dev\n"
+"X-Generator: Weblate 4.10.1\n"
 
 msgid "Welcome"
 msgstr "Välkommen"
@@ -188,7 +189,7 @@ msgid "Drive Model"
 msgstr "Diskmodell"
 
 msgid "Serial Number"
-msgstr ""
+msgstr "Serienummer"
 
 msgid "Partitions"
 msgstr "Partitioner"
@@ -456,10 +457,12 @@ msgid "Reboot"
 msgstr "Starta om"
 
 msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
-msgstr ""
+msgstr "Rädda: Ignorera inkonsekvenser i filsystemet och dåliga sektorer"
 
 msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
 msgstr ""
+"<b>Att aktivera \"Rädda\" kan undertrycka viktiga fel. Använd med "
+"försiktighet.</b>"
 
 msgid "To start the backup, click <b>Next</b>."
 msgstr "Klicka på <b>Nästa</b> för att starta säkerhetskopian."
@@ -492,7 +495,7 @@ msgid "Operation cancelled by user."
 msgstr "Säkerhetskopieringen avbröts av användaren."
 
 msgid "Rescue option is enabled."
-msgstr ""
+msgstr "Räddningsalternativet är aktiverat."
 
 msgid "Error creating backup: "
 msgstr "Fel vid säkerhetskopiering: "
@@ -798,13 +801,13 @@ msgid "Open in file manager"
 msgstr "Öppna i filhanteraren"
 
 msgid "Verify"
-msgstr ""
+msgstr "Verifera"
 
 msgid "Select one or more image(s) to verify."
 msgstr ""
 
 msgid "To begin verification, click <b>Next</b>."
-msgstr ""
+msgstr "För att börja verifiera, klicka på <b>Nästa</b>."
 
 msgid "Verifying Image"
 msgstr ""
@@ -816,13 +819,13 @@ msgid "Verifying {image_name}"
 msgstr ""
 
 msgid "Summary of Verification"
-msgstr ""
+msgstr "Sammanfattning av verifiering"
 
 msgid "Confirm the verification summary."
-msgstr ""
+msgstr "Bekräfta verifieringssammanfattningen."
 
 msgid "Verification Summary"
-msgstr ""
+msgstr "Verifieringssammanfattning"
 
 msgid "To verify another image, click <b>Back</b>."
 msgstr ""
@@ -834,16 +837,16 @@ msgid "❌"
 msgstr "❌"
 
 msgid "MBR backup appears correct."
-msgstr ""
+msgstr "MBR-säkerhetskopia verkar korrekt."
 
 msgid "No partition table found."
-msgstr ""
+msgstr "Ingen partitionstabell hittades."
 
 msgid "Sfdisk partition table file is empty or missing."
-msgstr ""
+msgstr "Sfdisk-partitionstabellfilen är tom eller saknas."
 
 msgid "Sfdisk partition table file is present."
-msgstr ""
+msgstr "Sfdisk partitionstabellfil finns."
 
 msgid "Unable to verify."
 msgstr ""
