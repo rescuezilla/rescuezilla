@@ -6,13 +6,14 @@
 #
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
 # Pierfrancesco Passerini <p.passerini@gmail.com>, 2021, 2022.
+# Anto F <tempthings@outlook.it>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2022-01-08 09:54+0000\n"
-"Last-Translator: Pierfrancesco Passerini <p.passerini@gmail.com>\n"
+"PO-Revision-Date: 2022-01-11 23:53+0000\n"
+"Last-Translator: Anto F <tempthings@outlook.it>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/it/>\n"
 "Language: it\n"
@@ -135,7 +136,7 @@ msgid "Select which partitions from the source drive to clone, and whether to ov
 msgstr ""
 "Selezionare quali partizioni dell'unità sorgente clonare e se sovrascrivere "
 "la tabella delle partizioni. <b>Lascia tutto selezionato per clonare "
-"completamente l'unità sorgente sull'unità di destinazione</b>."
+"completamente l'unità sorgente sull'unità di destinazione.</b>"
 
 msgid "Step 5: Confirm Cloning Configuration"
 msgstr "Fase 5: Confermare la Configurazione di Clonazione"
@@ -206,7 +207,7 @@ msgstr "Fase 2: Seleziona le partizioni"
 msgid "Select which partitions to create a backup of. <b>Leave all partitions selected if you are unsure.</b>"
 msgstr ""
 "Seleziona le partizioni da salvare. <b>Se non sei sicuro, lascia tutte le "
-"partizioni selezionate</b>."
+"partizioni selezionate.</b>."
 
 msgid "Save"
 msgstr "Salva"
@@ -414,7 +415,7 @@ msgstr "Fase 6: Personalizzare le Impostazioni di Compressione"
 msgid "Customize image compression settings. <b>Don't make any changes if you are unsure.</b>"
 msgstr ""
 "Personalizza le impostazioni di compressione dell'immagine.<b> Se non sei "
-"sicuro, non fare alcuna modifica</b>."
+"sicuro, non fare alcuna modifica.</b>."
 
 msgid "Compression format: "
 msgstr "Formato di compressione: "
@@ -480,7 +481,7 @@ msgstr "Recupero: ignora inconsistenza del filesystem e/o settori danneggiati"
 msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
 msgstr ""
 "<b>L'uso di \"Rescue\" può sopprimere errori importanti. Usare con "
-"cautela</b>."
+"cautela.</b>."
 
 msgid "To start the backup, click <b>Next</b>."
 msgstr "Per avviare il backup, clicca su <b>Avanti</b>."
@@ -588,7 +589,7 @@ msgid "Select which partitions from the backup image to restore, and whether to 
 msgstr ""
 "Seleziona quali partizioni dell'immagine di backup ripristinare e se "
 "sovrascrivere la tabella delle partizioni. <b>Lascia tutto selezionato per "
-"ripristinare completamente l'unità di destinazione</b>."
+"ripristinare completamente l'unità di destinazione.</b>."
 
 msgid "Selected image"
 msgstr "Immagine selezionata"
