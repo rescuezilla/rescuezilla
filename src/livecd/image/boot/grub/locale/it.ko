@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-27 14:12+0930\n"
-"PO-Revision-Date: 2021-12-26 16:52+0000\n"
+"PO-Revision-Date: 2022-01-08 09:54+0000\n"
 "Last-Translator: Pierfrancesco Passerini <p.passerini@gmail.com>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/rescuezilla/"
 "grub-boot/it/>\n"
@@ -26,33 +26,35 @@ msgid "If boot fails, reboot and try selecting Graphical fallback instead"
 msgstr "Se il boot non va a buon fine, riavvia e prova a selezionare la modalità grafica alternativa"
 
 msgid "Graphical fallback mode"
-msgstr "Modalità grafica alternativa"
+msgstr "Modalità video alternativa"
 
 msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
-msgstr "Utilizza i driver grafici alternativi a bassa risoluzione se i driver della modalità standard non funzionano sul tuo hardware"
+msgstr ""
+"Utilizza i driver grafici a bassa risoluzione se la modalità standard non "
+"funziona sul tuo hardware"
 
 msgid "Load USB into RAM"
-msgstr "Carica la memoria USB nella RAM"
+msgstr "Carica Filezilla in RAM"
 
 msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
 msgstr ""
-"Carica Rescuezilla nella memoria per poter espellere il dispositivo di "
-"caricamento dopo l'avvio del sistema"
+"Carica Rescuezilla in memoria per poter espellere il dispositivo di "
+"caricamento dopo l'avvio"
 
 msgid "Check USB for defects"
-msgstr "Verifica difetti sull'USB"
+msgstr "Verifica difetti dell'USB"
 
 msgid "Verify integrity of USB drive"
 msgstr "Verifica l'integrità del dispositivo USB"
 
 msgid "Enter BIOS Setup"
-msgstr "Entra nelle impostazioni del BIOS"
+msgstr "Accedi alle impostazioni del BIOS"
 
 msgid "Configure machine's firmware, boot options etc"
 msgstr "Configura il firmware della macchina, le opzioni di avvio, ecc"
 
 msgid "Memory test"
-msgstr "Test della memoria (RAM)"
+msgstr "Verifica della memoria RAM"
 
 msgid "Check computer memory for errors"
-msgstr "Controlla se ci sono errori nella memoria (RAM) del computer"
+msgstr "Verificare la presenza di errori nella RAM del computer"
