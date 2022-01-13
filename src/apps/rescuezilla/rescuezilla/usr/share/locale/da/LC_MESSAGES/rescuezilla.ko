@@ -1,13 +1,14 @@
 # Artem <KovalevArtem.ru@gmail.com>, 2021.
 # Bolle Barnewitz <detlef@sol.dk>, 2021.
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021.
+# Carl Andersen <carl@bluemarlin.dk>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2021-07-11 14:33+0000\n"
-"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
+"PO-Revision-Date: 2022-01-08 09:54+0000\n"
+"Last-Translator: Carl Andersen <carl@bluemarlin.dk>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/da/>\n"
 "Language: da\n"
@@ -15,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.8-dev\n"
+"X-Generator: Weblate 4.10.1\n"
 
 msgid "Welcome"
 msgstr "Velkommen"
@@ -35,7 +36,7 @@ msgid "Restore"
 msgstr "Gendan"
 
 msgid "Verify Image"
-msgstr ""
+msgstr "Verificere aftryk"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
 msgstr ""
@@ -182,7 +183,7 @@ msgid "Drive Model"
 msgstr "Drevnavn/-model"
 
 msgid "Serial Number"
-msgstr ""
+msgstr "Serienummer"
 
 msgid "Partitions"
 msgstr "Partitioner"
@@ -467,10 +468,12 @@ msgid "Reboot"
 msgstr "Genstart"
 
 msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
-msgstr ""
+msgstr "Redning: Ignorer filsysteminkonsekvenser og dårlige sektorer"
 
 msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
 msgstr ""
+"<b>At aktivere \"Redning\" kan muligvis undertrykke vigtige fejl. Brug med "
+"forsigtighed..</b>"
 
 msgid "To start the backup, click <b>Next</b>."
 msgstr "For at starte sikkerhedskopieringen; klik <b>Næste</b>."
@@ -507,7 +510,7 @@ msgid "Operation cancelled by user."
 msgstr "Handlingen annulleret af brugeren."
 
 msgid "Rescue option is enabled."
-msgstr ""
+msgstr "Redningsindstillingen er aktiveret."
 
 msgid "Error creating backup: "
 msgstr "Fejl ved oprettelse af sikkerhedskopi: "
@@ -810,11 +813,11 @@ msgstr "Sikkerhedskopien blev gendannet."
 msgid "Image Explorer\n"
 "      (beta)"
 msgstr ""
-"Image Explorer\n"
+"Aftryk ifinder\n"
 "      (beta)"
 
 msgid "Image Explorer (beta)"
-msgstr "Image Explorer (beta)"
+msgstr "Aftryk finder (beta)"
 
 msgid "Select the image file to explore"
 msgstr "Vælg sikkerhedskopi"
@@ -847,34 +850,34 @@ msgid "Open in file manager"
 msgstr "Åbn i filhåndtering"
 
 msgid "Verify"
-msgstr ""
+msgstr "Verificere"
 
 msgid "Select one or more image(s) to verify."
-msgstr ""
+msgstr "Vælg et eller flere aftryk(s) for at verificere."
 
 msgid "To begin verification, click <b>Next</b>."
-msgstr ""
+msgstr "Klik på <b>Næste,</b> for at begynde verifikationen."
 
 msgid "Verifying Image"
-msgstr ""
+msgstr "Verficerer aftrykket"
 
 msgid "Verifying the selected image(s)."
-msgstr ""
+msgstr "Verficerer det eller de valgte aftryk."
 
 msgid "Verifying {image_name}"
-msgstr ""
+msgstr "Verficerer {image_name}"
 
 msgid "Summary of Verification"
-msgstr ""
+msgstr "Opsumering af verifikation"
 
 msgid "Confirm the verification summary."
-msgstr ""
+msgstr "Bekræft verifikationsoversigten."
 
 msgid "Verification Summary"
-msgstr ""
+msgstr "Verifikationsoversigt"
 
 msgid "To verify another image, click <b>Back</b>."
-msgstr ""
+msgstr "For at verficere et andet aftryk, klik <b>Tilbage</b>."
 
 msgid "✔"
 msgstr "✔"
@@ -883,19 +886,19 @@ msgid "❌"
 msgstr "❌"
 
 msgid "MBR backup appears correct."
-msgstr ""
+msgstr "MBR backup vises korrekt."
 
 msgid "No partition table found."
-msgstr ""
+msgstr "Ingen partitionstabel fundet."
 
 msgid "Sfdisk partition table file is empty or missing."
-msgstr ""
+msgstr "Sfdisk partitionstabelfilen er tom eller mangler."
 
 msgid "Sfdisk partition table file is present."
-msgstr ""
+msgstr "Sfdisk partitionstabelfil er til stede."
 
 msgid "Unable to verify."
-msgstr ""
+msgstr "Kan ikke verficeres."
 
 msgid "{partition}: filesystem image successfully verified."
-msgstr ""
+msgstr "{partition}: filsystembilledet er blevet verficeret."
