@@ -1,25 +1,27 @@
+# radosdesign <radek82@gmail.com>, 2022.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2021-05-19 03:18+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2022-01-08 09:54+0000\n"
+"Last-Translator: radosdesign <radek82@gmail.com>\n"
+"Language-Team: Slovak <https://hosted.weblate.org/projects/rescuezilla/"
+"graphical-shutdown/sk/>\n"
 "Language: sk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.10.1\n"
 
 msgid "End Session"
-msgstr ""
+msgstr "Ukončiť reláciu"
 
 msgid "Cancel"
-msgstr ""
+msgstr "Storno"
 
 msgid "Shutdown"
-msgstr ""
+msgstr "Vypnúť"
 
 msgid "Reboot"
-msgstr ""
+msgstr "Reštartovať"
 
 msgid "Choose action."
-msgstr ""
+msgstr "Vyber akciu."
