@@ -1,93 +1,84 @@
 # Artem <KovalevArtem.ru@gmail.com>, 2021.
 # yesinmsg <yesinmsg@gmail.com>, 2021.
-# Shasheen Ediriweera <shasheene@gmail.com>, 2021.
-# liimee <alt3753.7@gmail.com>, 2021.
-# Reza Almanda <rezaalmanda27@gmail.com>, 2021.
-# pZan <padrisauzan@protonmail.com>, 2022.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
+# ttt113326 <tonio_k@mail.ru>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2022-01-16 23:57+0000\n"
-"Last-Translator: pZan <padrisauzan@protonmail.com>\n"
-"Language-Team: Indonesian <https://hosted.weblate.org/projects/rescuezilla/"
-"rescuezilla/id/>\n"
-"Language: id\n"
+"PO-Revision-Date: 2021-12-26 16:52+0000\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: te\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 4.10.1\n"
 
 msgid "Welcome"
-msgstr "Selamat Datang"
+msgstr ""
 
 msgid "Select an Option"
-msgstr "Pilih satu Opsi"
+msgstr ""
 
 msgid "Easily create a backup image of your computer, or completely restore from one.  Click an option to begin:"
 msgstr ""
-"Buat image cadangan dari komputer Anda dengan mudah, atau pulihkan sebuah "
-"image sepenuhnya.  Klik sebuah opsi untuk memulai:"
 
 msgid "Backup"
-msgstr "Cadangkan"
+msgstr ""
 
 msgid "Restore"
-msgstr "Pulihkan"
+msgstr ""
 
 msgid "Verify Image"
-msgstr "Verifikasi Image"
+msgstr ""
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
 msgstr ""
-"Butuh bantuan? Mulai dengan memeriksa pertanyaan yang sering ditanyakan "
-"Rescuezilla, setelahnya lanjut ke forum Rescuezilla."
 
 msgid "Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed."
 msgstr ""
-"Pertimbangkan berkontribusi $1/bulan di situs penggalangan dana Patreon "
-"sehingga Rescuezilla dapat terus dikembangkan."
 
 msgid "Back"
-msgstr "Kembali"
+msgstr ""
 
 msgid "Next >"
-msgstr "Lanjut >"
+msgstr ""
 
 msgid "Please wait..."
-msgstr "Harap tunggu..."
+msgstr ""
 
 msgid "Identifying disk drives..."
-msgstr "Mengidentifikasi disk drives..."
+msgstr ""
 
 msgid "Unmounting: {path}"
-msgstr "Melepas: {path}"
+msgstr ""
 
 msgid "Unable to unmount {path}"
-msgstr "Tidak dapat melepas {path}"
+msgstr ""
 
 msgid "Running: {app}"
-msgstr "Menjalankan: {app}"
+msgstr ""
 
 msgid "Running {app} on {device}"
-msgstr "Menjalankan {app} pada {device}"
+msgstr ""
 
 msgid "Failed to run command: "
-msgstr "Gagal menjalankan perintah: "
+msgstr ""
 
 msgid "Error querying drives: "
-msgstr "Galat saat mengkueri drive: "
+msgstr ""
 
 msgid "Clone"
-msgstr "Klon"
+msgstr ""
 
 msgid "Step 1: Understanding Cloning"
-msgstr "Langkah 1: Memahami Kloning"
+msgstr ""
 
 msgid "Please understand how \"cloning\" differs from \"imaging\"."
-msgstr "Tolong pahami bagaimana \"kloning\" berbeda dari \"pencitraan\"."
+msgstr ""
 
 msgid "This mode is for \"disk cloning\". Cloning means copying one drive and directly overwriting another drive. This is a direct one-step operation with no temporary storage required.\n"
 "\n"
@@ -98,211 +89,196 @@ msgid "This mode is for \"disk cloning\". Cloning means copying one drive and di
 msgstr ""
 
 msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
-msgstr "Untuk memulai wizard \"kloning\", klik <b>Berikutnya</b>"
+msgstr ""
 
 msgid "Step 2: Select Source Drive"
-msgstr "Langkah 2: Pilih Asal Drive"
+msgstr ""
 
 msgid "Select the <b>source drive</b> to clone."
-msgstr "Pilih <b>drive sumber</b> untuk dikloning."
+msgstr ""
 
 msgid "Select the <b>destination drive</b> to overwrite."
-msgstr "Pilih <b>drive tujuan</b> untuk ditimpa."
+msgstr ""
 
 msgid "Step 4: Select Partitions to Clone"
-msgstr "Langkah 4: Pilih Partisi untuk Dikloning"
+msgstr ""
 
 msgid "Select which partitions from the source drive to clone, and whether to overwrite the partition table. <b>Leave everything selected to completely clone the source drive to the destination drive.</b>"
 msgstr ""
 
 msgid "Step 5: Confirm Cloning Configuration"
-msgstr "Langkah 5: Konfirmasi Konfigurasi Kloning"
+msgstr ""
 
 msgid "Confirm the following cloning configuration."
-msgstr "Konfirmasi konfigurasi kloning berikut."
+msgstr ""
 
 msgid "Cloning the following partitions"
-msgstr "Mengkloning partisi berikut"
+msgstr ""
 
 msgid "To start cloning, click <b>Next</b>."
-msgstr "Untuk memulai kloning, klik <b>Berikutnya</b>."
+msgstr ""
 
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
-"Yakin ingin mengkloning drive ke {destination_drive}? Melakukannya akan "
-"menimpa data di drive ini secara permanen!"
 
 msgid "Step 6: Cloning Disk"
-msgstr "Langkah 6: Mengkloning Disk"
+msgstr ""
 
 msgid "Cloning the drive you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
-"Mengkloning drive yang Anda pilih.  Ini mungkin memakan waktu satu jam atau "
-"lebih tergantung pada kecepatan komputer Anda dan jumlah data."
 
 msgid "Summary of Clone"
-msgstr "Ringkasan Kloning"
+msgstr ""
 
 msgid "Clone Summary"
-msgstr "Ringkasan Klon"
+msgstr ""
 
 msgid "Confirm the clone summary."
-msgstr "Konfirmasi ringkasan kloning."
+msgstr ""
 
 msgid "Unable to shutdown Image Explorer"
-msgstr "Tidak dapat menghentikan Image Explorer"
+msgstr ""
 
 msgid "Step 1: Select Drive To Backup"
-msgstr "Langkah 1: Pilih Drive Yang Ingin Dicadangkan"
+msgstr ""
 
 msgid "Select the <b>source drive</b> that you would like to create a backup image from."
-msgstr "Pilih <b>drive sumber</b> tempat Anda ingin membuat gambar cadangan."
+msgstr ""
 
 msgid "Drive"
-msgstr "Drive"
+msgstr ""
 
 msgid "Capacity"
-msgstr "Kapasitas"
+msgstr ""
 
 msgid "Drive Model"
-msgstr "Model Drive"
+msgstr ""
 
 msgid "Serial Number"
-msgstr "Nomor Seri"
+msgstr ""
 
 msgid "Partitions"
-msgstr "Partisi"
+msgstr ""
 
 msgid "Show hidden devices (for advanced users)"
-msgstr "Tampilkan perangkat tersembunyi (untuk pengguna tingkat lanjut)"
+msgstr ""
 
 msgid "Step 2: Select Partitions to Save"
-msgstr "Langkah 2: Pilih Partisi yang Ingin Disimpan"
+msgstr ""
 
 msgid "Select which partitions to create a backup of. <b>Leave all partitions selected if you are unsure.</b>"
 msgstr ""
-"Pilih partisi yang ingin dicadangkan. <b>Biarkan semuanya terpilih jika Anda "
-"kurang yakin.</b>"
 
 msgid "Save"
-msgstr "Simpan"
+msgstr ""
 
 msgid "Description"
-msgstr "Keterangan"
+msgstr ""
 
 msgid "Drive {drive_number}"
-msgstr "Drive {drive_number}"
+msgstr ""
 
 msgid "Partition {partition_number}"
-msgstr "Partisi {partition_number}"
+msgstr ""
 
 msgid "Step 3: Select Destination Drive"
-msgstr "Langkah 3: Pilih Drive Tujuan"
+msgstr ""
 
 msgid "Click on the box below to select the source drive that you would like to create a backup image from."
 msgstr ""
-"Klik pada kotak di bawah ini untuk memilih drive sumber yang ingin Anda buat "
-"image cadangannya."
 
 msgid "Connected directly to my computer"
-msgstr "Langsung terhubung dengan komputer saya"
+msgstr ""
 
 msgid "Shared over a network"
-msgstr "Dibagikan melalui jaringan"
+msgstr ""
 
 msgid "Where would you like to save the image?"
-msgstr "Di mana Anda ingin menyimpan image?"
+msgstr ""
 
 msgid "Windows shared folder (SMB/CIFS, Samba)"
-msgstr "Folder bersama Windows (SMB/CIFS, Samba)"
+msgstr ""
 
 msgid "Search network"
-msgstr "Cari jaringan"
+msgstr ""
 
 msgid "Server"
-msgstr "Server"
+msgstr ""
 
 msgid "Share location (UNC path)"
-msgstr "Bagikan lokasi (UNC path)"
+msgstr ""
 
 msgid "Username"
-msgstr "Nama pengguna"
+msgstr ""
 
 msgid "Password"
-msgstr "Kata sandi"
+msgstr ""
 
 msgid "Domain"
-msgstr "Domain"
+msgstr ""
 
 msgid "Version"
-msgstr "Versi"
+msgstr ""
 
 msgid "Remote path"
-msgstr "Path jarak jauh"
+msgstr ""
 
 msgid "Exported path"
-msgstr "Path yang diekspor"
+msgstr ""
 
 msgid "Identity File"
-msgstr "Berkas Identitas"
+msgstr ""
 
 msgid "Optional"
-msgstr "Opsional"
+msgstr ""
 
 msgid "Select network-shared storage location:"
-msgstr "Pilih lokasi penyimpanan jaringan-bersama:"
+msgstr ""
 
 msgid "Select the partition where the image files will be saved to"
-msgstr "Pilih partisi tempat file image akan disimpan"
+msgstr ""
 
 msgid "Partition"
-msgstr "Partisi"
+msgstr ""
 
 msgid "Mounting..."
 msgstr ""
 
 msgid "Close this popup to cancel the mount operation."
-msgstr "Tutup popup ini untuk membatalkan operasi pemasangan."
+msgstr ""
 
 msgid "Please ensure the username, password and other fields provided are correct, and try again."
 msgstr ""
-"Harap pastikan nama pengguna, kata sandi, dan bidang lain yang disediakan "
-"sudah benar, dan coba lagi."
 
 msgid "Must provide either password or SSH identity file."
-msgstr "Harus memberikan kata sandi atau file identitas SSH."
+msgstr ""
 
 msgid "Scanning folder for backup images..."
-msgstr "Memindai folder untuk image cadangan..."
+msgstr ""
 
 msgid "({timeout_seconds} second timeout)"
 msgstr ""
 
 msgid "Close this popup to cancel scanning the selected folder and subfolders."
 msgstr ""
-"Tutup popup ini untuk membatalkan pemindaian folder dan subfolder yang "
-"dipilih."
 
 msgid "Scanning: {filename}"
-msgstr "Pemindaian: {filename}"
+msgstr ""
 
 msgid "Error processing the following images:"
-msgstr "Kesalahan saat memproses image berikut:"
+msgstr ""
 
 msgid "Unable to fully process the image associated with the following partitions:"
 msgstr ""
-"Tidak dapat sepenuhnya memproses image yang terkait dengan partisi berikut:"
 
 msgid "Unable to fully process the following image:"
-msgstr "Tidak dapat sepenuhnya memproses image berikut:"
+msgstr ""
 
 msgid "Cannot find partition's associated partclone image"
-msgstr "Tidak dapat menemukan bagian klon image yang terkait dengan partisi"
+msgstr ""
 
 msgid "This can happen when loading images which Clonezilla was unable to completely backup."
 msgstr ""
-"Ini dapat terjadi saat memuat image yang tidak dapat dicadangkan sepenuhnya "
-"oleh Clonezilla."
 
 msgid "Note: This image format cannot distinguish between failed partclone backup and a user who chose not to backup a partition."
 msgstr ""
@@ -334,13 +310,13 @@ msgid "You must select a folder inside {location}"
 msgstr ""
 
 msgid "Please select a different folder."
-msgstr "Pilih folder lain."
+msgstr ""
 
 msgid "The table below lists the backup images that are already in this folder (if any)."
 msgstr ""
 
 msgid "Browse..."
-msgstr "Jelajahi..."
+msgstr ""
 
 msgid "Filename"
 msgstr ""
@@ -420,10 +396,10 @@ msgid "Do nothing"
 msgstr ""
 
 msgid "Shutdown"
-msgstr "Matikan"
+msgstr ""
 
 msgid "Reboot"
-msgstr "Mulai Ulang"
+msgstr ""
 
 msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
 msgstr ""
@@ -658,23 +634,22 @@ msgid "Updating initramfs (if any)"
 msgstr ""
 
 msgid "Successfully updated initramfs"
-msgstr "Berhasil memperbarui initramfs"
+msgstr ""
 
 msgid "Updating EFI NVRAM..."
-msgstr "Memperbarui EFI NVRAM..."
+msgstr ""
 
 msgid "Successfully updated EFI NVRAM"
-msgstr "Berhasil memperbarui EFI NVRAM"
+msgstr ""
 
 msgid "Error restoring image: "
-msgstr "Galat saat memulihkan gambar: "
+msgstr ""
 
 msgid "Could not restore sfdisk partition table as file has zero length: "
 msgstr ""
-"Tak bisa memulihkan tabel partisi sfdisk karena berkas memiliki panjang nol: "
 
 msgid "Successfully restored partition table."
-msgstr "Tabel partisi berhasil dipulihkan."
+msgstr ""
 
 msgid "Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."
 msgstr ""
@@ -692,54 +667,50 @@ msgid "Successfully restored image partition {image} to {destination_partition}"
 msgstr ""
 
 msgid "Summary of Restore"
-msgstr "Ringkasan Pemulihan"
+msgstr ""
 
 msgid "Restore Summary"
-msgstr "Pulihkan Ringkasan"
+msgstr ""
 
 msgid "Confirm the restore summary."
-msgstr "Konfirmasi ringkasan pemulihan."
+msgstr ""
 
 msgid "Backup restored successfully."
-msgstr "Cadangan berhasil dipulihkan."
+msgstr ""
 
 msgid "Image Explorer\n"
 "      (beta)"
 msgstr ""
-"Penjelajah Gambar\n"
-"      (beta)"
 
 msgid "Image Explorer (beta)"
-msgstr "Penjelajah Gambar (beta)"
+msgstr ""
 
 msgid "Select the image file to explore"
-msgstr "Pilih berkas gambar untuk dicari"
+msgstr ""
 
 msgid "Step 3: Select Partition to Explore"
-msgstr "Langkah 3: Pilih Partisi untuk Dijelajahi"
+msgstr ""
 
 msgid "Select the partition to access files from."
-msgstr "Pilih partisi untuk mengakses file."
+msgstr ""
 
 msgid "Click <b>Mount</b> to mount the backup image (as read-only)."
-msgstr "Klik <b>Mount</b> untuk memasang gambar cadangan (sebagai read-only)."
+msgstr ""
 
 msgid "Mount"
-msgstr "Muat"
+msgstr ""
 
 msgid "Mounting as read-only..."
-msgstr "Memasang sebagai read-only..."
+msgstr ""
 
 msgid "Unmount"
-msgstr "Lepas"
+msgstr ""
 
 msgid "Once the partition has been mounted, click <b>Open in file manager</b> to access your files."
 msgstr ""
-"Setelah partisi dipasang, klik <b>Buka di manajer file</b> untuk mengakses "
-"file Anda."
 
 msgid "Open in file manager"
-msgstr "Buka di manajer file"
+msgstr ""
 
 msgid "Verify"
 msgstr ""
@@ -772,10 +743,10 @@ msgid "To verify another image, click <b>Back</b>."
 msgstr ""
 
 msgid "✔"
-msgstr "✔"
+msgstr ""
 
 msgid "❌"
-msgstr "❌"
+msgstr ""
 
 msgid "MBR backup appears correct."
 msgstr ""

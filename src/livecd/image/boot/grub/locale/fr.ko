@@ -3,22 +3,24 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-27 14:12+0930\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2022-01-22 09:55+0000\n"
+"Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
+"Language-Team: French <https://hosted.weblate.org/projects/rescuezilla/"
+"grub-boot/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.11-dev\n"
 
 msgid "Start Rescuezilla"
-msgstr "Démarrer Redo Backup"
+msgstr "Démarrer Rescuezilla"
 
 msgid "If boot fails, reboot and try selecting Graphical fallback instead"
 msgstr "Si le démarrage échoue, redémarrez et essayez plutôt de sélectionner le mode de secours graphique"
@@ -27,28 +29,31 @@ msgid "Graphical fallback mode"
 msgstr "Mode de secours graphique"
 
 msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
-msgstr "Utilisez le mode de secour graphique à basse résolution si le mode standard ne fonctionne pas pour votre matériel"
+msgstr ""
+"Utilisez le mode de secours graphique à basse résolution si le mode standard "
+"ne fonctionne pas pour votre matériel"
 
 msgid "Load USB into RAM"
 msgstr "Charger l'USB dans la RAM"
 
 msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
-msgstr "Charge Rescuezilla en mémoire, ce qui permet d'éjecter le support d'amorçage après le démarrage" 
+msgstr "Charge Rescuezilla en mémoire, ce qui permet d'éjecter le support d'amorçage après le démarrage"
 
 msgid "Check USB for defects"
-msgstr "Vérifie l'intégrité du disque"
+msgstr "Vérifier l'intégrité du disque"
 
 msgid "Verify integrity of USB drive"
-msgstr "Vérifie l'intégrité du disque"
+msgstr "Vérifie l'intégrité du disque USB"
 
 msgid "Enter BIOS Setup"
-msgstr "Entrez dans la configuration du BIOS"
+msgstr "Entrer dans la configuration du BIOS"
 
 msgid "Configure machine's firmware, boot options etc"
-msgstr "Configurer le micrologiciel de la machine, les options de démarrage, etc."
+msgstr ""
+"Configurer le micrologiciel de la machine, les options de démarrage, etc"
 
 msgid "Memory test"
 msgstr "Test mémoire"
 
 msgid "Check computer memory for errors"
-msgstr "Teste la mémoire de l'ordinateur"
+msgstr "Recherche les erreurs dans la mémoire de l'ordinateur"
