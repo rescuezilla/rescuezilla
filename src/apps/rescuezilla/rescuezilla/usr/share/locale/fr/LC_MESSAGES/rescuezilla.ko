@@ -5,19 +5,22 @@
 # Originally extracted from: https://sourceforge.net/p/redobackup/discussion/general/thread/75ede95f/
 # and: https://sourceforge.net/p/redobackup/discussion/general/thread/f318c13e/
 #
-#, fuzzy
+# Nathan <bonnemainsnathan@gmail.com>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:31+1030\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2022-01-22 09:55+0000\n"
+"Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
+"Language-Team: French <https://hosted.weblate.org/projects/rescuezilla/"
+"rescuezilla/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.11-dev\n"
 
 msgid "Welcome"
 msgstr "Bienvenue"
@@ -26,7 +29,9 @@ msgid "Select an Option"
 msgstr "Sélectionnez une option"
 
 msgid "Easily create a backup image of your computer, or completely restore from one.  Click an option to begin:"
-msgstr "Créez facilement une sauvegarde de votre PC, ou restaurez-le à partir d'une sauvegarde. Choisissez une option pour commencer :"
+msgstr ""
+"Créez facilement une sauvegarde de votre PC, ou restaurez-le à partir d'une "
+"sauvegarde. Sélectionnez une option pour commencer :"
 
 msgid "Backup"
 msgstr "Sauvegarder"
@@ -35,13 +40,17 @@ msgid "Restore"
 msgstr "Restaurer"
 
 msgid "Verify Image"
-msgstr ""
+msgstr "Vérifier l'image"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
-msgstr "Vous avez besoin d'aide ? Commencez par consulter la Foire aux\nquestions Rescuezilla, puis allez sur le forum Rescuezilla."
+msgstr ""
+"Vous avez besoin d'aide ? Commencez par consulter la Foire Aux\n"
+"Questions de Rescuezilla, puis rendez-vous sur le forum de Rescuezilla."
 
 msgid "Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed."
-msgstr "Envisagez de donner 1 $/mois sur site Web de financement communautaire\nPatreon pour que Rescuezilla puisse continuer d'être développé."
+msgstr ""
+"Envisagez de donner 1 $/mois sur le site Web de financement participatif\n"
+"Patreon pour que Rescuezilla puisse continuer d'être développé."
 
 msgid "Back"
 msgstr "Retour"
@@ -56,31 +65,31 @@ msgid "Identifying disk drives..."
 msgstr "Identification des disques durs..."
 
 msgid "Unmounting: {path}"
-msgstr ""
+msgstr "Démontage : {path}"
 
 msgid "Unable to unmount {path}"
-msgstr ""
+msgstr "Impossible de démonter {path}"
 
 msgid "Running: {app}"
-msgstr ""
+msgstr "Exécution : {path}"
 
 msgid "Running {app} on {device}"
-msgstr ""
+msgstr "Exécution de {app} sur {device}"
 
 msgid "Failed to run command: "
-msgstr ""
+msgstr "Échec de l'exécution de la commande : "
 
 msgid "Error querying drives: "
-msgstr ""
+msgstr "Erreur de récupération des disques : "
 
 msgid "Clone"
-msgstr ""
+msgstr "Cloner"
 
 msgid "Step 1: Understanding Cloning"
-msgstr ""
+msgstr "Étape 1 : Comprendre le clonage"
 
 msgid "Please understand how \"cloning\" differs from \"imaging\"."
-msgstr ""
+msgstr "Veuillez bien comprendre la différence entre « clonage » et « image »."
 
 msgid "This mode is for \"disk cloning\". Cloning means copying one drive and directly overwriting another drive. This is a direct one-step operation with no temporary storage required.\n"
 "\n"
@@ -89,68 +98,90 @@ msgid "This mode is for \"disk cloning\". Cloning means copying one drive and di
 ""
 "To use the \"imaging\" wizards, click <b>Back</b> and select <b>Backup</b> or <b>Restore</b>."
 msgstr ""
-""
-""
-""
-""
-""
+"Ce mode est destiné au « clonage de disque ». Le clonage consiste à copier "
+"un disque en écrasant directement le contenu d'un autre disque. Il s'agit "
+"d'une opération en une seule étape qui ne nécessite pas de stockage "
+"intermédiaire.\n"
+"\n"
+"Le clonage est différent de la « création d'image ». La création d'image "
+"consiste à copier tout ce qui se trouve sur un disque dans de très gros "
+"fichiers stockés dans un dossier sur un disque externe. Il est possible "
+"d'enregistrer plusieurs images sur le même disque externe. Ces images "
+"peuvent être restaurées sur le disque d'origine ou sur tout autre disque. En "
+"d'autres termes, dans le cas de la « création d'image », l'opération de "
+"sauvegarde copie votre disque vers des <i>fichiers</i> qui doivent être "
+"stockés sur un autre disque, ne serait-ce que temporairement, avant de "
+"pouvoir être restaurés.\n"
+"\n"
+"Pour utiliser l'assistant de « création d'image », cliquez sur <b>Retour</b> "
+"puis sélectionnez <b>Sauvegarde</b> ou <b>Restauration</b>."
 
 msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
-msgstr ""
+msgstr "Pour lancer l'assistant de « clonage », cliquez sur <b>Suivant</b>"
 
 msgid "Step 2: Select Source Drive"
-msgstr ""
+msgstr "Étape 2 : Sélectionner le disque source"
 
 msgid "Select the <b>source drive</b> to clone."
-msgstr ""
+msgstr "Sélectionnez le <b>disque source</b> à cloner."
 
 msgid "Select the <b>destination drive</b> to overwrite."
-msgstr ""
+msgstr "Sélectionnez le <b>disque de destination</b> à écraser."
 
 msgid "Step 4: Select Partitions to Clone"
-msgstr ""
+msgstr "Étape 4 : Sélectionner les partitions à cloner"
 
 msgid "Select which partitions from the source drive to clone, and whether to overwrite the partition table. <b>Leave everything selected to completely clone the source drive to the destination drive.</b>"
 msgstr ""
+"Sélectionnez les partitions du disque source que vous souhaitez cloner, et "
+"indiquez si vous souhaitez écraser le registre des partitions. <b>Laissez "
+"toutes les options sélectionnées si vous souhaitez cloner entièrement le "
+"disque source vers le disque de destination</b>"
 
 msgid "Step 5: Confirm Cloning Configuration"
-msgstr ""
+msgstr "Étape 5 : Confirmer la configuration du clonage"
 
 msgid "Confirm the following cloning configuration."
-msgstr ""
+msgstr "Veuillez confirmer la configuration du clonage suivante."
 
 msgid "Cloning the following partitions"
-msgstr ""
+msgstr "Clonage des partitions suivantes"
 
 msgid "To start cloning, click <b>Next</b>."
-msgstr ""
+msgstr "Pour lancer le clonage, cliquez sur <b>Suivant</b>."
 
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
+"Souhaitez-vous vraiment cloner le disque vers {destination_drive} ? Ceci "
+"écrasera définitivement les données de ce disque !"
 
 msgid "Step 6: Cloning Disk"
-msgstr ""
+msgstr "Étape 6 : Clonage du disque"
 
 msgid "Cloning the drive you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
+"Clonage du disque sélectionné. Cette opération peut durer une heure ou plus "
+"en fonction de la vitesse de votre ordinateur et la quantité de données."
 
 msgid "Summary of Clone"
-msgstr ""
+msgstr "Résumé du clonage"
 
 msgid "Clone Summary"
-msgstr ""
+msgstr "Résumé du clonage"
 
 msgid "Confirm the clone summary."
-msgstr ""
+msgstr "Veuillez confirmer le résumé du clonage."
 
 msgid "Unable to shutdown Image Explorer"
-msgstr ""
+msgstr "Impossible d'arrêter l'explorateur d'image"
 
 msgid "Step 1: Select Drive To Backup"
-msgstr "Étape 1 : choisissez le disque à sauvegarder"
+msgstr "Étape 1 : Sélectionner le disque à sauvegarder"
 
 msgid "Select the <b>source drive</b> that you would like to create a backup image from."
-msgstr "Choisissez le disque source à partir duquel vous souhaitez créer une image de sauvegarde."
+msgstr ""
+"Sélectionnez le <b>disque source</b> à partir duquel vous souhaitez créer "
+"une image de sauvegarde."
 
 msgid "Drive"
 msgstr "Disque"
@@ -162,19 +193,21 @@ msgid "Drive Model"
 msgstr "Modèle de disque"
 
 msgid "Serial Number"
-msgstr ""
+msgstr "Numéro de série"
 
 msgid "Partitions"
 msgstr "Partitions"
 
 msgid "Show hidden devices (for advanced users)"
-msgstr "Afficher les appareils masqués (pour les utilisateurs avancés)"
+msgstr "Afficher les périphériques masqués (pour les utilisateurs avancés)"
 
 msgid "Step 2: Select Partitions to Save"
-msgstr "Étape 2 : Choix des partitions à sauvegarder"
+msgstr "Étape 2 : Sélectionner les partitions à sauvegarder"
 
 msgid "Select which partitions to create a backup of. <b>Leave all partitions selected if you are unsure.</b>"
-msgstr "Sélectionnez les partitions que vous voulez sauvegarder. Laissez toutes les partitions sélectionnées si vous n'êtes pas sûr."
+msgstr ""
+"Sélectionnez les partitions que vous souhaitez sauvegarder. <b>Laissez "
+"toutes les partitions sélectionnées si vous n'êtes pas sûr·e.</b>"
 
 msgid "Save"
 msgstr "Enregistrer"
@@ -186,34 +219,34 @@ msgid "Drive {drive_number}"
 msgstr "Disque {drive_number}"
 
 msgid "Partition {partition_number}"
-msgstr "partition {partition_number}"
+msgstr "Partition {partition_number}"
 
 msgid "Step 3: Select Destination Drive"
-msgstr "Étape 3 : Sélectionnez la destination de la sauvegarde"
+msgstr "Étape 3 : Sélectionner le disque de destination"
 
 msgid "Click on the box below to select the source drive that you would like to create a backup image from."
 msgstr "Cliquez sur la zone ci-dessous pour sélectionner le disque dont vous voulez réaliser une image."
 
 msgid "Connected directly to my computer"
-msgstr "Directement connecté à mon PC"
+msgstr "Connecté directement à mon PC"
 
 msgid "Shared over a network"
 msgstr "Partagé sur un réseau"
 
 msgid "Where would you like to save the image?"
-msgstr "Où est le disque de destination ?"
+msgstr "Où souhaitez-vous enregistrer l'image ?"
 
 msgid "Windows shared folder (SMB/CIFS, Samba)"
-msgstr "Dossier partagé indiqué ci-dessous"
+msgstr "Dossier partagé de Windows (SMB/CIFS, Samba)"
 
 msgid "Search network"
-msgstr "Recherche des partages réseau"
+msgstr "Rechercher sur le réseau"
 
 msgid "Server"
-msgstr "Emplacement du serveur ou du partage "
+msgstr "Serveur"
 
 msgid "Share location (UNC path)"
-msgstr "Emplacement du serveur ou du partage "
+msgstr "Emplacement du partage (chemin UNC)"
 
 msgid "Username"
 msgstr "Nom d'utilisateur"
@@ -228,98 +261,121 @@ msgid "Version"
 msgstr "Version"
 
 msgid "Remote path"
-msgstr ""
+msgstr "Chemin distant"
 
 msgid "Exported path"
-msgstr ""
+msgstr "Chemin exporté"
 
 msgid "Identity File"
-msgstr ""
+msgstr "Fichier d'identité"
 
 msgid "Optional"
-msgstr "optionnel"
+msgstr "Facultatif"
 
 msgid "Select network-shared storage location:"
-msgstr "Choisir l'emplacement de stockage partagé sur le réseau :"
+msgstr "Sélectionner l'emplacement de stockage partagé sur le réseau :"
 
 msgid "Select the partition where the image files will be saved to"
-msgstr "Sélectionnez le disque de destination :"
+msgstr ""
+"Sélectionnez la partition sur laquelle les fichiers d'image seront "
+"enregistrés"
 
 msgid "Partition"
 msgstr "Partition"
 
 msgid "Mounting..."
-msgstr "Montage..."
+msgstr "Montage…"
 
 msgid "Close this popup to cancel the mount operation."
-msgstr ""
+msgstr "Fermez cette fenêtre pour annuler l'opération de montage."
 
 msgid "Please ensure the username, password and other fields provided are correct, and try again."
-msgstr "Si le périphérique est partagé sur un réseau, assurez-vous que le nom d'utilisateur et le mot de passe sont corrects et essayez à nouveau."
+msgstr ""
+"Si le périphérique est partagé sur un réseau, assurez-vous que le nom "
+"d'utilisateur et le mot de passe sont corrects puis essayez à nouveau."
 
 msgid "Must provide either password or SSH identity file."
-msgstr ""
+msgstr "Vous devez fournir un mot de passe ou un fichier d'identité SSH."
 
 msgid "Scanning folder for backup images..."
-msgstr "Analyse du dossier à la recherche d'images de sauvegarde..."
+msgstr "Analyse du dossier à la recherche d'images de sauvegarde…"
 
 msgid "({timeout_seconds} second timeout)"
-msgstr ""
+msgstr "(délai de {timeout_seconds} secondes)"
 
 msgid "Close this popup to cancel scanning the selected folder and subfolders."
 msgstr ""
+"Fermez cette fenêtre pour annuler l'analyse du dossier sélectionné et de ses "
+"sous-dossiers."
 
 msgid "Scanning: {filename}"
-msgstr ""
+msgstr "Analyse : {filename}"
 
 msgid "Error processing the following images:"
-msgstr "Erreur de traitement des images suivantes :"
+msgstr "Erreur de traitement des images suivantes :"
 
 msgid "Unable to fully process the image associated with the following partitions:"
-msgstr "Impossible de traiter complètement l'image associée aux partitions suivantes :"
+msgstr ""
+"Impossible de traiter complètement l'image associée aux partitions suivantes "
+":"
 
 msgid "Unable to fully process the following image:"
-msgstr "Impossible de traiter complètement l'image suivante :"
+msgstr "Impossible de traiter complètement l'image suivante :"
 
 msgid "Cannot find partition's associated partclone image"
-msgstr ""
+msgstr "Impossible de trouver l'image partclone associée à la partition"
 
 msgid "This can happen when loading images which Clonezilla was unable to completely backup."
 msgstr "Cela peut se produire lors du chargement d'images dont Clonezilla n'a pu totalement sauvegarder."
 
 msgid "Note: This image format cannot distinguish between failed partclone backup and a user who chose not to backup a partition."
 msgstr ""
+"Remarque : Ce format d'image ne permet pas de faire la distinction entre une "
+"sauvegarde partclone ayant échoué et un utilisateur qui a choisi de ne pas "
+"sauvegarder une partition."
 
 msgid "Any other filesystems within the image should be restorable as normal."
 msgstr "Tout autre système de fichiers au sein de l'image doit pouvoir être restauré normalement."
 
 msgid "Needs decryption"
-msgstr "Doit être décrypté"
+msgstr "Nécessite un déchiffrement"
 
 msgid "Unknown filesystem"
 msgstr "Système de fichiers inconnu"
 
 msgid "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance."
-msgstr "Les informations de partition étendue de la sauvegarde sont vides ou manquantes. Cela se produit avec les sauvegardes incomplètes créées par une mise à jour non officielle de Redo Backup. Si la sauvegarde contient des partitions étendues, elles ne seront pas restaurées correctement. Toutes les donnnées peuvent encore être complètement récupérées mais une intervention manuelle est nécessaire pour restaurer complètement les partitions étendues. Veuillez consulter la page {url} pour toute information et assistance. Le disque de destination n'a pas encore été modifié. Voulez-vous poursuivre la restauration ?"
+msgstr ""
+"Les informations de la partition étendue de la sauvegarde sont vides. Si la "
+"sauvegarde contient une partition étendue, elle ne sera pas restaurée "
+"correctement. Toutes les données sont encore récupérables, mais une "
+"intervention manuelle est nécessaire pour restaurer complètement les données "
+"de la partition étendue. Veuillez consulter {url} pour obtenir des "
+"informations et de l'aide."
 
 msgid "The backup's bootloader data is shorter than expected. If the backup contained certain bootloaders like GRUB, during a restore operation Rescuezilla will try and re-install the bootloader."
 msgstr ""
+"Les données du programme d'amorçage de la sauvegarde sont plus courtes que "
+"prévu. Si la sauvegarde contenait certains programmes d'amorçage comme GRUB, "
+"Rescuezilla tentera de les réinstaller lors des opérations de restauration."
 
 msgid "Step 4: Select Destination Folder"
-msgstr "Étape 4 : Sélectionnez le répertoire de sauvegarde"
+msgstr "Étape 4 : Sélectionner le dossier de destination"
 
 msgid "Click <b>Browse</b> to select the folder on the destination drive where your new backup image will be saved.\n"
 "\n"
 "The folder a backup is saved in is usually a description of the computer, e.g. <b>office1</b> or <b>zack-laptop</b>."
-msgstr "Cliquez <b>Parcourir</b> pour sélectionner ou créer un répertoire dans lequel enregistrer votre nouvelle sauvegarde.\n"
+msgstr ""
+"Cliquez sur <b>Parcourir</b> pour sélectionner ou créer un dossier dans "
+"lequel enregistrer votre nouvelle sauvegarde.\n"
 "\n"
-"Le dossier de sauvegarde est généralement une description du PC, par exemple <b>Bureau1</b> ou <b>Portable-David</b>."
+"Le dossier de sauvegarde est généralement une description du PC, par exemple "
+"<b>Bureau1</b> ou <b>Portable-David</b>."
 
 msgid "You must select a folder inside {location}"
 msgstr "Vous devez sélectionner un dossier dans {location}"
 
 msgid "Please select a different folder."
-msgstr "Veuillez choisir un autre dossier."
+msgstr "Veuillez sélectionner un autre dossier."
 
 msgid "The table below lists the backup images that are already in this folder (if any)."
 msgstr "Le tableau ci-dessous liste les images sauvegardées se trouvant déjà dans ce dossier (le cas échéant)."
@@ -328,7 +384,7 @@ msgid "Browse..."
 msgstr "Parcourir..."
 
 msgid "Filename"
-msgstr "Nom de fichier"
+msgstr "Nom du fichier"
 
 msgid "Size"
 msgstr "Taille"
@@ -340,71 +396,78 @@ msgid "When you are happy with the destination folder, click <b>Next</b>."
 msgstr "Lorsque vous êtes satisfait du dossier de destination, cliquez sur <b>Suivant</b>."
 
 msgid "Step 5: Name Your Backup"
-msgstr "Étape 5 : Donnez un nom à votre sauvegarde"
+msgstr "Étape 5 : Nommer votre sauvegarde"
 
 msgid "Provide a unique name for this backup image, such as the date.  Today's date is automatically entered for you below.\n"
 "\n"
 "You may only use letters, numbers, and dashes in your backup name."
-msgstr "Fournissez un nom unique pour cette sauvegarde, tel que la date. La date du jour est automatiquement proposée par la suite."
+msgstr ""
+"Attribuez un nom unique à cette sauvegarde, tel que la date. La date du jour "
+"est automatiquement proposée pour vous ci-dessous.\n"
 "\n"
-"Vous pouvez utiliser que des lettres, des chiffres et des tirets dans le nom de la sauvegarde."
+"Vous ne pouvez utiliser que des lettres, des chiffres et des tirets dans le "
+"nom de la sauvegarde."
 
 msgid "Optional: Provide a short description."
-msgstr ""
+msgstr "Facultatif : Indiquez une description courte."
 
 msgid "Step 6: Customize Compression Settings"
-msgstr ""
+msgstr "Étape 6 : Personnaliser les paramètres de compression"
 
 msgid "Customize image compression settings. <b>Don't make any changes if you are unsure.</b>"
 msgstr ""
+"Personnalisez les paramètres de compression d'image. <b>N'effectuez aucun "
+"changement si vous n'êtes pas sûr·e de ce que vous faîtes.</b>"
 
 msgid "Compression format: "
-msgstr ""
+msgstr "Format de compression : "
 
 msgid "gzip"
-msgstr ""
+msgstr "gzip"
 
 msgid "default"
-msgstr ""
+msgstr "Par défaut"
 
 msgid "zstandard"
-msgstr ""
+msgstr "zstandard"
 
 msgid "Uncompressed (Suitable for use with Image Explorer)"
-msgstr ""
+msgstr "Non compressé (convient pour une utilisation de l'explorateur d'image)"
 
 msgid "Compression level: "
-msgstr ""
+msgstr "Niveau de compression : "
 
 msgid "Fastest"
-msgstr ""
+msgstr "Le plus rapide"
 
 msgid "Best"
-msgstr ""
+msgstr "Le meilleur"
 
 msgid "When you are happy with the compression settings, click <b>Next</b>."
 msgstr ""
+"Lorsque les paramètres de compression vous conviennent, cliquez sur "
+"<b>Suivant</b>."
 
 msgid "Step 7: Confirm Backup Configuration"
-msgstr "Étape 6 : confirmez la configuration de sauvegarde"
+msgstr "Étape 7 : Confirmer la configuration de la sauvegarde"
 
 msgid "Source drive"
 msgstr "Disque source"
 
 msgid "Backing up the following partition(s)"
-msgstr "Sauvegarde de la partition suivante"
+msgstr "Sauvegarde des partitions suivantes"
 
 msgid "The backup image will be written into folder {dest_dir} on {description}"
 msgstr "L'image sauvegardée sera écrite dans le dossier {dest_dir} sur {description}"
 
 msgid "Confirm the following backup configuration."
-msgstr "Confirmez la configuration suivante de sauvegarde."
+msgstr "Confirmez la configuration de sauvegarde suivante."
 
 msgid "On successful completion of the task, perform the following action: "
-msgstr ""
+msgstr "Une fois la tâche terminée avec succès, effectuer l'action suivante : "
 
 msgid "Do nothing"
-msgstr ""
+msgstr "Ne rien faire"
 
 msgid "Shutdown"
 msgstr "Arrêter"
@@ -414,147 +477,190 @@ msgstr "Redémarrer"
 
 msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
 msgstr ""
+"Sauvetage : Ignorer les incohérences du système de fichiers et les secteurs "
+"défectueux"
 
 msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
 msgstr ""
+"<b>L'activation de l'option « Sauvetage » est susceptible de masquer des "
+"erreurs importantes. À utiliser avec précaution.</b>"
 
 msgid "To start the backup, click <b>Next</b>."
-msgstr "Pour débuter la sauvegarde, cliquez sur <b>Suivant</b>."
+msgstr "Pour lancer la sauvegarde, cliquez sur <b>Suivant</b>."
 
 msgid "Step 8: Creating Backup Image"
-msgstr "Étape 7 : Création de la sauvegarde"
+msgstr "Étape 8 : Création de la sauvegarde"
 
 msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
-msgstr "Sauvegarde du système sur l'emplacement sélectionné. Cela peut prendre du temps et dépend de la puissance de votre PC et de la taille des données."
+msgstr ""
+"Sauvegarde du système sur l'emplacement sélectionné. Cette opération peut "
+"durer une heure ou plus en fonction de la vitesse de votre ordinateur et la "
+"quantité de données."
 
 msgid "Saving: {file}"
-msgstr ""
+msgstr "Enregistrement : {file}"
 
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
 msgstr "Sauvegarder {partition_name} contenant le système de fichier {filesystem} vers {destination}"
 
 msgid "Summary of Backup"
-msgstr "Sommaire de la sauvegarde"
+msgstr "Résumé de la sauvegarde"
 
 msgid "Confirm the backup summary."
-msgstr "Confirmer le sommaire de la sauvegarde."
+msgstr "Veuillez confirmer le résumé de la sauvegarde."
 
 msgid "Backup Summary"
-msgstr "Sommaire de la sauvegarde"
+msgstr "Résumé de la sauvegarde"
 
 msgid "An operation is in progress. Do you wish to cancel?"
-msgstr ""
+msgstr "Une opération est en cours. Souhaitez-vous l'annuler ?"
 
 msgid "Operation cancelled by user."
 msgstr "Sauvegarde annulée par l'utilisateur."
 
 msgid "Rescue option is enabled."
-msgstr ""
+msgstr "L'option « Sauvetage » est activée."
 
 msgid "Error creating backup: "
-msgstr "Erreur de création de la sauvegarde :"
+msgstr "Erreur de création de la sauvegarde : "
 
 msgid "Failed to write destination file. Please confirm it is valid to create the provided file path, and try again."
-msgstr "Echec d'écriture du fichier de destination. Veuillez confirmer qu'il est valide de créer le chemin de fichier fourni, et réessayez."
+msgstr ""
+"Echec d'écriture du fichier de destination. Veuillez confirmer qu'il est "
+"valide de créer le chemin de fichier fourni, puis réessayez."
 
 msgid "Successful backup of swap partition {partition_name}"
-msgstr "Sauvegarde réussie de la partition échangée {partition_name}"
+msgstr "Sauvegarde de la partition d'échange {partition_name} réussie"
 
 msgid "<b>Failed to backup partition</b> {partition_name}"
 msgstr "<b>Échec de sauvegarde de la partition</b> {partition_name}"
 
 msgid "Successful backup of partition {partition_name}"
-msgstr "Sauvegarde réussie de la partition {partition_name}"
+msgstr "Sauvegarde de la partition {partition_name} réussie"
 
 msgid "Backup saved successfully."
 msgstr "Sauvegarde réalisée avec succès."
 
 msgid "Backup succeeded with some errors:"
-msgstr "Sauvegarde réussie avec des erreurs :"
+msgstr "Sauvegarde terminée avec des erreurs :"
 
 msgid "Backup operation failed:"
-msgstr "Échec de l'opération de sauvegarde :"
+msgstr "Échec de l'opération de sauvegarde :"
 
 msgid "User requested operation to stop."
-msgstr ""
+msgstr "L'utilisateur a demandé l'arrêt de l'opération."
 
 msgid "Operation took {num_minutes} minutes."
 msgstr "L'opération a duré {num_minutes} minutes."
 
 msgid "To start a new session, click <b>Next</b>"
-msgstr "Pour débuter une nouvelle séance, cliquez sur <b>Suivant</b>"
+msgstr "Pour lancer une nouvelle session, cliquez sur <b>Suivant</b>"
 
 msgid "Step 1: Select Image Location"
-msgstr "Étape 1 : choisissez l'emplacement de l'image"
+msgstr "Étape 1 : Sélectionner l'emplacement de l'image"
 
 msgid "Where are the image files stored?"
-msgstr "Où est le disque source ?"
+msgstr "Où se trouvent les fichiers d'image ?"
 
 msgid "Select the partition which contains the image files:"
-msgstr "Sélectionner le disque source :"
+msgstr "Sélectionnez la partition contenant les fichiers d'image :"
 
 msgid "Step 2: Select Backup Image"
-msgstr "Étape 2 : Sélectionnez l'image à restaurer"
+msgstr "Étape 2 : Sélectionner l'image à restaurer"
 
 msgid "Click <b>Browse</b> to select the folder containing image files."
-msgstr "Cliquez sur la case ci-dessous pour sélectionner le dossier contenant les fichiers images."
+msgstr ""
+"Cliquez sur <b>Parcourir</b> pour sélectionner le dossier contenant les "
+"fichiers d'image."
 
 msgid "Select the image file to restore."
-msgstr "Choisir le fichier image à restaurer"
+msgstr "Sélectionnez le fichier d'image à restaurer."
 
 msgid "Step 3: Select Drive To Restore"
-msgstr "Étape 3 : Sélectionnez le disque à restaurer"
+msgstr "Étape 3 : Sélectionner le disque à restaurer"
 
 msgid "Select the destination drive to restore with the selected image."
-msgstr "Choisissez le disque de destination que vous souhaitez écraser et sur lequel restaurer l'image sélectionnée."
+msgstr ""
+"Sélectionnez le disque de destination que vous souhaitez écraser et sur "
+"lequel restaurer l'image sélectionnée."
 
 msgid "Step 4: Select Partitions to Restore"
-msgstr "Étape 4 : sélectionnez les partitions à restaurer"
+msgstr "Étape 4 : Sélectionnez les partitions à restaurer"
 
 msgid "Select which partitions from the backup image to restore, and whether to overwrite the partition table. <b>Leave everything selected to completely restore the destination drive.</b>"
-msgstr "Sélectionnez quelles partitions de la sauvegarde à restaurer, et si la table de partition doit être écrasée. Laissez tout sélectionné pour restaurer complètement le disque de destination."
+msgstr ""
+"Sélectionnez les partitions de la sauvegarde à restaurer, et indiquez si le "
+"registre des partitions doit être écrasé. <b>Laissez toutes les options "
+"sélectionnées pour restaurer complètement le disque de destination.</b>"
 
 msgid "Selected image"
 msgstr "Image sélectionnée"
 
 msgid "Destination device"
-msgstr "Appareil de destination"
+msgstr "Périphérique de destination"
 
 msgid "Destination partition"
 msgstr "Partition de destination"
 
 msgid "Overwrite partition table"
-msgstr "Écraser la table de partition"
+msgstr "Écraser le registre des partitions"
 
 msgid "You will be overwriting the partition table."
-msgstr "Vous allez écraser la table de partition."
+msgstr "Vous allez écraser le registre des partitions."
 
 msgid "The \"destination partition\" column has been updated using the information stored within the backup image.\n\n<b>If partitions have been resized, new partitions added, or additional operating systems installed <i>since the backup image was created</i>, then the destination drive's partition table will not match the backup image, and overwriting the destination drive's partition table will render these resized and additional partitions permanently inaccessible.</b> If you have not modified the partition table in such a way since creating this backup then overwriting the partition table is completely safe and will have no negative effects."
-msgstr "La colonne \"partition de destination\" a été mise à jour en utilisant les informations stockées au sein de l'image de sauvegarde.\n\n<b>Si des partitions ont été retaillées, si de nouvelles partitions ont été ajoutées ou des systèmes d'exploitation supplémentaires installés <i>depuis la création de l'image de sauvegarde</i>, la table de partition du disque de destination ne correspondra alors pas l'image de sauvegarde, et écraser la table de partition du disque de destination rendra définitivement inaccessibles ces partitions retaillées et supplémentaires.</b> Si vous n'avez pas modifié la table de partition de telle manière depuis la création de cette sauvegarde, écraser la table de partition est totalement sûr et n'aura pas de conséquences négatives."
+msgstr ""
+"La colonne « partition de destination » a été mise à jour en utilisant les "
+"informations stockées au sein de l'image de sauvegarde.\n"
+"\n"
+"<b>Si des partitions ont été redimensionnées, si de nouvelles partitions ont "
+"été ajoutées ou des systèmes d'exploitation supplémentaires installés "
+"<i>depuis la création de l'image de sauvegarde</i>, le registre des "
+"partitions du disque de destination ne correspondra alors pas à l'image de "
+"sauvegarde, et écraser le registre des partitions du disque de destination "
+"rendra définitivement inaccessibles ces partitions redimensionnées ou "
+"ajoutées.</b> Si vous n'avez pas modifié le registre des partitions de cette "
+"façon depuis la création de cette sauvegarde, écraser le registre des "
+"partitions ne pose pas de problème."
 
 msgid "You will <b>not</b> be overwriting the partition table."
-msgstr "Vous n'allez <b>pas</b> écraser la table de partition."
+msgstr "Vous n'allez <b>pas</b> écraser le registre des partitions."
 
 msgid "The source does not contain a partition table."
-msgstr ""
+msgstr "La source ne contient pas de registre des partitions."
 
 msgid "The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table."
-msgstr "La colonne \"partition de destination\" a été mise à jour avec les informations de la table de partition existante du lecteur de destination. \n\n<b>La colonne de la partition de destination peut être modifiée comme un menu déroulant. Le mappage inexact des partitions de destination peut provoquer le non démarrage des systèmes d'exploitation. </b> Si vous n'êtes pas sûr du mappage, voyez s'il ne serait pas plus approprié d'écraser la table des partitions."
+msgstr ""
+"La colonne « partition de destination » a été mise à jour avec les "
+"informations du registre des partitions existant du disque de destination.\n"
+"\n"
+"<b>La colonne de la partition de destination peut être modifiée comme un "
+"menu déroulant. Le mappage inexact des partitions de destination peut "
+"provoquer le non démarrage des systèmes d'exploitation. </b> Si vous n'êtes "
+"pas sûr·e du mappage, voyez s'il ne serait pas plus approprié d'écraser le "
+"registre des partitions."
 
 msgid "No destination partition selected. Use the destination partition drop-down menu to select the destination"
-msgstr "Aucune partition de destination sélectionnée. Utilisez le menu déroulant de partitions de destination pour choisir la destination"
+msgstr ""
+"Aucune partition de destination sélectionnée. Utilisez le menu déroulant de "
+"partitions de destination pour sélectionner la destination"
 
 msgid "Not restoring this partition"
-msgstr ""
+msgstr "Cette partition ne sera pas restaurée"
 
 msgid "When you are ready to continue, click <b>Next</b>."
-msgstr ""
+msgstr "Lorsque vous êtes prêt·e à continuer, cliquez sur <b>Suivant</b>."
 
 msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
 msgstr ""
+"Analyse et démontage de tous les volumes logiques du Logical Volume Manager "
+"(LVM)…"
 
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
 msgstr ""
+"La partition finale du registre de partition source ({source} : {source_size}"
+" octets) doit faire référence à une région entièrement située sur le disque "
+"de destination ({destination_size} octets)."
 
 msgid "Rescuezilla cannot yet automatically shrink partitions to restore from large disks to smaller disks. The final partition currently must always completely reside within the destination disk.\n"
 "\n"
@@ -562,19 +668,29 @@ msgid "Rescuezilla cannot yet automatically shrink partitions to restore from la
 "\n"
 "{url}"
 msgstr ""
-""
-""
-""
-""
+"Rescuezilla ne peut pas encore réduire automatiquement les partitions pour "
+"restaurer des disques de grande taille vers des disques plus petits. La "
+"partition finale doit en effet se trouver entièrement sur le disque de "
+"destination.\n"
+"\n"
+"Actuellement, le seul moyen de restaurer des disques plus petits que "
+"l'original est d'utiliser d'abord GParted Partition Editor pour réduire la "
+"dernière partition du disque original avant de créer une nouvelle image de "
+"sauvegarde. Veuillez lire les instructions suivantes pour plus "
+"d'informations :\n"
+"\n"
+"{url}"
 
 msgid "Step 5: Confirm Restore Configuration"
-msgstr "Étape 5 : Confirmez la configuration de restauration"
+msgstr "Étape 5 : Confirmer la configuration de la restauration"
 
 msgid "Confirm the following restore configuration."
-msgstr "Confirmez la configuration de restauration."
+msgstr "Veuillez confirmer la configuration de la restauration."
 
 msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!"
-msgstr "Êtes-vous sûr de vouloir restaurer la sauvegarde vers {destination_drive} ? Poursuivre écrasera définitivement les données de ce disque !"
+msgstr ""
+"Êtes-vous sûr de vouloir restaurer la sauvegarde vers {destination_drive} ? "
+"Poursuivre écrasera définitivement les données de ce disque !"
 
 msgid "Source image"
 msgstr "Image source"
@@ -586,88 +702,103 @@ msgid "Restoring the following partitions"
 msgstr "Restauration des partitions suivantes"
 
 msgid "WILL BE OVERWRITING PARTITION TABLE"
-msgstr "ÉCRASERA LA TABLE DE PARTITION"
+msgstr "ÉCRASERA LE REGISTRE DES PARTITIONS"
 
 msgid "Will <b>NOT</b> be overwriting partition table"
-msgstr "N'écrasera <b>PAS</b> la table de partition"
+msgstr "N'écrasera <b>PAS</b> le registre des partitions"
 
 msgid "To start the restore, click <b>Next</b>."
-msgstr "Pour débuter la restauration, cliquez sur <b>Suivant</b>."
+msgstr "Pour lancer la restauration, cliquez sur <b>Suivant</b>."
 
 msgid "Restoring From Backup"
 msgstr "Restauration à partir d'une sauvegarde"
 
 msgid "Restoring your system from the image you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
-msgstr "Restaure le système à partir de la sauvegarde sélectionnée. Cela peut prendre du temps et dépend de la puissance de votre PC et de la taille des données."
+msgstr ""
+"Restaure le système à partir de la sauvegarde sélectionnée. Cette opération "
+"peut durer une heure ou plus en fonction de la vitesse de votre ordinateur "
+"et de la quantité de données."
 
 msgid "Refreshing partition table"
-msgstr "Actualisation de la table de partition"
+msgstr "Actualisation du registre des partitions"
 
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
 msgstr "Restauration de {description} vers {destination_partition} ({destination_description})"
 
 msgid "Synchronizing disks..."
-msgstr ""
+msgstr "Synchronisation des disques…"
 
 msgid "Querying hard drive geometry of {device}"
-msgstr ""
+msgstr "Recherche de la géométrie du disque dur de {device}"
 
 msgid "Probing {device} with {app}"
-msgstr ""
+msgstr "Analyse de {device} avec {app}"
 
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
 msgstr ""
+"Agrandissement du système de fichiers {partition} ({filesystem}). Cette "
+"opération peut prendre du temps…"
 
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
 msgstr ""
+"Échec du redimensionnement de la partition {partition} ({filesystem}) : {msg}"
 
 msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
 msgstr ""
+"Ajustement réussi de la géométrie du système de fichiers NTFS de "
+"{ntfs_device} en utilisant les valeurs de {geometry_source}"
 
 msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
 msgstr ""
+"Échec de l'ajustement de la géométrie du système de fichiers NTFS de "
+"{ntfs_device}"
 
 msgid "Removing udev MAC address records (if any)"
-msgstr ""
+msgstr "Suppression des enregistrements d'adresses MAC de udev (le cas échéant)"
 
 msgid "Re-installing syslinux (if any)"
-msgstr ""
+msgstr "Réinstallation de syslinyx (le cas échéant)"
 
 msgid "Successfully re-installed syslinux bootloader"
-msgstr ""
+msgstr "Réinstallation de syslinux réussie"
 
 msgid "Re-installing GRUB bootloader (if any)"
-msgstr ""
+msgstr "Réinstallation GRUB (le cas échéant)"
 
 msgid "Successfully re-installed GRUB bootloader"
-msgstr ""
+msgstr "Réinstallation de GRUB réussie"
 
 msgid "Did not update GRUB bootloader (if any)"
-msgstr ""
+msgstr "GRUB n'a pas été mis à jour (le cas échéant)"
 
 msgid "Updating initramfs (if any)"
-msgstr ""
+msgstr "Mise à jour de initramfs (le cas échéant)"
 
 msgid "Successfully updated initramfs"
-msgstr ""
+msgstr "Mise à jour de initramfs réussie"
 
 msgid "Updating EFI NVRAM..."
-msgstr ""
+msgstr "Mise à jour de EFI NVRAM…"
 
 msgid "Successfully updated EFI NVRAM"
-msgstr ""
+msgstr "Mise à jour de EFI NVRAM réussie"
 
 msgid "Error restoring image: "
-msgstr "Erreur de restauration de l'image :"
+msgstr "Erreur de restauration de l'image : "
 
 msgid "Could not restore sfdisk partition table as file has zero length: "
-msgstr "Impossible de restaurer la table de partition sfdisk car la longueur du fichier est de zéro."
+msgstr ""
+"Impossible de restaurer le registre des partitions sfdisk car la longueur du "
+"fichier est de zéro : "
 
 msgid "Successfully restored partition table."
-msgstr "Table de partition restaurée avec succès."
+msgstr "Registre des partitions restauré avec succès."
 
 msgid "Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."
-msgstr "Échec d'actualisation de la table de partition des appareils. Cela peut se produire si un autre processus est en train d'accéder à la table de partition."
+msgstr ""
+"Échec de l'actualisation du registre des partitions des périphériques. Cela "
+"peut se produire si un autre processus est en train d'accéder au registre "
+"des partitions."
 
 msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
 msgstr "Impossible de restaurer la partition {destination_partition} car aucune image enregistrée n'est associée à : {description}."
@@ -682,81 +813,87 @@ msgid "Successfully restored image partition {image} to {destination_partition}"
 msgstr "Restauration réussie de la partition d'image {image} vers {destination_partition}"
 
 msgid "Summary of Restore"
-msgstr "Sommaire de la restauration"
+msgstr "Résumé de la restauration"
 
 msgid "Restore Summary"
-msgstr "Sommaire de la restauration"
+msgstr "Résumé de la restauration"
 
 msgid "Confirm the restore summary."
-msgstr "Confirmer le sommaire de restauration."
+msgstr "Veuillez confirmer le résumé de la restauration."
 
 msgid "Backup restored successfully."
-msgstr "Sauvegarde restaurée avec succès." 
+msgstr "Sauvegarde restaurée avec succès."
 
 msgid "Image Explorer\n"
 "      (beta)"
 msgstr ""
-""
+"Explorateur d'image\n"
+"      (bêta)"
 
 msgid "Image Explorer (beta)"
-msgstr ""
+msgstr "Explorateur d'image (bêta)"
 
 msgid "Select the image file to explore"
-msgstr ""
+msgstr "Sélectionnez le fichier d'image à explorer"
 
 msgid "Step 3: Select Partition to Explore"
-msgstr ""
+msgstr "Étape 3 : Sélectionner la partition à explorer"
 
 msgid "Select the partition to access files from."
 msgstr ""
+"Sélectionnez la partition pour laquelle vous souhaitez accéder aux fichiers."
 
 msgid "Click <b>Mount</b> to mount the backup image (as read-only)."
 msgstr ""
+"Cliquez sur <b>Monter</b> pour monter l'image de sauvegarde (en lecture "
+"seule)."
 
 msgid "Mount"
-msgstr ""
+msgstr "Monter"
 
 msgid "Mounting as read-only..."
-msgstr ""
+msgstr "Montage en lecture seule…"
 
 msgid "Unmount"
-msgstr ""
+msgstr "Démonter"
 
 msgid "Once the partition has been mounted, click <b>Open in file manager</b> to access your files."
 msgstr ""
+"Une fois la partition montée, cliquez sur <b>Ouvrir dans le gestionnaire de "
+"fichiers</b> pour accéder à vos fichiers."
 
 msgid "Open in file manager"
-msgstr ""
+msgstr "Ouvrir dans le gestionnaire de fichiers"
 
 msgid "Verify"
-msgstr ""
+msgstr "Vérifier"
 
 msgid "Select one or more image(s) to verify."
-msgstr ""
+msgstr "Sélectionnez une ou plusieurs image·s à vérifier."
 
 msgid "To begin verification, click <b>Next</b>."
-msgstr ""
+msgstr "Pour commencer la vérification, cliquez sur <b>Suivant</b>."
 
 msgid "Verifying Image"
-msgstr ""
+msgstr "Vérification de l'image"
 
 msgid "Verifying the selected image(s)."
-msgstr ""
+msgstr "Vérification des images sélectionnées."
 
 msgid "Verifying {image_name}"
-msgstr ""
+msgstr "Vérification de {image_name}"
 
 msgid "Summary of Verification"
-msgstr ""
+msgstr "Résumé de la vérification"
 
 msgid "Confirm the verification summary."
-msgstr ""
+msgstr "Veuillez confirmer le résumé de la vérification."
 
 msgid "Verification Summary"
-msgstr ""
+msgstr "Résumé de la vérification"
 
 msgid "To verify another image, click <b>Back</b>."
-msgstr ""
+msgstr "Pour vérifier une autre image, cliquez sur <b>Retour</b>."
 
 msgid "✔"
 msgstr "✔"
@@ -765,19 +902,19 @@ msgid "❌"
 msgstr "❌"
 
 msgid "MBR backup appears correct."
-msgstr ""
+msgstr "La sauvegarde du MBR semble correcte."
 
 msgid "No partition table found."
-msgstr ""
+msgstr "Aucun registre des partitions trouvé."
 
 msgid "Sfdisk partition table file is empty or missing."
-msgstr ""
+msgstr "Le registre des partition sfdisk est vide ou manquant."
 
 msgid "Sfdisk partition table file is present."
-msgstr ""
+msgstr "Le registre des partitions sfdisk est présent."
 
 msgid "Unable to verify."
-msgstr ""
+msgstr "Impossible d'effectuer la vérification."
 
 msgid "{partition}: filesystem image successfully verified."
-msgstr ""
+msgstr "{partition} : image du système de fichiers vérifiée avec succès."
