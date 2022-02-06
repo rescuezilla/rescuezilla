@@ -6,13 +6,13 @@
 # [2] and: https://sourceforge.net/p/redobackup/discussion/general/thread/07a80bc8/
 #
 # Mirko Hanker <Mirko1984@pm.me>, 2021.
-# Shasheen Ediriweera <shasheene@gmail.com>, 2021.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2021-08-29 11:32+0000\n"
+"PO-Revision-Date: 2022-02-06 17:57+0000\n"
 "Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/de/>\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.8.1-dev\n"
+"X-Generator: Weblate 4.11-dev\n"
 
 msgid "Welcome"
 msgstr "Willkommen"
@@ -41,7 +41,7 @@ msgid "Restore"
 msgstr "Wiederherstellen"
 
 msgid "Verify Image"
-msgstr ""
+msgstr "Image überprüfen"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
 msgstr ""
@@ -198,7 +198,7 @@ msgid "Drive Model"
 msgstr "Laufwerksmodell"
 
 msgid "Serial Number"
-msgstr ""
+msgstr "Serienummer"
 
 msgid "Partitions"
 msgstr "Partitionen"
@@ -486,9 +486,12 @@ msgstr "Neustarten"
 
 msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
 msgstr ""
+"Rescue: Inkonsistenzen im Dateisystem und fehlerhafte Sektoren ignorieren"
 
 msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
 msgstr ""
+"<b>Die Aktivierung von \"Rescue\" kann wichtige Fehler unterdrücken. Seien "
+"Sie vorsichtig.</b>"
 
 msgid "To start the backup, click <b>Next</b>."
 msgstr "Klicke zum Starten des Sicherungsvorgangs auf <b>Weiter</b>."
@@ -524,7 +527,7 @@ msgid "Operation cancelled by user."
 msgstr "Sicherung vom Benutzer abgebrochen."
 
 msgid "Rescue option is enabled."
-msgstr ""
+msgstr "Die Option Rettung ist aktiviert."
 
 msgid "Error creating backup: "
 msgstr "Fehler beim Erstellen der Sicherungskopie: "
@@ -872,7 +875,7 @@ msgid "Open in file manager"
 msgstr "In Dateimanager öffnen"
 
 msgid "Verify"
-msgstr ""
+msgstr "Überprüfen"
 
 msgid "Select one or more image(s) to verify."
 msgstr ""
