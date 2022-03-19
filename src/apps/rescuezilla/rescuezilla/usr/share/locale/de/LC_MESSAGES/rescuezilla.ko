@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2022-02-11 08:58+0000\n"
-"Last-Translator: Marcel Küsters <Marcel_Kuesters@t-online.de>\n"
+"PO-Revision-Date: 2022-03-19 05:17+0000\n"
+"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/de/>\n"
 "Language: de\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.11-dev\n"
+"X-Generator: Weblate 4.12-dev\n"
 
 msgid "Welcome"
 msgstr "Willkommen"
@@ -885,24 +885,20 @@ msgid "To begin verification, click <b>Next</b>."
 msgstr "Um mit der Überprüfung zu beginnen, klicken Sie auf <b>Weiter</b>."
 
 msgid "Verifying Image"
-msgstr "Bild überprüfen"
+msgstr "Image überprüfen"
 
 msgid "Verifying the selected image(s)."
 msgstr "Überprüfung des/der ausgewählten Image(s)."
 
-#, fuzzy
 msgid "Verifying {image_name}"
 msgstr "Überprüfung von {image_name}"
 
-#, fuzzy
 msgid "Summary of Verification"
 msgstr "Zusammenfassung der Verifizierung"
 
-#, fuzzy
 msgid "Confirm the verification summary."
 msgstr "Bestätigen Sie die Zusammenfassung der Überprüfung."
 
-#, fuzzy
 msgid "Verification Summary"
 msgstr "Zusammenfassung der Verifizierung"
 

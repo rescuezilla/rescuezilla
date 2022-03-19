@@ -1,15 +1,16 @@
 # Nathan <bonnemainsnathan@gmail.com>, 2022.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2022.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2022-01-21 08:55+0000\n"
-"Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
+"PO-Revision-Date: 2022-03-19 05:17+0000\n"
+"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/rescuezilla/"
 "graphical-shutdown/fr/>\n"
 "Language: fr\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.11-dev\n"
+"X-Generator: Weblate 4.12-dev\n"
 
 msgid "End Session"
 msgstr "Quitter la session"
@@ -24,4 +25,4 @@ msgid "Reboot"
 msgstr "Redémarrer"
 
 msgid "Choose action."
-msgstr "Sélectionner une option."
+msgstr "Choisir action."
