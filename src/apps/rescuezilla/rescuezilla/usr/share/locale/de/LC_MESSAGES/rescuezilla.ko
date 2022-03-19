@@ -7,13 +7,14 @@
 #
 # Mirko Hanker <Mirko1984@pm.me>, 2021.
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
+# Marcel Küsters <Marcel_Kuesters@t-online.de>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2022-02-06 17:57+0000\n"
-"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
+"PO-Revision-Date: 2022-02-11 08:58+0000\n"
+"Last-Translator: Marcel Küsters <Marcel_Kuesters@t-online.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/de/>\n"
 "Language: de\n"
@@ -101,23 +102,23 @@ msgid "This mode is for \"disk cloning\". Cloning means copying one drive and di
 ""
 "To use the \"imaging\" wizards, click <b>Back</b> and select <b>Backup</b> or <b>Restore</b>."
 msgstr ""
-"Dieser Vorgang ist für das \"Klonen\" eines Laufwerks vorgesehen. Klonen "
-"bedeutet, dass ein Laufwerk direkt auf ein Ziellaufwerk kopiert wird. Dabei "
-"wird das Ziellaufwerk überschrieben. Dieser Vorgang wird in einem Schritt "
-"vollzogen ohne, dass ein Zwischenspeicher benötigt wird.\n"
+"Dieser Modus ist für das Klonen von Festplatten gedacht. Klonen bedeutet, "
+"dass ein Laufwerk kopiert und ein anderes Laufwerk direkt überschrieben "
+"wird. Dies ist ein direkter, einstufiger Vorgang, der keine "
+"Zwischenspeicherung erfordert.\n"
 "\n"
-"Klonen unterscheidet sich von der Sicherungskopie eines Laufwerks. Die "
-"Sicherungskopie bedeutet, alles von einem Laufwerk in eine einzige große "
-"Datei auf einem externen Datenträger zu kopieren. Mehrere Sicherungskopien "
-"können auf dem selben externen Datenträger gespeichert werden. Diese "
-"Sicherungskopien können auf das ursprüngliche Laufwerk oder aber auch auf "
-"ein anderes Laufwerk zurückgespielt werden. Mit anderen Worten: Um eine "
-"Sicherungskopie zu erstellen, kopiert die Sicherungskopie dein Laufwerk nach "
-"<i>files</i>, welches auf einem Datenträger zwischengespeichert werden muss "
-"bevor es wiederhergestellt werden kann.\n"
+"Klonen unterscheidet sich von \"Disk Imaging\". Beim Imaging wird alles von "
+"einem Laufwerk in sehr große Dateien kopiert, die in einem Ordner auf einem "
+"externen Laufwerk gespeichert werden. Es können mehrere Abbilder auf "
+"demselben externen Laufwerk gespeichert werden. Diese Abbilder können auf "
+"der ursprünglichen Festplatte oder auf weiteren Festplatten "
+"wiederhergestellt werden. Mit anderen Worten: Beim \"Imaging\" kopiert der "
+"Sicherungsvorgang Ihr Laufwerk in <i>Dateien</i>, die zumindest "
+"vorübergehend auf einem Laufwerk gespeichert werden müssen, bevor es "
+"wiederhergestellt werden kann.\n"
 "\n"
-"Um den Assitenten für die Sicherungskopie zu verwenden, klicke <b>Zurück</b> "
-"und wähle <b>Sichern</b> oder <b>Wiederherstellen</b>."
+"Um die \"Imaging\" Assistenten zu verwenden, klicken Sie auf <b>Zurück</b> "
+"und wählen Sie <b>Sicherung</b> oder <b>Wiederherstellung</b>."
 
 msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
 msgstr "Um den Assistenten für das \"Klonen\" zu starten, klicke <b>Weiter</b>"
@@ -878,31 +879,35 @@ msgid "Verify"
 msgstr "Überprüfen"
 
 msgid "Select one or more image(s) to verify."
-msgstr ""
+msgstr "Wählen Sie ein oder mehrere zu überprüfende Images aus."
 
 msgid "To begin verification, click <b>Next</b>."
-msgstr ""
+msgstr "Um mit der Überprüfung zu beginnen, klicken Sie auf <b>Weiter</b>."
 
 msgid "Verifying Image"
-msgstr ""
+msgstr "Bild überprüfen"
 
 msgid "Verifying the selected image(s)."
-msgstr ""
+msgstr "Überprüfung des/der ausgewählten Image(s)."
 
+#, fuzzy
 msgid "Verifying {image_name}"
-msgstr ""
+msgstr "Überprüfung von {image_name}"
 
+#, fuzzy
 msgid "Summary of Verification"
-msgstr ""
+msgstr "Zusammenfassung der Verifizierung"
 
+#, fuzzy
 msgid "Confirm the verification summary."
-msgstr ""
+msgstr "Bestätigen Sie die Zusammenfassung der Überprüfung."
 
+#, fuzzy
 msgid "Verification Summary"
-msgstr ""
+msgstr "Zusammenfassung der Verifizierung"
 
 msgid "To verify another image, click <b>Back</b>."
-msgstr ""
+msgstr "Um ein anderes Image zu überprüfen, klicken Sie auf <b>Zurück</b>."
 
 msgid "✔"
 msgstr "✔"
@@ -910,20 +915,26 @@ msgstr "✔"
 msgid "❌"
 msgstr "❌"
 
+#, fuzzy
 msgid "MBR backup appears correct."
-msgstr ""
+msgstr "Die MBR-Sicherung scheint korrekt zu sein."
 
+#, fuzzy
 msgid "No partition table found."
-msgstr ""
+msgstr "Keine Partitionstabelle gefunden."
 
+#, fuzzy
 msgid "Sfdisk partition table file is empty or missing."
-msgstr ""
+msgstr "Sfdisk-Partitionstabellendatei ist leer oder fehlt."
 
+#, fuzzy
 msgid "Sfdisk partition table file is present."
-msgstr ""
+msgstr "Die Partitionstabellendatei Sfdisk ist vorhanden."
 
+#, fuzzy
 msgid "Unable to verify."
-msgstr ""
+msgstr "Kann nicht verifiziert werden."
 
+#, fuzzy
 msgid "{partition}: filesystem image successfully verified."
-msgstr ""
+msgstr "{Partition}: Dateisystemabbild erfolgreich verifiziert."
