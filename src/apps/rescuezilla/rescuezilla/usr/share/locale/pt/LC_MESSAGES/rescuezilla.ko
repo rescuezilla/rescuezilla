@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Vinicios de Lima Clarindo <vinicioslc@outlook.com>, 2020
 # Submitted at: https://github.com/rescuezilla/rescuezilla/issues/128
-# Vinicios Clarindo <vinicioslc@outlook.com>, 2021.
+# Vinicios Clarindo <vinicioslc@outlook.com>, 2021, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2021-05-23 21:31+0000\n"
+"PO-Revision-Date: 2022-02-13 16:56+0000\n"
 "Last-Translator: Vinicios Clarindo <vinicioslc@outlook.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/pt/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.11-dev\n"
 
 msgid "Welcome"
 msgstr "Bem vindo!"
@@ -36,7 +36,7 @@ msgid "Restore"
 msgstr "Restaurar"
 
 msgid "Verify Image"
-msgstr ""
+msgstr "Verificar Imagem"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
 msgstr ""
