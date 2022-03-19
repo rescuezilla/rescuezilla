@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Carlos Luna <caralu74@protonmail.com>, 2019, 2021.
 # Submitted at: https://github.com/rescuezilla/rescuezilla/issues/28
-# Shasheen Ediriweera <shasheene@gmail.com>, 2021.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2021-12-31 19:52+0000\n"
-"Last-Translator: caralu74 <caralu74@protonmail.com>\n"
+"PO-Revision-Date: 2022-02-27 20:54+0000\n"
+"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/es/>\n"
 "Language: es\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.10.1\n"
+"X-Generator: Weblate 4.11.1-dev\n"
 
 msgid "Welcome"
 msgstr "Bienvenido"
@@ -440,7 +440,7 @@ msgstr ""
 "<b>Siguiente</b>."
 
 msgid "Step 7: Confirm Backup Configuration"
-msgstr "Paso 6: confirma la copia de seguridad de la configuración"
+msgstr "Paso 7: confirma la copia de seguridad de la configuración"
 
 msgid "Source drive"
 msgstr "Unidad de origen"
