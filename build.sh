@@ -214,20 +214,20 @@ ln -s /usr/share/applications/gparted.desktop "$BUILD_DIRECTORY/chroot/home/ubun
 
 # Process GRUB locale files
 pushd "$BUILD_DIRECTORY/image/boot/grub/locale/"
-for grub_ko_file in *.ko; do
-        if [[ ! -f "$grub_ko_file" ]]; then
-                echo "Warning: $grub_ko_file translation does not exist. Skipping."
+for grub_po_file in *.po; do
+        if [[ ! -f "$grub_po_file" ]]; then
+                echo "Warning: $grub_po_file translation does not exist. Skipping."
         else
-                # Remove .ko extension from filename
-                lang=$(echo "$grub_ko_file" | cut -f 1 -d '.')
-                echo "Converting language translation file: $BUILD_DIRECTORY/image/boot/grub/locale/$grub_ko_file to $lang.mo" 
-                msgfmt --output-file="$lang.mo" "$grub_ko_file"
+                # Remove .po extension from filename
+                lang=$(echo "$grub_po_file" | cut -f 1 -d '.')
+                echo "Converting language translation file: $BUILD_DIRECTORY/image/boot/grub/locale/$grub_po_file to $lang.mo" 
+                msgfmt --output-file="$lang.mo" "$grub_po_file"
                 if [[ $? -ne 0 ]]; then
-                        echo "Error: Unable to convert GRUB bootloader configuration $lang translation from text-based ko format to binary mo format."
+                        echo "Error: Unable to convert GRUB bootloader configuration $lang translation from text-based po format to binary mo format."
                         exit 1
                 fi
-                # Remove unused *.ko file
-                rm "$grub_ko_file"
+                # Remove unused *.po file
+                rm "$grub_po_file"
         fi
 done
 popd

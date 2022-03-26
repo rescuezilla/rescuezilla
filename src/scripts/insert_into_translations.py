@@ -34,7 +34,7 @@ print("Using glob: " + language_glob)
 
 language_dir_list = glob.glob(language_glob)
 for language_dir in language_dir_list:
-	language_file = os.path.join(language_dir, "LC_MESSAGES/rescuezilla.ko")
+	language_file = os.path.join(language_dir, "LC_MESSAGES/rescuezilla.po")
 	print("Looking at " + language_dir)
 	search_str = sys.argv[1]
 	input_file = sys.argv[2]
