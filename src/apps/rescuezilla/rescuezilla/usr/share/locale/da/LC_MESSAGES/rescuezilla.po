@@ -60,15 +60,19 @@ msgstr "Vent venligst..."
 msgid "Identifying disk drives..."
 msgstr "Søger efter drev..."
 
+#, python-brace-format
 msgid "Unmounting: {path}"
 msgstr "Afmonterer: {path}"
 
+#, python-brace-format
 msgid "Unable to unmount {path}"
 msgstr "Kunne ikke afmontere {path}"
 
+#, python-brace-format
 msgid "Running: {app}"
 msgstr "Udfører: {app}"
 
+#, python-brace-format
 msgid "Running {app} on {device}"
 msgstr "Udfører {app} på {device}"
 
@@ -142,6 +146,7 @@ msgstr "Disse partitioner klones"
 msgid "To start cloning, click <b>Next</b>."
 msgstr "For at starte kloningen; klik <b>Næste</b>."
 
+#, python-brace-format
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
 "Er du sikker på at ville klone drevet til {destination_drive}? Hvis du "
@@ -205,9 +210,11 @@ msgstr "Gem"
 msgid "Description"
 msgstr "Beskrivelse"
 
+#, python-brace-format
 msgid "Drive {drive_number}"
 msgstr "Drev {drive_number}"
 
+#, python-brace-format
 msgid "Partition {partition_number}"
 msgstr "Partition {partition_number}"
 
@@ -290,6 +297,7 @@ msgstr "Adgangskode eller SHH-identitetsfil er nødvendig."
 msgid "Scanning folder for backup images..."
 msgstr "Mappen til sikkerhedskopier skannes..."
 
+#, python-brace-format
 msgid "({timeout_seconds} second timeout)"
 msgstr "({timeout_seconds} sekund timeout)"
 
@@ -297,6 +305,7 @@ msgid "Close this popup to cancel scanning the selected folder and subfolders."
 msgstr ""
 "Luk vinduet for at afbryde skanningen af den valgte mappen og undermapper."
 
+#, python-brace-format
 msgid "Scanning: {filename}"
 msgstr "Skanner: {filename}"
 
@@ -335,6 +344,7 @@ msgstr "Dekryptering nødvendig"
 msgid "Unknown filesystem"
 msgstr "Ukendt filsystem"
 
+#, python-brace-format
 msgid "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance."
 msgstr ""
 "Sikkerhedskopiens udvidede partitionsoplysninger er tomme. Hvis "
@@ -362,6 +372,7 @@ msgstr ""
 "Mappen, som en sikkerhedskopi gemmes i, er normalt en beskrivelse af "
 "computeren, f.eks. <b> office1 </b> eller <b> zack-laptop </b>."
 
+#, python-brace-format
 msgid "You must select a folder inside {location}"
 msgstr "Du skal vælge en mappe i {location}"
 
@@ -449,6 +460,7 @@ msgstr "Kildedrev"
 msgid "Backing up the following partition(s)"
 msgstr "Følgende partitioner sikkerhedskopieres"
 
+#, python-brace-format
 msgid "The backup image will be written into folder {dest_dir} on {description}"
 msgstr "Sikkerhedskopien vil blive lagret i mappen {dest_dir} på {description}"
 
@@ -486,9 +498,11 @@ msgstr ""
 "Sikkerhedskopierer dit system til den valgte placering. Det kan tage en time "
 "eller mere afhængigt af din computers hastighed og datamængden."
 
+#, python-brace-format
 msgid "Saving: {file}"
 msgstr "Gemmer: {file}"
 
+#, python-brace-format
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
 msgstr ""
 "Sikkerhedskopierer {partition_name} indeholdende filsystem {filesystem} til "
@@ -520,12 +534,15 @@ msgstr ""
 "Kunne ikke skrive destinationsfilen. Bekræft, at den angivne filsti er "
 "gyldig og prøv igen."
 
+#, python-brace-format
 msgid "Successful backup of swap partition {partition_name}"
 msgstr "Sikkerhedskopiering af swap-partionen {partition_name} lykkedes"
 
+#, python-brace-format
 msgid "<b>Failed to backup partition</b> {partition_name}"
 msgstr "<b>Kunne ikke sikkerhedskopiere partition</b> {partition_name}"
 
+#, python-brace-format
 msgid "Successful backup of partition {partition_name}"
 msgstr "Sikkerhedskopiering af partitionen {partition_name} lykkedes"
 
@@ -541,6 +558,7 @@ msgstr "Sikkerhedskopieringen mislykkedes:"
 msgid "User requested operation to stop."
 msgstr "Brugeren har annulleret handlingen."
 
+#, python-brace-format
 msgid "Operation took {num_minutes} minutes."
 msgstr "Handlingen tog {num_minutes} minnuter."
 
@@ -641,12 +659,14 @@ msgstr "Når du er klar til at fortsætte, skal du klikke på <b>Næste</b>."
 msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
 msgstr "Skanner og afmonterer alle Logical Volume Manager (LVM)..."
 
+#, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
 msgstr ""
 "Kildepartitionstabellens sidste partition ({source}: {source_size} bytes) "
 "skal henvise til et område, som ligger fuldstændigt indenfor "
 "destinationsdiskens størrelse ({destination_size} bytes)."
 
+#, python-brace-format
 msgid "Rescuezilla cannot yet automatically shrink partitions to restore from large disks to smaller disks. The final partition currently must always completely reside within the destination disk.\n"
 "\n"
 "Currently the only way to restore to disks smaller than original is to first use GParted Partition Editor to shrink the final partition of the original disk before making a new backup image. Please read the following instructions for more information:\n"
@@ -670,6 +690,7 @@ msgstr "Trin 5: Bekræft indstillingen af gendannelsen"
 msgid "Confirm the following restore configuration."
 msgstr "Bekræft indstillingen af følgende gendannelse."
 
+#, python-brace-format
 msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
 "Er du sikker på at ville gendanne sikkerhedskopien på {destination_drive}? "
@@ -704,6 +725,7 @@ msgstr ""
 msgid "Refreshing partition table"
 msgstr "Opdaterer partitionstabel"
 
+#, python-brace-format
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
 msgstr ""
 "{description} gendannes på {destination_partition} "
@@ -712,27 +734,33 @@ msgstr ""
 msgid "Synchronizing disks..."
 msgstr "Synkroniserer diske..."
 
+#, python-brace-format
 msgid "Querying hard drive geometry of {device}"
 msgstr "Forespørger harddiskens geometri af {device}"
 
+#, python-brace-format
 msgid "Probing {device} with {app}"
 msgstr "Undersøger {device} med {app}"
 
+#, python-brace-format
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
 msgstr ""
 "Opretter filsystem {partition} ({filesystem}). Dette kan tage et stykke "
 "tid..."
 
+#, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
 msgstr ""
 "Ændring af størrelse på partition {partition} ({filesystem}) mislykkedes: "
 "{msg}"
 
+#, python-brace-format
 msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
 msgstr ""
 "NTFS-filsystem fra {ntfs_device} er blevet tilpasset baseret på værdierne "
 "fra {geometry_source}"
 
+#, python-brace-format
 msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
 msgstr "Kunne ikke justere NTFS-filsystemgeometrien for {ntfs_device}"
 
@@ -780,6 +808,7 @@ msgstr ""
 "Kunne ikke opdatere drevets partitionstabel. Dette kan ske, hvis en anden "
 "proces har adgang til partitionstabellen."
 
+#, python-brace-format
 msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
 msgstr ""
 "Kunne ikke gendanne partitionen {destination_partition}, fordi der ikke er "
@@ -790,10 +819,12 @@ msgstr ""
 "Dette kan forekomme, hvis Clonezilla oprindeligt ikke kunne "
 "sikkerhedskopiere denne partition."
 
+#, python-brace-format
 msgid "Error restoring partition {image_key} to {destination_partition}."
 msgstr ""
 "Fejl ved gendannelse af partition {image_key} til {destination_partition}."
 
+#, python-brace-format
 msgid "Successfully restored image partition {image} to {destination_partition}"
 msgstr ""
 "Gendannelsen af partitionen {image} til {destination_partition} lykkedes"
@@ -864,6 +895,7 @@ msgstr "Verificerer diskafbildningen"
 msgid "Verifying the selected image(s)."
 msgstr "Verificerer de(t) valgte diskafbildning."
 
+#, python-brace-format
 msgid "Verifying {image_name}"
 msgstr "Verificerer {image_name}"
 
@@ -900,5 +932,6 @@ msgstr "Sfdisk partitionstabelfil er til stede."
 msgid "Unable to verify."
 msgstr "Kan ikke verificeres."
 
+#, python-brace-format
 msgid "{partition}: filesystem image successfully verified."
 msgstr "{partition}: filsystembilledet er blevet verificeret."

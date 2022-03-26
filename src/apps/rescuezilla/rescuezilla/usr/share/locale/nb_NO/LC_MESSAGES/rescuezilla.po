@@ -58,15 +58,19 @@ msgstr "Vennligst vent …"
 msgid "Identifying disk drives..."
 msgstr "Identifiserer diskenheter …"
 
+#, python-brace-format
 msgid "Unmounting: {path}"
 msgstr "Avmonterer: {path}"
 
+#, python-brace-format
 msgid "Unable to unmount {path}"
 msgstr "Klarte ikke å avmontere {path}"
 
+#, python-brace-format
 msgid "Running: {app}"
 msgstr "Kjører: {app}"
 
+#, python-brace-format
 msgid "Running {app} on {device}"
 msgstr "Kjører {app} på {device}"
 
@@ -140,6 +144,7 @@ msgstr "Kloner følgende partisjoner"
 msgid "To start cloning, click <b>Next</b>."
 msgstr "Trykk <b>Neste</b> for å starte kloningen."
 
+#, python-brace-format
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
 "Vil du klone enheten til {destination_drive}? Å gjøre dette vil overskrive "
@@ -205,9 +210,11 @@ msgstr "Lagre"
 msgid "Description"
 msgstr "Beskrivelse"
 
+#, python-brace-format
 msgid "Drive {drive_number}"
 msgstr "Disk {drive_number}"
 
+#, python-brace-format
 msgid "Partition {partition_number}"
 msgstr "Partisjon {partition_number}"
 
@@ -290,6 +297,7 @@ msgstr "Enten passord eller SSH-identitetsfil må angis."
 msgid "Scanning folder for backup images..."
 msgstr "Skanner mappe for sikkerhetskopieringsavtrykk …"
 
+#, python-brace-format
 msgid "({timeout_seconds} second timeout)"
 msgstr "({timeout_seconds} sekunder tidsavbrudd)"
 
@@ -298,6 +306,7 @@ msgstr ""
 "Lukk dette oppsprettet for å avbryte skanning av valgte mapper og "
 "undermapper."
 
+#, python-brace-format
 msgid "Scanning: {filename}"
 msgstr "Skanner: {filename}"
 
@@ -333,6 +342,7 @@ msgstr "Må dekrypteres"
 msgid "Unknown filesystem"
 msgstr "Ukjent filsystem"
 
+#, python-brace-format
 msgid "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance."
 msgstr ""
 "Sikkerhetskopiens utvidede pertisjonsinfo er tom. Hvis sikkerhetskopien "
@@ -360,6 +370,7 @@ msgstr ""
 "Mappen en sikkerhetskopi lagres i er vanligvis en beskrivelse av "
 "datamaskinen, f.eks. <b>kontor1</b>, eller <b>ola-bærbar</b>."
 
+#, python-brace-format
 msgid "You must select a folder inside {location}"
 msgstr "Du må velge en mappe i {location}"
 
@@ -446,6 +457,7 @@ msgstr "Kildeenhet"
 msgid "Backing up the following partition(s)"
 msgstr "Sikkerhetskopierer følgende partisjoner"
 
+#, python-brace-format
 msgid "The backup image will be written into folder {dest_dir} on {description}"
 msgstr "Sikkerhetskopi vil bli lagret i mappen {dest_dir} på {description}"
 
@@ -484,9 +496,11 @@ msgstr ""
 "opptil en time eller mer avhengig av hastigheten på datamaskinen din og "
 "mengden data."
 
+#, python-brace-format
 msgid "Saving: {file}"
 msgstr "Lagrer: {file}"
 
+#, python-brace-format
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
 msgstr ""
 "Sikkerhetskopier {partition_name} som inneholder filsystemet {filesystem} "
@@ -518,12 +532,15 @@ msgstr ""
 "Klarte ikke å skrive målfil. Bekreft at den er gyldig for å opprette angitt "
 "filsti, og prøv igjen."
 
+#, python-brace-format
 msgid "Successful backup of swap partition {partition_name}"
 msgstr "Sikkerhetskopierte sidevekslingspartisjonen {partition_name}"
 
+#, python-brace-format
 msgid "<b>Failed to backup partition</b> {partition_name}"
 msgstr "<b>Klarte ikke å sikkerhetskopiere partisjonen </b> {partition_name}"
 
+#, python-brace-format
 msgid "Successful backup of partition {partition_name}"
 msgstr "Sikkerhetskopierte partisjonen {partition_name}"
 
@@ -539,6 +556,7 @@ msgstr "Sikkerhetskopiering mislyktes:"
 msgid "User requested operation to stop."
 msgstr "Bruker forespurte operasjonsstsopp."
 
+#, python-brace-format
 msgid "Operation took {num_minutes} minutes."
 msgstr "Operasjonen tok {num_minutes} minutter."
 
@@ -643,6 +661,7 @@ msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes.
 msgstr "Skanner og avmonterer alle (LVM) logiske volum …"
 
 #, fuzzy
+#, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
 msgstr ""
 "Endelig partisjon for kildens partisjonstabell ({source}: {source_size} "
@@ -650,6 +669,7 @@ msgstr ""
 "({destination_size} bytes)."
 
 #, fuzzy
+#, python-brace-format
 msgid "Rescuezilla cannot yet automatically shrink partitions to restore from large disks to smaller disks. The final partition currently must always completely reside within the destination disk.\n"
 "\n"
 "Currently the only way to restore to disks smaller than original is to first use GParted Partition Editor to shrink the final partition of the original disk before making a new backup image. Please read the following instructions for more information:\n"
@@ -674,6 +694,7 @@ msgid "Confirm the following restore configuration."
 msgstr "Bekreft følgende gjenopprettelsesoppsett."
 
 #, fuzzy
+#, python-brace-format
 msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
 "Er du sikker på at du vil gjenopprette sikkerhetskopien til "
@@ -711,6 +732,7 @@ msgstr ""
 msgid "Refreshing partition table"
 msgstr "Gjenoppfrisking av partisjonstabell"
 
+#, python-brace-format
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
 msgstr ""
 "Gjenoppretter {description} til {destination_partition} "
@@ -720,27 +742,33 @@ msgid "Synchronizing disks..."
 msgstr "Synkroniserer disker …"
 
 #, fuzzy
+#, python-brace-format
 msgid "Querying hard drive geometry of {device}"
 msgstr "Utfører spørring av harddiskens geometri for {device}"
 
 #, fuzzy
+#, python-brace-format
 msgid "Probing {device} with {app}"
 msgstr "Utfører spørring av {device} med {app}"
 
 #, fuzzy
+#, python-brace-format
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
 msgstr "Utvider filsystemet {partition} ({filesystem}). Dette kan ta en stund …"
 
+#, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
 msgstr ""
 "Endring av størrelse på partisjonen {partition} ({filesystem}) mislyktes: "
 "{msg}"
 
+#, python-brace-format
 msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
 msgstr ""
 "Justerte NTFS-filsystemsgeometri for {ntfs_device} ved bruk av verdier fra "
 "{geometry_source}"
 
+#, python-brace-format
 msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
 msgstr "Klarte ikke å justere NTFS-filsystemsgeometri for {ntfs_device}"
 
@@ -798,6 +826,7 @@ msgstr ""
 "en annen prosess prøver å bruke partisjonstabellen."
 
 #, fuzzy
+#, python-brace-format
 msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
 msgstr ""
 "Kunne ikke gjenopprette partisjonen {destination_partition} fordi det ikke "
@@ -810,12 +839,14 @@ msgstr ""
 "denne partisjonen."
 
 #, fuzzy
+#, python-brace-format
 msgid "Error restoring partition {image_key} to {destination_partition}."
 msgstr ""
 "Klarte ikke å gjenopprette partisjonen {image_key} til "
 "{destination_partition}."
 
 #, fuzzy
+#, python-brace-format
 msgid "Successfully restored image partition {image} to {destination_partition}"
 msgstr "Gjenopprettet avtrykkspartisjon {image} til {destination_partition}"
 
@@ -894,6 +925,7 @@ msgstr "Bekrefting av avtrykk"
 msgid "Verifying the selected image(s)."
 msgstr "Bekrefter valgt(e) avtrykk."
 
+#, python-brace-format
 msgid "Verifying {image_name}"
 msgstr "Bekrefter {image_name} …"
 
@@ -930,5 +962,6 @@ msgstr "Sfdisk-partisjonstabellfil eksisterer."
 msgid "Unable to verify."
 msgstr "Kunne ikke utføre bekreftelse."
 
+#, python-brace-format
 msgid "{partition}: filesystem image successfully verified."
 msgstr "{partition}: filesystemsavtrykk bekreftet."

@@ -58,15 +58,19 @@ msgstr "Đang chờ..."
 msgid "Identifying disk drives..."
 msgstr "Đang nhận dạng các ổ đĩa..."
 
+#, python-brace-format
 msgid "Unmounting: {path}"
 msgstr "Huỷ kết nối ổ đĩa: {path}"
 
+#, python-brace-format
 msgid "Unable to unmount {path}"
 msgstr "Không thể huỷ kết nối ổ đĩa {path}"
 
+#, python-brace-format
 msgid "Running: {app}"
 msgstr "Đang chạy: {app}"
 
+#, python-brace-format
 msgid "Running {app} on {device}"
 msgstr "Đang chạy {app} trên thiết bị {device}"
 
@@ -137,6 +141,7 @@ msgstr "Đang thực hiện nhân bản các phân vùng sau đây"
 msgid "To start cloning, click <b>Next</b>."
 msgstr "Để bắt đầu nhân bản, Chọn <b>Tiếp theo</b>."
 
+#, python-brace-format
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
 "Bạn có chắc chắn sẽ sao chép vào ổ {destination_drive}? Nếu làm thì toàn bộ "
@@ -200,9 +205,11 @@ msgstr "Lưu"
 msgid "Description"
 msgstr "Mô tả"
 
+#, python-brace-format
 msgid "Drive {drive_number}"
 msgstr "Ổ {drive_number}"
 
+#, python-brace-format
 msgid "Partition {partition_number}"
 msgstr "Phân vùng {partition_number}"
 
@@ -284,12 +291,14 @@ msgstr "Phải nhập cả mật khẩu và tập tin nhận dạng SSH."
 msgid "Scanning folder for backup images..."
 msgstr "Đang quét các thư mục để sao lưu..."
 
+#, python-brace-format
 msgid "({timeout_seconds} second timeout)"
 msgstr "(Thời gian chờ còn {timeout_seconds} giây)"
 
 msgid "Close this popup to cancel scanning the selected folder and subfolders."
 msgstr "Đóng cửa sổ này để hủy việc quét các thư mục và thư mục phụ đã chọn."
 
+#, python-brace-format
 msgid "Scanning: {filename}"
 msgstr "Đang quét file: {filename}"
 
@@ -326,6 +335,7 @@ msgstr "Cần giải mã"
 msgid "Unknown filesystem"
 msgstr "Hệ thống tập tin không xác định"
 
+#, python-brace-format
 msgid "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance."
 msgstr ""
 "Thông tin phân vùng mở rộng của bản sao lưu hiện đang trống. Nếu bản sao lưu "
@@ -353,6 +363,7 @@ msgstr ""
 "Thư mục sao lưu thường được lưu với tên liên quan máy tính như <b>vanphong1</"
 "b>, <b>laptop-anh-a</b>. Vui lòng không đặt tên sử dụng dấu câu hay ký tự lạ."
 
+#, python-brace-format
 msgid "You must select a folder inside {location}"
 msgstr "Bạn phải chọn thư mục trong {location}"
 
@@ -437,6 +448,7 @@ msgstr "Ổ nguồn"
 msgid "Backing up the following partition(s)"
 msgstr "Đang sao lưu các phân vùng sau"
 
+#, python-brace-format
 msgid "The backup image will be written into folder {dest_dir} on {description}"
 msgstr "Bản sao lưu sẽ ghi vào thư mục {dest_dir} ở {description}"
 
@@ -472,9 +484,11 @@ msgstr ""
 "Đang sao lưu hệ thống vào đường dẫn bạn chọn. Việc này có thể mất cả tiếng "
 "hoặc hơn tùy theo hiệu năng máy tính của bạn và số lường dữ liệu."
 
+#, python-brace-format
 msgid "Saving: {file}"
 msgstr "Đang lưu: {file}"
 
+#, python-brace-format
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
 msgstr ""
 "Sao lưu phân vùng {partition_name} chứa tập tin hệ thống {filesystem} vào "
@@ -505,12 +519,15 @@ msgid "Failed to write destination file. Please confirm it is valid to create th
 msgstr ""
 "Lỗi khi ghi tệp đích. Vui lòng xác nhận đường dẫn tệp là hợp lệ và thử lại."
 
+#, python-brace-format
 msgid "Successful backup of swap partition {partition_name}"
 msgstr "Sao lưu thành công phân vùng swap {partition_name}"
 
+#, python-brace-format
 msgid "<b>Failed to backup partition</b> {partition_name}"
 msgstr "<b>Lỗi khi sao lưu phân vùng</b> {partition_name}"
 
+#, python-brace-format
 msgid "Successful backup of partition {partition_name}"
 msgstr "Sao lưu thành công phân vùng {partition_name}"
 
@@ -526,6 +543,7 @@ msgstr "Thất bại ở quá trình lưu:"
 msgid "User requested operation to stop."
 msgstr "Người dùng đã yêu cầu tiến trình dừng lại."
 
+#, python-brace-format
 msgid "Operation took {num_minutes} minutes."
 msgstr "Tiến trình này tốn {num_minutes} phút."
 
@@ -622,12 +640,14 @@ msgstr "Nếu bạn đã sẵn sàng để tiếp tục, hãy nhấp vào <b>Ti�
 msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
 msgstr "Quét và ngắt kết nối các ổ Logical Volume Manager (LVM)..."
 
+#, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
 msgstr ""
 "Phân vùng sao lưu của bảng phân vùng nguồn ({source}: {source_size} bytes) "
 "phải tham chiếu đến một vùng nằm hoàn toàn trong ổ đĩa đích "
 "({destination_size} bytes)."
 
+#, python-brace-format
 msgid "Rescuezilla cannot yet automatically shrink partitions to restore from large disks to smaller disks. The final partition currently must always completely reside within the destination disk.\n"
 "\n"
 "Currently the only way to restore to disks smaller than original is to first use GParted Partition Editor to shrink the final partition of the original disk before making a new backup image. Please read the following instructions for more information:\n"
@@ -651,6 +671,7 @@ msgstr "Bước 5: Xác nhận cấu hình khôi phục"
 msgid "Confirm the following restore configuration."
 msgstr "Xác nhận các cấu hình khôi phục sau đây."
 
+#, python-brace-format
 msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
 "Bạn có muốn khôi phục bản sao lưu vào ổ {destination_drive}? Việc này sẽ ghi "
@@ -686,6 +707,7 @@ msgstr ""
 msgid "Refreshing partition table"
 msgstr "Làm mới bảng phân vùng"
 
+#, python-brace-format
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
 msgstr ""
 "Đang khôi phục {description} vào phân vùng {destination_partition} "
@@ -694,27 +716,33 @@ msgstr ""
 msgid "Synchronizing disks..."
 msgstr "Đang đồng bộ hóa các ổ ..."
 
+#, python-brace-format
 msgid "Querying hard drive geometry of {device}"
 msgstr "Truy vấn hình dạng ổ cứng của {device}"
 
+#, python-brace-format
 msgid "Probing {device} with {app}"
 msgstr "Kiểm tra ổ {device} với {app}"
 
+#, python-brace-format
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
 msgstr ""
 "Đang phát triển hệ thống tập tin {partition} ({filesystem}). Việc này có thể "
 "mất một lúc..."
 
+#, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
 msgstr ""
 "Thay đổi kích thước phân vùng {partition} ({filesystem}) không thành công: "
 "{msg}"
 
+#, python-brace-format
 msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
 msgstr ""
 "Đã điều chỉnh thành công hình dạng hệ thống tập tin NTFS của {ntfs_device} "
 "bằng cách sử dụng các giá trị từ {geometry_source}"
 
+#, python-brace-format
 msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
 msgstr "Lỗi khi điều chỉnh hình dạng hệ thống tập tin NTFS của {ntfs_device}"
 
@@ -763,6 +791,7 @@ msgstr ""
 "Lỗi khi làm mới bảng phân vùng ổ. Điều này có thể xảy ra nếu một quá trình "
 "khác đang truy cập bảng phân vùng."
 
+#, python-brace-format
 msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
 msgstr ""
 "Không thể khôi phục phân vùng {destination_partition} vì không có bản sao "
@@ -773,11 +802,13 @@ msgstr ""
 "Điều này có thể xảy ra nếu Clonezilla ban đầu không thể sao lưu phân vùng "
 "này."
 
+#, python-brace-format
 msgid "Error restoring partition {image_key} to {destination_partition}."
 msgstr ""
 "Lỗi khi khôi phục phân vùng {image_key} vào phân vùng "
 "{destination_partition}."
 
+#, python-brace-format
 msgid "Successfully restored image partition {image} to {destination_partition}"
 msgstr ""
 "Đã khôi phục thành công phân vùng bản sao lưu {image} vào phân vùng "
@@ -848,6 +879,7 @@ msgstr ""
 msgid "Verifying the selected image(s)."
 msgstr ""
 
+#, python-brace-format
 msgid "Verifying {image_name}"
 msgstr ""
 
@@ -884,5 +916,6 @@ msgstr ""
 msgid "Unable to verify."
 msgstr ""
 
+#, python-brace-format
 msgid "{partition}: filesystem image successfully verified."
 msgstr ""

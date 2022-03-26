@@ -52,15 +52,19 @@ msgstr "잠시만 기다리세요..."
 msgid "Identifying disk drives..."
 msgstr "디스크 드라이브 식별 중..."
 
+#, python-brace-format
 msgid "Unmounting: {path}"
 msgstr "마운트 해제: {path}"
 
+#, python-brace-format
 msgid "Unable to unmount {path}"
 msgstr "마운트 해제할 수 없음: {path}"
 
+#, python-brace-format
 msgid "Running: {app}"
 msgstr "실행 중: {app}"
 
+#, python-brace-format
 msgid "Running {app} on {device}"
 msgstr "{device} 에서 {app} 실행 중"
 
@@ -128,6 +132,7 @@ msgstr "다음 파티션을 복제"
 msgid "To start cloning, click <b>Next</b>."
 msgstr "복제를 시작하려면 <b>다음</b>을 클릭하세요."
 
+#, python-brace-format
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
 "정말 드라이브를 {destination_drive} 에 복제하시겠습니까? 계속하면 현재 드라이브의 데이터를 영구적으로 덮어씁니다!"
@@ -186,9 +191,11 @@ msgstr "저장"
 msgid "Description"
 msgstr "설명"
 
+#, python-brace-format
 msgid "Drive {drive_number}"
 msgstr "드라이브 {drive_number}"
 
+#, python-brace-format
 msgid "Partition {partition_number}"
 msgstr "파티션 {partition_number}"
 
@@ -267,12 +274,14 @@ msgstr "비밀번호 또는 SSH 키 파일이 필요합니다."
 msgid "Scanning folder for backup images..."
 msgstr "백업 이미지에 대한 폴더 탐색 중..."
 
+#, python-brace-format
 msgid "({timeout_seconds} second timeout)"
 msgstr "(타임아웃 {timeout_seconds}초)"
 
 msgid "Close this popup to cancel scanning the selected folder and subfolders."
 msgstr "선택한 폴더 및 하위 폴더 탐색을 취소하려면 현재 팝업을 닫으세요."
 
+#, python-brace-format
 msgid "Scanning: {filename}"
 msgstr "탐색 중: {filename}"
 
@@ -303,6 +312,7 @@ msgstr "암호 해독 필요"
 msgid "Unknown filesystem"
 msgstr "알 수 없는 파일 시스템"
 
+#, python-brace-format
 msgid "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance."
 msgstr ""
 "백업의 확장 파티션 정보가 비어있습니다. 백업에 확장 파티션이 포함되어 있으면 올바르게 복원되지 않습니다. 모든 데이터는 아직 완전히 "
@@ -324,6 +334,7 @@ msgstr ""
 "\n"
 "백업이 저장될 폴더의 이름은 보통 <b>office1</b> 또는 <b>zack-laptop</b>과 같은 컴퓨터의 이름입니다."
 
+#, python-brace-format
 msgid "You must select a folder inside {location}"
 msgstr "{location} 내에서 폴더를 선택해야 합니다"
 
@@ -404,6 +415,7 @@ msgstr "원본 드라이브"
 msgid "Backing up the following partition(s)"
 msgstr "다음 파티션 백업"
 
+#, python-brace-format
 msgid "The backup image will be written into folder {dest_dir} on {description}"
 msgstr "백업 이미지는 {description}의 {dest_dir} 폴더에 기록됩니다"
 
@@ -437,9 +449,11 @@ msgstr "8 단계: 백업 이미지 만들기"
 msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr "선택한 위치로 시스템을 백업합니다.  컴퓨터의 속도와 데이터의 양에 따라 1시간 이상이 소요될 수 있습니다."
 
+#, python-brace-format
 msgid "Saving: {file}"
 msgstr "저장 중: {file}"
 
+#, python-brace-format
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
 msgstr "{partition_name} ({filesystem}) 파티션을 다음 위치로 백업: {destination}"
 
@@ -467,12 +481,15 @@ msgstr "백업을 만드는 중 오류: "
 msgid "Failed to write destination file. Please confirm it is valid to create the provided file path, and try again."
 msgstr "대상 파일을 쓰지 못했습니다. 만들 수 있는 파일 경로를 입력했는지 확인하고 다시 시도하세요."
 
+#, python-brace-format
 msgid "Successful backup of swap partition {partition_name}"
 msgstr "{partition_name} 스왑 파티션 백업 성공"
 
+#, python-brace-format
 msgid "<b>Failed to backup partition</b> {partition_name}"
 msgstr "<b>파티션 백업 실패</b> {partition_name}"
 
+#, python-brace-format
 msgid "Successful backup of partition {partition_name}"
 msgstr "{partition_name} 파티션 백업 성공"
 
@@ -488,6 +505,7 @@ msgstr "백업 작업 실패:"
 msgid "User requested operation to stop."
 msgstr "사용자가 작업 중지를 요청했습니다."
 
+#, python-brace-format
 msgid "Operation took {num_minutes} minutes."
 msgstr "작업에 소요된 시간은 {num_minutes}분 입니다."
 
@@ -575,11 +593,13 @@ msgstr "계속할 준비가 되면 <b>다음</b>을 클릭하세요."
 msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
 msgstr "논리 볼륨 관리자(LVM)를 탐색하고 마운트 해제 중..."
 
+#, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
 msgstr ""
 "원본 파티션 테이블의 최종 파티션({source}: {source_size} 바이트)은 대상 디스크({destination_size} "
 "바이트) 내의 영역을 완전히 참조해야 합니다."
 
+#, python-brace-format
 msgid "Rescuezilla cannot yet automatically shrink partitions to restore from large disks to smaller disks. The final partition currently must always completely reside within the destination disk.\n"
 "\n"
 "Currently the only way to restore to disks smaller than original is to first use GParted Partition Editor to shrink the final partition of the original disk before making a new backup image. Please read the following instructions for more information:\n"
@@ -600,6 +620,7 @@ msgstr "5 단계: 복원 구성 확인"
 msgid "Confirm the following restore configuration."
 msgstr "다음 복원 구성을 확인하세요."
 
+#, python-brace-format
 msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr "정말 백업을 {destination_drive} 에 복원하시겠습니까? 계속하면 현재 드라이브의 데이터를 영구적으로 덮어씁니다!"
 
@@ -630,6 +651,7 @@ msgstr "선택한 이미지에서 시스템을 복원합니다.  컴퓨터의 �
 msgid "Refreshing partition table"
 msgstr "파티션 테이블 새로 고침"
 
+#, python-brace-format
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
 msgstr ""
 "{description} 원본을 {destination_partition} ({destination_description}) 대상에 복원"
@@ -637,22 +659,28 @@ msgstr ""
 msgid "Synchronizing disks..."
 msgstr "디스크 동기화..."
 
+#, python-brace-format
 msgid "Querying hard drive geometry of {device}"
 msgstr "{device}의 하드 드라이브 구조 조회"
 
+#, python-brace-format
 msgid "Probing {device} with {app}"
 msgstr "{app} 명령으로 {device} 확인"
 
+#, python-brace-format
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
 msgstr "파일 시스템 {partition} ({filesystem}) 확장 중. 시간이 좀 걸릴 수 있습니다..."
 
+#, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
 msgstr "{partition} ({filesystem}) 파티션 크기 조정 실패: {msg}"
 
+#, python-brace-format
 msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
 msgstr ""
 "{ntfs_device} 의 NTFS 파일 시스템 구조 정보를 {geometry_source} 의 값을 사용하여 성공적으로 조정했습니다"
 
+#, python-brace-format
 msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
 msgstr "{ntfs_device} 의 NTFS 파일 시스템 구조 정보를 조정하지 못했습니다"
 
@@ -698,15 +726,18 @@ msgstr "파티션 테이블을 성공적으로 복원했습니다."
 msgid "Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."
 msgstr "장치의 파티션 테이블을 새로 고치지 못했습니다. 다른 프로세스가 파티션 테이블에 접근하기 때문일 수 있습니다."
 
+#, python-brace-format
 msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
 msgstr "{description} 에 연결된 이미지가 없으므로 {destination_partition} 파티션을 복원할 수 없습니다."
 
 msgid "This may occur if Clonezilla was originally unable to backup this partition."
 msgstr "이 상황은 Clonezilla가 처음부터 현재 파티션을 백업할 수 없는 경우 발생할 수 있습니다."
 
+#, python-brace-format
 msgid "Error restoring partition {image_key} to {destination_partition}."
 msgstr "{image_key} 파티션을 {destination_partition} 대상으로 복원하는 중 오류가 발생했습니다."
 
+#, python-brace-format
 msgid "Successfully restored image partition {image} to {destination_partition}"
 msgstr "{image} 이미지 파티션을 {destination_partition} 대상에 성공적으로 복원했습니다"
 
@@ -773,6 +804,7 @@ msgstr "이미지 검증 중"
 msgid "Verifying the selected image(s)."
 msgstr "선택한 이미지를 검증합니다."
 
+#, python-brace-format
 msgid "Verifying {image_name}"
 msgstr "{image_name} 검증 중"
 
@@ -809,5 +841,6 @@ msgstr "Sfdisk 파티션 테이블이 있습니다."
 msgid "Unable to verify."
 msgstr "검증할 수 없습니다."
 
+#, python-brace-format
 msgid "{partition}: filesystem image successfully verified."
 msgstr "{partition}: 파일 시스템 이미지가 성공적으로 검증되었습니다."

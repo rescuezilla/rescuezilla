@@ -57,15 +57,19 @@ msgstr "お待ちください..."
 msgid "Identifying disk drives..."
 msgstr "ディスクドライブを認識中..."
 
+#, python-brace-format
 msgid "Unmounting: {path}"
 msgstr ""
 
+#, python-brace-format
 msgid "Unable to unmount {path}"
 msgstr ""
 
+#, python-brace-format
 msgid "Running: {app}"
 msgstr ""
 
+#, python-brace-format
 msgid "Running {app} on {device}"
 msgstr ""
 
@@ -123,6 +127,7 @@ msgstr ""
 msgid "To start cloning, click <b>Next</b>."
 msgstr ""
 
+#, python-brace-format
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
 
@@ -180,9 +185,11 @@ msgstr "保存する"
 msgid "Description"
 msgstr "説明"
 
+#, python-brace-format
 msgid "Drive {drive_number}"
 msgstr "ドライブ {drive_number}"
 
+#, python-brace-format
 msgid "Partition {partition_number}"
 msgstr "パーティション {partition_number}"
 
@@ -261,12 +268,14 @@ msgstr ""
 msgid "Scanning folder for backup images..."
 msgstr "バックアップイメージのフォルダを検索しています..."
 
+#, python-brace-format
 msgid "({timeout_seconds} second timeout)"
 msgstr ""
 
 msgid "Close this popup to cancel scanning the selected folder and subfolders."
 msgstr ""
 
+#, python-brace-format
 msgid "Scanning: {filename}"
 msgstr ""
 
@@ -297,6 +306,7 @@ msgstr "復号化が必要"
 msgid "Unknown filesystem"
 msgstr "不明なファイルシステム"
 
+#, python-brace-format
 msgid "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance."
 msgstr ""
 
@@ -313,6 +323,7 @@ msgstr "[<b>参照</b>]をクリックして、バックアップイメージを
 "\n"
 "バックアップを保存するフォルダ名は通常、コンピュータの説明文にします。 例えば <b>office1</b> や <b>zack-laptop</b>など。"
 
+#, python-brace-format
 msgid "You must select a folder inside {location}"
 msgstr "{location}のフォルダを選択する必要があります"
 
@@ -392,6 +403,7 @@ msgstr "ソースドライブ"
 msgid "Backing up the following partition(s)"
 msgstr "次のパーティションをバックアップします"
 
+#, python-brace-format
 msgid "The backup image will be written into folder {dest_dir} on {description}"
 msgstr "バックアップイメージは、{description}のフォルダ{dest_dir}に書き込まれます"
 
@@ -425,9 +437,11 @@ msgstr "ステップ 7: バックアップイメージの作成をしていま�
 msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr "選択した場所にシステムをバックアップしています。 コンピュータのスペックやデータ量によっては、1時間以上かかる場合があります。"
 
+#, python-brace-format
 msgid "Saving: {file}"
 msgstr ""
 
+#, python-brace-format
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
 msgstr "{partition_name}(ファイルシステム:{filesystem})を{destination}にバックアップしています"
 
@@ -455,12 +469,15 @@ msgstr "バックアップの作成中にエラーが発生しました:"
 msgid "Failed to write destination file. Please confirm it is valid to create the provided file path, and try again."
 msgstr "宛先ファイルの書き込みに失敗しました。 ファイルパスが有効であることを確認して、再試行してください。"
 
+#, python-brace-format
 msgid "Successful backup of swap partition {partition_name}"
 msgstr "スワップパーティションのバックアップは成功しました。 {partition_name}"
 
+#, python-brace-format
 msgid "<b>Failed to backup partition</b> {partition_name}"
 msgstr "<b>パーティションのバックアップに失敗しました</b> {partition_name}"
 
+#, python-brace-format
 msgid "Successful backup of partition {partition_name}"
 msgstr "パーティションのバックアップが成功しました {partition_name}"
 
@@ -476,6 +493,7 @@ msgstr "バックアップ作業に失敗しました:"
 msgid "User requested operation to stop."
 msgstr ""
 
+#, python-brace-format
 msgid "Operation took {num_minutes} minutes."
 msgstr "作業時間は{num_minutes}分でした。"
 
@@ -551,9 +569,11 @@ msgstr ""
 msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
 msgstr ""
 
+#, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
 msgstr ""
 
+#, python-brace-format
 msgid "Rescuezilla cannot yet automatically shrink partitions to restore from large disks to smaller disks. The final partition currently must always completely reside within the destination disk.\n"
 "\n"
 "Currently the only way to restore to disks smaller than original is to first use GParted Partition Editor to shrink the final partition of the original disk before making a new backup image. Please read the following instructions for more information:\n"
@@ -568,6 +588,7 @@ msgstr "ステップ 5: レストアの構成を確認します"
 msgid "Confirm the following restore configuration."
 msgstr "レストアの構成を確認してください。"
 
+#, python-brace-format
 msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr "バックアップを{destination_drive}にレストアしてもよろしいですか？ この操作を行うと、このドライブのデータは完全に上書きされます！"
 
@@ -598,27 +619,34 @@ msgstr "選択したイメージからシステムをレストアをしていま
 msgid "Refreshing partition table"
 msgstr "パーティションテーブルを更新しています"
 
+#, python-brace-format
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
 msgstr "{description}を{destination_partition}にレストアしています ({destination_description})"
 
 msgid "Synchronizing disks..."
 msgstr ""
 
+#, python-brace-format
 msgid "Querying hard drive geometry of {device}"
 msgstr ""
 
+#, python-brace-format
 msgid "Probing {device} with {app}"
 msgstr ""
 
+#, python-brace-format
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
 msgstr ""
 
+#, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
 msgstr ""
 
+#, python-brace-format
 msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
 msgstr ""
 
+#, python-brace-format
 msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
 msgstr ""
 
@@ -664,15 +692,18 @@ msgstr "パーティションテーブルのレストアに成功しました。
 msgid "Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."
 msgstr "ドライブのパーティションテーブルの更新に失敗しました。 別のプロセスがパーティションテーブルにアクセスしている可能性があります。"
 
+#, python-brace-format
 msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
 msgstr "{description}に関連付けられた保存済みイメージがないため、パーティション{destination_partition}をレストアできません。"
 
 msgid "This may occur if Clonezilla was originally unable to backup this partition."
 msgstr "これは、Clonezillaが元々このパーティションをバックアップできなかった場合に発生する可能性があります。"
 
+#, python-brace-format
 msgid "Error restoring partition {image_key} to {destination_partition}."
 msgstr "パーティション{image_key}を{destination_partition}にレストア中にエラーが発生しました。"
 
+#, python-brace-format
 msgid "Successfully restored image partition {image} to {destination_partition}"
 msgstr "{destination_partition}に対するイメージパーティション{image}のレストアに成功しました"
 
@@ -738,6 +769,7 @@ msgstr ""
 msgid "Verifying the selected image(s)."
 msgstr ""
 
+#, python-brace-format
 msgid "Verifying {image_name}"
 msgstr ""
 
@@ -774,5 +806,6 @@ msgstr ""
 msgid "Unable to verify."
 msgstr ""
 
+#, python-brace-format
 msgid "{partition}: filesystem image successfully verified."
 msgstr ""

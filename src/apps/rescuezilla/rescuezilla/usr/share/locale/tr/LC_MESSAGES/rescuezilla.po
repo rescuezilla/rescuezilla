@@ -57,15 +57,19 @@ msgstr "Lütfen bekleyin..."
 msgid "Identifying disk drives..."
 msgstr "Diskler tanımlanıyor..."
 
+#, python-brace-format
 msgid "Unmounting: {path}"
 msgstr "Bağlantısı kaldırılıyor: {path}"
 
+#, python-brace-format
 msgid "Unable to unmount {path}"
 msgstr "{path} bağlantısı kaldırılamıyor"
 
+#, python-brace-format
 msgid "Running: {app}"
 msgstr "Çalıştırılıyor: {app}"
 
+#, python-brace-format
 msgid "Running {app} on {device}"
 msgstr "{device} üzerinde {app} çalıştırılıyor"
 
@@ -141,6 +145,7 @@ msgstr "Aşağıdaki bölümler klonlanıyor"
 msgid "To start cloning, click <b>Next</b>."
 msgstr "Klonlamayı başlatmak için <b>İleri</b> düğmesine tıklayın."
 
+#, python-brace-format
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
 "Diski {destination_drive} konumuna klonlamak istediğinizden emin misiniz? "
@@ -205,9 +210,11 @@ msgstr "Kaydet"
 msgid "Description"
 msgstr "Açıklama"
 
+#, python-brace-format
 msgid "Drive {drive_number}"
 msgstr "Disk {drive_number}"
 
+#, python-brace-format
 msgid "Partition {partition_number}"
 msgstr "Bölüm {partition_number}"
 
@@ -290,6 +297,7 @@ msgstr "Parola ya da SSH kimlik dosyasından biri belirtilmelidir."
 msgid "Scanning folder for backup images..."
 msgstr "Yedek kalıplar için klasör taranıyor..."
 
+#, python-brace-format
 msgid "({timeout_seconds} second timeout)"
 msgstr "({timeout_seconds} saniye zaman aşımı)"
 
@@ -298,6 +306,7 @@ msgstr ""
 "Seçili klasör ve alt klasörleri taramayı iptal etmek için bu açılır "
 "pencereyi kapatın."
 
+#, python-brace-format
 msgid "Scanning: {filename}"
 msgstr "Taranıyor: {filename}"
 
@@ -333,6 +342,7 @@ msgstr "Şifre çözme gerekiyor"
 msgid "Unknown filesystem"
 msgstr "Bilinmeyen dosya sistemi"
 
+#, python-brace-format
 msgid "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance."
 msgstr ""
 "Yedeklemenin genişletilmiş bölüm bilgisi boş. Yedekleme genişletilmiş bir "
@@ -360,6 +370,7 @@ msgstr ""
 "Bir yedeğin kaydedildiği klasör genellikle bilgisayarın bir açıklamasıdır, "
 "örn. <b>ofis1</b> veya <b>zack-laptop</b>."
 
+#, python-brace-format
 msgid "You must select a folder inside {location}"
 msgstr "{location} içinde bir klasör seçmelisiniz"
 
@@ -446,6 +457,7 @@ msgstr "Kaynak disk"
 msgid "Backing up the following partition(s)"
 msgstr "Aşağıdaki bölüm yedekleniyor"
 
+#, python-brace-format
 msgid "The backup image will be written into folder {dest_dir} on {description}"
 msgstr "Yedek kalıp, {description} üzerindeki {dest_dir} klasörüne yazılacak"
 
@@ -483,9 +495,11 @@ msgstr ""
 "Sisteminiz seçtiğiniz konuma yedekleniyor.  Bu, bilgisayarınızın hızına ve "
 "veri miktarına bağlı olarak bir saat veya daha fazla sürebilir."
 
+#, python-brace-format
 msgid "Saving: {file}"
 msgstr "Kaydediliyor: {file}"
 
+#, python-brace-format
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
 msgstr ""
 "{filesystem} dosya sistemini içeren {partition_name} bölümünü {destination} "
@@ -517,12 +531,15 @@ msgstr ""
 "Hedef dosya yazılamadı. Lütfen belirtilen dosya yolunu oluşturmanın geçerli "
 "olduğunu onaylayın ve tekrar deneyin."
 
+#, python-brace-format
 msgid "Successful backup of swap partition {partition_name}"
 msgstr "{partition_name} takas bölümü başarıyla yedeklendi"
 
+#, python-brace-format
 msgid "<b>Failed to backup partition</b> {partition_name}"
 msgstr "{partition_name} <b>bölümü yedeklenemedi</b>"
 
+#, python-brace-format
 msgid "Successful backup of partition {partition_name}"
 msgstr "{partition_name} bölümü başarıyla yedeklendi"
 
@@ -538,6 +555,7 @@ msgstr "Yedekleme işlemi başarısız oldu:"
 msgid "User requested operation to stop."
 msgstr "Kullanıcı işlemin durdurulmasını istedi."
 
+#, python-brace-format
 msgid "Operation took {num_minutes} minutes."
 msgstr "İşlem {num_minutes} dakika sürdü."
 
@@ -640,12 +658,14 @@ msgstr ""
 "Mantıksal Birim Yöneticisi (LVM) Mantıksal Birimleri taranıyor ve bağlantısı "
 "kaldırılıyor..."
 
+#, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
 msgstr ""
 "Kaynak bölümlendirme tablosunun son bölümü ({source}: {source_size} bayt), "
 "tamamen hedef disk içindeki bir bölgeyi göstermelidir ({destination_size} "
 "bayt)."
 
+#, python-brace-format
 msgid "Rescuezilla cannot yet automatically shrink partitions to restore from large disks to smaller disks. The final partition currently must always completely reside within the destination disk.\n"
 "\n"
 "Currently the only way to restore to disks smaller than original is to first use GParted Partition Editor to shrink the final partition of the original disk before making a new backup image. Please read the following instructions for more information:\n"
@@ -669,6 +689,7 @@ msgstr "5. Adım: Geri Yükleme Yapılandırmasını Onaylayın"
 msgid "Confirm the following restore configuration."
 msgstr "Aşağıdaki geri yükleme yapılandırmasını onaylayın."
 
+#, python-brace-format
 msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
 "Yedeği {destination_drive} konumuna geri yüklemek istediğinizden emin "
@@ -704,6 +725,7 @@ msgstr ""
 msgid "Refreshing partition table"
 msgstr "Bölümlendirme tablosu yenileniyor"
 
+#, python-brace-format
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
 msgstr ""
 "{description}, {destination_partition} ({destination_description}) konumuna "
@@ -712,25 +734,31 @@ msgstr ""
 msgid "Synchronizing disks..."
 msgstr "Diskler eşzamanlanıyor..."
 
+#, python-brace-format
 msgid "Querying hard drive geometry of {device}"
 msgstr "{device} sabit disk geometrisi sorgulanıyor"
 
+#, python-brace-format
 msgid "Probing {device} with {app}"
 msgstr "{device}, {app} ile sorgulanıyor"
 
+#, python-brace-format
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
 msgstr ""
 "{partition} ({filesystem}) dosya sistemi büyütülüyor. Bu biraz zaman "
 "alabilir..."
 
+#, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
 msgstr "{partition} ({filesystem}) bölümü yeniden boyutlandırılamadı: {msg}"
 
+#, python-brace-format
 msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
 msgstr ""
 "{geometry_source} değerleri kullanılarak {ntfs_device} NTFS dosya sistemi "
 "geometrisi başarıyla ayarlandı"
 
+#, python-brace-format
 msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
 msgstr "{ntfs_device} NTFS dosya sistemi geometrisi ayarlanamadı"
 
@@ -780,6 +808,7 @@ msgstr ""
 "Aygıtların bölümlendirme tablosu yenilenemedi. Bu, başka bir işlem "
 "bölümlendirme tablosuna erişiyorsa meydana gelebilir."
 
+#, python-brace-format
 msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
 msgstr ""
 "{description} ile ilişkili kaydedilmiş kalıp olmadığı için "
@@ -789,11 +818,13 @@ msgid "This may occur if Clonezilla was originally unable to backup this partiti
 msgstr ""
 "Bu, Clonezilla başlangıçta bu bölümü yedekleyemediyse meydana gelebilir."
 
+#, python-brace-format
 msgid "Error restoring partition {image_key} to {destination_partition}."
 msgstr ""
 "{image_key} bölümü {destination_partition} konumuna geri yüklenirken hata "
 "oluştu."
 
+#, python-brace-format
 msgid "Successfully restored image partition {image} to {destination_partition}"
 msgstr ""
 "{image} kalıp bölümü {destination_partition} konumuna başarıyla geri yüklendi"
@@ -865,6 +896,7 @@ msgstr "Kalıp Doğrulanıyor"
 msgid "Verifying the selected image(s)."
 msgstr "Seçilen görüntü(ler) doğrulanıyor."
 
+#, python-brace-format
 msgid "Verifying {image_name}"
 msgstr "{image_name} doğrulanıyor"
 
@@ -901,5 +933,6 @@ msgstr "Sfdisk bölümlendirme tablosu dosyası var."
 msgid "Unable to verify."
 msgstr "Doğrulanamadı."
 
+#, python-brace-format
 msgid "{partition}: filesystem image successfully verified."
 msgstr "{partition}: dosya sistemi kalıbı başarıyla doğrulandı."

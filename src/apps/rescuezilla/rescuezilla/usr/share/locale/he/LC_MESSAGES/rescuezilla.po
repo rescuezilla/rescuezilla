@@ -60,15 +60,19 @@ msgstr "נא להמתין…"
 msgid "Identifying disk drives..."
 msgstr "הכוננים הקשיחים מזוהים…"
 
+#, python-brace-format
 msgid "Unmounting: {path}"
 msgstr "העיגון מנותק: {path}"
 
+#, python-brace-format
 msgid "Unable to unmount {path}"
 msgstr "לא ניתן לנתק את {path}"
 
+#, python-brace-format
 msgid "Running: {app}"
 msgstr "מופעל: {app}"
 
+#, python-brace-format
 msgid "Running {app} on {device}"
 msgstr "{app} מופעל על {device}"
 
@@ -139,6 +143,7 @@ msgstr "המחיצות הבאות תשוכפלנה"
 msgid "To start cloning, click <b>Next</b>."
 msgstr "כדי להתחיל בשכפול, יש ללחוץ על <b>הבא</b>."
 
+#, python-brace-format
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
 "לשכפל את הכונן אל {destination_drive}? פעולה זו תשכתב לצמיתות את כל הנתונים "
@@ -202,9 +207,11 @@ msgstr "שמירה"
 msgid "Description"
 msgstr "תיאור"
 
+#, python-brace-format
 msgid "Drive {drive_number}"
 msgstr "כונן {drive_number}"
 
+#, python-brace-format
 msgid "Partition {partition_number}"
 msgstr "מחיצה {partition_number}"
 
@@ -285,12 +292,14 @@ msgstr "יש לספק סיסמה או קובץ זהות SSH."
 msgid "Scanning folder for backup images..."
 msgstr "התיקייה נסרקת לאיתור קובצי גיבוי…"
 
+#, python-brace-format
 msgid "({timeout_seconds} second timeout)"
 msgstr "({timeout_seconds} שניות לסיום)"
 
 msgid "Close this popup to cancel scanning the selected folder and subfolders."
 msgstr "סגירת החלונית הזאת תבטל את סריקת התיקייה הנבחרת על תת־תיקיותיה."
 
+#, python-brace-format
 msgid "Scanning: {filename}"
 msgstr "בסריקה: {filename}"
 
@@ -325,6 +334,7 @@ msgstr "נדרש פענוח"
 msgid "Unknown filesystem"
 msgstr "מערכת קבצים לא ידועה"
 
+#, python-brace-format
 msgid "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance."
 msgstr ""
 "פרטי המחיצה המורחבת של הגיבוי ריקים. אם הגיבוי מכיל מחיצה מורחבת היא לא "
@@ -348,6 +358,7 @@ msgstr ""
 "התיקייה אליה נשמר הגיבוי היא בדרך כלל תיאור המחשב, למשל: <b>משרד1</b> או "
 "<b>הלפטופ-של-צחי</b>."
 
+#, python-brace-format
 msgid "You must select a folder inside {location}"
 msgstr "עליך לבחור בתיקייה מתוך {location}"
 
@@ -429,6 +440,7 @@ msgstr "כונן המקור"
 msgid "Backing up the following partition(s)"
 msgstr "המחיצות האלו יגובו"
 
+#, python-brace-format
 msgid "The backup image will be written into folder {dest_dir} on {description}"
 msgstr "קובץ הגיבוי יישמר בתיקייה {dest_dir} על גבי {description}"
 
@@ -464,9 +476,11 @@ msgstr ""
 "המערכת שלך מגובה למיקום שבחרת. פעולה זו עשויה לארוך שעה ויותר כתלות במהירות "
 "המחשב שלך וכמות הנתונים."
 
+#, python-brace-format
 msgid "Saving: {file}"
 msgstr "מתבצעת שמירה: {file}"
 
+#, python-brace-format
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
 msgstr ""
 "המחיצה {partition_name} שמכילה את מערכת הקבצים {filesystem} מגובה אל "
@@ -497,12 +511,15 @@ msgid "Failed to write destination file. Please confirm it is valid to create th
 msgstr ""
 "הכתיבה לקובץ היעד נכשלה. נא לאשר שאפשר ליצור את קובץ הגיבוי הרצוי ולנסות שוב."
 
+#, python-brace-format
 msgid "Successful backup of swap partition {partition_name}"
 msgstr "הגיבוי של מחיצת ההחלפה (swap) {partition_name} הצליח"
 
+#, python-brace-format
 msgid "<b>Failed to backup partition</b> {partition_name}"
 msgstr "<b>גיבוי המחיצה</b> {partition_name} נכשל"
 
+#, python-brace-format
 msgid "Successful backup of partition {partition_name}"
 msgstr "המחיצה {partition_name} גובתה בהצלחה"
 
@@ -518,6 +535,7 @@ msgstr "פעולת הגיבוי נכשלה:"
 msgid "User requested operation to stop."
 msgstr "הפעולה נעצרה לבקשת המשתמש."
 
+#, python-brace-format
 msgid "Operation took {num_minutes} minutes."
 msgstr "הפעולה ארכה {num_minutes} דקות."
 
@@ -608,11 +626,13 @@ msgstr "כשסיימת להתכונן, יש ללחוץ על <b>הבא</b>."
 msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
 msgstr "מתבצעת סריקה וניתוק של כוננים לוגיים ממנהל הכוננים הלוגיים (LVM)…"
 
+#, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
 msgstr ""
 "המחיצה האחרונה של טבלת המחיצות המקורית ({source}: {source_size} בתים) חייבת "
 "להתייחס לאזור שכולו בתוך כונן היעד ({destination_size} בתים)."
 
+#, python-brace-format
 msgid "Rescuezilla cannot yet automatically shrink partitions to restore from large disks to smaller disks. The final partition currently must always completely reside within the destination disk.\n"
 "\n"
 "Currently the only way to restore to disks smaller than original is to first use GParted Partition Editor to shrink the final partition of the original disk before making a new backup image. Please read the following instructions for more information:\n"
@@ -634,6 +654,7 @@ msgstr "שלב 5: אישור הגדרות השחזור"
 msgid "Confirm the following restore configuration."
 msgstr "נא לאשר את הגדרות השחזור הבאות."
 
+#, python-brace-format
 msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
 "לשחזר את הגיבוי אל {destination_drive}? פעולה זו תשכתב את כל הנתונים שבכונן "
@@ -668,6 +689,7 @@ msgstr ""
 msgid "Refreshing partition table"
 msgstr "טבלת המחיצות מתרעננת"
 
+#, python-brace-format
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
 msgstr ""
 "{description} משוחזר אל {destination_partition} ({destination_description})"
@@ -675,23 +697,29 @@ msgstr ""
 msgid "Synchronizing disks..."
 msgstr "הכוננים מסונכרנים…"
 
+#, python-brace-format
 msgid "Querying hard drive geometry of {device}"
 msgstr "תשתית הכונן הקשיח {device} נבדקת"
 
+#, python-brace-format
 msgid "Probing {device} with {app}"
 msgstr "מתבצע תשאול מול {device} עם {app}"
 
+#, python-brace-format
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
 msgstr "מערכת הקבצים {partition} ({filesystem}) מתרחבת. זה עלול לקחת זמן מה…"
 
+#, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
 msgstr "שינוי גודל המחיצה {partition} ({filesystem}) נכשל: {msg}"
 
+#, python-brace-format
 msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
 msgstr ""
 "תשתית מערכת הקבצים NTFS של {ntfs_device} הותאמה בהצלחה בעזרת הערכים מתוך "
 "{geometry_source}"
 
+#, python-brace-format
 msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
 msgstr "התאמת תשתית מערכת הקבצים של {ntfs_device} מסוג NTFS נכשלה"
 
@@ -739,6 +767,7 @@ msgstr ""
 "רענון טבלת המחיצות של המכשיר נכשל. פעולה זו יכולה לקרות אם תהליך אחר מנסה "
 "לגשת לטבלת המחיצות."
 
+#, python-brace-format
 msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
 msgstr ""
 "לא ניתן לשחזר את המחיצה {destination_partition} כיוון שאין קובץ גיבוי שמור "
@@ -747,9 +776,11 @@ msgstr ""
 msgid "This may occur if Clonezilla was originally unable to backup this partition."
 msgstr "מצב זה יכול לקרות אם ל־Clonezilla לא התאפשר לגבות את המחיצה הזו במקור."
 
+#, python-brace-format
 msgid "Error restoring partition {image_key} to {destination_partition}."
 msgstr "שחזור המחיצה {image_key} אל {destination_partition} נתקל בשגיאה."
 
+#, python-brace-format
 msgid "Successfully restored image partition {image} to {destination_partition}"
 msgstr "קובץ גיבוי המחיצה {image} שוחזר בהצלחה אל {destination_partition}"
 
@@ -818,6 +849,7 @@ msgstr "הדמות עוברת אימות"
 msgid "Verifying the selected image(s)."
 msgstr "הדמויות הנבחרות עוברות אימות."
 
+#, python-brace-format
 msgid "Verifying {image_name}"
 msgstr "{image_name} עוברת אימות"
 
@@ -854,5 +886,6 @@ msgstr "קובץ טבלת המחיצות Sfdisk קיים."
 msgid "Unable to verify."
 msgstr "לא ניתן לאמת."
 
+#, python-brace-format
 msgid "{partition}: filesystem image successfully verified."
 msgstr "{partition}: דמות מערכת הקבצים אומתה בהצלחה."

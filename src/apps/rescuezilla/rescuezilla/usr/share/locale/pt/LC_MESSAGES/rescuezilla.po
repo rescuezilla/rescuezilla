@@ -61,15 +61,19 @@ msgstr "Por favor espere..."
 msgid "Identifying disk drives..."
 msgstr "Identificando drives de disco ..."
 
+#, python-brace-format
 msgid "Unmounting: {path}"
 msgstr "Desmontando: {path}"
 
+#, python-brace-format
 msgid "Unable to unmount {path}"
 msgstr "Impossível montar {path}"
 
+#, python-brace-format
 msgid "Running: {app}"
 msgstr "Executando: {app}"
 
+#, python-brace-format
 msgid "Running {app} on {device}"
 msgstr "Executando {app} no {device}"
 
@@ -144,6 +148,7 @@ msgstr "Clonando as seguintes partições"
 msgid "To start cloning, click <b>Next</b>."
 msgstr "Para iniciar a clonagem, clique em <b>Próximo</b>."
 
+#, python-brace-format
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
 
@@ -201,9 +206,11 @@ msgstr "Salvar"
 msgid "Description"
 msgstr "Descrição"
 
+#, python-brace-format
 msgid "Drive {drive_number}"
 msgstr "Drive {drive_number}"
 
+#, python-brace-format
 msgid "Partition {partition_number}"
 msgstr "Partição {partition_number}"
 
@@ -282,12 +289,14 @@ msgstr ""
 msgid "Scanning folder for backup images..."
 msgstr "Escaneando pasta por imagens de backup ..."
 
+#, python-brace-format
 msgid "({timeout_seconds} second timeout)"
 msgstr ""
 
 msgid "Close this popup to cancel scanning the selected folder and subfolders."
 msgstr ""
 
+#, python-brace-format
 msgid "Scanning: {filename}"
 msgstr ""
 
@@ -318,6 +327,7 @@ msgstr "Precisa de descriptografia"
 msgid "Unknown filesystem"
 msgstr "Sistema de arquivos desconhecido"
 
+#, python-brace-format
 msgid "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance."
 msgstr "As informações de partição estendida do backup estão vazias ou ausentes. Isso acontece com backups incompletos criados por uma atualização não oficial de Redo Backup. Se o backup contiver partições estendidas, elas não serão restauradas corretamente. Todos os dados ainda são totalmente recuperáveis, mas a intervenção manual é necessária para restaurar totalmente as partições estendidas. Consulte {url} para obter informações e assistência. A unidade de destino ainda não foi modificada. Você deseja continuar com a restauração?"
 
@@ -334,6 +344,7 @@ msgstr "Click em <b>Buscar</b> para selecionar uma pasta no drive de destino, on
 "\n"
 "A pasta onde um backup é salvo, normalmente é definida com o nome do computador, como por ex.: <b>trabalho1</b>, <b>vinny-laptop</b>."
 
+#, python-brace-format
 msgid "You must select a folder inside {location}"
 msgstr "Você deve selecionar uma pasta dentro {location}"
 
@@ -413,6 +424,7 @@ msgstr "Drive de origem"
 msgid "Backing up the following partition(s)"
 msgstr "Fazendo backup da seguinte partição"
 
+#, python-brace-format
 msgid "The backup image will be written into folder {dest_dir} on {description}"
 msgstr "A imagem de backup será sobrescrita na pasta {dest_dir} em {description}."
 
@@ -446,9 +458,11 @@ msgstr "Passo 7: Criando Imagem de Backup..."
 msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr "Fazendo backup do seu sistema para o local informado. Isso pode levar uma hora ou mais dependendo da velocidade do seu sistema e quantidade de dados salvos."
 
+#, python-brace-format
 msgid "Saving: {file}"
 msgstr ""
 
+#, python-brace-format
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
 msgstr "Fazendo backup {partition_name} contendo filesystem {filesystem} para o {destination}"
 
@@ -476,12 +490,15 @@ msgstr "Erro criando backup:"
 msgid "Failed to write destination file. Please confirm it is valid to create the provided file path, and try again."
 msgstr "Falha ao escrever o arquivo de destino. Por favor confirme se o caminho para criar o arquivo é valido, e tente novamente."
 
+#, python-brace-format
 msgid "Successful backup of swap partition {partition_name}"
 msgstr "Backup bem sucedido da partição swap {partition_name}"
 
+#, python-brace-format
 msgid "<b>Failed to backup partition</b> {partition_name}"
 msgstr "<b>Falha no backup da partição</b> {partition_name}"
 
+#, python-brace-format
 msgid "Successful backup of partition {partition_name}"
 msgstr "Backup com sucesso da partição {partition_name}"
 
@@ -497,6 +514,7 @@ msgstr "Operação de backup falhou:"
 msgid "User requested operation to stop."
 msgstr ""
 
+#, python-brace-format
 msgid "Operation took {num_minutes} minutes."
 msgstr "Operação levou {num_minutes} minutos."
 
@@ -572,9 +590,11 @@ msgstr ""
 msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
 msgstr ""
 
+#, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
 msgstr ""
 
+#, python-brace-format
 msgid "Rescuezilla cannot yet automatically shrink partitions to restore from large disks to smaller disks. The final partition currently must always completely reside within the destination disk.\n"
 "\n"
 "Currently the only way to restore to disks smaller than original is to first use GParted Partition Editor to shrink the final partition of the original disk before making a new backup image. Please read the following instructions for more information:\n"
@@ -589,6 +609,7 @@ msgstr "Passo 5: Confirme a configuração de restauração"
 msgid "Confirm the following restore configuration."
 msgstr "Confirme a configuração de restauração."
 
+#, python-brace-format
 msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr "Você tem certeza que vai restaurar o backup para {destination_drive}? Fazendo-o irá sobrescrever permanentemente os dados deste dispositivo!"
 
@@ -619,27 +640,34 @@ msgstr "Restaurando seu sistema da imagem que você selecionou. Isso pode levar 
 msgid "Refreshing partition table"
 msgstr "Atualizando tabela de partição"
 
+#, python-brace-format
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
 msgstr "Restaurando {description} para {destination_partition} ({destination_description})"
 
 msgid "Synchronizing disks..."
 msgstr ""
 
+#, python-brace-format
 msgid "Querying hard drive geometry of {device}"
 msgstr ""
 
+#, python-brace-format
 msgid "Probing {device} with {app}"
 msgstr ""
 
+#, python-brace-format
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
 msgstr ""
 
+#, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
 msgstr ""
 
+#, python-brace-format
 msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
 msgstr ""
 
+#, python-brace-format
 msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
 msgstr ""
 
@@ -685,15 +713,18 @@ msgstr "Tabela de partição restaurada com sucesso."
 msgid "Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."
 msgstr "Falha ao atualizar tabela partição do dispositivo. Isso pode acontecer caso outro processi esteja acessando a tabela de partição"
 
+#, python-brace-format
 msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
 msgstr "Impedido de restaurar partição {destination_partition} pois aqui não há imagem salva associada com {description}."
 
 msgid "This may occur if Clonezilla was originally unable to backup this partition."
 msgstr "Isso pode ocorrer se Clonezilla tiver sido impedido de fazer backup desta partição."
 
+#, python-brace-format
 msgid "Error restoring partition {image_key} to {destination_partition}."
 msgstr "Erro restaurando a Partição {image_key} para {destination_partition}."
 
+#, python-brace-format
 msgid "Successfully restored image partition {image} to {destination_partition}"
 msgstr "Imagem de Partição {image} restaurada para {destination_partition} com sucesso."
 
@@ -759,6 +790,7 @@ msgstr ""
 msgid "Verifying the selected image(s)."
 msgstr ""
 
+#, python-brace-format
 msgid "Verifying {image_name}"
 msgstr ""
 
@@ -795,5 +827,6 @@ msgstr ""
 msgid "Unable to verify."
 msgstr ""
 
+#, python-brace-format
 msgid "{partition}: filesystem image successfully verified."
 msgstr ""

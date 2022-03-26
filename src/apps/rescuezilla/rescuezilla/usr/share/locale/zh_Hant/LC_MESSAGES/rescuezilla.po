@@ -52,15 +52,19 @@ msgstr "請稍候…"
 msgid "Identifying disk drives..."
 msgstr "識別磁碟機..."
 
+#, python-brace-format
 msgid "Unmounting: {path}"
 msgstr "卸載：{path}"
 
+#, python-brace-format
 msgid "Unable to unmount {path}"
 msgstr "無法卸載 {path}"
 
+#, python-brace-format
 msgid "Running: {app}"
 msgstr "正在執行：{app}"
 
+#, python-brace-format
 msgid "Running {app} on {device}"
 msgstr "在{device}上運行{app}"
 
@@ -123,6 +127,7 @@ msgstr "克隆以下分區"
 msgid "To start cloning, click <b>Next</b>."
 msgstr "要開始克隆，請單擊 <b>下一個 </b>。"
 
+#, python-brace-format
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr "您是否確定要將驅動器克隆到{destination_drive}？這樣做將永久覆蓋此驅動器上的資料！"
 
@@ -180,9 +185,11 @@ msgstr "儲存"
 msgid "Description"
 msgstr "說明"
 
+#, python-brace-format
 msgid "Drive {drive_number}"
 msgstr "驅動器{drive_number}"
 
+#, python-brace-format
 msgid "Partition {partition_number}"
 msgstr "分區[partition_number}"
 
@@ -261,12 +268,14 @@ msgstr "必須提供密碼或SSH身份檔。"
 msgid "Scanning folder for backup images..."
 msgstr "掃描資料夾以檢視備份影像..."
 
+#, python-brace-format
 msgid "({timeout_seconds} second timeout)"
 msgstr "（[timeout_seconds]第二次超時）"
 
 msgid "Close this popup to cancel scanning the selected folder and subfolders."
 msgstr "關閉此彈出視窗以取消掃描選擇的資料夾和子資料夾。"
 
+#, python-brace-format
 msgid "Scanning: {filename}"
 msgstr "掃描：{filename}"
 
@@ -297,6 +306,7 @@ msgstr "需要解密"
 msgid "Unknown filesystem"
 msgstr "未知檔案系統"
 
+#, python-brace-format
 msgid "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance."
 msgstr ""
 "備份的擴展分區資訊為空。如果備份包含擴展分區，則無法正確恢復。所有數據仍完全可恢復，但需要人工干預才能在擴展分區內完全恢復數據。請諮詢[網址]以獲取資訊和"
@@ -316,6 +326,7 @@ msgstr ""
 "\n"
 "保存在備份的資料夾通常是計算機的描述，例如 <b> office1 </b> 或 <b> zack-laptop </b>。"
 
+#, python-brace-format
 msgid "You must select a folder inside {location}"
 msgstr "您必須選擇內部的資料夾{location}"
 
@@ -396,6 +407,7 @@ msgstr "源驅動器"
 msgid "Backing up the following partition(s)"
 msgstr "備份以下分區"
 
+#, python-brace-format
 msgid "The backup image will be written into folder {dest_dir} on {description}"
 msgstr "備份影像將寫入資料夾{dest_dir}在{description}"
 
@@ -429,9 +441,11 @@ msgstr "第 8 步：創建備份圖像"
 msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr "將系統備份到您選擇的位置。 這可能需要一個小時或更長的時間，具體取決於計算機的速度和數據量。"
 
+#, python-brace-format
 msgid "Saving: {file}"
 msgstr "儲存：{file}"
 
+#, python-brace-format
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
 msgstr "備份{partition_name}包含檔案系統{filesystem}到{destination}"
 
@@ -459,12 +473,15 @@ msgstr "建立備份的錯誤： "
 msgid "Failed to write destination file. Please confirm it is valid to create the provided file path, and try again."
 msgstr "未能編寫目標檔。請確認創建所提供的文件路徑有效，並重試。"
 
+#, python-brace-format
 msgid "Successful backup of swap partition {partition_name}"
 msgstr "交換分割區的成功備份[partition_name}"
 
+#, python-brace-format
 msgid "<b>Failed to backup partition</b> {partition_name}"
 msgstr "<b>未能備份分割區</b>[partition_name}"
 
+#, python-brace-format
 msgid "Successful backup of partition {partition_name}"
 msgstr "分割區的成功備份[partition_name}"
 
@@ -480,6 +497,7 @@ msgstr "備份操作失敗："
 msgid "User requested operation to stop."
 msgstr "使用者要求停止操作。"
 
+#, python-brace-format
 msgid "Operation took {num_minutes} minutes."
 msgstr "操作花了[num_minutes]分鐘。"
 
@@ -562,9 +580,11 @@ msgstr "準備好繼續使用時，請單擊 <b>下一個</b>。"
 msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
 msgstr "掃描和卸載任何邏輯卷管理器（LVM）邏輯卷。。。"
 
+#, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
 msgstr "源分區表的最終分區（[源]：[source_size]位元組）必須完全指目的地磁碟內的區域（[destination_size] 位元組）。"
 
+#, python-brace-format
 msgid "Rescuezilla cannot yet automatically shrink partitions to restore from large disks to smaller disks. The final partition currently must always completely reside within the destination disk.\n"
 "\n"
 "Currently the only way to restore to disks smaller than original is to first use GParted Partition Editor to shrink the final partition of the original disk before making a new backup image. Please read the following instructions for more information:\n"
@@ -583,6 +603,7 @@ msgstr "第 5 步：確認恢復配置"
 msgid "Confirm the following restore configuration."
 msgstr "確認以下恢復配置。"
 
+#, python-brace-format
 msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr "您是否確定要將備份恢復為{destination_drive}？這樣做將永久覆蓋此驅動器上的資料！"
 
@@ -613,27 +634,34 @@ msgstr "從您選擇的影像中恢復系統。 這可能需要一個小時或�
 msgid "Refreshing partition table"
 msgstr "刷新分區表"
 
+#, python-brace-format
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
 msgstr "將{description} 恢復為{destination_partition} ({destination_description})"
 
 msgid "Synchronizing disks..."
 msgstr "同步磁碟..."
 
+#, python-brace-format
 msgid "Querying hard drive geometry of {device}"
 msgstr "查詢{device}的磁碟幾何形狀"
 
+#, python-brace-format
 msgid "Probing {device} with {app}"
 msgstr "用{app}探测{device}"
 
+#, python-brace-format
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
 msgstr "不斷增長的檔案系統{partition}({filesystem})。這可能需要一段時間..."
 
+#, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
 msgstr "調整分割區{partition}({filesystem}) 失敗：{msg}"
 
+#, python-brace-format
 msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
 msgstr "使用{geometry_source}中的值成功調整了 {ntfs_device} NTFS文件系統幾何形狀"
 
+#, python-brace-format
 msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
 msgstr "無法調整 NTFS 檔案系統幾何形狀 {ntfs_device}"
 
@@ -679,15 +707,18 @@ msgstr "成功恢復分區表。"
 msgid "Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."
 msgstr "未能刷新設備的分區表。如果另一個過程正在訪問分區表，則可能發生這種情況。"
 
+#, python-brace-format
 msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
 msgstr "無法恢復分區{destination_partition} ，因為沒有與之相關的保存圖像： {description}。"
 
 msgid "This may occur if Clonezilla was originally unable to backup this partition."
 msgstr "如果Clonezilla無法備份此分區，則可能發生這種情況。"
 
+#, python-brace-format
 msgid "Error restoring partition {image_key} to {destination_partition}."
 msgstr "錯誤復原分割區 {image_key} 到{destination_partition}。"
 
+#, python-brace-format
 msgid "Successfully restored image partition {image} to {destination_partition}"
 msgstr "成功復原影像分區{image}至{destination_partition}"
 
@@ -754,6 +785,7 @@ msgstr "驗證映像"
 msgid "Verifying the selected image(s)."
 msgstr "驗證所選映像。"
 
+#, python-brace-format
 msgid "Verifying {image_name}"
 msgstr "正在驗證 {image_name}"
 
@@ -790,5 +822,6 @@ msgstr "存在 Sfdisk 分區表檔。"
 msgid "Unable to verify."
 msgstr "無法驗證。"
 
+#, python-brace-format
 msgid "{partition}: filesystem image successfully verified."
 msgstr "{partition}：文件系統映像已成功驗證。"

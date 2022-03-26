@@ -66,15 +66,19 @@ msgstr "Bitte warten ..."
 msgid "Identifying disk drives..."
 msgstr "Suche Laufwerke ..."
 
+#, python-brace-format
 msgid "Unmounting: {path}"
 msgstr "Aushängen: {path}"
 
+#, python-brace-format
 msgid "Unable to unmount {path}"
 msgstr "{path} konnte nicht ausgehängt werden"
 
+#, python-brace-format
 msgid "Running: {app}"
 msgstr "{app} wird ausgeführt"
 
+#, python-brace-format
 msgid "Running {app} on {device}"
 msgstr "{app} wird auf {device} ausgeführt"
 
@@ -154,6 +158,7 @@ msgstr "Die folgenden Partitionen werden geklont"
 msgid "To start cloning, click <b>Next</b>."
 msgstr "Um mit dem Klonen zu beginnen, klicke <b>Weiter</b>."
 
+#, python-brace-format
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
 "Bist du sicher, dass du auf dieses Laufwerk {destination_drive} klonen "
@@ -222,9 +227,11 @@ msgstr "Speichern"
 msgid "Description"
 msgstr "Beschreibung"
 
+#, python-brace-format
 msgid "Drive {drive_number}"
 msgstr "Laufwerk {drive_number}"
 
+#, python-brace-format
 msgid "Partition {partition_number}"
 msgstr "Partition {partition_number}"
 
@@ -307,6 +314,7 @@ msgstr "Passwort oder SSH Identitäts-Datei benötigt."
 msgid "Scanning folder for backup images..."
 msgstr "Ordner für Sicherungskopien wird gescannt ..."
 
+#, python-brace-format
 msgid "({timeout_seconds} second timeout)"
 msgstr "({timeout_seconds} second timeout)"
 
@@ -315,6 +323,7 @@ msgstr ""
 "Schließe dieses Fenster, um das Durchsuchen der ausgewählten Ordner und "
 "Unterordner abzubrechen."
 
+#, python-brace-format
 msgid "Scanning: {filename}"
 msgstr "Durchsuche: {filename}"
 
@@ -348,6 +357,7 @@ msgstr "Entschlüsselung erforderlich"
 msgid "Unknown filesystem"
 msgstr "Unbekanntes Dateisystem"
 
+#, python-brace-format
 msgid "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance."
 msgstr ""
 "Die Information zur erweiterten Partition in der Sicherungskopie ist leer. "
@@ -377,6 +387,7 @@ msgstr ""
 "Wähle eine sprechende Bezeichnung für den Ordner - beispielsweise <b>Mein-"
 "PC</b> oder <b>Pauls-Laptop</b>."
 
+#, python-brace-format
 msgid "You must select a folder inside {location}"
 msgstr "Du musst ein Verzeichnis innerhalb {location} auswählen"
 
@@ -465,6 +476,7 @@ msgstr "Quelllaufwerk"
 msgid "Backing up the following partition(s)"
 msgstr "Folgende Partition wird gesichert"
 
+#, python-brace-format
 msgid "The backup image will be written into folder {dest_dir} on {description}"
 msgstr ""
 "Die Sicherungskopie wird im Ordner {dest_dir} auf {description} gespeichert"
@@ -506,9 +518,11 @@ msgstr ""
 "der Geschwindigkeit deines Computers und der Datenmenge durchaus eine Stunde "
 "oder sogar länger dauern."
 
+#, python-brace-format
 msgid "Saving: {file}"
 msgstr "Sichere: {file}"
 
+#, python-brace-format
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
 msgstr "{partition_name} mit Dateisystem {filesystem} auf {destination} sichern"
 
@@ -538,12 +552,15 @@ msgstr ""
 "Fehler beim Erstellen der Zieldatei. Bitte bestätige, dass der angegebene "
 "Dateipfad gültig ist und versuche es dann erneut."
 
+#, python-brace-format
 msgid "Successful backup of swap partition {partition_name}"
 msgstr "Erfolgreiche Sicherung der Swap-Partition {partition_name}"
 
+#, python-brace-format
 msgid "<b>Failed to backup partition</b> {partition_name}"
 msgstr "<b>Fehler beim Sichern der Partition</b> {partition_name}"
 
+#, python-brace-format
 msgid "Successful backup of partition {partition_name}"
 msgstr "Erfolgreiche Sicherung der Partition {partition_name}"
 
@@ -559,6 +576,7 @@ msgstr "Sicherungsvorgang fehlgeschlagen:"
 msgid "User requested operation to stop."
 msgstr "Der Benutzer hat den Vorgang abgebrochen."
 
+#, python-brace-format
 msgid "Operation took {num_minutes} minutes."
 msgstr "Der Vorgang dauerte {num_minutes} Minuten."
 
@@ -663,12 +681,14 @@ msgstr "Wenn du bereit bist fortzufahren, klicke <b>Weiter</b>."
 msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
 msgstr "Duchsuche und hänge Logical Volume Manager (LVM) aus ..."
 
+#, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
 msgstr ""
 "Die endgültige Partition der Quellpartitionstabelle ({source}: {source_size} "
 "bytes) muss sich auf einen Bereich beziehen, der vollständig auf der "
 "Zielfestplatte liegt ({destination_size} bytes)."
 
+#, python-brace-format
 msgid "Rescuezilla cannot yet automatically shrink partitions to restore from large disks to smaller disks. The final partition currently must always completely reside within the destination disk.\n"
 "\n"
 "Currently the only way to restore to disks smaller than original is to first use GParted Partition Editor to shrink the final partition of the original disk before making a new backup image. Please read the following instructions for more information:\n"
@@ -694,6 +714,7 @@ msgstr "Schritt 5: Bestätigung der Konfiguration zur Wiederherstellung"
 msgid "Confirm the following restore configuration."
 msgstr "Bestätige die nachfolgende Konfiguration für die Wiederherstellung."
 
+#, python-brace-format
 msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
 "Möchtest du die Sicherungskopie wirklich auf {destination_drive} "
@@ -730,32 +751,39 @@ msgstr ""
 msgid "Refreshing partition table"
 msgstr "Partitionstabelle aktualisieren"
 
+#, python-brace-format
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
 msgstr "{description} wird auf {destination_partition} ({destination_description}) wiederhergestellt"
 
 msgid "Synchronizing disks..."
 msgstr "Synchronisiere Laufwerke ..."
 
+#, python-brace-format
 msgid "Querying hard drive geometry of {device}"
 msgstr "Abfrage der Festplattengeometrie von {device}"
 
+#, python-brace-format
 msgid "Probing {device} with {app}"
 msgstr "Prüfe {device} mit {app}"
 
+#, python-brace-format
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
 msgstr ""
 "Lege Dateisystem an {partition} ({filesystem}]. Dies kann eine Weile dauern "
 "..."
 
+#, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
 msgstr ""
 "Größenapassung der Partition {partition} ({filesystem}] fehlgeschlagen: {msg}"
 
+#, python-brace-format
 msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
 msgstr ""
 "NTFS Dateisystem von {ntfs_device} erfolgreich angepasst anhand der Werte "
 "von {geometry_source}"
 
+#, python-brace-format
 msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
 msgstr "Anpassung des NTFS-Dateisystems von {ntfs_device} fehlgeschlagen"
 
@@ -805,6 +833,7 @@ msgstr ""
 "Fehler beim Aktualisieren der Partitionstabelle des Laufwerks. Dies kann "
 "passieren, wenn ein anderer Prozess auf die Partitionstabelle zugreift."
 
+#, python-brace-format
 msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
 msgstr ""
 "Die Partition {destination_partition} kann nicht wiederhergestellt werden, "
@@ -815,9 +844,11 @@ msgstr ""
 "Das kann auftreten, wenn Clonezilla diese Partition ursprünglich nicht "
 "sichern konnte."
 
+#, python-brace-format
 msgid "Error restoring partition {image_key} to {destination_partition}."
 msgstr "Fehler beim Wiederherstellen der Partition {image_key} auf {destination_partition}."
 
+#, python-brace-format
 msgid "Successfully restored image partition {image} to {destination_partition}"
 msgstr "Partition der Sicherungskopie {image} auf {destination_partition} erfolgreich wiederhergestellt"
 
@@ -890,6 +921,7 @@ msgstr "Image überprüfen"
 msgid "Verifying the selected image(s)."
 msgstr "Überprüfung des/der ausgewählten Image(s)."
 
+#, python-brace-format
 msgid "Verifying {image_name}"
 msgstr "Überprüfung von {image_name}"
 
@@ -932,5 +964,6 @@ msgid "Unable to verify."
 msgstr "Kann nicht verifiziert werden."
 
 #, fuzzy
+#, python-brace-format
 msgid "{partition}: filesystem image successfully verified."
 msgstr "{Partition}: Dateisystemabbild erfolgreich verifiziert."

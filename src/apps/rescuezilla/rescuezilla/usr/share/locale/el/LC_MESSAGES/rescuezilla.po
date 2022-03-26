@@ -61,15 +61,19 @@ msgstr "Παρακαλώ περιμένετε..."
 msgid "Identifying disk drives..."
 msgstr "Αναγνώριση μονάδων δίσκου..."
 
+#, python-brace-format
 msgid "Unmounting: {path}"
 msgstr "Λειτουργία μη προσβασιμότητας αρχείων: {path}"
 
+#, python-brace-format
 msgid "Unable to unmount {path}"
 msgstr "Δεν είναι δυνατή η λειτουργία μη προσβασιμότητας αρχείων {path}"
 
+#, python-brace-format
 msgid "Running: {app}"
 msgstr "Εκτέλεση: {app}"
 
+#, python-brace-format
 msgid "Running {app} on {device}"
 msgstr "Εκτέλεση {app} σε {device}"
 
@@ -152,6 +156,7 @@ msgid "To start cloning, click <b>Next</b>."
 msgstr ""
 "Για να εκκινήσετε την κλωνοποίηση, κάντε κλικ στην επιλογή <b>Επόμενο</b>."
 
+#, python-brace-format
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
 "Είστε βέβαιοι ότι θέλετε να κλωνοποιήσετε τη μονάδα δίσκου σε "
@@ -219,9 +224,11 @@ msgstr "Αποθήκευση"
 msgid "Description"
 msgstr "Περιγραφή"
 
+#, python-brace-format
 msgid "Drive {drive_number}"
 msgstr "Μονάδα Δίσκου {drive_number}"
 
+#, python-brace-format
 msgid "Partition {partition_number}"
 msgstr "Διαμέρισμα {partition_number}"
 
@@ -304,6 +311,7 @@ msgstr "Πρέπει να δώσετε κωδικό πρόσβασης ή αρχ
 msgid "Scanning folder for backup images..."
 msgstr "Σάρωση φακέλου για είδωλα αντιγράφων ασφαλείας..."
 
+#, python-brace-format
 msgid "({timeout_seconds} second timeout)"
 msgstr "({timeout_seconds} διακοπή σε δευ/τα)"
 
@@ -312,6 +320,7 @@ msgstr ""
 "Κλείστε το αναδυόμενο παράθυρο για να ακυρώσετε τη σάρωση του επιλεγμένου "
 "φακέλου και των υποφακέλων."
 
+#, python-brace-format
 msgid "Scanning: {filename}"
 msgstr "Σάρωση: {filename}"
 
@@ -347,6 +356,7 @@ msgstr "Απαιτείται αποκρυπτογράφηση"
 msgid "Unknown filesystem"
 msgstr "Άγνωστο Σύστημα Αρχείων"
 
+#, python-brace-format
 msgid "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance."
 msgstr ""
 "Οι εκτεταμένες πληροφορίες διαμερίσματος του αντιγράφου ασφαλείας είναι "
@@ -373,6 +383,7 @@ msgstr "Κάντε κλικ στο κουμπί <b>Αναζήτηση</b> για
 "\n"
 "Ο φάκελος στον οποίο αποθηκεύεται είναι συνήθως μια περιγραφή του υπολογιστή, πχ. <b>office1</b> or <b>zack-laptop</b>."
 
+#, python-brace-format
 msgid "You must select a folder inside {location}"
 msgstr "Πρέπει να επιλέξετε ένα φάκελο μέσα στη {location}"
 
@@ -456,6 +467,7 @@ msgstr "Μονάδα δίσκου προέλευσης"
 msgid "Backing up the following partition(s)"
 msgstr "Δημιουργία αντιγράφου ασφαλείας για το ακόλουθο διαμέρισμα"
 
+#, python-brace-format
 msgid "The backup image will be written into folder {dest_dir} on {description}"
 msgstr ""
 "Το είδωλο αντιγράφου ασφαλείας θα εγγραφεί στο φάκελο {dest_dir} σε "
@@ -496,9 +508,11 @@ msgstr "Βήμα 7: Δημιουργία Ειδώλου Αντιγράφου Α�
 msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr "Δημιουργία των αντιγράφων ασφαλείας του συστήματός σας στη θέση που επιλέξατε. Αυτό μπορεί να διαρκέσει μια ώρα ή περισσότερο, ανάλογα με την ταχύτητα του υπολογιστή σας και το μέγεθος των δεδομένων."
 
+#, python-brace-format
 msgid "Saving: {file}"
 msgstr "Αποθήκευση: {file}"
 
+#, python-brace-format
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
 msgstr "Αντίγραφο Ασφαλείας {partition_name} περιέχει αρχείο συστήματος {filesystem} σε {destination}"
 
@@ -526,12 +540,15 @@ msgstr "Παρουσιάστηκε σφάλμα κατά τη δημιουργί
 msgid "Failed to write destination file. Please confirm it is valid to create the provided file path, and try again."
 msgstr "Απέτυχε η εγγραφή του αρχείου προορισμού. Επιβεβαιώστε ότι είναι δυνατή η δημιουργία της παρεχόμενης διαδρομής αρχείου και προσπαθήστε ξανά."
 
+#, python-brace-format
 msgid "Successful backup of swap partition {partition_name}"
 msgstr "Επιτυχής δημιουργία αντιγράφου ασφαλείας του διαμερίσματος ανταλλαγής {partition_name}"
 
+#, python-brace-format
 msgid "<b>Failed to backup partition</b> {partition_name}"
 msgstr "<b>Ανεπιτυχής δημιουργία αντιγράφου ασφαλείας του διαμερίσματος</b> {partition_name}"
 
+#, python-brace-format
 msgid "Successful backup of partition {partition_name}"
 msgstr "Επιτυχής δημιουργία αντιγράφου ασφαλείας του διαμερίσματος {partition_name}"
 
@@ -547,6 +564,7 @@ msgstr "Η διαδικασία δημιουργίας αντιγράφου ασ
 msgid "User requested operation to stop."
 msgstr "Ο χρήστης ζήτησε να διακοπεί η λειτουργία."
 
+#, python-brace-format
 msgid "Operation took {num_minutes} minutes."
 msgstr "Η διαδικασία ολοκληρώθηκε σε {num_minutes} λεπτά."
 
@@ -642,12 +660,14 @@ msgstr ""
 msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
 msgstr "Σάρωση και αποσύνδεση Λογικών Τόμων Διαχείρισης (LVM)..."
 
+#, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
 msgstr ""
 "Το τελικό διαμέρισμα του πίνακα διαμερισμάτων προέλευσης ({source}: "
 "{source_size}) πρέπει να αναφέρεται σε μια περιοχή μέσα στο δίσκο προορισμού "
 "({destination_size})."
 
+#, python-brace-format
 msgid "Rescuezilla cannot yet automatically shrink partitions to restore from large disks to smaller disks. The final partition currently must always completely reside within the destination disk.\n"
 "\n"
 "Currently the only way to restore to disks smaller than original is to first use GParted Partition Editor to shrink the final partition of the original disk before making a new backup image. Please read the following instructions for more information:\n"
@@ -672,6 +692,7 @@ msgstr "Βήμα 5: Επιβεβαίωση Ρύθμισης Παραμέτρων
 msgid "Confirm the following restore configuration."
 msgstr "Επιβεβαιώστε τη ρύθμιση παραμέτρων επαναφοράς."
 
+#, python-brace-format
 msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr "Είστε βέβαιοι ότι επιθυμείτε την επαναφορά του αντιγράφου ασφαλείας στο {destination_drive}; Με αυτόν τον τρόπο θα αντικατασταθούν οριστικά τα δεδομένα σε αυτήν τη μονάδα δίσκου!"
 
@@ -702,32 +723,39 @@ msgstr "Γίνεται επαναφορά του συστήματός σας α�
 msgid "Refreshing partition table"
 msgstr "Ανανέωση πίνακα διαμερισμάτων"
 
+#, python-brace-format
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
 msgstr "Επαναφορά {description} στο {destination_partition} ({destination_description})"
 
 msgid "Synchronizing disks..."
 msgstr "Συγχρονισμός δίσκων..."
 
+#, python-brace-format
 msgid "Querying hard drive geometry of {device}"
 msgstr "Ερώτημα για γεωμετρία σκληρού δίσκου του {device}"
 
+#, python-brace-format
 msgid "Probing {device} with {app}"
 msgstr "Έλεγχος {device} με {app}"
 
+#, python-brace-format
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
 msgstr ""
 "Ανάπτυξη συστήματος αρχείων {partition} ({filesystem}). Αυτό μπορεί να "
 "διαρκέσει λίγο..."
 
+#, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
 msgstr ""
 "Η αλλαγή μεγέθους διαμερίσματος {partition} ({filesystem}) απέτυχε: {msg}"
 
+#, python-brace-format
 msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
 msgstr ""
 "Επιτυχής προσαρμογή γεωμετρίας συστήματος αρχείων NTFS {ntfs_device} "
 "χρησιμοποιώντας τιμές από {geometry_source}"
 
+#, python-brace-format
 msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
 msgstr ""
 "Απέτυχε η προσαρμογή γεωμετρίας του συστήματος αρχείων NTFS {ntfs_device}"
@@ -775,15 +803,18 @@ msgstr "Η επαναφορά του πίνακα διαμερισμάτων ο�
 msgid "Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."
 msgstr "Η ανανέωση του πίνακα διαμερισμάτων των συσκευών απέτυχε. Αυτό μπορεί να συμβεί εάν μια άλλη διεργασία έχει πρόσβαση στον πίνακα διαμερισμάτων."
 
+#, python-brace-format
 msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
 msgstr "Δεν είναι δυνατή η επαναφορά του διαμερίσματος {destination_partition}, επειδή δεν υπάρχει αποθηκευμένο είδωλο συσχετισμένο με: {description}."
 
 msgid "This may occur if Clonezilla was originally unable to backup this partition."
 msgstr "Αυτό μπορεί να συμβεί εάν το Clonezilla αρχικά απέτυχε να δημιουργήσει αντίγραφο ασφαλείας αυτού του διαμερίσματος."
 
+#, python-brace-format
 msgid "Error restoring partition {image_key} to {destination_partition}."
 msgstr "Παρουσιάστηκε σφάλμα κατά την επαναφορά του διαμερίσματος {image_key} στο {destination_partition}."
 
+#, python-brace-format
 msgid "Successfully restored image partition {image} to {destination_partition}"
 msgstr "Η επαναφορά του διαμερίσματος ειδώλου {image} ολοκληρώθηκε με επιτυχία στο {destination_partition}"
 
@@ -855,6 +886,7 @@ msgstr "Επαλήθευση Εικόνας"
 msgid "Verifying the selected image(s)."
 msgstr "Επαλήθευση των επιλεγμένων εικόνων."
 
+#, python-brace-format
 msgid "Verifying {image_name}"
 msgstr "Επαλήθευση {image_name}"
 
@@ -891,5 +923,6 @@ msgstr "Το αρχείο πίνακα διαμερισμάτων Sfdisk υπά�
 msgid "Unable to verify."
 msgstr "Δεν είναι δυνατή η επαλήθευση."
 
+#, python-brace-format
 msgid "{partition}: filesystem image successfully verified."
 msgstr "{partition}: Η εικόνα του συστήματος αρχείων επαληθεύτηκε με επιτυχία."
