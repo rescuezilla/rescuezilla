@@ -1,11 +1,12 @@
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
+# BennyBeat <bennybeat@gmail.com>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2022-02-07 12:27+0000\n"
-"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
+"PO-Revision-Date: 2022-04-10 20:51+0000\n"
+"Last-Translator: BennyBeat <bennybeat@gmail.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/ca/>\n"
 "Language: ca\n"
@@ -13,74 +14,82 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.11-dev\n"
+"X-Generator: Weblate 4.12-dev\n"
 
 msgid "Welcome"
-msgstr ""
+msgstr "Us donem la benvinguda"
 
 msgid "Select an Option"
-msgstr ""
+msgstr "Trieu una opció"
 
 msgid "Easily create a backup image of your computer, or completely restore from one.  Click an option to begin:"
 msgstr ""
+"Creeu una còpia de seguretat d'aquest ordinador, o bé restaureu des d'una "
+"existent.  Trieu una opció per iniciar:"
 
 msgid "Backup"
-msgstr ""
+msgstr "Còpia de seguretat"
 
 msgid "Restore"
-msgstr ""
+msgstr "Restauració"
 
 msgid "Verify Image"
-msgstr ""
+msgstr "Verifica una imatge"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
 msgstr ""
+"Us cal ajuda? Veieu primer les PMF i, si encara teniu cap dubte, consulteu "
+"el fòrum (en anglès) del RescueZilla."
 
 msgid "Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed."
 msgstr ""
+"Considereu fer una donació d'1 €/mes mitjançant el Patreon perquè el "
+"RescueZilla continuï el seu desenvolupament."
 
 msgid "Back"
-msgstr ""
+msgstr "Enrere"
 
 msgid "Next >"
-msgstr ""
+msgstr "Endavant >"
 
 msgid "Please wait..."
-msgstr ""
+msgstr "Un moment..."
 
 msgid "Identifying disk drives..."
-msgstr ""
+msgstr "S'estan identificant les unitats de disc..."
 
 #, python-brace-format
 msgid "Unmounting: {path}"
-msgstr ""
+msgstr "Desmuntant: {path}"
 
 #, python-brace-format
 msgid "Unable to unmount {path}"
-msgstr ""
+msgstr "No s'ha pogut desmuntar {path}"
 
 #, python-brace-format
 msgid "Running: {app}"
-msgstr ""
+msgstr "Executant: {app}"
 
 #, python-brace-format
 msgid "Running {app} on {device}"
-msgstr ""
+msgstr "S'està executant {app} a {device}"
 
 msgid "Failed to run command: "
-msgstr ""
+msgstr "Ha fallat en executar l'ordre: "
 
 msgid "Error querying drives: "
-msgstr ""
+msgstr "Error en consultar les unitats: "
 
 msgid "Clone"
-msgstr ""
+msgstr "Clona"
 
 msgid "Step 1: Understanding Cloning"
-msgstr ""
+msgstr "Primer pas: Entendre el procés de clonació"
 
 msgid "Please understand how \"cloning\" differs from \"imaging\"."
 msgstr ""
+"A continuació us expliquem les diferències entre «clonació» i «creació "
+"d'imatges»."
 
 msgid "This mode is for \"disk cloning\". Cloning means copying one drive and directly overwriting another drive. This is a direct one-step operation with no temporary storage required.\n"
 "\n"
@@ -89,177 +98,213 @@ msgid "This mode is for \"disk cloning\". Cloning means copying one drive and di
 ""
 "To use the \"imaging\" wizards, click <b>Back</b> and select <b>Backup</b> or <b>Restore</b>."
 msgstr ""
+"Aquest mode és per realitzar una «clonació del disc». Clonar significa "
+"copiar l'estructura d'una unitat en altra, reemplaçant el contingut "
+"d'aquesta última. És una operació en un sol pas que no requereix cap mena "
+"d'emmagatzematge temporal.\n"
+"\n"
+"Clonar difereix d'una «imatge del disc» (que és el que fa l'opció «Còpia»). "
+"La imatge implica copiar tot el contingut d'una unitat cap a grans fitxers "
+"d'emmagatzematge a una carpeta d'un disc extern. Aquesta imatge conté "
+"l'estat del disc al moment de crear la còpia i es poden crear múltiples "
+"imatges, sense que la informació de la unitat de destinació sigui "
+"reemplaçada. Aquestes imatges permeten restaurar l'estat en què es trobava "
+"un disc al moment que es va crear la imatge, o bé per a replicació de discos "
+"en massa amb la mateixa informació. Simplificant molt, la «imatge del disc» "
+"copia <i>fitxers</i> que necessiten emmagatzematge (com a mínim de forma "
+"temporal) per poder ser restaurats més tard sense implicar cap reemplaçament "
+"d'informació, i  <b>el procés de clonació</b> es realitza al vol i  "
+"<b>reemplaça tota la informació continguda a la unitat de destinació</b>.\n"
+"\n"
+"Per utilitzar les opcions d'«imatge del disc» en comptes de funcions de "
+"clonació, feu clic a <b>Enrere</b> i trieu <b>Còpia</b> o <b>Restaura</b>."
 
 msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
-msgstr ""
+msgstr "Per iniciar l'assistent de clonació, feu clic a <b>Endavant</b>"
 
 msgid "Step 2: Select Source Drive"
-msgstr ""
+msgstr "Segon pas: Seleccioneu la unitat d'origen"
 
 msgid "Select the <b>source drive</b> to clone."
-msgstr ""
+msgstr "Seleccioneu quina <b>unitat d'origen</b> voleu clonar."
 
 msgid "Select the <b>destination drive</b> to overwrite."
 msgstr ""
+"Seleccioneu la <b>unitat de destinació</b> on reemplaçar les dades existents."
 
 msgid "Step 4: Select Partitions to Clone"
-msgstr ""
+msgstr "Quart pas: Seleccioneu quines particions voleu clonar"
 
 msgid "Select which partitions from the source drive to clone, and whether to overwrite the partition table. <b>Leave everything selected to completely clone the source drive to the destination drive.</b>"
 msgstr ""
+"Seleccioneu quines particions voleu clonar de la unitat d'origen i també si "
+"voleu reemplaçar la taula de particions a la unitat de destinació. <b"
+">Marqueu-ho tot si voleu una clonació completa del disc</b>."
 
 msgid "Step 5: Confirm Cloning Configuration"
-msgstr ""
+msgstr "Cinquè pas: Confirmeu la configuració de la clonació"
 
 msgid "Confirm the following cloning configuration."
-msgstr ""
+msgstr "Confirmeu la configuració següent per a la clonació."
 
 msgid "Cloning the following partitions"
-msgstr ""
+msgstr "Clona les particions següents"
 
 msgid "To start cloning, click <b>Next</b>."
-msgstr ""
+msgstr "Per iniciar la clonació, feu clic a <b>Endavant</b>."
 
 #, python-brace-format
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
+"Segur que voleu clonar l'origen de les dades a la unitat {destination_drive}"
+"? Es reemplaçarà tot el contingut existent en aquesta unitat de destinació!"
 
 msgid "Step 6: Cloning Disk"
-msgstr ""
+msgstr "Sisè pas: Clonació del disc"
 
 msgid "Cloning the drive you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
+"S'està clonant a la unitat triada. El procés trigarà en funció de la "
+"quantitat de dades existents a la unitat d'origen."
 
 msgid "Summary of Clone"
-msgstr ""
+msgstr "Resum del procés"
 
 msgid "Clone Summary"
-msgstr ""
+msgstr "Resum de la clonació"
 
 msgid "Confirm the clone summary."
 msgstr ""
 
 msgid "Unable to shutdown Image Explorer"
-msgstr ""
+msgstr "No es pot tancar l'explorador d'imatges"
 
 msgid "Step 1: Select Drive To Backup"
-msgstr ""
+msgstr "Primer pas: Seleccioneu la unitat que voleu copiar"
 
 msgid "Select the <b>source drive</b> that you would like to create a backup image from."
 msgstr ""
+"Seleccioneu la <b>unitat d'origen</b> des d'on voleu crear una còpia de "
+"seguretat."
 
 msgid "Drive"
-msgstr ""
+msgstr "Unitat"
 
 msgid "Capacity"
-msgstr ""
+msgstr "Capacitat"
 
 msgid "Drive Model"
-msgstr ""
+msgstr "Model de la unitat"
 
 msgid "Serial Number"
-msgstr ""
+msgstr "Número de sèrie"
 
 msgid "Partitions"
-msgstr ""
+msgstr "Particions"
 
 msgid "Show hidden devices (for advanced users)"
-msgstr ""
+msgstr "Mostra els dispositius amagats (per a usuaris avançats)"
 
 msgid "Step 2: Select Partitions to Save"
-msgstr ""
+msgstr "Segon pas: Seleccioneu quines particions voleu desar"
 
 msgid "Select which partitions to create a backup of. <b>Leave all partitions selected if you are unsure.</b>"
 msgstr ""
+"Seleccioneu les particions que voleu incloure a la còpia. <b>En cas de dubte "
+"marqueu-les totes.</b>"
 
 msgid "Save"
-msgstr ""
+msgstr "Desa"
 
 msgid "Description"
-msgstr ""
+msgstr "Descripció"
 
 #, python-brace-format
 msgid "Drive {drive_number}"
-msgstr ""
+msgstr "Unitat {drive_number}"
 
 #, python-brace-format
 msgid "Partition {partition_number}"
-msgstr ""
+msgstr "Partició {partition_number}"
 
 msgid "Step 3: Select Destination Drive"
-msgstr ""
+msgstr "Tercer pas: Seleccioneu la unitat de destinació"
 
 msgid "Click on the box below to select the source drive that you would like to create a backup image from."
 msgstr ""
+"Marqueu la unitat d'origen des d'on voleu crear una imatge de còpia de "
+"seguretat."
 
 msgid "Connected directly to my computer"
-msgstr ""
+msgstr "Unitat local en aquest ordinador"
 
 msgid "Shared over a network"
-msgstr ""
+msgstr "Unitat compartida a la xarxa"
 
 msgid "Where would you like to save the image?"
-msgstr ""
+msgstr "On voleu desar la imatge?"
 
 msgid "Windows shared folder (SMB/CIFS, Samba)"
-msgstr ""
+msgstr "Carpeta compartida (SMB/CIFS, Samba)"
 
 msgid "Search network"
-msgstr ""
+msgstr "Cerca a la xarxa"
 
 msgid "Server"
-msgstr ""
+msgstr "Servidor"
 
 msgid "Share location (UNC path)"
-msgstr ""
+msgstr "Recurs compartit (ruta UNC)"
 
 msgid "Username"
-msgstr ""
+msgstr "Nom d'usuari"
 
 msgid "Password"
-msgstr ""
+msgstr "Contrasenya"
 
 msgid "Domain"
-msgstr ""
+msgstr "Domini"
 
 msgid "Version"
-msgstr ""
+msgstr "Versió"
 
 msgid "Remote path"
-msgstr ""
+msgstr "Ruta d'accés a la xarxa"
 
 msgid "Exported path"
-msgstr ""
+msgstr "Ruta d'exportació"
 
 msgid "Identity File"
-msgstr ""
+msgstr "Fitxer d'identitat"
 
 msgid "Optional"
-msgstr ""
+msgstr "Opcional"
 
 msgid "Select network-shared storage location:"
-msgstr ""
+msgstr "Seleccioneu la ruta d'emmagatzematge compartit a la xarxa:"
 
 msgid "Select the partition where the image files will be saved to"
-msgstr ""
+msgstr "Seleccioneu la partició on voleu desar el fitxer d'imatge"
 
 msgid "Partition"
-msgstr ""
+msgstr "Partició"
 
 msgid "Mounting..."
-msgstr ""
+msgstr "S'està muntant..."
 
 msgid "Close this popup to cancel the mount operation."
-msgstr ""
+msgstr "Tanqueu aquesta finestra emergent per cancel·lar l'operació."
 
 msgid "Please ensure the username, password and other fields provided are correct, and try again."
 msgstr ""
+"Assegureu-vos que les credencials inserides d'usuari i contrasenya són "
+"correctes i torneu a provar."
 
 msgid "Must provide either password or SSH identity file."
-msgstr ""
+msgstr "Heu de facilitar una contrasenya vàlida o fitxer SSH."
 
 msgid "Scanning folder for backup images..."
-msgstr ""
+msgstr "S'està escanejant la carpeta de còpies de seguretat..."
 
 #, python-brace-format
 msgid "({timeout_seconds} second timeout)"
@@ -267,31 +312,41 @@ msgstr ""
 
 msgid "Close this popup to cancel scanning the selected folder and subfolders."
 msgstr ""
+"Tanqueu aquesta finestra emergent per cancel·lar l'escaneig de sub/carpetes "
+"seleccionades."
 
 #, python-brace-format
 msgid "Scanning: {filename}"
-msgstr ""
+msgstr "Escanejant: {filename}"
 
 msgid "Error processing the following images:"
-msgstr ""
+msgstr "S'ha produït un error en processar les imatges següents:"
 
 msgid "Unable to fully process the image associated with the following partitions:"
 msgstr ""
+"No s'ha pogut processar correctament la imatge associada a aquestes "
+"particions:"
 
 msgid "Unable to fully process the following image:"
-msgstr ""
+msgstr "No s'ha pogut processar correctament aquesta imatge:"
 
 msgid "Cannot find partition's associated partclone image"
-msgstr ""
+msgstr "No es pot trobar la partició partclone d'imatge associada"
 
 msgid "This can happen when loading images which Clonezilla was unable to completely backup."
 msgstr ""
+"Això pot passar en carregar imatges que el Clonezilla no ha finalitzat "
+"correctament."
 
 msgid "Note: This image format cannot distinguish between failed partclone backup and a user who chose not to backup a partition."
 msgstr ""
+"Nota: Aquest format d'imatge no distingeix entre una còpia del partclone "
+"fallida o quan l'usuari tria no crear una còpia d'una partició."
 
 msgid "Any other filesystems within the image should be restorable as normal."
 msgstr ""
+"La resta de sistemes d'arxius continguts a la imatge s'haurien de poder "
+"restaurar amb normalitat."
 
 msgid "Needs decryption"
 msgstr ""
