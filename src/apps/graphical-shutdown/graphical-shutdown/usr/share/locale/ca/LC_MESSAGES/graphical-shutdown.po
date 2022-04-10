@@ -1,25 +1,27 @@
+# BennyBeat <bennybeat@gmail.com>, 2022.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2021-05-19 03:18+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2022-04-02 07:06+0000\n"
+"Last-Translator: BennyBeat <bennybeat@gmail.com>\n"
+"Language-Team: Catalan <https://hosted.weblate.org/projects/rescuezilla/"
+"graphical-shutdown/ca/>\n"
 "Language: ca\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.12-dev\n"
 
 msgid "End Session"
-msgstr ""
+msgstr "Tanca la sessió"
 
 msgid "Cancel"
-msgstr ""
+msgstr "Cancel·la"
 
 msgid "Shutdown"
-msgstr ""
+msgstr "Tanca"
 
 msgid "Reboot"
-msgstr ""
+msgstr "Reinicia"
 
 msgid "Choose action."
-msgstr ""
+msgstr "Trieu una opció."
