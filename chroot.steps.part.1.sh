@@ -143,7 +143,7 @@ done
 common_pkgs=("discover"
              "laptop-detect"
              "casper"
-             "lupin-casper"
+             #"lupin-casper" is deprecated
              "openbox"
              "lightdm"
              # Firmware package for NVidia cards from ~2009 (newer cards have firmware in the kernel)
@@ -180,7 +180,8 @@ common_pkgs=("discover"
              "arandr"
              "xfce4-terminal"
              "lxpanel"
-             "ttf-ubuntu-font-family"
+             #"ttf-ubuntu-font-family" is deprecated. fonts-ubuntu is the right one.
+             "fonts-ubuntu"
              "alsamixergui"
              "volumeicon-alsa"
              "pm-utils"
@@ -220,7 +221,8 @@ common_pkgs=("discover"
              "jfsutils"
              "wget"
              "exfat-fuse"
-             "exfat-utils"
+             #"exfat-utils" is replaced with exfatprogs
+             "exfatprogs"
              "btrfs-progs"
              "udisks2-btrfs"
              "hfsplus"
