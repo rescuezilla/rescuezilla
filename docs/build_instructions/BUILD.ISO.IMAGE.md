@@ -16,15 +16,15 @@ To construct such an ISO image, an Ubuntu 18.04, or similar Ubuntu-package envir
 # executed by Rescuezilla's TravisCI build bot automatically so is contantly being tested. The exact instructions below
 # sometimes gets out-of-date, especially if your build environment is based on a different version of Debian or Ubuntu.
 
-sudo apt-get update
-sudo apt-get install git-lfs git make sudo \
+sudo apt update
+sudo apt install -f git-lfs git make sudo \
                      rsync debootstrap gettext squashfs-tools dosfstools mtools xorriso \
                      memtest86+ devscripts debhelper checkinstall cmake \
                      grub-efi-amd64-bin grub-efi-ia32-bin grub-pc-bin \
                      shim-signed grub-efi-amd64-signed \
-                     libtool-bin gawk pkg-config comerr-dev docbook-xsl e2fslibs-dev fuse \
-                     libaal-dev libblkid-dev libbsd-dev libext2fs-dev libncurses5-dev \
-                     libncursesw5-dev libntfs-3g88 libreadline-gplv2-dev libreadline5 \
+                     libtool-bin gawk pkg-config comerr-dev docbook-xsl e2fslibs-dev \
+                     libaal-dev libblkid-dev libbsd-dev libncurses5-dev \
+                     libncursesw5-dev readline-common \
                      libreiser4-dev libtinfo-dev libxslt1.1 nilfs-tools ntfs-3g ntfs-3g-dev \
                      quilt sgml-base uuid-dev vmfs-tools xfslibs-dev xfsprogs xml-core \
                      xsltproc ccache

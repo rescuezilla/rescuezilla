@@ -105,6 +105,22 @@ pkgs_specific_to_ubuntu2110_impish=(
                        "lupin-casper"
 )
 
+pkgs_specific_to_ubuntu2204_jammy=(
+			"linux-generic"
+                        "xserver-xorg"
+                        "xserver-xorg-video-all"
+                        "xserver-xorg-video-intel"
+                        "xserver-xorg-video-qxl"
+                        "xserver-xorg-video-mga"
+                        # Packages which may assist users needing to do a GRUB repair (64-bit EFI)
+                       "shim-signed"
+                       "grub-efi-amd64-signed"
+                       "grub-efi-amd64-bin"
+                       "grub-efi-ia32-bin"
+                       # Dependency for partclone-utils' imagemount
+                       "nbdkit"
+)
+
 # Languages on the system
 lang_codes=(
              "ar"
@@ -185,7 +201,7 @@ common_pkgs=("discover"
              "arandr"
              "xfce4-terminal"
              "lxpanel"
-             "ttf-ubuntu-font-family"
+             "fonts-ubuntu"
              "alsamixergui"
              "volumeicon-alsa"
              "pm-utils"
@@ -225,7 +241,7 @@ common_pkgs=("discover"
              "jfsutils"
              "wget"
              "exfat-fuse"
-             "exfat-utils"
+             "exfatprogs"
              "btrfs-progs"
              "udisks2-btrfs"
              "hfsplus"
@@ -253,6 +269,8 @@ elif  [ "$ARCH" == "amd64" ] && [ "$CODENAME" == "focal" ]; then
   apt_pkg_list=("${pkgs_specific_to_ubuntu2004_focal[@]}" "${common_pkgs[@]}")
 elif  [ "$ARCH" == "amd64" ] && [ "$CODENAME" == "impish" ]; then
   apt_pkg_list=("${pkgs_specific_to_ubuntu2110_impish[@]}" "${common_pkgs[@]}")
+elif  [ "$ARCH" == "amd64" ] && [ "$CODENAME" == "jammy" ]; then
+  apt_pkg_list=("${pkgs_specific_to_ubuntu2204_jammy[@]}" "${common_pkgs[@]}")
 else
   echo "Warning: unknown CPU arch $ARCH or Ubuntu release codename $CODENAME"
   exit 1
