@@ -1,7 +1,7 @@
 # BennyBeat <bennybeat@gmail.com>, 2022.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2022-04-02 07:06+0000\n"
+"PO-Revision-Date: 2022-04-13 23:06+0000\n"
 "Last-Translator: BennyBeat <bennybeat@gmail.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/rescuezilla/"
 "graphical-shutdown/ca/>\n"
@@ -18,10 +18,10 @@ msgid "Cancel"
 msgstr "Cancel·la"
 
 msgid "Shutdown"
-msgstr "Tanca"
+msgstr "Tanca l'ordinador"
 
 msgid "Reboot"
-msgstr "Reinicia"
+msgstr "Reinicia l'ordinador"
 
 msgid "Choose action."
 msgstr "Trieu una opció."

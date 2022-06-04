@@ -5,8 +5,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2022-04-10 22:07+0000\n"
-"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
+"PO-Revision-Date: 2022-04-13 23:06+0000\n"
+"Last-Translator: BennyBeat <bennybeat@gmail.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/ca/>\n"
 "Language: ca\n"
@@ -113,7 +113,7 @@ msgstr ""
 "en massa amb la mateixa informació. Simplificant molt, la «imatge del disc» "
 "copia <i>fitxers</i> que necessiten emmagatzematge (com a mínim de forma "
 "temporal) per poder ser restaurats més tard sense implicar cap reemplaçament "
-"d'informació, i  <b>el procés de clonació</b> es realitza al vol i  "
+"d'informació, i <b>el procés de clonació</b> es realitza al vol i "
 "<b>reemplaça tota la informació continguda a la unitat de destinació</b>.\n"
 "\n"
 "Per utilitzar les opcions d'«imatge del disc» en comptes de funcions de "
@@ -165,7 +165,8 @@ msgstr "Sisè pas: Clonació del disc"
 msgid "Cloning the drive you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
 "S'està clonant a la unitat triada. El procés trigarà en funció de la "
-"quantitat de dades existents a la unitat d'origen."
+"velocitat del vostre equip i la quantitat de dades existents a la unitat "
+"d'origen."
 
 msgid "Summary of Clone"
 msgstr "Resum del procés"
@@ -352,17 +353,25 @@ msgid "Needs decryption"
 msgstr ""
 
 msgid "Unknown filesystem"
-msgstr ""
+msgstr "Sistema de fitxers desconegut"
 
 #, python-brace-format
 msgid "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance."
 msgstr ""
+"La informació de la partició estesa a la còpia de seguretat és buida. Si la "
+"còpia de seguretat conté una partició estesa, no es restaurarà correctament. "
+"Tota la informació és accessible, però cal intervenció manual per recuperar "
+"les dades contingudes a la partició estesa. Per a més informació i ajuda, "
+"consulteu {url}."
 
 msgid "The backup's bootloader data is shorter than expected. If the backup contained certain bootloaders like GRUB, during a restore operation Rescuezilla will try and re-install the bootloader."
 msgstr ""
+"Les dades del gestor d'arrencada contingudes a la còpia de seguretat són "
+"inferiors a les esperades. Si la còpia conté determinats gestors com ara "
+"GRUB, el Rescuezilla intentarà restaurar el gestor d'arrencada."
 
 msgid "Step 4: Select Destination Folder"
-msgstr ""
+msgstr "Quart pas: Trieu la carpeta de destinació"
 
 msgid "Click <b>Browse</b> to select the folder on the destination drive where your new backup image will be saved.\n"
 "\n"
@@ -371,244 +380,276 @@ msgstr ""
 
 #, python-brace-format
 msgid "You must select a folder inside {location}"
-msgstr ""
+msgstr "Heu de seleccionar una carpeta pertanyent a {location}"
 
 msgid "Please select a different folder."
-msgstr ""
+msgstr "Trieu altra carpeta diferent."
 
 msgid "The table below lists the backup images that are already in this folder (if any)."
 msgstr ""
+"A continuació es mostren les còpies de seguretat d'aquesta carpeta (si "
+"existeixen)."
 
 msgid "Browse..."
-msgstr ""
+msgstr "Navega..."
 
 msgid "Filename"
-msgstr ""
+msgstr "Nom de fitxer"
 
 msgid "Size"
-msgstr ""
+msgstr "Mida"
 
 msgid "Last modified"
-msgstr ""
+msgstr "Darrera modificació"
 
 msgid "When you are happy with the destination folder, click <b>Next</b>."
-msgstr ""
+msgstr "En seleccionar la carpeta de destinació, feu clic a <b>Endavant</b>."
 
 msgid "Step 5: Name Your Backup"
-msgstr ""
+msgstr "Cinquè pas: Indiqueu un nom"
 
 msgid "Provide a unique name for this backup image, such as the date.  Today's date is automatically entered for you below.\n"
 "\n"
 "You may only use letters, numbers, and dashes in your backup name."
 msgstr ""
+"Assigneu un nom inequívoc i únic per a aquesta còpia de seguretat, com ara "
+"la data.  La data del dia d'avui s'afegeix automàticament.\n"
+"\n"
+"Al nom de la còpia només podeu utilitzar lletres, números i guions."
 
 msgid "Optional: Provide a short description."
-msgstr ""
+msgstr "Opcional: Indiqueu una descripció breu."
 
 msgid "Step 6: Customize Compression Settings"
-msgstr ""
+msgstr "Sisè pas: Seleccioneu el tipus de compressió"
 
 msgid "Customize image compression settings. <b>Don't make any changes if you are unsure.</b>"
 msgstr ""
+"Podeu triar el tipus i grau de compressió. <b>No modifiqueu res si teniu cap "
+"dubte.</b>"
 
 msgid "Compression format: "
-msgstr ""
+msgstr "Mètode de compressió "
 
 msgid "gzip"
-msgstr ""
+msgstr "gzip"
 
 msgid "default"
-msgstr ""
+msgstr "per defecte"
 
 msgid "zstandard"
-msgstr ""
+msgstr "zstandard"
 
 msgid "Uncompressed (Suitable for use with Image Explorer)"
-msgstr ""
+msgstr "Sense compressió (compatible amb l'Explorador d'imatges)"
 
 msgid "Compression level: "
-msgstr ""
+msgstr "Nivell de compressió: "
 
 msgid "Fastest"
-msgstr ""
+msgstr "La més ràpida"
 
 msgid "Best"
-msgstr ""
+msgstr "La millor"
 
 msgid "When you are happy with the compression settings, click <b>Next</b>."
 msgstr ""
+"Un cop seleccioneu la configuració desitjada, feu clic a <b>Endavant</b>."
 
 msgid "Step 7: Confirm Backup Configuration"
-msgstr ""
+msgstr "Setè pas: Confirmeu la configuració de la còpia de seguretat"
 
 msgid "Source drive"
-msgstr ""
+msgstr "Unitat d'origen"
 
 msgid "Backing up the following partition(s)"
-msgstr ""
+msgstr "Es crearà una còpia de seguretat d'aquestes particions"
 
 #, python-brace-format
 msgid "The backup image will be written into folder {dest_dir} on {description}"
 msgstr ""
+"La còpia de seguretat es crearà com a {description} a la carpeta {dest_dir}"
 
 msgid "Confirm the following backup configuration."
-msgstr ""
+msgstr "Confirmeu la configuració següent de la còpia de seguretat."
 
 msgid "On successful completion of the task, perform the following action: "
-msgstr ""
+msgstr "En finalitzar correctament la còpia de seguretat: "
 
 msgid "Do nothing"
-msgstr ""
+msgstr "No facis res"
 
 msgid "Shutdown"
-msgstr ""
+msgstr "Tanca l'ordinador"
 
 msgid "Reboot"
-msgstr ""
+msgstr "Reinicia l'ordinador"
 
 msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
-msgstr ""
+msgstr "Rescat: Ignora sistemes de fitxers inconsistents i sectors defectuosos"
 
 msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
 msgstr ""
+"<b>En habilitar el mode «Rescat» es poden suprimir errors importants. "
+"Utilitzeu-lo amb precaució.</b>"
 
 msgid "To start the backup, click <b>Next</b>."
-msgstr ""
+msgstr "Per iniciar la còpia de seguretat, feu clic a <b>Endavant</b>."
 
 msgid "Step 8: Creating Backup Image"
-msgstr ""
+msgstr "Vuitè pas: Creació de la còpia de seguretat"
 
 msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
+"S'està creant la còpia de seguretat a la ubicació seleccionada. El procés "
+"trigarà en funció de la velocitat del vostre equip i la quantitat de dades "
+"seleccionades a l'origen."
 
 #, python-brace-format
 msgid "Saving: {file}"
-msgstr ""
+msgstr "S'està desant: {file}"
 
 #, python-brace-format
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
 msgstr ""
+"Crea una còpia de seguretat de {partition_name} amb el sistema de fitxers "
+"{filesystem} a: {destination}"
 
 msgid "Summary of Backup"
-msgstr ""
+msgstr "Resum de la còpia de seguretat"
 
 msgid "Confirm the backup summary."
-msgstr ""
+msgstr "Confirmeu el resum de la còpia de seguretat."
 
 msgid "Backup Summary"
-msgstr ""
+msgstr "Resum de la còpia de seguretat"
 
 msgid "An operation is in progress. Do you wish to cancel?"
-msgstr ""
+msgstr "S'està executant una operació. Segur que voleu cancel·lar?"
 
 msgid "Operation cancelled by user."
-msgstr ""
+msgstr "Heu cancel·lat el procés de còpia."
 
 msgid "Rescue option is enabled."
-msgstr ""
+msgstr "S'ha habilitat el mode «Rescat»."
 
 msgid "Error creating backup: "
-msgstr ""
+msgstr "S'ha produït un error en crear la còpia: "
 
 msgid "Failed to write destination file. Please confirm it is valid to create the provided file path, and try again."
 msgstr ""
+"Ha fallat en escriure el fitxer de destinació. Comproveu que la ruta és "
+"vàlida i torneu a provar."
 
 #, python-brace-format
 msgid "Successful backup of swap partition {partition_name}"
 msgstr ""
+"S'ha creat correctament una còpia de seguretat de la partició d'intercanvi "
+"{partition_name}"
 
 #, python-brace-format
 msgid "<b>Failed to backup partition</b> {partition_name}"
-msgstr ""
+msgstr "<b>Ha fallat en crear la còpia de la partició</b> {partition_name}"
 
 #, python-brace-format
 msgid "Successful backup of partition {partition_name}"
 msgstr ""
+"S'ha creat correctament una còpia de seguretat de la partició "
+"{partition_name}"
 
 msgid "Backup saved successfully."
-msgstr ""
+msgstr "S'ha creat la còpia de seguretat correctament."
 
 msgid "Backup succeeded with some errors:"
-msgstr ""
+msgstr "S'ha creat la còpia de seguretat amb errors:"
 
 msgid "Backup operation failed:"
-msgstr ""
+msgstr "Ha fallat el procés de còpia de seguretat:"
 
 msgid "User requested operation to stop."
-msgstr ""
+msgstr "S'ha cancel·lat el procés de forma manual."
 
 #, python-brace-format
 msgid "Operation took {num_minutes} minutes."
-msgstr ""
+msgstr "L'operació ha trigat {num_minutes} minuts."
 
 msgid "To start a new session, click <b>Next</b>"
-msgstr ""
+msgstr "Per iniciar una sessió nova, feu clic a <b>Endavant</b>"
 
 msgid "Step 1: Select Image Location"
-msgstr ""
+msgstr "Primer pas: Seleccioneu la ruta de la còpia de seguretat"
 
 msgid "Where are the image files stored?"
-msgstr ""
+msgstr "On es troben els fitxers d'imatge?"
 
 msgid "Select the partition which contains the image files:"
-msgstr ""
+msgstr "Seleccioneu la partició que conté els fitxers d'imatge:"
 
 msgid "Step 2: Select Backup Image"
-msgstr ""
+msgstr "Segon pas: Seleccioneu la còpia de seguretat"
 
 msgid "Click <b>Browse</b> to select the folder containing image files."
 msgstr ""
+"Feu clic a <b>Navega</b> per seleccionar la carpeta que conté els fitxers "
+"d'imatge."
 
 msgid "Select the image file to restore."
-msgstr ""
+msgstr "Seleccioneu quina imatge voleu restaurar."
 
 msgid "Step 3: Select Drive To Restore"
-msgstr ""
+msgstr "Tercer pas: Seleccioneu la unitat que voleu restaurar"
 
 msgid "Select the destination drive to restore with the selected image."
 msgstr ""
+"Seleccioneu la destinació on sobreescriure les dades existents amb la imatge "
+"triada."
 
 msgid "Step 4: Select Partitions to Restore"
-msgstr ""
+msgstr "Quart pas: Seleccioneu quines particions restaurar"
 
 msgid "Select which partitions from the backup image to restore, and whether to overwrite the partition table. <b>Leave everything selected to completely restore the destination drive.</b>"
 msgstr ""
+"Seleccioneu quines particions existents a la còpia de seguretat voleu "
+"restaurar, i també si voleu reemplaçar la taula de particions. <b>Marqueu-ho "
+"tot si voleu una restauració completa.</b>"
 
 msgid "Selected image"
-msgstr ""
+msgstr "Imatge seleccionada"
 
 msgid "Destination device"
-msgstr ""
+msgstr "Dispositiu de destinació"
 
 msgid "Destination partition"
-msgstr ""
+msgstr "Partició de destinació"
 
 msgid "Overwrite partition table"
-msgstr ""
+msgstr "Reemplaça la taula de particions"
 
 msgid "You will be overwriting the partition table."
-msgstr ""
+msgstr "Esteu a punt de sobreescriure la taula de particions."
 
 msgid "The \"destination partition\" column has been updated using the information stored within the backup image.\n\n<b>If partitions have been resized, new partitions added, or additional operating systems installed <i>since the backup image was created</i>, then the destination drive's partition table will not match the backup image, and overwriting the destination drive's partition table will render these resized and additional partitions permanently inaccessible.</b> If you have not modified the partition table in such a way since creating this backup then overwriting the partition table is completely safe and will have no negative effects."
 msgstr ""
 
 msgid "You will <b>not</b> be overwriting the partition table."
-msgstr ""
+msgstr "<b>No</b> es reemplaçarà la taula de particions."
 
 msgid "The source does not contain a partition table."
-msgstr ""
+msgstr "No s'ha trobat cap taula de particions a l'origen."
 
 msgid "The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table."
 msgstr ""
 
 msgid "No destination partition selected. Use the destination partition drop-down menu to select the destination"
 msgstr ""
+"No s'ha seleccionat cap partició de destinació. Utilitzeu el menú "
+"desplegable per triar la partició de destinació"
 
 msgid "Not restoring this partition"
-msgstr ""
+msgstr "No es restaurarà aquesta partició"
 
 msgid "When you are ready to continue, click <b>Next</b>."
-msgstr ""
+msgstr "Per iniciar l'operació, feu clic a <b>Endavant</b>."
 
 msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
 msgstr ""
@@ -651,13 +692,16 @@ msgid "Will <b>NOT</b> be overwriting partition table"
 msgstr ""
 
 msgid "To start the restore, click <b>Next</b>."
-msgstr ""
+msgstr "Per iniciar la restauració, feu clic a <b>Endavant</b>."
 
 msgid "Restoring From Backup"
 msgstr ""
 
 msgid "Restoring your system from the image you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
+"S'està restaurant la còpia de seguretat des de la imatge que heu "
+"seleccionat. El procés trigarà en funció de la velocitat del vostre equip i "
+"la quantitat de dades d'origen."
 
 msgid "Refreshing partition table"
 msgstr ""
@@ -803,7 +847,7 @@ msgid "Select one or more image(s) to verify."
 msgstr ""
 
 msgid "To begin verification, click <b>Next</b>."
-msgstr ""
+msgstr "Per iniciar la verificació, feu clic a <b>Endavant</b>."
 
 msgid "Verifying Image"
 msgstr ""
