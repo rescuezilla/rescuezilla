@@ -78,7 +78,7 @@ msgid "Clone"
 msgstr "複製"
 
 msgid "Step 1: Understanding Cloning"
-msgstr "第1步：瞭解克隆"
+msgstr "第 1 步：瞭解克隆"
 
 msgid "Please understand how \"cloning\" differs from \"imaging\"."
 msgstr "請瞭解\"克隆\"與\"成像\"有何不同。"
@@ -110,7 +110,7 @@ msgid "Select the <b>destination drive</b> to overwrite."
 msgstr "選擇 <b> 目的地驅動器 </b> 以覆蓋。"
 
 msgid "Step 4: Select Partitions to Clone"
-msgstr "第4步：選擇克隆分區"
+msgstr "第 4 步：選擇克隆分區"
 
 msgid "Select which partitions from the source drive to clone, and whether to overwrite the partition table. <b>Leave everything selected to completely clone the source drive to the destination drive.</b>"
 msgstr "選擇從源驅動器到克隆的分區，以及是否覆蓋分區表。<b>將選擇的一切完全克隆源驅動器留到目的地驅動器。</b>"
@@ -530,7 +530,7 @@ msgid "Select the destination drive to restore with the selected image."
 msgstr "選擇目的地驅動器，用選定的圖像恢復。"
 
 msgid "Step 4: Select Partitions to Restore"
-msgstr "第4步：選擇分區以恢復"
+msgstr "第 4 步：選擇分區以恢復"
 
 msgid "Select which partitions from the backup image to restore, and whether to overwrite the partition table. <b>Leave everything selected to completely restore the destination drive.</b>"
 msgstr "選擇備份圖像中的哪些分區以恢復，以及是否覆蓋分區表。<b>保留所選擇的一切以完全恢復目標驅動器。</b>"
