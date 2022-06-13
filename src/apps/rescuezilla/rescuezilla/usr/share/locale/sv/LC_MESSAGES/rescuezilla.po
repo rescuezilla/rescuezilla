@@ -8,13 +8,14 @@
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021.
 # Allan Nordhøy <epost@anotheragency.no>, 2021.
 # Luna Jernberg <droidbittin@gmail.com>, 2022.
+# Simon N <Observeramera@pm.me>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2022-01-13 12:52+0000\n"
-"Last-Translator: Luna Jernberg <droidbittin@gmail.com>\n"
+"PO-Revision-Date: 2022-04-19 11:07+0000\n"
+"Last-Translator: Simon N <Observeramera@pm.me>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/sv/>\n"
 "Language: sv\n"
@@ -22,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.10.1\n"
+"X-Generator: Weblate 4.12-dev\n"
 
 msgid "Welcome"
 msgstr "Välkommen"
@@ -42,7 +43,7 @@ msgid "Restore"
 msgstr "Återställ"
 
 msgid "Verify Image"
-msgstr ""
+msgstr "Validera bild"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
 msgstr ""
@@ -835,20 +836,20 @@ msgid "Verify"
 msgstr "Verifera"
 
 msgid "Select one or more image(s) to verify."
-msgstr ""
+msgstr "Välj en eller flera bilder att validera."
 
 msgid "To begin verification, click <b>Next</b>."
 msgstr "För att börja verifiera, klicka på <b>Nästa</b>."
 
 msgid "Verifying Image"
-msgstr ""
+msgstr "Validerar bild"
 
 msgid "Verifying the selected image(s)."
-msgstr ""
+msgstr "Validerar den valda bilden(er)"
 
 #, python-brace-format
 msgid "Verifying {image_name}"
-msgstr ""
+msgstr "Validerar {image_name}"
 
 msgid "Summary of Verification"
 msgstr "Sammanfattning av verifiering"
@@ -860,7 +861,7 @@ msgid "Verification Summary"
 msgstr "Verifieringssammanfattning"
 
 msgid "To verify another image, click <b>Back</b>."
-msgstr ""
+msgstr "För att validera en annan bild, klicka <b>Tillbaka</b>."
 
 msgid "✔"
 msgstr "✔"
@@ -881,8 +882,8 @@ msgid "Sfdisk partition table file is present."
 msgstr "Sfdisk partitionstabellfil finns."
 
 msgid "Unable to verify."
-msgstr ""
+msgstr "Kunde inte validera."
 
 #, python-brace-format
 msgid "{partition}: filesystem image successfully verified."
-msgstr ""
+msgstr "{partition}: filsystem bild framgångsrikt validerad."
