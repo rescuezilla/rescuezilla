@@ -105,7 +105,9 @@ pkgs_specific_to_ubuntu2110_impish=(
 
 # Languages on the system
 lang_codes=(
+             "ar"
              "ca"
+             "cs"
              "da"
              "de"
              "el"
@@ -115,11 +117,13 @@ lang_codes=(
              "id"
              "it"
              "he"
+             "hu"
              "ja"
              "nb"
              "pl"
              "pt"
              "ru"
+             "sk"
              "sv"
              "tr"
              "uk"

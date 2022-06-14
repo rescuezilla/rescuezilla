@@ -38,7 +38,9 @@ Note: Rescuezilla does NOT yet _automatically_ shrink partitions to restore to d
 
 Rescuezilla has been translated into the following languages:
 
+* (ar-EG) ﺎﻠﻋﺮﺒﻳﺓ (Translation [in-progress](https://hosted.weblate.org/translate/rescuezilla/-/ar/?offset=1&q=state%3A%3Ctranslated+AND+NOT+has%3Asuggestion&sort_by=-priority%2Cposition&checksum=))
 * Català (ca-ES) (Translation [in-progress](https://hosted.weblate.org/translate/rescuezilla/-/ca/?offset=1&q=state%3A%3Ctranslated+AND+NOT+has%3Asuggestion&sort_by=-priority%2Cposition&checksum=))
+* Čeština (cs-CZ) (Translation [in-progress](https://hosted.weblate.org/translate/rescuezilla/-/cs/?offset=1&q=state%3A%3Ctranslated+AND+NOT+has%3Asuggestion&sort_by=-priority%2Cposition&checksum=))
 * Dansk (da-DK)
 * Deutsch (de-DE)
 * Ελληνικά (el-GR)
@@ -49,11 +51,13 @@ Rescuezilla has been translated into the following languages:
 * Italiano (it-IT)
 * Bahasa Indonesia (id-ID) (Translation [in-progress](https://hosted.weblate.org/translate/rescuezilla/-/id/?offset=1&q=state%3A%3Ctranslated+AND+NOT+has%3Asuggestion&sort_by=-priority%2Cposition&checksum=))
 * עִברִית (he-IL)
+* Magyar (hu-HU) (Translation [in-progress](https://hosted.weblate.org/translate/rescuezilla/-/hu/?offset=1&q=state%3A%3Ctranslated+AND+NOT+has%3Asuggestion&sort_by=-priority%2Cposition&checksum=))
 * 日本語 (ja-JP)
 * Norsk Bokmål (nb-NO)
 * Polski (pl-PL)
 * Português brasileiro (pt-BR)
 * Русский (ru-RU)
+* Slovenčina (sk-SK) (Translation [in-progress](https://hosted.weblate.org/translate/rescuezilla/-/sk/?offset=1&q=state%3A%3Ctranslated+AND+NOT+has%3Asuggestion&sort_by=-priority%2Cposition&checksum=))
 * Svenska (sv-SE)
 * Türkçe (tr-TR)
 * Українська (uk-UA) (Translation [in-progress](https://hosted.weblate.org/translate/rescuezilla/-/uk/?offset=1&q=state%3A%3Ctranslated+AND+NOT+has%3Asuggestion&sort_by=-priority%2Cposition&checksum=))
