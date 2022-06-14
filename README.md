@@ -38,7 +38,7 @@ Note: Rescuezilla does NOT yet _automatically_ shrink partitions to restore to d
 
 Rescuezilla has been translated into the following languages:
 
-* Català (ca-ES) (available next release)
+* Català (ca-ES) (Translation [in-progress](https://hosted.weblate.org/translate/rescuezilla/-/ca/?offset=1&q=state%3A%3Ctranslated+AND+NOT+has%3Asuggestion&sort_by=-priority%2Cposition&checksum=))
 * Dansk (da-DK)
 * Deutsch (de-DE)
 * Ελληνικά (el-GR)
@@ -47,16 +47,16 @@ Rescuezilla has been translated into the following languages:
 * Français (fr-FR)
 * 한국어 (ko-KR)
 * Italiano (it-IT)
-* Bahasa Indonesia (id-ID) (Translation in-progress)
+* Bahasa Indonesia (id-ID) (Translation [in-progress](https://hosted.weblate.org/translate/rescuezilla/-/id/?offset=1&q=state%3A%3Ctranslated+AND+NOT+has%3Asuggestion&sort_by=-priority%2Cposition&checksum=))
 * עִברִית (he-IL)
 * 日本語 (ja-JP)
-* Norsk Bokmål (nb-NO) (Translation in-progress)
+* Norsk Bokmål (nb-NO)
 * Polski (pl-PL)
 * Português brasileiro (pt-BR)
 * Русский (ru-RU)
 * Svenska (sv-SE)
 * Türkçe (tr-TR)
-* Українська (uk-UA) (Translation in-progress)
+* Українська (uk-UA) (Translation [in-progress](https://hosted.weblate.org/translate/rescuezilla/-/uk/?offset=1&q=state%3A%3Ctranslated+AND+NOT+has%3Asuggestion&sort_by=-priority%2Cposition&checksum=))
 * Tiếng Việt (vi-VN)
 * 中文(简体) (zh-CN)
 * 中文(繁體) (zh-Hant)
