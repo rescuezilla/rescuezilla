@@ -239,9 +239,9 @@ class Handler:
             self.network_protocol_combobox_changed(combobox)
 
         # Post action comboboxes don't have signal handlers so no need to trigger anything
-        self.builder.get_object("backup_step7_perform_action_combobox").set_active(0)
-        self.builder.get_object("restore_step5_perform_action_combobox").set_active(0)
-        self.builder.get_object("clone_step5_perform_action_combobox").set_active(0)
+        self.builder.get_object("backup_step8_perform_action_combobox").set_active(0)
+        self.builder.get_object("restore_step6_perform_action_combobox").set_active(0)
+        self.builder.get_object("clone_step6_perform_action_combobox").set_active(0)
 
     def display_backup_wizard(self, button):
         self.mode = Mode.BACKUP
@@ -410,10 +410,9 @@ class Handler:
                 elif self.current_page == Page.BACKUP_CONFIRM_CONFIGURATION:
                     self.current_page = Page.BACKUP_PROGRESS
                     self.builder.get_object("backup_tabs").set_current_page(7)
-                    self.post_task_action = Utility.get_combobox_key(self.builder.get_object("backup_step7_perform_action_combobox"))
                     self.backup_manager.update_backup_progress_bar(0)
                     is_rescue = self.get_rescue_state()
-                    self.backup_manager.start_backup(self.selected_drive_key, self.partitions_to_backup, self.drive_query.drive_state, self.dest_dir, self.backup_notes, self.compression_dict, is_rescue, self.post_task_action, self._on_operation_completed_callback)
+                    self.backup_manager.start_backup(self.selected_drive_key, self.partitions_to_backup, self.drive_query.drive_state, self.dest_dir, self.backup_notes, self.compression_dict, is_rescue, self._on_operation_completed_callback)
                     # Disable back/next button until the restore completes
                     self.builder.get_object("button_next").set_sensitive(False)
                     self.builder.get_object("button_back").set_sensitive(False)
@@ -519,7 +518,6 @@ class Handler:
                     # Disable back/next button until the restore completes
                     self.builder.get_object("button_next").set_sensitive(False)
                     self.builder.get_object("button_back").set_sensitive(False)
-                    self.post_task_action = Utility.get_combobox_key(self.builder.get_object("restore_step5_perform_action_combobox"))
                     AreYouSureModalPopup(self.builder,
                                          _("Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!").format(destination_drive = self.restore_destination_drive),
                                          self._restore_confirmation_callback)
@@ -678,8 +676,6 @@ class Handler:
                     # Disable back/next button until the clone completes
                     self.builder.get_object("button_next").set_sensitive(False)
                     self.builder.get_object("button_back").set_sensitive(False)
-                    self.post_task_action = Utility.get_combobox_key(
-                        self.builder.get_object("clone_step5_perform_action_combobox"))
                     AreYouSureModalPopup(self.builder,
                                          _("Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!").format(
                                              destination_drive=self.clone_destination_drive),
@@ -921,7 +917,6 @@ class Handler:
                 self.restore_manager.start_restore(self.selected_image, self.restore_destination_drive,
                                                    self.partitions_to_restore, self.is_overwriting_partition_table,
                                                    is_rescue,
-                                                   self.post_task_action,
                                                    self._on_operation_completed_callback)
             else:
                 self.restore_manager.update_progress_bar(0)
@@ -931,7 +926,6 @@ class Handler:
                                                drive_state=self.drive_query.drive_state,
                                                is_overwriting_partition_table=self.is_overwriting_partition_table,
                                                is_rescue=is_rescue,
-                                               post_task_action=self.post_task_action,
                                                completed_callback=self._on_operation_completed_callback)
             # Display the Patreon call-to-action.
             self.set_patreon_call_to_action_visible(True)
@@ -950,7 +944,6 @@ class Handler:
                                            drive_state=self.drive_query.drive_state,
                                            is_overwriting_partition_table=self.is_overwriting_partition_table,
                                            is_rescue=is_rescue,
-                                           post_task_action=self.post_task_action,
                                            completed_callback=self._on_operation_completed_callback)
             # Display the Patreon call-to-action.
             self.set_patreon_call_to_action_visible(True)

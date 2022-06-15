@@ -72,7 +72,6 @@ class BackupManager:
                      backup_notes,
                      compression_dict,
                      is_rescue,
-                     post_task_action,
                      completed_backup_callback,
                      metadata_only_image_to_annotate=None,
                      on_separate_thread=True):
@@ -83,7 +82,6 @@ class BackupManager:
         self.backup_notes = backup_notes
         self.compression_dict = compression_dict
         self.is_rescue = is_rescue
-        self.post_task_action = post_task_action
         self.partitions_to_backup = partitions_to_backup
         # Entire machine's drive state
         # TODO: This is a crutch that ideally will be removed. It's very bad from an abstraction perspective, and
@@ -1036,10 +1034,10 @@ class BackupManager:
                     error = ErrorMessageModalPopup(self.builder, self.summary_message, error_heading=heading)
 
                 self.summary_message += duration_message + "\n"
-
-                if self.post_task_action != "DO_NOTHING":
+                post_task_action = Utility.get_combobox_key(self.builder.get_object("backup_step8_perform_action_combobox"))
+                if post_task_action != "DO_NOTHING":
                     if succeeded:
-                        has_scheduled, msg = Utility.schedule_shutdown_reboot(self.post_task_action)
+                        has_scheduled, msg = Utility.schedule_shutdown_reboot(post_task_action)
                         self.summary_message += "\n" + msg
                     else:
                         self.summary_message += "\n" + _("Shutdown/Reboot cancelled due to errors.")

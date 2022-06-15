@@ -55,14 +55,13 @@ class CloneManager:
             return self.clone_in_progress
 
     def start_clone(self, image, clone_destination_drive, clone_mapping_dict, drive_state,
-                    is_overwriting_partition_table, is_rescue, post_task_action, completed_callback):
+                    is_overwriting_partition_table, is_rescue, completed_callback):
         self.clone_timestart = datetime.now()
         self.image = image
         self.clone_destination_drive = clone_destination_drive
         self.clone_mapping_dict = clone_mapping_dict
         self.is_overwriting_partition_table = is_overwriting_partition_table
         self.is_rescue = is_rescue
-        self.post_task_action = post_task_action
         self.completed_callback = completed_callback
         GLib.idle_add(self.restore_manager.update_progress_bar, 0)
         # Entire machine's drive state
@@ -138,10 +137,10 @@ class CloneManager:
             GLib.idle_add(self.completed_clone, False, "Unsupported image")
             return
         # self, selected_drive_key, partitions_to_backup, drive_state, dest_dir, backup_notes,
-        #                      compression_dict, post_task_action, completed_backup_callback, on_separate_thread=True
+        #                      compression_dict, completed_backup_callback, on_separate_thread=True
         #
         # clone_destination_drive, clone_mapping_dict, is_overwriting_partition_table,
-        #                       post_task_action, completed_callback
+        #                       completed_callback
 
         partitions_to_backup = self.image.get_partitions_to_backup(self.clone_mapping_dict.keys())
         is_success, message = self.backup_manager.start_backup(selected_drive_key=self.image.long_device_node,
@@ -151,7 +150,6 @@ class CloneManager:
                                                                backup_notes="",
                                                                compression_dict={"format": "uncompressed", "level": None},
                                                                is_rescue=self.is_rescue,
-                                                               post_task_action="DO_NOTHING",
                                                                completed_backup_callback=CloneManager._ignore_suboperation_callback,
                                                                metadata_only_image_to_annotate = self.image,
                                                                on_separate_thread=False)
@@ -166,13 +164,12 @@ class CloneManager:
         self.image.scan_dummy_images_and_annotate(self.temp_dir)
 
         # image, restore_destination_drive, restore_mapping_dict, is_overwriting_partition_table,
-        #                       post_task_action, completed_callback, on_separate_thread=True
+        #                       completed_callback, on_separate_thread=True
         is_success, message = self.restore_manager.start_restore(image=self.image,
                                            restore_destination_drive=self.clone_destination_drive,
                                            restore_mapping_dict=self.clone_mapping_dict,
                                            is_overwriting_partition_table=self.is_overwriting_partition_table,
                                            is_rescue=self.is_rescue,
-                                           post_task_action="DO_NOTHING",
                                            completed_callback = CloneManager._ignore_suboperation_callback,
                                            on_separate_thread = False)
         with self.summary_message_lock and self.restore_manager.summary_message_lock:
@@ -214,9 +211,10 @@ class CloneManager:
             print("Failure")
         with self.summary_message_lock:
             self.summary_message += "\n" + _("Operation took {num_minutes} minutes.").format(num_minutes=duration_minutes) + "\n"
-            if self.post_task_action != "DO_NOTHING":
+            post_task_action = Utility.get_combobox_key(self.builder.get_object("clone_step6_perform_action_combobox"))
+            if post_task_action != "DO_NOTHING":
                 if succeeded:
-                    has_scheduled, msg = Utility.schedule_shutdown_reboot(self.post_task_action)
+                    has_scheduled, msg = Utility.schedule_shutdown_reboot(post_task_action)
                     self.summary_message += "\n" + msg
                 else:
                     self.summary_message += "\n" + _("Shutdown/Reboot cancelled due to errors.")

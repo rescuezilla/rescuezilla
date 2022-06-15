@@ -77,7 +77,6 @@ class RestoreManager:
                       restore_mapping_dict,
                       is_overwriting_partition_table,
                       is_rescue,
-                      post_task_action,
                       completed_callback,
                       on_separate_thread=True):
         self.restore_timestart = datetime.now()
@@ -90,7 +89,6 @@ class RestoreManager:
         self.restore_mapping_dict = restore_mapping_dict
         self.is_overwriting_partition_table = is_overwriting_partition_table
         self.is_rescue = is_rescue
-        self.post_task_action = post_task_action
         self.completed_callback = completed_callback
         self.logger = Logger("/tmp/rescuezilla.log." + datetime.now().strftime("%Y%m%dT%H%M%S") + ".txt")
         GLib.idle_add(self.update_progress_bar, 0)
@@ -1387,9 +1385,10 @@ class RestoreManager:
                 print("Failure")
             with self.summary_message_lock:
                 self.summary_message += "\n" + _("Operation took {num_minutes} minutes.").format(num_minutes=duration_minutes) + "\n"
-                if self.post_task_action != "DO_NOTHING":
+                post_task_action = Utility.get_combobox_key(self.builder.get_object("restore_step6_perform_action_combobox"))
+                if post_task_action != "DO_NOTHING":
                     if succeeded:
-                        has_scheduled, msg = Utility.schedule_shutdown_reboot(self.post_task_action)
+                        has_scheduled, msg = Utility.schedule_shutdown_reboot(post_task_action)
                         self.summary_message += "\n" + msg
                     else:
                         self.summary_message += "\n" + _("Shutdown/Reboot cancelled due to errors.")

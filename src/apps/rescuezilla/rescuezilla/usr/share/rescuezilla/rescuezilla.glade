@@ -2286,49 +2286,6 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkBox">
-                                            <property name="visible">True</property>
-                                            <property name="can-focus">False</property>
-                                            <child>
-                                              <object class="GtkLabel" id="backup_step7_perform_action_label">
-                                                <property name="visible">True</property>
-                                                <property name="can-focus">False</property>
-                                                <property name="label" translatable="yes">On successful completion of the task, perform the following action: </property>
-                                                <property name="use-markup">True</property>
-                                                <property name="wrap">True</property>
-                                              </object>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="fill">False</property>
-                                                <property name="position">0</property>
-                                              </packing>
-                                            </child>
-                                            <child>
-                                              <object class="GtkComboBox" id="backup_step7_perform_action_combobox">
-                                                <property name="visible">True</property>
-                                                <property name="can-focus">False</property>
-                                                <property name="model">post_operation_action_list</property>
-                                                <child>
-                                                  <object class="GtkCellRendererText" id="backup_network_cellrenderertext1"/>
-                                                  <attributes>
-                                                    <attribute name="text">1</attribute>
-                                                  </attributes>
-                                                </child>
-                                              </object>
-                                              <packing>
-                                                <property name="expand">True</property>
-                                                <property name="fill">True</property>
-                                                <property name="position">1</property>
-                                              </packing>
-                                            </child>
-                                          </object>
-                                          <packing>
-                                            <property name="expand">False</property>
-                                            <property name="fill">False</property>
-                                            <property name="position">4</property>
-                                          </packing>
-                                        </child>
-                                        <child>
                                           <object class="GtkLabel" id="backup_step7_start_backup_label">
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
@@ -2341,7 +2298,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                           <packing>
                                             <property name="expand">False</property>
                                             <property name="fill">True</property>
-                                            <property name="position">5</property>
+                                            <property name="position">4</property>
                                           </packing>
                                         </child>
                                       </object>
@@ -2477,6 +2434,49 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                           </packing>
                                         </child>
                                         <child>
+                                          <object class="GtkBox" id="backup_step8_perform_action_box">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <child>
+                                              <object class="GtkLabel" id="backup_step8_perform_action_label">
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">False</property>
+                                                <property name="label" translatable="yes">On successful completion of the task, perform the following action: </property>
+                                                <property name="use-markup">True</property>
+                                                <property name="wrap">True</property>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">False</property>
+                                                <property name="position">0</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkComboBox" id="backup_step8_perform_action_combobox">
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">False</property>
+                                                <property name="model">post_operation_action_list</property>
+                                                <child>
+                                                  <object class="GtkCellRendererText" id="backup_network_cellrenderertext1"/>
+                                                  <attributes>
+                                                    <attribute name="text">1</attribute>
+                                                  </attributes>
+                                                </child>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">True</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">1</property>
+                                              </packing>
+                                            </child>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">False</property>
+                                            <property name="position">2</property>
+                                          </packing>
+                                        </child>
+                                        <child>
                                           <object class="GtkLinkButton" id="backup_step8_patreon_linkbutton">
                                             <property name="label" translatable="yes">Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed.</property>
                                             <property name="visible">True</property>
@@ -2490,7 +2490,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                           <packing>
                                             <property name="expand">False</property>
                                             <property name="fill">True</property>
-                                            <property name="position">2</property>
+                                            <property name="position">3</property>
                                           </packing>
                                         </child>
                                       </object>
@@ -4198,49 +4198,6 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                               </packing>
                                             </child>
                                             <child>
-                                              <object class="GtkBox">
-                                                <property name="visible">True</property>
-                                                <property name="can-focus">False</property>
-                                                <child>
-                                                  <object class="GtkLabel" id="restore_step5_perform_action_label">
-                                                    <property name="visible">True</property>
-                                                    <property name="can-focus">False</property>
-                                                    <property name="label" translatable="yes">On successful completion of the task, perform the following action: </property>
-                                                    <property name="use-markup">True</property>
-                                                    <property name="wrap">True</property>
-                                                  </object>
-                                                  <packing>
-                                                    <property name="expand">False</property>
-                                                    <property name="fill">False</property>
-                                                    <property name="position">0</property>
-                                                  </packing>
-                                                </child>
-                                                <child>
-                                                  <object class="GtkComboBox" id="restore_step5_perform_action_combobox">
-                                                    <property name="visible">True</property>
-                                                    <property name="can-focus">False</property>
-                                                    <property name="model">post_operation_action_list</property>
-                                                    <child>
-                                                      <object class="GtkCellRendererText" id="backup_network_cellrenderertext2"/>
-                                                      <attributes>
-                                                        <attribute name="text">1</attribute>
-                                                      </attributes>
-                                                    </child>
-                                                  </object>
-                                                  <packing>
-                                                    <property name="expand">True</property>
-                                                    <property name="fill">True</property>
-                                                    <property name="position">1</property>
-                                                  </packing>
-                                                </child>
-                                              </object>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="fill">False</property>
-                                                <property name="position">4</property>
-                                              </packing>
-                                            </child>
-                                            <child>
                                               <object class="GtkLabel" id="restore_step5_start_restore_label">
                                                 <property name="visible">True</property>
                                                 <property name="can-focus">False</property>
@@ -4253,7 +4210,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                               <packing>
                                                 <property name="expand">False</property>
                                                 <property name="fill">True</property>
-                                                <property name="position">5</property>
+                                                <property name="position">4</property>
                                               </packing>
                                             </child>
                                           </object>
@@ -4394,10 +4351,53 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                               </packing>
                                             </child>
                                             <child>
+                                              <object class="GtkBox" id="restore_step6_perform_action_box">
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">False</property>
+                                                <child>
+                                                  <object class="GtkLabel" id="restore_step6_perform_action_label">
+                                                    <property name="visible">True</property>
+                                                    <property name="can-focus">False</property>
+                                                    <property name="label" translatable="yes">On successful completion of the task, perform the following action: </property>
+                                                    <property name="use-markup">True</property>
+                                                    <property name="wrap">True</property>
+                                                  </object>
+                                                  <packing>
+                                                    <property name="expand">False</property>
+                                                    <property name="fill">False</property>
+                                                    <property name="position">0</property>
+                                                  </packing>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkComboBox" id="restore_step6_perform_action_combobox">
+                                                    <property name="visible">True</property>
+                                                    <property name="can-focus">False</property>
+                                                    <property name="model">post_operation_action_list</property>
+                                                    <child>
+                                                      <object class="GtkCellRendererText" id="backup_network_cellrenderertext2"/>
+                                                      <attributes>
+                                                        <attribute name="text">1</attribute>
+                                                      </attributes>
+                                                    </child>
+                                                  </object>
+                                                  <packing>
+                                                    <property name="expand">True</property>
+                                                    <property name="fill">True</property>
+                                                    <property name="position">1</property>
+                                                  </packing>
+                                                </child>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">False</property>
+                                                <property name="position">2</property>
+                                              </packing>
+                                            </child>
+                                            <child>
                                               <object class="GtkLinkButton" id="restore_step6_patreon_linkbutton">
                                                 <property name="label" translatable="yes">Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed.</property>
                                                 <property name="visible">True</property>
-                                                <property name="can-focus">False</property>
+                                                <property name="can-focus">True</property>
                                                 <property name="receives-default">True</property>
                                                 <property name="halign">center</property>
                                                 <property name="relief">none</property>
@@ -4407,7 +4407,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                               <packing>
                                                 <property name="expand">False</property>
                                                 <property name="fill">True</property>
-                                                <property name="position">2</property>
+                                                <property name="position">3</property>
                                               </packing>
                                             </child>
                                           </object>
@@ -5783,7 +5783,6 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                         <property name="ypad">0</property>
                                                         <property name="use-markup">True</property>
                                                         <property name="wrap">True</property>
-                                                        <property name="selectable">False</property>
                                                         <property name="track-visited-links">False</property>
                                                         <property name="yalign">0.5</property>
                                                       </object>
@@ -6868,49 +6867,6 @@ To use the "imaging" wizards, click &lt;b&gt;Back&lt;/b&gt; and select &lt;b&gt;
                                           </packing>
                                         </child>
                                         <child>
-                                          <object class="GtkBox">
-                                            <property name="visible">True</property>
-                                            <property name="can-focus">False</property>
-                                            <child>
-                                              <object class="GtkLabel" id="clone_step5_perform_action_label">
-                                                <property name="visible">True</property>
-                                                <property name="can-focus">False</property>
-                                                <property name="label" translatable="yes">On successful completion of the task, perform the following action: </property>
-                                                <property name="use-markup">True</property>
-                                                <property name="wrap">True</property>
-                                              </object>
-                                              <packing>
-                                                <property name="expand">False</property>
-                                                <property name="fill">False</property>
-                                                <property name="position">0</property>
-                                              </packing>
-                                            </child>
-                                            <child>
-                                              <object class="GtkComboBox" id="clone_step5_perform_action_combobox">
-                                                <property name="visible">True</property>
-                                                <property name="can-focus">False</property>
-                                                <property name="model">post_operation_action_list</property>
-                                                <child>
-                                                  <object class="GtkCellRendererText" id="backup_network_cellrenderertext7"/>
-                                                  <attributes>
-                                                    <attribute name="text">1</attribute>
-                                                  </attributes>
-                                                </child>
-                                              </object>
-                                              <packing>
-                                                <property name="expand">True</property>
-                                                <property name="fill">True</property>
-                                                <property name="position">1</property>
-                                              </packing>
-                                            </child>
-                                          </object>
-                                          <packing>
-                                            <property name="expand">False</property>
-                                            <property name="fill">False</property>
-                                            <property name="position">4</property>
-                                          </packing>
-                                        </child>
-                                        <child>
                                           <object class="GtkLabel" id="clone_step5_begin_clone_label">
                                             <property name="visible">True</property>
                                             <property name="can-focus">False</property>
@@ -6923,7 +6879,7 @@ To use the "imaging" wizards, click &lt;b&gt;Back&lt;/b&gt; and select &lt;b&gt;
                                           <packing>
                                             <property name="expand">False</property>
                                             <property name="fill">True</property>
-                                            <property name="position">5</property>
+                                            <property name="position">4</property>
                                           </packing>
                                         </child>
                                       </object>
@@ -7057,6 +7013,49 @@ To use the "imaging" wizards, click &lt;b&gt;Back&lt;/b&gt; and select &lt;b&gt;
                                           </packing>
                                         </child>
                                         <child>
+                                          <object class="GtkBox" id="clone_step6_perform_action_box">
+                                            <property name="visible">True</property>
+                                            <property name="can-focus">False</property>
+                                            <child>
+                                              <object class="GtkLabel" id="clone_step6_perform_action_label">
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">False</property>
+                                                <property name="label" translatable="yes">On successful completion of the task, perform the following action: </property>
+                                                <property name="use-markup">True</property>
+                                                <property name="wrap">True</property>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">False</property>
+                                                <property name="fill">False</property>
+                                                <property name="position">0</property>
+                                              </packing>
+                                            </child>
+                                            <child>
+                                              <object class="GtkComboBox" id="clone_step6_perform_action_combobox">
+                                                <property name="visible">True</property>
+                                                <property name="can-focus">False</property>
+                                                <property name="model">post_operation_action_list</property>
+                                                <child>
+                                                  <object class="GtkCellRendererText" id="backup_network_cellrenderertext7"/>
+                                                  <attributes>
+                                                    <attribute name="text">1</attribute>
+                                                  </attributes>
+                                                </child>
+                                              </object>
+                                              <packing>
+                                                <property name="expand">True</property>
+                                                <property name="fill">True</property>
+                                                <property name="position">1</property>
+                                              </packing>
+                                            </child>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">False</property>
+                                            <property name="position">2</property>
+                                          </packing>
+                                        </child>
+                                        <child>
                                           <object class="GtkLinkButton" id="clone_step6_patreon_linkbutton">
                                             <property name="label" translatable="yes">Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed.</property>
                                             <property name="visible">True</property>
@@ -7070,7 +7069,7 @@ To use the "imaging" wizards, click &lt;b&gt;Back&lt;/b&gt; and select &lt;b&gt;
                                           <packing>
                                             <property name="expand">False</property>
                                             <property name="fill">True</property>
-                                            <property name="position">2</property>
+                                            <property name="position">3</property>
                                           </packing>
                                         </child>
                                       </object>
