@@ -107,6 +107,7 @@ class Handler:
         self.compression_tool_list = self.builder.get_object("compression_tool_list")
         self.compression_tool_list.append(["gzip", _("gzip") + " " + "(" + _("default") + ")"])
         self.compression_tool_list.append(["zstd", _("zstandard")])
+        self.compression_tool_list.append(["bzip2", _("bzip2")])
         self.compression_tool_list.append(["uncompressed", _("Uncompressed (Suitable for use with Image Explorer)")])
         compression_format_combobox = self.builder.get_object("backup_step6_compression_format_combobox")
         compression_format_combobox.set_active(0)
@@ -1160,6 +1161,12 @@ class Handler:
                 range = (1, 19)
                 # Default compression for zstd is 3
                 default_value = 3
+            elif compression_key == "bzip2":
+                compression_level_box.set_visible(True)
+                range = (1, 9)
+                # Default compression for bzip2 is 9
+                default_value = 9
+
 
         compression_level_scale.clear_marks()
         compression_level_scale.set_range(range[0], range[1])

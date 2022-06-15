@@ -756,6 +756,8 @@ class Utility:
             return "gz"
         elif format == "zstd":
             return "zst"
+        elif format == "bzip2":
+            return "bz2"
         elif format == "uncompressed":
             return "uncomp"
         else:
@@ -771,6 +773,8 @@ class Utility:
         elif format == "zstd":
             # Set number of threads to 0 to autodetect number of physical cores
             return ["zstd", "--stdout", level, "--threads=0"]
+        elif format == "bzip2":
+            return ["pbzip2", "--stdout", level]
         elif format == "uncompressed":
             return ["cat", "-"]
         else:
