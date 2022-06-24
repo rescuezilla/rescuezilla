@@ -1,11 +1,11 @@
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021.
-# 池边树下 <mzky@163.com>, 2021.
+# 池边树下 <mzky@163.com>, 2021, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2021-12-03 02:51+0000\n"
+"PO-Revision-Date: 2022-06-24 01:21+0000\n"
 "Last-Translator: 池边树下 <mzky@163.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
 "rescuezilla/rescuezilla/zh_Hant/>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.10-dev\n"
+"X-Generator: Weblate 4.13.1-dev\n"
 
 msgid "Welcome"
 msgstr "歡迎"
@@ -191,7 +191,7 @@ msgstr "驅動器{drive_number}"
 
 #, python-brace-format
 msgid "Partition {partition_number}"
-msgstr "分區[partition_number}"
+msgstr "分區{partition_number}"
 
 msgid "Step 3: Select Destination Drive"
 msgstr "第 3 步：選擇目的地驅動器"
@@ -270,7 +270,7 @@ msgstr "掃描資料夾以檢視備份影像..."
 
 #, python-brace-format
 msgid "({timeout_seconds} second timeout)"
-msgstr "（[timeout_seconds]第二次超時）"
+msgstr "({timeout_seconds}第二次超時）"
 
 msgid "Close this popup to cancel scanning the selected folder and subfolders."
 msgstr "關閉此彈出視窗以取消掃描選擇的資料夾和子資料夾。"
@@ -309,8 +309,9 @@ msgstr "未知檔案系統"
 #, python-brace-format
 msgid "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance."
 msgstr ""
-"備份的擴展分區資訊為空。如果備份包含擴展分區，則無法正確恢復。所有數據仍完全可恢復，但需要人工干預才能在擴展分區內完全恢復數據。請諮詢[網址]以獲取資訊和"
-"説明。"
+"備份的擴展分區資訊為空。如果備份包含擴展分區，則無法正確恢復。所有數據仍完全"
+"可恢復，但需要人工干預才能在擴展分區內完全恢復數據。請諮詢 "
+"{url}以獲取資訊和説明。"
 
 msgid "The backup's bootloader data is shorter than expected. If the backup contained certain bootloaders like GRUB, during a restore operation Rescuezilla will try and re-install the bootloader."
 msgstr "備份的引導載入器數據比預期的要短。如果備份包含某些引導載入器（如 GRUB），則在恢復操作期間，救援團隊將嘗試重新安裝引導載入器。"
@@ -475,15 +476,15 @@ msgstr "未能編寫目標檔。請確認創建所提供的文件路徑有效，
 
 #, python-brace-format
 msgid "Successful backup of swap partition {partition_name}"
-msgstr "交換分割區的成功備份[partition_name}"
+msgstr "交換分割區的成功備份 {partition_name}"
 
 #, python-brace-format
 msgid "<b>Failed to backup partition</b> {partition_name}"
-msgstr "<b>未能備份分割區</b>[partition_name}"
+msgstr "<b>未能備份分割區</b> {partition_name}"
 
 #, python-brace-format
 msgid "Successful backup of partition {partition_name}"
-msgstr "分割區的成功備份[partition_name}"
+msgstr "分割區的成功備份{partition_name}"
 
 msgid "Backup saved successfully."
 msgstr "備份保存成功。"
@@ -499,7 +500,7 @@ msgstr "使用者要求停止操作。"
 
 #, python-brace-format
 msgid "Operation took {num_minutes} minutes."
-msgstr "操作花了[num_minutes]分鐘。"
+msgstr "操作花了{num_minutes}分鐘。"
 
 msgid "To start a new session, click <b>Next</b>"
 msgstr "要開始新會話，請單擊 <b> 下一個 </b>"
@@ -582,7 +583,9 @@ msgstr "掃描和卸載任何邏輯卷管理器（LVM）邏輯卷。。。"
 
 #, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
-msgstr "源分區表的最終分區（[源]：[source_size]位元組）必須完全指目的地磁碟內的區域（[destination_size] 位元組）。"
+msgstr ""
+"源分區表的最終分區（ {source}：{source_size} "
+"bytes）必須完全指目的地磁碟內的區域（{destination_size} bytes）。"
 
 #, python-brace-format
 msgid "Rescuezilla cannot yet automatically shrink partitions to restore from large disks to smaller disks. The final partition currently must always completely reside within the destination disk.\n"
