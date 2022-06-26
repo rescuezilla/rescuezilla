@@ -2867,7 +2867,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             <property name="margin-bottom">15</property>
                                                             <property name="shadow-type">in</property>
                                                             <child>
-                                                            <object class="GtkTreeView" id="restore_step4_mount_partition_selection_treeview">
+                                                            <object class="GtkTreeView" id="restore_step1_mount_partition_selection_treeview">
                                                             <property name="visible">True</property>
                                                             <property name="can-focus">True</property>
                                                             <property name="hexpand">True</property>
