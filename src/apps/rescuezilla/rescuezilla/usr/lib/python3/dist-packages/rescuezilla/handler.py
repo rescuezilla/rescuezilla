@@ -159,6 +159,8 @@ class Handler:
             'network_ssh_idfile': {},
             'network_ssh_idfile_box': {},
             'network_ssh_idfile_label': {},
+            'network_port_label': {},
+            'network_port': {},
         }
         for mode in NETWORK_UI_WIDGET_MODES:
             for prefix in self.network_protocol_widget_dict.keys():
@@ -1069,6 +1071,9 @@ class Handler:
                 self.network_protocol_widget_dict['network_version_combobox'][mode].set_visible(True)
                 self.network_protocol_widget_dict['network_ssh_idfile_label'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_ssh_idfile_box'][mode].set_visible(False)
+                self.network_protocol_widget_dict['network_port_label'][mode].set_visible(False)
+                self.network_protocol_widget_dict['network_port_label'][mode].set_text(_("Port"))
+                self.network_protocol_widget_dict['network_port'][mode].set_visible(False)
         elif network_protocol_key == "SSH":
             for mode in NETWORK_UI_WIDGET_MODES:
                 self.network_protocol_widget_dict['network_server_label'][mode].set_visible(True)
@@ -1090,6 +1095,9 @@ class Handler:
                 self.network_protocol_widget_dict['network_ssh_idfile_label'][mode].set_visible(True)
                 self.network_protocol_widget_dict['network_ssh_idfile_label'][mode].set_text(_("Identity File"))
                 self.network_protocol_widget_dict['network_ssh_idfile_box'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_port_label'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_port_label'][mode].set_text(_("Port"))
+                self.network_protocol_widget_dict['network_port'][mode].set_visible(True)
         elif network_protocol_key == "NFS":
             for mode in NETWORK_UI_WIDGET_MODES:
                 self.network_protocol_widget_dict['network_server_label'][mode].set_visible(True)
@@ -1108,7 +1116,9 @@ class Handler:
                 self.network_protocol_widget_dict['network_version_combobox'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_ssh_idfile_label'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_ssh_idfile_box'][mode].set_visible(False)
-
+                self.network_protocol_widget_dict['network_port_label'][mode].set_visible(False)
+                self.network_protocol_widget_dict['network_port_label'][mode].set_text(_("Port"))
+                self.network_protocol_widget_dict['network_port'][mode].set_visible(False)
         else:
             raise ValueError("Unknown network protocol")
         return

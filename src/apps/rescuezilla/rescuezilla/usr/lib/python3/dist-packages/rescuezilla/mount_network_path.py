@@ -43,7 +43,9 @@ class MountNetworkPath:
             'domain': network_widget_dict["network_domain"][mode].get_text().strip(),
             'version': Utility.get_combobox_key(network_widget_dict["network_version_combobox"][mode]),
             'ssh_idfile': network_widget_dict["network_ssh_idfile"][mode].get_text().strip(),
-            'destination_path': destination_path}
+            'destination_path': destination_path,
+            'port': network_widget_dict["network_port"][mode].get_text().strip(),
+        }
 
         network_protocol_key = Utility.get_combobox_key(network_widget_dict['network_protocol_combobox'][mode])
         # restore_network_version
@@ -198,7 +200,11 @@ class MountNetworkPath:
                     f.flush()
                     ssh_cmd += "sshpass -f " + tmp.name + " "
 
-            ssh_cmd += "ssh -o StrictHostKeyChecking=no"
+            ssh_port = "22"
+            if settings['port'] != "":
+                ssh_port = settings['port']
+
+            ssh_cmd += f"ssh -p {ssh_port} -o StrictHostKeyChecking=no"
             if settings['ssh_idfile'] != "":
                 ssh_cmd += ",IdentityFile=" + settings['ssh_idfile'] + ",BatchMode=yes"
             mount_cmd_list.append('-o')
