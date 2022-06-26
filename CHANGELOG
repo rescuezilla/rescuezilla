@@ -1,4 +1,21 @@
 -------------------------------------------------------------------------------
+  Weekly Rolling Release (2022-06-26) 
+-------------------------------------------------------------------------------
+
+* Added ability to compress images using bzip2 algorithm (#290)
+* Moved post-completion action to in-progress page (#316)
+* Added ability to set custom SSH port (#336)
+* Many existing translations updated, but also added:
+  * Arabic/ﺎﻠﻋﺮﺒﻳﺓ (ar-EG) (Translation in-progress)
+  * Catalan/Català (ca-ES) (Translation in-progress)
+  * Czech/Čeština (cs-CZ) (Translation in-progress)
+  * Hungarian/Magyar (hu-HU) Translation in-progress)
+  * Slovak/Slovenčina (sk-SK) (Translation in-progress)
+
+More changes are upcoming. Rescuezilla v2.4 will be released when enough changes
+have been completed. See release page for more information.
+
+-------------------------------------------------------------------------------
   Version 2.3.1 (2022-01-02) 
 -------------------------------------------------------------------------------
 
