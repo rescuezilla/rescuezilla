@@ -86,7 +86,8 @@ Below table shows an abridged history of Rescuezilla. For more information, see 
 
 | Release             | Release Date | Operating System | Notes |
 | ------------------- | ---------- | ---------------- | ---------------------------------- |
-| Rescuezilla 2.3.1   | 2022-01-02 | Ubuntu 21.10     | Added 'Verify Image' [Download page](https://github.com/rescuezilla/rescuezilla/releases/latest)
+| Rescuezilla Rolling | 2022-XX-XX | Ubuntu 21.10     | Weekly rolling release with upcoming features and translations [Download page](https://github.com/rescuezilla/rescuezilla/releases)
+| Rescuezilla 2.3.1   | 2022-01-02 | Ubuntu 21.10     | Added 'Verify Image'
 | Rescuezilla 2.2     | 2021-06-04 | Ubuntu 21.04     | Added 'Clone', VM image support.
 | Rescuezilla 2.1     | 2020-12-12 | Ubuntu 20.10     | Added Image Explorer (beta)
 | Rescuezilla 2.0     | 2020-10-14 | Ubuntu 20.04     | Added Clonezilla image support
