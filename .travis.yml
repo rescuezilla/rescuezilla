@@ -37,6 +37,10 @@ script:
 - git clean -dfX && git clean -dfx
   # DANGER: Do *not* use this on your working dir
 - git reset --hard HEAD
+  # Trust Rescuezilla git folder
+- docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container git config --global --add safe.directory /home/rescuezilla
+  # Trust partclone git submodule
+- docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container git config --global --add safe.directory /home/rescuezilla/src/third-party/partclone
   # Runs unit tests
 - docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make test
   # Ensure Travis-CI no-output timeout is much larger than 10 minutes, using workaround [1]
