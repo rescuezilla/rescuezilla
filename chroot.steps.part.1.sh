@@ -85,6 +85,7 @@ pkgs_specific_to_ubuntu2004_focal=("linux-generic-hwe-18.04"
                        "grub-efi-ia32-bin"
                        # Dependency for partclone-utils' imagemount
                        "nbdkit"
+                       "lupin-casper"
 )
 
 pkgs_specific_to_ubuntu2110_impish=(
@@ -101,6 +102,7 @@ pkgs_specific_to_ubuntu2110_impish=(
                        "grub-efi-ia32-bin"
                        # Dependency for partclone-utils' imagemount
                        "nbdkit"
+                       "lupin-casper"
 )
 
 # Languages on the system
@@ -147,7 +149,6 @@ done
 common_pkgs=("discover"
              "laptop-detect"
              "casper"
-             "lupin-casper"
              "openbox"
              "lightdm"
              # Firmware package for NVidia cards from ~2009 (newer cards have firmware in the kernel)
