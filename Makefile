@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := jammy
-.PHONY: all focal impish jammy i386 deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-utils partclone-nbd install test integration-test clean-build-dir clean clean-all
+.PHONY: all focal impish jammy i386 deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-latest partclone-utils partclone-nbd install test integration-test clean-build-dir clean clean-all
 
 # FIXME: Properly specify the build artifacts to allow the GNU make to actually be smart about what gets built and when.
 # FIXME: This lack of specifying dependency graph means requires eg, `make focal` and `make impish` has to be done as separate invocations
@@ -36,7 +36,7 @@ impish: deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-utils
 jammy: ARCH=amd64
 jammy: CODENAME=jammy
 export ARCH CODENAME
-jammy: deb sfdisk.v2.20.1.amd64 partclone-utils partclone-nbd $(buildscripts)
+jammy: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-utils partclone-nbd $(buildscripts)
 	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) ./build.sh	
 
 # ISO image based on Ubuntu 18.04 Bionic LTS (Long Term Support) 32bit (the last 32bit/i386 Ubuntu LTS release)
@@ -96,6 +96,24 @@ partclone.restore.v0.2.43.amd64:
 	mv $(PARTCLONE_BUILD_DIR)/src/partclone.restore $(AMD64_BUILD_DIR)/chroot/usr/sbin/partclone.restore.v0.2.43.64bit
 	# FIXME: Building out-of-tree modifies two files in the source directory during the TravisCI docker build (but works fine on a local build)
 	cd $(SRC_DIR) && git checkout -- config.h.in configure
+
+partclone-latest: SRC_DIR=$(shell pwd)/src/third-party/partclone-latest
+partclone-latest: AMD64_BUILD_DIR=$(BASE_BUILD_DIRECTORY)/$(CODENAME).$(ARCH)
+partclone-latest: PARTCLONE_LATEST_BUILD_DIR=$(AMD64_BUILD_DIR)/partclone-latest
+partclone-latest: PARTCLONE_PKG_VERSION=0.3.20
+partclone-latest:
+	# DANGER: Deletes build folder recursively. This can end very badly if a variable is not defined correctly.
+	# TODO: FIX THIS
+	rm -rf $(PARTCLONE_LATEST_BUILD_DIR)
+	mkdir --parents $(PARTCLONE_LATEST_BUILD_DIR) $(AMD64_BUILD_DIR)/chroot/
+	# TODO: Remove need to copy the source folder to destination
+	rsync -rP "$(SRC_DIR)/" "$(PARTCLONE_LATEST_BUILD_DIR)/"
+	cd $(PARTCLONE_LATEST_BUILD_DIR) && autoreconf -i
+	cd $(PARTCLONE_LATEST_BUILD_DIR) && ./configure --enable-ncursesw --enable-static --enable-extfs --enable-reiser4 --enable-ntfs --enable-fat --enable-exfat --enable-hfsp --enable-apfs --enable-btrfs --enable-minix --enable-f2fs --enable-nilfs2
+	cd $(PARTCLONE_LATEST_BUILD_DIR) && make CC='ccache cc' -j $(THREADS)
+	# Create deb package from a standard Makefile's `make install` using the checkinstall tool (for cleaner uninstall)
+	cd $(PARTCLONE_LATEST_BUILD_DIR) && checkinstall --install=no --pkgname partclone --pkgversion $(PARTCLONE_PKG_VERSION) --pkgrelease 1 --maintainer 'rescuezilla@gmail.com' -D --default  make CC='ccache cc' -j $(THREADS) install
+	mv $(PARTCLONE_LATEST_BUILD_DIR)/partclone_$(PARTCLONE_PKG_VERSION)-1_amd64.deb $(AMD64_BUILD_DIR)/chroot/
 
 # Builds partclone-utils, which contains some very useful utilities for working with partclone images.
 partclone-utils: SRC_DIR=$(shell pwd)/src/third-party/partclone-utils
