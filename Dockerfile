@@ -3,10 +3,10 @@
 
 # Note: the host system Ubuntu version (below) is defined separately from the version of the
 # generated Ubuntu image.
-ARG CODENAME=focal
+ARG CODENAME=jammy
 FROM ubuntu:${CODENAME}
 # Define the Ubuntu code name again because Docker clears the argument after the FROM command.
-ARG CODENAME=focal
+ARG CODENAME=jammy
 
 # Copy the apt repository mirror list into the Docker image.
 # 
@@ -40,9 +40,9 @@ RUN apt-get install --yes \
                           shim-signed grub-efi-amd64-signed grub-efi-amd64-bin grub-efi-ia32-bin grub-pc-bin \
                           devscripts debhelper ccache \
                           # Dependencies for "sfdisk" and "partclone.restore" build.
-                          libtool-bin gawk pkg-config comerr-dev docbook-xsl e2fslibs-dev fuse \
+                          libtool-bin gawk pkg-config comerr-dev docbook-xsl e2fslibs-dev fuse3 \
                           libaal-dev libblkid-dev libbsd-dev libext2fs-dev libncurses5-dev \
-                          libncursesw5-dev libntfs-3g883 libreadline-gplv2-dev libreadline5 \
+                          libncursesw5-dev libntfs-3g89 libreadline-dev libreadline8 \
                           libreiser4-dev libtinfo-dev libxslt1.1 nilfs-tools ntfs-3g ntfs-3g-dev \
                           quilt sgml-base uuid-dev vmfs-tools xfslibs-dev xfsprogs xml-core \
                           xsltproc \

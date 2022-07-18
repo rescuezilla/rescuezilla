@@ -22,9 +22,9 @@ sudo apt install -f git-lfs git make sudo \
                      memtest86+ devscripts debhelper checkinstall cmake \
                      grub-efi-amd64-bin grub-efi-ia32-bin grub-pc-bin \
                      shim-signed grub-efi-amd64-signed \
-                     libtool-bin gawk pkg-config comerr-dev docbook-xsl e2fslibs-dev \
+                     libtool-bin gawk pkg-config comerr-dev docbook-xsl e2fslibs-dev fuse3 \
                      libaal-dev libblkid-dev libbsd-dev libncurses5-dev \
-                     libncursesw5-dev readline-common \
+                     libncursesw5-dev libntfs-3g89 libreadline-dev libreadline8 readline-common \
                      libreiser4-dev libtinfo-dev libxslt1.1 nilfs-tools ntfs-3g ntfs-3g-dev \
                      quilt sgml-base uuid-dev vmfs-tools xfslibs-dev xfsprogs xml-core \
                      xsltproc ccache
