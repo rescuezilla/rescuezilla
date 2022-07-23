@@ -216,7 +216,7 @@ if [[ $? -ne 0 ]]; then
 fi
 # Create desktop icon shortcuts
 ln -s /usr/share/applications/rescuezilla.desktop "$BUILD_DIRECTORY/chroot/home/ubuntu/Desktop/rescuezilla.desktop"
-ln -s /usr/share/applications/mousepad.desktop "$BUILD_DIRECTORY/chroot/home/ubuntu/Desktop/mousepad.desktop"
+ln -s /usr/share/applications/org.xfce.mousepad.desktop "$BUILD_DIRECTORY/chroot/home/ubuntu/Desktop/mousepad.desktop"
 ln -s /usr/share/applications/gparted.desktop "$BUILD_DIRECTORY/chroot/home/ubuntu/Desktop/gparted.desktop"
 
 # Process GRUB locale files
