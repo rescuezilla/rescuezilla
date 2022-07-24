@@ -191,6 +191,11 @@ def create_vm(vm_name, hd_to_attach):
     print("Creating " + vm_name)
     create_vm_cmd_list = ["VBoxManage", "createvm", "--name", vm_name, "--ostype", "Windows10_64", "--register"]
     subprocess.run(create_vm_cmd_list, encoding='utf-8')
+    # Add to group
+    group_cmd_list = ["VBoxManage", "modifyvm", vm_name,
+                      "--groups", "/Rescuezilla.Integration.Suite"]
+    subprocess.run(group_cmd_list, encoding='utf-8')
+
     # Set memory and network
     memory_network_cmd_list = ["VBoxManage", "modifyvm", vm_name,
                                "--ioapic", "on",
