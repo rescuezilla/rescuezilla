@@ -66,4 +66,5 @@ DEPLOY_DICT = {
     "50gb": "50gb.Windows.GPT.vdi",
     "2tb.primary": "2tb.MBR.Windows.By.Itself.vdi",
     "2tb.secondary": "2tb.MBR.Windows.Ubuntu.DualBoot.vdi",
+    "1.9tb": "1tb.MBR.compressed.BTRFS.Fedora.Workstation.36.vdi",
 }
