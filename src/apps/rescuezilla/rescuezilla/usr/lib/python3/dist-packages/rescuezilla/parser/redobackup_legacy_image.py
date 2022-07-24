@@ -191,7 +191,7 @@ class RedoBackupLegacyImage:
             if self.image_format == "REDOBACKUP_0.9.3_1.0.4_FORMAT" or self.image_format == "REDOBACKUP_0.9.2_FORMAT":
                 use_old_partclone = True
                 self.partclone_info_dict_dict[short_device_node] = Partclone.get_partclone_info_dict(abs_partclone_image_list, short_device_node, compression)
-                filesystem = self.partclone_info_dict_dict[short_device_node]['filesystem']
+                filesystem = self.partclone_info_dict_dict[short_device_node]['filesystem'].lower()
                 print(str(self.partclone_info_dict_dict))
             if filesystem != "<unknown>" and filesystem != "raw":
                 self.image_format_dict_dict[short_device_node] = {'type': "partclone",
