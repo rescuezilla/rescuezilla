@@ -1,4 +1,15 @@
 -------------------------------------------------------------------------------
+  "Weekly" Rolling Release (2022-07-24) 
+-------------------------------------------------------------------------------
+
+* Replaces Ubuntu 21.10 (Impish) build with build based on Ubuntu 22.04 (Jammy) for best support of new hardware
+* Builds latest version of partclone from source code `v0.3.20`, instead of OS package (#168, #309 and #335)
+    * This fixes "unsupported feature" error for users of compressed BTRFS filesystems (such as Fedora Workstation 33 and newer)
+* Removed old partclone v0.2.43 used to _maximize_ legacy Redo Backup compatibility (modern partclone still provides good backwards compatibility)
+
+Rescuezilla v2.4 will largely be this release + misc bug fixes. See release page for more information.
+
+-------------------------------------------------------------------------------
   Weekly Rolling Release (2022-06-26) 
 -------------------------------------------------------------------------------
 
@@ -11,9 +22,6 @@
   * Czech/Čeština (cs-CZ) (Translation in-progress)
   * Hungarian/Magyar (hu-HU) Translation in-progress)
   * Slovak/Slovenčina (sk-SK) (Translation in-progress)
-
-More changes are upcoming. Rescuezilla v2.4 will be released when enough changes
-have been completed. See release page for more information.
 
 -------------------------------------------------------------------------------
   Version 2.3.1 (2022-01-02) 
