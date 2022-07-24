@@ -6,6 +6,7 @@
 * Builds latest version of partclone from source code `v0.3.20`, instead of OS package (#168, #309 and #335)
     * This fixes "unsupported feature" error for users of compressed BTRFS filesystems (such as Fedora Workstation 33 and newer)
 * Removed old partclone v0.2.43 used to _maximize_ legacy Redo Backup compatibility (modern partclone still provides good backwards compatibility)
+* Switched Firefox to using the Mozilla Team PPA repository, because new "snap" packaging is still incompatible with Rescuezilla's "chroot-based" build scripts
 
 Rescuezilla v2.4 will largely be this release + misc bug fixes. See release page for more information.
 
