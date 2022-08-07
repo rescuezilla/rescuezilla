@@ -4,7 +4,7 @@ rescuezilla (2.3.1-1) unstable; urgency=low
   * Fixed "Clone stuck at 0%" issue that was introduced in v2.3.0
   * Added Korean translation
 
- -- Shasheen Ediriweera <rescuezilla@gmail.com>  Sun, 02 Jan 2021 12:00:00 -0800
+ -- Shasheen Ediriweera <rescuezilla@gmail.com>  Sun, 02 Jan 2022 12:00:00 -0800
 
 rescuezilla (2.3-1) unstable; urgency=low
 
