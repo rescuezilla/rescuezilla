@@ -1,8 +1,8 @@
-graphical-shutdown (2.3.1-1) unstable; urgency=low
+graphical-shutdown (2.4-1) unstable; urgency=low
 
-  * New upstream version.
+  * New version. For full changes: See https://raw.githubusercontent.com/rescuezilla/rescuezilla/master/CHANGELOG
 
- -- Shasheen Ediriweera <rescuezilla@gmail.com>  Sun, 02 Dec 2022 12:00:00 -0800
+ -- Shasheen Ediriweera <rescuezilla@gmail.com>  Sun, 08 Aug 2022 12:00:00 -0800
 
 graphical-shutdown (2.3-1) unstable; urgency=low
 
