@@ -1196,6 +1196,11 @@ class RestoreManager:
                         self.logger.write("Found bios_grub flag! Skipping EFI NVRAM update.")
                     else:
                         if shutil.which("update-efi-nvram-boot-entry") is None:
+                            message = "Not updating EFI NVRAM: Unable to find update-efi-nvram-boot-entry. Is Clonezilla installed?\n"
+                            self.logger.write(message)
+                            with self.summary_message_lock:
+                                self.summary_message += message + "\n"
+                        else:
                             GLib.idle_add(self.display_status, _("Updating EFI NVRAM..."))
                             # TODO: Port Clonezilla's ocs-update-initrd bash script to Python instead of relying on Clonezilla's script
                             # Unlike Clonezilla, no need to specify a -f/--efi-boot-file-info option
@@ -1210,11 +1215,6 @@ class RestoreManager:
                                     self.summary_message += message + "\n"
                             # No need to implement "get the new efi_os_label, efi_system_part_no and efi_sys_part_boot_file"
                             # because Rescuezilla doesn't operate in client/server like Clonezilla.
-                        else:
-                            message = "Not updating EFI NVRAM: Unable to find update-efi-nvram-boot-entry. Is Clonezilla installed?\n"
-                            self.logger.write(message)
-                            with self.summary_message_lock:
-                                self.summary_message += message + "\n"
         elif isinstance(self.image, FsArchiverImage):
             self.logger.write("Detected FsArchiverImage")
             self.logger.write(str(self.restore_mapping_dict))
