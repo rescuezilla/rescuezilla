@@ -48,7 +48,9 @@ APT_INDEX_CACHE_DIRECTORY=var.lib.apt.lists.$CODENAME.$ARCH
 # 'abc' is the number of commits since that tag, gGITSHA is the git sha
 # prepended by a 'g', and -dirty is present if the working tree has been
 # modified.
-VERSION_STRING=$(git describe --tags --match="[0-9].[0-9].[0-9]" --dirty)
+#
+# Note: the --match is a glob, not a regex.
+VERSION_STRING=$(git describe --tags --match="[0-9].[0-9]*" --dirty)
 
 # Date of current git commit in colon-less ISO 8601 format (2013-04-01T130102)
 GIT_COMMIT_DATE=$(date +"%Y-%m-%dT%H%M%S" --date=@$(git show --no-patch --format=%ct HEAD))
