@@ -59,6 +59,7 @@ Rescuezilla has been translated into the following languages:
 * Русский (ru-RU)
 * Slovenčina (sk-SK) (Translation [in-progress](https://hosted.weblate.org/translate/rescuezilla/-/sk/?offset=1&q=state%3A%3Ctranslated+AND+NOT+has%3Asuggestion&sort_by=-priority%2Cposition&checksum=))
 * Svenska (sv-SE)
+* ภาษาไทย (th-TH) (available next release)
 * Türkçe (tr-TR)
 * Українська (uk-UA) (Translation [in-progress](https://hosted.weblate.org/translate/rescuezilla/-/uk/?offset=1&q=state%3A%3Ctranslated+AND+NOT+has%3Asuggestion&sort_by=-priority%2Cposition&checksum=))
 * Tiếng Việt (vi-VN)

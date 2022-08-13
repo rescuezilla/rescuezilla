@@ -143,6 +143,7 @@ lang_codes=(
              "ru"
              "sk"
              "sv"
+             "th"
              "tr"
              "uk"
              "vi"
@@ -190,6 +191,8 @@ common_pkgs=("discover"
              "fonts-wqy-zenhei"
              # Korean font
              "fonts-unfonts-core"
+             # Thai font
+             "fonts-thai-tlwg"
              "breeze-gtk-theme"
              "gtk3-engines-breeze"
              "gnome-icon-theme"
