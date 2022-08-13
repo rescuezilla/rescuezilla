@@ -1,11 +1,12 @@
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
+# PizzaProgram <info@pizzaprogram.hu>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2022-03-19 05:17+0000\n"
-"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
+"PO-Revision-Date: 2022-08-10 14:20+0000\n"
+"Last-Translator: PizzaProgram <info@pizzaprogram.hu>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/hu/>\n"
 "Language: hu\n"
@@ -13,74 +14,80 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.12-dev\n"
+"X-Generator: Weblate 4.14-dev\n"
 
 msgid "Welcome"
-msgstr ""
+msgstr "Üdvözöllek"
 
 msgid "Select an Option"
-msgstr ""
+msgstr "Válassz egy opciót"
 
 msgid "Easily create a backup image of your computer, or completely restore from one.  Click an option to begin:"
 msgstr ""
+"Készíts könnyen teljes lemezkép mentést a komputeredről, vagy állíts vissza "
+"egy korábbit. Kattints valamely opcióra a kezdéshez:"
 
 msgid "Backup"
-msgstr ""
+msgstr "Mentés"
 
 msgid "Restore"
-msgstr ""
+msgstr "Helyreállítás"
 
 msgid "Verify Image"
 msgstr ""
+"Lemezkép Ellenőrzése\n"
+"(korábbi mentésé)"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
-msgstr ""
+msgstr "Segítség kell? Kezd a FAQ (GyIK) oldalon, utána a Rescuezilla fórumán."
 
 msgid "Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed."
 msgstr ""
+"Fontold meg havi 1 dollár adományozását a Patreon oldalon keresztül, hogy a "
+"Rescuezilla fejlesztése folytatódhasson."
 
 msgid "Back"
-msgstr ""
+msgstr "Vissza"
 
 msgid "Next >"
-msgstr ""
+msgstr "Tovább >"
 
 msgid "Please wait..."
-msgstr ""
+msgstr "Kérlek várj..."
 
 msgid "Identifying disk drives..."
-msgstr ""
+msgstr "Lemez-meghajtók azonosítása..."
 
 #, python-brace-format
 msgid "Unmounting: {path}"
-msgstr ""
+msgstr "Leválasztás: {path}"
 
 #, python-brace-format
 msgid "Unable to unmount {path}"
-msgstr ""
+msgstr "Nem sikerült a leválasztás: {path}"
 
 #, python-brace-format
 msgid "Running: {app}"
-msgstr ""
+msgstr "Fut éppen: {app}"
 
 #, python-brace-format
 msgid "Running {app} on {device}"
-msgstr ""
+msgstr "Fut éppen: {app} ezen a gépen: {device}"
 
 msgid "Failed to run command: "
-msgstr ""
+msgstr "Nem sikerült a parancs futtatása: "
 
 msgid "Error querying drives: "
-msgstr ""
+msgstr "Hiba a meghajtók lekérésekor: "
 
 msgid "Clone"
-msgstr ""
+msgstr "Klónozd"
 
 msgid "Step 1: Understanding Cloning"
-msgstr ""
+msgstr "1. Lépés: A klónozás megértése"
 
 msgid "Please understand how \"cloning\" differs from \"imaging\"."
-msgstr ""
+msgstr "A \"klónozás\" különbözik a \"Lemezkép készítéstől\"."
 
 msgid "This mode is for \"disk cloning\". Cloning means copying one drive and directly overwriting another drive. This is a direct one-step operation with no temporary storage required.\n"
 "\n"
@@ -91,409 +98,471 @@ msgid "This mode is for \"disk cloning\". Cloning means copying one drive and di
 msgstr ""
 
 msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
-msgstr ""
+msgstr "A \"Klónozó\" varázsló indításához nyomj <b>Tovább</b> gombot"
 
 msgid "Step 2: Select Source Drive"
-msgstr ""
+msgstr "2. Lépés: Válassz Forrás Lemezt (ahonnan...)"
 
 msgid "Select the <b>source drive</b> to clone."
-msgstr ""
+msgstr "Válaszd ki a klónozandó <b>Forrás Lemezt</b> !"
 
 msgid "Select the <b>destination drive</b> to overwrite."
-msgstr ""
+msgstr "Válassz <b>Cél Lemezt</b> ahová másolsz és ezáltal felülírsz."
 
 msgid "Step 4: Select Partitions to Clone"
-msgstr ""
+msgstr "4. Lépés: Válassz partíciókat, melyeket klónozni akarsz"
 
 msgid "Select which partitions from the source drive to clone, and whether to overwrite the partition table. <b>Leave everything selected to completely clone the source drive to the destination drive.</b>"
 msgstr ""
+"Válassz partíciókat a forrás-meghajtóról a klónozáshoz és hogy felülírod-e a "
+"partíciós tábla-szerkezetet. <b>Hagyd mindent kiválasztva, ha az egész "
+"meghajtót át akarod klónozni a cél meghajtóra.</b>"
 
 msgid "Step 5: Confirm Cloning Configuration"
-msgstr ""
+msgstr "5. Lépés: Erősítsd meg a Klónozási Konfigurációt"
 
 msgid "Confirm the following cloning configuration."
-msgstr ""
+msgstr "Az alábbi klónozási beállítások megerősítése."
 
 msgid "Cloning the following partitions"
-msgstr ""
+msgstr "Az alábbi partíciók Klónozása"
 
 msgid "To start cloning, click <b>Next</b>."
-msgstr ""
+msgstr "Klónozás megkezdéséhez nyomj <b>Tovább</b> gombot."
 
 #, python-brace-format
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
+"Biztos vagy benne, hogy klónozni akarod erre a meghajtóra: "
+"{destination_drive}? Ezzel VÉGLEGESEN FELÜLÍROD AZ ADATOKAT a meghajtón! "
+"Tehát örökre törölve lesz róla minden!"
 
 msgid "Step 6: Cloning Disk"
-msgstr ""
+msgstr "6. Lépés: Lemez Klónozása"
 
 msgid "Cloning the drive you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
+"A kiválasztott meghajtó klónozása zajlok.  Ez több órán át is tarthat a gép "
+"sebességétől és az adatok mennyiségétől függően."
 
 msgid "Summary of Clone"
-msgstr ""
+msgstr "A Klónozás Összefoglalása"
 
 msgid "Clone Summary"
-msgstr ""
+msgstr "Klónozási Összefoglaló"
 
 msgid "Confirm the clone summary."
-msgstr ""
+msgstr "Erősíts rá a klónozási összefoglalóra."
 
 msgid "Unable to shutdown Image Explorer"
-msgstr ""
+msgstr "Nem lehetett leállítani a \"Lemezkép Böngészőt\""
 
 msgid "Step 1: Select Drive To Backup"
-msgstr ""
+msgstr "1. Lépés: Elmentendő Lemez kiválasztása (amelyről...)"
 
 msgid "Select the <b>source drive</b> that you would like to create a backup image from."
 msgstr ""
+"Válassz <b>forrás lemezt</b> amelyről lemezképet (azaz fájlba-mentést) "
+"akarsz készíteni."
 
 msgid "Drive"
-msgstr ""
+msgstr "Lemez"
 
 msgid "Capacity"
-msgstr ""
+msgstr "Kapacitás"
 
 msgid "Drive Model"
-msgstr ""
+msgstr "Lemez Model"
 
 msgid "Serial Number"
-msgstr ""
+msgstr "Szériaszám"
 
 msgid "Partitions"
-msgstr ""
+msgstr "Partíciók"
 
 msgid "Show hidden devices (for advanced users)"
-msgstr ""
+msgstr "Mutasd a rejtett meghajtókat is (csak haladó felhasználóknak javasolt)"
 
 msgid "Step 2: Select Partitions to Save"
-msgstr ""
+msgstr "2. Lépés: Válassz elmentendő Partíciókat"
 
 msgid "Select which partitions to create a backup of. <b>Leave all partitions selected if you are unsure.</b>"
 msgstr ""
+"Válaszd ki, mely partíciókról akarsz mentést készíteni. <b>Hagyd mindet "
+"kiválasztva, azaz bepipálva, ha nem vagy biztos benne.</b>"
 
 msgid "Save"
-msgstr ""
+msgstr "Mentés"
 
 msgid "Description"
-msgstr ""
+msgstr "Leírás"
 
 #, python-brace-format
 msgid "Drive {drive_number}"
-msgstr ""
+msgstr "{drive_number}. lemez"
 
 #, python-brace-format
 msgid "Partition {partition_number}"
-msgstr ""
+msgstr "{partition_number}. partíció"
 
 msgid "Step 3: Select Destination Drive"
-msgstr ""
+msgstr "3. Lépés: Válassz Cél-Lemezt (ahová...)"
 
 msgid "Click on the box below to select the source drive that you would like to create a backup image from."
 msgstr ""
+"Kattints az alábbi doboz valamelyikére a Forrás-Lemez kiválasztásához, "
+"melyről biztonsági mentést akarsz készíteni."
 
 msgid "Connected directly to my computer"
-msgstr ""
+msgstr "Közvetlen a gépre csatolt eszköz"
 
 msgid "Shared over a network"
-msgstr ""
+msgstr "Hálózati megosztás"
 
 msgid "Where would you like to save the image?"
-msgstr ""
+msgstr "Hová szeretnéd menteni a lemezképet?"
 
 msgid "Windows shared folder (SMB/CIFS, Samba)"
-msgstr ""
+msgstr "Windows megosztott mappa (SMB/CIFS, Samba)"
 
 msgid "Search network"
-msgstr ""
+msgstr "Hálózati keresés..."
 
 msgid "Server"
-msgstr ""
+msgstr "Szerver"
 
 msgid "Share location (UNC path)"
-msgstr ""
+msgstr "Megosztás helye (UNC útvonal)"
 
 msgid "Username"
-msgstr ""
+msgstr "Felhasználónév"
 
 msgid "Password"
-msgstr ""
+msgstr "Jelszó"
 
 msgid "Domain"
-msgstr ""
+msgstr "Domain"
 
 msgid "Version"
-msgstr ""
+msgstr "Verzió"
 
 msgid "Remote path"
-msgstr ""
+msgstr "Távoli útvonal"
 
 msgid "Exported path"
-msgstr ""
+msgstr "Exportált útvonal"
 
 msgid "Identity File"
-msgstr ""
+msgstr "Identitás Fájl"
 
 msgid "Optional"
-msgstr ""
+msgstr "Opcionális"
 
 msgid "Select network-shared storage location:"
-msgstr ""
+msgstr "Válassz tárolóhelyet a hálózati megosztáson:"
 
 msgid "Select the partition where the image files will be saved to"
-msgstr ""
+msgstr "Válaszd ki a helyet, ahová a lemezkép-fájlokat el akarod menteni"
 
 msgid "Partition"
-msgstr ""
+msgstr "Partíció"
 
 msgid "Mounting..."
-msgstr ""
+msgstr "Csatolom..."
 
 msgid "Close this popup to cancel the mount operation."
-msgstr ""
+msgstr "Zárd be ezt a felugró panelt a felcsatolás megszakításához."
 
 msgid "Please ensure the username, password and other fields provided are correct, and try again."
 msgstr ""
+"Győződj meg róla, hogy a felhasználónév, jelszó és más mezők jól lettek "
+"kitöltve, majd próbáld újra."
 
 msgid "Must provide either password or SSH identity file."
-msgstr ""
+msgstr "Szükséges megadni vagy egy jelszót, vagy SSH identitás-fájlt."
 
 msgid "Scanning folder for backup images..."
-msgstr ""
+msgstr "Korábbi mentés fájlok auto-keresése a mappában..."
 
 #, python-brace-format
 msgid "({timeout_seconds} second timeout)"
-msgstr ""
+msgstr "({timeout_seconds} másodperc lejárati idő)"
 
 msgid "Close this popup to cancel scanning the selected folder and subfolders."
 msgstr ""
+"Zárd be ezt a felugró panelt, ha nem akarod, hogy keressen a mappában és "
+"almappákban."
 
 #, python-brace-format
 msgid "Scanning: {filename}"
-msgstr ""
+msgstr "Keresés: {filename}"
 
 msgid "Error processing the following images:"
-msgstr ""
+msgstr "Hiba történt az alábbi lemezkép feldolgozásakor:"
 
 msgid "Unable to fully process the image associated with the following partitions:"
 msgstr ""
+"Képtelenség teljesen feldolgozni a lemezképet, mely az alábbi partícióval "
+"van összekapcsolva:"
 
 msgid "Unable to fully process the following image:"
-msgstr ""
+msgstr "Nem lehetséges teljesen feldolgozni az alábbi lemezképet:"
 
 msgid "Cannot find partition's associated partclone image"
-msgstr ""
+msgstr "Nem találom a partícióhoz hozzárendelt \"partclone\" lemezképet"
 
 msgid "This can happen when loading images which Clonezilla was unable to completely backup."
 msgstr ""
+"Ilyen akkor fordulhat elő, ha nem teljes a lemezkép mentés, fájlok "
+"hiányoznak."
 
 msgid "Note: This image format cannot distinguish between failed partclone backup and a user who chose not to backup a partition."
 msgstr ""
+"Megjegyzés: Ezen lemezkép formátumom esetén nem lehet különbséget tenni, "
+"hogy \"hibás/részleges\" egy partíció mentése, vagy csak a felhasználó "
+"döntött úgy, hogy kihagyja azt a partíciót."
 
 msgid "Any other filesystems within the image should be restorable as normal."
 msgstr ""
+"Minden más fájlrendszer a lemezképen belül normál módon kell, hogy "
+"helyreállításra kerüljön."
 
 msgid "Needs decryption"
-msgstr ""
+msgstr "Visszafejtés szükséges (decrypt)"
 
 msgid "Unknown filesystem"
-msgstr ""
+msgstr "Ismeretlen fájlrendszer"
 
 #, python-brace-format
 msgid "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance."
 msgstr ""
+"A mentés \"kiterjesztett partíciós információja\" üres. Ha a tartalmaz is "
+"egy kiterjesztett partíciót, az nem fog megfelelően helyreállítódni. Minden "
+"adat visszaállítható, de ehhez kézi beavatkozás szükséges. Kérlek konzultálj "
+"erről ezen a linken: {url}"
 
 msgid "The backup's bootloader data is shorter than expected. If the backup contained certain bootloaders like GRUB, during a restore operation Rescuezilla will try and re-install the bootloader."
 msgstr ""
+"A korábbi Mentés rendszerindító adata (bootloader) rövidebb, mint elvárt. Ha "
+"a Mentés tartalmazott olyan indítót, mint a GRUB, akkor a helyreállítás "
+"folyamán a Rescuezilla megpróbálja újrainstallálni azt."
 
 msgid "Step 4: Select Destination Folder"
-msgstr ""
+msgstr "4. Lépés: Válassz Cél-mappát (ahová...)"
 
 msgid "Click <b>Browse</b> to select the folder on the destination drive where your new backup image will be saved.\n"
 "\n"
 "The folder a backup is saved in is usually a description of the computer, e.g. <b>office1</b> or <b>zack-laptop</b>."
 msgstr ""
+"Kattints a <b>Tallózásra</b> a hely kiválasztásához, ahová az új mentés "
+"fájljai kiírásra kerülnek.\n"
+"\n"
+"A mappa, ahová a mentés kerül általában lehet a gép leírása egyben. Pl.: "
+"<b>iroda1</b> vagy <b>Zsolt-Laptopja-2022-0202</b>, stb."
 
 #, python-brace-format
 msgid "You must select a folder inside {location}"
-msgstr ""
+msgstr "Ezen helyen belül kell egy mappát választanod: {location}"
 
 msgid "Please select a different folder."
-msgstr ""
+msgstr "Kérlek válassz másik mappát."
 
 msgid "The table below lists the backup images that are already in this folder (if any)."
 msgstr ""
+"Az alábbi táblázat listázza a mappán belül található korábbi mentéseket azaz "
+"lemezképeket (ha vannak)."
 
 msgid "Browse..."
-msgstr ""
+msgstr "Tallózás..."
 
 msgid "Filename"
-msgstr ""
+msgstr "Fájlnév"
 
 msgid "Size"
-msgstr ""
+msgstr "Méret"
 
 msgid "Last modified"
-msgstr ""
+msgstr "Módosult"
 
 msgid "When you are happy with the destination folder, click <b>Next</b>."
-msgstr ""
+msgstr "Ha elégedett vagy a cél-mappával, nyomj a <b>Tovább</b> gombra."
 
 msgid "Step 5: Name Your Backup"
-msgstr ""
+msgstr "5. Lépés: Nevezd el a mostani Mentést"
 
 msgid "Provide a unique name for this backup image, such as the date.  Today's date is automatically entered for you below.\n"
 "\n"
 "You may only use letters, numbers, and dashes in your backup name."
 msgstr ""
+"Adj meg egy egyedi nevet ehhez a lemezképhez, mint például a gép neve vagy "
+"dátum. A mai dátumot automatikusan kitöltöttük alább.\n"
+"\n"
+"Csak (angol?) betűk, számok, és kötőjelek szerepelhetnek a névben."
 
 msgid "Optional: Provide a short description."
-msgstr ""
+msgstr "Opcionálisan: Megadhatsz egy rövid leírást is."
 
 msgid "Step 6: Customize Compression Settings"
-msgstr ""
+msgstr "6. Lépés: Beállíthatsz tömörítési fajtát / erősséget"
 
 msgid "Customize image compression settings. <b>Don't make any changes if you are unsure.</b>"
 msgstr ""
+"Egyedire szabhatod a tömörítési beállításokat. <b>Ne változtass semmin, ha "
+"nem vagy biztos benne.</b>"
 
 msgid "Compression format: "
-msgstr ""
+msgstr "Tömörítési formátum: "
 
 msgid "gzip"
-msgstr ""
+msgstr "gzip"
 
 msgid "default"
-msgstr ""
+msgstr "alap"
 
 msgid "zstandard"
 msgstr ""
 
 msgid "Uncompressed (Suitable for use with Image Explorer)"
-msgstr ""
+msgstr "Tömörítetlen (Ideális a \"Lemezkép Böngészőhöz\")"
 
 msgid "Compression level: "
-msgstr ""
+msgstr "Tömörítési fokozat: "
 
 msgid "Fastest"
-msgstr ""
+msgstr "Leggyorsabb"
 
 msgid "Best"
-msgstr ""
+msgstr "Legjobb"
 
 msgid "When you are happy with the compression settings, click <b>Next</b>."
 msgstr ""
+"Ha elégedett vagy a tömörítési beállításokkal, nyomj a <b>Tovább</b> gombra."
 
 msgid "Step 7: Confirm Backup Configuration"
-msgstr ""
+msgstr "7. Lépés: Mentési Konfigurációk Jóváhagyása"
 
 msgid "Source drive"
-msgstr ""
+msgstr "Forrás meghajtó"
 
 msgid "Backing up the following partition(s)"
-msgstr ""
+msgstr "Az alábbi partíció(k) mentése"
 
 #, python-brace-format
 msgid "The backup image will be written into folder {dest_dir} on {description}"
 msgstr ""
+"A Lemezkép Mentés ebbe a mappába lesz kiírva: {dest_dir} leírás: "
+"{description}"
 
 msgid "Confirm the following backup configuration."
-msgstr ""
+msgstr "Hagyd jóvá az alábbi mentési konfigurációt."
 
 msgid "On successful completion of the task, perform the following action: "
-msgstr ""
+msgstr "Sikeres végrehajtás után az alábbi műveletet hajtsd végre: "
 
 msgid "Do nothing"
-msgstr ""
+msgstr "Ne csinálj semmit"
 
 msgid "Shutdown"
-msgstr ""
+msgstr "Leállítás"
 
 msgid "Reboot"
-msgstr ""
+msgstr "Újraindítás"
 
 msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
 msgstr ""
+"Erőltetett Helyreállítás: Hagyja figyelmen kívül a fájlrendszer "
+"inkonzisztenciáit és a hibás szektorokat"
 
 msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
 msgstr ""
+"<b>Az \"Erőltetett Helyreállítás\" elnyomhat fontos hibaüzeneteket. "
+"Körültekintően használd csak.</b>"
 
 msgid "To start the backup, click <b>Next</b>."
-msgstr ""
+msgstr "A Mentés megkezdéséhez kattints a <b>Tovább</b> gombra."
 
 msgid "Step 8: Creating Backup Image"
-msgstr ""
+msgstr "8. Lépés: Lemezkép Mentés készítése"
 
 msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
+"Éppen mentést készítek a rendszerről az általad választott helyre. Ez több "
+"órán át eltarthat a gép sebességétől, tömörítés mértékétől és az adatok "
+"mennyiségétől függően."
 
 #, python-brace-format
 msgid "Saving: {file}"
-msgstr ""
+msgstr "Épp ezt mentem: {file}"
 
 #, python-brace-format
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
 msgstr ""
+"A(z) \"{partition_name}\" partíció mentése, mely {filesystem} fájlrendszert "
+"tartalmaz, ide: {destination}"
 
 msgid "Summary of Backup"
-msgstr ""
+msgstr "Mentés Összefoglaló"
 
 msgid "Confirm the backup summary."
-msgstr ""
+msgstr "Hagyd jóvá a mentési összesítőt."
 
 msgid "Backup Summary"
-msgstr ""
+msgstr "Mentés Összesítő"
 
 msgid "An operation is in progress. Do you wish to cancel?"
-msgstr ""
+msgstr "Még zajlik a folyamat. Biztos megszakítod?"
 
 msgid "Operation cancelled by user."
-msgstr ""
+msgstr "A folyamatot megszakítottad."
 
 msgid "Rescue option is enabled."
-msgstr ""
+msgstr "A Mentési opció engedélyezve van."
 
 msgid "Error creating backup: "
-msgstr ""
+msgstr "Hiba a mentés készítésekor: "
 
 msgid "Failed to write destination file. Please confirm it is valid to create the provided file path, and try again."
 msgstr ""
+"Nem sikerült a cél-fájlba írni. Erősítsd meg, hogy lehetséges az adott "
+"útvonalra írni és próbáld újra."
 
 #, python-brace-format
 msgid "Successful backup of swap partition {partition_name}"
-msgstr ""
+msgstr "Sikeres mentés készült erről a (swap) partícióról: {partition_name}"
 
 #, python-brace-format
 msgid "<b>Failed to backup partition</b> {partition_name}"
 msgstr ""
+"<b>Nem sikerült mentést készíteni erről a partícióról:</b> {partition_name}"
 
 #, python-brace-format
 msgid "Successful backup of partition {partition_name}"
-msgstr ""
+msgstr "Sikerült mentést készíteni erről a partícióról: {partition_name}"
 
 msgid "Backup saved successfully."
-msgstr ""
+msgstr "A Mentés sikeres."
 
 msgid "Backup succeeded with some errors:"
-msgstr ""
+msgstr "A Mentés részben sikerült az alábbi hibákkal:"
 
 msgid "Backup operation failed:"
-msgstr ""
+msgstr "A mentés NEM sikerült:"
 
 msgid "User requested operation to stop."
-msgstr ""
+msgstr "Leállítottad a folyamatot."
 
 #, python-brace-format
 msgid "Operation took {num_minutes} minutes."
-msgstr ""
+msgstr "A művelet {num_minutes} percbe telt."
 
 msgid "To start a new session, click <b>Next</b>"
-msgstr ""
+msgstr "Egy új műveletsor kezdéséhez kattints a <b>Tovább</b> gombra"
 
 msgid "Step 1: Select Image Location"
-msgstr ""
+msgstr "1. Lépés: Válaszd ki a lemezkép helyét (ahonnan...)"
 
 msgid "Where are the image files stored?"
-msgstr ""
+msgstr "Hová vannak elmentve a korábbi Lemezkép mentés-fájljai?"
 
 msgid "Select the partition which contains the image files:"
 msgstr ""

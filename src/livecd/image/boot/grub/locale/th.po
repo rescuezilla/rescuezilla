@@ -1,0 +1,53 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-03-02 00:00+0000\n"
+"PO-Revision-Date: 2022-08-10 15:51+0000\n"
+"Last-Translator: Sadayu Boonsanguansilp <maxzone5432@hotmail.com>\n"
+"Language-Team: Thai <https://hosted.weblate.org/projects/rescuezilla/"
+"grub-boot/th/>\n"
+"Language: th\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.14-dev\n"
+
+msgid "Start Rescuezilla"
+msgstr "เริ่มใช้งาน Rescuezilla"
+
+msgid "If boot fails, reboot and try selecting Graphical fallback instead"
+msgstr "ถ้าบูตไม่สำเร็จ ให้รีบูตและเลือกแสดงผลแบบกราฟิกแทน"
+
+msgid "Graphical fallback mode"
+msgstr "โหมดกราฟิก"
+
+msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
+msgstr "ใช้โหมดความละเอียดต่ำถ้าโหมดปกติไม่สามารถทำงานได้บนอุปกรณ์ของคุณ"
+
+msgid "Load USB into RAM"
+msgstr "โหลดข้อมูล USB ลงแรม"
+
+msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
+msgstr ""
+"โหลด Rescuezilla "
+"ลงที่หน่วยความจำเพื่อทำให้สามารถตัวอุปกรณ์บูดถอดออกได้หลังจากบูตสำเร็จ"
+
+msgid "Check USB for defects"
+msgstr "ตรวจหาจุดบกพร่องของ USB"
+
+msgid "Verify integrity of USB drive"
+msgstr "ตรวจสอบความสมบูรณ์ของไดร์ฟ USB"
+
+msgid "Enter BIOS Setup"
+msgstr "เข้าสู่โหมดตั้งค่าไบออส"
+
+msgid "Configure machine's firmware, boot options etc"
+msgstr "ตั้งค่าเฟิร์มแวร์เครื่อง, ตั้งค่าการบูต และอื่นๆ"
+
+msgid "Memory test"
+msgstr "ตัวทดสอบแรม"
+
+msgid "Check computer memory for errors"
+msgstr "เช็คข้อบกพร่องของแรมคอมพิวเตอร์"

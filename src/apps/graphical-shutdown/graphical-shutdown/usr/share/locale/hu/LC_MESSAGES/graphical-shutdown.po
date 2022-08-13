@@ -1,25 +1,27 @@
+# PizzaProgram <info@pizzaprogram.hu>, 2022.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2021-05-19 03:18+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2022-08-10 14:20+0000\n"
+"Last-Translator: PizzaProgram <info@pizzaprogram.hu>\n"
+"Language-Team: Hungarian <https://hosted.weblate.org/projects/rescuezilla/"
+"graphical-shutdown/hu/>\n"
 "Language: hu\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.14-dev\n"
 
 msgid "End Session"
-msgstr ""
+msgstr "Munkamenet befejezése"
 
 msgid "Cancel"
-msgstr ""
+msgstr "Mégse"
 
 msgid "Shutdown"
-msgstr ""
+msgstr "Leállítás"
 
 msgid "Reboot"
-msgstr ""
+msgstr "Újraindítás"
 
 msgid "Choose action."
-msgstr ""
+msgstr "Válassz parancsot."

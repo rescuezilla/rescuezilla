@@ -1,0 +1,1006 @@
+# Artem <KovalevArtem.ru@gmail.com>, 2021.
+# yesinmsg <yesinmsg@gmail.com>, 2021.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
+# ttt113326 <tonio_k@mail.ru>, 2021.
+# МАН69К <weblate@mah69k.net>, 2022.
+# Sadayu Boonsanguansilp <maxzone5432@hotmail.com>, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-03-02 00:00+0000\n"
+"PO-Revision-Date: 2022-08-11 05:40+0000\n"
+"Last-Translator: Sadayu Boonsanguansilp <maxzone5432@hotmail.com>\n"
+"Language-Team: Thai <https://hosted.weblate.org/projects/rescuezilla/"
+"rescuezilla/th/>\n"
+"Language: th\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.14-dev\n"
+
+msgid "Welcome"
+msgstr "ยินดีต้อนรับ"
+
+msgid "Select an Option"
+msgstr "เลือกการดำเนินการ"
+
+msgid ""
+"Easily create a backup image of your computer, or completely restore from "
+"one.  Click an option to begin:"
+msgstr ""
+"สร้างการสำรองข้อมูลเครื่องคอมของคุณง่ายๆ หรือจะคืนค่าที่สำรองไว้เพียวแค่กดปุ่มเดียว  "
+"คลิกเพื่อเลือกเริ่มดำเนินการ:"
+
+msgid "Backup"
+msgstr "สำรองข้อมูล"
+
+msgid "Restore"
+msgstr "คืนค่าข้อมูล"
+
+msgid "Verify Image"
+msgstr "ตรวจสอบไฟล์อิมเมจ"
+
+msgid ""
+"Need help? Start by checking the Rescuezilla frequently asked questions, "
+"then proceed to the Rescuezilla forum."
+msgstr ""
+"ต้องการความช่วยเหลือใช่ไหม? เริ่มต้นโดยการเช็คคำถามที่พบบ่อยๆกับการใช้งาน Rescuezilla "
+"จากนั้นดูข้อมูลที่กระดานสนทนาของ Rescuezilla"
+
+msgid ""
+"Consider contributing $1/month on the crowdfunding website Patreon so "
+"Rescuezilla can continue to be developed."
+msgstr ""
+"สนับสนุนนักพัฒนาเพียง 1 ดอลล่าสหรัฐต่อเดือนบนเว็บ Patreon เพื่อให้ Rescuezilla ได้พัฒนาต่อๆไป"
+
+msgid "Back"
+msgstr "กลับ"
+
+msgid "Next >"
+msgstr "ถัดไป >"
+
+msgid "Please wait..."
+msgstr "โปรดรอสักครู่..."
+
+msgid "Identifying disk drives..."
+msgstr "กำลังยืนยันข้อมูลไดร์เวอร์ฮาร์ดดิส...."
+
+#, python-brace-format
+msgid "Unmounting: {path}"
+msgstr "กำลังยกเลิกเชื่อม: {path}"
+
+#, python-brace-format
+msgid "Unable to unmount {path}"
+msgstr "ไม่สามารถยกเลิกการเชื่อมกับ {path} ได้"
+
+#, python-brace-format
+msgid "Running: {app}"
+msgstr "กำลังเริ่มโปรแกรม: {app}"
+
+#, python-brace-format
+msgid "Running {app} on {device}"
+msgstr "กำลังใช้งานโปรแกรม {app} บนเครื่อง {device}"
+
+msgid "Failed to run command: "
+msgstr "การเริ่มคำสั่งล้มเหลว: "
+
+msgid "Error querying drives: "
+msgstr "การเรียกข้อมูลไดร์ฟผิดพลาด: "
+
+msgid "Clone"
+msgstr "สร้างสำเนา"
+
+msgid "Step 1: Understanding Cloning"
+msgstr "ขั้นตอนที่ 1: การทำความเข้าใจของการทำสำเนา"
+
+msgid "Please understand how \"cloning\" differs from \"imaging\"."
+msgstr "โปรดทราบว่าการ \"ทำสำเนา\" นั้นแตกต่างจากการทำ \"อิมเมจ\""
+
+msgid ""
+"This mode is for \"disk cloning\". Cloning means copying one drive and "
+"directly overwriting another drive. This is a direct one-step operation with "
+"no temporary storage required.\n"
+"\n"
+"Cloning is different to \"disk imaging\". Imaging means copying everything "
+"from one drive into very large files stored inside a folder on an external "
+"drive. Multiple images can be saved on the same external drive. These images "
+"can be restored back to the original disk, or to additional disks. In other "
+"words, for \"imaging\" the backup operation copies your drive to <i>files</"
+"i> that need to be stored on a drive at least temporarily before it can be "
+"restored.\n"
+"\n"
+"To use the \"imaging\" wizards, click <b>Back</b> and select <b>Backup</b> "
+"or <b>Restore</b>."
+msgstr ""
+"การทำงานของโหมดนี้คือการ \"ทำสำเนาฮาร์ดดิส\" "
+"การทำสำเนาหรือโคลนนิ่งคือการคัดลอกไดร์ฟหนึ่งไปอีกไดร์ฟหนึ่งโดยเขียนทับข้อมูลเดิมโดยตรง "
+"การทำแบบนี้ทำเพียงขั้นตอนเดียวโดยไม่ต้องการพื้นที่สำรองชั่วคราว.\n"
+"\n"
+"การทำสำเนานั้นแตกต่างจากการทำ \"อิมเมจดิสก์\" "
+"การทำอิมเมจหมายถึงการคัดลอกข้อมูลทั้งหมดจากไดร์ฟหนึ่งเป็นไฟล์เดียวขนาดใหญ่มากๆให้สามารถเก็บบนฮาร์ดดิสพกพาหรือที่อื่นๆได้ "
+"การอิมเมจหลายๆไฟล์สามารถเก็บในฮาร์ดดิสพกพาตัวเดิมได้ "
+"ไฟล์อิมเมจพวกนี้สามารถย้อนคืนค่าก่อนทำอิมเมจบนฮาร์ดดิสตัวใหม่ หรือฮาร์ดดิสตัวอื่นๆได้ "
+"ในอีกความหมายของ \"อิมเมจ\" คือการสำรองข้อมูลที่คัดลอกไดร์ฟของคุณออกมาเป็น <i>ไฟล์ๆเดียว</"
+"i> และต้องการใช้พื้นที่ชั่วคราวจำนวนหนึ่งบนไดร์ฟก่อนจะดำเนินการคืนค่าได้\n"
+"\n"
+"เพื่อใช้งานเครื่องมือ \"การทำอิมเมจ\" คลิก <b>กลับ</b> และเลือก <b>สำรองข้อมูล</b> หรือ "
+"<b>คืนค่าข้อมูล</b>"
+
+msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
+msgstr "เพื่อเริ่มใช้งานเครื่องมือ \"การทำสำเนา\" ให้คลิก <b>ถัดไป</b>"
+
+msgid "Step 2: Select Source Drive"
+msgstr "ขั้นตอนที่ 2: เลือกไดร์ฟที่ต้องการทำสำเนา"
+
+msgid "Select the <b>source drive</b> to clone."
+msgstr "เลือก <b>ไดร์ฟต้นทาง</b> เพื่อทำสำเนา"
+
+msgid "Select the <b>destination drive</b> to overwrite."
+msgstr "เลือก <b>ไดร์ฟปลายทาง</b> เพื่อเขียนทับข้อมูล"
+
+msgid "Step 4: Select Partitions to Clone"
+msgstr "ขั้นตอนที่ 4: เลือกพาร์ติชั่นเพื่อทำสำเนา"
+
+msgid ""
+"Select which partitions from the source drive to clone, and whether to "
+"overwrite the partition table. <b>Leave everything selected to completely "
+"clone the source drive to the destination drive.</b>"
+msgstr ""
+"เลือกพาร์ติชั่นที่ต้องการบนไดร์ฟต้นทางเพื่อทำสำเนา และเขียนทับข้อมูลบนพาร์ติชั่นใหม่ "
+"<b>ปล่อยให้ติ๊กถูกไว้ทั้งหมดเพื่อให้การทำสำเนาจากไดร์ฟต้นทางไปปลายทางได้สำเร็จ</b>"
+
+msgid "Step 5: Confirm Cloning Configuration"
+msgstr "ขั้นตอนที่ 5: ยืนยันการตั้งค่าของการทำสำเนา"
+
+msgid "Confirm the following cloning configuration."
+msgstr "ยืนยันการตั้งค่าการทำสำเนาตามที่ตั้งค่าไว้ต่อไปนี้"
+
+msgid "Cloning the following partitions"
+msgstr "ทำสำเนาตามพาร์ติชั่นดังต่อไปนี้"
+
+msgid "To start cloning, click <b>Next</b>."
+msgstr "เพื่อเริ่มการทำสำเนา โปรดคลิก <b>ถัดไป</b>"
+
+#, python-brace-format
+msgid ""
+"Are you sure you want to clone the drive to {destination_drive}? Doing so "
+"will permanently overwrite data on this drive!"
+msgstr ""
+"คุณแน่ใจหรือไม่ที่ต้องการทำสำเนาไปที่ไดร์ฟ {destination_drive}? "
+"การดำเนินการนี้จะเป็นการเขียนทับข้อมูลเดิมถาวรบนไดร์ฟปลายทางนะ!"
+
+msgid "Step 6: Cloning Disk"
+msgstr "ขั้นตอนที่ 6: กำลังทำสำเนาดิสก์"
+
+msgid ""
+"Cloning the drive you selected.  This may take an hour or more depending on "
+"the speed of your computer and the amount of data."
+msgstr ""
+"เรากำลังทำสำเนาบนไดร์ฟที่คุณเลือกไว้อยู่ การดำเนินการนี้อาจใช้เวลา 1 "
+"ชั่วโมงหรือใช้เวลานานกว่านั้นขึ้นอยู่กับความเร็วคอมพิวเตอร์ของคุณ และความใหญ่ของฮาร์ดดิส"
+
+msgid "Summary of Clone"
+msgstr "ผลสรุปของการทำสำเนา"
+
+msgid "Clone Summary"
+msgstr "สรุปการทำสำเนา"
+
+msgid "Confirm the clone summary."
+msgstr "ยืนยันผลการดำเนินการทำสำเนา"
+
+msgid "Unable to shutdown Image Explorer"
+msgstr "ไม่สามารถปิดการทำงานของตัวค้นหาไฟล์อิมเมจได้"
+
+msgid "Step 1: Select Drive To Backup"
+msgstr "ขั้นตอนที่ 1: เลือกไดร์ฟที่ต้องการสำรองข้อมูล"
+
+msgid ""
+"Select the <b>source drive</b> that you would like to create a backup image "
+"from."
+msgstr "เลือก <b>ไดร์ฟต้นทาง</b> ที่ต้องการสร้างไฟล์สำรองข้อมูล"
+
+msgid "Drive"
+msgstr "ไดร์ฟ"
+
+msgid "Capacity"
+msgstr "ขนาดความจุ"
+
+msgid "Drive Model"
+msgstr "รุ่นของไดร์ฟ"
+
+msgid "Serial Number"
+msgstr "ซีเรียลนัมเบอร์"
+
+msgid "Partitions"
+msgstr "พาร์ติชั่น"
+
+msgid "Show hidden devices (for advanced users)"
+msgstr "แสดงไดร์ฟที่ถูกซ่อนไว้ (สำหรับผู้ใช้ขั้นสูง)"
+
+msgid "Step 2: Select Partitions to Save"
+msgstr "ขึ้นตอนที่ 2: เลือกพาร์ติชั่นที่ต้องการบันทึก"
+
+msgid ""
+"Select which partitions to create a backup of. <b>Leave all partitions "
+"selected if you are unsure.</b>"
+msgstr ""
+"เลือกพาร์ติชั่นที่ต้องการให้สร้างไฟล์สำรองข้อมูล <b>โปรดปล่อยว่างให้ระบบเลือกพาร์ติชั่นทั้งหมด "
+"หากคุณไม่มั่นใจ</b>"
+
+msgid "Save"
+msgstr "บันทึก"
+
+msgid "Description"
+msgstr "คำอธิบาย"
+
+#, python-brace-format
+msgid "Drive {drive_number}"
+msgstr "ไดร์ฟ {drive_number}"
+
+#, python-brace-format
+msgid "Partition {partition_number}"
+msgstr "พาร์ติชั่น {partition_number}"
+
+msgid "Step 3: Select Destination Drive"
+msgstr "ขั้นตอนที่ 3: เลือกไดร์ฟปลายทาง"
+
+msgid ""
+"Click on the box below to select the source drive that you would like to "
+"create a backup image from."
+msgstr "คลิกที่กล่องด้านล่างเพื่อเลือกไดร์ฟต้นทางที่คุณต้องการสร้างเป็นไฟล์สำรองข้อมูล"
+
+msgid "Connected directly to my computer"
+msgstr "เชื่อมต่อโดยตรงกับคอมพิวเตอร์ของฉัน"
+
+msgid "Shared over a network"
+msgstr "แชร์ผ่านอินเทอร์เน็ต"
+
+msgid "Where would you like to save the image?"
+msgstr "คุณต้องการบันทึกไฟล์สำรองข้อมูลที่ใด?"
+
+msgid "Windows shared folder (SMB/CIFS, Samba)"
+msgstr "ระบบแชร์ไฟล์ของ Windows (SMB/CIFS, Samba)"
+
+msgid "Search network"
+msgstr "ค้นหาเน็ตเวิร์ค"
+
+msgid "Server"
+msgstr "เซิร์ฟเวอร์"
+
+msgid "Share location (UNC path)"
+msgstr "ตำแหน่งโฟลเดอร์หรือเซิร์ฟเวอร์ที่ใช้ร่วมกัน (แบบ UNC)"
+
+msgid "Username"
+msgstr "ชื่อผู้ใช้งาน"
+
+msgid "Password"
+msgstr "รหัสผ่าน"
+
+msgid "Domain"
+msgstr "โดเมน"
+
+msgid "Version"
+msgstr "เวอร์ชั่น"
+
+msgid "Remote path"
+msgstr "เส้นทางที่ใช้รีโมท"
+
+msgid "Exported path"
+msgstr "เส้นทางที่ใช้นำออก"
+
+msgid "Identity File"
+msgstr "ไฟล์ระบุอัตลักษณ์"
+
+msgid "Optional"
+msgstr "ตัวเลือก"
+
+msgid "Select network-shared storage location:"
+msgstr "เลือกที่จัดเก็บไฟล์บนเน็ตเวิร์คที่แชร์:"
+
+msgid "Select the partition where the image files will be saved to"
+msgstr "เลือกพาร์ติชั่นที่ต้องการให้บันทึกไฟล์สำรองข้อมูล"
+
+msgid "Partition"
+msgstr "พาร์ติชั่น"
+
+msgid "Mounting..."
+msgstr "กำลังเชื่อมต่อ..."
+
+msgid "Close this popup to cancel the mount operation."
+msgstr "ปิดหน้าต่างนี้เพื่อยกเลิกการดำเนินการเชื่อมต่อ"
+
+msgid ""
+"Please ensure the username, password and other fields provided are correct, "
+"and try again."
+msgstr "โปรดเช็คว่าชื่อผู้ใช้, รหัสผ่าน และช่องอื่นๆถูกต้องหรือไม่ และลองใหม่อีกครั้ง"
+
+msgid "Must provide either password or SSH identity file."
+msgstr "ต้องระบุไม่รหัสผ่าน หรือไฟล์คีย์ SSH"
+
+msgid "Scanning folder for backup images..."
+msgstr "กำลังค้นหาโฟลเดอร์เพื่อสร้างไฟล์สำรอง..."
+
+#, python-brace-format
+msgid "({timeout_seconds} second timeout)"
+msgstr "(หมดเวลาในอีก {timeout_seconds} วินาที)"
+
+msgid "Close this popup to cancel scanning the selected folder and subfolders."
+msgstr "ปิดหน้าต่างนี้เพื่อยกเลิกการค้นหาโฟลเดอร์ที่เลือกไว้"
+
+#, python-brace-format
+msgid "Scanning: {filename}"
+msgstr "กำลังค้นหา: {filename}"
+
+msgid "Error processing the following images:"
+msgstr "เกิดข้อผิดพลาดระหว่างดำเนินการในไฟล์สำรองต่อไปนี้:"
+
+msgid ""
+"Unable to fully process the image associated with the following partitions:"
+msgstr "ไม่สามารถดำเนินการสำรองข้อมูลได้อย่างเต็มรูปแบบตามในพาร์ติชั่นต่อไปนี้:"
+
+msgid "Unable to fully process the following image:"
+msgstr "ไม่สามารถดำเนินการสำรองข้อมูลได้อย่างเต็มรูปแบบตามไฟล์สำรองข้อมูลดังนี้:"
+
+msgid "Cannot find partition's associated partclone image"
+msgstr "ไม่พบไฟล์สำรองข้อมูลที่สร้างโดย partclone จากพาร์ติชั่นที่เกี่ยวข้อง"
+
+msgid ""
+"This can happen when loading images which Clonezilla was unable to "
+"completely backup."
+msgstr ""
+"เกิดขึ้นจากการโหลดข้อมูลไฟล์สำรองที่ Clonezilla นั้นสร้างสำรองข้อมูลไม่สำเร็จหรือไม่ครบถ้วน"
+
+msgid ""
+"Note: This image format cannot distinguish between failed partclone backup "
+"and a user who chose not to backup a partition."
+msgstr ""
+"หมายเหตุ: รูปแบบไฟล์สำรองนี้ระบบไม่สามารถแยกแยะได้ว่า partclone นั้นสำรองไม่สำเร็จ "
+"หรือผู้ใช้งานเลือกที่จะไม่สำรองพาร์ติชั่น"
+
+msgid "Any other filesystems within the image should be restorable as normal."
+msgstr "ข้อมูลระบบไฟล์อื่นๆภายในไฟล์สำรองนี้จะสามารถกู้คืนกลับมาได้ตามปกติ"
+
+msgid "Needs decryption"
+msgstr "ต้องการการถอดรหัส"
+
+msgid "Unknown filesystem"
+msgstr "ระบบไฟล์ที่ไม่รู้จัก"
+
+#, python-brace-format
+msgid ""
+"The backup's extended partition information is empty. If the backup contains "
+"an extended partition this will not restore correctly. All data is still "
+"fully recoverable but manual intervention is required to fully restore data "
+"within the extended partition. Please consult {url} for information and "
+"assistance."
+msgstr ""
+"ข้อมูลส่วนเสริมพาร์ติชั่นที่สำรองข้อมูลว่างเปล่า "
+"ถ้าสำรองข้อมูลโดยมีส่วนเสริมของพาร์ติชั่นนี้ติดไปด้วยจะคืนค่าได้ไม่ถูกต้อง "
+"ข้อมูลทุกอย่างจะยังคงกู้คืนได้ตามปกติแต่ต้องมีการเข้าไปส่วนเสริมนี้เพิ่มเติมด้วยวิธีการบางอย่างเพื่อให้สามารถคืนค่าส่วนเสริมนี้ด้วย "
+"โปรดปรึกษาและอ่านรายละเอียดข้อมูลเพิ่มเติมได้ที่ {url}"
+
+msgid ""
+"The backup's bootloader data is shorter than expected. If the backup "
+"contained certain bootloaders like GRUB, during a restore operation "
+"Rescuezilla will try and re-install the bootloader."
+msgstr ""
+"การสำรองข้อมูลตัวบูตระบบ (bootloader) สั้นกว่าที่คาดไว้ ถ้าสำรองข้อมูลโดยรวมตัวบูตระบบเช่น "
+"GRUB ด้วย ในระหว่างที่คืนค่าข้อมูลระบบปฏิบัติการ ทาง Rescuezilla "
+"จะพยายามติดตั้งตัวบูตระบบใหม่ให้อีกครั้ง"
+
+msgid "Step 4: Select Destination Folder"
+msgstr "ขั้นตอนที่ 4: เลือกโฟลเดอร์ปลายทาง"
+
+msgid ""
+"Click <b>Browse</b> to select the folder on the destination drive where your "
+"new backup image will be saved.\n"
+"\n"
+"The folder a backup is saved in is usually a description of the computer, e."
+"g. <b>office1</b> or <b>zack-laptop</b>."
+msgstr ""
+"คลิกที่ <b>สำรวจ</b> เพื่อเลือกโฟลเดอร์ปลายทางที่คุณต้องการบันทึกไฟล์สำรองข้อมูลนี้\n"
+"\n"
+"โฟลเดอร์ที่จัดเก็บไฟล์สำรองข้อมูลจะมีชื่อและลักษณะเป็นคอมพิวเตอร์ เช่น <b>office1</b> หรือ "
+"<b>zack-laptop</b> เป็นต้น"
+
+#, python-brace-format
+msgid "You must select a folder inside {location}"
+msgstr "คุณต้องเลือกข้างในโฟลเดอร์ {location}"
+
+msgid "Please select a different folder."
+msgstr "กรุณาเลือกโฟลเดอร์อื่น"
+
+msgid ""
+"The table below lists the backup images that are already in this folder (if "
+"any)."
+msgstr "ตารางที่แสดงรายการด้านล่างนี้จะแสดงไฟล์สำรองข้อมูลที่มีอยู่แล้วในโฟลเดอร์นี้ (ถ้ามี)"
+
+msgid "Browse..."
+msgstr "สำรวจ..."
+
+msgid "Filename"
+msgstr "ชื่อไฟล์"
+
+msgid "Size"
+msgstr "ขนาด"
+
+msgid "Last modified"
+msgstr "แก้ไขครั้งล่าสุด"
+
+msgid "When you are happy with the destination folder, click <b>Next</b>."
+msgstr "เมื่อคุณตัดสินใจเลือกโฟลเดอร์ปลายทางเรียบร้อยแล้ว คลิก <b>ถัดไป</b> เพื่อดำเนินการต่อ"
+
+msgid "Step 5: Name Your Backup"
+msgstr "ขั้นตอนที่ 5: ตั้งชื่อการสำรองข้อมูลของคุณ"
+
+msgid ""
+"Provide a unique name for this backup image, such as the date.  Today's date "
+"is automatically entered for you below.\n"
+"\n"
+"You may only use letters, numbers, and dashes in your backup name."
+msgstr ""
+"ระบุชื่อในแบบที่ไม่เหมือนใครสำหรับไฟล์สำรองนี้เช่นระบุวันที่  "
+"ข้อมูลวันที่สร้างวันนี้จะถูกกรอกให้อัตโนมัติตามด้านล่างนี้\n"
+"\n"
+"คุณสามารถใช้ได้เพียงตัวอักษร, ตัวเลข และขีดกลาง ( - ) ในชื่อไฟล์สำรองของคุณได้"
+
+msgid "Optional: Provide a short description."
+msgstr "ตัวเลือกเสริม: ระบุคำอธิบายสั้นๆ"
+
+msgid "Step 6: Customize Compression Settings"
+msgstr "ขั้นตอนที่ 6: ปรับแต่งการตั้งค่าการบีบอัด"
+
+msgid ""
+"Customize image compression settings. <b>Don't make any changes if you are "
+"unsure.</b>"
+msgstr ""
+"การปรับแต่งและตั้งค่าบีบอัดไฟล์สำรองข้อมูล "
+"<b>อย่าพยายามเปลี่ยนแปลงการตั้งค่าถ้าคุณไม่มั่นใจและเข้าใจดี</b>"
+
+msgid "Compression format: "
+msgstr "รูปแบบการบีบอัด: "
+
+msgid "gzip"
+msgstr "gzip"
+
+msgid "default"
+msgstr "ค่าเริ่มต้น"
+
+msgid "zstandard"
+msgstr "zstandard"
+
+msgid "Uncompressed (Suitable for use with Image Explorer)"
+msgstr "ไม่บีบอัดเลย (เหมาะสำหรับการใช้กับตัวค้นหาไฟล์สำรองข้อมูล)"
+
+msgid "Compression level: "
+msgstr "ระดับการบีบอัด: "
+
+msgid "Fastest"
+msgstr "เร็วสุดๆ"
+
+msgid "Best"
+msgstr "ดีที่สุด"
+
+msgid "When you are happy with the compression settings, click <b>Next</b>."
+msgstr "เมื่อคุณตัดสินใจการตั้งค่าการบีบอัดเรียบร้อยแล้ว คลิ๊ก <b>ถัดไป</b>"
+
+msgid "Step 7: Confirm Backup Configuration"
+msgstr "ขั้นตอนที่ 7: ยืนยันการตั้งค่าสำรองข้อมูล"
+
+msgid "Source drive"
+msgstr "ไดร์ฟตันทาง"
+
+msgid "Backing up the following partition(s)"
+msgstr "สำรองข้อมูลตามพาร์ติชั่นดังต่อไปนี้"
+
+#, python-brace-format
+msgid ""
+"The backup image will be written into folder {dest_dir} on {description}"
+msgstr "ไฟล์สำรองข้อมูลจะถูกเขียนข้อมูลที่โฟลเดอร์ {dest_dir} บน {description}"
+
+msgid "Confirm the following backup configuration."
+msgstr "ยืนยันการตั้งค่าสำรองข้อมูลตามข้อมูลดังนี้"
+
+msgid "On successful completion of the task, perform the following action: "
+msgstr "เมื่อสำรองข้อมูลสำเร็จแล้ว ให้ดำเนินการดังต่อไปนี้: "
+
+msgid "Do nothing"
+msgstr "ไม่ต้องทำอะไร"
+
+msgid "Shutdown"
+msgstr "ปิดเครื่อง"
+
+msgid "Reboot"
+msgstr "รีสตาร์ท"
+
+msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
+msgstr "การกู้ข้อมูล: ละเว้นไฟล์ระบบที่ไม่สอดคล้องกัน และข้อมูลผิดปกติที่เกิดจาก Bad Sectors"
+
+msgid ""
+"<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
+msgstr ""
+"<b>การเปิดฟังก์ชั่น \"การกู้ข้อมูล\" อาจระงับข้อผิดพลาดที่สำคัญได้ โปรดใช้งานอย่างระมัดระวัง</b>"
+
+msgid "To start the backup, click <b>Next</b>."
+msgstr "เพื่อเริ่มการสำรองข้อมูล คลิ๊ก <b>ถัดไป</b>"
+
+msgid "Step 8: Creating Backup Image"
+msgstr "ขั้นตอนที่ 8: การสร้างไฟล์สำรองข้อมูล"
+
+msgid ""
+"Backing up your system to the location you selected.  This may take an hour "
+"or more depending on the speed of your computer and the amount of data."
+msgstr ""
+"การสำรองข้อมูลระบบของคุณไปที่ปลายทางที่เลือกไว้ "
+"จะใช้เวลาเป็นชั่วโมงหรือมากกว่านั้นขึ้นอยู่กับความเร็วเครื่องคอมพิวเตอร์ และขนาดของข้อมูล"
+
+#, python-brace-format
+msgid "Saving: {file}"
+msgstr "กำลังบันทึก: {file}"
+
+#, python-brace-format
+msgid ""
+"Backup {partition_name} containing filesystem {filesystem} to {destination}"
+msgstr "สำรอง {partition_name} รวมไฟล์ระบบ {filesystem} ไปที่ {destination}"
+
+msgid "Summary of Backup"
+msgstr "ผลสรุปการสำรองข้อมูล"
+
+msgid "Confirm the backup summary."
+msgstr "ยืนยันผลดำเนินการสำรองข้อมูล"
+
+msgid "Backup Summary"
+msgstr "ผลการสำรองข้อมูล"
+
+msgid "An operation is in progress. Do you wish to cancel?"
+msgstr "กำลังอยู่ในระหว่างการดำเนินการ คุณต้องการยกเลิกหรือไม่?"
+
+msgid "Operation cancelled by user."
+msgstr "การดำเนินการถูกยกเลิกโดยผู้ใช้งาน"
+
+msgid "Rescue option is enabled."
+msgstr "ตัวเลือกการกู้ข้อมูลได้เปิดใช้งานแล้ว"
+
+msgid "Error creating backup: "
+msgstr "เกิดข้อผิดพลาดสร้างไฟล์สำรองข้อมูล: "
+
+msgid ""
+"Failed to write destination file. Please confirm it is valid to create the "
+"provided file path, and try again."
+msgstr ""
+"ไม่สามารถเขียนไฟล์ไปที่ปลางทางได้ โปรดยืนยันว่าที่อยู่ปลายทางถูกต้องหรือไม่ และทำรายการอีกครั้ง"
+
+#, python-brace-format
+msgid "Successful backup of swap partition {partition_name}"
+msgstr "สำรองข้อมูลไปที่พาร์ติชั่น {partition_name} สำเร็จ"
+
+#, python-brace-format
+msgid "<b>Failed to backup partition</b> {partition_name}"
+msgstr "<b>ไม่สามารถสำรองข้อมูลพาร์ติชั่น</b> {partition_name} ได้"
+
+#, python-brace-format
+msgid "Successful backup of partition {partition_name}"
+msgstr "สำรองข้อมูลที่พาร์ติชั่น {partition_name} สำเร็จ"
+
+msgid "Backup saved successfully."
+msgstr "บันทึกการสำรองเรียบร้อย"
+
+msgid "Backup succeeded with some errors:"
+msgstr "การสำรองข้อมูลสำเร็จพร้อมกับข้อผิดพลาดบางอย่าง:"
+
+msgid "Backup operation failed:"
+msgstr "ดำเนินการสำรองข้อมูลไม่สำเร็จ:"
+
+msgid "User requested operation to stop."
+msgstr "ผู้ใช้งานสั่งให้หยุดดำเนินการ"
+
+#, python-brace-format
+msgid "Operation took {num_minutes} minutes."
+msgstr "ใช้เวลาดำเนินการ {num_minutes} นาที"
+
+msgid "To start a new session, click <b>Next</b>"
+msgstr "เพื่อเริ่มเซสชั่นใหม่ คลิ๊ก<b>ถัดไป</b>"
+
+msgid "Step 1: Select Image Location"
+msgstr "ขั้นตอนที่ 1: เลือกที่อยู่ของไฟล์สำรอง"
+
+msgid "Where are the image files stored?"
+msgstr "ไฟล์สำรองข้อมูลของคุณเก็บไว้อยู่ที่ไหน?"
+
+msgid "Select the partition which contains the image files:"
+msgstr "เลือกพาร์ติชั่นที่เก็บไฟล์สำรองข้อมูลไว้:"
+
+msgid "Step 2: Select Backup Image"
+msgstr "ขั้นตอนที่ 2: เลือกไฟล์สำรองข้อมูล"
+
+msgid "Click <b>Browse</b> to select the folder containing image files."
+msgstr "คลิ๊ก <b>สำรวจ</b> เพื่อเลือกโฟลเดอร์ที่มีไฟล์สำรองข้อมูล"
+
+msgid "Select the image file to restore."
+msgstr "เลือกไฟล์สำรองข้อมูลที่ต้องการคืนค่า"
+
+msgid "Step 3: Select Drive To Restore"
+msgstr "ขั้นตอนที่ 3: เลือกไดร์ฟที่ต้องการคืนค่าข้อมูล"
+
+msgid "Select the destination drive to restore with the selected image."
+msgstr "เลือกไดร์ฟปลายทางที่ต้องการให้คืนค่าข้อมูลด้วยไฟล์ที่เลือก"
+
+msgid "Step 4: Select Partitions to Restore"
+msgstr "ขั้นตอนที่ 4: เลือกที่ต้องการคืนค่า"
+
+msgid ""
+"Select which partitions from the backup image to restore, and whether to "
+"overwrite the partition table. <b>Leave everything selected to completely "
+"restore the destination drive.</b>"
+msgstr ""
+"เลือกพาร์ติชั่นจากไฟล์สำรองข้อมูลเพื่อคืนค่า และเขียนทับข้อมูลพาร์ติชั่นบนปลายทาง "
+"<b>ปล่อยการตั้งค่าที่เลือกไว้ให้ทั้งหมดเพื่อให้การคืนค่าไปไดร์ฟปลายทางสำเร็จ</b>"
+
+msgid "Selected image"
+msgstr "ไฟล์สำรองข้อมูลที่เลือกไว้"
+
+msgid "Destination device"
+msgstr "ไดร์ฟปลายทาง"
+
+msgid "Destination partition"
+msgstr "พาร์ติชั่นปลายทาง"
+
+msgid "Overwrite partition table"
+msgstr "เขียนทับข้อมูลพาร์ติชั่นบนตาราง"
+
+msgid "You will be overwriting the partition table."
+msgstr "คุณจะเขียนทับข้อมูลบนตารางของพาร์ติชั่น"
+
+msgid ""
+"The \"destination partition\" column has been updated using the information "
+"stored within the backup image.\n"
+"\n"
+"<b>If partitions have been resized, new partitions added, or additional "
+"operating systems installed <i>since the backup image was created</i>, then "
+"the destination drive's partition table will not match the backup image, and "
+"overwriting the destination drive's partition table will render these "
+"resized and additional partitions permanently inaccessible.</b> If you have "
+"not modified the partition table in such a way since creating this backup "
+"then overwriting the partition table is completely safe and will have no "
+"negative effects."
+msgstr ""
+"ในช่อง \"ปลายทางของพาร์ติชั่น\" จะถูกอัพเดตโดยใช้ข้อมูลที่จัดเก็บไว้ในไฟล์สำรองข้อมูล\n"
+"\n"
+"<b>ถ้าพาร์ติชั่นมีการลดขนาดลง, มีพาร์ติชั่นใหม่เพิ่มเข้ามา "
+"หรือติดตั้งระบบปฏิบัติการเพิ่ม<i>หลังที่สร้างไฟล์สำรองข้อมูลไปแล้ว</i> "
+"ปลายทางตารางของพาร์ติชั่นของไดร์ฟจะไม่ตรงกันกับไฟล์สำรองข้อมูล "
+"และการเขียนข้อมูลทับลงในตารางของพาร์ติชั่นในไดร์ฟปลายทางทำให้ลดขนาดพาร์ติชั่นลง "
+"และพาร์ติชั่นที่มีอยู่อื่นๆจะไม่สามารถเข้าถึงได้</b> "
+"ถ้าคุณไม่ได้ปรับแต่งตารางของพาร์ติชั่นหลังจากที่สร้างไฟล์สำรองข้อมูลนี้ "
+"คุณสามารถเขียนทับข้อมูลลงบนตารางของพาร์ติชั่นได้อย่างปลอดภัยหายห่วง "
+"และจะไม่มีผลกระทบใดๆตามมา"
+
+msgid "You will <b>not</b> be overwriting the partition table."
+msgstr "คุณจะ<b>ไม่</b>เขียนทับข้อมูลเดิมบนตารางของพาร์ติชั่น"
+
+msgid "The source does not contain a partition table."
+msgstr "ตัวไฟล์ไม่ได้ทำตารางของพาร์ติชั่นใส่ไว้"
+
+msgid ""
+"The \"destination partition\" column has been updated with destination "
+"drive's existing partition table information.\n"
+"\n"
+"<b>The destination partition column can be modified as a dropdown menu. "
+"Incorrectly mapping the destination partitions may cause operating systems "
+"to no longer boot.</b> If you are unsure of the mapping, consider if it's "
+"more suitable to instead overwrite the partition table."
+msgstr ""
+"ในช่อง \"ปลายทางของพาร์ติชั่น\" จะถูกอัพเดตด้วยข้อมูลไดร์ฟที่มีตารางของพาร์ติชั่นไว้อยู่แล้ว\n"
+"\n"
+"<b>ในช่องปลายทางพาร์ติชั่นจะถูกแก้ไขคล้ายๆเมนูแบบเลื่อนลง "
+"การวางแผนที่ของพาร์ติชั่นปลายทางไม่ถูกต้องอาจทำให้ระบบไม่สามารถบูตกลับมาใช้งานได้แบบปกติ</b> "
+"ถ้าคุณไม่มั่นใจในการทำแผนที่เส้นทาง โปรดคิดไว้ว่าควรเขียนทับข้อมูลข้อมูลบนตารางพาร์ติชั่นแบบเดิม"
+
+msgid ""
+"No destination partition selected. Use the destination partition drop-down "
+"menu to select the destination"
+msgstr "ไม่มีพาร์ติชั่นปลายทางที่เลือกไว้ โปรดใช้พาร์ติชั่นที่อยู่ในเมนูเพื่อเลือกปลายทาง"
+
+msgid "Not restoring this partition"
+msgstr "ห้ามคืนค่าในพาร์ติชั่นนี้"
+
+msgid "When you are ready to continue, click <b>Next</b>."
+msgstr "เมื่อพร้อมดำเนินการแล้ว คลิ๊ก <b>ถัดไป</b>"
+
+msgid ""
+"Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
+msgstr "กำลังสแกน และยกเลิกการเชื่อมระบบจัดการพื้นที่ (LVM) ทุกระบบ..."
+
+#, python-brace-format
+msgid ""
+"The source partition table's final partition ({source}: {source_size} bytes) "
+"must refer to a region completely within the destination disk "
+"({destination_size} bytes)."
+msgstr ""
+"ตารางช่องสุดท้ายของพาร์ติชั่นต้นทาง ({source}:{source_size} ไบต์) "
+"จะต้องอ้างอิงถึงขอบเขตที่สมบูรณ์ภายในดิสก์ปลายทาง ({destination_size} ไบต์)"
+
+#, python-brace-format
+msgid ""
+"Rescuezilla cannot yet automatically shrink partitions to restore from large "
+"disks to smaller disks. The final partition currently must always completely "
+"reside within the destination disk.\n"
+"\n"
+"Currently the only way to restore to disks smaller than original is to first "
+"use GParted Partition Editor to shrink the final partition of the original "
+"disk before making a new backup image. Please read the following "
+"instructions for more information:\n"
+"\n"
+"{url}"
+msgstr ""
+"Rescuezilla "
+"ไม่สามารถย่อขนาดของพาร์ติชั่นเพื่อคืนค่าข้องมูลที่สำรองไว้จากพื้นที่ดิสขนาดใหญ่มาขนาดเล็กได้อัตโนมัติ "
+"พาร์ติชั่นที่จัดเตรียมไว้จะต้องตั้งค่าไว้เรียบร้อยแล้วที่ฮาร์ดดิสปลายทาง\n"
+"\n"
+"การคืนค่าในฮาร์ดดิสที่มีขนาดเล็กกว่าไฟล์สำรองข้อมูลปัจจุบันมีเพียงทางเดียวคือการใช้ GParted "
+"Partition Editor เพื่อย่อพาร์ติชั่นที่เตรียมไว้ก่อนจะสร้างไฟล์สำรองข้อมูลใหม่ "
+"อ่านรายละเอียดและขั้นตอนการดำเนินการเพิ่มเติมจากลิงค์ด้านล่างนี้\n"
+" \n"
+"{url}"
+
+msgid "Step 5: Confirm Restore Configuration"
+msgstr "ขั้นตอนที่ 5: ยืนยันตั้งค่าการคืนค่าข้อมูล"
+
+msgid "Confirm the following restore configuration."
+msgstr "โปรดยืนยันข้อมูลการตั้งค่าตามรายละเอียดดังต่อไปนี้"
+
+#, python-brace-format
+msgid ""
+"Are you sure you want to restore the backup to {destination_drive}? Doing so "
+"will permanently overwrite data on this drive!"
+msgstr ""
+"คุณแน่ใจหรือไม่ที่ต้องการคืนค่าการสำรองข้อมูลนี้ไปที่ {destination_drive}? "
+"การดำเนินการนี้จะเขียนทับข้อมูลลงบนไดร์ฟอย่างถาวรนะ!"
+
+msgid "Source image"
+msgstr "ไฟล์สำรองข้อมูล"
+
+msgid "Destination drive"
+msgstr "ไดร์ฟปลายทาง"
+
+msgid "Restoring the following partitions"
+msgstr "การคืนค่าข้อมูลไปพาร์ติชั่นตามรายละเอียดดังนี้"
+
+msgid "WILL BE OVERWRITING PARTITION TABLE"
+msgstr "จะเขียนข้อมูลทับบนตารางพาร์ติชั่น"
+
+msgid "Will <b>NOT</b> be overwriting partition table"
+msgstr "<b>ไม่</b>เขียนข้อมูลทับบนตารางพาร์ติชั่น"
+
+msgid "To start the restore, click <b>Next</b>."
+msgstr "เพื่อเริ่มดำเนินการคืนค่า คลิ๊ก <b>ถัดไป</b>"
+
+msgid "Restoring From Backup"
+msgstr "กำลังคืนค่าจากไฟล์สำรองข้อมูล"
+
+msgid ""
+"Restoring your system from the image you selected.  This may take an hour or "
+"more depending on the speed of your computer and the amount of data."
+msgstr ""
+"การคืนค่าจากไฟล์สำรองข้อมูลบนเครื่องของคุณจะใช้เวลาชั่วโมงหรือมากกว่านั้น "
+"ขึ้นอยู่กับความเร็วคอมพิวเตอร์ของคุณ หรือขนาดของข้อมูล"
+
+msgid "Refreshing partition table"
+msgstr "กำลังรีเฟรชตารางพาร์ติชั่น"
+
+#, python-brace-format
+msgid ""
+"Restoring {description} to {destination_partition} "
+"({destination_description})"
+msgstr ""
+"กำลังคินค่าข้อมูล {description} ไปที่พาร์ติชั่น {destination_partition} "
+"({destination_description})"
+
+msgid "Synchronizing disks..."
+msgstr "กำลังซิงค์ดิสก์…"
+
+#, python-brace-format
+msgid "Querying hard drive geometry of {device}"
+msgstr "กำลังเรียกโครงสร้างฮาร์ดดิสของ {device}"
+
+#, python-brace-format
+msgid "Probing {device} with {app}"
+msgstr "กำลังตรวจสอบ {device} ด้วย {app}"
+
+#, python-brace-format
+msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
+msgstr ""
+"กำลังจัดวางไฟล์ระบบบนพาร์ติชั่น {partition} ({filesystem}) อาจใช้เวลานานนิดหน่อย…"
+
+#, python-brace-format
+msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
+msgstr "การย่อขยายพาร์ติชั่น {partition} ({filesystem}) ล้มเหลว: {msg}"
+
+#, python-brace-format
+msgid ""
+"Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values "
+"from {geometry_source}"
+msgstr ""
+"การจัดเรียงโครงสร้างไฟล์ระบบ NTFS ของ {ntfs_device} โดยใช้ค่าข้อมูลจาก "
+"{geometry_source}"
+
+#, python-brace-format
+msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
+msgstr "การจัดเรียงโครงสร้างไฟล์ระบบ NTFS ของ {ntfs_device} ล้มเหลว"
+
+msgid "Removing udev MAC address records (if any)"
+msgstr "กำลังลบบันทึกข้อมูล udev ของ MAC Address (ถ้ามี)"
+
+msgid "Re-installing syslinux (if any)"
+msgstr "กำลังติดตั้ง syslinux ใหม่ (ถ้ามี)"
+
+msgid "Successfully re-installed syslinux bootloader"
+msgstr "การติดตั้งตัวบูต syslinux ใหม่สำเร็จ"
+
+msgid "Re-installing GRUB bootloader (if any)"
+msgstr "กำลังติดตั้งตัวบูต GRUB ใหม่ (ถ้ามี)"
+
+msgid "Successfully re-installed GRUB bootloader"
+msgstr "ติดตั้งตัวบูต GRUB ใหม่สำเร็จ"
+
+msgid "Did not update GRUB bootloader (if any)"
+msgstr "ไม่ได้อัพเดตตัวบูต GRUB (ถ้ามี)"
+
+msgid "Updating initramfs (if any)"
+msgstr "กำลังอัพเดต Initramfs (ถ้ามี)"
+
+msgid "Successfully updated initramfs"
+msgstr "อัพเดตตัว Initramfs สำเร็จ"
+
+msgid "Updating EFI NVRAM..."
+msgstr "กำลังอัพเดต EFI NVRAM..."
+
+msgid "Successfully updated EFI NVRAM"
+msgstr "อัพเดต EFI NVRAM สำเร็จ"
+
+msgid "Error restoring image: "
+msgstr "เกิดข้อผิดพลาดระหว่างคืนค่าข้อมูล: "
+
+msgid "Could not restore sfdisk partition table as file has zero length: "
+msgstr "ไม่สามารถคืนค่าบนตารางพาร์ติชั่น sfdisk ที่มีความยาวเป็น 0 ได้ "
+
+msgid "Successfully restored partition table."
+msgstr "คืนค่าบนตารางพาร์ติชั่นสำเร็จ"
+
+msgid ""
+"Failed to refresh the devices' partition table. This can happen if another "
+"process is accessing the partition table."
+msgstr ""
+"การรีเฟรชพาร์ติชั่นของอุปกรณ์ล้มเหลว "
+"อาจเกิดจากมีการทำงานอื่นกำลังเข้าถึงหรือกำลังใช้งานพาร์ติชั่นอยู่"
+
+#, python-brace-format
+msgid ""
+"Unable to restore partition {destination_partition} because there is no "
+"saved image associated with: {description}."
+msgstr ""
+"ไม่สามารถคืนค่าบนพาร์ติชั่น {destination_partition} ได้ "
+"เนื่องจากไม่มีไฟล์สำรองข้อมูลที่เกี่ยวข้อง: {description}"
+
+msgid ""
+"This may occur if Clonezilla was originally unable to backup this partition."
+msgstr "กรณีอาจเกิดขึ้นได้ถ้า Clonezilla ไม่สามารถสำรองข้อมูลบนพาร์ติชั่นนี้ได้สำเร็จตั้งแต่แรก"
+
+#, python-brace-format
+msgid "Error restoring partition {image_key} to {destination_partition}."
+msgstr "เกิดข้อผิดพลาดขณะคืนค่าพาร์ติชั่น {image_key} ไปที่พาร์ติชั่น {destination_partition}"
+
+#, python-brace-format
+msgid ""
+"Successfully restored image partition {image} to {destination_partition}"
+msgstr "คืนค่าการสำรองข้อมูลพาร์ติชั่นด้วย {image} ไปที่ {destination_partition} สำเร็จ"
+
+msgid "Summary of Restore"
+msgstr "ผลสรุปการคืนค่าข้อมูฃ"
+
+msgid "Restore Summary"
+msgstr "ผลการคืนค่า"
+
+msgid "Confirm the restore summary."
+msgstr "ผลยืนยันการคืนค่าข้อมูล"
+
+msgid "Backup restored successfully."
+msgstr "ข้อมูลที่สำรองไว้ได้รับการคืนค่าสำเร็จเรียบร้อย"
+
+msgid ""
+"Image Explorer\n"
+"      (beta)"
+msgstr ""
+"เครื่องมือค้นหาไฟล์สำรองข้อมูล\n"
+"      (รุ่นทดสอบ)"
+
+msgid "Image Explorer (beta)"
+msgstr "เครื่องมือค้นหาไฟสำรองข้อมูล (รุ่นทดสอบ)"
+
+msgid "Select the image file to explore"
+msgstr "เลือกไฟล์สำรองข้อมูลเพื่อค้นหา"
+
+msgid "Step 3: Select Partition to Explore"
+msgstr "ขึ้นตอนที่ 3: เลือกพาร์ติชั่นที่ต้องการค้นหา"
+
+msgid "Select the partition to access files from."
+msgstr "เลือกพาร์ติชั่นเพื่อเข้าถึงข้อมูล"
+
+msgid "Click <b>Mount</b> to mount the backup image (as read-only)."
+msgstr "คลิ๊ก <b>เชื่อม</b> เพื่อเชื่อมเข้ากับไฟล์สำรองข้อมูล (อ่านได้อย่างเดียว)"
+
+msgid "Mount"
+msgstr "เชื่อม"
+
+msgid "Mounting as read-only..."
+msgstr "กำลังเชื่อมเพื่ออย่างเดียว…"
+
+msgid "Unmount"
+msgstr "ยกเลิกเชื่อม"
+
+msgid ""
+"Once the partition has been mounted, click <b>Open in file manager</b> to "
+"access your files."
+msgstr ""
+"เมื่อพาร์ติชั่นถูกเชื่อมเข้ากันเรียบร้อย คลิ๊ก <b>เปิดด้วยเครื่องมือจัดการไฟล์</b> เพื่อเข้าถึงไฟล์ของคุณ"
+
+msgid "Open in file manager"
+msgstr "เปิดด้วยเครื่องมือจัดการไฟล์"
+
+msgid "Verify"
+msgstr "ทดสอบ"
+
+msgid "Select one or more image(s) to verify."
+msgstr "เลือกไฟล์สำรองข้อมูลหนึ่ง หรือมากกว่าเพื่อตรวจความถูกต้อง"
+
+msgid "To begin verification, click <b>Next</b>."
+msgstr "เพื่อเริ่มดำเนินการตรวจสอบยืนยันข้อมูล คลิ๊ก <b>ถัดไป</b>"
+
+msgid "Verifying Image"
+msgstr "กำลังตรวจสอบและยืนยันไฟล์สำรองข้อมูล"
+
+msgid "Verifying the selected image(s)."
+msgstr "กำลังตรวจสอบและยืนยันไฟล์สำรองที่เลือกไว้"
+
+#, python-brace-format
+msgid "Verifying {image_name}"
+msgstr "กำลังตัวจสอบและยืนยันไฟล์ชื่อ {image_name}"
+
+msgid "Summary of Verification"
+msgstr "ผลการตรวจสอบ"
+
+msgid "Confirm the verification summary."
+msgstr "ผลยืนยันการตรวจสอบข้อมูล"
+
+msgid "Verification Summary"
+msgstr "ผลการตรวจสอบ"
+
+msgid "To verify another image, click <b>Back</b>."
+msgstr "เพื่อยืนยันไฟล์สำรองอื่น คลิ๊ก <b>กลับ</b>"
+
+msgid "✔"
+msgstr "✔"
+
+msgid "❌"
+msgstr "❌"
+
+msgid "MBR backup appears correct."
+msgstr "การสำรอง MBR แสดงผลถูกต้อง"
+
+msgid "No partition table found."
+msgstr "ไม่พบตารางพาร์ติชั่น"
+
+msgid "Sfdisk partition table file is empty or missing."
+msgstr "ไฟล์ตารางพาร์ติชั่นของ Sfdisk ไม่มีหรือสูญหาย"
+
+msgid "Sfdisk partition table file is present."
+msgstr "มีไฟล์ตารางพาร์ติชั่นของ Sfdisk อยู่"
+
+msgid "Unable to verify."
+msgstr "ไม่สามารถตรวจสอบและยืนยันข้อมูลได้"
+
+#, python-brace-format
+msgid "{partition}: filesystem image successfully verified."
+msgstr "{partition}: ยืนยันการสำรองข้อมูลไฟล์ระบบสำเร็จ"

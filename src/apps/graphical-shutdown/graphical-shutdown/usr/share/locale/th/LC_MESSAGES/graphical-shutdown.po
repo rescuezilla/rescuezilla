@@ -1,0 +1,30 @@
+# Artem <KovalevArtem.ru@gmail.com>, 2021.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2021.
+# Sadayu Bunsahaunsin <maxzone5432@hotmail.com>, 2022.
+# Sadayu Boonsanguansilp <maxzone5432@hotmail.com>, 2022.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2022-08-09 11:41+0000\n"
+"Last-Translator: Sadayu Boonsanguansilp <maxzone5432@hotmail.com>\n"
+"Language-Team: Thai <https://hosted.weblate.org/projects/rescuezilla/"
+"graphical-shutdown/th/>\n"
+"Language: th\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.14-dev\n"
+
+msgid "End Session"
+msgstr "สิ้นสุดกระบวนการ"
+
+msgid "Cancel"
+msgstr "ยกเลิก"
+
+msgid "Shutdown"
+msgstr "ปิดเครื่อง"
+
+msgid "Reboot"
+msgstr "รีสตาร์ท"
+
+msgid "Choose action."
+msgstr "เลือกการกระทำ"
