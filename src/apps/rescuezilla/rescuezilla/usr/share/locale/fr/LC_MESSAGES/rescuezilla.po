@@ -6,13 +6,14 @@
 # and: https://sourceforge.net/p/redobackup/discussion/general/thread/f318c13e/
 #
 # Nathan <bonnemainsnathan@gmail.com>, 2022.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:31+1030\n"
-"PO-Revision-Date: 2022-01-22 09:55+0000\n"
-"Last-Translator: Nathan <bonnemainsnathan@gmail.com>\n"
+"PO-Revision-Date: 2022-08-13 21:33+0000\n"
+"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/fr/>\n"
 "Language: fr\n"
@@ -20,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.11-dev\n"
+"X-Generator: Weblate 4.14-dev\n"
 
 msgid "Welcome"
 msgstr "Bienvenue"
@@ -74,7 +75,7 @@ msgstr "Impossible de démonter {path}"
 
 #, python-brace-format
 msgid "Running: {app}"
-msgstr "Exécution : {path}"
+msgstr "Exécution : {app}"
 
 #, python-brace-format
 msgid "Running {app} on {device}"

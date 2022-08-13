@@ -1,12 +1,12 @@
-# Shasheen Ediriweera <shasheene@gmail.com>, 2021.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
 # Jiwoon Kim <budaestew@gmail.com>, 2021, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2022-01-08 09:54+0000\n"
-"Last-Translator: Jiwoon Kim <budaestew@gmail.com>\n"
+"PO-Revision-Date: 2022-08-13 21:33+0000\n"
+"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/ko/>\n"
 "Language: ko\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.10.1\n"
+"X-Generator: Weblate 4.14-dev\n"
 
 msgid "Welcome"
 msgstr "환영합니다"
@@ -315,8 +315,9 @@ msgstr "알 수 없는 파일 시스템"
 #, python-brace-format
 msgid "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance."
 msgstr ""
-"백업의 확장 파티션 정보가 비어있습니다. 백업에 확장 파티션이 포함되어 있으면 올바르게 복원되지 않습니다. 모든 데이터는 아직 완전히 "
-"복구할 수 있지만 확장 파티션 내의 데이터도 완전히 복원하려면 수동으로 조정해야 합니다."
+"백업의 확장 파티션 정보가 비어있습니다. 백업에 확장 파티션이 포함되어 있으면 "
+"올바르게 복원되지 않습니다. 모든 데이터는 아직 완전히 복구할 수 있지만 확장 "
+"파티션 내의 데이터도 완전히 복원하려면 수동으로 조정해야 합니다. {url}."
 
 msgid "The backup's bootloader data is shorter than expected. If the backup contained certain bootloaders like GRUB, during a restore operation Rescuezilla will try and re-install the bootloader."
 msgstr ""
