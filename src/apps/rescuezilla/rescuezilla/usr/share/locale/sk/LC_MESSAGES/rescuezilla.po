@@ -1,4 +1,4 @@
-# Shasheen Ediriweera <shasheene@gmail.com>, 2021.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
 # radosdesign <radek82@gmail.com>, 2022.
 # alejandro ar <alejandroar@wearehackerone.com>, 2022.
 msgid ""
@@ -6,8 +6,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2022-08-13 14:26+0000\n"
-"Last-Translator: alejandro ar <alejandroar@wearehackerone.com>\n"
+"PO-Revision-Date: 2022-08-13 14:37+0000\n"
+"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: Slovak <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/sk/>\n"
 "Language: sk\n"
@@ -18,16 +18,18 @@ msgstr ""
 "X-Generator: Weblate 4.14-dev\n"
 
 msgid "Welcome"
-msgstr "Welcome"
+msgstr "Vitajte"
 
 msgid "Select an Option"
-msgstr ""
+msgstr "Vyberte jednu z možností"
 
 msgid "Easily create a backup image of your computer, or completely restore from one.  Click an option to begin:"
 msgstr ""
+"Vytvorte zálohu vášho počítača alebo obnovte počítač zo zálohy. Kliknite na "
+"jednu z možností"
 
 msgid "Backup"
-msgstr "."
+msgstr ""
 
 msgid "Restore"
 msgstr ""
