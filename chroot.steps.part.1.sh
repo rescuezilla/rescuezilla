@@ -193,6 +193,8 @@ common_pkgs=("discover"
              "fonts-unfonts-core"
              # Thai font
              "fonts-thai-tlwg"
+             # Font for symbols like "❌"
+             "fonts-symbola"
              "breeze-gtk-theme"
              "gtk3-engines-breeze"
              "gnome-icon-theme"
