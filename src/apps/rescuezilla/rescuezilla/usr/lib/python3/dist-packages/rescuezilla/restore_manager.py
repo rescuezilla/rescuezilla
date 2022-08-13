@@ -1392,7 +1392,8 @@ class RestoreManager:
                         self.summary_message += "\n" + msg
                     else:
                         self.summary_message += "\n" + _("Shutdown/Reboot cancelled due to errors.")
-        self.logger.close()
+        if self.logger:
+            self.logger.close()
         with self.restore_in_progress_lock:
             self.restore_in_progress = False
         self.populate_summary_page()

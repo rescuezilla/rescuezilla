@@ -1069,8 +1069,8 @@ class BackupManager:
                     else:
                         GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, "Failed to output checksum file Info-img-id.txt: " + process.stdout + "\n\n" + process.stderr)
 
-        # Always close logger
-        self.logger.close()
+        if self.logger:
+            self.logger.close()
 
         if not self.is_cloning:
             is_unmounted, umount_message = Utility.umount_warn_on_busy("/mnt/backup", is_lazy_umount=True)
