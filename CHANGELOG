@@ -6,7 +6,7 @@
 * Builds latest version of partclone from source code `v0.3.20`, instead of OS package (#168, #309 and #335)
     * This fixes "unsupported feature" error for users of compressed BTRFS filesystems (such as Fedora Workstation 33 and newer)
 * Removed old partclone v0.2.43 used to _maximize_ legacy Redo Backup compatibility (modern partclone still provides good backwards compatibility)
-* Switched Firefox to using the Mozilla Team PPA repository, because new "snap" packaging is still incompatible with Rescuezilla's "chroot-based" build scripts
+* Switched Firefox to Mozilla Team PPA repository, because new "snap" packages incompatible with chroots (#364)
 * Added ability to compress images using bzip2 algorithm (#290)
 * Moved post-completion action to in-progress page (#316)
 * Added ability to set custom SSH port (#336)
@@ -26,7 +26,7 @@
 * Builds latest version of partclone from source code `v0.3.20`, instead of OS package (#168, #309 and #335)
     * This fixes "unsupported feature" error for users of compressed BTRFS filesystems (such as Fedora Workstation 33 and newer)
 * Removed old partclone v0.2.43 used to _maximize_ legacy Redo Backup compatibility (modern partclone still provides good backwards compatibility)
-* Switched Firefox to using the Mozilla Team PPA repository, because new "snap" packaging is still incompatible with Rescuezilla's "chroot-based" build scripts
+* Switched Firefox to Mozilla Team PPA repository, because new "snap" packages incompatible with chroots (#364)
 
 -------------------------------------------------------------------------------
   Weekly Rolling Release (2022-06-26) 
