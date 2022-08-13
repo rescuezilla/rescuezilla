@@ -44,14 +44,14 @@ make deb
 mkdir /mnt/ramdisk/
 sudo mount -t tmpfs -o rw,size=7G tmpfs /mnt/ramdisk/
 rsync -av `pwd` /mnt/ramdisk
-cd /mnt/ramdisk
+cd /mnt/ramdisk/rescuezilla
 
 # Build the amd64 ISO image based on Ubuntu 20.04 (Focal), and the deb files.
 # This should work on Ubuntu or Ubuntu-derived distributions, but is _not_ recommended
 # Debian or Debian-derived environments (see "EFI Secure Boot" section below).
 #
 # sudo privileges required for the chroot bind mount
-sudo make focal
+sudo make jammy
 
 # Test the generated ISO image in a virtual machine. (see suggested workflow section below)
 sudo apt-get install virtualbox
