@@ -1,12 +1,12 @@
-# Shasheen Ediriweera <shasheene@gmail.com>, 2021.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
 # 池边树下 <mzky@163.com>, 2021, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2022-06-24 01:21+0000\n"
-"Last-Translator: 池边树下 <mzky@163.com>\n"
+"PO-Revision-Date: 2022-08-11 05:40+0000\n"
+"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
 "rescuezilla/rescuezilla/zh_Hant/>\n"
 "Language: zh_Hant\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.13.1-dev\n"
+"X-Generator: Weblate 4.14-dev\n"
 
 msgid "Welcome"
 msgstr "歡迎"
@@ -38,10 +38,10 @@ msgid "Need help? Start by checking the Rescuezilla frequently asked questions, 
 msgstr "需要説明嗎？首先檢查救援隊經常提出的問題，然後前往救援會。"
 
 msgid "Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed."
-msgstr "考慮在眾籌網站 Patreon 上每月捐款 1 美元， 以便救援齊拉可以繼續開發。"
+msgstr "考慮在眾籌網站 Patreon 上每月捐款 1 美元， 以便Rescuezilla可以繼續開發。"
 
 msgid "Back"
-msgstr "後退"
+msgstr "返回"
 
 msgid "Next >"
 msgstr "下一個>"
@@ -50,7 +50,7 @@ msgid "Please wait..."
 msgstr "請稍候…"
 
 msgid "Identifying disk drives..."
-msgstr "識別磁碟機..."
+msgstr "正在識別磁碟機..."
 
 #, python-brace-format
 msgid "Unmounting: {path}"

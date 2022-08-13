@@ -4,13 +4,14 @@
 # Vinicios de Lima Clarindo <vinicioslc@outlook.com>, 2020
 # Submitted at: https://github.com/rescuezilla/rescuezilla/issues/128
 # Vinicios Clarindo <vinicioslc@outlook.com>, 2021, 2022.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2022-02-13 16:56+0000\n"
-"Last-Translator: Vinicios Clarindo <vinicioslc@outlook.com>\n"
+"PO-Revision-Date: 2022-08-13 05:19+0000\n"
+"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/pt/>\n"
 "Language: pt\n"
@@ -18,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.11-dev\n"
+"X-Generator: Weblate 4.14-dev\n"
 
 msgid "Welcome"
 msgstr "Bem vindo!"
@@ -151,6 +152,9 @@ msgstr "Para iniciar a clonagem, clique em <b>Próximo</b>."
 #, python-brace-format
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
+"Você tem certeza que quer clonar o drive para o drive {destination_drive} ?  "
+"Fazendo isso você irá sobrepor permanentemente todos os dados do drive de "
+"destino!"
 
 msgid "Step 6: Cloning Disk"
 msgstr ""
