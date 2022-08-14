@@ -7,8 +7,19 @@ DEBIAN_FRONTEND=noninteractive
 
 cd /
 
+# Install other rescuezilla frontend and all dependencies.
+# gdebi installs deb files and resolves dependencies from the apt repositories.
+gdebi --non-interactive /rescuezilla*deb
+if [[ $? -ne 0 ]]; then
+  echo "Error: Failed to install Rescuezilla deb packages."
+  exit 1
+fi
+rm /rescuezilla.*deb
+# HACK(Ref:#367): Backup Ubuntu repository's "partclone.xfs"
+echo "Making backup of Ubuntu repository partclone.xfs binary before installing newer partclone. See #367"
+cp -r /usr/sbin/partclone.xfs /
 
-# Install Rescuezilla frontend, other rescuezilla packages and all dependencies.
+# Install other rescuezilla packages and all dependencies.
 DEB_PACKAGES=/*.deb
 for f in $DEB_PACKAGES
 do
@@ -22,6 +33,9 @@ done
 
 # Delete the now-installed deb files from the chroot filesystem
 rm /*.deb
+
+echo "Deploying Ubuntu repository partclone.xfs binary after installing newer partclone. See #367"
+mv /partclone.xfs /usr/sbin/
 
 # Add reasonable xdg-open MIME associations based on Ubuntu user file
 mkdir --parents /root/.local/share/applications/
