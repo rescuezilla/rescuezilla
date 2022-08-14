@@ -261,6 +261,7 @@ common_pkgs=("discover"
              "${language_pack_gnome_base_pkg[@]}"
              "qemu-utils"
              "xfce4-screenshooter"
+             "wpasupplicant"
 )
 
 # Install openssh-server only if the IS_INTEGRATION_TEST variable is enable
