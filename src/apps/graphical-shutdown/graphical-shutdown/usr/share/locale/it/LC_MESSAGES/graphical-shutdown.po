@@ -1,7 +1,7 @@
 # Pierfrancesco Passerini <p.passerini@gmail.com>, 2021, 2022.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2022-08-09 11:27+0000\n"
+"PO-Revision-Date: 2022-08-14 20:36+0000\n"
 "Last-Translator: Pierfrancesco Passerini <p.passerini@gmail.com>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/rescuezilla/"
 "graphical-shutdown/it/>\n"
@@ -21,7 +21,7 @@ msgid "Shutdown"
 msgstr "Spegnimento"
 
 msgid "Reboot"
-msgstr "Riavviare"
+msgstr "Riavvio"
 
 msgid "Choose action."
 msgstr "Seleziona opzione."
