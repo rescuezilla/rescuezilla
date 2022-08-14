@@ -21,7 +21,7 @@ buildscripts = build.sh chroot.steps.part.1.sh chroot.steps.part.2.sh
 focal: ARCH=amd64
 focal: CODENAME=focal
 export ARCH CODENAME
-focal: deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-utils partclone-nbd $(buildscripts)
+focal: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-utils partclone-nbd $(buildscripts)
 	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) ./build.sh
 
 # ISO image based on Ubuntu 21.10 Impish 64bit as a temporary measure to provide a newer Linux kernel for better support for
@@ -30,7 +30,7 @@ focal: deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-utils 
 impish: ARCH=amd64
 impish: CODENAME=impish
 export ARCH CODENAME
-impish: deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-utils partclone-nbd $(buildscripts)
+impish: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-utils partclone-nbd $(buildscripts)
 	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) ./build.sh
 	
 jammy: ARCH=amd64
