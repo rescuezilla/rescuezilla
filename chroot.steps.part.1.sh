@@ -74,11 +74,11 @@ pkgs_specific_to_32bit=("linux-generic-hwe-18.04"
 # https://wiki.ubuntu.com/Kernel/LTSEnablementStack
 # https://ubuntu.com/about/release-cycle
 pkgs_specific_to_ubuntu2004_focal=("linux-generic-hwe-18.04"
-                        "xserver-xorg-hwe-18.04"
-                        "xserver-xorg-video-all-hwe-18.04"
-                        "xserver-xorg-video-intel-hwe-18.04"
-                        "xserver-xorg-video-qxl-hwe-18.04"
-                        # Packages which may assist users needing to do a GRUB repair (64-bit EFI)
+                       "xserver-xorg-hwe-18.04"
+                       "xserver-xorg-video-all-hwe-18.04"
+                       "xserver-xorg-video-intel-hwe-18.04"
+                       "xserver-xorg-video-qxl-hwe-18.04"
+                       # Packages which may assist users needing to do a GRUB repair (64-bit EFI)
                        "shim-signed"
                        "grub-efi-amd64-signed"
                        "grub-efi-amd64-bin"
@@ -89,13 +89,13 @@ pkgs_specific_to_ubuntu2004_focal=("linux-generic-hwe-18.04"
 )
 
 pkgs_specific_to_ubuntu2110_impish=(
-			"linux-generic"
-                        "xserver-xorg"
-                        "xserver-xorg-video-all"
-                        "xserver-xorg-video-intel"
-                        "xserver-xorg-video-qxl"
-                        "xserver-xorg-video-mga"
-                        # Packages which may assist users needing to do a GRUB repair (64-bit EFI)
+			                 "linux-generic"
+                       "xserver-xorg"
+                       "xserver-xorg-video-all"
+                       "xserver-xorg-video-intel"
+                       "xserver-xorg-video-qxl"
+                       "xserver-xorg-video-mga"
+                       # Packages which may assist users needing to do a GRUB repair (64-bit EFI)
                        "shim-signed"
                        "grub-efi-amd64-signed"
                        "grub-efi-amd64-bin"
@@ -106,12 +106,12 @@ pkgs_specific_to_ubuntu2110_impish=(
 )
 
 pkgs_specific_to_ubuntu2204_jammy=(
-			"linux-generic"
-                        "xserver-xorg"
-                        "xserver-xorg-video-all"
-                        "xserver-xorg-video-intel"
-                        "xserver-xorg-video-qxl"
-                        "xserver-xorg-video-mga"
+                       "linux-generic"
+                       "xserver-xorg"
+                       "xserver-xorg-video-all"
+                       "xserver-xorg-video-intel"
+                       "xserver-xorg-video-qxl"
+                       "xserver-xorg-video-mga"
                         # Packages which may assist users needing to do a GRUB repair (64-bit EFI)
                        "shim-signed"
                        "grub-efi-amd64-signed"
