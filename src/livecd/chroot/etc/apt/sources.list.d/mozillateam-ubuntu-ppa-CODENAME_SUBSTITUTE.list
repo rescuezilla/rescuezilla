@@ -1,0 +1,2 @@
+deb https://ppa.launchpadcontent.net/mozillateam/ppa/ubuntu/ CODENAME_SUBSTITUTE main
+# deb-src https://ppa.launchpadcontent.net/mozillateam/ppa/ubuntu/ CODENAME_SUBSTITUTE main
