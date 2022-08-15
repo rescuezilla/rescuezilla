@@ -86,6 +86,8 @@ pkgs_specific_to_ubuntu2004_focal=("linux-generic-hwe-18.04"
                        # Dependency for partclone-utils' imagemount
                        "nbdkit"
                        "lupin-casper"
+                       # Replaced by exfatprogs
+                       "exfat-utils"
 )
 
 pkgs_specific_to_ubuntu2110_impish=(
@@ -103,6 +105,8 @@ pkgs_specific_to_ubuntu2110_impish=(
                        # Dependency for partclone-utils' imagemount
                        "nbdkit"
                        "lupin-casper"
+                       # Replaced by exfatprogs
+                       "exfat-utils"
 )
 
 pkgs_specific_to_ubuntu2204_jammy=(
@@ -119,6 +123,8 @@ pkgs_specific_to_ubuntu2204_jammy=(
                        "grub-efi-ia32-bin"
                        # Dependency for partclone-utils' imagemount
                        "nbdkit"
+                       # Replaces exfat-utils
+                       "exfatprogs"
 )
 
 # Languages on the system
@@ -246,7 +252,6 @@ common_pkgs=("discover"
              "jfsutils"
              "wget"
              "exfat-fuse"
-             "exfatprogs"
              "btrfs-progs"
              "udisks2-btrfs"
              "hfsplus"
