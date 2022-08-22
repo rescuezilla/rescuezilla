@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2022-08-13 21:33+0000\n"
+"PO-Revision-Date: 2022-08-22 17:47+0000\n"
 "Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/ca/>\n"
@@ -695,37 +695,47 @@ msgid "Rescuezilla cannot yet automatically shrink partitions to restore from la
 "\n"
 "{url}"
 msgstr ""
+"Rescuezilla encara no pot reduir automàticament les particions per restaurar-"
+"les de discs grans a discs més petits. Actualment, la partició final sempre "
+"ha de residir completament dins del disc de destinació.\n"
+"\n"
+"Actualment, l'única manera de restaurar a discs més petits que l'original és "
+"utilitzar primer GParted Partition Editor per reduir la partició final del "
+"disc original abans de fer una nova imatge de còpia de seguretat. Si us "
+"plau, llegiu les instruccions següents per obtenir més informació:"
 
 msgid "Step 5: Confirm Restore Configuration"
-msgstr ""
+msgstr "Pas 5: confirmeu la configuració de restauració"
 
 msgid "Confirm the following restore configuration."
-msgstr ""
+msgstr "Confirmeu la següent configuració de restauració"
 
 #, python-brace-format
 msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
+"Esteu segur que voleu restaurar la còpia de seguretat a {destination_drive}? "
+"En fer-ho, es sobreescriuran permanentment les dades d'aquesta unitat."
 
 msgid "Source image"
-msgstr ""
+msgstr "Imatge origen"
 
 msgid "Destination drive"
-msgstr ""
+msgstr "Unitat destí"
 
 msgid "Restoring the following partitions"
-msgstr ""
+msgstr "Restaurant les  següents particions"
 
 msgid "WILL BE OVERWRITING PARTITION TABLE"
-msgstr ""
+msgstr "SE SOBRESCRIURÀ LA TAULA DE PARTICIONS"
 
 msgid "Will <b>NOT</b> be overwriting partition table"
-msgstr ""
+msgstr "<b>NO</b> sobreescriurà la taula de particions"
 
 msgid "To start the restore, click <b>Next</b>."
 msgstr "Per iniciar la restauració, feu clic a <b>Endavant</b>."
 
 msgid "Restoring From Backup"
-msgstr ""
+msgstr "Restauració des de la còpia de seguretat"
 
 msgid "Restoring your system from the image you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
@@ -734,59 +744,69 @@ msgstr ""
 "la quantitat de dades d'origen."
 
 msgid "Refreshing partition table"
-msgstr ""
+msgstr "Actualització de la taula de particions"
 
 #, python-brace-format
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
 msgstr ""
+"S'està restaurant {description} a {destination_partition} "
+"({destination_description})"
 
 msgid "Synchronizing disks..."
-msgstr ""
+msgstr "Sincronitzant discs..."
 
 #, python-brace-format
 msgid "Querying hard drive geometry of {device}"
-msgstr ""
+msgstr "Consulta de la geometria del disc dur de {dispositiu}"
 
 #, python-brace-format
 msgid "Probing {device} with {app}"
-msgstr ""
+msgstr "Sondejant {device} amb {app}"
 
 #, python-brace-format
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
 msgstr ""
+"Sistema de fitxers en creixement {partició} ({sistema de fitxers}). Això pot "
+"trigar una estona..."
 
 #, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
 msgstr ""
+"No s'ha pogut canviar la mida de la partició {partició} ({sistema de "
+"fitxers}): {msg}"
 
 #, python-brace-format
 msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
 msgstr ""
+"S'ha ajustat correctament la geometria del sistema de fitxers NTFS de "
+"{ntfs_device} mitjançant valors de {geometry_source}"
 
 #, python-brace-format
 msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
 msgstr ""
+"No s'ha pogut ajustar la geometria del sistema de fitxers NTFS de "
+"{ntfs_device}"
 
 msgid "Removing udev MAC address records (if any)"
-msgstr ""
+msgstr "Eliminació dels registres d'adreces MAC d'udev (si n'hi ha)"
 
 msgid "Re-installing syslinux (if any)"
-msgstr ""
+msgstr "Reinstal·lació de syslinux (si n'hi ha)"
 
 msgid "Successfully re-installed syslinux bootloader"
-msgstr ""
+msgstr "S'ha reinstal·lat correctament el carregador d'arrencada syslinux"
 
 msgid "Re-installing GRUB bootloader (if any)"
-msgstr ""
+msgstr "Reinstal-lant el carregador d'arrencada GRUB (si n'hi ha)"
 
 msgid "Successfully re-installed GRUB bootloader"
-msgstr ""
+msgstr "S'ha tornat a instal·lar correctament el carregador d'arrencada GRUB"
 
 msgid "Did not update GRUB bootloader (if any)"
-msgstr ""
+msgstr "No s'ha actualitzat el carregador d'arrencada GRUB (si n'hi ha)"
 
 msgid "Updating initramfs (if any)"
-msgstr ""
+msgstr "S'està actualitzant initramfs (si n'hi ha)"
 
 msgid "Successfully updated initramfs"
 msgstr ""
