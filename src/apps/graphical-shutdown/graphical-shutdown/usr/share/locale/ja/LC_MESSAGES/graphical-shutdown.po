@@ -1,8 +1,15 @@
+# Shasheen Ediriweera <shasheene@gmail.com>, 2022.
 msgid ""
 msgstr ""
+"PO-Revision-Date: 2022-08-23 02:49+0000\n"
+"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
+"Language-Team: Japanese <https://hosted.weblate.org/projects/rescuezilla/"
+"graphical-shutdown/ja/>\n"
 "Language: ja\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.14-dev\n"
 
 msgid "End Session"
 msgstr "セッションを終了する"
@@ -17,4 +24,4 @@ msgid "Reboot"
 msgstr "再起動"
 
 msgid "Choose action."
-msgstr "アクションを選択してください"
+msgstr "アクションを選択してください。"

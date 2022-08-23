@@ -1,11 +1,11 @@
 # Allan Nordhøy <epost@anotheragency.no>, 2021.
-# Shasheen Ediriweera <shasheene@gmail.com>, 2021.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2021-12-26 23:37+0000\n"
+"PO-Revision-Date: 2022-08-23 02:49+0000\n"
 "Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "rescuezilla/rescuezilla/nb_NO/>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.10.1\n"
+"X-Generator: Weblate 4.14-dev\n"
 
 msgid "Welcome"
 msgstr "Velkommen"
@@ -522,7 +522,7 @@ msgid "Operation cancelled by user."
 msgstr "Operasjon avbrutt av bruker."
 
 msgid "Rescue option is enabled."
-msgstr "Redningsopsjon påslått"
+msgstr "Redningsopsjon påslått."
 
 msgid "Error creating backup: "
 msgstr "Kunne ikke opprette sikkerhetskopi: "
@@ -803,9 +803,8 @@ msgstr "Oppdaterte initramfs"
 msgid "Updating EFI NVRAM..."
 msgstr "Oppdaterer EFI NVRAM …"
 
-#, fuzzy
 msgid "Successfully updated EFI NVRAM"
-msgstr "Oppdaterte EFI NVRAM …"
+msgstr "Oppdaterte EFI NVRAM"
 
 #, fuzzy
 msgid "Error restoring image: "
@@ -927,13 +926,13 @@ msgstr "Bekrefter valgt(e) avtrykk."
 
 #, python-brace-format
 msgid "Verifying {image_name}"
-msgstr "Bekrefter {image_name} …"
+msgstr "Bekrefter {image_name}"
 
 msgid "Summary of Verification"
 msgstr "Sammendrag av bekreftelse"
 
 msgid "Confirm the verification summary."
-msgstr "Bekreft sammendraget"
+msgstr "Bekreft sammendraget."
 
 msgid "Verification Summary"
 msgstr "Bekreftelsessammendrag"
@@ -951,7 +950,7 @@ msgid "MBR backup appears correct."
 msgstr "MBR-sikkerhetskopi ser ut til å være korrekt."
 
 msgid "No partition table found."
-msgstr "Fant ikke noen partisjonstabell …"
+msgstr "Fant ikke noen partisjonstabell."
 
 msgid "Sfdisk partition table file is empty or missing."
 msgstr "Sfdisk-partisjonstabellfil mangler eller er tom."

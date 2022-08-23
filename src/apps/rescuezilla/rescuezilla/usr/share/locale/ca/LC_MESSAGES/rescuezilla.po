@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2022-08-22 17:47+0000\n"
+"PO-Revision-Date: 2022-08-23 02:23+0000\n"
 "Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/ca/>\n"
@@ -702,13 +702,15 @@ msgstr ""
 "Actualment, l'única manera de restaurar a discs més petits que l'original és "
 "utilitzar primer GParted Partition Editor per reduir la partició final del "
 "disc original abans de fer una nova imatge de còpia de seguretat. Si us "
-"plau, llegiu les instruccions següents per obtenir més informació:"
+"plau, llegiu les instruccions següents per obtenir més informació:\n"
+"\n"
+"{url}"
 
 msgid "Step 5: Confirm Restore Configuration"
 msgstr "Pas 5: confirmeu la configuració de restauració"
 
 msgid "Confirm the following restore configuration."
-msgstr "Confirmeu la següent configuració de restauració"
+msgstr "Confirmeu la següent configuració de restauració."
 
 #, python-brace-format
 msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!"
@@ -723,7 +725,7 @@ msgid "Destination drive"
 msgstr "Unitat destí"
 
 msgid "Restoring the following partitions"
-msgstr "Restaurant les  següents particions"
+msgstr "Restaurant les següents particions"
 
 msgid "WILL BE OVERWRITING PARTITION TABLE"
 msgstr "SE SOBRESCRIURÀ LA TAULA DE PARTICIONS"
@@ -757,7 +759,7 @@ msgstr "Sincronitzant discs..."
 
 #, python-brace-format
 msgid "Querying hard drive geometry of {device}"
-msgstr "Consulta de la geometria del disc dur de {dispositiu}"
+msgstr "Consulta de la geometria del disc dur de {device}"
 
 #, python-brace-format
 msgid "Probing {device} with {app}"
@@ -766,14 +768,14 @@ msgstr "Sondejant {device} amb {app}"
 #, python-brace-format
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
 msgstr ""
-"Sistema de fitxers en creixement {partició} ({sistema de fitxers}). Això pot "
-"trigar una estona..."
+"Sistema de fitxers en creixement {partition} ({filesystem}). Això pot trigar "
+"una estona..."
 
 #, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
 msgstr ""
-"No s'ha pogut canviar la mida de la partició {partició} ({sistema de "
-"fitxers}): {msg}"
+"No s'ha pogut canviar la mida de la partició {partition} ({filesystem}): "
+"{msg}"
 
 #, python-brace-format
 msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
