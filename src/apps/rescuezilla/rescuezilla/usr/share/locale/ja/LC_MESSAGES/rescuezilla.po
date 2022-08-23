@@ -4,13 +4,13 @@
 # AE720, 2021
 # Submitted at: https://github.com/rescuezilla/rescuezilla/issues/176
 #
-# Shasheen Ediriweera <shasheene@gmail.com>, 2021.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2021-11-23 15:21+0000\n"
+"PO-Revision-Date: 2022-08-23 02:49+0000\n"
 "Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/ja/>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.10-dev\n"
+"X-Generator: Weblate 4.14-dev\n"
 
 msgid "Welcome"
 msgstr "ようこそ"
@@ -432,7 +432,7 @@ msgid "To start the backup, click <b>Next</b>."
 msgstr "バックアップを開始するには、[<b>次へ</b>]をクリックします。"
 
 msgid "Step 8: Creating Backup Image"
-msgstr "ステップ 7: バックアップイメージの作成をしています。。。"
+msgstr "ステップ 8 バックアップイメージの作成をしています"
 
 msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr "選択した場所にシステムをバックアップしています。 コンピュータのスペックやデータ量によっては、1時間以上かかる場合があります。"
@@ -464,7 +464,7 @@ msgid "Rescue option is enabled."
 msgstr ""
 
 msgid "Error creating backup: "
-msgstr "バックアップの作成中にエラーが発生しました:"
+msgstr "バックアップの作成中にエラーが発生しました: "
 
 msgid "Failed to write destination file. Please confirm it is valid to create the provided file path, and try again."
 msgstr "宛先ファイルの書き込みに失敗しました。 ファイルパスが有効であることを確認して、再試行してください。"
@@ -482,7 +482,7 @@ msgid "Successful backup of partition {partition_name}"
 msgstr "パーティションのバックアップが成功しました {partition_name}"
 
 msgid "Backup saved successfully."
-msgstr "バックアップが正常に保存されました"
+msgstr "バックアップが正常に保存されました。"
 
 msgid "Backup succeeded with some errors:"
 msgstr "バックアップは成功しましたが、エラーが発生しています:"
@@ -516,7 +516,7 @@ msgid "Click <b>Browse</b> to select the folder containing image files."
 msgstr "下のボックスをクリックして、イメージファイルを含むフォルダを選択します。"
 
 msgid "Select the image file to restore."
-msgstr "レストアするイメージファイルを選択します"
+msgstr "レストアするイメージファイルを選択します。"
 
 msgid "Step 3: Select Drive To Restore"
 msgstr "ステップ 3: レストアするドライブを選択します"
@@ -546,10 +546,20 @@ msgid "You will be overwriting the partition table."
 msgstr "パーティションテーブルを上書きします。"
 
 msgid "The \"destination partition\" column has been updated using the information stored within the backup image.\n\n<b>If partitions have been resized, new partitions added, or additional operating systems installed <i>since the backup image was created</i>, then the destination drive's partition table will not match the backup image, and overwriting the destination drive's partition table will render these resized and additional partitions permanently inaccessible.</b> If you have not modified the partition table in such a way since creating this backup then overwriting the partition table is completely safe and will have no negative effects."
-msgstr "「宛先パーティション」列が、バックアップイメージ内に保存されている情報を元に更新されました。\n\n<b><i>バックアップイメージを作成した後に</i>パーティションのサイズを変更したり、新しいパーティションを追加したり、オペレーティングシステムを追加した場合、宛先ドライブのパーティションテーブルがバックアップイメージと一致せず、そのままパーティションテーブルを書きすると、これらの追加やサイズ変更されたパーティションに永久にアクセスできなくなります。バックアップを作成してからそのような方法でパーティションテーブルを変更していない場合は、パーティションテーブルを書きしても完全に安全であり、悪影響はありません。"
+msgstr ""
+"「宛先パーティション」列が、バックアップイメージ内に保存されている情報を元に"
+"更新されました。\n"
+"\n"
+"<i>バックアップイメージを作成した後に</i>パーティションのサイズを変更したり、"
+"新しいパーティションを追加したり、オペレーティングシステムを追加した場合、宛"
+"先ドライブのパーティションテーブルがバックアップイメージと一致せず、そのまま"
+"パーティションテーブルを書きすると、これらの追加やサイズ変更されたパーティシ"
+"ョンに永久にアクセスできなくなります。バックアップを作成してからそのような方"
+"法でパーティションテーブルを変更していない場合は、パーティションテーブルを書"
+"きしても完全に安全であり、悪影響はありません。"
 
 msgid "You will <b>not</b> be overwriting the partition table."
-msgstr "パーティションテーブルを上書き<b>しません。</b>"
+msgstr "パーティションテーブルを上書き<b>しません</b>。"
 
 msgid "The source does not contain a partition table."
 msgstr ""
@@ -681,10 +691,11 @@ msgid "Successfully updated EFI NVRAM"
 msgstr ""
 
 msgid "Error restoring image: "
-msgstr "イメージのレストア中にエラーが発生しました:"
+msgstr "イメージのレストア中にエラーが発生しました: "
 
 msgid "Could not restore sfdisk partition table as file has zero length: "
-msgstr "ファイルの長さがゼロであるため、sfdiskパーティションテーブルをレストアできませんでした:"
+msgstr "ファイルの長さがゼロであるため、sfdiskパーティションテーブルをレストアできま"
+"せんでした: "
 
 msgid "Successfully restored partition table."
 msgstr "パーティションテーブルのレストアに成功しました。"
