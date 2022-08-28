@@ -204,3 +204,38 @@ clean-all: clean-build-dir
 	$(info )
 	$(info * Deleting cached apt-get indexes AND cached deb packages)
 	rm -rf pkg.cache/
+
+### Helper targets to simplify running in Docker
+
+docker-build:
+	docker build --no-cache=true --tag builder.image .
+
+docker-run:
+	docker run --rm --detach --privileged --name=builder.container --volume=$(shell pwd):/home/rescuezilla/ --tty builder.image cat
+	docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container ./git_add_safe_directory.sh
+
+docker-stop:
+	docker stop builder.container
+
+docker-add-safe-directory:
+	docker exec --interactive --workdir=/home/rescuezilla/ builder.container ./git_add_safe_directory.sh
+
+docker-test:
+	docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make test
+
+docker-status:
+	docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make status
+
+# Start an interactive bash session for live debugging
+docker-bash:
+	docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container /bin/bash
+
+docker-deb:
+	docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make deb
+
+docker-jammy:
+	docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make jammy
+
+docker-focal:
+	docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make focal
+
