@@ -1,4 +1,19 @@
 -------------------------------------------------------------------------------
+  Version 2.4.1 (2022-09-05)
+-------------------------------------------------------------------------------
+
+* Fixed broken wifi after v2.4 broke it (due to change in Ubuntu 22.04 Jammy leading to a key package not being installed (#366)
+* Reintroduced ISO variant based on Ubuntu 20.04 (Focal), to assist users with AMD/Intel graphics
+    * AMD/Intel graphics still expected to be broken on "Jammy" variant except when using Graphical Fallback Mode (#351)
+* Fixed image verification for German language (broken for all images in v2.4 German language mode, due to a typo in a translation string) (#352)
+    * Fixed similar fatal user-facing error messages caused by translation typos in the French, Danish and Catalan translations
+* Add the font to fix display of the cross mark character "❌" in the image verification summary
+* Fixed "stuck at 0%" progress bar when the destination is read-only (#363)
+    * Added protection to prevent other unexpected situations from leading to the same behavior
+* Many existing translations updated, but also added:
+  * Thai/ภาษาไทย (th-TH)
+
+-------------------------------------------------------------------------------
   Version 2.4 (2022-08-07)
 -------------------------------------------------------------------------------
 
