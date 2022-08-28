@@ -12,9 +12,10 @@ Alternatively, a single `make all` command can generate an AMD64 ISO image and a
 To construct such an ISO image, an Ubuntu 18.04, or similar Ubuntu-package environment capable of running debootstrap, chroot and bind mounts is currently required. It's currently recommended _only_ Ubuntu environments be used to build the ISO image as Debian and other non-Canonical package environments GRUB packages are signed differently (see the "EFI Secure Boot" section below). To build on environments other than Ubuntu 18.04, see the "Build ISO with docker" section below.
 
 ```bash
-# Please note: the following instructions are based on the Dockerfile and the .travis.yml file, which gets frequently
-# executed by Rescuezilla's TravisCI build bot automatically so is contantly being tested. The exact instructions below
-# sometimes gets out-of-date, especially if your build environment is based on a different version of Debian or Ubuntu.
+# Please note: the following instructions are based on the Dockerfile and the [`.github/workflows/build-rescuezilla-iso.yml`](https://github.com/rescuezilla/rescuezilla/blob/master/.github/workflows/build-rescuezilla-iso.yml)
+# GitHub Actions workflow file, which gets frequently executed by Rescuezilla's GitHub Actions build bot automatically so
+# is constantly being tested. The exact instructions below sometimes gets out-of-date, especially if your build environment
+is based on a different version of Debian or Ubuntu.
 
 sudo apt update
 sudo apt install -f git-lfs git make sudo \
@@ -59,7 +60,7 @@ sudo apt-get install virtualbox
 
 ### Build ISO with docker
 
-An optional Dockerfile is provided to generate a consistent build environment on a much larger variety of operating systems. The Dockerfile is managed under version-control just like the source code, which means the ideal build environment is always available, even when building very old commits. Official releases are built using this approach. See .travis.yml for docker build instructions.
+An optional Dockerfile is provided to generate a consistent build environment on a much larger variety of operating systems. The Dockerfile is managed under version-control just like the source code, which means the ideal build environment is always available, even when building very old commits. Official releases are built using this approach. See [`.github/workflows/build-rescuezilla-iso.yml`](https://github.com/rescuezilla/rescuezilla/blob/master/.github/workflows/build-rescuezilla-iso.yml) for docker build instructions.
 
 To be used effectively in development, Docker has a relatively steep learning curve. If you prefer to avoid docker entirely, stick to the 'Build without docker' instructions.
 

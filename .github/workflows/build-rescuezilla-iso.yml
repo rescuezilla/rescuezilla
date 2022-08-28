@@ -1,0 +1,60 @@
+# On push [1]
+# [1] https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows
+on: [push]
+jobs:
+  rescuezilla-iso-build:
+    # The build bot OS environment does not really matter, as the docker image
+    # provides the primary host environment for the build. However, a more recent
+    # OS provides a more recent Docker release, which means additional Docker
+    # functionality.
+    # Launches Docker container to act as 'host system'. See BUILD.ISO.IMAGE.md for more information.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      # Extract human-readable version string from the most recent CHANGELOG entry
+      - run: echo "RESCUEZILLA_RELEASE_NAME=\"$(git grep -h -E -o '[a-zA-Z].*)' CHANGELOG | head -1)\"" >> $GITHUB_ENV
+      # Get deb package version using same command from its build scripts
+      - run: echo "DEB_VERSION=$(git describe --tags  --match='[0-9].[0-9]*' --abbrev=0)" >> $GITHUB_ENV
+
+      - name: Build Docker image
+        run: make docker-build
+
+      - name: Launch Docker container
+        run: make docker-run
+
+      - name: Trust the git folder
+        run: make docker-add-safe-directory
+
+      - run: make docker-status
+      - name: Make DEB package
+        run: make docker-deb
+
+      - name: Run unit tests within the Docker container
+        run: make docker-test
+
+      - run: make docker-status
+      - name: Make Ubuntu 22.04 LTS (Jammy) ISO [LTS  = Long Term Support]
+        run: make docker-jammy
+      - run: sudo mv build/rescuezilla.amd64.jammy.iso build/rescuezilla-${{github.ref_name}}-64bit.jammy.iso
+
+      - run: make docker-status
+      - name: Make Ubuntu 20.04 LTS (Focal) ISO [LTS  = Long Term Support]
+        run: make docker-focal
+      - run: sudo mv build/rescuezilla.amd64.focal.iso build/rescuezilla-${{github.ref_name}}-64bit.focal.iso
+
+      - name: Create checksums for ISO images
+        run: cd build && sudo ../src/scripts/create_iso_checksums.sh rescuezilla_${{env.DEB_VERSION}}-1_all.deb  rescuezilla-${{github.ref_name}}-*.iso
+
+      - name: Upload artifacts
+        uses: softprops/action-gh-release@v1
+        if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+        with:
+          files: |
+            build/*SUM
+            build/rescuezilla_${{env.DEB_VERSION}}-1_all.deb
+            build/rescuezilla-${{github.ref_name}}-*.iso
