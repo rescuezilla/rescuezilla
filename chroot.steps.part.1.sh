@@ -254,6 +254,8 @@ common_pkgs=("discover"
              "exfat-fuse"
              "btrfs-progs"
              "udisks2-btrfs"
+             #Add support for crypto volumes mount (luks, bitlocker, crypt)
+             "libblockdev-crypto2"
              "hfsplus"
              "hfsprogs"
              "f2fs-tools"
