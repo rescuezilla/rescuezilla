@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2022-08-10 14:20+0000\n"
+"PO-Revision-Date: 2022-09-21 14:18+0000\n"
 "Last-Translator: PizzaProgram <info@pizzaprogram.hu>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/hu/>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 4.14.1\n"
 
 msgid "Welcome"
 msgstr "Üdvözöllek"
@@ -96,6 +96,25 @@ msgid "This mode is for \"disk cloning\". Cloning means copying one drive and di
 ""
 "To use the \"imaging\" wizards, click <b>Back</b> and select <b>Backup</b> or <b>Restore</b>."
 msgstr ""
+"Ez a mód a \"Lemez Klónozás\". A klónozás azt jelenti, hogy az egyik "
+"merevlemezről vagy SSD-ről egy az egyben átmásol minden adatot, felülírva a "
+"másik tartalmát. Ez egy direkt, egy-lépéses művelet, nem kell hozzá átmeneti "
+"tár.\n"
+" \n"
+"A klónozás más, mint a <i>\"Lemezkép-készítés\"</i>. A Lemezkép azt jelenti, "
+"hogy a forrás-lemez pillanatnyi állapotáról készít a program egy <i>"
+"\"tömörített másolatot\"</i>, avagy <i>\"mentést\"</i>, méghozzá néhány nagy "
+"fájlba, amit lement egy másik hely egy mappájába. Akár több ilyen másolat is "
+"készíthető, külön időpontokban, melyeket bárhová átmozgathatunk, vagy "
+"másolhatunk. Ezeket később visszaállíthatjuk akár az eredeti lemezt "
+"felülírva, vagy más lemezekre is. Ugyan tárolhatnánk ezeket a <i>mentés-"
+"fájlokat</i> később az eredeti merevlemezre visszamásolva is, de ahhoz, hogy "
+"visszaállítsuk belőle a merevlemez vagy partíció eredeti állapotát, előbb "
+"egy másik helyre kell mozgatnunk. (Tehát nem tudja önmagát felülírni, "
+"miközben rajta vannak tárolva a <i>mentés-fájlok</i>!)\n"
+" \n"
+"A \"Lemezkép\" készítéséhez és visszaállításához kattints a <b>Vissza</b> "
+"gombra és válaszd <b>Ment</b> vagy <b>Visszaállít</b> gombot."
 
 msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
 msgstr "A \"Klónozó\" varázsló indításához nyomj <b>Tovább</b> gombot"
@@ -419,8 +438,9 @@ msgstr "gzip"
 msgid "default"
 msgstr "alap"
 
+#, fuzzy
 msgid "zstandard"
-msgstr ""
+msgstr "zstandard"
 
 msgid "Uncompressed (Suitable for use with Image Explorer)"
 msgstr "Tömörítetlen (Ideális a \"Lemezkép Böngészőhöz\")"
@@ -565,71 +585,98 @@ msgid "Where are the image files stored?"
 msgstr "Hová vannak elmentve a korábbi Lemezkép mentés-fájljai?"
 
 msgid "Select the partition which contains the image files:"
-msgstr ""
+msgstr "Válaszd ki azt a partíciót, ami tartalmazza a lemezkép fájlt:"
 
 msgid "Step 2: Select Backup Image"
-msgstr ""
+msgstr "2. Lépés: Válassz Lemezképet a mentésről"
 
 msgid "Click <b>Browse</b> to select the folder containing image files."
 msgstr ""
+"Kattints a <b>Tallózás</b> gombra a mappa kiválasztásához, mely tartalmazza "
+"a lemezkép fájlokat."
 
 msgid "Select the image file to restore."
-msgstr ""
+msgstr "Válassz egy Lemezkép fájlt a helyreállításhoz."
 
 msgid "Step 3: Select Drive To Restore"
-msgstr ""
+msgstr "3. Lépés: Válassz Meghajtót a helyreállításhoz"
 
 msgid "Select the destination drive to restore with the selected image."
-msgstr ""
+msgstr "Válaszd ki a Célmeghajtót, melyet felülírsz a kiválasztott Lemezképpel."
 
 msgid "Step 4: Select Partitions to Restore"
-msgstr ""
+msgstr "4. Lépés: Válassz Partíciókat a helyreállításhoz"
 
 msgid "Select which partitions from the backup image to restore, and whether to overwrite the partition table. <b>Leave everything selected to completely restore the destination drive.</b>"
 msgstr ""
+"Pipáld be, melyik partíciókat akarod a Lemezkép mentésből helyreállítani, és "
+"hogy felülírja-e a partíciós táblaszerkezetet. <b>Hagyjd mindet bepipálva, "
+"ha teljes helyreállítást akarsz a Meghajtón.</b>"
 
 msgid "Selected image"
-msgstr ""
+msgstr "Kiválasztott Lemezkép"
 
 msgid "Destination device"
-msgstr ""
+msgstr "Cél-eszköz"
 
 msgid "Destination partition"
-msgstr ""
+msgstr "Cél-partíció"
 
 msgid "Overwrite partition table"
-msgstr ""
+msgstr "Írd felül a partíciós táblát"
 
 msgid "You will be overwriting the partition table."
-msgstr ""
+msgstr "A partíciós tábla véglegesen és visszaállíthatatlanul felül lesz írva."
 
 msgid "The \"destination partition\" column has been updated using the information stored within the backup image.\n\n<b>If partitions have been resized, new partitions added, or additional operating systems installed <i>since the backup image was created</i>, then the destination drive's partition table will not match the backup image, and overwriting the destination drive's partition table will render these resized and additional partitions permanently inaccessible.</b> If you have not modified the partition table in such a way since creating this backup then overwriting the partition table is completely safe and will have no negative effects."
 msgstr ""
+"A \"Cél-partíció\" oszlop frissült a mentésben talált információk alapján. \n"
+" \n"
+"<b>Ha a partíciók át lettek méretezve, újak hozzáadva, vagy más operációs "
+"rendszer is telepítve lett <i>mióta a Lemezkép mentés készült</i>, akkor a "
+"Cél-meghajtó partíciós táblája nem fog egyezni a mentésben tároltakkal. "
+"Ezért ha felülírod a a Cél-meghajtó partíciós tábláját, akkor a korábbi "
+"partíciók a továbbiakban NEM LESZNEK ELÉRHETŐK!</b> Ha nem változtattad meg "
+"a partíciós táblákat amióta a mentés készült, akkor a felülírás teljesen "
+"biztonságos és nincs negatív hatása."
 
 msgid "You will <b>not</b> be overwriting the partition table."
-msgstr ""
+msgstr "<b>Nem</b> fogja felülírni a partíciós táblát."
 
 msgid "The source does not contain a partition table."
-msgstr ""
+msgstr "A forrás nem tartalmaz partíciós táblát."
 
 msgid "The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table."
 msgstr ""
+"A \"Cél-partíció\" oszlop a friss adatokat mutatja a Cél-Meghajtón meglévő "
+"partíciós táblák alapján. \n"
+" \n"
+"<b>Az oszlopot, mint \"lenyíló-menüt\" lehet módosítani. Ha helytelenül "
+"rendeled hozzá a cél-partíciókat, akkor az operációs rendszer talán nem "
+"töltődik be többé.</b> Ha bizonytalan vagy a hozzárendelés mikéntjéről, "
+"megfontolandó lehet, hogy teljesen felülírd a partíciós táblát."
 
 msgid "No destination partition selected. Use the destination partition drop-down menu to select the destination"
 msgstr ""
+"Nem választottál partíciós táblát. Használd a Cél-partíció lenyíló menüjét, "
+"hogy kiválassz egy Célt ahová kicsomagolja a mentést"
 
 msgid "Not restoring this partition"
-msgstr ""
+msgstr "Ez a partíció nem lesz helyreállítva"
 
 msgid "When you are ready to continue, click <b>Next</b>."
-msgstr ""
+msgstr "Ha készen állsz a folytatásra, kattints a <b>Tovább</b> gombra."
 
 msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
 msgstr ""
+"A \"Logikai Lemezkezelő\" (LVM) éppen szkennel és lecsatol minden logikai "
+"meghajtót..."
 
 #, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
 msgstr ""
+"A végső Forrás-partícióstábla ( {source} ) mérete ( {source_size} bájt) rá "
+"kell férjen a Cél-lemezre ({destination_size} bájt)."
 
 #, python-brace-format
 msgid "Rescuezilla cannot yet automatically shrink partitions to restore from large disks to smaller disks. The final partition currently must always completely reside within the destination disk.\n"
@@ -638,208 +685,257 @@ msgid "Rescuezilla cannot yet automatically shrink partitions to restore from la
 "\n"
 "{url}"
 msgstr ""
+"Rescuezilla ezen verziója még nem tud \"automatikus kicsinyítést\", hogy "
+"ráférjen egy eredetileg nagyobb merevlemez partíciója a most kiválasztott "
+"kisebb Cél-területre. \n"
+" \n"
+"Jelenleg két lehetőség van, (Pl.: a \"GParted Partition Editor\" program "
+"segítségével):\n"
+"1. Ha először a forrás partíciókat összezsugorítjuk, mielőtt a mentést "
+"elkészítjük róluk.\n"
+"2. Ha létrehozzuk manuálisan az üres partíciókat a Cél-lemezen, majd \"csak "
+"adat-helyreállítást\" választunk. De ezután még javítanunk kell a boot-ot "
+"is, hogy betöltődjön a rendszer, illetve aktívvá kell tenni a betöltő "
+"partíciót.\n"
+"További információk: {url}"
 
 msgid "Step 5: Confirm Restore Configuration"
-msgstr ""
+msgstr "5. Lépés: A helyreállítási konfiguráció végleges elfogadása"
 
 msgid "Confirm the following restore configuration."
 msgstr ""
+"Hagyd jóvá az alábbi konfigurációt a helyreállításhoz (és esetleges "
+"felülíráshoz)."
 
 #, python-brace-format
 msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
+"Biztos vagy benne, hogy helyreállítod a korábbi mentést, és ezzel VÉGLEGESEN "
+"TÖRLÖD és FELÜLÍROD a {destination_drive} lemezen az adatokat?"
 
 msgid "Source image"
-msgstr ""
+msgstr "Forrás Lemezkép"
 
 msgid "Destination drive"
-msgstr ""
+msgstr "Cél-meghajtó"
 
 msgid "Restoring the following partitions"
-msgstr ""
+msgstr "Partíciók helyreállítása zajlik"
 
 msgid "WILL BE OVERWRITING PARTITION TABLE"
-msgstr ""
+msgstr "FELÜL LESZ ÍRVA A PARTÍCIÓS TÁBLA"
 
 msgid "Will <b>NOT</b> be overwriting partition table"
-msgstr ""
+msgstr "<b>NEM</b> lesz felülírva a partíciós tábla"
 
 msgid "To start the restore, click <b>Next</b>."
-msgstr ""
+msgstr "A kezdéshez kattints a <b>Tovább</b> gombra."
 
 msgid "Restoring From Backup"
-msgstr ""
+msgstr "Mentésből helyreállítás"
 
 msgid "Restoring your system from the image you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
+"Helyreállítás zajlik a kiválasztott Lemezképből.  Ez eltarthat egy órát vagy "
+"többet a gép sebességétől és az adat mennyiségétől függően."
 
 msgid "Refreshing partition table"
-msgstr ""
+msgstr "Partíciós táblák frissítése"
 
 #, python-brace-format
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
 msgstr ""
+"A {description} helyreállítása ide: {destination_partition} "
+"({destination_description})"
 
 msgid "Synchronizing disks..."
-msgstr ""
+msgstr "Lemezek szinkronizálása..."
 
 #, python-brace-format
 msgid "Querying hard drive geometry of {device}"
-msgstr ""
+msgstr "Lekérem ezen eszköz tulajdonságait: {device}"
 
 #, python-brace-format
 msgid "Probing {device} with {app}"
-msgstr ""
+msgstr "Az eszköz {device} próbája ezzel a programmal: {app}"
 
 #, python-brace-format
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
 msgstr ""
+"Fájlrendszer megnövelése: {partition} ({filesystem}). Ez eltarthat egy "
+"darabig..."
 
 #, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
 msgstr ""
+"A partíció {partition} ({filesystem}) átméretezése sikertelen. A hibaüzenet: "
+"{msg}"
 
 #, python-brace-format
 msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
 msgstr ""
+"Sikeresen módosítottam az NTFS fájlrendszer méretét ezen: {ntfs_device} az "
+"eszközön, az alábbi adatokat használva: {geometry_source}"
 
 #, python-brace-format
 msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
 msgstr ""
+"Nem sikerült átméretezni az NTFS fájlrendszer ennél az eszköznél: "
+"{ntfs_device}"
 
 msgid "Removing udev MAC address records (if any)"
-msgstr ""
+msgstr "Eltávolítom az \"udev MAC\" cím-rekordokat (ha vannak)"
 
 msgid "Re-installing syslinux (if any)"
-msgstr ""
+msgstr "Újra-telepítem a syslinux rendszerbetöltőt (ha van)"
 
 msgid "Successfully re-installed syslinux bootloader"
-msgstr ""
+msgstr "Sikeresen újra-telepítettem a syslinux rendszerbetöltőt"
 
 msgid "Re-installing GRUB bootloader (if any)"
-msgstr ""
+msgstr "Újra-telepítem a GRUB rendszerbetöltőt (ha van)"
 
 msgid "Successfully re-installed GRUB bootloader"
-msgstr ""
+msgstr "Sikeresen újra-telepítettem a GRUB rendszerbetöltőt"
 
 msgid "Did not update GRUB bootloader (if any)"
-msgstr ""
+msgstr "Nem telepítettem GRUB rendszerbetöltőt"
 
 msgid "Updating initramfs (if any)"
-msgstr ""
+msgstr "Frissítem az \"initramfs\" -t (ha van)"
 
 msgid "Successfully updated initramfs"
-msgstr ""
+msgstr "Sikeresen frissítettem az \"initramfs\"-t"
 
 msgid "Updating EFI NVRAM..."
-msgstr ""
+msgstr "Frissítem az EFI NVRAM-ot..."
 
 msgid "Successfully updated EFI NVRAM"
-msgstr ""
+msgstr "Sikeresen frissítettem az EFI NVRAM-ot"
 
 msgid "Error restoring image: "
-msgstr ""
+msgstr "Hiba történt a lemezkép helyreállításakor: "
 
 msgid "Could not restore sfdisk partition table as file has zero length: "
 msgstr ""
+"Nem lehetett helyreállítani az \"sfdisk\" partíciós táblát, mert a hossza "
+"nulla bájt: "
 
 msgid "Successfully restored partition table."
-msgstr ""
+msgstr "Sikeresen helyreállítottam a partíciós táblát."
 
 msgid "Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."
 msgstr ""
+"Nem sikerült az eszköz partíciós táblájának frissítése. Ez akkor fordul elő, "
+"ha egy másik folyamat használja."
 
 #, python-brace-format
 msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
 msgstr ""
+"Lehetetlen helyreállítani ezt a partíciót: {destination_partition} mert "
+"nincs mentett Lemezkép hozzárendelve ehhez: {description}."
 
 msgid "This may occur if Clonezilla was originally unable to backup this partition."
 msgstr ""
+"Ilyen akkor fordulhat elő, ha a CloneZilla vagy RescueZilla anno nem tudta "
+"lementeni a partíciót."
 
 #, python-brace-format
 msgid "Error restoring partition {image_key} to {destination_partition}."
 msgstr ""
+"Hiba történt a \"{image_key}\" partíció helyreállításakor ide: "
+"{destination_partition}."
 
 #, python-brace-format
 msgid "Successfully restored image partition {image} to {destination_partition}"
 msgstr ""
+"Sikeresen helyreállítottam a \"{image}\" Lemezkép partíciót ide: "
+"{destination_partition}"
 
 msgid "Summary of Restore"
-msgstr ""
+msgstr "A helyreállítás összefoglalója"
 
 msgid "Restore Summary"
-msgstr ""
+msgstr "Összefoglaló"
 
 msgid "Confirm the restore summary."
-msgstr ""
+msgstr "Az összefoglaló jóváhagyása."
 
 msgid "Backup restored successfully."
-msgstr ""
+msgstr "A mentés sikeresen helyre lett állítva."
 
 msgid "Image Explorer\n"
 "      (beta)"
 msgstr ""
+"Lemezkép Böngésző \n"
+"...(béta)"
 
 msgid "Image Explorer (beta)"
-msgstr ""
+msgstr "Lemezkép Betekintő (béta)"
 
 msgid "Select the image file to explore"
-msgstr ""
+msgstr "Válassz egy Lemezkép-mentést, amibe belenéznél"
 
 msgid "Step 3: Select Partition to Explore"
-msgstr ""
+msgstr "3. Lépés: Válassz partíciót amit megnyitsz"
 
 msgid "Select the partition to access files from."
 msgstr ""
+"Válaszd az a partíciót, amelyikben a tárolt fájlokhoz akarsz hozzáférni."
 
 msgid "Click <b>Mount</b> to mount the backup image (as read-only)."
 msgstr ""
+"Kattints a <b>Csatold</b> gombra, hogy (csak olvasható módban) megnyíljon a "
+"Lemezkép."
 
 msgid "Mount"
-msgstr ""
+msgstr "Csatold"
 
 msgid "Mounting as read-only..."
-msgstr ""
+msgstr "Csatolom csak olvashatóként..."
 
 msgid "Unmount"
-msgstr ""
+msgstr "Válaszd le"
 
 msgid "Once the partition has been mounted, click <b>Open in file manager</b> to access your files."
 msgstr ""
+"Amint a partíció csatolva lett, kattints a <b>Nyisd meg fájl-menedzserrel</"
+"b> gombra, hogy hozzáférj a fájlokhoz."
 
 msgid "Open in file manager"
-msgstr ""
+msgstr "Nyisd meg fájl-menedzserrel"
 
 msgid "Verify"
-msgstr ""
+msgstr "Ellenőrizd"
 
 msgid "Select one or more image(s) to verify."
-msgstr ""
+msgstr "Válassz egy vagy több Mentést, melyeket ellenőrizzek."
 
 msgid "To begin verification, click <b>Next</b>."
-msgstr ""
+msgstr "Az ellenőrzés megkezdéséhez kattints a <b>Tovább</b> gombra."
 
 msgid "Verifying Image"
-msgstr ""
+msgstr "A mentett Lemezkép ellenőrzése"
 
 msgid "Verifying the selected image(s)."
-msgstr ""
+msgstr "Éppen ellenőrzöm a kiválasztott Lemezkép(ek)et."
 
 #, python-brace-format
 msgid "Verifying {image_name}"
-msgstr ""
+msgstr "Ezt vizsgálom: {image_name}"
 
 msgid "Summary of Verification"
-msgstr ""
+msgstr "Az ellenőrzés összefoglalója"
 
 msgid "Confirm the verification summary."
-msgstr ""
+msgstr "Hagyd jóvá az ellenőrzési összefoglalót."
 
 msgid "Verification Summary"
-msgstr ""
+msgstr "Összefoglaló az ellenőrzésről"
 
 msgid "To verify another image, click <b>Back</b>."
 msgstr ""
+"Más Lemezkép-mentésfájlok ellenőrzéséhez kattints a <b>Vissza</b> gombra."
 
 msgid "✔"
 msgstr "✔"
@@ -848,20 +944,20 @@ msgid "❌"
 msgstr "❌"
 
 msgid "MBR backup appears correct."
-msgstr ""
+msgstr "Az MBR mentés jónak tűnik."
 
 msgid "No partition table found."
 msgstr "Nincs partíciós tábla"
 
 msgid "Sfdisk partition table file is empty or missing."
-msgstr ""
+msgstr "Az \"sfdisk\" partíciós tábla üres vagy hiányzik."
 
 msgid "Sfdisk partition table file is present."
-msgstr ""
+msgstr "Találtam sfdisk partíciós táblát."
 
 msgid "Unable to verify."
-msgstr ""
+msgstr "Lehetetlen ellenőrizni."
 
 #, python-brace-format
 msgid "{partition}: filesystem image successfully verified."
-msgstr ""
+msgstr "{partition}: fájlrendszere sikeresen le lett ellenőrizve."
