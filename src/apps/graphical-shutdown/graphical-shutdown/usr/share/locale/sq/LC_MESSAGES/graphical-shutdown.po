@@ -1,0 +1,29 @@
+# Artem <KovalevArtem.ru@gmail.com>, 2021.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2021.
+# Besnik Bleta <besnik@programeshqip.org>, 2022.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2022-09-11 11:06+0000\n"
+"Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
+"Language-Team: Albanian <https://hosted.weblate.org/projects/rescuezilla/"
+"graphical-shutdown/sq/>\n"
+"Language: sq\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.14.1-dev\n"
+
+msgid "End Session"
+msgstr "Përfundoje Sesionin"
+
+msgid "Cancel"
+msgstr "Anuloje"
+
+msgid "Shutdown"
+msgstr "Fike"
+
+msgid "Reboot"
+msgstr "Rinise"
+
+msgid "Choose action."
+msgstr "Zgjidhni veprim."

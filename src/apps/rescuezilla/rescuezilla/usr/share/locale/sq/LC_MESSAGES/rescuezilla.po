@@ -1,0 +1,803 @@
+# Artem <KovalevArtem.ru@gmail.com>, 2021.
+# yesinmsg <yesinmsg@gmail.com>, 2021.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
+# ttt113326 <tonio_k@mail.ru>, 2021.
+# МАН69К <weblate@mah69k.net>, 2022.
+# Besnik Bleta <besnik@programeshqip.org>, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-03-02 00:00+0000\n"
+"PO-Revision-Date: 2022-09-11 11:06+0000\n"
+"Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
+"Language-Team: Albanian <https://hosted.weblate.org/projects/rescuezilla/"
+"rescuezilla/sq/>\n"
+"Language: sq\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.14.1-dev\n"
+
+msgid "Welcome"
+msgstr ""
+
+msgid "Select an Option"
+msgstr ""
+
+msgid "Easily create a backup image of your computer, or completely restore from one.  Click an option to begin:"
+msgstr ""
+
+msgid "Backup"
+msgstr ""
+
+msgid "Restore"
+msgstr ""
+
+msgid "Verify Image"
+msgstr ""
+
+msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
+msgstr ""
+
+msgid "Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed."
+msgstr ""
+
+msgid "Back"
+msgstr ""
+
+msgid "Next >"
+msgstr ""
+
+msgid "Please wait..."
+msgstr ""
+
+msgid "Identifying disk drives..."
+msgstr ""
+
+#, python-brace-format
+msgid "Unmounting: {path}"
+msgstr ""
+
+#, python-brace-format
+msgid "Unable to unmount {path}"
+msgstr ""
+
+#, python-brace-format
+msgid "Running: {app}"
+msgstr ""
+
+#, python-brace-format
+msgid "Running {app} on {device}"
+msgstr ""
+
+msgid "Failed to run command: "
+msgstr ""
+
+msgid "Error querying drives: "
+msgstr ""
+
+msgid "Clone"
+msgstr ""
+
+msgid "Step 1: Understanding Cloning"
+msgstr ""
+
+msgid "Please understand how \"cloning\" differs from \"imaging\"."
+msgstr ""
+
+msgid "This mode is for \"disk cloning\". Cloning means copying one drive and directly overwriting another drive. This is a direct one-step operation with no temporary storage required.\n"
+"\n"
+"Cloning is different to \"disk imaging\". Imaging means copying everything from one drive into very large files stored inside a folder on an external drive. Multiple images can be saved on the same external drive. These images can be restored back to the original disk, or to additional disks. In other words, for \"imaging\" the backup operation copies your drive to <i>files</i> that need to be stored on a drive at least temporarily before it can be restored.\n"
+"\n"
+""
+"To use the \"imaging\" wizards, click <b>Back</b> and select <b>Backup</b> or <b>Restore</b>."
+msgstr ""
+
+msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
+msgstr ""
+
+msgid "Step 2: Select Source Drive"
+msgstr ""
+
+msgid "Select the <b>source drive</b> to clone."
+msgstr ""
+
+msgid "Select the <b>destination drive</b> to overwrite."
+msgstr ""
+
+msgid "Step 4: Select Partitions to Clone"
+msgstr ""
+
+msgid "Select which partitions from the source drive to clone, and whether to overwrite the partition table. <b>Leave everything selected to completely clone the source drive to the destination drive.</b>"
+msgstr ""
+
+msgid "Step 5: Confirm Cloning Configuration"
+msgstr ""
+
+msgid "Confirm the following cloning configuration."
+msgstr ""
+
+msgid "Cloning the following partitions"
+msgstr ""
+
+msgid "To start cloning, click <b>Next</b>."
+msgstr ""
+
+#, python-brace-format
+msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
+msgstr ""
+
+msgid "Step 6: Cloning Disk"
+msgstr ""
+
+msgid "Cloning the drive you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
+msgstr ""
+
+msgid "Summary of Clone"
+msgstr ""
+
+msgid "Clone Summary"
+msgstr ""
+
+msgid "Confirm the clone summary."
+msgstr ""
+
+msgid "Unable to shutdown Image Explorer"
+msgstr ""
+
+msgid "Step 1: Select Drive To Backup"
+msgstr ""
+
+msgid "Select the <b>source drive</b> that you would like to create a backup image from."
+msgstr ""
+
+msgid "Drive"
+msgstr ""
+
+msgid "Capacity"
+msgstr ""
+
+msgid "Drive Model"
+msgstr ""
+
+msgid "Serial Number"
+msgstr ""
+
+msgid "Partitions"
+msgstr ""
+
+msgid "Show hidden devices (for advanced users)"
+msgstr ""
+
+msgid "Step 2: Select Partitions to Save"
+msgstr ""
+
+msgid "Select which partitions to create a backup of. <b>Leave all partitions selected if you are unsure.</b>"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Description"
+msgstr ""
+
+#, python-brace-format
+msgid "Drive {drive_number}"
+msgstr ""
+
+#, python-brace-format
+msgid "Partition {partition_number}"
+msgstr ""
+
+msgid "Step 3: Select Destination Drive"
+msgstr ""
+
+msgid "Click on the box below to select the source drive that you would like to create a backup image from."
+msgstr ""
+
+msgid "Connected directly to my computer"
+msgstr ""
+
+msgid "Shared over a network"
+msgstr ""
+
+msgid "Where would you like to save the image?"
+msgstr ""
+
+msgid "Windows shared folder (SMB/CIFS, Samba)"
+msgstr ""
+
+msgid "Search network"
+msgstr ""
+
+msgid "Server"
+msgstr ""
+
+msgid "Share location (UNC path)"
+msgstr ""
+
+msgid "Username"
+msgstr ""
+
+msgid "Password"
+msgstr ""
+
+msgid "Domain"
+msgstr ""
+
+msgid "Version"
+msgstr ""
+
+msgid "Remote path"
+msgstr ""
+
+msgid "Exported path"
+msgstr ""
+
+msgid "Identity File"
+msgstr ""
+
+msgid "Optional"
+msgstr ""
+
+msgid "Select network-shared storage location:"
+msgstr ""
+
+msgid "Select the partition where the image files will be saved to"
+msgstr ""
+
+msgid "Partition"
+msgstr ""
+
+msgid "Mounting..."
+msgstr ""
+
+msgid "Close this popup to cancel the mount operation."
+msgstr ""
+
+msgid "Please ensure the username, password and other fields provided are correct, and try again."
+msgstr ""
+
+msgid "Must provide either password or SSH identity file."
+msgstr ""
+
+msgid "Scanning folder for backup images..."
+msgstr ""
+
+#, python-brace-format
+msgid "({timeout_seconds} second timeout)"
+msgstr ""
+
+msgid "Close this popup to cancel scanning the selected folder and subfolders."
+msgstr ""
+
+#, python-brace-format
+msgid "Scanning: {filename}"
+msgstr ""
+
+msgid "Error processing the following images:"
+msgstr ""
+
+msgid "Unable to fully process the image associated with the following partitions:"
+msgstr ""
+
+msgid "Unable to fully process the following image:"
+msgstr ""
+
+msgid "Cannot find partition's associated partclone image"
+msgstr ""
+
+msgid "This can happen when loading images which Clonezilla was unable to completely backup."
+msgstr ""
+
+msgid "Note: This image format cannot distinguish between failed partclone backup and a user who chose not to backup a partition."
+msgstr ""
+
+msgid "Any other filesystems within the image should be restorable as normal."
+msgstr ""
+
+msgid "Needs decryption"
+msgstr ""
+
+msgid "Unknown filesystem"
+msgstr ""
+
+#, python-brace-format
+msgid "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance."
+msgstr ""
+
+msgid "The backup's bootloader data is shorter than expected. If the backup contained certain bootloaders like GRUB, during a restore operation Rescuezilla will try and re-install the bootloader."
+msgstr ""
+
+msgid "Step 4: Select Destination Folder"
+msgstr ""
+
+msgid "Click <b>Browse</b> to select the folder on the destination drive where your new backup image will be saved.\n"
+"\n"
+"The folder a backup is saved in is usually a description of the computer, e.g. <b>office1</b> or <b>zack-laptop</b>."
+msgstr ""
+
+#, python-brace-format
+msgid "You must select a folder inside {location}"
+msgstr ""
+
+msgid "Please select a different folder."
+msgstr ""
+
+msgid "The table below lists the backup images that are already in this folder (if any)."
+msgstr ""
+
+msgid "Browse..."
+msgstr ""
+
+msgid "Filename"
+msgstr ""
+
+msgid "Size"
+msgstr ""
+
+msgid "Last modified"
+msgstr ""
+
+msgid "When you are happy with the destination folder, click <b>Next</b>."
+msgstr ""
+
+msgid "Step 5: Name Your Backup"
+msgstr ""
+
+msgid "Provide a unique name for this backup image, such as the date.  Today's date is automatically entered for you below.\n"
+"\n"
+"You may only use letters, numbers, and dashes in your backup name."
+msgstr ""
+
+msgid "Optional: Provide a short description."
+msgstr ""
+
+msgid "Step 6: Customize Compression Settings"
+msgstr ""
+
+msgid "Customize image compression settings. <b>Don't make any changes if you are unsure.</b>"
+msgstr ""
+
+msgid "Compression format: "
+msgstr ""
+
+msgid "gzip"
+msgstr ""
+
+msgid "default"
+msgstr ""
+
+msgid "zstandard"
+msgstr ""
+
+msgid "Uncompressed (Suitable for use with Image Explorer)"
+msgstr ""
+
+msgid "Compression level: "
+msgstr ""
+
+msgid "Fastest"
+msgstr ""
+
+msgid "Best"
+msgstr ""
+
+msgid "When you are happy with the compression settings, click <b>Next</b>."
+msgstr ""
+
+msgid "Step 7: Confirm Backup Configuration"
+msgstr ""
+
+msgid "Source drive"
+msgstr ""
+
+msgid "Backing up the following partition(s)"
+msgstr ""
+
+#, python-brace-format
+msgid "The backup image will be written into folder {dest_dir} on {description}"
+msgstr ""
+
+msgid "Confirm the following backup configuration."
+msgstr ""
+
+msgid "On successful completion of the task, perform the following action: "
+msgstr ""
+
+msgid "Do nothing"
+msgstr ""
+
+msgid "Shutdown"
+msgstr "Fike"
+
+msgid "Reboot"
+msgstr "Rinise"
+
+msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
+msgstr ""
+
+msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
+msgstr ""
+
+msgid "To start the backup, click <b>Next</b>."
+msgstr ""
+
+msgid "Step 8: Creating Backup Image"
+msgstr ""
+
+msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
+msgstr ""
+
+#, python-brace-format
+msgid "Saving: {file}"
+msgstr ""
+
+#, python-brace-format
+msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
+msgstr ""
+
+msgid "Summary of Backup"
+msgstr ""
+
+msgid "Confirm the backup summary."
+msgstr ""
+
+msgid "Backup Summary"
+msgstr ""
+
+msgid "An operation is in progress. Do you wish to cancel?"
+msgstr ""
+
+msgid "Operation cancelled by user."
+msgstr ""
+
+msgid "Rescue option is enabled."
+msgstr ""
+
+msgid "Error creating backup: "
+msgstr ""
+
+msgid "Failed to write destination file. Please confirm it is valid to create the provided file path, and try again."
+msgstr ""
+
+#, python-brace-format
+msgid "Successful backup of swap partition {partition_name}"
+msgstr ""
+
+#, python-brace-format
+msgid "<b>Failed to backup partition</b> {partition_name}"
+msgstr ""
+
+#, python-brace-format
+msgid "Successful backup of partition {partition_name}"
+msgstr ""
+
+msgid "Backup saved successfully."
+msgstr ""
+
+msgid "Backup succeeded with some errors:"
+msgstr ""
+
+msgid "Backup operation failed:"
+msgstr ""
+
+msgid "User requested operation to stop."
+msgstr ""
+
+#, python-brace-format
+msgid "Operation took {num_minutes} minutes."
+msgstr ""
+
+msgid "To start a new session, click <b>Next</b>"
+msgstr ""
+
+msgid "Step 1: Select Image Location"
+msgstr ""
+
+msgid "Where are the image files stored?"
+msgstr ""
+
+msgid "Select the partition which contains the image files:"
+msgstr ""
+
+msgid "Step 2: Select Backup Image"
+msgstr ""
+
+msgid "Click <b>Browse</b> to select the folder containing image files."
+msgstr ""
+
+msgid "Select the image file to restore."
+msgstr ""
+
+msgid "Step 3: Select Drive To Restore"
+msgstr ""
+
+msgid "Select the destination drive to restore with the selected image."
+msgstr ""
+
+msgid "Step 4: Select Partitions to Restore"
+msgstr ""
+
+msgid "Select which partitions from the backup image to restore, and whether to overwrite the partition table. <b>Leave everything selected to completely restore the destination drive.</b>"
+msgstr ""
+
+msgid "Selected image"
+msgstr ""
+
+msgid "Destination device"
+msgstr ""
+
+msgid "Destination partition"
+msgstr ""
+
+msgid "Overwrite partition table"
+msgstr ""
+
+msgid "You will be overwriting the partition table."
+msgstr ""
+
+msgid "The \"destination partition\" column has been updated using the information stored within the backup image.\n\n<b>If partitions have been resized, new partitions added, or additional operating systems installed <i>since the backup image was created</i>, then the destination drive's partition table will not match the backup image, and overwriting the destination drive's partition table will render these resized and additional partitions permanently inaccessible.</b> If you have not modified the partition table in such a way since creating this backup then overwriting the partition table is completely safe and will have no negative effects."
+msgstr ""
+
+msgid "You will <b>not</b> be overwriting the partition table."
+msgstr ""
+
+msgid "The source does not contain a partition table."
+msgstr ""
+
+msgid "The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table."
+msgstr ""
+
+msgid "No destination partition selected. Use the destination partition drop-down menu to select the destination"
+msgstr ""
+
+msgid "Not restoring this partition"
+msgstr ""
+
+msgid "When you are ready to continue, click <b>Next</b>."
+msgstr ""
+
+msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
+msgstr ""
+
+#, python-brace-format
+msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
+msgstr ""
+
+#, python-brace-format
+msgid "Rescuezilla cannot yet automatically shrink partitions to restore from large disks to smaller disks. The final partition currently must always completely reside within the destination disk.\n"
+"\n"
+"Currently the only way to restore to disks smaller than original is to first use GParted Partition Editor to shrink the final partition of the original disk before making a new backup image. Please read the following instructions for more information:\n"
+"\n"
+"{url}"
+msgstr ""
+
+msgid "Step 5: Confirm Restore Configuration"
+msgstr ""
+
+msgid "Confirm the following restore configuration."
+msgstr ""
+
+#, python-brace-format
+msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!"
+msgstr ""
+
+msgid "Source image"
+msgstr ""
+
+msgid "Destination drive"
+msgstr ""
+
+msgid "Restoring the following partitions"
+msgstr ""
+
+msgid "WILL BE OVERWRITING PARTITION TABLE"
+msgstr ""
+
+msgid "Will <b>NOT</b> be overwriting partition table"
+msgstr ""
+
+msgid "To start the restore, click <b>Next</b>."
+msgstr ""
+
+msgid "Restoring From Backup"
+msgstr ""
+
+msgid "Restoring your system from the image you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
+msgstr ""
+
+msgid "Refreshing partition table"
+msgstr ""
+
+#, python-brace-format
+msgid "Restoring {description} to {destination_partition} ({destination_description})"
+msgstr ""
+
+msgid "Synchronizing disks..."
+msgstr ""
+
+#, python-brace-format
+msgid "Querying hard drive geometry of {device}"
+msgstr ""
+
+#, python-brace-format
+msgid "Probing {device} with {app}"
+msgstr ""
+
+#, python-brace-format
+msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
+msgstr ""
+
+#, python-brace-format
+msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
+msgstr ""
+
+#, python-brace-format
+msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
+msgstr ""
+
+#, python-brace-format
+msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
+msgstr ""
+
+msgid "Removing udev MAC address records (if any)"
+msgstr ""
+
+msgid "Re-installing syslinux (if any)"
+msgstr ""
+
+msgid "Successfully re-installed syslinux bootloader"
+msgstr ""
+
+msgid "Re-installing GRUB bootloader (if any)"
+msgstr ""
+
+msgid "Successfully re-installed GRUB bootloader"
+msgstr ""
+
+msgid "Did not update GRUB bootloader (if any)"
+msgstr ""
+
+msgid "Updating initramfs (if any)"
+msgstr ""
+
+msgid "Successfully updated initramfs"
+msgstr ""
+
+msgid "Updating EFI NVRAM..."
+msgstr ""
+
+msgid "Successfully updated EFI NVRAM"
+msgstr ""
+
+msgid "Error restoring image: "
+msgstr ""
+
+msgid "Could not restore sfdisk partition table as file has zero length: "
+msgstr ""
+
+msgid "Successfully restored partition table."
+msgstr ""
+
+msgid "Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."
+msgstr ""
+
+#, python-brace-format
+msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
+msgstr ""
+
+msgid "This may occur if Clonezilla was originally unable to backup this partition."
+msgstr ""
+
+#, python-brace-format
+msgid "Error restoring partition {image_key} to {destination_partition}."
+msgstr ""
+
+#, python-brace-format
+msgid "Successfully restored image partition {image} to {destination_partition}"
+msgstr ""
+
+msgid "Summary of Restore"
+msgstr ""
+
+msgid "Restore Summary"
+msgstr ""
+
+msgid "Confirm the restore summary."
+msgstr ""
+
+msgid "Backup restored successfully."
+msgstr ""
+
+msgid "Image Explorer\n"
+"      (beta)"
+msgstr ""
+
+msgid "Image Explorer (beta)"
+msgstr ""
+
+msgid "Select the image file to explore"
+msgstr ""
+
+msgid "Step 3: Select Partition to Explore"
+msgstr ""
+
+msgid "Select the partition to access files from."
+msgstr ""
+
+msgid "Click <b>Mount</b> to mount the backup image (as read-only)."
+msgstr ""
+
+msgid "Mount"
+msgstr ""
+
+msgid "Mounting as read-only..."
+msgstr ""
+
+msgid "Unmount"
+msgstr ""
+
+msgid "Once the partition has been mounted, click <b>Open in file manager</b> to access your files."
+msgstr ""
+
+msgid "Open in file manager"
+msgstr ""
+
+msgid "Verify"
+msgstr ""
+
+msgid "Select one or more image(s) to verify."
+msgstr ""
+
+msgid "To begin verification, click <b>Next</b>."
+msgstr ""
+
+msgid "Verifying Image"
+msgstr ""
+
+msgid "Verifying the selected image(s)."
+msgstr ""
+
+#, python-brace-format
+msgid "Verifying {image_name}"
+msgstr ""
+
+msgid "Summary of Verification"
+msgstr ""
+
+msgid "Confirm the verification summary."
+msgstr ""
+
+msgid "Verification Summary"
+msgstr ""
+
+msgid "To verify another image, click <b>Back</b>."
+msgstr ""
+
+msgid "✔"
+msgstr ""
+
+msgid "❌"
+msgstr ""
+
+msgid "MBR backup appears correct."
+msgstr ""
+
+msgid "No partition table found."
+msgstr ""
+
+msgid "Sfdisk partition table file is empty or missing."
+msgstr ""
+
+msgid "Sfdisk partition table file is present."
+msgstr ""
+
+msgid "Unable to verify."
+msgstr ""
+
+#, python-brace-format
+msgid "{partition}: filesystem image successfully verified."
+msgstr ""
