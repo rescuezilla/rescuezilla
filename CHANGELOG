@@ -1,4 +1,21 @@
 -------------------------------------------------------------------------------
+  Version 2.4.2 (2023-03-05)
+-------------------------------------------------------------------------------
+
+* Removes the Intel screen tearing fix introduced for v2.3 (2021-12-24), which should fix black screens on Intel graphics (#281)
+* Introduces Ubuntu 22.10 (Kinetic) for best support of new hardware, but leaves default build as Ubuntu 22.04 (Jammy) 
+* Reintroduces a 32-bit (Intel i386) build, currently based on Ubuntu 18.04 (Bionic) (#232) after it was temporarily dropped in v2.0 (2020-10-14)
+    * Note: Partclone backwards compatibility is imperfect and 32-bit release uses old Ubuntu repository partclone version, not latest compiled version
+* Fixes Backup mode's broken SSH port field introduced in v2.4 (#385)
+* Installs lxappearance (#274), hexdump (bsdmainutils) (#382), flashrom (#388)
+* Installed packages which improve ability to mount encrypted drives with pcmanfm file manager (#379)
+* Replaces out-of-service Travis-CI build bot integration with GitHub Actions, for improved quality-control, and to assist Rescuezilla contributors
+* Many existing translations updated, but also added:
+  * Albanian/Shqip (sq-AL) (Translation in-progress)
+  * Lithuanian/Lietuvių (lt-LT)
+  * Dutch/Nederlands (nl-NL)
+
+-------------------------------------------------------------------------------
   Version 2.4.1 (2022-09-05)
 -------------------------------------------------------------------------------
 
