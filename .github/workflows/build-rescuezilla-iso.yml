@@ -38,6 +38,11 @@ jobs:
         run: make docker-test
 
       - run: make docker-status
+      - name: Make Ubuntu 22.10 (Kinetic) ISO
+        run: make docker-kinetic
+      - run: sudo mv build/rescuezilla.amd64.kinetic.iso build/rescuezilla-${{github.ref_name}}-64bit.kinetic.iso
+
+      - run: make docker-status
       - name: Make Ubuntu 22.04 LTS (Jammy) ISO [LTS  = Long Term Support]
         run: make docker-jammy
       - run: sudo mv build/rescuezilla.amd64.jammy.iso build/rescuezilla-${{github.ref_name}}-64bit.jammy.iso

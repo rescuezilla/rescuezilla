@@ -133,6 +133,25 @@ pkgs_specific_to_ubuntu2204_jammy=(
                        "plymouth-theme-ubuntu-logo"
 )
 
+pkgs_specific_to_ubuntu2210_kinetic=(
+                       "linux-generic"
+                       "xserver-xorg"
+                       "xserver-xorg-video-all"
+                       "xserver-xorg-video-intel"
+                       "xserver-xorg-video-qxl"
+                       "xserver-xorg-video-mga"
+                        # Packages which may assist users needing to do a GRUB repair (64-bit EFI)
+                       "shim-signed"
+                       "grub-efi-amd64-signed"
+                       "grub-efi-amd64-bin"
+                       "grub-efi-ia32-bin"
+                       # Dependency for partclone-utils' imagemount
+                       "nbdkit"
+                       # Replaces exfat-utils
+                       "exfatprogs"
+)
+
+
 # Languages on the system
 lang_codes=(
              "ar"
@@ -295,6 +314,8 @@ elif  [ "$ARCH" == "amd64" ] && [ "$CODENAME" == "impish" ]; then
   apt_pkg_list=("${pkgs_specific_to_ubuntu2110_impish[@]}" "${common_pkgs[@]}")
 elif  [ "$ARCH" == "amd64" ] && [ "$CODENAME" == "jammy" ]; then
   apt_pkg_list=("${pkgs_specific_to_ubuntu2204_jammy[@]}" "${common_pkgs[@]}")
+elif  [ "$ARCH" == "amd64" ] && [ "$CODENAME" == "kinetic" ]; then
+  apt_pkg_list=("${pkgs_specific_to_ubuntu2210_kinetic[@]}" "${common_pkgs[@]}")
 else
   echo "Warning: unknown CPU arch $ARCH or Ubuntu release codename $CODENAME"
   exit 1
