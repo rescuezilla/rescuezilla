@@ -141,6 +141,7 @@ lang_codes=(
              "id"
              "it"
              "he"
+             "lt"
              "hu"
              "ja"
              "nb"
