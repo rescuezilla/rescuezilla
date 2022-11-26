@@ -10,8 +10,8 @@ Vcs-Git: https://github.com/rescuezilla/rescuezilla.git
 
 Package: rescuezilla
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, smbclient, fsarchiver, partclone, pv, pigz, nmap, os-prober, gvfs, cifs-utils, smbclient, sshfs, sshpass, nfs-common, fsarchiver, file, xdg-utils, libnotify-bin, lshw, pciutils, yad, hdparm, pbzip2, lzop, pixz, plzip, lrzip, zstd, fatresize, archivemount, nbd-server, nbd-client, python3-whichcraft, python3-babel, clonezilla, lvm2, binutils, smartmontools, qemu-utils, nbdkit, efibootmgr
-Recommends: partimage, ecryptfs-utils
+Depends: ${shlibs:Depends}, ${misc:Depends}, smbclient, fsarchiver, partclone, pv, pigz, nmap, os-prober, gvfs, cifs-utils, smbclient, sshfs, sshpass, nfs-common, fsarchiver, file, xdg-utils, libnotify-bin, lshw, pciutils, yad, hdparm, pbzip2, lzop, pixz, plzip, lrzip, zstd, fatresize, archivemount, nbd-server, nbd-client, python3-whichcraft, python3-babel, clonezilla, lvm2, binutils, smartmontools, qemu-utils, efibootmgr
+Recommends: partimage, ecryptfs-utils, nbdkit
 Description: Graphical hard drive backup and restore
  Rescuezilla is an easy-to-use disk cloning and imaging application that's
  fully compatible with Clonezilla — the industry-standard trusted by tens
