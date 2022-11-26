@@ -148,6 +148,7 @@ lang_codes=(
              "pt"
              "ru"
              "sk"
+             "sq"
              "sv"
              "th"
              "tr"
