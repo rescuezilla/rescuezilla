@@ -88,6 +88,8 @@ pkgs_specific_to_ubuntu2004_focal=("linux-generic-hwe-18.04"
                        "lupin-casper"
                        # Replaced by exfatprogs
                        "exfat-utils"
+                       # Removed since 22.10 Kinetic
+                       "plymouth-theme-ubuntu-logo"
 )
 
 pkgs_specific_to_ubuntu2110_impish=(
@@ -107,6 +109,8 @@ pkgs_specific_to_ubuntu2110_impish=(
                        "lupin-casper"
                        # Replaced by exfatprogs
                        "exfat-utils"
+                       # Removed since 22.10 Kinetic
+                       "plymouth-theme-ubuntu-logo"
 )
 
 pkgs_specific_to_ubuntu2204_jammy=(
@@ -125,6 +129,8 @@ pkgs_specific_to_ubuntu2204_jammy=(
                        "nbdkit"
                        # Replaces exfat-utils
                        "exfatprogs"
+                       # Removed since 22.10 Kinetic
+                       "plymouth-theme-ubuntu-logo"
 )
 
 # Languages on the system
@@ -184,7 +190,6 @@ common_pkgs=("discover"
              "network-manager-gnome"
              "plymouth-x11"
              "plymouth-label"
-             "plymouth-theme-ubuntu-logo"
              "pcmanfm"
              # PCManFM recommended packages to resolve paths like eg, smb://fileserver/johnsmith
              # TODO: Re-enable GVFS packages -- seems to cause issues around preventing refreshing partition
