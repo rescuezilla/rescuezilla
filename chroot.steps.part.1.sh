@@ -65,7 +65,8 @@ pkgs_specific_to_ubuntu1804_bionic_32bit=("linux-generic-hwe-18.04"
                         "xserver-xorg-video-all-hwe-18.04"
                         "xserver-xorg-video-intel-hwe-18.04"
                         "xserver-xorg-video-qxl-hwe-18.04"
-
+                        # Python3.7 as Rescuezilla uses subprocess's "capture_output" parameter
+                        "python3.7"
 )
 
 # Packages specific to Rescuezilla 64-bit build (currently based Ubuntu 20.04 Focal)
@@ -325,6 +326,19 @@ apt-get install --yes --no-install-recommends "${apt_pkg_list[@]}"
 if [[ $? -ne 0 ]]; then
     echo "Error: Failed to install packages."
     exit 1
+fi
+
+if  [ "$CODENAME" == "bionic" ]; then
+  # Ensure the Python3 symlink points to Python 3.7 on Ubuntu 18.04 Bionic, as it uses Python 3.6 by default
+  # and Rescuezilla relies on a few Python 3.7 features, such as subprocess module's capture_output parameter
+  update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.7 1
+  # HACK: Ensure Python GObject Introspection library doesn't fail using Python 3. [1]
+  # [1] https://stackoverflow.com/a/62672285/4745097
+  ln -s /usr/lib/python3/dist-packages/gi/_gi.cpython-{36m,37m}-i386-linux-gnu.so
+  # HACK: Similar issue with python-apt and python 3.7 [1]
+  # [1] https://stackoverflow.com/a/57147858/4745097
+  ln -s /usr/lib/python3/dist-packages/apt_pkg.cpython-{36m,37m}-${ARCH}-linux-gnu.so
+  ln -s /usr/lib/python3/dist-packages/apt_inst.cpython-{36m,37m}-${ARCH}-linux-gnu.so
 fi
 
 if  [ "$IS_INTEGRATION_TEST" == "true" ]; then
