@@ -143,6 +143,7 @@ lang_codes=(
              "he"
              "lt"
              "hu"
+             "nl"
              "ja"
              "nb"
              "pl"

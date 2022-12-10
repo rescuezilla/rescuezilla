@@ -54,6 +54,7 @@ Rescuezilla has been translated into the following languages:
 * Magyar (hu-HU)
 * 日本語 (ja-JP) (Translation [in-progress](https://hosted.weblate.org/translate/rescuezilla/-/ja/?offset=1&q=state%3A%3Ctranslated+AND+NOT+has%3Asuggestion&sort_by=-priority%2Cposition&checksum=))
 * Lietuvių (lt-LT) (available next release)
+* Nederlands (nl-NL) (available next release)
 * Norsk Bokmål (nb-NO)
 * Polski (pl-PL)
 * Português brasileiro (pt-BR)
