@@ -1,0 +1,31 @@
+# Artem <KovalevArtem.ru@gmail.com>, 2021.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2021.
+# Gediminas Murauskas <muziejusinfo@gmail.com>, 2022.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2022-11-03 20:02+0000\n"
+"Last-Translator: Gediminas Murauskas <muziejusinfo@gmail.com>\n"
+"Language-Team: Lithuanian <https://hosted.weblate.org/projects/rescuezilla/"
+"graphical-shutdown/lt/>\n"
+"Language: lt\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n % 10 == 1 && (n % 100 < 11 || n % 100 > "
+"19)) ? 0 : ((n % 10 >= 2 && n % 10 <= 9 && (n % 100 < 11 || n % 100 > 19)) ? "
+"1 : 2);\n"
+"X-Generator: Weblate 4.14.2-dev\n"
+
+msgid "End Session"
+msgstr "Baigti sesiją"
+
+msgid "Cancel"
+msgstr "Atšaukti"
+
+msgid "Shutdown"
+msgstr "Išjungti"
+
+msgid "Reboot"
+msgstr "Perkrauti"
+
+msgid "Choose action."
+msgstr "Pasirinkite veiksmą."

@@ -1,0 +1,946 @@
+# Artem <KovalevArtem.ru@gmail.com>, 2021.
+# yesinmsg <yesinmsg@gmail.com>, 2021.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
+# ttt113326 <tonio_k@mail.ru>, 2021.
+# МАН69К <weblate@mah69k.net>, 2022.
+# Gideon van Melle <translations@gvmelle.com>, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-03-02 00:00+0000\n"
+"PO-Revision-Date: 2022-11-28 20:48+0000\n"
+"Last-Translator: Gideon van Melle <translations@gvmelle.com>\n"
+"Language-Team: Dutch <https://hosted.weblate.org/projects/rescuezilla/"
+"rescuezilla/nl/>\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.15-dev\n"
+
+msgid "Welcome"
+msgstr "Welkom"
+
+msgid "Select an Option"
+msgstr "Selecteer een optie"
+
+msgid "Easily create a backup image of your computer, or completely restore from one.  Click an option to begin:"
+msgstr ""
+"Maak eenvoudig een back-up image van uw computer of herstel deze volledig "
+"vanaf een image.   Klik op een optie om te beginnen:"
+
+msgid "Backup"
+msgstr "Back-up"
+
+msgid "Restore"
+msgstr "Herstellen"
+
+msgid "Verify Image"
+msgstr "Image verifiëren"
+
+msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
+msgstr ""
+"Hulp nodig? Begin met het controleren van de veelgestelde vragen van "
+"Rescuezilla en ga vervolgens naar het Rescuezilla-forum."
+
+msgid "Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed."
+msgstr ""
+"Overweeg om $1/maand bij te dragen op de crowdfunding-website Patreon, zodat "
+"Rescuezilla verder kan worden ontwikkeld."
+
+msgid "Back"
+msgstr "Terug"
+
+msgid "Next >"
+msgstr "Volgende >"
+
+msgid "Please wait..."
+msgstr "Ogenblik…"
+
+msgid "Identifying disk drives..."
+msgstr "Schijfstations identificeren…"
+
+#, python-brace-format
+msgid "Unmounting: {path}"
+msgstr "Ontkoppelen: {path}"
+
+#, python-brace-format
+msgid "Unable to unmount {path}"
+msgstr "Kan niet ontkoppelen: {path}"
+
+#, python-brace-format
+msgid "Running: {app}"
+msgstr "Lopend: {app}"
+
+#, python-brace-format
+msgid "Running {app} on {device}"
+msgstr "Lopend {app} op {device}"
+
+msgid "Failed to run command: "
+msgstr "Kan commando niet uitvoeren: "
+
+msgid "Error querying drives: "
+msgstr "Fout bij doorzoeken schijfstations: "
+
+msgid "Clone"
+msgstr "Klonen"
+
+msgid "Step 1: Understanding Cloning"
+msgstr "Stap 1: begrijpen wat klonen is"
+
+msgid "Please understand how \"cloning\" differs from \"imaging\"."
+msgstr "Gelieve te begrijpen hoe \"klonen\" verschilt van \"imaging\"."
+
+msgid "This mode is for \"disk cloning\". Cloning means copying one drive and directly overwriting another drive. This is a direct one-step operation with no temporary storage required.\n"
+"\n"
+"Cloning is different to \"disk imaging\". Imaging means copying everything from one drive into very large files stored inside a folder on an external drive. Multiple images can be saved on the same external drive. These images can be restored back to the original disk, or to additional disks. In other words, for \"imaging\" the backup operation copies your drive to <i>files</i> that need to be stored on a drive at least temporarily before it can be restored.\n"
+"\n"
+""
+"To use the \"imaging\" wizards, click <b>Back</b> and select <b>Backup</b> or <b>Restore</b>."
+msgstr ""
+"Deze modus is voor het \"klonen van schijven\". Klonen betekent het kopiëren "
+"van een schijf en het direct overschrijven van een andere schijf. Dit is een "
+"directe bewerking in één stap zonder dat tijdelijke opslag vereist is.\n"
+"\n"
+"Klonen is iets anders dan \"disk imaging\". Imaging betekent alles kopiëren "
+"van één schijf naar zeer grote bestanden die zijn opgeslagen in een map op "
+"een externe schijf. Er kunnen meerdere images op dezelfde externe schijf "
+"worden opgeslagen. Deze afbeeldingen kunnen worden teruggezet naar de "
+"oorspronkelijke schijf of naar extra schijven. Met andere woorden, voor "
+"\"imaging\" kopieert de back-upbewerking uw schijf naar <i>bestanden</i> die "
+"op zijn minst tijdelijk op een schijf moeten worden opgeslagen voordat deze "
+"kan worden hersteld.\n"
+"\n"
+"Om de \"imaging\"-wizards te gebruiken, klikt u op <b>Terug</b> en "
+"selecteert u <b>Back-up</b> of <b>Herstellen</b>."
+
+msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
+msgstr "Om de “kloning” wizard te starten klik op <b>Volgende</b>"
+
+msgid "Step 2: Select Source Drive"
+msgstr "Stap 2: Selecteer het bronstation"
+
+msgid "Select the <b>source drive</b> to clone."
+msgstr "Selecteer het <b>bronstation</b> dat u wilt klonen."
+
+msgid "Select the <b>destination drive</b> to overwrite."
+msgstr "Selecteer het <b>doelstation</b> dat u wilt overschrijven."
+
+msgid "Step 4: Select Partitions to Clone"
+msgstr "Stap 4: Selecteer partities om te klonen"
+
+msgid "Select which partitions from the source drive to clone, and whether to overwrite the partition table. <b>Leave everything selected to completely clone the source drive to the destination drive.</b>"
+msgstr ""
+"Selecteer welke partities van het bronstation u wilt klonen en of u de "
+"partitietabel wilt overschrijven. <b>Laat alles geselecteerd om de "
+"bronschijf volledig te klonen naar de doelschijf.</b>"
+
+msgid "Step 5: Confirm Cloning Configuration"
+msgstr "Stap 5: Bevestig de kloonconfiguratie"
+
+msgid "Confirm the following cloning configuration."
+msgstr "Stap 5: Bevestig de volgende kloonconfiguratie."
+
+msgid "Cloning the following partitions"
+msgstr "De volgende partities worden gekloond"
+
+msgid "To start cloning, click <b>Next</b>."
+msgstr "Om het klonen te starten, klik op <b>Volgende</b>."
+
+#, python-brace-format
+msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
+msgstr ""
+"Weet u zeker dat u de schijf naar {destination_drive} wilt klonen? Als u dit "
+"doet, worden de gegevens op die schijf permanent overschreven!"
+
+msgid "Step 6: Cloning Disk"
+msgstr "Stap 6: Het klonen van een schijf"
+
+msgid "Cloning the drive you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
+msgstr ""
+"De geselecteerde schijf klonen. Dit kan een uur of langer duren, afhankelijk "
+"van de snelheid van uw computer en de hoeveelheid gegevens."
+
+msgid "Summary of Clone"
+msgstr "Kloonoverzicht"
+
+msgid "Clone Summary"
+msgstr "Kloonoverzicht"
+
+msgid "Confirm the clone summary."
+msgstr "Bevestig het kloonoverzicht."
+
+msgid "Unable to shutdown Image Explorer"
+msgstr "Afsluiten Image Explorer niet mogelijk"
+
+msgid "Step 1: Select Drive To Backup"
+msgstr "Stap 1: Selecteer schijf voor back-up"
+
+msgid "Select the <b>source drive</b> that you would like to create a backup image from."
+msgstr ""
+"Selecteer het <b>bronstation</b> waarvan u een back-up image wilt maken."
+
+msgid "Drive"
+msgstr "Schijf"
+
+msgid "Capacity"
+msgstr "Capaciteit"
+
+msgid "Drive Model"
+msgstr "Schijf model"
+
+msgid "Serial Number"
+msgstr "Serienummer"
+
+msgid "Partitions"
+msgstr "Partities"
+
+msgid "Show hidden devices (for advanced users)"
+msgstr "Toon verborgen apparaten (voor geavanceerde gebruikers)"
+
+msgid "Step 2: Select Partitions to Save"
+msgstr "Stap 2: Selecteer partities om op te slaan"
+
+msgid "Select which partitions to create a backup of. <b>Leave all partitions selected if you are unsure.</b>"
+msgstr ""
+"Selecteer van welke partities u een back-up wilt maken. <b>Selecteer alle "
+"partities als u het niet zeker weet.</b>"
+
+msgid "Save"
+msgstr "Opslaan"
+
+msgid "Description"
+msgstr "Beschrijving"
+
+#, python-brace-format
+msgid "Drive {drive_number}"
+msgstr "Schijf {drive_number}"
+
+#, python-brace-format
+msgid "Partition {partition_number}"
+msgstr "Partitie {partition_number}"
+
+msgid "Step 3: Select Destination Drive"
+msgstr "Stap 3: Selecteer doelschijf"
+
+msgid "Click on the box below to select the source drive that you would like to create a backup image from."
+msgstr ""
+"Klik op het onderstaande vak om het bronstation te selecteren waarvan u een "
+"back-up image wilt maken."
+
+msgid "Connected directly to my computer"
+msgstr "Direct verbonden met mijn computer"
+
+msgid "Shared over a network"
+msgstr "Gedeeld via een netwerk"
+
+msgid "Where would you like to save the image?"
+msgstr "Waar wilt u de image opslaan?"
+
+msgid "Windows shared folder (SMB/CIFS, Samba)"
+msgstr "Windows gedeelde map (SMB/CIFS, Samba)"
+
+msgid "Search network"
+msgstr "Doorzoek netwerk"
+
+msgid "Server"
+msgstr "Server"
+
+msgid "Share location (UNC path)"
+msgstr "Deellokatie (UNC pad)"
+
+msgid "Username"
+msgstr "Gebruikersnaam"
+
+msgid "Password"
+msgstr "Wachtwoord"
+
+msgid "Domain"
+msgstr "Domein"
+
+msgid "Version"
+msgstr "Versie"
+
+msgid "Remote path"
+msgstr "Remote pad"
+
+msgid "Exported path"
+msgstr "Geëxporteerd pad"
+
+msgid "Identity File"
+msgstr "Identificatiebestand"
+
+msgid "Optional"
+msgstr "Optioneel"
+
+msgid "Select network-shared storage location:"
+msgstr "Selecteer netwerk-gedeeld opslag locatie:"
+
+msgid "Select the partition where the image files will be saved to"
+msgstr "Selecteer de partitie waar de imagebestanden zullen worden opgeslagen"
+
+msgid "Partition"
+msgstr "Partitie"
+
+msgid "Mounting..."
+msgstr "Aankoppelen..."
+
+msgid "Close this popup to cancel the mount operation."
+msgstr "Sluit deze pop-up om de koppelingsbewerking te annuleren."
+
+msgid "Please ensure the username, password and other fields provided are correct, and try again."
+msgstr ""
+"Controleer of de gebruikersnaam, het wachtwoord en andere velden correct "
+"zijn en probeer het opnieuw."
+
+msgid "Must provide either password or SSH identity file."
+msgstr "U moet een wachtwoord of SSH-identiteitsbestand opgeven."
+
+msgid "Scanning folder for backup images..."
+msgstr "Map scannen op back-up images..."
+
+#, python-brace-format
+msgid "({timeout_seconds} second timeout)"
+msgstr "({timeout_seconds} seconden timeout)"
+
+msgid "Close this popup to cancel scanning the selected folder and subfolders."
+msgstr ""
+"Sluit deze pop-up om het scannen van de geselecteerde map en submappen te "
+"annuleren."
+
+#, python-brace-format
+msgid "Scanning: {filename}"
+msgstr "{filename} wordt gescand"
+
+msgid "Error processing the following images:"
+msgstr "Fout bij het verwerken van de volgende images:"
+
+msgid "Unable to fully process the image associated with the following partitions:"
+msgstr ""
+"Kan de image die hoort bij de volgende partities niet volledig verwerken:"
+
+msgid "Unable to fully process the following image:"
+msgstr "Kan de volgende image niet volledig verwerken:"
+
+msgid "Cannot find partition's associated partclone image"
+msgstr "Kan de bijbehorende partclone-image van partitie niet vinden"
+
+msgid "This can happen when loading images which Clonezilla was unable to completely backup."
+msgstr ""
+"Dit kan gebeuren bij het laden van images waarvan Clonezilla geen volledige "
+"back-up kon maken."
+
+msgid "Note: This image format cannot distinguish between failed partclone backup and a user who chose not to backup a partition."
+msgstr ""
+"N.B.: Dit image formaat kan geen onderscheid maken tussen een mislukte "
+"partclone-back-up en een gebruiker die ervoor heeft gekozen geen back-up van "
+"een partitie te maken."
+
+msgid "Any other filesystems within the image should be restorable as normal."
+msgstr ""
+"Alle andere bestandssystemen binnen de image moeten normalerwijs hersteld "
+"kunnen worden."
+
+msgid "Needs decryption"
+msgstr "Heeft decodering nodig"
+
+msgid "Unknown filesystem"
+msgstr "Onbekend bestandssysteem"
+
+#, python-brace-format
+msgid "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance."
+msgstr ""
+"De informatie over de uitgebreide partitie van de back-up is leeg. Als de "
+"back-up een uitgebreide partitie bevat, zal dit niet correct herstellen. "
+"Alle gegevens kunnen nog steeds volledig worden hersteld, maar handmatige "
+"tussenkomst is vereist om gegevens binnen de uitgebreide partitie volledig "
+"te herstellen. Raadpleeg {url} voor informatie en hulp."
+
+msgid "The backup's bootloader data is shorter than expected. If the backup contained certain bootloaders like GRUB, during a restore operation Rescuezilla will try and re-install the bootloader."
+msgstr ""
+"De bootloadergegevens van de back-up zijn korter dan verwacht. Als de back-"
+"up bepaalde bootloaders zoals GRUB bevatte, zal Rescuezilla tijdens een "
+"herstelbewerking proberen de bootloader opnieuw te installeren."
+
+msgid "Step 4: Select Destination Folder"
+msgstr "Stap 4: Selecteer Doelmap"
+
+msgid "Click <b>Browse</b> to select the folder on the destination drive where your new backup image will be saved.\n"
+"\n"
+"The folder a backup is saved in is usually a description of the computer, e.g. <b>office1</b> or <b>zack-laptop</b>."
+msgstr ""
+"Klik op <b>Bladeren</b> om de map op het doelstation te selecteren waar uw "
+"nieuwe back-upimage zal worden opgeslagen.\n"
+"\n"
+"De map waarin een back-up wordt opgeslagen, is meestal een beschrijving van "
+"de computer, b.v. <b>office1</b> van <b>zack-laptop</b>."
+
+#, python-brace-format
+msgid "You must select a folder inside {location}"
+msgstr "U moet een map selecteren in {location}"
+
+msgid "Please select a different folder."
+msgstr "Selecteer een andere map."
+
+msgid "The table below lists the backup images that are already in this folder (if any)."
+msgstr ""
+"De onderstaande tabel bevat de back-up images die zich al in deze map "
+"bevinden (indien aanwezig)."
+
+msgid "Browse..."
+msgstr "Bladeren..."
+
+msgid "Filename"
+msgstr "Bestandsnaam"
+
+msgid "Size"
+msgstr "Grootte"
+
+msgid "Last modified"
+msgstr "Laatst gewijzigd"
+
+msgid "When you are happy with the destination folder, click <b>Next</b>."
+msgstr "Als u tevreden bent met de doelmap, klikt dan op <b>Volgende</b>."
+
+msgid "Step 5: Name Your Backup"
+msgstr "Stap 5: Geef uw back-up een naam"
+
+msgid "Provide a unique name for this backup image, such as the date.  Today's date is automatically entered for you below.\n"
+"\n"
+"You may only use letters, numbers, and dashes in your backup name."
+msgstr ""
+"Geef een unieke naam op voor deze back-up image, zoals de datum.  De datum "
+"van vandaag wordt hieronder automatisch voor u ingevoerd.\n"
+"\n"
+"U mag alleen letters, cijfers en streepjes gebruiken in uw back-upnaam."
+
+msgid "Optional: Provide a short description."
+msgstr "Optioneel: Geef een korte beschrijving."
+
+msgid "Step 6: Customize Compression Settings"
+msgstr "Stap 6: Compressie-instellingen aanpassen"
+
+msgid "Customize image compression settings. <b>Don't make any changes if you are unsure.</b>"
+msgstr ""
+"Pas de instellingen voor image-compressie aan. <b>Breng geen wijzigingen aan "
+"als u het niet zeker weet.</b>"
+
+msgid "Compression format: "
+msgstr "Compressieformaat: "
+
+msgid "gzip"
+msgstr "gzip"
+
+msgid "default"
+msgstr "standaard"
+
+msgid "zstandard"
+msgstr "zstandard"
+
+msgid "Uncompressed (Suitable for use with Image Explorer)"
+msgstr "Ongecomprimeerd (geschikt voor gebruik met Image Explorer)"
+
+msgid "Compression level: "
+msgstr "Compressieniveau: "
+
+msgid "Fastest"
+msgstr "Snelste"
+
+msgid "Best"
+msgstr "Beste"
+
+msgid "When you are happy with the compression settings, click <b>Next</b>."
+msgstr ""
+"Als u tevreden bent met de compressie-instellingen, klikt u op "
+"<b>Volgende</b>."
+
+msgid "Step 7: Confirm Backup Configuration"
+msgstr "Stap 7: Back-upconfiguratie bevestigen"
+
+msgid "Source drive"
+msgstr "Bron station"
+
+msgid "Backing up the following partition(s)"
+msgstr "Een back-up maken van de volgende partitie(s)"
+
+#, python-brace-format
+msgid "The backup image will be written into folder {dest_dir} on {description}"
+msgstr "De back-up image wordt in de map {dest_dir} op {description} geschreven"
+
+msgid "Confirm the following backup configuration."
+msgstr "Bevestig de volgende back-up configuratie."
+
+msgid "On successful completion of the task, perform the following action: "
+msgstr "Nadat de taak met succes is voltooid, voert u de volgende actie uit: "
+
+msgid "Do nothing"
+msgstr "Doe niets"
+
+msgid "Shutdown"
+msgstr "Afsluiten"
+
+msgid "Reboot"
+msgstr "Herstarten"
+
+msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
+msgstr ""
+"Rescue: negeer inconsistenties en slechte sectoren van het bestandssysteem"
+
+msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
+msgstr ""
+"<b>Het inschakelen van \"Rescue\" kan belangrijke fouten onderdrukken. Wees "
+"voorzichtig.</b>"
+
+msgid "To start the backup, click <b>Next</b>."
+msgstr "Als u de back-up wilt starten, klikt u op <b>Volgende</b>."
+
+msgid "Step 8: Creating Backup Image"
+msgstr "Stap 8: Back-up image maken"
+
+msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
+msgstr ""
+"Een back-up van uw systeem maken op de locatie die u hebt geselecteerd.  Dit "
+"kan een uur of langer duren, afhankelijk van de snelheid van uw computer en "
+"de hoeveelheid gegevens."
+
+#, python-brace-format
+msgid "Saving: {file}"
+msgstr "Opslaan: {file}"
+
+#, python-brace-format
+msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
+msgstr ""
+"Back-up {partition_name} met bestandssysteem {filesystem} naar {destination}"
+
+msgid "Summary of Backup"
+msgstr "Overzicht van back-up"
+
+msgid "Confirm the backup summary."
+msgstr "Bevestig het back-up overzicht."
+
+msgid "Backup Summary"
+msgstr "Back-up overzicht"
+
+msgid "An operation is in progress. Do you wish to cancel?"
+msgstr "Er wordt een opdracht uitgevoerd. Wenst u deze te annuleren?"
+
+msgid "Operation cancelled by user."
+msgstr "De opdrachtsuitvoering is geannuleerd door de gebruiker."
+
+msgid "Rescue option is enabled."
+msgstr "De optie Rescue is ingeschakeld."
+
+msgid "Error creating backup: "
+msgstr "Fout bij het maken van een back-up: "
+
+msgid "Failed to write destination file. Please confirm it is valid to create the provided file path, and try again."
+msgstr ""
+"Kan doelbestand niet wegschrijven. Bevestig dat het opgegeven bestandspad "
+"geldig is en probeer het dan opnieuw."
+
+#, python-brace-format
+msgid "Successful backup of swap partition {partition_name}"
+msgstr "Succesvolle back-up van swappartitie {partition_name}"
+
+#, python-brace-format
+msgid "<b>Failed to backup partition</b> {partition_name}"
+msgstr "<b>Kan geen back-up maken van partitie</b> {partition_name}"
+
+#, python-brace-format
+msgid "Successful backup of partition {partition_name}"
+msgstr "Succesvolle back-up van partitie {partition_name}"
+
+msgid "Backup saved successfully."
+msgstr "Back-up succesvol opgeslagen."
+
+msgid "Backup succeeded with some errors:"
+msgstr "Back-up is gelukt met enkele fouten:"
+
+msgid "Backup operation failed:"
+msgstr "Back-up mislukt:"
+
+msgid "User requested operation to stop."
+msgstr "De gebruiker heeft verzocht de uitvoering te stoppen."
+
+#, python-brace-format
+msgid "Operation took {num_minutes} minutes."
+msgstr "De uitvoering duurde {num_minutes} minuten."
+
+msgid "To start a new session, click <b>Next</b>"
+msgstr "Om een nieuwe sessie te starten, klikt u op <b>Volgende</b>"
+
+msgid "Step 1: Select Image Location"
+msgstr "Stap 1: Selecteer image locatie"
+
+msgid "Where are the image files stored?"
+msgstr "Waar worden de imagebestanden opgeslagen?"
+
+msgid "Select the partition which contains the image files:"
+msgstr "Selecteer de partitie die de imagebestanden bevat:"
+
+msgid "Step 2: Select Backup Image"
+msgstr "Stap 2: Selecteer Back-upimage"
+
+msgid "Click <b>Browse</b> to select the folder containing image files."
+msgstr "Klik op <b>Bladeren</b> om de map met imagebestanden te selecteren."
+
+msgid "Select the image file to restore."
+msgstr "Selecteer het imagebestand dat u wilt herstellen."
+
+msgid "Step 3: Select Drive To Restore"
+msgstr "Stap 3: Selecteer schijf om te herstellen"
+
+msgid "Select the destination drive to restore with the selected image."
+msgstr ""
+"Selecteer het doelschijf die u wilt herstellen met de geselecteerde image."
+
+msgid "Step 4: Select Partitions to Restore"
+msgstr "Stap 4: Selecteer partities om te herstellen"
+
+msgid "Select which partitions from the backup image to restore, and whether to overwrite the partition table. <b>Leave everything selected to completely restore the destination drive.</b>"
+msgstr ""
+"Selecteer welke partities van de back-upimage u wilt herstellen en of u de "
+"partitietabel wilt overschrijven. <b>Laat alles geselecteerd om de "
+"bestemmingsschijf volledig te herstellen.</b>"
+
+msgid "Selected image"
+msgstr "Geselecteerde image"
+
+msgid "Destination device"
+msgstr "Doelschijf"
+
+msgid "Destination partition"
+msgstr "Doelpartitie"
+
+msgid "Overwrite partition table"
+msgstr "Partitietabel overschrijven"
+
+msgid "You will be overwriting the partition table."
+msgstr "U gaat de partitietabel overschrijven."
+
+msgid "The \"destination partition\" column has been updated using the information stored within the backup image.\n\n<b>If partitions have been resized, new partitions added, or additional operating systems installed <i>since the backup image was created</i>, then the destination drive's partition table will not match the backup image, and overwriting the destination drive's partition table will render these resized and additional partitions permanently inaccessible.</b> If you have not modified the partition table in such a way since creating this backup then overwriting the partition table is completely safe and will have no negative effects."
+msgstr ""
+"De kolom \"bestemmingspartitie\" is bijgewerkt met behulp van de informatie "
+"die is opgeslagen in de back-up image.\n"
+"\n"
+"<b>Als de grootte van partities is gewijzigd, nieuwe partities zijn "
+"toegevoegd of extra besturingssystemen zijn geïnstalleerd <i>sinds het maken "
+"van de back-up image</i>, dan zal de partitietabel van de doelschijf niet "
+"overeenkomen met de back-up image en overschrijven van de partitietabel op "
+"de doelschijf zal deze van grootte veranderde en aanvullende partities "
+"permanent ontoegankelijk maken.</b> Als u de partitietabel niet op een "
+"dergelijke manier heeft gewijzigd sinds u deze back-up hebt gemaakt, is het "
+"overschrijven van de partitietabel volkomen veilig en heeft dit geen "
+"negatieve gevolgen."
+
+msgid "You will <b>not</b> be overwriting the partition table."
+msgstr "U overschrijft de partitietabel <b>niet</b>."
+
+msgid "The source does not contain a partition table."
+msgstr "De bron bevat geen partitietabel."
+
+msgid "The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table."
+msgstr ""
+"De kolom \"doelpartitie\" is bijgewerkt met de bestaande partitietabel "
+"informatie van de bestemmingsschijf.\n"
+"\n"
+"<b>De doelpartitie kolom kan worden gewijzigd als een vervolgkeuzemenu. Als "
+"de doelpartities onjuist worden toegewezen, kunnen besturingssystemen niet "
+"meer opstarten.</b> Als u niet zeker bent van de toewijzing, overweeg dan of "
+"het beter is om in plaats daarvan de partitietabel te overschrijven."
+
+msgid "No destination partition selected. Use the destination partition drop-down menu to select the destination"
+msgstr ""
+"Geen doelpartitie geselecteerd. Gebruik het vervolgkeuzemenu "
+"bestemmingspartitie om de bestemming te selecteren"
+
+msgid "Not restoring this partition"
+msgstr "Deze partitie wordt niet hersteld"
+
+msgid "When you are ready to continue, click <b>Next</b>."
+msgstr "Wanneer u klaar bent om door te gaan, klikt u op <b>Volgende</b>."
+
+msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
+msgstr ""
+"Alle logische volumes van Logical Volume Manager (LVM) scannen en "
+"ontkoppelen..."
+
+#, python-brace-format
+msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
+msgstr ""
+"De doel partitie van de bronpartitietabel ({source}: {source_size} bytes) "
+"moet verwijzen naar een gebied dat zich volledig binnen de doelschijf "
+"bevindt ({destination_size} bytes)."
+
+#, python-brace-format
+msgid "Rescuezilla cannot yet automatically shrink partitions to restore from large disks to smaller disks. The final partition currently must always completely reside within the destination disk.\n"
+"\n"
+"Currently the only way to restore to disks smaller than original is to first use GParted Partition Editor to shrink the final partition of the original disk before making a new backup image. Please read the following instructions for more information:\n"
+"\n"
+"{url}"
+msgstr ""
+"Rescuezilla kan partities nog niet automatisch verkleinen om van grote "
+"schijven naar kleinere schijven te herstellen. De laatste partitie moet "
+"momenteel altijd volledig op de doelschijf staan.\n"
+"\n"
+"Momenteel is de enige manier om te herstellen naar schijven die kleiner zijn "
+"dan de originele, eerst GParted Partition Editor te gebruiken om de laatste "
+"partitie van de originele schijf te verkleinen voordat een nieuwe back-"
+"upimage wordt gemaakt. Lees de volgende instructies voor meer informatie:\n"
+"\n"
+"{url}"
+
+msgid "Step 5: Confirm Restore Configuration"
+msgstr "Stap 5: Bevestig herstelconfiguratie"
+
+msgid "Confirm the following restore configuration."
+msgstr "Bevestig de volgende herstelconfiguratie."
+
+#, python-brace-format
+msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!"
+msgstr ""
+"Weet u zeker dat u de back-up wilt herstellen naar {destination_drive}? Als "
+"u dit doet, worden gegevens op deze schijf permanent overschreven!"
+
+msgid "Source image"
+msgstr "Bron image"
+
+msgid "Destination drive"
+msgstr "Doel schijfstation"
+
+msgid "Restoring the following partitions"
+msgstr "De volgende partities aan het herstellen"
+
+msgid "WILL BE OVERWRITING PARTITION TABLE"
+msgstr "ZAL PARTITIETABEL OVERSCHRIJVEN"
+
+msgid "Will <b>NOT</b> be overwriting partition table"
+msgstr "Zal de partitietabel <b>NIET</b> overschrijven"
+
+msgid "To start the restore, click <b>Next</b>."
+msgstr "Als u het herstel wilt starten, klikt u op <b>Volgende</b>."
+
+msgid "Restoring From Backup"
+msgstr "Herstellen vanaf back-up"
+
+msgid "Restoring your system from the image you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
+msgstr ""
+"Herstel uw systeem vanaf de image die u hebt geselecteerd.  Dit kan een uur "
+"of langer duren, afhankelijk van de snelheid van uw computer en de "
+"hoeveelheid gegevens."
+
+msgid "Refreshing partition table"
+msgstr "Partitietabel aan het vernieuwen"
+
+#, python-brace-format
+msgid "Restoring {description} to {destination_partition} ({destination_description})"
+msgstr ""
+"Herstellen van {description} naar {destination_partition} "
+"({destination_description})"
+
+msgid "Synchronizing disks..."
+msgstr "Schijven synchroniseren..."
+
+#, python-brace-format
+msgid "Querying hard drive geometry of {device}"
+msgstr "De geometrie van de harde schijf van {device} opvragen"
+
+#, python-brace-format
+msgid "Probing {device} with {app}"
+msgstr "{device} onderzoeken met {app}"
+
+#, python-brace-format
+msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
+msgstr ""
+"Groeiend bestandssysteem {partition} ({filesystem}). Dit kan even duren..."
+
+#, python-brace-format
+msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
+msgstr ""
+"De grootte van partitie {partition} ({filesystem}) wijzigen is mislukt: {msg}"
+
+#, python-brace-format
+msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
+msgstr ""
+"Succesvol de NTFS-bestandssysteemgeometrie van {ntfs_device} met waarden van "
+"{geometry_source} aangepast"
+
+#, python-brace-format
+msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
+msgstr "Kan NTFS-bestandssysteemgeometrie van {ntfs_device} niet aanpassen"
+
+msgid "Removing udev MAC address records (if any)"
+msgstr "Udev MAC-adresrecords aan het verwijderen (indien aanwezig)"
+
+msgid "Re-installing syslinux (if any)"
+msgstr "Syslinux opnieuw installeren (indien aanwezig)"
+
+msgid "Successfully re-installed syslinux bootloader"
+msgstr "Succesvol opnieuw geïnstalleerd syslinux bootloader"
+
+msgid "Re-installing GRUB bootloader (if any)"
+msgstr "GRUB bootloader opnieuw installeren (indien aanwezig)"
+
+msgid "Successfully re-installed GRUB bootloader"
+msgstr "Grub bootloader opnieuw met succes geïnstalleerd"
+
+msgid "Did not update GRUB bootloader (if any)"
+msgstr "GRUB bootloader niet bijgewerkt (indien aanwezig)"
+
+msgid "Updating initramfs (if any)"
+msgstr "Initramfs aan het bijwerken (indien van toepassing)"
+
+msgid "Successfully updated initramfs"
+msgstr "Succesvol initramfs bijgewerkt"
+
+msgid "Updating EFI NVRAM..."
+msgstr "EFI NVRAM bijwerken..."
+
+msgid "Successfully updated EFI NVRAM"
+msgstr "EFI NVRAM succesvol bijgewerkt"
+
+msgid "Error restoring image: "
+msgstr "Fout bij het herstellen van de image: "
+
+msgid "Could not restore sfdisk partition table as file has zero length: "
+msgstr ""
+"Kan de sfdisk-partitietabel niet herstellen omdat het bestand zero lengte "
+"heeft: "
+
+msgid "Successfully restored partition table."
+msgstr "Partitietabel met succes hersteld."
+
+msgid "Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."
+msgstr ""
+"Kan de partitietabel van de apparaten niet vernieuwen. Dit kan gebeuren als "
+"een ander proces toegang krijgt tot de partitietabel."
+
+#, python-brace-format
+msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
+msgstr ""
+"Kan partitie {destination_partition} niet herstellen omdat er geen "
+"opgeslagen afbeelding is gekoppeld aan: {description}."
+
+msgid "This may occur if Clonezilla was originally unable to backup this partition."
+msgstr ""
+"Dit kan gebeuren als Clonezilla oorspronkelijk geen back-up van deze "
+"partitie kon maken."
+
+#, python-brace-format
+msgid "Error restoring partition {image_key} to {destination_partition}."
+msgstr ""
+"Fout bij het herstellen van partitie {image_key} naar "
+"{destination_partition}."
+
+#, python-brace-format
+msgid "Successfully restored image partition {image} to {destination_partition}"
+msgstr "Herstel van de image partitie {image} naar {destination_partition}"
+
+msgid "Summary of Restore"
+msgstr "Samenvatting van Restore"
+
+msgid "Restore Summary"
+msgstr "Hersteloverzicht"
+
+msgid "Confirm the restore summary."
+msgstr "Bevestig het hersteloverzicht."
+
+msgid "Backup restored successfully."
+msgstr "Back-up met succes hersteld."
+
+msgid "Image Explorer\n"
+"      (beta)"
+msgstr ""
+"Image Explorer\n"
+"      (beta)"
+
+msgid "Image Explorer (beta)"
+msgstr "Image Explorer (beta)"
+
+msgid "Select the image file to explore"
+msgstr "Selecteer het imagebestand dat u wilt verkennen"
+
+msgid "Step 3: Select Partition to Explore"
+msgstr "Stap 3: Selecteer partitie om te verkennen"
+
+msgid "Select the partition to access files from."
+msgstr "Selecteer de partitie om bestanden van te openen."
+
+msgid "Click <b>Mount</b> to mount the backup image (as read-only)."
+msgstr ""
+"Klik op <b>Koppelen</b> om de back-up image te koppelen (als alleen-lezen)."
+
+msgid "Mount"
+msgstr "Koppelen"
+
+msgid "Mounting as read-only..."
+msgstr "Koppelen als alleen-lezen..."
+
+msgid "Unmount"
+msgstr "Ontkoppelen"
+
+msgid "Once the partition has been mounted, click <b>Open in file manager</b> to access your files."
+msgstr ""
+"Zodra de partitie is gekoppeld, klikt u op <b>Openen in bestandsbeheer</b> "
+"om toegang te krijgen tot uw bestanden."
+
+msgid "Open in file manager"
+msgstr "Openen in bestandsbeheer"
+
+msgid "Verify"
+msgstr "Verifiëren"
+
+msgid "Select one or more image(s) to verify."
+msgstr "Selecteer één of meer images om te verifiëren."
+
+msgid "To begin verification, click <b>Next</b>."
+msgstr "Als u de verificatie wilt starten, klikt u op <b>Volgende</b>."
+
+msgid "Verifying Image"
+msgstr "Afbeelding verifiëren"
+
+msgid "Verifying the selected image(s)."
+msgstr "De geselecteerde afbeelding(en) controleren."
+
+#, python-brace-format
+msgid "Verifying {image_name}"
+msgstr "{image_name} verifiëren"
+
+msgid "Summary of Verification"
+msgstr "Samenvatting van de verificatie"
+
+msgid "Confirm the verification summary."
+msgstr "Bevestig het verificatieoverzicht."
+
+msgid "Verification Summary"
+msgstr "Verificatie overzicht"
+
+msgid "To verify another image, click <b>Back</b>."
+msgstr "Als u een andere afbeelding wilt verifiëren, klikt u op <b>Vorige</b>."
+
+msgid "✔"
+msgstr "✔"
+
+msgid "❌"
+msgstr "❌"
+
+msgid "MBR backup appears correct."
+msgstr "MBR back-up lijkt correct."
+
+msgid "No partition table found."
+msgstr "Geen partitietabel gevonden."
+
+msgid "Sfdisk partition table file is empty or missing."
+msgstr "Sfdisk partitietabelbestand is leeg of ontbreekt."
+
+msgid "Sfdisk partition table file is present."
+msgstr "Sfdisk partitie tabelbestand is aanwezig."
+
+msgid "Unable to verify."
+msgstr "Kan niet verifiëren."
+
+#, python-brace-format
+msgid "{partition}: filesystem image successfully verified."
+msgstr "{partition}: bestandssysteem image succesvol geverifieerd."

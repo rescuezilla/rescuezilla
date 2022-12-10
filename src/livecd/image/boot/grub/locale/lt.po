@@ -1,0 +1,59 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-03-02 00:00+0000\n"
+"PO-Revision-Date: 2022-11-03 20:02+0000\n"
+"Last-Translator: Gediminas Murauskas <muziejusinfo@gmail.com>\n"
+"Language-Team: Lithuanian <https://hosted.weblate.org/projects/rescuezilla/"
+"grub-boot/lt/>\n"
+"Language: lt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n % 10 == 1 && (n % 100 < 11 || n % 100 > "
+"19)) ? 0 : ((n % 10 >= 2 && n % 10 <= 9 && (n % 100 < 11 || n % 100 > 19)) ? "
+"1 : 2);\n"
+"X-Generator: Weblate 4.14.2-dev\n"
+
+msgid "Start Rescuezilla"
+msgstr "Paleisti Rescuezilla"
+
+msgid "If boot fails, reboot and try selecting Graphical fallback instead"
+msgstr ""
+"Jei paleisti nepavyksta, paleskite iš naujo ir pabandykite pasirinkti "
+"grafinį atsarginį rėžimą"
+
+msgid "Graphical fallback mode"
+msgstr "Grafinis atsarginis režimas"
+
+msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
+msgstr ""
+"Naudoti mažos skiriamosios gebos atsarginę grafikos tvarkyklę, jei "
+"standartinis režimas neveikia jūsų aparatinėje įrangoje"
+
+msgid "Load USB into RAM"
+msgstr "Įkelti USB į RAM atmintį"
+
+msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
+msgstr ""
+"Įkelia Rescuezilla į atmintį, leidžiančią po įrenginio paleidimo pašalinti "
+"įkrovos laikmeną"
+
+msgid "Check USB for defects"
+msgstr "Patikrinti USB, ar nėra defektų"
+
+msgid "Verify integrity of USB drive"
+msgstr "Patikrinti USB atmintinės vientisumą"
+
+msgid "Enter BIOS Setup"
+msgstr "Įeiti į BIOS sąranką"
+
+msgid "Configure machine's firmware, boot options etc"
+msgstr "Konfigūruokite įrenginio programinę įrangą, įkrovos parinktis ir t. t."
+
+msgid "Memory test"
+msgstr "Atminties testas"
+
+msgid "Check computer memory for errors"
+msgstr "Patikrinti, ar kompiuterio atmintyje nėra klaidų"

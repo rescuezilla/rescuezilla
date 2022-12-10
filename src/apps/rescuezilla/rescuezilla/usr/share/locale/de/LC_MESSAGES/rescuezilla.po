@@ -8,13 +8,14 @@
 # Mirko Hanker <Mirko1984@pm.me>, 2021.
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
 # Marcel Küsters <Marcel_Kuesters@t-online.de>, 2022.
+# Ettore Atalan <atalanttore@googlemail.com>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2022-08-13 21:33+0000\n"
-"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
+"PO-Revision-Date: 2022-10-12 18:29+0000\n"
+"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/de/>\n"
 "Language: de\n"
@@ -22,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 4.15-dev\n"
 
 msgid "Welcome"
 msgstr "Willkommen"
@@ -943,21 +944,17 @@ msgstr "✔"
 msgid "❌"
 msgstr "❌"
 
-#, fuzzy
 msgid "MBR backup appears correct."
-msgstr "Die MBR-Sicherung scheint korrekt zu sein."
+msgstr "MBR-Sicherung scheint korrekt zu sein."
 
-#, fuzzy
 msgid "No partition table found."
 msgstr "Keine Partitionstabelle gefunden."
 
-#, fuzzy
 msgid "Sfdisk partition table file is empty or missing."
 msgstr "Sfdisk-Partitionstabellendatei ist leer oder fehlt."
 
-#, fuzzy
 msgid "Sfdisk partition table file is present."
-msgstr "Die Partitionstabellendatei Sfdisk ist vorhanden."
+msgstr "Sfdisk-Partitionstabellendatei ist vorhanden."
 
 #, fuzzy
 msgid "Unable to verify."

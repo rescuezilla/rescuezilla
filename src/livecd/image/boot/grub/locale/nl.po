@@ -1,0 +1,57 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-03-02 00:00+0000\n"
+"PO-Revision-Date: 2022-11-27 15:32+0000\n"
+"Last-Translator: Gideon van Melle <translations@gvmelle.com>\n"
+"Language-Team: Dutch <https://hosted.weblate.org/projects/rescuezilla/"
+"grub-boot/nl/>\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.15-dev\n"
+
+msgid "Start Rescuezilla"
+msgstr "Rescuezilla starten"
+
+msgid "If boot fails, reboot and try selecting Graphical fallback instead"
+msgstr ""
+"Als het opstarten mislukt, start u opnieuw op en probeert u in plaats "
+"daarvan Grafische terugval te selecteren"
+
+msgid "Graphical fallback mode"
+msgstr "Grafische terugval-modus"
+
+msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
+msgstr ""
+"Gebruik een grafische terugval driver met lage resolutie als de "
+"standaardmodus niet werkt voor uw hardware"
+
+msgid "Load USB into RAM"
+msgstr "Laad USB in RAM"
+
+msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
+msgstr ""
+"Laadt Rescuezilla in het geheugen waardoor de opstartmedia na het opstarten "
+"kunnen worden uitgeworpen"
+
+msgid "Check USB for defects"
+msgstr "Controleer USB op defecten"
+
+msgid "Verify integrity of USB drive"
+msgstr "Controleer de integriteit van het USB-station"
+
+msgid "Enter BIOS Setup"
+msgstr "Bios-instellingen openen"
+
+msgid "Configure machine's firmware, boot options etc"
+msgstr "Configureer de firmware van de machine, opstartopties, enz"
+
+msgid "Memory test"
+msgstr "Geheugentest"
+
+msgid "Check computer memory for errors"
+msgstr "Controleer het computergeheugen op fouten"

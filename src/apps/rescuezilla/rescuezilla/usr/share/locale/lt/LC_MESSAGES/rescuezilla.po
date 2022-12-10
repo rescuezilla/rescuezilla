@@ -1,0 +1,940 @@
+# Artem <KovalevArtem.ru@gmail.com>, 2021.
+# yesinmsg <yesinmsg@gmail.com>, 2021.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
+# ttt113326 <tonio_k@mail.ru>, 2021.
+# МАН69К <weblate@mah69k.net>, 2022.
+# Gediminas Murauskas <muziejusinfo@gmail.com>, 2022.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-03-02 00:00+0000\n"
+"PO-Revision-Date: 2022-11-10 18:48+0000\n"
+"Last-Translator: Gediminas Murauskas <muziejusinfo@gmail.com>\n"
+"Language-Team: Lithuanian <https://hosted.weblate.org/projects/rescuezilla/"
+"rescuezilla/lt/>\n"
+"Language: lt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n % 10 == 1 && (n % 100 < 11 || n % 100 > "
+"19)) ? 0 : ((n % 10 >= 2 && n % 10 <= 9 && (n % 100 < 11 || n % 100 > 19)) ? "
+"1 : 2);\n"
+"X-Generator: Weblate 4.15-dev\n"
+
+msgid "Welcome"
+msgstr "Sveiki"
+
+msgid "Select an Option"
+msgstr "Pasirinkite parinktį"
+
+msgid "Easily create a backup image of your computer, or completely restore from one.  Click an option to begin:"
+msgstr ""
+"Lengvai sukurkite atsarginį kompiuterio atvaizdą arba visiškai atkurkite jį "
+"iš atsarginės kopijos.  Spustelėkite parinktį ir pradėkite:"
+
+msgid "Backup"
+msgstr "Atsarginė kopija"
+
+msgid "Restore"
+msgstr "Atkurti"
+
+msgid "Verify Image"
+msgstr "Patikrinti atvaizdą"
+
+msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
+msgstr ""
+"Reikia pagalbos? Pradėkite tikrindami Rescuezilla dažniausiai užduodamus "
+"klausimus, tada eikite į Rescuezilla forumą."
+
+msgid "Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed."
+msgstr ""
+"Apsvarstykite galimybę skirti 1 $ per mėnesį sutelktinio finansavimo "
+"svetainėje Patreon, kad Rescuezilla būtų toliau plėtojama."
+
+msgid "Back"
+msgstr "Atgal"
+
+msgid "Next >"
+msgstr "Toliau >"
+
+msgid "Please wait..."
+msgstr "Palaukite..."
+
+msgid "Identifying disk drives..."
+msgstr "Atpažįstami diskų įrenginiai..."
+
+#, python-brace-format
+msgid "Unmounting: {path}"
+msgstr "Atjungiama: {path}"
+
+#, python-brace-format
+msgid "Unable to unmount {path}"
+msgstr "Nepavyko atjungti {path}"
+
+#, python-brace-format
+msgid "Running: {app}"
+msgstr "Veikia: {app}"
+
+#, python-brace-format
+msgid "Running {app} on {device}"
+msgstr "{app} veikia {device}"
+
+msgid "Failed to run command: "
+msgstr "Nepavyko paleisti komandos: "
+
+msgid "Error querying drives: "
+msgstr "Diskų užklausos klaida: "
+
+msgid "Clone"
+msgstr "Klonuoti"
+
+msgid "Step 1: Understanding Cloning"
+msgstr "1 žingsnis: klonavimo supratimas"
+
+msgid "Please understand how \"cloning\" differs from \"imaging\"."
+msgstr "Supraskite, kuo „klonavimas“ skiriasi nuo „atvaizdavimo“."
+
+msgid "This mode is for \"disk cloning\". Cloning means copying one drive and directly overwriting another drive. This is a direct one-step operation with no temporary storage required.\n"
+"\n"
+"Cloning is different to \"disk imaging\". Imaging means copying everything from one drive into very large files stored inside a folder on an external drive. Multiple images can be saved on the same external drive. These images can be restored back to the original disk, or to additional disks. In other words, for \"imaging\" the backup operation copies your drive to <i>files</i> that need to be stored on a drive at least temporarily before it can be restored.\n"
+"\n"
+""
+"To use the \"imaging\" wizards, click <b>Back</b> and select <b>Backup</b> or <b>Restore</b>."
+msgstr ""
+"Šis režimas skirtas „disko klonavimui“. Klonavimas reiškia vieno disko "
+"kopijavimą ir tiesioginį kito disko perrašymą. Tai tiesioginė vieno žingsnio "
+"operacija, kuriai nereikia laikino saugojimo.\n"
+"\n"
+"Klonavimas skiriasi nuo „disko atvaizdavimo“. Vaizdo kūrimas reiškia visko "
+"kopijavimą iš vieno disko į labai didelius failus, saugomus išorinio disko "
+"aplanke. Tame pačiame išoriniame diske galima išsaugoti kelis atvaizdus. "
+"Šiuos atvaizdus galima atkurti atgal į pradinį diską arba į papildomus "
+"diskus. Kitaip tariant, norint sukurti „atvaizdą“, atsarginė kopija "
+"nukopijuoja jūsų diską į <i>failus</i>, kuriuos reikia bent laikinai "
+"išsaugoti diske, kad būtų galima jį atkurti.\n"
+"\n"
+"Norėdami naudoti „atvaizdavimo“ vedlius, spustelėkite <b>Atgal</b> ir "
+"pasirinkite <b>Atsarginė kopija</b> arba <b>Atkurti</b>."
+
+msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
+msgstr "Norėdami pradėti „klonavimo“ vedlį, spustelėkite <b>Toliau</b>"
+
+msgid "Step 2: Select Source Drive"
+msgstr "2 žingsnis: pasirinkite šaltinio diską"
+
+msgid "Select the <b>source drive</b> to clone."
+msgstr "Pasirinkite <b>šaltinio diską</b>, kurį norite klonuoti."
+
+msgid "Select the <b>destination drive</b> to overwrite."
+msgstr "Pasirinkite <b>paskirties diską</b>, kurį norite perrašyti."
+
+msgid "Step 4: Select Partitions to Clone"
+msgstr "4 žingsnis: pasirinkite skaidinius, kuriuos norite klonuoti"
+
+msgid "Select which partitions from the source drive to clone, and whether to overwrite the partition table. <b>Leave everything selected to completely clone the source drive to the destination drive.</b>"
+msgstr ""
+"Pasirinkite, kuriuos šaltinio disko skaidinius klonuoti ir ar perrašyti "
+"skaidinių lentelę. <b>Jei norite visiškai klonuoti šaltinio diską į "
+"paskirties diską, palikite viską pasirinktą.</b>"
+
+msgid "Step 5: Confirm Cloning Configuration"
+msgstr "5 žingsnis: patvirtinkite klonavimo konfigūraciją"
+
+msgid "Confirm the following cloning configuration."
+msgstr "Patvirtinkite šią klonavimo konfigūraciją."
+
+msgid "Cloning the following partitions"
+msgstr "Toliau nurodytų skaidinių klonavimas"
+
+msgid "To start cloning, click <b>Next</b>."
+msgstr "Norėdami pradėti klonuoti, spustelėkite <b>Toliau</b>."
+
+#, python-brace-format
+msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
+msgstr ""
+"Ar tikrai norite klonuoti diską į {destination_drive}? Tai padarę visam "
+"laikui perrašysite šio disko duomenis!"
+
+msgid "Step 6: Cloning Disk"
+msgstr "6 žingsnis: disko klonavimas"
+
+msgid "Cloning the drive you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
+msgstr ""
+"Pasirinkto disko klonavimas.  Tai gali užtrukti valandą ar daugiau, "
+"priklausomai nuo jūsų kompiuterio spartos ir duomenų kiekio."
+
+msgid "Summary of Clone"
+msgstr "Klono santrauka"
+
+msgid "Clone Summary"
+msgstr "Klonavimo santrauka"
+
+msgid "Confirm the clone summary."
+msgstr "Patvirtinkite klono santrauką."
+
+msgid "Unable to shutdown Image Explorer"
+msgstr "Nepavyksta išjungti atvaizdų naršyklės"
+
+msgid "Step 1: Select Drive To Backup"
+msgstr "1 žingsnis: pasirinkite diską, iš kurio norite kurti atsarginę kopiją"
+
+msgid "Select the <b>source drive</b> that you would like to create a backup image from."
+msgstr ""
+"Pasirinkite <b>šaltinio diską</b>, iš kurio norite sukurti atsarginės "
+"kopijos atvaizdą."
+
+msgid "Drive"
+msgstr "Diskas"
+
+msgid "Capacity"
+msgstr "Talpa"
+
+msgid "Drive Model"
+msgstr "Disko modelis"
+
+msgid "Serial Number"
+msgstr "Serijos numeris"
+
+msgid "Partitions"
+msgstr "Skaidiniai"
+
+msgid "Show hidden devices (for advanced users)"
+msgstr "Rodyti paslėptus įrenginius (pažengusiems naudotojams)"
+
+msgid "Step 2: Select Partitions to Save"
+msgstr "2 žingsnis: pasirinkite skaidinius, kuriuos norite išsaugoti"
+
+msgid "Select which partitions to create a backup of. <b>Leave all partitions selected if you are unsure.</b>"
+msgstr ""
+"Pasirinkite, kurių skaidinių atsarginę kopiją norite sukurti. <b>Jei nesate "
+"tikri, palikite pasirinktus visus skaidinius.</b>"
+
+msgid "Save"
+msgstr "Išsaugoti"
+
+msgid "Description"
+msgstr "Aprašymas"
+
+#, python-brace-format
+msgid "Drive {drive_number}"
+msgstr "Diskas {drive_number}"
+
+#, python-brace-format
+msgid "Partition {partition_number}"
+msgstr "Skaidinys {partition_number}"
+
+msgid "Step 3: Select Destination Drive"
+msgstr "3 žingsnis: pasirinkite paskirties diską"
+
+msgid "Click on the box below to select the source drive that you would like to create a backup image from."
+msgstr ""
+"Spustelėkite toliau esantį langelį ir pasirinkite šaltinio diską, iš kurio "
+"norite sukurti atsarginės kopijos atvaizdą."
+
+msgid "Connected directly to my computer"
+msgstr "Tiesiogiai prijungtas prie mano kompiuterio"
+
+msgid "Shared over a network"
+msgstr "Bendrinamas per tinklą"
+
+msgid "Where would you like to save the image?"
+msgstr "Kur norite išsaugoti atvaizdą?"
+
+msgid "Windows shared folder (SMB/CIFS, Samba)"
+msgstr "„Windows“ bendrinamas aplankas (SMB / CIFS, „Samba“)"
+
+msgid "Search network"
+msgstr "Ieškoti tinkle"
+
+msgid "Server"
+msgstr "Serveris"
+
+msgid "Share location (UNC path)"
+msgstr "Bendrinimo vieta (UNC kelias)"
+
+msgid "Username"
+msgstr "Naudotojo vardas"
+
+msgid "Password"
+msgstr "Slaptažodis"
+
+msgid "Domain"
+msgstr "Domenas"
+
+msgid "Version"
+msgstr "Versija"
+
+msgid "Remote path"
+msgstr "Nutolęs kelias"
+
+msgid "Exported path"
+msgstr "Eksportuotas kelias"
+
+msgid "Identity File"
+msgstr "Tapatybės failas"
+
+msgid "Optional"
+msgstr "Neprivaloma"
+
+msgid "Select network-shared storage location:"
+msgstr "Pasirinkite tinkle bendrinamos saugyklos vietą:"
+
+msgid "Select the partition where the image files will be saved to"
+msgstr "Pasirinkite skaidinį, kuriame bus išsaugoti atvaizdo failai"
+
+msgid "Partition"
+msgstr "Skaidinys"
+
+msgid "Mounting..."
+msgstr "Prijungiama..."
+
+msgid "Close this popup to cancel the mount operation."
+msgstr "Uždarykite šį iššokantį langą, kad atšauktumėte prijungimo operaciją."
+
+msgid "Please ensure the username, password and other fields provided are correct, and try again."
+msgstr ""
+"Įsitikinkite, kad naudotojo vardas, slaptažodis ir kiti pateikti laukai yra "
+"teisingi, ir bandykite dar kartą."
+
+msgid "Must provide either password or SSH identity file."
+msgstr "Turite pateikti slaptažodį arba SSH tapatybės failą."
+
+msgid "Scanning folder for backup images..."
+msgstr "Nuskaitomas aplankas ir ieškoma atvaizdų atsarginių kopijų..."
+
+#, python-brace-format
+msgid "({timeout_seconds} second timeout)"
+msgstr "({timeout_seconds} sek. skirtasis laikas)"
+
+msgid "Close this popup to cancel scanning the selected folder and subfolders."
+msgstr ""
+"Uždarykite šį iššokantįjį langą, kad atšauktumėte pasirinkto aplanko ir "
+"poaplankių nuskaitymą."
+
+#, python-brace-format
+msgid "Scanning: {filename}"
+msgstr "Skenuojama: {filename}"
+
+msgid "Error processing the following images:"
+msgstr "Klaida apdorojant šiuos atvaizdus:"
+
+msgid "Unable to fully process the image associated with the following partitions:"
+msgstr "Nepavyksta visiškai apdoroti vaizdo, susieto su šiais skaidiniais:"
+
+msgid "Unable to fully process the following image:"
+msgstr "Nepavyksta visiškai apdoroti šio atvaizdo:"
+
+msgid "Cannot find partition's associated partclone image"
+msgstr "Nepavyksta rasti su skaidiniu susieto partclone atvaizdo"
+
+msgid "This can happen when loading images which Clonezilla was unable to completely backup."
+msgstr ""
+"Taip gali nutikti įkeliant atvaizdus, kurių atsarginių kopijų Clonezilla "
+"nepavyko visiškai sukurti."
+
+msgid "Note: This image format cannot distinguish between failed partclone backup and a user who chose not to backup a partition."
+msgstr ""
+"Pastaba: Šis atvaizdo formatas negali atskirti nepavykusios partclone "
+"atsarginės kopijos nuo naudotojo, kuris pasirinko nekurti atsarginės kopijos."
+
+msgid "Any other filesystems within the image should be restorable as normal."
+msgstr "Visos kitos atvaizdo failų sistemos turėtų būti atkurtos kaip įprasta."
+
+msgid "Needs decryption"
+msgstr "Reikalingas iššifravimas"
+
+msgid "Unknown filesystem"
+msgstr "Nežinoma failų sistema"
+
+#, python-brace-format
+msgid "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance."
+msgstr ""
+"Atsarginės kopijos išplėstinio skaidinio informacija tuščia. Jei atsarginėje "
+"kopijoje yra išplėstinis skaidinys, jis nebus tinkamai atkurtas. Visi "
+"duomenys vis dar visiškai atkuriami, tačiau norint visiškai atkurti "
+"išplėstinio skaidinio duomenis, reikia rankinio įsikišimo. Norėdami gauti "
+"informacijos ir pagalbos, kreipkitės į {url}."
+
+msgid "The backup's bootloader data is shorter than expected. If the backup contained certain bootloaders like GRUB, during a restore operation Rescuezilla will try and re-install the bootloader."
+msgstr ""
+"Atsarginės kopijos įkrovos paleidyklės duomenys yra trumpesni nei tikėtasi. "
+"Jei atsarginėje kopijoje buvo tam tikrų įkrovos tvarkyklių, pvz., GRUB, "
+"atkūrimo operacijos metu Rescuezilla bandys iš naujo įdiegti įkrovos "
+"įkroviklį."
+
+msgid "Step 4: Select Destination Folder"
+msgstr "4 žingsnis: pasirinkite paskirties aplanką"
+
+msgid "Click <b>Browse</b> to select the folder on the destination drive where your new backup image will be saved.\n"
+"\n"
+"The folder a backup is saved in is usually a description of the computer, e.g. <b>office1</b> or <b>zack-laptop</b>."
+msgstr ""
+"Spustelėkite <b>Naršyti</b>, kad pasirinktumėte aplanką paskirties diske, "
+"kuriame bus išsaugotas naujas atsarginis atvaizdas.\n"
+"\n"
+"Aplankas, kuriame išsaugoma atsarginė kopija, dažniausiai yra kompiuterio "
+"apibūdinimas, pvz. <b>darbinis1</b> arba <b>jono-kompiuteris</b>."
+
+#, python-brace-format
+msgid "You must select a folder inside {location}"
+msgstr "Turite pasirinkti aplanką, esantį {location}"
+
+msgid "Please select a different folder."
+msgstr "Pasirinkite kitą aplanką."
+
+msgid "The table below lists the backup images that are already in this folder (if any)."
+msgstr ""
+"Toliau pateiktoje lentelėje išvardyti šiame aplanke jau esantys atsarginių "
+"kopijų atvaizdai (jei tokių yra)."
+
+msgid "Browse..."
+msgstr "Naršyti..."
+
+msgid "Filename"
+msgstr "Failo pavadinimas"
+
+msgid "Size"
+msgstr "Dydis"
+
+msgid "Last modified"
+msgstr "Paskutinį kartą keistas"
+
+msgid "When you are happy with the destination folder, click <b>Next</b>."
+msgstr "Kai būsite patenkinti paskirties aplanku, spustelėkite <b>Toliau</b>."
+
+msgid "Step 5: Name Your Backup"
+msgstr "5 žingsnis: pavadinkite atsarginę kopiją"
+
+msgid "Provide a unique name for this backup image, such as the date.  Today's date is automatically entered for you below.\n"
+"\n"
+"You may only use letters, numbers, and dashes in your backup name."
+msgstr ""
+"Pateikite unikalų šio atsarginės kopijos atvaizdo pavadinimą, pvz., datą.  "
+"Šiandieninė data už jus automatiškai įvedama toliau.\n"
+"\n"
+"Atsarginės kopijos pavadinime galite naudoti tik raides, skaičius ir "
+"brūkšnelius."
+
+msgid "Optional: Provide a short description."
+msgstr "Neprivaloma: pateikite trumpą aprašą."
+
+msgid "Step 6: Customize Compression Settings"
+msgstr "6 žingsnis: pritaikykite suspaudimo nustatymus"
+
+msgid "Customize image compression settings. <b>Don't make any changes if you are unsure.</b>"
+msgstr ""
+"Pritaikykite atvaizdo suspaudimo nustatymus. <b>Nedarykite jokių pakeitimų, "
+"jei nesate tikri.</b>"
+
+msgid "Compression format: "
+msgstr "Suspaudimo formatas: "
+
+msgid "gzip"
+msgstr "gzip"
+
+msgid "default"
+msgstr "numatytasis"
+
+msgid "zstandard"
+msgstr "zstandard"
+
+msgid "Uncompressed (Suitable for use with Image Explorer)"
+msgstr "Nesuspaustas (tinka naudoti su atvaizdų naršykle)"
+
+msgid "Compression level: "
+msgstr "Suspaudimo lygis: "
+
+msgid "Fastest"
+msgstr "Greičiausias"
+
+msgid "Best"
+msgstr "Geriausias"
+
+msgid "When you are happy with the compression settings, click <b>Next</b>."
+msgstr "Kai suspaudimo nustatymai bus tinkami, spustelėkite <b>Toliau</b>."
+
+msgid "Step 7: Confirm Backup Configuration"
+msgstr "7 žingsnis: patvirtinkite atsarginės kopijos konfigūraciją"
+
+msgid "Source drive"
+msgstr "Šaltinio diskas"
+
+msgid "Backing up the following partition(s)"
+msgstr "Kuriama atsarginė šio (-ių) skaidinio (-ių) kopija"
+
+#, python-brace-format
+msgid "The backup image will be written into folder {dest_dir} on {description}"
+msgstr ""
+"Atsarginė atvaizdo kopija bus įrašyta į aplanką {dest_dir} {description}"
+
+msgid "Confirm the following backup configuration."
+msgstr "Patvirtinkite šią atsarginės kopijos konfigūraciją."
+
+msgid "On successful completion of the task, perform the following action: "
+msgstr "Sėkmingai įvykdžius užduotį, atlikti šį veiksmą: "
+
+msgid "Do nothing"
+msgstr "Nedaryti nieko"
+
+msgid "Shutdown"
+msgstr "Išjungti"
+
+msgid "Reboot"
+msgstr "Perkrauti"
+
+msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
+msgstr "Gelbėjimas: nepaisyti failų sistemos neatitikimų ir blogų sektorių"
+
+msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
+msgstr ""
+"<b>Įgalinus „Gelbėjimą“ gali būti užslopintos svarbios klaidos. Naudokite "
+"atsargiai.</b>"
+
+msgid "To start the backup, click <b>Next</b>."
+msgstr "Norėdami pradėti kurti atsarginę kopiją, spustelėkite <b>Toliau</b>."
+
+msgid "Step 8: Creating Backup Image"
+msgstr "8 žingsnis: atsarginės atvaizdo kopijos sukūrimas"
+
+msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
+msgstr ""
+"Atsarginės sistemos kopijos kūrimas į pasirinktą vietą.  Tai gali užtrukti "
+"valandą ar daugiau, priklausomai nuo jūsų kompiuterio spartos ir duomenų "
+"kiekio."
+
+#, python-brace-format
+msgid "Saving: {file}"
+msgstr "Išsaugoma: {file}"
+
+#, python-brace-format
+msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
+msgstr ""
+"Padaryti {partition_name} su failų sistema {filesystem}atsarginė kopiją į "
+"{destination}"
+
+msgid "Summary of Backup"
+msgstr "Atsarginės kopijos santrauka"
+
+msgid "Confirm the backup summary."
+msgstr "Patvirtinkite atsarginės kopijos santrauką."
+
+msgid "Backup Summary"
+msgstr "Atsarginės kopijos santrauka"
+
+msgid "An operation is in progress. Do you wish to cancel?"
+msgstr "Vykdoma operacija. Ar norite atšaukti?"
+
+msgid "Operation cancelled by user."
+msgstr "Operaciją atšaukė naudotojas."
+
+msgid "Rescue option is enabled."
+msgstr "Įjungta gelbėjimo parinktis."
+
+msgid "Error creating backup: "
+msgstr "Klaida kuriant atsarginę kopiją: "
+
+msgid "Failed to write destination file. Please confirm it is valid to create the provided file path, and try again."
+msgstr ""
+"Nepavyko įrašyti paskirties failo. Patikrinkite, ar įmanomas pateikto failo "
+"kelias, ir bandykite dar kartą."
+
+#, python-brace-format
+msgid "Successful backup of swap partition {partition_name}"
+msgstr "Sėkminga apsikeitimo skaidinio atsarginė kopija {partition_name}"
+
+#, python-brace-format
+msgid "<b>Failed to backup partition</b> {partition_name}"
+msgstr "<b>Nepavyko sukurti atsarginės skaidinio kopijos</b> {partition_name}"
+
+#, python-brace-format
+msgid "Successful backup of partition {partition_name}"
+msgstr "Sėkmingai sukurta atsarginė skaidinio kopija {partition_name}"
+
+msgid "Backup saved successfully."
+msgstr "Atsarginė kopija išsaugota sėkmingai."
+
+msgid "Backup succeeded with some errors:"
+msgstr "Atsarginės kopijos kūrimas pavyko su tam tikromis klaidomis:"
+
+msgid "Backup operation failed:"
+msgstr "Atsarginės kopijos kūrimo operacija nepavyko:"
+
+msgid "User requested operation to stop."
+msgstr "Naudotojas paprašė sustabdyti operaciją."
+
+#, python-brace-format
+msgid "Operation took {num_minutes} minutes."
+msgstr "Operacija truko {num_minutes} min."
+
+msgid "To start a new session, click <b>Next</b>"
+msgstr "Jei norite pradėti naują sesiją, spustelėkite <b>Toliau</b>"
+
+msgid "Step 1: Select Image Location"
+msgstr "1 žingsnis: pasirinkite atvaizdo vietą"
+
+msgid "Where are the image files stored?"
+msgstr "Kur saugomi atvaizdo failai?"
+
+msgid "Select the partition which contains the image files:"
+msgstr "Pasirinkite skaidinį, kuriame yra atvaizdo failai:"
+
+msgid "Step 2: Select Backup Image"
+msgstr "2 žingsnis: pasirinkite atsarginės kopijos atvaizdą"
+
+msgid "Click <b>Browse</b> to select the folder containing image files."
+msgstr "Spustelėkite <b>Naršyti</b> ir pasirinkite aplanką su atvaizdo failais."
+
+msgid "Select the image file to restore."
+msgstr "Pasirinkite atvaizdo failą, kurį norite atkurti."
+
+msgid "Step 3: Select Drive To Restore"
+msgstr "3 žingsnis: pasirinkite diską, kuriame norite atkurti"
+
+msgid "Select the destination drive to restore with the selected image."
+msgstr ""
+"Pasirinkite paskirties diską, į kurį bus atkurtas pasirinktas atvaizdas."
+
+msgid "Step 4: Select Partitions to Restore"
+msgstr "4 žingsnis: pasirinkite skaidinius, kuriuos norite atkurti"
+
+msgid "Select which partitions from the backup image to restore, and whether to overwrite the partition table. <b>Leave everything selected to completely restore the destination drive.</b>"
+msgstr ""
+"Pasirinkite, kuriuos atsarginės kopijos atvaizdo skaidinius norite atkurti "
+"ir ar perrašyti skaidinių lentelę. <b>Palikite viską pasirinktą, kad "
+"visiškai atkurtumėte paskirties diską.</b>"
+
+msgid "Selected image"
+msgstr "Pasirinktas atvaizdas"
+
+msgid "Destination device"
+msgstr "Paskirties įrenginys"
+
+msgid "Destination partition"
+msgstr "Paskirties skaidinys"
+
+msgid "Overwrite partition table"
+msgstr "Perrašyti skaidinio lentelę"
+
+msgid "You will be overwriting the partition table."
+msgstr "Perrašysite skaidinio lentelę."
+
+msgid "The \"destination partition\" column has been updated using the information stored within the backup image.\n\n<b>If partitions have been resized, new partitions added, or additional operating systems installed <i>since the backup image was created</i>, then the destination drive's partition table will not match the backup image, and overwriting the destination drive's partition table will render these resized and additional partitions permanently inaccessible.</b> If you have not modified the partition table in such a way since creating this backup then overwriting the partition table is completely safe and will have no negative effects."
+msgstr ""
+"Stulpelis „Paskirties skaidinys“ buvo atnaujintas naudojant informaciją, "
+"saugomą atsarginiame atvaizde.\n"
+"\n"
+"<b>Jei buvo pakeistas skaidinių dydis, pridėta naujų skaidinių arba įdiegtos "
+"papildomos operacinės sistemos <i> nuo tada, kai buvo sukurtas atsarginis "
+"atvaizdas</i>, tada paskirties disko skaidinių lentelė neatitiks atsarginės "
+"kopijos atvaizdo ir bus perrašytas paskirties disko skaidinys. lentelė "
+"padarys šiuos pakeisto dydžio ir papildomus skaidinius visam laikui "
+"neprieinamas.</b> Jei nuo šios atsarginės kopijos sukūrimo taip nepakeitėte "
+"skaidinių lentelės, skaidinių lentelės perrašymas yra visiškai saugus ir "
+"neturės jokio neigiamo poveikio."
+
+msgid "You will <b>not</b> be overwriting the partition table."
+msgstr "Jūs <b>ne</b>perrašinėsite skaidinio lentelės."
+
+msgid "The source does not contain a partition table."
+msgstr "Šaltinyje nėra skaidinių lentelės."
+
+msgid "The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table."
+msgstr ""
+"Stulpelis „Paskirties skaidinys“ buvo atnaujintas su esama paskirties disko "
+"skaidinio lentelės informacija.\n"
+"\n"
+"<b>Paskirties skaidinio stulpelį galima keisti kaip išskleidžiamąjį meniu. "
+"Neteisingai susiejant paskirties skaidinius, operacinės sistemos gali "
+"nebepaleisti.</b> Jei nesate tikri dėl susiejimo, apsvarstykite, gal labiau "
+"tinka perrašyti skaidinių lentelę."
+
+msgid "No destination partition selected. Use the destination partition drop-down menu to select the destination"
+msgstr ""
+"Nepasirinktas joks paskirties skaidinys. Norėdami pasirinkti paskirties "
+"vietą, naudokite paskirties skaidinio išskleidžiamąjį meniu"
+
+msgid "Not restoring this partition"
+msgstr "Šis skaidinys neatkuriamas"
+
+msgid "When you are ready to continue, click <b>Next</b>."
+msgstr "Kai būsite pasirengę tęsti, spustelėkite <b>Toliau</b>."
+
+msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
+msgstr ""
+"Nuskaitomi ir atjungiami bet kokie loginiai tomų tvarkyklės (LVM) loginiai "
+"tomai..."
+
+#, python-brace-format
+msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
+msgstr ""
+"Šaltinio skaidinio lentelės galutinis skaidinys ({source}: {source_size} "
+"baitai) turi nurodyti regioną, pilnai esantį paskirties diske "
+"({destination_size} baitai)."
+
+#, python-brace-format
+msgid "Rescuezilla cannot yet automatically shrink partitions to restore from large disks to smaller disks. The final partition currently must always completely reside within the destination disk.\n"
+"\n"
+"Currently the only way to restore to disks smaller than original is to first use GParted Partition Editor to shrink the final partition of the original disk before making a new backup image. Please read the following instructions for more information:\n"
+"\n"
+"{url}"
+msgstr ""
+"Rescuezilla dar negali automatiškai sumažinti skaidinių, kad būtų galima "
+"atkurti iš didelių diskų į mažesnius. Šiuo metu galutinis skaidinys visada "
+"turi būti paskirties diske.\n"
+"\n"
+"Šiuo metu vienintelis būdas atkurti diskus, mažesnius nei originalus, yra "
+"pirmiausia naudoti GParted Partition Editor, kad sumažintumėte galutinį "
+"pradinio disko skaidinį prieš sukuriant naują atsarginę kopiją. Norėdami "
+"gauti daugiau informacijos, perskaitykite šias instrukcijas:\n"
+"\n"
+"{url}"
+
+msgid "Step 5: Confirm Restore Configuration"
+msgstr "5 žingsnis: patvirtinkite atkūrimo konfigūraciją"
+
+msgid "Confirm the following restore configuration."
+msgstr "Patvirtinkite šią atkūrimo konfigūraciją."
+
+#, python-brace-format
+msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!"
+msgstr ""
+"Ar tikrai norite atkurti atsarginę kopiją į {destination_drive}? Tai atlikus "
+"visam laikui bus perrašyti duomenys šiame diske!"
+
+msgid "Source image"
+msgstr "Šaltinio atvaizdas"
+
+msgid "Destination drive"
+msgstr "Paskirties diskas"
+
+msgid "Restoring the following partitions"
+msgstr "Atkuriami toliau nurodyti skaidiniai"
+
+msgid "WILL BE OVERWRITING PARTITION TABLE"
+msgstr "BUS PERRAŠYTA SKAIDINIO LENTELĖ"
+
+msgid "Will <b>NOT</b> be overwriting partition table"
+msgstr "Bus <b>NE</b>perrašoma skaidinio lentelė"
+
+msgid "To start the restore, click <b>Next</b>."
+msgstr "Norėdami pradėti atkūrimą, spustelėkite <b>Toliau</b>."
+
+msgid "Restoring From Backup"
+msgstr "Atkuriama iš atsarginės kopijos"
+
+msgid "Restoring your system from the image you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
+msgstr ""
+"Atkuriama jūsų sistema iš jūsų pasirinkto atvaizdo. Tai gali užtrukti "
+"valandą ar ilgiau, priklausomai nuo kompiuterio greičio ir duomenų kiekio."
+
+msgid "Refreshing partition table"
+msgstr "Atnaujinama skaidinių lentelė"
+
+#, python-brace-format
+msgid "Restoring {description} to {destination_partition} ({destination_description})"
+msgstr ""
+"Atkuriama {description} į {destination_partition} ({destination_description})"
+
+msgid "Synchronizing disks..."
+msgstr "Sinchronizuojami diskai..."
+
+#, python-brace-format
+msgid "Querying hard drive geometry of {device}"
+msgstr "Užklausiama standžiojo disko geometrija {device}"
+
+#, python-brace-format
+msgid "Probing {device} with {app}"
+msgstr "Naršoma {device} naudojant {app}"
+
+#, python-brace-format
+msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
+msgstr ""
+"Plečiama failų sistema {partition} ({filesystem}). Tai gali šiek tiek "
+"užtrukti..."
+
+#, python-brace-format
+msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
+msgstr "Nepavyko pakeisti skaidinio {partition} ({filesystem}) dydžio: {msg}"
+
+#, python-brace-format
+msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
+msgstr ""
+"Sėkmingai pakoreguota {ntfs_device} NTFS failų sistemos geometrija, "
+"naudojant reikšmes iš {geometry_source}"
+
+#, python-brace-format
+msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
+msgstr "Nepavyko pakoreguoti {ntfs_device} NTFS failų sistemos geometrijos"
+
+msgid "Removing udev MAC address records (if any)"
+msgstr "Pašalinami udev MAC adresų įrašai (jei yra)"
+
+msgid "Re-installing syslinux (if any)"
+msgstr "Iš naujo įdiegiama syslinux (jei yra)"
+
+msgid "Successfully re-installed syslinux bootloader"
+msgstr "Syslinux paleidyklės įkroviklis sėkmingai įdiegtas iš naujo"
+
+msgid "Re-installing GRUB bootloader (if any)"
+msgstr "Iš naujo įdiegiama GRUB įkrovos tvarkyklė (jei yra)"
+
+msgid "Successfully re-installed GRUB bootloader"
+msgstr "Sėkmingai iš naujo įdiegta GRUB įkrovos tvarkyklė"
+
+msgid "Did not update GRUB bootloader (if any)"
+msgstr "GRUB įkrovos tvarkyklės neatnaujinta (jei yra)"
+
+msgid "Updating initramfs (if any)"
+msgstr "Atnaujinama initramfs (jei yra)"
+
+msgid "Successfully updated initramfs"
+msgstr "Initramfs sėkmingai atnaujinta"
+
+msgid "Updating EFI NVRAM..."
+msgstr "Atnaujinama EFI NVRAM..."
+
+msgid "Successfully updated EFI NVRAM"
+msgstr "Sėkmingai atnaujinta EFI NVRAM"
+
+msgid "Error restoring image: "
+msgstr "Klaida atkuriant atvaizdą: "
+
+msgid "Could not restore sfdisk partition table as file has zero length: "
+msgstr ""
+"Nepavyko atkurti sfdisk skaidinio lentelės, nes failo ilgis lygus nuliui: "
+
+msgid "Successfully restored partition table."
+msgstr "Sėkmingai atkurta skaidinio lentelė."
+
+msgid "Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."
+msgstr ""
+"Nepavyko atnaujinti įrenginių skaidinių lentelės. Taip gali nutikti, jei "
+"prie skaidinių lentelės prieina kitas procesas."
+
+#, python-brace-format
+msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
+msgstr ""
+"Nepavyko atkurti skaidinio {destination_partition}, nes nėra išsaugoto "
+"atvaizdo, susieto su: {description}."
+
+msgid "This may occur if Clonezilla was originally unable to backup this partition."
+msgstr ""
+"Taip gali nutikti, jei Clonezilla iš pradžių negalėjo sukurti atsarginės šio "
+"skaidinio kopijos."
+
+#, python-brace-format
+msgid "Error restoring partition {image_key} to {destination_partition}."
+msgstr "Klaida atkuriant skaidinį {image_key} į {destination_partition}."
+
+#, python-brace-format
+msgid "Successfully restored image partition {image} to {destination_partition}"
+msgstr "Sėkmingai atkurtas atvaizdo skaidinys {image} į {destination_partition}"
+
+msgid "Summary of Restore"
+msgstr "Atkūrimo santrauka"
+
+msgid "Restore Summary"
+msgstr "Atkūrimo santrauka"
+
+msgid "Confirm the restore summary."
+msgstr "Patvirtinkite atkūrimo santrauką."
+
+msgid "Backup restored successfully."
+msgstr "Atsarginė kopija atkurta sėkmingai."
+
+msgid "Image Explorer\n"
+"      (beta)"
+msgstr ""
+"Atvaizdų naršyklė\n"
+"      (beta)"
+
+msgid "Image Explorer (beta)"
+msgstr "Atvaizdų naršyklė (beta)"
+
+msgid "Select the image file to explore"
+msgstr "Pasirinkite atvaizdo failą, kurį norite naršyti"
+
+msgid "Step 3: Select Partition to Explore"
+msgstr "3 žingsnis: pasirinkite skaidinį, kurį norite naršyti"
+
+msgid "Select the partition to access files from."
+msgstr "Pasirinkite skaidinį, iš kurio norite pasiekti failus."
+
+msgid "Click <b>Mount</b> to mount the backup image (as read-only)."
+msgstr ""
+"Spustelėkite <b>Prijungti</b>, kad prijungtumėte atsarginės kopijos atvaizdą "
+"(tik nuskaitymui)."
+
+msgid "Mount"
+msgstr "Prijungti"
+
+msgid "Mounting as read-only..."
+msgstr "Prijungiama nuskaitymui..."
+
+msgid "Unmount"
+msgstr "Atjungti"
+
+msgid "Once the partition has been mounted, click <b>Open in file manager</b> to access your files."
+msgstr ""
+"Kai skaidinys bus prijungtas, spustelėkite <b>Atidaryti failų tvarkyklėje</"
+"b>, kad pasiektumėte failus."
+
+msgid "Open in file manager"
+msgstr "Atidaryti failų tvarkyklėje"
+
+msgid "Verify"
+msgstr "Patikrinti"
+
+msgid "Select one or more image(s) to verify."
+msgstr "Pasirinkite vieną ar daugiau atvaizdų, kuriuos norite patikrinti."
+
+msgid "To begin verification, click <b>Next</b>."
+msgstr "Norėdami pradėti tikrinimą, spustelėkite <b>Toliau</b>."
+
+msgid "Verifying Image"
+msgstr "Tikrinamas atvaizdas"
+
+msgid "Verifying the selected image(s)."
+msgstr "Tikrinamas pasirinktas atvaizdas (-ai)."
+
+#, python-brace-format
+msgid "Verifying {image_name}"
+msgstr "Tikrinimas {image_name}"
+
+msgid "Summary of Verification"
+msgstr "Tikrinimo santrauka"
+
+msgid "Confirm the verification summary."
+msgstr "Patvirtinkite tikrinimo santrauką."
+
+msgid "Verification Summary"
+msgstr "Tikrinimo santrauka"
+
+msgid "To verify another image, click <b>Back</b>."
+msgstr "Jei norite patikrinti kitą atvaizdą, spustelėkite <b>Atgal</b>."
+
+msgid "✔"
+msgstr "✔"
+
+msgid "❌"
+msgstr "❌"
+
+msgid "MBR backup appears correct."
+msgstr "MBR atsarginė kopija atrodo teisinga."
+
+msgid "No partition table found."
+msgstr "Skaidinių lentelė nerasta."
+
+msgid "Sfdisk partition table file is empty or missing."
+msgstr "Sfdisk skaidinio lentelės failas tuščias arba jo nėra."
+
+msgid "Sfdisk partition table file is present."
+msgstr "Sfdisk skaidinio lentelės failas yra."
+
+msgid "Unable to verify."
+msgstr "Nepavyko patikrinti."
+
+#, python-brace-format
+msgid "{partition}: filesystem image successfully verified."
+msgstr "{partition}: failų sistemos atvaizdas sėkmingai patikrintas."
