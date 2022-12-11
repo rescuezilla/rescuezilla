@@ -67,7 +67,7 @@ deb:
 	# deb file.
 	# Taking care to pass in environment variable for the Makefile invocation
 	$(info * Make deb package by, among other things, running make on a copy of this very Makefile)
-	cd $(PACKING_DIR) && APP_NAME=$(APP_NAME) dpkg-buildpackage -us -uc
+	cd $(PACKING_DIR) && APP_NAME=$(APP_NAME) dpkg-buildpackage -b -us -uc
 
 clean: 
 	rm -rf $(ABS_BUILD_PATH)
