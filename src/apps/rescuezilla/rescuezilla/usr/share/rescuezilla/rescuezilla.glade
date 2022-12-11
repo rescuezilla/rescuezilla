@@ -1452,19 +1452,16 @@
                                                             </packing>
                                                             </child>
                                                             <child>
-                                                            <object class="GtkLabel" id="backup_network_port">
+                                                            <object class="GtkEntry" id="backup_network_port">
                                                             <property name="visible">True</property>
-                                                            <property name="can-focus">False</property>
-                                                            <property name="label" translatable="yes">Domain</property>
-                                                            <property name="use-markup">True</property>
-                                                            <property name="xalign">1</property>
+                                                            <property name="can-focus">True</property>
+                                                            <property name="invisible-char">●</property>
                                                             </object>
                                                             <packing>
                                                             <property name="left-attach">1</property>
                                                             <property name="right-attach">2</property>
                                                             <property name="top-attach">7</property>
                                                             <property name="bottom-attach">8</property>
-                                                            <property name="x-options">GTK_FILL</property>
                                                             </packing>
                                                             </child>
                                                             </object>
