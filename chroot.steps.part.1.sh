@@ -60,7 +60,7 @@ sed --in-place s/COMPRESS=gzip/COMPRESS=lz4/g /etc/initramfs-tools/initramfs.con
 # Hardware Enablement (HWE, also called LTS Enablement Stack) [1] [2]
 # https://wiki.ubuntu.com/Kernel/LTSEnablementStack
 # https://ubuntu.com/about/release-cycle
-pkgs_specific_to_32bit=("linux-generic-hwe-18.04"
+pkgs_specific_to_ubuntu1804_bionic_32bit=("linux-generic-hwe-18.04"
                         "xserver-xorg-hwe-18.04"
                         "xserver-xorg-video-all-hwe-18.04"
                         "xserver-xorg-video-intel-hwe-18.04"
@@ -306,8 +306,8 @@ if  [ "$IS_INTEGRATION_TEST" == "true" ]; then
     common_pkgs=("${common_pkgs[@]}" "openssh-server")
 fi
 
-if  [ "$ARCH" == "i386" ]; then
-  apt_pkg_list=("${pkgs_specific_to_32bit[@]}" "${common_pkgs[@]}")
+if  [ "$ARCH" == "i386" ] && [ "$CODENAME" == "bionic" ]; then
+  apt_pkg_list=("${pkgs_specific_to_ubuntu1804_bionic_32bit[@]}" "${common_pkgs[@]}")
 elif  [ "$ARCH" == "amd64" ] && [ "$CODENAME" == "focal" ]; then
   apt_pkg_list=("${pkgs_specific_to_ubuntu2004_focal[@]}" "${common_pkgs[@]}")
 elif  [ "$ARCH" == "amd64" ] && [ "$CODENAME" == "impish" ]; then
