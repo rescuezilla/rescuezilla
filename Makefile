@@ -153,7 +153,7 @@ clean-build-dir:
 
 # Print git status for all git submodules, to help debug when the working directory is non-pristine.
 status: UTIL_LINUX_SRC_DIR=$(shell pwd)/src/third-party/util-linux
-status: PARTCLONE_SRC_DIR=$(shell pwd)/src/third-party/partclone
+status: PARTCLONE_SRC_DIR=$(shell pwd)/src/third-party/partclone-latest
 status:
 	$(info * Top level Rescuezilla git status.)
 	git status
