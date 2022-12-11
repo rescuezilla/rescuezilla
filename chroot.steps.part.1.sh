@@ -306,18 +306,18 @@ if  [ "$IS_INTEGRATION_TEST" == "true" ]; then
     common_pkgs=("${common_pkgs[@]}" "openssh-server")
 fi
 
-if  [ "$ARCH" == "i386" ] && [ "$CODENAME" == "bionic" ]; then
+if    [ "$CODENAME" == "bionic" ]; then
   apt_pkg_list=("${pkgs_specific_to_ubuntu1804_bionic_32bit[@]}" "${common_pkgs[@]}")
-elif  [ "$ARCH" == "amd64" ] && [ "$CODENAME" == "focal" ]; then
+elif  [ "$CODENAME" == "focal" ]; then
   apt_pkg_list=("${pkgs_specific_to_ubuntu2004_focal[@]}" "${common_pkgs[@]}")
-elif  [ "$ARCH" == "amd64" ] && [ "$CODENAME" == "impish" ]; then
+elif  [ "$CODENAME" == "impish" ]; then
   apt_pkg_list=("${pkgs_specific_to_ubuntu2110_impish[@]}" "${common_pkgs[@]}")
-elif  [ "$ARCH" == "amd64" ] && [ "$CODENAME" == "jammy" ]; then
+elif  [ "$CODENAME" == "jammy" ]; then
   apt_pkg_list=("${pkgs_specific_to_ubuntu2204_jammy[@]}" "${common_pkgs[@]}")
-elif  [ "$ARCH" == "amd64" ] && [ "$CODENAME" == "kinetic" ]; then
+elif  [ "$CODENAME" == "kinetic" ]; then
   apt_pkg_list=("${pkgs_specific_to_ubuntu2210_kinetic[@]}" "${common_pkgs[@]}")
 else
-  echo "Warning: unknown CPU arch $ARCH or Ubuntu release codename $CODENAME"
+  echo "Warning: Unknown release codename $CODENAME"
   exit 1
 fi
 
