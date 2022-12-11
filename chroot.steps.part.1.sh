@@ -301,6 +301,7 @@ common_pkgs=("discover"
              "xfce4-screenshooter"
              "wpasupplicant"
              "lxappearance"
+             "flashrom"
 )
 
 # Install openssh-server only if the IS_INTEGRATION_TEST variable is enable
