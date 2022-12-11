@@ -300,6 +300,7 @@ common_pkgs=("discover"
              "qemu-utils"
              "xfce4-screenshooter"
              "wpasupplicant"
+             "lxappearance"
 )
 
 # Install openssh-server only if the IS_INTEGRATION_TEST variable is enable
