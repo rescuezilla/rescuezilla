@@ -205,6 +205,9 @@ clean-all: clean-build-dir
 	$(info * Deleting cached apt-get indexes AND cached deb packages)
 	rm -rf pkg.cache/
 
+fix-permissions: clean
+  chown -R $(id -u):$(id -g) pkg.cache
+
 ### Helper targets to simplify running in Docker
 
 docker-build:
