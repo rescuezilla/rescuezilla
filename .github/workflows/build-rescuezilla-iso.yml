@@ -60,7 +60,7 @@ jobs:
       - name: Create checksums for ISO images
         run: cd build && sudo ../src/scripts/create_iso_checksums.sh rescuezilla_${{env.DEB_VERSION}}-1_all.deb  rescuezilla-${{github.ref_name}}-*.iso
 
-      - name: Upload artifacts
+      - name: Upload release assets (on tag push)
         uses: softprops/action-gh-release@v1
         if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
         with:
@@ -68,3 +68,47 @@ jobs:
             build/*SUM
             build/rescuezilla_${{env.DEB_VERSION}}-1_all.deb
             build/rescuezilla-${{github.ref_name}}-*.iso
+
+      # Upload GitHub Action workflow *artifacts*. Note "artifacts" are a different concept to GitHub release rssets. The former is available on each GitHub Actions
+      # workflow run. The latter is associated with only a pushed tag.
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: SHA256SUM
+          path: build/SHA256SUM
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: MD5SUM
+          path: build/MD5SUM
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: SHA1SUM
+          path: build/SHA1SUM
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: rescuezilla_${{env.DEB_VERSION}}-1_all.deb
+          path: build/rescuezilla_${{env.DEB_VERSION}}-1_all.deb
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: rescuezilla-${{github.ref_name}}-64bit.kinetic.iso
+          path: build/rescuezilla-${{github.ref_name}}-64bit.kinetic.iso
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: rescuezilla-${{github.ref_name}}-64bit.jammy.iso
+          path: build/rescuezilla-${{github.ref_name}}-64bit.jammy.iso
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: rescuezilla-${{github.ref_name}}-64bit.focal.iso
+          path: build/rescuezilla-${{github.ref_name}}-64bit.focal.iso
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: rescuezilla-${{github.ref_name}}-32bit.bionic.iso
+          path: build/rescuezilla-${{github.ref_name}}-32bit.bionic.iso
+
