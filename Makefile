@@ -239,13 +239,13 @@ docker-status:
 
 # Start an interactive bash session for live debugging
 docker-bash:
-	docker exec --interactive --workdir=/home/rescuezilla/ builder.container /bin/bash
+	docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container /bin/bash
 
 docker-deb:
 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make deb
 
 docker-kinetic:
-	docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make kinetic
+	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make kinetic
 
 docker-jammy:
 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make jammy
