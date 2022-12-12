@@ -239,7 +239,7 @@ docker-status:
 
 # Start an interactive bash session for live debugging
 docker-bash:
-	docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container /bin/bash
+	docker exec --interactive --workdir=/home/rescuezilla/ builder.container /bin/bash
 
 docker-deb:
 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make deb
@@ -254,5 +254,5 @@ docker-focal:
 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make focal
 
 docker-bionic-i386:
-	docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make bionic-i386
+	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make bionic-i386
 
