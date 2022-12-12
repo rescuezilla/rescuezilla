@@ -253,3 +253,6 @@ docker-jammy:
 docker-focal:
 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make focal
 
+docker-bionic-i386:
+	docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make bionic-i386
+
