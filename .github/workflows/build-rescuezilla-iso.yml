@@ -52,6 +52,11 @@ jobs:
         run: make docker-focal
       - run: sudo mv build/rescuezilla.amd64.focal.iso build/rescuezilla-${{github.ref_name}}-64bit.focal.iso
 
+      - run: make docker-status
+      - name: Make Ubuntu 18.04 LTS (Bionic) ISO (i386)
+        run: make docker-bionic-i386
+      - run: sudo mv build/rescuezilla.i386.bionic.iso build/rescuezilla-${{github.ref_name}}-32bit.bionic.iso
+
       - name: Create checksums for ISO images
         run: cd build && sudo ../src/scripts/create_iso_checksums.sh rescuezilla_${{env.DEB_VERSION}}-1_all.deb  rescuezilla-${{github.ref_name}}-*.iso
 

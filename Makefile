@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := kinetic
-.PHONY: all focal impish jammy kinetic i386 deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-latest partclone-utils partclone-nbd install test integration-test clean-build-dir clean clean-all
+.PHONY: all focal impish jammy kinetic bionic-i386 deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-latest partclone-utils partclone-nbd install test integration-test clean-build-dir clean clean-all
 
 # FIXME: Properly specify the build artifacts to allow the GNU make to actually be smart about what gets built and when.
 # FIXME: This lack of specifying dependency graph means requires eg, `make focal` and `make impish` has to be done as separate invocations
@@ -48,10 +48,10 @@ kinetic: deb sfdisk.v2.20.1.amd64 partclone-utils partclone-nbd $(buildscripts)
 	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) ./build.sh	
 
 # ISO image based on Ubuntu 18.04 Bionic LTS (Long Term Support) 32bit (the last 32bit/i386 Ubuntu LTS release)
-i386: ARCH=i386
-i386: CODENAME=bionic
+bionic-i386: ARCH=i386
+bionic-i386: CODENAME=bionic
 export ARCH CODENAME
-i386: deb $(buildscripts)
+bionic-i386: deb $(buildscripts)
 	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) ./build.sh
 
 deb: DEB_BUILD_DIR=$(abspath $(BASE_BUILD_DIRECTORY))/deb
@@ -252,4 +252,7 @@ docker-jammy:
 
 docker-focal:
 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make focal
+
+docker-bionic-i386:
+	docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make bionic-i386
 
