@@ -1,5 +1,5 @@
-.DEFAULT_GOAL := jammy
-.PHONY: all focal impish jammy i386 deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-latest partclone-utils partclone-nbd install test integration-test clean-build-dir clean clean-all
+.DEFAULT_GOAL := kinetic
+.PHONY: all focal impish jammy kinetic i386 deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-latest partclone-utils partclone-nbd install test integration-test clean-build-dir clean clean-all
 
 # FIXME: Properly specify the build artifacts to allow the GNU make to actually be smart about what gets built and when.
 # FIXME: This lack of specifying dependency graph means requires eg, `make focal` and `make impish` has to be done as separate invocations
@@ -37,6 +37,14 @@ jammy: ARCH=amd64
 jammy: CODENAME=jammy
 export ARCH CODENAME
 jammy: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-utils partclone-nbd $(buildscripts)
+	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) ./build.sh	
+
+kinetic: ARCH=amd64
+kinetic: CODENAME=kinetic
+export ARCH CODENAME
+# Not building partclone v0.3.20 yet as Kinetic uses 0.3.20+repack-1 already [1]
+# [1] https://packages.ubuntu.com/kinetic/partclone
+kinetic: deb sfdisk.v2.20.1.amd64 partclone-utils partclone-nbd $(buildscripts)
 	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) ./build.sh	
 
 # ISO image based on Ubuntu 18.04 Bionic LTS (Long Term Support) 32bit (the last 32bit/i386 Ubuntu LTS release)
@@ -205,6 +213,9 @@ clean-all: clean-build-dir
 	$(info * Deleting cached apt-get indexes AND cached deb packages)
 	rm -rf pkg.cache/
 
+fix-permissions: clean
+  chown -R $(id -u):$(id -g) pkg.cache
+
 ### Helper targets to simplify running in Docker
 
 docker-build:
@@ -228,10 +239,13 @@ docker-status:
 
 # Start an interactive bash session for live debugging
 docker-bash:
-	docker exec --interactive --workdir=/home/rescuezilla/ builder.container /bin/bash
+	docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container /bin/bash
 
 docker-deb:
 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make deb
+
+docker-kinetic:
+	docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container make kinetic
 
 docker-jammy:
 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make jammy
