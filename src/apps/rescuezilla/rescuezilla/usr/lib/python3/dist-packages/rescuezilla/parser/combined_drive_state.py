@@ -55,7 +55,7 @@ class CombinedDriveState:
             drive_state[drive_longdevname]['model'] = current_block_device['model']
             drive_state[drive_longdevname]['serial'] = current_block_device['serial']
             # Drive capacity (in bytes)
-            drive_state[drive_longdevname]['capacity'] = current_block_device['size']
+            drive_state[drive_longdevname]['capacity'] = int(current_block_device['size'])
             if drive_state[drive_longdevname]['capacity'] == "":
                 drive_state[drive_longdevname]['capacity'] = parted_dict_dict[drive_longdevname]['capacity']
 
@@ -104,7 +104,7 @@ class CombinedDriveState:
                         drive_state[drive_longdevname]['has_raid_member_filesystem'] = True
 
                     # Partition size (in bytes)
-                    partition_state['size'] = lsblk_partition_dict['size']
+                    partition_state['size'] = int(lsblk_partition_dict['size'])
                     current_parted_dict = {}
                     try:
                         # Split may fail for some device nodes
@@ -117,7 +117,7 @@ class CombinedDriveState:
                     if 'partitions' in current_parted_dict.keys() and partition_number in current_parted_dict[
                         'partitions'].keys():
                         if partition_state['size'] == "":
-                            partition_state['size'] = current_parted_dict['partitions'][partition_number]['size']
+                            partition_state['size'] = int(current_parted_dict['partitions'][partition_number]['size'])
 
                     partition_state['filesystem'] = ""
                     if partition_longdevname in blkid_dict.keys():
