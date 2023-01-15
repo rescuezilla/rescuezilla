@@ -880,8 +880,13 @@ class BackupManager:
 
             self.proc['partclone_backup_' + partition_key].stdout.close()  # Allow p1 to receive a SIGPIPE if p2 exits.
             self.proc['compression_' + partition_key].stdout.close()  # Allow p2 to receive a SIGPIPE if p3 exits.
-            output, err = self.proc['partclone_backup_' + partition_key].communicate()
-            self.logger.write("Exit output " + str(output) + "stderr " + str(err))
+            try:
+                output, err = self.proc['partclone_backup_' + partition_key].communicate()
+                self.logger.write("Exit output " + str(output) + "stderr " + str(err))
+            except ValueError as e:
+                # Workaround for Python3.7 process communicate() in while loop bug [1]
+                # [1] https://bugs.python.org/issue35182
+                self.logger.write("Exception during communicate:" + str(e))
             if self.proc['partclone_backup_' + partition_key].returncode != 0:
                 partition_summary = _("<b>Failed to backup partition</b> {partition_name}").format(partition_name=partition_key) + "\n"
                 with self.summary_message_lock:
