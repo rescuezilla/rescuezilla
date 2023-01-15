@@ -67,6 +67,8 @@ pkgs_specific_to_ubuntu1804_bionic_32bit=("linux-generic-hwe-18.04"
                         "xserver-xorg-video-qxl-hwe-18.04"
                         # Python3.7 as Rescuezilla uses subprocess's "capture_output" parameter
                         "python3.7"
+                        # Explicitly install dmidecode as it appears to have been pulled in on other distros by a dependency
+                        "dmidecode"
 )
 
 # Packages specific to Rescuezilla 64-bit build (currently based Ubuntu 20.04 Focal)
