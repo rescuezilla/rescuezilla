@@ -1,12 +1,12 @@
-# Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022, 2023.
 # PizzaProgram <info@pizzaprogram.hu>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2022-09-21 14:18+0000\n"
-"Last-Translator: PizzaProgram <info@pizzaprogram.hu>\n"
+"PO-Revision-Date: 2023-02-11 17:54+0000\n"
+"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: Hungarian <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/hu/>\n"
 "Language: hu\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 4.16-dev\n"
 
 msgid "Welcome"
 msgstr "Üdvözöllek"
@@ -438,7 +438,6 @@ msgstr "gzip"
 msgid "default"
 msgstr "alap"
 
-#, fuzzy
 msgid "zstandard"
 msgstr "zstandard"
 

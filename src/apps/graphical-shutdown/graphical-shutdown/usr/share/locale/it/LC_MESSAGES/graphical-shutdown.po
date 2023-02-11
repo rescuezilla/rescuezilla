@@ -1,7 +1,7 @@
-# Pierfrancesco Passerini <p.passerini@gmail.com>, 2021, 2022.
+# Pierfrancesco Passerini <p.passerini@gmail.com>, 2021, 2022, 2023.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2022-08-14 20:36+0000\n"
+"PO-Revision-Date: 2023-01-19 18:50+0000\n"
 "Last-Translator: Pierfrancesco Passerini <p.passerini@gmail.com>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/rescuezilla/"
 "graphical-shutdown/it/>\n"
@@ -9,7 +9,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 4.15.1\n"
 
 msgid "End Session"
 msgstr "Fine sessione"
@@ -18,10 +18,10 @@ msgid "Cancel"
 msgstr "Annulla"
 
 msgid "Shutdown"
-msgstr "Spegnimento"
+msgstr "Spegni"
 
 msgid "Reboot"
-msgstr "Riavvio"
+msgstr "Riavvia"
 
 msgid "Choose action."
 msgstr "Seleziona opzione."

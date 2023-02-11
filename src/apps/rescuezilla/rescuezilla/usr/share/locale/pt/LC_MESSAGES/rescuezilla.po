@@ -5,13 +5,14 @@
 # Submitted at: https://github.com/rescuezilla/rescuezilla/issues/128
 # Vinicios Clarindo <vinicioslc@outlook.com>, 2021, 2022.
 # Shasheen Ediriweera <shasheene@gmail.com>, 2022.
+# Alexandre Hideki Watanabe <hidekiw@gmail.com>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2022-08-23 02:49+0000\n"
-"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
+"PO-Revision-Date: 2023-02-11 12:38+0000\n"
+"Last-Translator: Alexandre Hideki Watanabe <hidekiw@gmail.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/pt/>\n"
 "Language: pt\n"
@@ -19,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 4.16-dev\n"
 
 msgid "Welcome"
 msgstr "Bem vindo"
@@ -157,22 +158,24 @@ msgstr ""
 "destino!"
 
 msgid "Step 6: Cloning Disk"
-msgstr ""
+msgstr "Passo 6: Clonar o disco"
 
 msgid "Cloning the drive you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
+"Clonar o disco selecionado. Isso pode demorar uma hora ou mais dependendo da "
+"velocidade do seu computador e da quantidade de dados."
 
 msgid "Summary of Clone"
-msgstr ""
+msgstr "Resumo da clonagem"
 
 msgid "Clone Summary"
-msgstr ""
+msgstr "Resumo"
 
 msgid "Confirm the clone summary."
-msgstr ""
+msgstr "Confirme o resumo."
 
 msgid "Unable to shutdown Image Explorer"
-msgstr ""
+msgstr "Não foi possível fechar o Image Explorer"
 
 msgid "Step 1: Select Drive To Backup"
 msgstr "Passo 1: Selecionar Drive para Backup"
@@ -190,7 +193,7 @@ msgid "Drive Model"
 msgstr "Modelo do Drive"
 
 msgid "Serial Number"
-msgstr ""
+msgstr "Número de série"
 
 msgid "Partitions"
 msgstr "Partições"
@@ -258,13 +261,13 @@ msgid "Version"
 msgstr "Versão"
 
 msgid "Remote path"
-msgstr ""
+msgstr "Caminho remoto"
 
 msgid "Exported path"
-msgstr ""
+msgstr "Caminho exportado"
 
 msgid "Identity File"
-msgstr ""
+msgstr "Arquivo de identificação"
 
 msgid "Optional"
 msgstr "opcional"
@@ -282,27 +285,29 @@ msgid "Mounting..."
 msgstr "Montando..."
 
 msgid "Close this popup to cancel the mount operation."
-msgstr ""
+msgstr "Feche essa janela para cancelar a operação de montagem."
 
 msgid "Please ensure the username, password and other fields provided are correct, and try again."
 msgstr "Certifique-se de que o nome de usuário, senha e outros campos fornecidos estão corretos e tente novamente."
 
 msgid "Must provide either password or SSH identity file."
-msgstr ""
+msgstr "Precisa informar senha ou arquivo de identidade SSH."
 
 msgid "Scanning folder for backup images..."
 msgstr "Escaneando pasta por imagens de backup ..."
 
 #, python-brace-format
 msgid "({timeout_seconds} second timeout)"
-msgstr ""
+msgstr "({timeout_seconds} segundos para finalizar)"
 
 msgid "Close this popup to cancel scanning the selected folder and subfolders."
 msgstr ""
+"Feche essa janela para cancelar a varredura das pastas e subpastas "
+"selecionadas."
 
 #, python-brace-format
 msgid "Scanning: {filename}"
-msgstr ""
+msgstr "Escaneando: {filename}"
 
 msgid "Error processing the following images:"
 msgstr "Erro ao processar as seguintes imagens:"
