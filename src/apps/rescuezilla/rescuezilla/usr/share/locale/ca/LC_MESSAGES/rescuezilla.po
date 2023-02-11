@@ -1,12 +1,12 @@
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
-# BennyBeat <bennybeat@gmail.com>, 2022.
+# BennyBeat <bennybeat@gmail.com>, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2022-09-02 04:58+0000\n"
-"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
+"PO-Revision-Date: 2023-01-18 11:51+0000\n"
+"Last-Translator: BennyBeat <bennybeat@gmail.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/ca/>\n"
 "Language: ca\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1-dev\n"
+"X-Generator: Weblate 4.15.1-dev\n"
 
 msgid "Welcome"
 msgstr "Us donem la benvinguda"
@@ -811,7 +811,7 @@ msgid "Updating initramfs (if any)"
 msgstr "S'està actualitzant initramfs (si n'hi ha)"
 
 msgid "Successfully updated initramfs"
-msgstr ""
+msgstr "S'ha actualitzat initramfs correctament"
 
 msgid "Updating EFI NVRAM..."
 msgstr "Actualitzant EFI N RAM..."
@@ -824,6 +824,8 @@ msgstr "Error restaurant l'imatge: "
 
 msgid "Could not restore sfdisk partition table as file has zero length: "
 msgstr ""
+"No s'ha pogut restaurar la taula de la partició sfdisk, perquè el fitxer té "
+"una longitud zero: "
 
 msgid "Successfully restored partition table."
 msgstr "Tayla de particions restaurada de manera satisfactòria."
