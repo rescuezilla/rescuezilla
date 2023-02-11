@@ -5,7 +5,7 @@
 # Submitted at: https://github.com/rescuezilla/rescuezilla/issues/154
 #
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
-# Pierfrancesco Passerini <p.passerini@gmail.com>, 2021, 2022.
+# Pierfrancesco Passerini <p.passerini@gmail.com>, 2021, 2022, 2023.
 # Anto F <tempthings@outlook.it>, 2022.
 # Ereb0r <pierpaoloraz@gmail.com>, 2022.
 msgid ""
@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2022-08-16 02:01+0000\n"
+"PO-Revision-Date: 2023-01-19 18:50+0000\n"
 "Last-Translator: Pierfrancesco Passerini <p.passerini@gmail.com>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/it/>\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 4.15.1\n"
 
 msgid "Welcome"
 msgstr "Benvenuto"
@@ -33,7 +33,7 @@ msgstr "Seleziona un'opzione"
 msgid "Easily create a backup image of your computer, or completely restore from one.  Click an option to begin:"
 msgstr ""
 "Crea un'immagine di backup del tuo computer od esegui il ripristino completo "
-"di una di esse.  Scegli un'opzione per iniziare:"
+"da una di esse.  Scegli un'opzione per iniziare:"
 
 msgid "Backup"
 msgstr "Backup"
@@ -47,7 +47,7 @@ msgstr "Verifica immagine"
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
 msgstr ""
 "Serve aiuto? Inizia controllando le domande frequenti su Rescuezilla, poi "
-"procedi sul forum di Rescuezilla."
+"prosegui sul forum."
 
 msgid "Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed."
 msgstr ""
@@ -64,7 +64,7 @@ msgid "Please wait..."
 msgstr "Per favore attendi..."
 
 msgid "Identifying disk drives..."
-msgstr "Identificazione delle unità disco..."
+msgstr "Ricerca delle unità disco..."
 
 #, python-brace-format
 msgid "Unmounting: {path}"
@@ -115,10 +115,10 @@ msgstr ""
 "esterno. Queste immagini possono essere ripristinate sul disco originale o "
 "su altri dischi. In altre parole, con \"immagine\" l'operazione di backup "
 "copia il vostro disco in <i>file</i> che devono essere archiviati, almeno "
-"temporaneamente, su un'altro disco prima di poter essere ripristinati.\n"
+"temporaneamente, su un altro disco prima di poter essere ripristinati.\n"
 "\n"
 "Per utilizzare le procedure guidate di \"disco immagine\", clicca "
-"<b>Indietro</b> e seleziona <b>Backup</b> o <b>Restore</b>."
+"<b>Indietro</b> e seleziona <b>Backup</b> o <b>Ripristino</b>."
 
 msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
 msgstr ""
@@ -165,8 +165,8 @@ msgstr "Fase 6: Clonazione del Disco"
 
 msgid "Cloning the drive you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
-"Clonazione dell'unità selezionata. L'operazione potrebbe richiedere un'ora o "
-"più in funzione della velocità del computer e della quantità di dati."
+"Clonazione dell'unità selezionata. L'operazione richiede del tempo in "
+"funzione della velocità del computer e della quantità di dati."
 
 msgid "Summary of Clone"
 msgstr "Riepilogo di Clona"
@@ -211,8 +211,8 @@ msgstr "Fase 2: Seleziona le partizioni"
 
 msgid "Select which partitions to create a backup of. <b>Leave all partitions selected if you are unsure.</b>"
 msgstr ""
-"Seleziona le partizioni da salvare. <b>Se sei incerto, lascia selezionate "
-"tutte le partizioni.</b>"
+"Seleziona le partizioni da salvare. <b>Se non sei sicuro, lascia tutte le "
+"partizioni selezionate.</b>"
 
 msgid "Save"
 msgstr "Salva"
@@ -341,13 +341,15 @@ msgstr ""
 "una partizione."
 
 msgid "Any other filesystems within the image should be restorable as normal."
-msgstr "Qualsiasi altro filesystem all'interno dell'immagine dovrebbe essere ripristinabile normalmente."
+msgstr ""
+"Qualsiasi altro file system contenuto nell'immagine dovrebbe essere "
+"ripristinabile normalmente."
 
 msgid "Needs decryption"
 msgstr "Ha bisogno di essere decriptato"
 
 msgid "Unknown filesystem"
-msgstr "Filesystem sconosciuto"
+msgstr "File system sconosciuto"
 
 #, python-brace-format
 msgid "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance."
@@ -417,15 +419,15 @@ msgstr ""
 "Per il nome del backup, puoi utilizzare solo lettere, numeri e trattini."
 
 msgid "Optional: Provide a short description."
-msgstr "Facoltativo: fornire una breve descrizione."
+msgstr "Facoltativo: inserire una breve descrizione."
 
 msgid "Step 6: Customize Compression Settings"
 msgstr "Fase 6: Personalizzare le Impostazioni di Compressione"
 
 msgid "Customize image compression settings. <b>Don't make any changes if you are unsure.</b>"
 msgstr ""
-"Personalizza le impostazioni di compressione dell'immagine.<b> Se sei "
-"incerto, non fare alcuna modifica.</b>"
+"Personalizza le impostazioni di compressione dell'immagine.<b> Se non sei "
+"sicuro, non apportare modifiche.</b>"
 
 msgid "Compression format: "
 msgstr "Formato di compressione: "
@@ -446,7 +448,7 @@ msgid "Compression level: "
 msgstr "Livello di compressione: "
 
 msgid "Fastest"
-msgstr "Il più veloce"
+msgstr "Più veloce"
 
 msgid "Best"
 msgstr "Migliore"
@@ -474,25 +476,23 @@ msgid "Confirm the following backup configuration."
 msgstr "Conferma la seguente configurazione di backup."
 
 msgid "On successful completion of the task, perform the following action: "
-msgstr ""
-"Al completamento con successo dell'attività, effettua la seguente azione: "
+msgstr "Al corretto completamento dell'attività, esegui questa operazione: "
 
 msgid "Do nothing"
 msgstr "Non fare nulla"
 
 msgid "Shutdown"
-msgstr "Spegnimento"
+msgstr "Spegni"
 
 msgid "Reboot"
-msgstr "Riavvio"
+msgstr "Riavvia"
 
 msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
-msgstr ""
-"Salvataggio: ignora inconsistenza del filesystem e/o settori danneggiati"
+msgstr "Recupero: ignora inconsistenza del file system e/o settori danneggiati"
 
 msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
 msgstr ""
-"<b>Abilitare \"Salvataggio\" può sopprimere errori importanti. Usare con "
+"<b>Abilitare \"Recupero\" può sopprimere errori importanti. Usare con "
 "cautela.</b>"
 
 msgid "To start the backup, click <b>Next</b>."
@@ -503,9 +503,8 @@ msgstr "Fase 8: Creazione Immagine di Backup"
 
 msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
-"Backup del sistema nella posizione selezionata. L'operazione potrebbe "
-"richiedere un'ora o più in funzione della velocità del computer e della "
-"quantità di dati."
+"Backup del sistema nella posizione selezionata. L'operazione richiede del "
+"tempo in funzione della velocità del computer e della quantità di dati."
 
 #, python-brace-format
 msgid "Saving: {file}"
@@ -514,7 +513,7 @@ msgstr "Salvataggio: {file}"
 #, python-brace-format
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
 msgstr ""
-"Backup di {partition_name} contenente il filesystem {filesystem} su "
+"Backup di {partition_name} contenente il file system {filesystem} su "
 "{destination}"
 
 msgid "Summary of Backup"
@@ -533,7 +532,7 @@ msgid "Operation cancelled by user."
 msgstr "Operazione annullata dall'utente."
 
 msgid "Rescue option is enabled."
-msgstr "Opzione Salvataggio abilitata."
+msgstr "Opzione Recupero abilitata."
 
 msgid "Error creating backup: "
 msgstr "Errore durante la creazione del backup: "
@@ -560,10 +559,10 @@ msgid "Backup saved successfully."
 msgstr "Backup memorizzato con successo."
 
 msgid "Backup succeeded with some errors:"
-msgstr "Il backup è riuscito con alcuni errori:"
+msgstr "Backup riuscito ma con alcuni errori:"
 
 msgid "Backup operation failed:"
-msgstr "Operazione di backup non riuscita:"
+msgstr "Backup non riuscito:"
 
 msgid "User requested operation to stop."
 msgstr "L'utente ha richiesto l'interruzione dell'operazione."
@@ -690,10 +689,10 @@ msgstr ""
 "ripristinare dischi grandi in dischi più piccoli. Attualmente la partizione "
 "finale deve sempre risiedere completamente nel disco di destinazione.\n"
 "\n"
-"Per ora, l'unico modo per eseguire il ripristino su dischi più piccoli "
-"dell'originale, utilizzare GParted Partition Editor riducendo la partizione "
-"del disco sorgente prima di creare una nuova immagine di backup. Per "
-"maggiori informazioni leggere le seguenti istruzioni:\n"
+"Per ora, per eseguire il ripristino su dischi più piccoli dell'originale, "
+"utilizzare GParted Partition Editor riducendo la partizione del disco "
+"sorgente prima di creare una nuova immagine di backup. Per maggiori "
+"informazioni fare riferimento al seguenti link:\n"
 "\n"
 "{url}"
 
@@ -732,9 +731,8 @@ msgstr "Ripristino da Backup"
 
 msgid "Restoring your system from the image you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
-"Ripristino del sistema dall'immagine selezionata. L'operazione potrebbe "
-"richiedere un'ora o più in funzione della velocità del computer e della "
-"quantità di dati."
+"Ripristino del sistema dall'immagine selezionata. L'operazione richiede del "
+"tempo in funzione della velocità del computer e della quantità di dati."
 
 msgid "Refreshing partition table"
 msgstr "Aggiornamento della tabella delle partizioni"
@@ -757,8 +755,8 @@ msgstr "Esplorazione {device} con {app}"
 #, python-brace-format
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
 msgstr ""
-"Espansione del filesystem {partition} ({filesystem}). Potrebbe richiedere un "
-"po' di tempo..."
+"Espansione del file system {partition} ({filesystem}). Potrebbe richiedere "
+"del tempo..."
 
 #, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
@@ -769,13 +767,13 @@ msgstr ""
 #, python-brace-format
 msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
 msgstr ""
-"Geometria del filesystem NTFS {ntfs_device} corretta con successo "
+"Geometria del file system NTFS {ntfs_device} corretta con successo "
 "utilizzando i valori di {geometry_source}"
 
 #, python-brace-format
 msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
 msgstr ""
-"Impossibile correggere la geometria del filesystem NTFS di {ntfs_device}"
+"Impossibile correggere la geometria del file system NTFS di {ntfs_device}"
 
 msgid "Removing udev MAC address records (if any)"
 msgstr "Rimozione dei record di indirizzo MAC di udev (se presenti)"
@@ -931,7 +929,7 @@ msgid "❌"
 msgstr "❌"
 
 msgid "MBR backup appears correct."
-msgstr "Il backup MBR sembra corretto."
+msgstr "Il backup MBR appare corretto."
 
 msgid "No partition table found."
 msgstr "Nessuna tabella delle partizioni trovata."
@@ -943,8 +941,8 @@ msgid "Sfdisk partition table file is present."
 msgstr "Il file della tabella delle partizioni sfdisk è presente."
 
 msgid "Unable to verify."
-msgstr "Impossibile verificare."
+msgstr "Impossibile effettuare la verifica."
 
 #, python-brace-format
 msgid "{partition}: filesystem image successfully verified."
-msgstr "{partition}: immagine del filesystem verificata con successo."
+msgstr "{partition}: immagine del file system verificata con successo."
