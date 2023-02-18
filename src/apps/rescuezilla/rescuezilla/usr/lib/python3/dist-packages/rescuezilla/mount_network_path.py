@@ -263,7 +263,25 @@ class MountNetworkPath:
                 return
 
             mount_cmd_list = ["mount.nfs", server + ":" + exported_dir, settings['destination_path']]
-            mount_process, mount_flat_command_string, mount_failed_message = Utility.interruptable_run("Mounting network shared folder with NFS: ", mount_cmd_list, use_c_locale=False, is_shutdown_fn=self.is_stop_requested)
+
+            # If the user specifies a version from the drop-down, pass it in.
+            #
+            # From `man 5 nfs`:
+            #        nfsvers=n      The NFS protocol version number used to contact the server's NFS service.
+            #                       If the server does not support the  requested  version,  the  mount  request
+            #                       fails.  If this option is not specified, the client tries version 4.2 first, then
+            #                       negotiates down until it finds a version supported by the server.
+            #
+            #        vers=n         This option is an alternative to the nfsvers option.  It is included for
+            #                       compatibility with other operating systems
+            nfs_version_dropdown_selection = settings['version']
+            if nfs_version_dropdown_selection != "unspecified":
+                # Note: `mount.nfs4` is a symlink to `mount.nfs`, so
+                mount_cmd_list += ["-o", "vers=" +  nfs_version_dropdown_selection]
+
+            mount_process, mount_flat_command_string, mount_failed_message = Utility.interruptable_run(
+                "Mounting network shared folder with NFS: ", mount_cmd_list, use_c_locale=False,
+                is_shutdown_fn=self.is_stop_requested)
             if mount_process.returncode != 0:
                 check_password_msg = _("Please ensure the server and exported path are correct, and try again.")
                 GLib.idle_add(self.please_wait_popup.destroy)

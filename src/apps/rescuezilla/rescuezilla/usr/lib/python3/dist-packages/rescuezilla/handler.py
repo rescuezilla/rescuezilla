@@ -1079,6 +1079,20 @@ class Handler:
         # Initialize the network version dropdown menu
         self.network_protocol_widget_dict['network_version_combobox'][mode].set_active(0)
 
+    def initialize_nfs_version_selection_combobox(self, mode):
+        """
+        Configure SMB/CIFS network drop-down.
+        """
+        # Create a new model
+        # For some reason, trying to reuse an associated model of combobox doesn't work.
+        network_share_protocol_version_list = Gtk.ListStore(str, str)
+        network_share_protocol_version_list.append(["unspecified", _("Unspecified (Tries NFS v4.2 first, then negotiates with server down until finds a supported version)")])
+        network_share_protocol_version_list.append(["3", _("NFSv3")])
+        network_share_protocol_version_list.append(["4", _("NFSv4")])
+        self.network_protocol_widget_dict['network_version_combobox'][mode].set_model(network_share_protocol_version_list)
+        # Initialize the network version dropdown menu
+        self.network_protocol_widget_dict['network_version_combobox'][mode].set_active(0)
+
     def network_protocol_combobox_changed(self, combobox):
         # Shows and hides certain fields depending on the protocol.
         # Shows different label text depending on the protocol (eg, "Remote path" for SSH and "Exported path" for NFS).
@@ -1136,6 +1150,7 @@ class Handler:
                 self.network_protocol_widget_dict['network_port'][mode].set_visible(True)
         elif network_protocol_key == "NFS":
             for mode in NETWORK_UI_WIDGET_MODES:
+                self.initialize_nfs_version_selection_combobox(mode)
                 self.network_protocol_widget_dict['network_server_label'][mode].set_visible(True)
                 self.network_protocol_widget_dict['network_server_label'][mode].set_text(_("Server") + ": ")
                 self.network_protocol_widget_dict['network_server'][mode].set_visible(True)
@@ -1148,8 +1163,9 @@ class Handler:
                 self.network_protocol_widget_dict['network_password'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_domain_label'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_domain'][mode].set_visible(False)
-                self.network_protocol_widget_dict['network_version_label'][mode].set_visible(False)
-                self.network_protocol_widget_dict['network_version_combobox'][mode].set_visible(False)
+                self.network_protocol_widget_dict['network_version_label'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_version_label'][mode].set_text(_("Version"))
+                self.network_protocol_widget_dict['network_version_combobox'][mode].set_visible(True)
                 self.network_protocol_widget_dict['network_ssh_idfile_label'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_ssh_idfile_box'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_port_label'][mode].set_visible(False)
