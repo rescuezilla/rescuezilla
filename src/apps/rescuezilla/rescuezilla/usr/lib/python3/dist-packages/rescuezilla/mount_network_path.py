@@ -268,7 +268,7 @@ class MountNetworkPath:
             if settings['nfs_version'] == "NFSv3":
                 mount_cmd_list = ["mount.nfs", server + ":" + exported_dir, settings['destination_path']]
                 mount_process, mount_flat_command_string, mount_failed_message = Utility.interruptable_run("Mounting network shared folder with NFSv3: ", mount_cmd_list, use_c_locale=False, is_shutdown_fn=self.is_stop_requested)
-            elif:
+            else:
                 mount_cmd_list = ["mount.nfs4", server + ":" + exported_dir, settings['destination_path']]
                 mount_process, mount_flat_command_string, mount_failed_message = Utility.interruptable_run("Mounting network shared folder with NFSv4: ", mount_cmd_list, use_c_locale=False, is_shutdown_fn=self.is_stop_requested)
 
