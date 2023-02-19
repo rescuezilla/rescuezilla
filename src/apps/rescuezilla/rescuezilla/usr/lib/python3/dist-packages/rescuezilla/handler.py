@@ -160,7 +160,6 @@ class Handler:
             'network_domain': {},
             'network_version_label': {},
             'network_version_combobox': {},
-            'network_version_nfs_combobox': {},
             'network_ssh_idfile': {},
             'network_ssh_idfile_box': {},
             'network_ssh_idfile_label': {},
@@ -176,7 +175,6 @@ class Handler:
                 self.network_protocol_widget_dict[prefix][mode] = object
             # Initialize the network version dropdown menu
             self.network_protocol_widget_dict['network_version_combobox'][mode].set_active(0)
-            self.network_protocol_widget_dict['network_version_nfs_combobox'][mode].set_active(0)
 
         self.mount_partition_selection_treeselection_id_dict = {
             Mode.BACKUP: "backup_mount_partition_selection_treeselection",
@@ -1075,7 +1073,6 @@ class Handler:
                 self.network_protocol_widget_dict['network_version_label'][mode].set_visible(True)
                 self.network_protocol_widget_dict['network_version_label'][mode].set_text(_("Version"))
                 self.network_protocol_widget_dict['network_version_combobox'][mode].set_visible(True)
-                self.network_protocol_widget_dict['network_version_nfs_combobox'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_ssh_idfile_label'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_ssh_idfile_box'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_port_label'][mode].set_visible(False)
@@ -1105,7 +1102,7 @@ class Handler:
                 self.network_protocol_widget_dict['network_port_label'][mode].set_visible(True)
                 self.network_protocol_widget_dict['network_port_label'][mode].set_text(_("Port"))
                 self.network_protocol_widget_dict['network_port'][mode].set_visible(True)
-        elif ( network_protocol_key == "NFSv3" or network_protocol_key == "NFSv4" ):
+        elif network_protocol_key == "NFS":
             for mode in NETWORK_UI_WIDGET_MODES:
                 self.network_protocol_widget_dict['network_server_label'][mode].set_visible(True)
                 self.network_protocol_widget_dict['network_server_label'][mode].set_text(_("Server") + ": ")
@@ -1121,7 +1118,6 @@ class Handler:
                 self.network_protocol_widget_dict['network_domain'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_version_label'][mode].set_visible(True)
                 self.network_protocol_widget_dict['network_version_label'][mode].set_text(_("Version"))
-                self.network_protocol_widget_dict['network_version_nfs_combobox'][mode].set_visible(True)
                 self.network_protocol_widget_dict['network_version_combobox'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_ssh_idfile_label'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_ssh_idfile_box'][mode].set_visible(False)
