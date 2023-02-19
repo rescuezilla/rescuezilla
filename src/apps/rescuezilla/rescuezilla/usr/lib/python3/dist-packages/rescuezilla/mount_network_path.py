@@ -60,9 +60,7 @@ class MountNetworkPath:
             thread = threading.Thread(target=self._do_smb_mount_command, args=(settings,))
         elif network_protocol_key == "SSH":
             thread = threading.Thread(target=self._do_ssh_mount_command, args=(settings,))
-        elif network_protocol_key == "NFSv3":
-            thread = threading.Thread(target=self._do_nfs_mount_command, args=(settings,))
-        elif network_protocol_key == "NFSv4":
+        elif network_protocol_key == "NFS":
             thread = threading.Thread(target=self._do_nfs_mount_command, args=(settings,))
         else:
             raise ValueError("Unknown network protocol: " + network_protocol_key)
