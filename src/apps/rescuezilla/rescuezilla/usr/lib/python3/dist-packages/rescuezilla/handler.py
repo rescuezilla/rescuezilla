@@ -1118,7 +1118,7 @@ class Handler:
                 self.network_protocol_widget_dict['network_domain'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_version_label'][mode].set_visible(True)
                 self.network_protocol_widget_dict['network_version_label'][mode].set_text(_("Version"))
-                self.network_protocol_widget_dict['network_version_combobox'][mode].set_visible(False)
+                self.network_protocol_widget_dict['network_version_combobox'][mode].set_visible(True)
                 self.network_protocol_widget_dict['network_ssh_idfile_label'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_ssh_idfile_box'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_port_label'][mode].set_visible(False)
