@@ -42,7 +42,6 @@ class MountNetworkPath:
             'password': network_widget_dict["network_password"][mode].get_text(),
             'domain': network_widget_dict["network_domain"][mode].get_text().strip(),
             'version': Utility.get_combobox_key(network_widget_dict["network_version_combobox"][mode]),
-            'nfs_version' : Utility.get_combobox_key(network_widget_dict["network_version_nfs_combobox"][mode]),
             'ssh_idfile': network_widget_dict["network_ssh_idfile"][mode].get_text().strip(),
             'destination_path': destination_path,
             'port': network_widget_dict["network_port"][mode].get_text().strip(),
@@ -265,12 +264,18 @@ class MountNetworkPath:
                 GLib.idle_add(self.callback, False, "Must specify exported directory.")
                 return
 
-            if settings['nfs_version'] == "NFSv3":
-                mount_cmd_list = ["mount.nfs", server + ":" + exported_dir, settings['destination_path']]
+            nfs_arguments = int(settings['version'])
+            if nfs_arguments is 3:
+                mount_cmd_list = ["mount.nfs", server + ":" + exported_dir, settings['destination_path'], "-o", "vers=" + settings['version']]
                 mount_process, mount_flat_command_string, mount_failed_message = Utility.interruptable_run("Mounting network shared folder with NFSv3: ", mount_cmd_list, use_c_locale=False, is_shutdown_fn=self.is_stop_requested)
-            else:
+            elif nfs_arguments is 4:
                 mount_cmd_list = ["mount.nfs4", server + ":" + exported_dir, settings['destination_path']]
                 mount_process, mount_flat_command_string, mount_failed_message = Utility.interruptable_run("Mounting network shared folder with NFSv4: ", mount_cmd_list, use_c_locale=False, is_shutdown_fn=self.is_stop_requested)
+            else:
+                unknown_nfs_version_msg = _("Unknown NFS version selected, please try again")
+                GLib.idle_add(self.please_wait_popup.destroy)
+                GLib.idle_add(self.callback, False, unknown_nfs_version_msg)
+                return
 
             if mount_process.returncode != 0:
                 check_password_msg = _("Please ensure the server and exported path are correct, and try again.")

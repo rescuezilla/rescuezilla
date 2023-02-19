@@ -138,10 +138,9 @@ class Handler:
         self.network_share_protocol_version_list.append(["3.0",     _("3.0 (Introduced in Windows 8,  Windows Server 2012)")])
         self.network_share_protocol_version_list.append(["3.0.2",   _("3.0.2 (Introduced in Windows 8.1, Windows Server 2012R2)")])
         self.network_share_protocol_version_list.append(["3.1.1",   _("3.1.1 (Introduced in Windows 10, Windows Server 2016)")])
-        
-        self.network_share_nfs_protocol_version_list = self.builder.get_object("network_share_nfs_protocol_version_list")
-        self.network_share_nfs_protocol_version_list.append(["3",     _("NFSv3")])
-        self.network_share_nfs_protocol_version_list.append(["4",     _("NFSv4")])
+        ## NFS ITEMS
+        self.network_share_protocol_version_list.append(["3",     _("NFSv3")])
+        self.network_share_protocol_version_list.append(["4",     _("NFSv4")])
 
         # Manage all network protocol UI widgets
         self.network_protocol_widget_dict = {
