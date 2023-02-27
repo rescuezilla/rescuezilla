@@ -160,16 +160,6 @@ class Handler:
         self.network_share_protocol_list.append(["SSH", "SSH"])
         self.network_share_protocol_list.append(["NFS", "NFS"])
 
-        # Descriptions adapted from: https://manpages.ubuntu.com/manpages/focal/man8/mount.cifs.8.html
-        self.network_share_protocol_version_list = self.builder.get_object("network_share_protocol_version_list")
-        self.network_share_protocol_version_list.append(["default", _("default (Negotiate highest SMB2+ supported by client and server)")])
-        self.network_share_protocol_version_list.append(["1.0",     _("1.0 (The classic CIFS/SMBv1 protocol)")])
-        self.network_share_protocol_version_list.append(["2.0",     _("2.0 (Introduced in Vista SP1,  Windows Server 2008)")])
-        self.network_share_protocol_version_list.append(["2.1",     _("2.1 (Introduced in Windows 7,   Windows Server 2008R2)")])
-        self.network_share_protocol_version_list.append(["3",       _("3 (The SMBv3.0 protocol version and above)")])
-        self.network_share_protocol_version_list.append(["3.0",     _("3.0 (Introduced in Windows 8,  Windows Server 2012)")])
-        self.network_share_protocol_version_list.append(["3.0.2",   _("3.0.2 (Introduced in Windows 8.1, Windows Server 2012R2)")])
-        self.network_share_protocol_version_list.append(["3.1.1",   _("3.1.1 (Introduced in Windows 10, Windows Server 2016)")])
         # Manage all network protocol UI widgets
         self.network_protocol_widget_dict = {
             'network_protocol_combobox': {},
@@ -201,8 +191,6 @@ class Handler:
                 if object is None:
                     raise ValueError("Could not find: " + id)
                 self.network_protocol_widget_dict[prefix][mode] = object
-            # Initialize the network version dropdown menu
-            self.network_protocol_widget_dict['network_version_combobox'][mode].set_active(0)
 
         self.mount_partition_selection_treeselection_id_dict = {
             Mode.BACKUP: "backup_mount_partition_selection_treeselection",
@@ -1071,14 +1059,35 @@ class Handler:
         # ("True to stop other handlers from being invoked for the event. False to propagate the event further.")
         return True
 
+    def initialize_smb_cifs_version_selection_combobox(self, mode):
+        """
+        Configure SMB/CIFS network drop-down.
+        """
+        # Create a new model
+        # For some reason, trying to reuse an associated model of combobox doesn't work.
+        network_share_protocol_version_list = Gtk.ListStore(str, str)
+        # Descriptions adapted from: https://manpages.ubuntu.com/manpages/focal/man8/mount.cifs.8.html
+        network_share_protocol_version_list.append(["default", _("default (Negotiate highest SMB2+ supported by client and server)")])
+        network_share_protocol_version_list.append(["1.0", _("1.0 (The classic CIFS/SMBv1 protocol)")])
+        network_share_protocol_version_list.append(["2.0", _("2.0 (Introduced in Vista SP1,  Windows Server 2008)")])
+        network_share_protocol_version_list.append(["2.1", _("2.1 (Introduced in Windows 7,   Windows Server 2008R2)")])
+        network_share_protocol_version_list.append(["3", _("3 (The SMBv3.0 protocol version and above)")])
+        network_share_protocol_version_list.append(["3.0", _("3.0 (Introduced in Windows 8,  Windows Server 2012)")])
+        network_share_protocol_version_list.append(["3.0.2", _("3.0.2 (Introduced in Windows 8.1, Windows Server 2012R2)")])
+        network_share_protocol_version_list.append(["3.1.1", _("3.1.1 (Introduced in Windows 10, Windows Server 2016)")])
+        self.network_protocol_widget_dict['network_version_combobox'][mode].set_model(network_share_protocol_version_list)
+        # Initialize the network version dropdown menu
+        self.network_protocol_widget_dict['network_version_combobox'][mode].set_active(0)
+
     def network_protocol_combobox_changed(self, combobox):
         # Shows and hides certain fields depending on the protocol.
         # Shows different label text depending on the protocol (eg, "Remote path" for SSH and "Exported path" for NFS).
-        # Also whether or not a  field is depends on the network protocol.
+        # Also whether a field is displayed depends on the network protocol.
         optional = " (" + _("Optional") + "):"
         network_protocol_key = Utility.get_combobox_key(combobox)
         if network_protocol_key == "SMB":
             for mode in NETWORK_UI_WIDGET_MODES:
+                self.initialize_smb_cifs_version_selection_combobox(mode)
                 self.network_protocol_widget_dict['network_server_label'][mode].set_visible(True)
                 self.network_protocol_widget_dict['network_server_label'][mode].set_text(_("Share location (UNC path)") + ": ")
                 self.network_protocol_widget_dict['network_server'][mode].set_visible(True)
