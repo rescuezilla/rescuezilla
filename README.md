@@ -53,8 +53,8 @@ Rescuezilla has been translated into the following languages:
 * עִברִית (he-IL)
 * Magyar (hu-HU)
 * 日本語 (ja-JP) (Translation [in-progress](https://hosted.weblate.org/translate/rescuezilla/-/ja/?offset=1&q=state%3A%3Ctranslated+AND+NOT+has%3Asuggestion&sort_by=-priority%2Cposition&checksum=))
-* Lietuvių (lt-LT) (available next release)
-* Nederlands (nl-NL) (available next release)
+* Lietuvių (lt-LT)
+* Nederlands (nl-NL)
 * Norsk Bokmål (nb-NO)
 * Polski (pl-PL)
 * Português brasileiro (pt-BR) (Translation [in-progress](https://hosted.weblate.org/translate/rescuezilla/-/pt/?offset=1&q=state%3A%3Ctranslated+AND+NOT+has%3Asuggestion&sort_by=-priority%2Cposition&checksum=))
@@ -90,8 +90,8 @@ Below table shows an abridged history of Rescuezilla. For more information, see 
 
 | Release             | Release Date | Operating System | Notes |
 | ------------------- | ---------- | ---------------- | ---------------------------------- |
-| Rescuezilla Rolling | 2022-XX-XX | Ubuntu 22.04     | Weekly [rolling release](https://github.com/rescuezilla/rescuezilla/releases) with bleeding-edge features and translations
-| Rescuezilla 2.4.1   | 2022-09-05 | Ubuntu 22.04     | [Download page](https://github.com/rescuezilla/rescuezilla/releases/latest)
+| Rescuezilla Rolling | 2023-XX-XX | Ubuntu 22.04     | Weekly [rolling release](https://github.com/rescuezilla/rescuezilla/releases) with bleeding-edge features and translations
+| Rescuezilla 2.4.2   | 2023-03-05 | Ubuntu 22.04     | [Download page](https://github.com/rescuezilla/rescuezilla/releases/latest)
 | Rescuezilla 2.3.1   | 2022-01-02 | Ubuntu 21.10     | Added 'Verify Image' [Download page](https://github.com/rescuezilla/rescuezilla/releases/latest)
 | Rescuezilla 2.2     | 2021-06-04 | Ubuntu 21.04     | Added 'Clone', VM image support.
 | Rescuezilla 2.1     | 2020-12-12 | Ubuntu 20.10     | Added Image Explorer (beta)
