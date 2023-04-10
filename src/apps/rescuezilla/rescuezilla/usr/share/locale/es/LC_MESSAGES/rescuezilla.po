@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # Carlos Luna <caralu74@protonmail.com>, 2019, 2021.
 # Submitted at: https://github.com/rescuezilla/rescuezilla/issues/28
-# Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2022-08-13 21:33+0000\n"
+"PO-Revision-Date: 2023-04-10 19:30+0000\n"
 "Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/es/>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 4.17-dev\n"
 
 msgid "Welcome"
 msgstr "Bienvenido"
@@ -197,7 +197,7 @@ msgid "Drive Model"
 msgstr "Modelo de la unidad/disco"
 
 msgid "Serial Number"
-msgstr "Número serial"
+msgstr "Número de serie"
 
 msgid "Partitions"
 msgstr "Particiones"
@@ -206,12 +206,12 @@ msgid "Show hidden devices (for advanced users)"
 msgstr "Mostrar dispositivos ocultos (para usuarios avanzados)"
 
 msgid "Step 2: Select Partitions to Save"
-msgstr "Paso 2: Seleccione la partición a guardar"
+msgstr "Paso 2: Seleccione las particiones a guardar"
 
 msgid "Select which partitions to create a backup of. <b>Leave all partitions selected if you are unsure.</b>"
 msgstr ""
-"Seleccione qué particiones de la unidad se deben respaldar. <b>En caso de "
-"duda, seleccione todas las partes.</b>"
+"Seleccione las particiones de la unidad que se deben respaldar. <b>En caso "
+"de duda, selecciónelas todas.</b>"
 
 msgid "Save"
 msgstr "Guardar"
@@ -221,7 +221,7 @@ msgstr "Descripción"
 
 #, python-brace-format
 msgid "Drive {drive_number}"
-msgstr "Disque {drive_number}"
+msgstr "Disco {drive_number}"
 
 #, python-brace-format
 msgid "Partition {partition_number}"
