@@ -7,13 +7,14 @@
 # Shasheen Ediriweera <shasheene@gmail.com>, 2022.
 # Alexandre Hideki Watanabe <hidekiw@gmail.com>, 2023.
 # Bruno Batista <brucb879@gmail.com>, 2023.
+# Hugo Carvalho <hugokarvalho@hotmail.com>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2023-02-28 17:39+0000\n"
-"Last-Translator: Bruno Batista <brucb879@gmail.com>\n"
+"PO-Revision-Date: 2023-03-07 11:39+0000\n"
+"Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/pt/>\n"
 "Language: pt\n"
@@ -21,10 +22,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.16-rc\n"
+"X-Generator: Weblate 4.16.2-dev\n"
 
 msgid "Welcome"
-msgstr "Bem vindo"
+msgstr "Bem-vindo"
 
 msgid "Select an Option"
 msgstr "Selecione uma opção"
@@ -493,7 +494,7 @@ msgstr "Fazendo backup do seu sistema para o local informado. Isso pode levar um
 
 #, python-brace-format
 msgid "Saving: {file}"
-msgstr "Salvando:  {file}"
+msgstr "A guardar: {file}"
 
 #, python-brace-format
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
@@ -712,8 +713,8 @@ msgstr "Sondando {device} com {app}"
 #, python-brace-format
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
 msgstr ""
-"Crescente sistema de arquivos {partição} ({filesystem}). Isso pode demorar "
-"um pouco..."
+"Sistema de ficheiros em crescimento {partition} ({filesystem}). Isto pode "
+"demorar um pouco..."
 
 #, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
