@@ -1,11 +1,11 @@
 # Allan Nordhøy <epost@anotheragency.no>, 2021.
-# Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2022-08-23 02:49+0000\n"
+"PO-Revision-Date: 2023-05-03 20:52+0000\n"
 "Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "rescuezilla/rescuezilla/nb_NO/>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 4.18-dev\n"
 
 msgid "Welcome"
 msgstr "Velkommen"
@@ -963,4 +963,4 @@ msgstr "Kunne ikke utføre bekreftelse."
 
 #, python-brace-format
 msgid "{partition}: filesystem image successfully verified."
-msgstr "{partition}: filesystemsavtrykk bekreftet."
+msgstr "{partition}: filsystemavtrykk bekreftet."
