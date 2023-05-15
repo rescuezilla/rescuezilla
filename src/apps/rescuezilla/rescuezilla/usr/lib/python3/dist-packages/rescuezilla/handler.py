@@ -487,10 +487,9 @@ class Handler:
                 elif self.current_page == Page.RESTORE_DESTINATION_PARTITION_SELECTION:
                     self.is_overwriting_partition_table = self.builder.get_object(
                         "restore_overwrite_partition_table_checkbutton").get_active()
-                    partition_selection_list = self.builder.get_object("partition_selection_list")
                     self.partitions_to_restore = collections.OrderedDict()
                     has_atleast_one = False
-                    for row in partition_selection_list:
+                    for row in self.partition_selection_list:
                         print("row is " + str(row))
                         if row[1]:
                             image_key = row[0]
@@ -644,10 +643,9 @@ class Handler:
                 elif self.current_page == Page.CLONE_PARTITIONS_TO_CLONE_SELECTION:
                     self.is_overwriting_partition_table = self.builder.get_object(
                         "clone_overwrite_partition_table_checkbutton").get_active()
-                    partition_selection_list = self.builder.get_object("partition_selection_list")
                     self.partitions_to_clone = collections.OrderedDict()
                     has_atleast_one = False
-                    for row in partition_selection_list:
+                    for row in self.partition_selection_list:
                         print("row is " + str(row))
                         if row[1]:
                             image_key = row[0]
