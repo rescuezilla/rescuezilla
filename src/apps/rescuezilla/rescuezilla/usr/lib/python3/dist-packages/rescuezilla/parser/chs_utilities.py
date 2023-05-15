@@ -1,6 +1,6 @@
 # ----------------------------------------------------------------------
-#   Copyright (C) 2003-2021 Steven Shiau <steven _at_ clonezilla org>
-#   Copyright (C) 2019-2021 Rescuezilla.com <rescuezilla@gmail.com>
+#   Copyright (C) 2003-2023 Steven Shiau <steven _at_ clonezilla org>
+#   Copyright (C) 2019-2023 Rescuezilla.com <rescuezilla@gmail.com>
 # ----------------------------------------------------------------------
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU General Public License as published by
