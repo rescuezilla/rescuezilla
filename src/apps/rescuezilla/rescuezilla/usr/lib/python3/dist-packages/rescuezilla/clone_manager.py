@@ -25,27 +25,30 @@ from datetime import datetime
 
 import gi
 
+from ui_manager import UiManager
 from parser.metadata_only_image import MetadataOnlyImage
 from parser.qemu_image import QemuImage
 from wizard_state import QEMU_NBD_NBD_DEVICE
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import GObject, GLib
+from gi.repository import GLib
 
-from utility import ErrorMessageModalPopup, Utility, _
+from utility import Utility, _
 
 
 # Signals should automatically propagate to processes called with subprocess.run().
 
 # The CloneManager leverages the BackupManager and RestoreManager as much as possible.
 class CloneManager:
-    def __init__(self, builder, backup_manager, restore_manager):
+    def __init__(self,
+                 ui_manager: UiManager,
+                 backup_manager,
+                 restore_manager):
+        self.ui_manager = ui_manager
         self.clone_in_progress_lock = threading.Lock()
         self.clone_in_progress = False
-        self.builder = builder
         self.backup_manager = backup_manager
         self.restore_manager = restore_manager
-        self.main_statusbar = self.builder.get_object("main_statusbar")
         # proc dictionary
         self.proc = collections.OrderedDict()
         self.requested_stop = False
@@ -70,7 +73,7 @@ class CloneManager:
         self.is_overwriting_partition_table = is_overwriting_partition_table
         self.is_rescue = is_rescue
         self.completed_callback = completed_callback
-        GLib.idle_add(self.restore_manager.update_progress_bar, 0)
+        self.ui_manager.update_progress_bar(fraction=0)
         # Entire machine's drive state
         # TODO: This is a crutch that ideally will be removed. It's very bad from an abstraction perspective, and
         # TODO: clear abstractions is important for ensuring correctness of the backup/restore operation
@@ -122,8 +125,9 @@ class CloneManager:
         except Exception as exception:
             tb = traceback.format_exc()
             traceback.print_exc()
-            GLib.idle_add(self.completed_clone, False, _("Error restoring image: ") + tb)
-            return
+            return self.ui_manager.completed_operation(callable_fn=self.completed_clone,
+                                                       succeeded=False,
+                                                       message=_("Error restoring image: ") + tb)
 
     def do_clone(self):
         self.requested_stop = False
@@ -140,12 +144,14 @@ class CloneManager:
         if isinstance(self.image, QemuImage):
             is_associated, failed_message = self.image.associate_nbd(QEMU_NBD_NBD_DEVICE)
             if not is_associated:
-                GLib.idle_add(self.completed_clone, False, "Failed to associate QemuImage: " + failed_message)
-                return
+                return self.ui_manager.completed_operation(callable_fn=self.completed_clone,
+                                                           succeeded=False,
+                                                           message="Failed to associate QemuImage: " + failed_message)
         if not (isinstance(self.image, QemuImage) or isinstance(self.image, MetadataOnlyImage)):
             # This shouldn't ever happen
-            GLib.idle_add(self.completed_clone, False, "Unsupported image")
-            return
+            return self.ui_manager.completed_operation(callable_fn=self.completed_clone,
+                                                       succeeded=False,
+                                                       message="Unsupported image")
         # self, selected_drive_key, partitions_to_backup, drive_state, dest_dir, backup_notes,
         #                      compression_dict, completed_backup_callback, on_separate_thread=True
         #
@@ -168,8 +174,10 @@ class CloneManager:
             # During a clone operation, the user will only care about Backup Manager if it failed.
             with self.summary_message_lock and self.backup_manager.summary_message_lock:
                 self.summary_message += self.backup_manager.summary_message + "\n"
-            GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, message)
-            GLib.idle_add(self.completed_clone, False, message)
+            self.ui_manager.display_error_message(summary_message=message)
+            return self.ui_manager.completed_operation(callable_fn=self.completed_clone,
+                                                       succeeded=False,
+                                                       message=message)
 
         self.image.scan_dummy_images_and_annotate(self.temp_dir)
 
@@ -185,9 +193,13 @@ class CloneManager:
         with self.summary_message_lock and self.restore_manager.summary_message_lock:
             self.summary_message += self.restore_manager.summary_message + "\n"
         if not is_success:
-            GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, message)
-            GLib.idle_add(self.completed_clone, False, message)
-        GLib.idle_add(self.completed_clone, True, "")
+            self.ui_manager.display_error_message(summary_message=message)
+            return self.ui_manager.completed_operation(callable_fn=self.completed_clone,
+                                                       succeeded=False,
+                                                       message=message)
+        return self.ui_manager.completed_operation(callable_fn=self.completed_clone,
+                                                   succeeded=False,
+                                                   message="")
 
     # Expected to run on GTK event thread
     def completed_clone(self, succeeded, message):
@@ -199,7 +211,7 @@ class CloneManager:
             if not is_success:
                 with self.summary_message_lock:
                     self.summary_message += message + "\n"
-                error = ErrorMessageModalPopup(self.builder, failed_message)
+                self.ui_manager.display_error_message(summary_message=failed_message)
                 print(failed_message)
 
         if succeeded:
@@ -208,8 +220,8 @@ class CloneManager:
         else:
             # Keep temp_dir for debugging
             print("Not deleting " + self.temp_dir)
-        self.main_statusbar.remove_all(self.main_statusbar.get_context_id("restore"))
-        self.main_statusbar.remove_all(self.main_statusbar.get_context_id("clone"))
+        self.ui_manager.remove_all_main_statusbar(context_id="restore")
+        self.ui_manager.remove_all_main_statusbar(context_id="clone")
         with self.clone_in_progress_lock:
             self.clone_in_progress = False
         if succeeded:
@@ -217,11 +229,11 @@ class CloneManager:
         else:
             with self.summary_message_lock:
                 self.summary_message += message + "\n"
-            error = ErrorMessageModalPopup(self.builder, message)
+            self.ui_manager.display_error_message(summary_message=message)
             print("Failure")
         with self.summary_message_lock:
             self.summary_message += "\n" + _("Operation took {num_minutes} minutes.").format(num_minutes=duration_minutes) + "\n"
-            post_task_action = Utility.get_combobox_key(self.builder.get_object("clone_step6_perform_action_combobox"))
+            post_task_action: str = self.ui_manager.get_post_task_action()
             if post_task_action != "DO_NOTHING":
                 if succeeded:
                     has_scheduled, msg = Utility.schedule_shutdown_reboot(post_task_action)
@@ -246,12 +258,10 @@ class CloneManager:
         if isinstance(self.image, QemuImage):
             # For QemuImage instances, update the "Restore" mode UI widgets rather than the "Clone" mode UI widgets.
             heading = _("Restore Summary")
-            text_to_display = text_to_display.format(heading=_(heading), message=GObject.markup_escape_text(summary_message))
-            self.builder.get_object("restore_step7_summary_program_defined_text").set_markup(text_to_display)
         else:
             heading = _("Clone Summary")
-            text_to_display = text_to_display.format(heading=_(heading), message=GObject.markup_escape_text(summary_message))
-            self.builder.get_object("clone_step7_summary_program_defined_text").set_markup(text_to_display)
+        text_to_display = text_to_display.format(heading=_(heading), message=self.ui_manager.escape_text(input=self.summary_message))
+        self.ui_manager.display_summary_text(text_to_display=text_to_display)
 
     # CloneManager handles the threading so calls to the BackupManager/RestoreManager are done synchronously, so the
     # callback is not required here.

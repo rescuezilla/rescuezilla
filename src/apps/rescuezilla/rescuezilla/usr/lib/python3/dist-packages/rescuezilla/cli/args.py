@@ -69,11 +69,12 @@ def parse_arguments(parser: argparse.ArgumentParser) -> argparse.Namespace:
     clone_parser.add_argument('--partitions', default='all', nargs='+', type=str, help='The partitions to clone from the source drive')
 
     # Add the --description parsing for backup subcommand
-    backup_parser.add_argument('--description', type=str, help='Textual description of the backup image')
+    backup_parser.add_argument('--description', type=str, help='Textual description of the backup image', default="")
 
     # Add the --compression-format for the backup command
     backup_parser.add_argument('--compression-format', type=str, choices=['gzip', 'none', 'zstd', 'bzip2'], default='gzip', help='The compression format')
-    backup_parser.add_argument('--compression-level', type=lambda x: valid_compression_level(parser.parse_args().compression_format, int(x)), default=9)
+    #TODO fix
+    backup_parser.add_argument('--compression-level', type=lambda x: valid_compression_level("gzip", int(x)), default=9)
 
     backup_parser.add_argument('--post-operation-action', type=str, choices=['none', 'shutdown', 'reboot'], default='none', help='Operation to do after backup finished')
     backup_parser.add_argument('--rescue', action='store_true', default=False, help="Use partclone's --rescue option. Use with caution: enabling may suppress important errors")

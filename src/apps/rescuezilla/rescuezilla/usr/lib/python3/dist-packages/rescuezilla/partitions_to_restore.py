@@ -22,6 +22,7 @@ import traceback
 
 import gi
 
+import utility
 from parser.apart_gtk_image import ApartGtkImage
 from parser.fogproject_image import FogProjectImage
 from parser.foxclone_image import FoxcloneImage
@@ -118,6 +119,13 @@ class PartitionsToRestore:
             overwrite_partition_table_checkbutton.set_active(self.selected_image.has_partition_table())
         self.set_overwriting_partition_warning_label(self.selected_image.has_partition_table())
 
+    # Quick kludge to print without UiManger
+    # TODO refactor to remove kludge
+    def _display_error_message(self, msg):
+        GLib.idle_add(utility.ErrorMessageModalPopup.display_nonfatal_warning_message,
+                      self.builder,
+                      message=msg)
+
     # Starts LVM and umounts all relevant logical volumes
     # FIXME: Similar code is is duplicated elsewhere in the codebase.
     def _scan_and_unmount_existing_lvm(self, dest_partitions, is_overwriting_partition_table):
@@ -169,7 +177,8 @@ class PartitionsToRestore:
                                 continue
 
             # Stop the Logical Volume Manager (LVM)
-            failed_logical_volume_list, failed_volume_group_list = Lvm.shutdown_lvm2(self.builder, None)
+            failed_logical_volume_list, failed_volume_group_list = Lvm.shutdown_lvm2(display_error_message=self._display_error_message,
+                                                                                     logger=None)
             for failed_volume_group in failed_volume_group_list:
                 error_message += "Failed to shutdown Logical Volume Manager (LVM) Volume Group (VG): " + failed_volume_group[
                     0] + "\n\n" + failed_volume_group[1]

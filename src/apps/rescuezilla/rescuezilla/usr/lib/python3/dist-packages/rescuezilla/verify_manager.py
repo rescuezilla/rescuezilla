@@ -23,19 +23,15 @@ import threading
 import traceback
 from datetime import datetime
 
-import gi
-
+from ui_manager import UiManager
 from parser.metadata_only_image import MetadataOnlyImage
 from parser.sfdisk import Sfdisk
-
-gi.require_version("Gtk", "3.0")
-from gi.repository import GObject, GLib
 
 from logger import Logger
 
 from parser.partclone import Partclone
 from parser.fsarchiver_image import FsArchiverImage
-from utility import ErrorMessageModalPopup, Utility, _
+from utility import Utility, _
 
 
 # Signals should automatically propagate to processes called with subprocess.run().
@@ -47,13 +43,11 @@ from utility import ErrorMessageModalPopup, Utility, _
 # TODO: Check veracity of the LVM configuration here (rather than a basic scan during the image scan step),
 # TODO: implement ocs-chkimg's basic content of the dd images.
 class VerifyManager:
-    def __init__(self, builder):
+    def __init__(self,
+                 ui_manager: UiManager):
+        self.ui_manager = ui_manager
         self.verify_in_progress_lock = threading.Lock()
         self.verify_in_progress = False
-        self.builder = builder
-        self.verify_progress = self.builder.get_object("verify_progress")
-        self.verify_progress_status = self.builder.get_object("verify_progress_status")
-        self.main_statusbar = self.builder.get_object("main_statusbar")
         # proc dictionary
         self.proc = collections.OrderedDict()
         self.requested_stop = False
@@ -107,8 +101,9 @@ class VerifyManager:
         except Exception as exception:
             tb = traceback.format_exc()
             traceback.print_exc()
-            GLib.idle_add(self.completed_verify, False, _("Error verifying image: ") + tb)
-            return
+            return self.ui_manager.completed_operation(callable_fn=self.completed_verify,
+                                                       succeeded=False,
+                                                       message=_("Error verifying image: ") + tb)
 
     # TODO: Ideally find ways to consolidate the overlap between this function and aspects of Restore Manager's
     # TODO: do_restore() function
@@ -122,7 +117,7 @@ class VerifyManager:
         env = Utility.get_env_C_locale()
 
         self.logger = Logger("/tmp/rescuezilla.log." + datetime.now().strftime("%Y%m%dT%H%M%S") + ".txt")
-        GLib.idle_add(self.update_progress_bar, 0)
+        self.ui_manager.update_progress_bar(fraction=0)
 
         # Calculate the size across all selected images
         all_images_total_size_estimate = 0
@@ -140,11 +135,12 @@ class VerifyManager:
             image_number += 1
             image_verify_message = _("Verifying {image_name}").format(image_name=image.absolute_path)
             self.logger.write(image_verify_message)
-            GLib.idle_add(self.display_status, image_verify_message, image_verify_message)
+            self.ui_manager.display_status(msg1=image_verify_message, msg2=image_verify_message)
 
             if self.requested_stop:
-                GLib.idle_add(self.completed_verify, False, _("User requested operation to stop."))
-                return
+                return self.ui_manager.completed_operation(callable_fn=self.completed_verify,
+                                                           succeeded=False,
+                                                           message=_("User requested operation to stop."))
 
             with self.summary_message_lock:
                 self.summary_message += image.absolute_path + "\n"
@@ -188,8 +184,9 @@ class VerifyManager:
             for partition_key in image.image_format_dict_dict.keys():
                 total_partition_number += 1
                 if self.requested_stop:
-                    GLib.idle_add(self.completed_verify, False, _("User requested operation to stop."))
-                    return
+                    return self.ui_manager.completed_operation(callable_fn=self.completed_verify,
+                                                               succeeded=False,
+                                                               message=_("User requested operation to stop."))
 
                 if 'estimated_size_bytes' in image.image_format_dict_dict[partition_key].keys():
                     partition_estimated_size_bytes = image.image_format_dict_dict[partition_key]['estimated_size_bytes']
@@ -202,8 +199,7 @@ class VerifyManager:
 
                 filesystem_verify_message = _("Partition {partition}").format(partition=partition_key)
                 self.logger.write(image_verify_message)
-                GLib.idle_add(self.display_status, image_verify_message + " " + filesystem_verify_message,
-                              filesystem_verify_message)
+                self.ui_manager.display_status(msg1=image_verify_message + " " + filesystem_verify_message, msg2=filesystem_verify_message)
 
                 total_progress_float = Utility.calculate_progress_ratio(current_partition_completed_percentage=0,
                                                                         current_partition_bytes=partition_estimated_size_bytes,
@@ -211,7 +207,7 @@ class VerifyManager:
                                                                         total_bytes=all_images_total_size_estimate,
                                                                         image_number=total_partition_number,
                                                                         num_partitions=all_images_num_partitions)
-                GLib.idle_add(self.update_progress_bar, total_progress_float)
+                self.ui_manager.update_progress_bar(fraction=total_progress_float)
 
                 if 'type' in image.image_format_dict_dict[partition_key].keys():
                     image_type = image.image_format_dict_dict[partition_key]['type']
@@ -281,8 +277,9 @@ class VerifyManager:
                     proc_stderr = ""
                     while True:
                         if self.requested_stop:
-                            GLib.idle_add(self.completed_verify, False, _("User requested operation to stop."))
-                            return False, _("User requested operation to stop.")
+                            return self.ui_manager.completed_operation(callable_fn=self.completed_verify,
+                                                                       succeeded=False,
+                                                                       message=_("User requested operation to stop."))
 
                         output = self.proc[verify_chkimg_proc_key].stderr.readline()
                         proc_stderr += output
@@ -298,14 +295,13 @@ class VerifyManager:
                                     total_bytes=all_images_total_size_estimate,
                                     image_number=total_partition_number,
                                     num_partitions=len(image.image_format_dict_dict[partition_key].keys()))
-                                GLib.idle_add(self.update_progress_bar, total_progress_float)
+                                self.ui_manager.update_progress_bar(fraction=total_progress_float)
                             if 'remaining' in temp_dict.keys():
-                                GLib.idle_add(self.update_verify_progress_status,
-                                              filesystem_verify_message + "\n\n" + output)
+                                self.ui_manager.update_progress_status(message=filesystem_verify_message + "\n\n" + output)
                         elif "partimage" == image_type:
-                            self.display_status("partimage: " + filesystem_verify_message, "")
+                            self.ui_manager.display_status(msg1="partimage: " + filesystem_verify_message, msg2="")
                         elif "ntfsclone" == image_type:
-                            self.display_status("ntfsclone: " + filesystem_verify_message, "")
+                            self.ui_manager.display_status(msg1="ntfsclone: " + filesystem_verify_message, msg2="")
 
                         rc = self.proc[verify_chkimg_proc_key].poll()
 
@@ -325,8 +321,7 @@ class VerifyManager:
                         decompression_stderr = self.proc[verify_decompression_proc_key].stderr
                         if decompression_stderr is not None and decompression_stderr != "":
                             extra_info += "\n\n" + decompression_cmd_list[0] + " stderr: " + decompression_stderr
-                        GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
-                                      partition_summary + extra_info)
+                        self.ui_manager.display_error_message(summary_message=partition_summary + extra_info)
                         with self.summary_message_lock:
                             self.summary_message += partition_summary
                         cumulative_bytes += partition_estimated_size_bytes
@@ -341,37 +336,18 @@ class VerifyManager:
             with self.summary_message_lock:
                 self.summary_message += "\n\n"
 
-        GLib.idle_add(self.completed_verify, True, "")
-        return
 
-    def display_status(self, msg1, msg2):
-        GLib.idle_add(self.update_verify_progress_status, msg1 + "\n" + msg2)
-        if msg2 != "":
-            status_bar_msg = msg1 + ": " + msg2
-        else:
-            status_bar_msg = msg1
-        GLib.idle_add(self.update_main_statusbar, status_bar_msg)
+        return self.ui_manager.completed_operation(callable_fn=self.completed_verify,
+                                                   succeeded=True,
+                                                   message="")
 
     # Intended to be called via event thread
-    def update_main_statusbar(self, message):
-        context_id = self.main_statusbar.get_context_id("verify")
-        self.main_statusbar.push(context_id, message)
-
-    # Intended to be called via event thread
-    def update_verify_progress_status(self, message):
-        self.verify_progress_status.set_text(message)
-
-    # Intended to be called via event thread
-    def update_progress_bar(self, fraction):
-        self.logger.write("Updating progress bar to " + str(fraction) + "\n")
-        self.verify_progress.set_fraction(fraction)
-
     # Expected to run on GTK event thread
     def completed_verify(self, succeeded, message):
         verify_timeend = datetime.now()
         duration_minutes = Utility.get_human_readable_minutes_seconds((verify_timeend - self.verify_timestart).total_seconds())
 
-        self.main_statusbar.remove_all(self.main_statusbar.get_context_id("verify"))
+        self.ui_manager.remove_all_main_statusbar(context_id="verify")
         with self.verify_in_progress_lock:
             self.verify_in_progress = False
         if succeeded:
@@ -379,7 +355,7 @@ class VerifyManager:
         else:
             with self.summary_message_lock:
                 self.summary_message += message + "\n"
-            error = ErrorMessageModalPopup(self.builder, message)
+            self.ui_manager.display_error_message(summary_message=message)
             print("Failure")
         with self.summary_message_lock:
             self.summary_message += "\n" + _("Operation took {num_minutes} minutes.").format(
@@ -393,5 +369,5 @@ class VerifyManager:
             self.logger.write("Populating summary page with:\n\n" + self.summary_message)
             text_to_display = _("""<b>{heading}</b>
 
-{message}""").format(heading=_("Verification Summary"), message=GObject.markup_escape_text(self.summary_message))
-        self.builder.get_object("verify_step4_summary_program_defined_text").set_markup(text_to_display)
+{message}""").format(heading=_("Verification Summary"), message=self.ui_manager.escape_text(input=self.summary_message))
+        self.ui_manager.display_summary_text(text_to_display=text_to_display)

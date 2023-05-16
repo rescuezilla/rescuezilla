@@ -29,7 +29,9 @@ import gi
 
 from backup_manager import BackupManager
 from cli.args import parse_arguments
+from ui_manager import UiManager
 from clone_manager import CloneManager
+from drive_query import CliDriveQuery, DriveQueryInternal
 from image_explorer_manager import ImageExplorerManager
 from restore_manager import RestoreManager
 from utility import Utility, ErrorMessageModalPopup
@@ -70,61 +72,81 @@ def main():
     print("WARNING: Command-line interface behavior may change between versions without notice.")
     parser = argparse.ArgumentParser(prog="rescuezillapy", description="Rescuezilla")
     args = parse_arguments(parser=parser)
+
+    memory_bus_width = Utility.get_memory_bus_width().strip()
+    version = Utility.read_file_into_string("/usr/share/rescuezilla/VERSION").strip()
+    commit_date = Utility.read_file_into_string("/usr/share/rescuezilla/GIT_COMMIT_DATE").strip()
+    human_readable_version = version + " (" + memory_bus_width + ") " + commit_date
+
     if args.command is None:
         # No arguments
-        launch_gui()
+        launch_gui(human_readable_version=human_readable_version)
     else:
-        cli_mode(args)
+        cli_mode(args=args,
+                 human_readable_version=human_readable_version)
 
 
-def cli_mode(args: argparse.Namespace):
+def cli_mode(args: argparse.Namespace,
+             human_readable_version: str):
         print(str(args))
+
+
+        cli_ui_manager = UiManager()
         if args.command == "backup":
-            backup_manager = BackupManager(human_readable_version)
-            drive_state = {}
+            backup_manager = BackupManager(ui_manager=cli_ui_manager,
+                                           human_readable_version=human_readable_version)
+            cli_drive_query = CliDriveQuery()
+            drive_query = DriveQueryInternal(ui_manager=cli_drive_query)
+            drive_state = drive_query._do_drive_query()
             backup_manager.start_backup(selected_drive_key=args.source,
                                         partitions_to_backup=args.partitions,
                                         drive_state=drive_state,
-                                        dest_dir=args=args.destination,
+                                        dest_dir=args.destination,
                                         backup_notes=args.description,
-                                        compression_dict={"format": args.compression, "level": args.compression_level},
+                                        compression_dict={"format": args.compression_format, "level": args.compression_level},
                                         is_rescue=args.rescue,
-                                        completed_backup_callback,
+                                        completed_backup_callback=cli_ui_manager.completed_operation,
                                         metadata_only_image_to_annotate=None,
                                         on_separate_thread=False)
         elif args.command == "restore":
-            restore_manager = RestoreManager()
-            restore_manager.start_restore(image,
+            restore_manager = RestoreManager(ui_manager=cli_ui_manager)
+            """restore_manager.start_restore(image,
                                           restore_destination_drive,
                                           restore_mapping_dict,
                                           is_overwriting_partition_table,
                                           is_rescue,
                                           completed_callback,
-                                          on_separate_thread=False)
+                                          on_separate_thread=False)"""
         elif args.command == "clone":
-            clone_manager = CloneManager(backup_manager, restore_manager)
-            clone_manager.start_clone(image,
+            backup_manager = BackupManager(ui_manager=cli_ui_manager,
+                                           human_readable_version=human_readable_version)
+            restore_manager = RestoreManager(ui_manager=cli_ui_manager)
+            clone_manager = CloneManager(ui_manager=cli_ui_manager,
+                                         backup_manager=backup_manager,
+                                         restore_manager=restore_manager)
+            """clone_manager.start_clone(image,
                                       clone_destination_drive,
                                       clone_mapping_dict,
                                       drive_state,
                                       is_overwriting_partition_table,
                                       is_rescue,
-                                      on_separate_thread=False)
+                                      on_separate_thread=False)"""
         elif args.command == "verify":
-            verify_manager = VerifyManager()
+            verify_manager = VerifyManager(ui_manager=cli_ui_manager)
+            # TODO: ImageFolderQuery
             verify_manager.start_verify(image_list=args.source,
-                                        completed_callback,
+                                        completed_callback=cli_ui_manager.completed_operation,
                                         on_separate_thread=False)
         elif args.command == "mount":
             image_explorer_manager = ImageExplorerManager()
             image_explorer_manager.mount_partition(selected_partition_key=args.partitions)
         elif args.command == "umount":
             image_explorer_manager = ImageExplorerManager()
-            image_explorer_manager.umount_partition(selected_partition_key=args.partitions)
+            #image_explorer_manager.umount_partition(selected_partition_key=args.partitions)
         else:
             print("unknown mode")
 
-def launch_gui():
+def launch_gui(human_readable_version: str):
     builder = Gtk.Builder()
     builder.set_translation_domain('rescuezilla')
     # Use the GTKBuilder to dynamically construct all the UI widget objects as defined in the GTKBuilder .glade XML
@@ -132,7 +154,8 @@ def launch_gui():
     # directly a text editor, because Glade occasionally has some user-interface limitations.
     builder.add_from_file("/usr/share/rescuezilla/rescuezilla.glade")
 
-    handler = Handler(builder)
+    handler = Handler(builder,
+                      human_readable_version=human_readable_version)
     # Connect the handler object for the GUI callbacks. This handler manages the entire application state.
     builder.connect_signals(handler)
 

@@ -31,6 +31,7 @@ from time import sleep
 import gi
 
 import utility
+from ui_manager import UiManager
 from parser.apart_gtk_image import ApartGtkImage
 from parser.fogproject_image import FogProjectImage
 from parser.foxclone_image import FoxcloneImage
@@ -66,11 +67,14 @@ from gi.repository import GLib
 # TODO: Add support to explore more compression formats used by Clonezilla (currently only xz, gzip and uncompressed)
 # TODO: Switch to partclone-utils (from partclone-nbd) in order to support 'ntfsclone' images in addition to 'partclone'
 class ImageExplorerManager:
-    def __init__(self, builder, image_explorer_partition_selection_list,
-                 set_support_information_linkbutton_visible, set_patreon_call_to_action_visible):
+    def __init__(self,
+                 builder,
+                 image_explorer_partition_selection_list,
+                 set_support_information_linkbutton_visible,
+                 set_patreon_call_to_action_visible):
+        self.builder = builder
         self.image_explorer_in_progress = False
         self.is_partition_mounted = False
-        self.builder = builder
         self.main_statusbar = self.builder.get_object("main_statusbar")
         self.duration_label = self.builder.get_object("image_explorer_operation_duration_label")
         self.image_explorer_partition_selection_list = image_explorer_partition_selection_list

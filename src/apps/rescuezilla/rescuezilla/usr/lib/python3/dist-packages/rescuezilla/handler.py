@@ -27,6 +27,7 @@ from datetime import datetime
 import gi
 
 from backup_manager import BackupManager
+from gtk_ui_manager import GtkUiManager
 from clone_manager import CloneManager
 from image_explorer_manager import ImageExplorerManager
 from mount_local_path import MountLocalPath
@@ -66,7 +67,9 @@ class Handler:
    PyGTK-specific API documentation https://developer.gnome.org/pygtk/stable/class-gtknotebook.html
    """
 
-    def __init__(self, builder):
+    def __init__(self,
+                 builder,
+                 human_readable_version: str):
         # The GTKBuilder is used to retrieve any arbitrary GTK widgets using "id" attributes in the GTKBuilder
         # (.glade) XML file
         self.builder = builder
@@ -74,13 +77,10 @@ class Handler:
         self.drive_list_store = self.builder.get_object("drive_list")
         self.mount_partition_list_store = self.builder.get_object("mount_partition_list")
         self.image_list_store = self.builder.get_object("image_list")
+        self.human_readable_version = human_readable_version
 
         self.has_prior_summary_page = False
-        self.memory_bus_width = Utility.get_memory_bus_width().strip()
-        self.version = Utility.read_file_into_string("/usr/share/rescuezilla/VERSION").strip()
-        self.commit_date = Utility.read_file_into_string("/usr/share/rescuezilla/GIT_COMMIT_DATE").strip()
         self.main_statusbar = self.builder.get_object("main_statusbar")
-        self.human_readable_version = self.version + " (" + self.memory_bus_width + ") " + self.commit_date
         self.mode = Mode.BACKUP
         self.current_page = Page.WELCOME
         self.drive_query = DriveQuery(self.builder, self.drive_list_store, self.save_partition_list_store,
@@ -113,10 +113,42 @@ class Handler:
         compression_format_combobox.set_active(0)
         self.compression_tool_changed(compression_format_combobox)
 
-        self.backup_manager = BackupManager(builder, self.human_readable_version)
-        self.restore_manager = RestoreManager(builder)
-        self.verify_manager = VerifyManager(builder)
-        self.clone_manager = CloneManager(builder, self.backup_manager, self.restore_manager)
+        backup_ui_manager = GtkUiManager(builder=builder,
+                                         main_statusbar=self.builder.get_object("main_statusbar"),
+                                         main_statusbar_context_id="backup",
+                                         progress_bars=[self.builder.get_object("backup_progress")],
+                                         progress_statuses=[self.builder.get_object("backup_progress_status")],
+                                         post_task_action_combobox=self.builder.get_object("backup_step8_perform_action_combobox"),
+                                         summary_program_defined_texts=[self.builder.get_object("backup_step9_summary_program_defined_text")])
+        self.backup_manager = BackupManager(ui_manager=backup_ui_manager,
+                                            human_readable_version=self.human_readable_version)
+        restore_ui_manager = GtkUiManager(builder=builder,
+                                          main_statusbar=self.builder.get_object("main_statusbar"),
+                                          main_statusbar_context_id="restore",
+                                          progress_bars=[self.builder.get_object("restore_progress"), self.builder.get_object("clone_progress")],
+                                          progress_statuses=[self.builder.get_object("restore_progress_status"), self.builder.get_object("clone_progress_status")],
+                                          post_task_action_combobox=self.builder.get_object("restore_step6_perform_action_combobox"),
+                                          summary_program_defined_texts=[self.builder.get_object("restore_step7_summary_program_defined_text")])
+        self.restore_manager = RestoreManager(ui_manager=restore_ui_manager)
+        verify_ui_manager = GtkUiManager(builder=builder,
+                                         main_statusbar=self.builder.get_object("main_statusbar"),
+                                         main_statusbar_context_id="verify",
+                                         progress_bars=[self.builder.get_object("verify_progress")],
+                                         progress_statuses=[self.builder.get_object("verify_progress_status")],
+                                         post_task_action_combobox=None,
+                                         summary_program_defined_texts=[self.builder.get_object("verify_step4_summary_program_defined_text")])
+        self.verify_manager = VerifyManager(ui_manager=verify_ui_manager)
+        clone_ui_manager = GtkUiManager(builder=builder,
+                                        main_statusbar=self.builder.get_object("main_statusbar"),
+                                        main_statusbar_context_id="clone",
+                                        progress_bars=[self.builder.get_object("restore_progress"), self.builder.get_object("clone_progress")],
+                                        progress_statuses=[self.builder.get_object("restore_progress_status"), self.builder.get_object("clone_progress_status")],
+                                        post_task_action_combobox=self.builder.get_object("clone_step6_perform_action_combobox"),
+                                        summary_program_defined_texts=[self.builder.get_object("clone_step7_summary_program_defined_text"),
+                                                                        self.builder.get_object("restore_step7_summary_program_defined_text")])
+        self.clone_manager = CloneManager(ui_manager=clone_ui_manager,
+                                          backup_manager=self.backup_manager,
+                                          restore_manager=self.restore_manager)
         # FIXME: Remove need to passing the support info / patreon visibility functions for improved abstraction
         self.image_explorer_manager = ImageExplorerManager(builder, self.image_explorer_partition_selection_list,
                                                            self.set_support_information_linkbutton_visible, self.set_patreon_call_to_action_visible)
@@ -412,7 +444,7 @@ class Handler:
                 elif self.current_page == Page.BACKUP_CONFIRM_CONFIGURATION:
                     self.current_page = Page.BACKUP_PROGRESS
                     self.builder.get_object("backup_tabs").set_current_page(7)
-                    self.backup_manager.update_backup_progress_bar(0)
+                    self.backup_manager.ui_manager.update_progress_bar(fraction=0)
                     is_rescue = self.get_rescue_state()
                     self.backup_manager.start_backup(self.selected_drive_key, self.partitions_to_backup, self.drive_query.drive_state, self.dest_dir, self.backup_notes, self.compression_dict, is_rescue, self._on_operation_completed_callback)
                     # Disable back/next button until the restore completes
@@ -913,13 +945,13 @@ class Handler:
             self.builder.get_object("restore_tabs").set_current_page(5)
             is_rescue = self.get_rescue_state()
             if not isinstance(self.selected_image, QemuImage):
-                self.restore_manager.update_progress_bar(0)
+                self.restore_manager.ui_manager.update_progress_bar(fraction=0)
                 self.restore_manager.start_restore(self.selected_image, self.restore_destination_drive,
                                                    self.partitions_to_restore, self.is_overwriting_partition_table,
                                                    is_rescue,
                                                    self._on_operation_completed_callback)
             else:
-                self.restore_manager.update_progress_bar(0)
+                self.restore_manager.ui_manager.update_progress_bar(fraction=0)
                 self.clone_manager.start_clone(image=self.selected_image,
                                                clone_destination_drive=self.restore_destination_drive,
                                                clone_mapping_dict=self.partitions_to_restore,

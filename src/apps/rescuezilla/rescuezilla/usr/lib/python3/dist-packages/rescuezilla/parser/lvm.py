@@ -19,15 +19,11 @@
 
 import json
 from os.path import isdir, isfile
+from typing import Callable, Optional
 
-import utility
+from logger import Logger
+from ui_manager import UiManager
 from utility import Utility
-
-import gi
-
-gi.require_version("Gtk", "3.0")
-from gi.repository import GLib
-
 
 # To maximize Rescuezilla's support for Clonezilla image format, this file is currently largely a Python port of
 # Clonezilla's Logical Volume Manager handling.
@@ -123,7 +119,8 @@ class Lvm:
         return json.loads(lvs_process.stdout)
 
     @staticmethod
-    def shutdown_lvm2(builder, logger):
+    def shutdown_lvm2(display_error_message: Callable[[str], None],
+                      logger: Optional[Logger]):
         print("Shutting down the Logical Volume Manager (LVM)")
         # Using list here because its doesn't appear to be guaranteed that the keys are unique
         failed_lv_shutdown_list = []
@@ -141,8 +138,7 @@ class Lvm:
                         elif 'lv_name' in logical_volume_dict.keys():
                             to_shutdown_lv = logical_volume_dict['lv_name']
                         else:
-                            GLib.idle_add(utility.ErrorMessageModalPopup.display_nonfatal_warning_message, builder,
-                                          "Could not find LV path or name. Unexpected " + str(logical_volume_dict))
+                            display_error_message("Could not find LV path or name. Unexpected " + str(logical_volume_dict))
                             print("No lv path or name found. Unexpected.")
                             continue
 
@@ -170,8 +166,7 @@ class Lvm:
                         elif 'vg_name' in volume_group_dict.keys():
                             to_shutdown_vg = volume_group_dict['vg_name']
                         else:
-                            GLib.idle_add(utility.ErrorMessageModalPopup.display_nonfatal_warning_message, builder,
-                                          "Could not find VG path or name. Unexpected " + str(volume_group_dict))
+                            display_error_message("Could not find VG path or name. Unexpected " + str(volume_group_dict))
                             print("No vg path or name found. Unexpected.")
                             continue
                         lv_count = int(volume_group_dict['lv_count'])
