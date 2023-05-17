@@ -62,16 +62,22 @@ class VerifyManager:
         with self.verify_in_progress_lock:
             return self.verify_in_progress
 
-    def start_verify(self, image_list, completed_callback):
+    def start_verify(self,
+                     image_list,
+                     completed_callback,
+                     on_separate_thread: bool = True):
         self.verify_timestart = datetime.now()
         self.image_list = image_list
         self.completed_callback = completed_callback
 
         with self.verify_in_progress_lock:
             self.verify_in_progress = True
-        thread = threading.Thread(target=self.do_verify_wrapper)
-        thread.daemon = True
-        thread.start()
+        if on_separate_thread:
+            thread = threading.Thread(target=self.do_verify_wrapper)
+            thread.daemon = True
+            thread.start()
+        else:
+            return self.do_verify()
 
     # Intended to be called via event thread
     # Sending signals to process objects on its own thread. Relying on Python GIL.

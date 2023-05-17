@@ -54,8 +54,15 @@ class CloneManager:
         with self.clone_in_progress_lock:
             return self.clone_in_progress
 
-    def start_clone(self, image, clone_destination_drive, clone_mapping_dict, drive_state,
-                    is_overwriting_partition_table, is_rescue, completed_callback):
+    def start_clone(self,
+                    image,
+                    clone_destination_drive,
+                    clone_mapping_dict,
+                    drive_state,
+                    is_overwriting_partition_table,
+                    is_rescue,
+                    completed_callback,
+                    on_separate_thread=True):
         self.clone_timestart = datetime.now()
         self.image = image
         self.clone_destination_drive = clone_destination_drive
@@ -74,9 +81,12 @@ class CloneManager:
             shutil.rmtree(self.temp_dir)
         with self.clone_in_progress_lock:
             self.clone_in_progress = True
-        thread = threading.Thread(target=self.do_clone_wrapper)
-        thread.daemon = True
-        thread.start()
+        if on_separate_thread:
+            thread = threading.Thread(target=self.do_clone_wrapper)
+            thread.daemon = True
+            thread.start()
+        else:
+            self.do_clone()
 
     # Intended to be called via event thread
     # Sending signals to process objects on its own thread. Relying on Python GIL.
