@@ -366,7 +366,6 @@ class RestoreManager:
             if not is_unmounted:
                 with self.summary_message_lock:
                     self.summary_message += message + "\n"
-                GLib.idle_add(self.restore_destination_drive, False, message)
 
             if self.requested_stop:
                 GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
@@ -738,7 +737,6 @@ class RestoreManager:
                 self.logger.write(partition_table_message)
                 with self.summary_message_lock:
                     self.summary_message += partition_table_message + "\n"
-                GLib.idle_add(self.restore_destination_drive, False, message)
 
             image_number = 0
             for image_key in self.restore_mapping_dict.keys():
@@ -764,7 +762,6 @@ class RestoreManager:
                     self.logger.write(message)
                     with self.summary_message_lock:
                         self.summary_message += message + "\n"
-                    GLib.idle_add(self.restore_destination_drive, False, message)
 
                 if self.requested_stop:
                     GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
@@ -1223,7 +1220,6 @@ class RestoreManager:
             if not is_unmounted:
                 with self.summary_message_lock:
                     self.summary_message += message + "\n"
-                GLib.idle_add(self.restore_destination_drive, False, message)
 
             if self.requested_stop:
                 GLib.idle_add(self.completed_restore, False, _("User requested operation to stop."))
@@ -1237,7 +1233,6 @@ class RestoreManager:
                     self.logger.write(message)
                     with self.summary_message_lock:
                         self.summary_message += message + "\n"
-                    GLib.idle_add(self.restore_destination_drive, False, message)
 
                 image_number += 1
                 self.logger.write("Going to restore " + image_key + " of image to " + self.restore_mapping_dict[image_key][
