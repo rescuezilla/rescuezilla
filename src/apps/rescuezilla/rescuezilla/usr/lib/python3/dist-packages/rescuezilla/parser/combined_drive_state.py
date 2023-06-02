@@ -18,8 +18,16 @@
 
 import collections
 import copy
+from enum import Enum
 
 from utility import Utility, _
+
+ENCRYPTED_FILESYSTEMS = ["BitLocker"]
+
+class EncryptionState(Enum):
+    NOT_SUPPORTED = 1
+    ENCRYPTED = 2
+    UNENCRYPTED = 3
 
 
 # Implementation of Clonezilla's "/sbin/ocs-get-part-info" bash script.
@@ -32,6 +40,13 @@ from utility import Utility, _
 # This approach does not seem particularly efficient, but to maximize Clonezilla image compatibility (both for backup
 # and restore), the data flow has been re-implemented.
 class CombinedDriveState:
+
+    @staticmethod
+    def _get_encryption_state(filesystem_type: str) -> EncryptionState:
+        if filesystem_type in ENCRYPTED_FILESYSTEMS:
+            return EncryptionState.ENCRYPTED
+        return EncryptionState.NOT_SUPPORTED
+
     @staticmethod
     def construct_combined_drive_state_dict(lsblk_json_dict, blkid_dict, osprober_dict, parted_dict_dict,
                                             sfdisk_dict_dict):
@@ -123,6 +138,7 @@ class CombinedDriveState:
                     if partition_longdevname in blkid_dict.keys():
                         if 'TYPE' in blkid_dict[partition_longdevname].keys():
                             partition_state['filesystem'] = blkid_dict[partition_longdevname]['TYPE']
+                            partition_state['encryption'] = CombinedDriveState._get_encryption_state(partition_state['filesystem'])
                         if 'UUID' in blkid_dict[partition_longdevname].keys():
                             partition_state['uuid'] = blkid_dict[partition_longdevname]['UUID']
                         if 'LABEL' in blkid_dict[partition_longdevname].keys():
