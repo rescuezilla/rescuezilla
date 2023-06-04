@@ -817,7 +817,6 @@
                                                 </child>
                                                 <child>
                                                   <object class="GtkTreeViewColumn">
-                                                    <property name="visible">False</property>
                                                     <property name="title">partition_shortdevnode</property>
                                                     <child>
                                                       <object class="GtkCellRendererText"/>
