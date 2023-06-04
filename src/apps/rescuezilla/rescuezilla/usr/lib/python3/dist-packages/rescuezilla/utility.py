@@ -26,10 +26,13 @@ import shutil
 import subprocess
 import threading
 import time
+import json
+import datetime
 from contextlib import contextmanager
 from queue import Queue
 from threading import Thread
 from time import sleep
+from enum import Enum
 
 import gi
 
@@ -44,6 +47,14 @@ from gi.repository import GLib, Gtk
 
 def _(string):
     return gettext.gettext(string)
+
+def dumper(arg):
+    def json_default(arg):
+        if isinstance(arg, datetime.datetime) or isinstance(arg, Enum):
+            return "{}".format(arg)
+        raise TypeError(arg)
+    # return json.dumps(data, sort_keys=True, default=json_default, indent=2)
+    print(json.dumps(arg, sort_keys=True, default=json_default, indent=2))
 
 
 class PleaseWaitModalPopup:
