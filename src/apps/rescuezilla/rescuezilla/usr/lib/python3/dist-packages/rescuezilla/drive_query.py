@@ -31,11 +31,11 @@ import gi
 
 from image_explorer_manager import ImageExplorerManager
 from parser.blkid import Blkid
-from parser.combined_drive_state import CombinedDriveState
+from parser.combined_drive_state import CombinedDriveState, EncryptionState
 from parser.os_prober import OsProber
 from parser.parted import Parted
 from parser.sfdisk import Sfdisk
-from utility import PleaseWaitModalPopup, Utility, _, ErrorMessageModalPopup
+from utility import PleaseWaitModalPopup, Utility, _, ErrorMessageModalPopup, dumper
 from wizard_state import IMAGE_EXPLORER_DIR, RESCUEZILLA_MOUNT_TMP_DIR
 
 gi.require_version("Gtk", "3.0")
@@ -124,7 +124,9 @@ class DriveQuery:
 
     def populate_partition_selection_table(self, drive_key):
         print('Received drive key ' + drive_key)
-        print('drive state is ' + str(self.drive_state))
+        # print('drive state is ' + str(self.drive_state))
+        print('drive state is ') # + str(self.drive_state)
+        dumper(self.drive_state)
         self.save_partition_list_store.clear()
 
         try:
@@ -132,13 +134,15 @@ class DriveQuery:
                 for partition_key in self.drive_state[drive_key]['partitions'].keys():
                     flattened_partition_description = CombinedDriveState.flatten_partition_description(self.drive_state, drive_key, partition_key)
                     # Add row that's ticked
-                    self.save_partition_list_store.append([partition_key, True, flattened_partition_description])
+                    encryptions_state = "{}".format(self.drive_state.get(drive_key, {}).get('partitions',{}).get(partition_key,{}).get("encryption", EncryptionState.NOT_SUPPORTED).name)
+                    self.save_partition_list_store.append([partition_key, True, encryptions_state, flattened_partition_description])
             else:
                 # Add the drive itself
                 flattened_partition_description = CombinedDriveState.flatten_partition_description(self.drive_state,
                                                                                                    drive_key, drive_key)
                 # Add row that's ticked
-                self.save_partition_list_store.append([drive_key, True, flattened_partition_description])
+                encryptions_state = ""
+                self.save_partition_list_store.append([drive_key, True, encryptions_state, flattened_partition_description])
         except Exception as exception:
             tb = traceback.format_exc()
             traceback.print_exc()
