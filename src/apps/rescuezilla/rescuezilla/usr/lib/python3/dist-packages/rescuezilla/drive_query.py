@@ -134,7 +134,7 @@ class DriveQuery:
                 for partition_key in self.drive_state[drive_key]['partitions'].keys():
                     flattened_partition_description = CombinedDriveState.flatten_partition_description(self.drive_state, drive_key, partition_key)
                     # Add row that's ticked
-                    encryptions_state = "{}".format(self.drive_state.get(drive_key, {}).get('partitions',{}).get(partition_key,{}).get("encryption", EncryptionState.NOT_SUPPORTED).name)
+                    encryptions_state = "{}".format(self.drive_state.get(drive_key, {}).get('partitions',{}).get(partition_key,{}).get("encryption", EncryptionState.DOES_NOT_APPLY).name)
                     self.save_partition_list_store.append([partition_key, True, encryptions_state, flattened_partition_description])
             else:
                 # Add the drive itself

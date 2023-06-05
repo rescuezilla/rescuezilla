@@ -25,10 +25,10 @@ from utility import Utility, _
 ENCRYPTED_FILESYSTEMS = ["BitLocker"]
 
 class EncryptionState(Enum):
-    NOT_SUPPORTED = 1
-    ENCRYPTED = 2
-    UNENCRYPTED = 3
-
+    ENCRYPTED_AND_LOCKED = 1
+    ENCRYPTED_AND_UNLOCKED = 2
+    NOT_ENCRYPTED = 3
+    DOES_NOT_APPLY = 4
 
 # Implementation of Clonezilla's "/sbin/ocs-get-part-info" bash script.
 #
@@ -44,8 +44,8 @@ class CombinedDriveState:
     @staticmethod
     def _get_encryption_state(filesystem_type: str) -> EncryptionState:
         if filesystem_type in ENCRYPTED_FILESYSTEMS:
-            return EncryptionState.ENCRYPTED
-        return EncryptionState.NOT_SUPPORTED
+            return EncryptionState.ENCRYPTED_AND_LOCKED
+        return EncryptionState.NOT_ENCRYPTED
 
     @staticmethod
     def construct_combined_drive_state_dict(lsblk_json_dict, blkid_dict, osprober_dict, parted_dict_dict,
