@@ -44,7 +44,8 @@ from partitions_to_restore import PartitionsToRestore
 from drive_query import DriveQuery
 from image_folder_query import ImageFolderQuery
 from parser.sfdisk import Sfdisk
-from utility import ErrorMessageModalPopup, BrowseSelectionPopup, Utility, AreYouSureModalPopup, _
+from bitlocker import BitLocker
+from utility import ErrorMessageModalPopup, BrowseSelectionPopup, Utility, AreYouSureModalPopup, ask_for_password_popup, _
 from wizard_state import Mode, Page, MOUNT_DIR, IMAGE_EXPLORER_DIR, NETWORK_UI_WIDGET_MODES, RESCUEZILLA_MOUNT_TMP_DIR
 
 
@@ -975,9 +976,38 @@ class Handler:
         # invert toggle
         self.save_partition_list_store.set_value(iterator, 1, not state)
 
+    def show_hide_encryption_info(self, treeview):
+        print("row-selected")
+        list_store, iters = self.get_rows("backup_partitions_treeselection")
+        partition_dev_node = list_store.get(iters[0], 0)[0]
+        print(partition_dev_node)
+        show_encryption_banner = BitLocker.show_hide_decryption_gui(self.drive_query.drive_state, partition_dev_node)
+        self.builder.get_object("unlock_encrypted_partition_if_possible_label").set_visible(show_encryption_banner)
+
+    def attempt_to_unlock_encrypted_partition2(self, gtklabel, link_name):
+        print("attempt_to_unlock_encrypted_partition2")
+        list_store, iters = self.get_rows("backup_partitions_treeselection")
+        partition_dev_node = list_store.get(iters[0], 0)[0]
+        title = _("Partition: ") + partition_dev_node
+        msg = _("Please type the password to unlock the encrypted partition")
+        the_password = ask_for_password_popup(self.builder, msg, title)
+
+        if the_password is None:
+            return
+        list_store, iters = self.get_rows("backup_partitions_treeselection")
+        partition = list_store.get(iters[0], 0)[0]
+        print(partition)
+
+        error_msg = BitLocker.mount_bitlocker_image_with_dislocker(partition, the_password)
+        if error_msg is not None:
+            ErrorMessageModalPopup(self.builder, error_msg)
+            return
+
+
     # Callback for double click (row-activate) on backup mode partitions to backup toggle
     # TODO: Directly call save_partition_toggled from above, to reduce duplication
     def row_activated_backup_partition_toggle(self, treeview, path, view_column):
+        print("Row Activated")
         list_store, iters = self.get_rows("backup_partitions_treeselection")
         state = list_store.get(iters[0], 1)[0]
         list_store.set_value(iters[0], 1, not state)

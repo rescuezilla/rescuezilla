@@ -158,6 +158,37 @@ class ErrorMessageModalPopup(Gtk.MessageDialog):
         ErrorMessageModalPopup(builder, message)
 
 
+def ask_for_password_popup(builder, message, title):
+    def responseToDialog(entry, dialog, response):
+        dialog.response(response)
+    main_window = builder.get_object("main_window")
+
+    dialog_window = Gtk.MessageDialog(parent=main_window,
+                        flags=Gtk.DialogFlags.MODAL | Gtk.DialogFlags.DESTROY_WITH_PARENT,
+                        type=Gtk.MessageType.QUESTION,
+                        buttons=Gtk.ButtonsType.OK_CANCEL,
+                        message_format=message)
+
+    dialog_window.set_title(title)
+    dialog_box = dialog_window.get_content_area()
+
+    userEntry = Gtk.Entry()
+    userEntry.set_visibility(False)
+    userEntry.set_invisible_char("*")
+    userEntry.set_size_request(250,0)
+    userEntry.connect("activate", responseToDialog, dialog_window, Gtk.ResponseType.OK)
+
+    dialog_box.pack_end(userEntry, False, False, 0)
+    dialog_window.show_all()
+    response = dialog_window.run()
+    text = userEntry.get_text()
+    dialog_window.destroy()
+    if (response == Gtk.ResponseType.OK) and (text != ''):
+        return text
+    else:
+        return None
+
+
 class AreYouSureModalPopup:
     def __init__(self, builder, message, callback):
         self._main_window = builder.get_object("main_window")
@@ -504,13 +535,16 @@ class Utility:
         return "{:.1f}".format(duration_minutes + frac)
 
     @staticmethod
-    def run(short_description, cmd_list, use_c_locale, output_filepath=None, logger=None):
+    def run(short_description, cmd_list, use_c_locale, output_filepath=None, logger=None, input=None):
         if use_c_locale:
             env = Utility.get_env_C_locale()
         else:
             env = os.environ.copy()
         flat_command_string = Utility.print_cli_friendly(short_description, [cmd_list])
-        process = subprocess.run(cmd_list, encoding='utf-8', capture_output=True, env=env)
+        if input is None:
+            process = subprocess.run(cmd_list, encoding='utf-8', capture_output=True, env=env)
+        else:
+            process = subprocess.run(cmd_list, encoding='utf-8', capture_output=True, env=env, input=input)
         logging_output = short_description + ": " + flat_command_string + " returned " + str(process.returncode) + ": " + process.stdout + " " + process.stderr + "\n"
         if logger is None:
             print(logging_output)
