@@ -160,6 +160,21 @@
     <property name="can-focus">False</property>
     <property name="pixbuf">padlock_icon.png</property>
   </object>
+  <object class="GtkImage" id="drive_partition_not_encrypted">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="pixbuf">drive_partition_not_encrypted.png</property>
+  </object>
+  <object class="GtkImage" id="drive_partition_encrypted_and_unlocked">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="pixbuf">drive_partition_encrypted_and_unlocked.png</property>
+  </object>
+  <object class="GtkImage" id="drive_partition_encrypted_and_locked">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="pixbuf">drive_partition_encrypted_and_locked.png</property>
+  </object>
   <object class="GtkListStore" id="partition_selection_list">
     <columns>
       <!-- column-name partition_short_device_node -->
@@ -226,6 +241,8 @@
       <column type="gchararray"/>
       <!-- column-name save_toggle -->
       <column type="gboolean"/>
+      <!-- column-name encryption_state -->
+      <column type="GdkPixbuf"/>
       <!-- column-name partition_description -->
       <column type="gchararray"/>
     </columns>
@@ -843,11 +860,23 @@
                                                 <child>
                                                   <object class="GtkTreeViewColumn">
                                                     <property name="resizable">True</property>
+                                                    <property name="title" translatable="yes">Encryption</property>
+                                                    <child>
+                                                      <object class="GtkCellRendererPixbuf"/>
+                                                      <attributes>
+                                                        <attribute name="pixbuf">2</attribute>
+                                                      </attributes>
+                                                    </child>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkTreeViewColumn">
+                                                    <property name="resizable">True</property>
                                                     <property name="title" translatable="yes">Description</property>
                                                     <child>
                                                       <object class="GtkCellRendererText"/>
                                                       <attributes>
-                                                        <attribute name="text">2</attribute>
+                                                        <attribute name="text">3</attribute>
                                                       </attributes>
                                                     </child>
                                                   </object>
