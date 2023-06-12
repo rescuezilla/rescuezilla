@@ -984,24 +984,38 @@ class Handler:
         show_encryption_banner = BitLocker.show_hide_decryption_gui(self.drive_query.drive_state, partition_dev_node)
         self.builder.get_object("unlock_encrypted_partition_if_possible_label").set_visible(show_encryption_banner)
 
-    def attempt_to_unlock_encrypted_partition2(self, gtklabel, link_name):
-        print("attempt_to_unlock_encrypted_partition2")
-        list_store, iters = self.get_rows("backup_partitions_treeselection")
+    def _ask_for_password_popup(self, list_store, iters) -> str:
         partition_dev_node = list_store.get(iters[0], 0)[0]
         title = _("Partition: ") + partition_dev_node
         msg = _("Please type the password to unlock the encrypted partition")
         the_password = ask_for_password_popup(self.builder, msg, title)
+        return the_password
 
+    def attempt_to_unlock_encrypted_partition2(self, *args, **kwargs):
+        print("attempt_to_unlock_encrypted_partition2")
+        list_store, iters = self.get_rows("backup_partitions_treeselection")
+        the_password = self._ask_for_password_popup(list_store, iters)
         if the_password is None:
             return
-        list_store, iters = self.get_rows("backup_partitions_treeselection")
+
         partition = list_store.get(iters[0], 0)[0]
         print(partition)
-
-        error_msg = BitLocker.mount_bitlocker_image_with_dislocker(partition, the_password)
+        unencrypted_partition_info, error_msg = BitLocker.mount_bitlocker_image_with_dislocker(partition, the_password)
+        BitLocker.update_drive_state(self.drive_query.drive_state, partition, unencrypted_partition_info)
         if error_msg is not None:
             ErrorMessageModalPopup(self.builder, error_msg)
             return
+
+        self._update_ui_with_unlocked_partition(list_store, iters, unencrypted_partition_info)
+
+    def _update_ui_with_unlocked_partition(self, list_store, iters, unencrypted_partition_info):
+        new_description = list_store.get(iters[0], 3)[0] + unencrypted_partition_info.get("filesystem", "") + " " + unencrypted_partition_info.get("os_label", "")
+        list_store.set(iters[0], 3, new_description)
+
+        partition_icon = self.drive_query.icon_pixbufs["drive_partition_encrypted_and_unlocked"]
+        list_store.set(iters[0], 2, partition_icon)
+
+        self.builder.get_object("unlock_encrypted_partition_if_possible_label").set_visible(False)
 
 
     # Callback for double click (row-activate) on backup mode partitions to backup toggle
