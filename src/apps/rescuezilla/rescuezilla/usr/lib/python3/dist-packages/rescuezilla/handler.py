@@ -23,6 +23,7 @@ import subprocess
 import threading
 import traceback
 from datetime import datetime
+from enum import Enum
 
 import gi
 
@@ -47,6 +48,13 @@ from parser.sfdisk import Sfdisk
 from bitlocker import BitLocker
 from utility import ErrorMessageModalPopup, BrowseSelectionPopup, Utility, AreYouSureModalPopup, ask_for_password_popup, _
 from wizard_state import Mode, Page, MOUNT_DIR, IMAGE_EXPLORER_DIR, NETWORK_UI_WIDGET_MODES, RESCUEZILLA_MOUNT_TMP_DIR
+
+
+class SavePartitionList(Enum):
+    PARTITION_SHORT_DEVICE_NODE = 0
+    SAVE_TOGGLE = 1
+    ENCRYPTION_STATE = 2
+    PARTITION_DESCRIPTION = 3
 
 
 class Handler:
@@ -375,9 +383,9 @@ class Handler:
                     has_atleast_one = False
                     for row in partition_list_store:
                         print("row is " + str(row))
-                        if row[1]:
-                            self.partitions_to_backup[row[0]] = self.drive_query.drive_state[self.selected_drive_key]['partitions'][row[0]]
-                            self.partitions_to_backup[row[0]]['description'] = row[2]
+                        if row[SavePartitionList.SAVE_TOGGLE.value]:
+                            self.partitions_to_backup[row[SavePartitionList.PARTITION_SHORT_DEVICE_NODE.value]] = self.drive_query.drive_state[self.selected_drive_key]['partitions'][row[SavePartitionList.PARTITION_SHORT_DEVICE_NODE.value]]
+                            self.partitions_to_backup[row[SavePartitionList.PARTITION_SHORT_DEVICE_NODE.value]]['description'] = row[SavePartitionList.PARTITION_DESCRIPTION.value]
                             has_atleast_one = True
                     if not has_atleast_one:
                         error = ErrorMessageModalPopup(self.builder, "Nothing selected!")
@@ -998,7 +1006,7 @@ class Handler:
         if the_password is None:
             return
 
-        partition = list_store.get(iters[0], 0)[0]
+        partition = list_store.get(iters[0], SavePartitionList.PARTITION_SHORT_DEVICE_NODE.value)[0]
         print(partition)
         unencrypted_partition_info, error_msg = BitLocker.mount_bitlocker_image_with_dislocker(partition, the_password)
         BitLocker.update_drive_state(self.drive_query.drive_state, partition, unencrypted_partition_info)
@@ -1009,11 +1017,11 @@ class Handler:
         self._update_ui_with_unlocked_partition(list_store, iters, unencrypted_partition_info)
 
     def _update_ui_with_unlocked_partition(self, list_store, iters, unencrypted_partition_info):
-        new_description = list_store.get(iters[0], 3)[0] + unencrypted_partition_info.get("filesystem", "") + " " + unencrypted_partition_info.get("os_label", "")
-        list_store.set(iters[0], 3, new_description)
+        new_description = list_store.get(iters[0], SavePartitionList.PARTITION_DESCRIPTION.value)[0] + unencrypted_partition_info.get("filesystem", "") + " " + unencrypted_partition_info.get("os_label", "")
+        list_store.set(iters[0], SavePartitionList.PARTITION_DESCRIPTION.value, new_description)
 
         partition_icon = self.drive_query.icon_pixbufs["drive_partition_encrypted_and_unlocked"]
-        list_store.set(iters[0], 2, partition_icon)
+        list_store.set(iters[0], SavePartitionList.ENCRYPTION_STATE.value, partition_icon)
 
         self.builder.get_object("unlock_encrypted_partition_if_possible_label").set_visible(False)
 
