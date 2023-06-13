@@ -46,7 +46,7 @@ from drive_query import DriveQuery
 from image_folder_query import ImageFolderQuery
 from parser.sfdisk import Sfdisk
 from bitlocker import BitLocker
-from utility import ErrorMessageModalPopup, BrowseSelectionPopup, Utility, AreYouSureModalPopup, ask_for_password_popup, _
+from utility import ErrorMessageModalPopup, BrowseSelectionPopup, Utility, AreYouSureModalPopup, ask_for_password_popup, _, dumper
 from wizard_state import Mode, Page, MOUNT_DIR, IMAGE_EXPLORER_DIR, NETWORK_UI_WIDGET_MODES, RESCUEZILLA_MOUNT_TMP_DIR
 
 
@@ -384,9 +384,22 @@ class Handler:
                     for row in partition_list_store:
                         print("row is " + str(row))
                         if row[SavePartitionList.SAVE_TOGGLE.value]:
-                            self.partitions_to_backup[row[SavePartitionList.PARTITION_SHORT_DEVICE_NODE.value]] = self.drive_query.drive_state[self.selected_drive_key]['partitions'][row[SavePartitionList.PARTITION_SHORT_DEVICE_NODE.value]]
-                            self.partitions_to_backup[row[SavePartitionList.PARTITION_SHORT_DEVICE_NODE.value]]['description'] = row[SavePartitionList.PARTITION_DESCRIPTION.value]
+                            partition_info = self.drive_query.drive_state[self.selected_drive_key]['partitions'][row[SavePartitionList.PARTITION_SHORT_DEVICE_NODE.value]]
+                            if "unencrypted_data" in partition_info:
+                                device_path = partition_info["unencrypted_data"]["device_path"]
+                            else:
+                                device_path = row[SavePartitionList.PARTITION_SHORT_DEVICE_NODE.value]
+
+                            self.partitions_to_backup[device_path] = self.drive_query.drive_state[self.selected_drive_key]['partitions'][row[SavePartitionList.PARTITION_SHORT_DEVICE_NODE.value]].copy()
+                            self.partitions_to_backup[device_path]['description'] = row[SavePartitionList.PARTITION_DESCRIPTION.value]
+
+                            if "unencrypted_data" in partition_info:
+                                for field in ["filesystem", "os_label", "uuid", "block_size"]:
+                                    if field in partition_info["unencrypted_data"]:
+                                        self.partitions_to_backup[device_path][field] = partition_info["unencrypted_data"][field]
+
                             has_atleast_one = True
+                    dumper(self.partitions_to_backup)
                     if not has_atleast_one:
                         error = ErrorMessageModalPopup(self.builder, "Nothing selected!")
                     else:
