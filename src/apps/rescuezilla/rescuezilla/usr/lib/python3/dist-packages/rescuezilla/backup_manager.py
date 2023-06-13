@@ -40,7 +40,7 @@ from parser.parted import Parted
 from parser.proc_mdstat import ProcMdstat
 from parser.sfdisk import Sfdisk
 from parser.swappt import Swappt
-from utility import ErrorMessageModalPopup, Utility, _
+from utility import ErrorMessageModalPopup, Utility, _, dumper
 
 # Signals should automatically propogate to processes called with subprocess.run().
 # TODO: This class uses 'subprocess.call', which provides exit code but not stdout/stderr. It would be
