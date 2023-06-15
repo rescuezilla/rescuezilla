@@ -144,6 +144,7 @@ class BackupManager:
         self.proc.clear()
         self.summary_message_lock = threading.Lock()
         self.summary_message = ""
+        self._msg_delimiter_star_line = "*****************************************************."
 
         if self.is_rescue and not self.is_cloning:
             with self.summary_message_lock:
@@ -188,51 +189,20 @@ class BackupManager:
             if not is_success:
                 return is_success, message
 
-            info_dmi_txt_filepath = os.path.join(self.dest_dir, "Info-dmi.txt")
-            GLib.idle_add(self.display_status, _("Saving: {file}").format(file=info_dmi_txt_filepath), "")
-            with open(info_dmi_txt_filepath, 'w') as filehandle:
-                filehandle.write("# This image was saved from this machine with DMI info at " + enduser_date + ":\n")
-                filehandle.flush()
-            process, flat_command_string, failed_message = Utility.run("Saving Info-dmi.txt", ["dmidecode"], use_c_locale=True, output_filepath=info_dmi_txt_filepath, logger=self.logger)
-            if process.returncode != 0:
-                with self.summary_message_lock:
-                    self.summary_message += failed_message
-                GLib.idle_add(self.completed_backup, False, failed_message)
-                return False, failed_message
 
-            info_lspci_filepath = os.path.join(self.dest_dir, "Info-lspci.txt")
-            with open(info_lspci_filepath, 'w') as filehandle:
-                # TODO: Improve datetime format string.
-                filehandle.write("This image was saved from this machine with PCI info at " + enduser_date + "\n")
-                filehandle.write("'lspci' results:\n")
-                filehandle.flush()
+            is_success, message = self._create_info_dmi_txt(enduser_date)
+            if not is_success:
+                return is_success, message
 
-            process, flat_command_string, failed_message = Utility.run("Appending `lspci` output to Info-lspci.txt", ["lspci"], use_c_locale=True, output_filepath=info_lspci_filepath, logger=self.logger)
-            if process.returncode != 0:
-                with self.summary_message_lock:
-                    self.summary_message += failed_message
-                GLib.idle_add(self.completed_backup, False, failed_message)
-                return False, failed_message
-
-            msg_delimiter_star_line = "*****************************************************."
-            with open(info_lspci_filepath, 'a+') as filehandle:
-                filehandle.write(msg_delimiter_star_line + "\n")
-                filehandle.write("'lspci -n' results:\n")
-                filehandle.flush()
-
-            # Show PCI vendor and device codes as numbers instead of looking them up in the PCI ID list.
-            process, flat_command_string, failed_message = Utility.run("Appending `lspci -n` output to Info-lspci.txt", ["lspci", "-n"], use_c_locale=True, output_filepath=info_lspci_filepath, logger=self.logger)
-            if process.returncode != 0:
-                with self.summary_message_lock:
-                    self.summary_message += failed_message
-                GLib.idle_add(self.completed_backup, False, failed_message)
-                return False, failed_message
+            is_success, message = self._create_info_lspci_txt(enduser_date)
+            if not is_success:
+                return is_success, message
 
             info_smart_filepath = os.path.join(self.dest_dir, "Info-smart.txt")
             GLib.idle_add(self.display_status, _("Saving: {file}").format(file=info_smart_filepath), "")
             with open(info_smart_filepath, 'w') as filehandle:
                 filehandle.write("This image was saved from this machine with hard drive S.M.A.R.T. info at " + enduser_date + "\n")
-                filehandle.write(msg_delimiter_star_line + "\n")
+                filehandle.write(self._msg_delimiter_star_line + "\n")
                 filehandle.write("For the drive: " + self.selected_drive_key + "\n")
                 filehandle.flush()
 
@@ -255,7 +225,7 @@ class BackupManager:
                 # Not considering os-prober exit code as fatal, to match Clonezilla's behavior
 
             with open(info_os_prober_filepath, 'a+') as filehandle:
-                filehandle.write(msg_delimiter_star_line + "\n")
+                filehandle.write(self._msg_delimiter_star_line + "\n")
                 filehandle.write("This Linux boot related info was saved from this machine with linux-boot-prober at " + enduser_date + "\n")
                 filehandle.flush()
 
@@ -939,6 +909,51 @@ class BackupManager:
         info_lshw_filepath = os.path.join(self.dest_dir, "Info-lshw.txt")
         GLib.idle_add(self.display_status, _("Saving: {file}").format(file=info_lshw_filepath), "")
         process, flat_command_string, failed_message = Utility.run("Saving Info-lshw.txt", ["lshw"], use_c_locale=True, output_filepath=info_lshw_filepath, logger=self.logger)
+        if process.returncode != 0:
+            with self.summary_message_lock:
+                self.summary_message += failed_message
+            GLib.idle_add(self.completed_backup, False, failed_message)
+            return False, failed_message
+        return True, None
+
+
+    def _create_info_dmi_txt(self, enduser_date: str) -> tuple[bool,str]:
+        info_dmi_txt_filepath = os.path.join(self.dest_dir, "Info-dmi.txt")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=info_dmi_txt_filepath), "")
+        with open(info_dmi_txt_filepath, 'w') as filehandle:
+            filehandle.write("# This image was saved from this machine with DMI info at " + enduser_date + ":\n")
+            filehandle.flush()
+        process, flat_command_string, failed_message = Utility.run("Saving Info-dmi.txt", ["dmidecode"], use_c_locale=True, output_filepath=info_dmi_txt_filepath, logger=self.logger)
+        if process.returncode != 0:
+            with self.summary_message_lock:
+                self.summary_message += failed_message
+            GLib.idle_add(self.completed_backup, False, failed_message)
+            return False, failed_message
+        return True, None
+
+    def _create_info_lspci_txt(self, enduser_date: str) -> tuple[bool, str]:
+        info_lspci_filepath = os.path.join(self.dest_dir, "Info-lspci.txt")
+        with open(info_lspci_filepath, 'w') as filehandle:
+            # TODO: Improve datetime format string.
+            filehandle.write("This image was saved from this machine with PCI info at " + enduser_date + "\n")
+            filehandle.write("'lspci' results:\n")
+            filehandle.flush()
+
+        process, flat_command_string, failed_message = Utility.run("Appending `lspci` output to Info-lspci.txt", ["lspci"], use_c_locale=True, output_filepath=info_lspci_filepath, logger=self.logger)
+        if process.returncode != 0:
+            with self.summary_message_lock:
+                self.summary_message += failed_message
+            GLib.idle_add(self.completed_backup, False, failed_message)
+            return False, failed_message
+
+
+        with open(info_lspci_filepath, 'a+') as filehandle:
+            filehandle.write(self._msg_delimiter_star_line + "\n")
+            filehandle.write("'lspci -n' results:\n")
+            filehandle.flush()
+
+        # Show PCI vendor and device codes as numbers instead of looking them up in the PCI ID list.
+        process, flat_command_string, failed_message = Utility.run("Appending `lspci -n` output to Info-lspci.txt", ["lspci", "-n"], use_c_locale=True, output_filepath=info_lspci_filepath, logger=self.logger)
         if process.returncode != 0:
             with self.summary_message_lock:
                 self.summary_message += failed_message
