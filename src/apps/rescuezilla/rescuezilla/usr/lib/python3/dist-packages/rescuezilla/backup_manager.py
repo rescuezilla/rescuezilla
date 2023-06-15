@@ -180,28 +180,13 @@ class BackupManager:
             if not is_success:
                 return is_success, message
 
-            blkid_list_filepath = os.path.join(self.dest_dir, "blkid.list")
-            GLib.idle_add(self.display_status, _("Saving: {file}").format(file=blkid_list_filepath), "")
-            blkid_cmd_list = ["blkid"]
-            sort_cmd_list = ["sort", "-V"]
-            Utility.print_cli_friendly("blkid ", [blkid_cmd_list, sort_cmd_list])
-            process, flat_command_string, failed_message = Utility.run("Saving blkid.list", ["blkid"], use_c_locale=True, output_filepath=blkid_list_filepath, logger=self.logger)
-            if process.returncode != 0:
-                with self.summary_message_lock:
-                    self.summary_message += failed_message
-                GLib.idle_add(self.completed_backup, False, failed_message)
-                return False, failed_message
+            is_success, message = self._create_blkid_list()
+            if not is_success:
+                return is_success, message
 
-
-
-            info_lshw_filepath = os.path.join(self.dest_dir, "Info-lshw.txt")
-            GLib.idle_add(self.display_status, _("Saving: {file}").format(file=info_lshw_filepath), "")
-            process, flat_command_string, failed_message = Utility.run("Saving Info-lshw.txt", ["lshw"], use_c_locale=True, output_filepath=info_lshw_filepath, logger=self.logger)
-            if process.returncode != 0:
-                with self.summary_message_lock:
-                    self.summary_message += failed_message
-                GLib.idle_add(self.completed_backup, False, failed_message)
-                return False, failed_message
+            is_success, message = self._create_info_lshw_txt()
+            if not is_success:
+                return is_success, message
 
             info_dmi_txt_filepath = os.path.join(self.dest_dir, "Info-dmi.txt")
             GLib.idle_add(self.display_status, _("Saving: {file}").format(file=info_dmi_txt_filepath), "")
@@ -925,7 +910,7 @@ class BackupManager:
                 filehandle.write(self.backup_notes)
                 filehandle.flush()
 
-    def _create_blkdev_list(self):
+    def _create_blkdev_list(self) -> tuple[bool, str]:
         blkdev_list_filepath = os.path.join(self.dest_dir, "blkdev.list")
         GLib.idle_add(self.display_status, _("Saving: {file}").format(file=blkdev_list_filepath), "")
         process, flat_command_string, failed_message = Utility.run("Saving blkdev.list", ["lsblk", "-oKNAME,NAME,SIZE,TYPE,FSTYPE,MOUNTPOINT,MODEL", self.selected_drive_key], use_c_locale=True, output_filepath=blkdev_list_filepath, logger=self.logger)
@@ -936,7 +921,30 @@ class BackupManager:
             return False, failed_message
         return True, None
 
-    def _create_blkdev_list(self):
+    def _create_blkid_list(self) -> tuple[bool, str]:
+        blkid_list_filepath = os.path.join(self.dest_dir, "blkid.list")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=blkid_list_filepath), "")
+        blkid_cmd_list = ["blkid"]
+        sort_cmd_list = ["sort", "-V"]
+        Utility.print_cli_friendly("blkid ", [blkid_cmd_list, sort_cmd_list])
+        process, flat_command_string, failed_message = Utility.run("Saving blkid.list", ["blkid"], use_c_locale=True, output_filepath=blkid_list_filepath, logger=self.logger)
+        if process.returncode != 0:
+            with self.summary_message_lock:
+                self.summary_message += failed_message
+            GLib.idle_add(self.completed_backup, False, failed_message)
+            return False, failed_message
+        return True, None
+
+    def _create_info_lshw_txt(self) -> tuple[bool,str]:
+        info_lshw_filepath = os.path.join(self.dest_dir, "Info-lshw.txt")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=info_lshw_filepath), "")
+        process, flat_command_string, failed_message = Utility.run("Saving Info-lshw.txt", ["lshw"], use_c_locale=True, output_filepath=info_lshw_filepath, logger=self.logger)
+        if process.returncode != 0:
+            with self.summary_message_lock:
+                self.summary_message += failed_message
+            GLib.idle_add(self.completed_backup, False, failed_message)
+            return False, failed_message
+        return True, None
 
 
     # Backup RAID information (Clonezilla's dump_software_raid_info_if_exists function)
