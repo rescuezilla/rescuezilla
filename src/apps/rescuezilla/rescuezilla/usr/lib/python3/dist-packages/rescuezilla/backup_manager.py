@@ -205,64 +205,17 @@ class BackupManager:
             # Not considering os-prober exit code as fatal, to match Clonezilla's behavior
             self._create_info_os_prober_txt(enduser_date)
 
-            filepath = os.path.join(self.dest_dir, "Info-packages.txt")
-            GLib.idle_add(self.display_status, _("Saving: {file}").format(file=filepath), "")
-            # Save Debian package informtion
-            if shutil.which("dpkg") is not None:
-                rescuezilla_package_list = ["rescuezilla", "partclone", "util-linux", "gdisk"]
-                with open(filepath, 'w') as filehandle:
-                    filehandle.write("Image was saved by these Rescuezilla-related packages:\n ")
-                    for pkg in rescuezilla_package_list:
-                        dpkg_process = subprocess.run(['dpkg', "--status", pkg], capture_output=True, encoding="UTF-8")
-                        if dpkg_process.returncode != 0:
-                            continue
-                        for line in dpkg_process.stdout.split("\n"):
-                            if re.search("^Version: ", line):
-                                version = line[len("Version: "):]
-                                filehandle.write(pkg + "-" + version + " ")
-                    filehandle.write("\nSaved by " + self.human_readable_version + ".\n")
+            self._create_info_packages_txt(enduser_date)
+
 
         # TODO: Clonezilla creates a file named "Info-saved-by-cmd.txt" file, to allow users to re-run the exact
         #  command again without going through the wizard. The proposed Rescuezilla approach to this feature is
         #  discussed here: https://github.com/rescuezilla/rescuezilla/issues/106
 
-        filepath = os.path.join(self.dest_dir, "parts")
-        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=filepath), "")
-        with open(filepath, 'w') as filehandle:
-            i = 0
-            for partition_key in self.partitions_to_backup:
-                short_partition_key = re.sub('/dev/', '', partition_key)
-                to_backup_dict = self.partitions_to_backup[partition_key]
-                is_swap = False
-                if 'filesystem' in to_backup_dict.keys() and to_backup_dict['filesystem'] == "swap":
-                    is_swap = True
-                if 'type' not in to_backup_dict.keys() or 'type' in to_backup_dict.keys() and 'extended' != to_backup_dict['type'] and not is_swap:
-                    # Clonezilla does not write the extended partition node into the parts file,
-                    # nor does it write swap partition node
-                    filehandle.write('%s' % short_partition_key)
-                    # Ensure no trailing space on final iteration (to match Clonezilla format exactly)
-                    if i + 1 != len(self.partitions_to_backup.keys()):
-                        filehandle.write(' ')
-                i += 1
-            # FIXME: This diverges from Clonezilla behavior. It's possible for Rescuezilla to write just a newline for
-            # FIXME: eg, disk full of only swap partitions. Rescuezilla can handle restoring such images, but Clonezilla
-            # FIXME: cannot (a divergence of behavior).
-            filehandle.write('\n')
+        self._create_file_parts()
+        self._create_file_disk()
+        self._create_file_short_selected_device_node_pt_parted_compact()
 
-        filepath = os.path.join(self.dest_dir, "disk")
-        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=filepath), "")
-        with open(filepath, 'w') as filehandle:
-            filehandle.write('%s\n' % short_selected_device_node)
-
-        compact_parted_filepath = os.path.join(self.dest_dir, short_selected_device_node + "-pt.parted.compact")
-        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=compact_parted_filepath), "")
-        # Parted drive information with human-readable "compact" units: KB/MB/GB rather than sectors.
-        process, flat_command_string, failed_message = Utility.run("Saving " + compact_parted_filepath, ["parted", "--script", self.selected_drive_key, "unit", "compact", "print"], use_c_locale=True, output_filepath=compact_parted_filepath, logger=self.logger)
-        if process.returncode != 0:
-            # Human-readable compact units is not that important.
-            print(failed_message)
-            if not self.is_cloning:
-                GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, failed_message)
 
         # Parted drive information with standard sector units. Clonezilla doesn't output easily parsable output using
         # the --machine flag, so for maximum Clonezilla compatibility neither does Rescuezilla.
@@ -866,6 +819,66 @@ class BackupManager:
             if process.returncode != 0:
                 self.logger.write(failed_message)
                 # Not considering os-prober exit code as fatal, to match Clonezilla's behavior
+
+    def _create_file_disk(self, short_selected_device_node: str) -> None:
+        filepath = os.path.join(self.dest_dir, "disk")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=filepath), "")
+        with open(filepath, 'w') as filehandle:
+            filehandle.write('%s\n' % short_selected_device_node)
+
+    def _create_file_short_selected_device_node_pt_parted_compact(self, short_selected_device_node: str) -> None:
+        compact_parted_filepath = os.path.join(self.dest_dir, short_selected_device_node + "-pt.parted.compact")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=compact_parted_filepath), "")
+        # Parted drive information with human-readable "compact" units: KB/MB/GB rather than sectors.
+        process, flat_command_string, failed_message = Utility.run("Saving " + compact_parted_filepath, ["parted", "--script", self.selected_drive_key, "unit", "compact", "print"], use_c_locale=True, output_filepath=compact_parted_filepath, logger=self.logger)
+        if process.returncode != 0:
+            # Human-readable compact units is not that important.
+            print(failed_message)
+            if not self.is_cloning:
+                GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, failed_message)
+
+    def _create_file_parts(self) -> None:
+        filepath = os.path.join(self.dest_dir, "parts")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=filepath), "")
+        with open(filepath, 'w') as filehandle:
+            i = 0
+            for partition_key in self.partitions_to_backup:
+                short_partition_key = re.sub('/dev/', '', partition_key)
+                to_backup_dict = self.partitions_to_backup[partition_key]
+                is_swap = False
+                if 'filesystem' in to_backup_dict.keys() and to_backup_dict['filesystem'] == "swap":
+                    is_swap = True
+                if 'type' not in to_backup_dict.keys() or 'type' in to_backup_dict.keys() and 'extended' != to_backup_dict['type'] and not is_swap:
+                    # Clonezilla does not write the extended partition node into the parts file,
+                    # nor does it write swap partition node
+                    filehandle.write('%s' % short_partition_key)
+                    # Ensure no trailing space on final iteration (to match Clonezilla format exactly)
+                    if i + 1 != len(self.partitions_to_backup.keys()):
+                        filehandle.write(' ')
+                i += 1
+            # FIXME: This diverges from Clonezilla behavior. It's possible for Rescuezilla to write just a newline for
+            # FIXME: eg, disk full of only swap partitions. Rescuezilla can handle restoring such images, but Clonezilla
+            # FIXME: cannot (a divergence of behavior).
+            filehandle.write('\n')
+
+    def _create_info_packages_txt(self, enduser_date: str) -> None:
+        filepath = os.path.join(self.dest_dir, "Info-packages.txt")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=filepath), "")
+        # Save Debian package informtion
+        if shutil.which("dpkg") is not None:
+            rescuezilla_package_list = ["rescuezilla", "partclone", "util-linux", "gdisk"]
+            with open(filepath, 'w') as filehandle:
+                filehandle.write("Image was saved by these Rescuezilla-related packages:\n ")
+                for pkg in rescuezilla_package_list:
+                    dpkg_process = subprocess.run(['dpkg', "--status", pkg], capture_output=True, encoding="UTF-8")
+                    if dpkg_process.returncode != 0:
+                        continue
+                    for line in dpkg_process.stdout.split("\n"):
+                        if re.search("^Version: ", line):
+                            version = line[len("Version: "):]
+                            filehandle.write(pkg + "-" + version + " ")
+                filehandle.write("\nSaved by " + self.human_readable_version + ".\n")
+
 
     def _create_info_smart_txt(self, enduser_date: str) -> None:
         info_smart_filepath = os.path.join(self.dest_dir, "Info-smart.txt")
