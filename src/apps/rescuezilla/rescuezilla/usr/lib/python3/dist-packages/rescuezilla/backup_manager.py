@@ -396,7 +396,7 @@ class BackupManager:
         parted_process, flat_command_string, failed_message = Utility.run("Saving " + parted_filepath,
                                                           ["parted", "--script", self.selected_drive_key, "unit", "s",
                                                            "print"], use_c_locale=True, output_filepath=parted_filepath, logger=self.logger)
-        if process.returncode != 0:
+        if parted_process.returncode != 0:
             print(failed_message)
             # Clonezilla doesn't consider non-zero parted return code as fatal. Indeed, RAID md devices without a
             # partition table returns an error using parted but Clonezilla is happy to continue. Rescuezilla does the
