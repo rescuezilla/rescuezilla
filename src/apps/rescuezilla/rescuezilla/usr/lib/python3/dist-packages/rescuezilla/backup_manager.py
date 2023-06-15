@@ -447,7 +447,7 @@ class BackupManager:
             dd_process, flat_command_string, failed_message = Utility.run("Saving " + first_gpt_filename,
                                                           ["dd", "if=" + self.selected_drive_key, "of=" + os.path.join(self.dest_dir, first_gpt_filename),
                                                            "bs=512", "count=34"], use_c_locale=False, logger=self.logger)
-            if process.returncode != 0:
+            if dd_process.returncode != 0:
                 with self.summary_message_lock:
                     self.summary_message += failed_message
                 GLib.idle_add(self.completed_backup, False, failed_message)
