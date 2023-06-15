@@ -198,36 +198,12 @@ class BackupManager:
             if not is_success:
                 return is_success, message
 
+            # VirtualBox doesn't support smart, so ignoring the exit code here.
+            # FIXME: Improve this.
             self._create_info_smart_txt(enduser_date)
 
-            info_os_prober_filepath = os.path.join(self.dest_dir, "Info-OS-prober.txt")
-            GLib.idle_add(self.display_status, _("Saving: {file}").format(file=info_os_prober_filepath), "")
-            with open(info_os_prober_filepath, 'w') as filehandle:
-                filehandle.write("This OS-related info was saved from this machine with os-prober at " + enduser_date + "\n")
-                filehandle.flush()
-            process, flat_command_string, failed_message = Utility.run("Running os-prober and appending output to Info-OS-prober.txt",
-                                                                           ["os-prober"],
-                                                                           use_c_locale=True,
-                                                                           output_filepath=info_os_prober_filepath,
-                                                                           logger=self.logger)
-            if process.returncode != 0:
-                self.logger.write(failed_message)
-                # Not considering os-prober exit code as fatal, to match Clonezilla's behavior
-
-            with open(info_os_prober_filepath, 'a+') as filehandle:
-                filehandle.write(self._msg_delimiter_star_line + "\n")
-                filehandle.write("This Linux boot related info was saved from this machine with linux-boot-prober at " + enduser_date + "\n")
-                filehandle.flush()
-
-            for partition_key in self.partitions_to_backup:
-                process, flat_command_string, failed_message = Utility.run("Running linux-boot-prober for " + partition_key,
-                                                                           ["linux-boot-prober", partition_key],
-                                                                           use_c_locale=True,
-                                                                           output_filepath=info_os_prober_filepath,
-                                                                           logger=self.logger)
-                if process.returncode != 0:
-                    self.logger.write(failed_message)
-                    # Not considering os-prober exit code as fatal, to match Clonezilla's behavior
+            # Not considering os-prober exit code as fatal, to match Clonezilla's behavior
+            self._create_info_os_prober_txt(enduser_date)
 
             filepath = os.path.join(self.dest_dir, "Info-packages.txt")
             GLib.idle_add(self.display_status, _("Saving: {file}").format(file=filepath), "")
@@ -861,7 +837,37 @@ class BackupManager:
         GLib.idle_add(self.completed_backup, True, "")
         return True, ""
 
-    def _create_info_smart_txt(self, enduser_date: str):
+    def _create_info_os_prober_txt(self, enduser_date: str) -> None:
+        info_os_prober_filepath = os.path.join(self.dest_dir, "Info-OS-prober.txt")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=info_os_prober_filepath), "")
+        with open(info_os_prober_filepath, 'w') as filehandle:
+            filehandle.write("This OS-related info was saved from this machine with os-prober at " + enduser_date + "\n")
+            filehandle.flush()
+        process, flat_command_string, failed_message = Utility.run("Running os-prober and appending output to Info-OS-prober.txt",
+                                                                        ["os-prober"],
+                                                                        use_c_locale=True,
+                                                                        output_filepath=info_os_prober_filepath,
+                                                                        logger=self.logger)
+        if process.returncode != 0:
+            self.logger.write(failed_message)
+            # Not considering os-prober exit code as fatal, to match Clonezilla's behavior
+
+        with open(info_os_prober_filepath, 'a+') as filehandle:
+            filehandle.write(self._msg_delimiter_star_line + "\n")
+            filehandle.write("This Linux boot related info was saved from this machine with linux-boot-prober at " + enduser_date + "\n")
+            filehandle.flush()
+
+        for partition_key in self.partitions_to_backup:
+            process, flat_command_string, failed_message = Utility.run("Running linux-boot-prober for " + partition_key,
+                                                                        ["linux-boot-prober", partition_key],
+                                                                        use_c_locale=True,
+                                                                        output_filepath=info_os_prober_filepath,
+                                                                        logger=self.logger)
+            if process.returncode != 0:
+                self.logger.write(failed_message)
+                # Not considering os-prober exit code as fatal, to match Clonezilla's behavior
+
+    def _create_info_smart_txt(self, enduser_date: str) -> None:
         info_smart_filepath = os.path.join(self.dest_dir, "Info-smart.txt")
         GLib.idle_add(self.display_status, _("Saving: {file}").format(file=info_smart_filepath), "")
         with open(info_smart_filepath, 'w') as filehandle:
@@ -870,8 +876,8 @@ class BackupManager:
             filehandle.write("For the drive: " + self.selected_drive_key + "\n")
             filehandle.flush()
 
-            # VirtualBox doesn't support smart, so ignoring the exit code here.
-            # FIXME: Improve this.
+        # VirtualBox doesn't support smart, so ignoring the exit code here.
+        # FIXME: Improve this.
         process, flat_command_string, failed_message = Utility.run("Saving Info-smart.txt", ["smartctl", "--all", self.selected_drive_key], use_c_locale=True, output_filepath=info_smart_filepath, logger=self.logger)
 
     def _create_rescuezilla_description_txt(self):
