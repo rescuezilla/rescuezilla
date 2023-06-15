@@ -63,7 +63,7 @@ class BitLocker:
             return EncryptionState.NOT_ENCRYPTED
 
     @staticmethod
-    def mount_bitlocker_image_with_dislocker(partition_dev_node: str, password: str) -> list:
+    def mount_bitlocker_image_with_dislocker(partition_dev_node: str, password: str) -> tuple[dict, str]:
         print("mount_bitlocker_image_with_dislocker")
         tempfolder = mkdtemp(prefix=f"dislocker_{partition_dev_node.split('/')[-1]}_")
         password_bytes = f"{password}\n"
