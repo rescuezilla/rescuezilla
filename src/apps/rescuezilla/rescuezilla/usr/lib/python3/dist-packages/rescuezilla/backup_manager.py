@@ -176,6 +176,10 @@ class BackupManager:
         if not self.is_cloning:
             self._create_rescuezilla_description_txt()
 
+            is_success, message = self._create_blkdev_list()
+            if not is_success:
+                return is_success, message
+
             blkdev_list_filepath = os.path.join(self.dest_dir, "blkdev.list")
             GLib.idle_add(self.display_status, _("Saving: {file}").format(file=blkdev_list_filepath), "")
             process, flat_command_string, failed_message = Utility.run("Saving blkdev.list", ["lsblk", "-oKNAME,NAME,SIZE,TYPE,FSTYPE,MOUNTPOINT,MODEL", self.selected_drive_key], use_c_locale=True, output_filepath=blkdev_list_filepath, logger=self.logger)
@@ -929,6 +933,17 @@ class BackupManager:
             with open(backup_notes_filepath, 'w') as filehandle:
                 filehandle.write(self.backup_notes)
                 filehandle.flush()
+
+    def _create_blkdev_list(self):
+        blkdev_list_filepath = os.path.join(self.dest_dir, "blkdev.list")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=blkdev_list_filepath), "")
+        process, flat_command_string, failed_message = Utility.run("Saving blkdev.list", ["lsblk", "-oKNAME,NAME,SIZE,TYPE,FSTYPE,MOUNTPOINT,MODEL", self.selected_drive_key], use_c_locale=True, output_filepath=blkdev_list_filepath, logger=self.logger)
+        if process.returncode != 0:
+            with self.summary_message_lock:
+                self.summary_message += failed_message
+            GLib.idle_add(self.completed_backup, False, failed_message)
+            return False, failed_message
+        return True, None
 
     # Backup RAID information (Clonezilla's dump_software_raid_info_if_exists function)
     def _dump_software_raid_info_if_exists(self):
