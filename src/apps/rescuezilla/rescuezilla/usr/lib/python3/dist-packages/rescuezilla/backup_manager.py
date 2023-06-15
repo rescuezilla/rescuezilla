@@ -171,42 +171,7 @@ class BackupManager:
         self.logger = Logger(clonezilla_img_filepath)
 
         # Backup RAID information (Clonezilla's dump_software_raid_info_if_exists function)
-        original_proc_mdstat_filepath = "/proc/mdstat"
-        if os.path.isfile(original_proc_mdstat_filepath):
-            proc_mdstat_string = Utility.read_file_into_string(original_proc_mdstat_filepath)
-            proc_mdstat_dict = ProcMdstat.parse_proc_mdstat_string(proc_mdstat_string)
-            if len(proc_mdstat_dict.keys()) > 0:
-                # Copy the mdstat file to the destination disk, as CLonezilla
-                copied_proc_mdstat_filepath = os.path.join(self.dest_dir, "mdstat.txt")
-                GLib.idle_add(self.display_status, _("Saving: {file}").format(file=copied_proc_mdstat_filepath), "")
-                with open(copied_proc_mdstat_filepath, 'w') as filehandle:
-                    filehandle.write(proc_mdstat_string)
-                    filehandle.flush()
-                # Save mdadm.conf
-                mdadm_conf_filepath = os.path.join(self.dest_dir, "mdadm.conf")
-                GLib.idle_add(self.display_status, _("Saving: {file}").format(file=mdadm_conf_filepath), "")
-                process, flat_command_string, failed_message = Utility.run("Saving mdadm.conf", ["mdadm", "--detail", "--scan"],
-                                                                               use_c_locale=True,
-                                                                               output_filepath=mdadm_conf_filepath,
-                                                                               logger=self.logger)
-                if process.returncode != 0:
-                    # Clonezilla doesn't handle non-zero return code, so to maximize compatibility Rescuezilla doesn't
-                    # either
-                    GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, failed_message)
-                # Export details for each RAID device
-                for raid_dev_key in proc_mdstat_dict.keys():
-                    raid_device_query_filepath = os.path.join(self.dest_dir, raid_dev_key + ".txt")
-                    GLib.idle_add(self.display_status, _("Saving: {file}").format(file=raid_device_query_filepath), "")
-                    process, flat_command_string, failed_message = Utility.run("Saving " + raid_device_query_filepath,
-                                                                               ["mdadm", "--query", "--detail", "--export", "/dev/" + raid_dev_key],
-                                                                               use_c_locale=True,
-                                                                               output_filepath=raid_device_query_filepath,
-                                                                               logger=self.logger)
-                    if process.returncode != 0:
-                        # Clonezilla doesn't handle non-zero return code, so to maximize compatibility Rescuezilla
-                        # doesn't either
-                        GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
-                                      failed_message)
+        self._dump_software_raid_info_if_exists()
 
         if not self.is_cloning:
             backup_notes_filepath = os.path.join(self.dest_dir, "rescuezilla.description.txt")
@@ -961,6 +926,45 @@ class BackupManager:
 
         GLib.idle_add(self.completed_backup, True, "")
         return True, ""
+
+    # Backup RAID information (Clonezilla's dump_software_raid_info_if_exists function)
+    def _dump_software_raid_info_if_exists(self):
+        original_proc_mdstat_filepath = "/proc/mdstat"
+        if os.path.isfile(original_proc_mdstat_filepath):
+            proc_mdstat_string = Utility.read_file_into_string(original_proc_mdstat_filepath)
+            proc_mdstat_dict = ProcMdstat.parse_proc_mdstat_string(proc_mdstat_string)
+            if len(proc_mdstat_dict.keys()) > 0:
+                # Copy the mdstat file to the destination disk, as CLonezilla
+                copied_proc_mdstat_filepath = os.path.join(self.dest_dir, "mdstat.txt")
+                GLib.idle_add(self.display_status, _("Saving: {file}").format(file=copied_proc_mdstat_filepath), "")
+                with open(copied_proc_mdstat_filepath, 'w') as filehandle:
+                    filehandle.write(proc_mdstat_string)
+                    filehandle.flush()
+                # Save mdadm.conf
+                mdadm_conf_filepath = os.path.join(self.dest_dir, "mdadm.conf")
+                GLib.idle_add(self.display_status, _("Saving: {file}").format(file=mdadm_conf_filepath), "")
+                process, flat_command_string, failed_message = Utility.run("Saving mdadm.conf", ["mdadm", "--detail", "--scan"],
+                                                                               use_c_locale=True,
+                                                                               output_filepath=mdadm_conf_filepath,
+                                                                               logger=self.logger)
+                if process.returncode != 0:
+                    # Clonezilla doesn't handle non-zero return code, so to maximize compatibility Rescuezilla doesn't
+                    # either
+                    GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, failed_message)
+                # Export details for each RAID device
+                for raid_dev_key in proc_mdstat_dict.keys():
+                    raid_device_query_filepath = os.path.join(self.dest_dir, raid_dev_key + ".txt")
+                    GLib.idle_add(self.display_status, _("Saving: {file}").format(file=raid_device_query_filepath), "")
+                    process, flat_command_string, failed_message = Utility.run("Saving " + raid_device_query_filepath,
+                                                                               ["mdadm", "--query", "--detail", "--export", "/dev/" + raid_dev_key],
+                                                                               use_c_locale=True,
+                                                                               output_filepath=raid_device_query_filepath,
+                                                                               logger=self.logger)
+                    if process.returncode != 0:
+                        # Clonezilla doesn't handle non-zero return code, so to maximize compatibility Rescuezilla
+                        # doesn't either
+                        GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
+                                      failed_message)
 
     # Implementation of Clonezilla "check_if_windows_boot_reserve_part" function
     def is_partition_windows_boot_reserved(self, partition_key, mount_point):
