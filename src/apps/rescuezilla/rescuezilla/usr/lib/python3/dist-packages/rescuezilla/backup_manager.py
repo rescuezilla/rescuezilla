@@ -198,17 +198,7 @@ class BackupManager:
             if not is_success:
                 return is_success, message
 
-            info_smart_filepath = os.path.join(self.dest_dir, "Info-smart.txt")
-            GLib.idle_add(self.display_status, _("Saving: {file}").format(file=info_smart_filepath), "")
-            with open(info_smart_filepath, 'w') as filehandle:
-                filehandle.write("This image was saved from this machine with hard drive S.M.A.R.T. info at " + enduser_date + "\n")
-                filehandle.write(self._msg_delimiter_star_line + "\n")
-                filehandle.write("For the drive: " + self.selected_drive_key + "\n")
-                filehandle.flush()
-
-            # VirtualBox doesn't support smart, so ignoring the exit code here.
-            # FIXME: Improve this.
-            process, flat_command_string, failed_message = Utility.run("Saving Info-smart.txt", ["smartctl", "--all", self.selected_drive_key], use_c_locale=True, output_filepath=info_smart_filepath, logger=self.logger)
+            self._create_info_smart_txt(enduser_date)
 
             info_os_prober_filepath = os.path.join(self.dest_dir, "Info-OS-prober.txt")
             GLib.idle_add(self.display_status, _("Saving: {file}").format(file=info_os_prober_filepath), "")
@@ -870,6 +860,19 @@ class BackupManager:
 
         GLib.idle_add(self.completed_backup, True, "")
         return True, ""
+
+    def _create_info_smart_txt(self, enduser_date: str):
+        info_smart_filepath = os.path.join(self.dest_dir, "Info-smart.txt")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=info_smart_filepath), "")
+        with open(info_smart_filepath, 'w') as filehandle:
+            filehandle.write("This image was saved from this machine with hard drive S.M.A.R.T. info at " + enduser_date + "\n")
+            filehandle.write(self._msg_delimiter_star_line + "\n")
+            filehandle.write("For the drive: " + self.selected_drive_key + "\n")
+            filehandle.flush()
+
+            # VirtualBox doesn't support smart, so ignoring the exit code here.
+            # FIXME: Improve this.
+        process, flat_command_string, failed_message = Utility.run("Saving Info-smart.txt", ["smartctl", "--all", self.selected_drive_key], use_c_locale=True, output_filepath=info_smart_filepath, logger=self.logger)
 
     def _create_rescuezilla_description_txt(self):
         backup_notes_filepath = os.path.join(self.dest_dir, "rescuezilla.description.txt")
