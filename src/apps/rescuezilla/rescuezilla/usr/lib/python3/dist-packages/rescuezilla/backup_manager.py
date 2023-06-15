@@ -174,13 +174,7 @@ class BackupManager:
         self._dump_software_raid_info_if_exists()
 
         if not self.is_cloning:
-            backup_notes_filepath = os.path.join(self.dest_dir, "rescuezilla.description.txt")
-            if self.backup_notes.strip() != "":
-                self.logger.write("Writing backup description file to " + backup_notes_filepath)
-                GLib.idle_add(self.display_status, _("Saving: {file}").format(file=backup_notes_filepath), "")
-                with open(backup_notes_filepath, 'w') as filehandle:
-                    filehandle.write(self.backup_notes)
-                    filehandle.flush()
+            self._create_rescuezilla_description_txt()
 
             blkdev_list_filepath = os.path.join(self.dest_dir, "blkdev.list")
             GLib.idle_add(self.display_status, _("Saving: {file}").format(file=blkdev_list_filepath), "")
@@ -926,6 +920,15 @@ class BackupManager:
 
         GLib.idle_add(self.completed_backup, True, "")
         return True, ""
+
+    def _create_rescuezilla_description_txt(self):
+        backup_notes_filepath = os.path.join(self.dest_dir, "rescuezilla.description.txt")
+        if self.backup_notes.strip() != "":
+            self.logger.write("Writing backup description file to " + backup_notes_filepath)
+            GLib.idle_add(self.display_status, _("Saving: {file}").format(file=backup_notes_filepath), "")
+            with open(backup_notes_filepath, 'w') as filehandle:
+                filehandle.write(self.backup_notes)
+                filehandle.flush()
 
     # Backup RAID information (Clonezilla's dump_software_raid_info_if_exists function)
     def _dump_software_raid_info_if_exists(self):
