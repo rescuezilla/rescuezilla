@@ -287,21 +287,9 @@ class BackupManager:
                             GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
                                           "Could not find lv_path name in " + str(lv_dict))
                             continue
-                        file_command_process, flat_command_string, failed_message = Utility.run("logical volume file info",
-                                                                                ["file", "--dereference",
-                                                                                 "--special-files", lv_path], use_c_locale=True, logger=self.logger)
-                        if file_command_process.returncode != 0:
-                            with self.summary_message_lock:
-                                self.summary_message += failed_message
-                            GLib.idle_add(self.completed_backup, False, failed_message)
-                            return False, failed_message
-
-                        output = file_command_process.stdout.split(" ", maxsplit=1)[1].strip()
-                        lvm_logv_list_filepath = os.path.join(self.dest_dir, "lvm_logv.list")
-                        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=lvm_logv_list_filepath), "")
-                        # Append to file
-                        with open(lvm_logv_list_filepath, 'a+') as filehandle:
-                            filehandle.write(lv_path + "  " + output + "\n")
+                        is_success, message = self._append_lvm_logv_list(self, lv_path)
+                        if not is_success:
+                            return is_success, message
 
                         if 'lv_dm_path' in lv_dict.keys():
                             # Device mapper path, eg /dev/mapper/vgtest-lvtest
@@ -558,6 +546,24 @@ class BackupManager:
 
         GLib.idle_add(self.completed_backup, True, "")
         return True, ""
+
+    def _append_lvm_logv_list(self, lv_path):
+        file_command_process, flat_command_string, failed_message = Utility.run("logical volume file info",
+                                                                ["file", "--dereference",
+                                                                    "--special-files", lv_path], use_c_locale=True, logger=self.logger)
+        if file_command_process.returncode != 0:
+            with self.summary_message_lock:
+                self.summary_message += failed_message
+            GLib.idle_add(self.completed_backup, False, failed_message)
+            return False, failed_message
+
+        output = file_command_process.stdout.split(" ", maxsplit=1)[1].strip()
+        lvm_logv_list_filepath = os.path.join(self.dest_dir, "lvm_logv.list")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=lvm_logv_list_filepath), "")
+        # Append to file
+        with open(lvm_logv_list_filepath, 'a+') as filehandle:
+            filehandle.write(lv_path + "  " + output + "\n")
+        return True, None
 
     def _save_lvm_vg_dev_list(self):
         Lvm.start_lvm2(self.logger)
