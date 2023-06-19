@@ -549,9 +549,7 @@ class BackupManager:
                                                                 ["vgcfgbackup", "--file",
                                                                 lvm_vgname_filepath, vg_name], use_c_locale=True, logger=self.logger)
         if vgcfgbackup_process.returncode != 0:
-            with self.summary_message_lock:
-                self.summary_message += failed_message
-            GLib.idle_add(self.completed_backup, False, failed_message)
+            self._append_summary_message(failed_message)
             return False, failed_message
         return True, None
 
@@ -561,9 +559,7 @@ class BackupManager:
                                                                 ["file", "--dereference",
                                                                     "--special-files", lv_path], use_c_locale=True, logger=self.logger)
         if file_command_process.returncode != 0:
-            with self.summary_message_lock:
-                self.summary_message += failed_message
-            GLib.idle_add(self.completed_backup, False, failed_message)
+            self._append_summary_message(failed_message)
             return False, failed_message
 
         output = file_command_process.stdout.split(" ", maxsplit=1)[1].strip()
@@ -784,9 +780,7 @@ class BackupManager:
                                                                             output_filepath=efi_nvram_filepath,
                                                                             logger=self.logger)
         if process.returncode != 0:
-            with self.summary_message_lock:
-                self.summary_message += failed_message
-            GLib.idle_add(self.completed_backup, False, failed_message)
+            self._append_summary_message(failed_message)
             return False, failed_message, efi_nvram_filepath
         return True, None, efi_nvram_filepath
 
@@ -860,9 +854,7 @@ class BackupManager:
         GLib.idle_add(self.display_status, _("Saving: {file}").format(file=blkdev_list_filepath), "")
         process, flat_command_string, failed_message = Utility.run("Saving blkdev.list", ["lsblk", "-oKNAME,NAME,SIZE,TYPE,FSTYPE,MOUNTPOINT,MODEL", self.selected_drive_key], use_c_locale=True, output_filepath=blkdev_list_filepath, logger=self.logger)
         if process.returncode != 0:
-            with self.summary_message_lock:
-                self.summary_message += failed_message
-            GLib.idle_add(self.completed_backup, False, failed_message)
+            self._append_summary_message(failed_message)
             return False, failed_message
         return True, None
 
@@ -874,9 +866,7 @@ class BackupManager:
         Utility.print_cli_friendly("blkid ", [blkid_cmd_list, sort_cmd_list])
         process, flat_command_string, failed_message = Utility.run("Saving blkid.list", ["blkid"], use_c_locale=True, output_filepath=blkid_list_filepath, logger=self.logger)
         if process.returncode != 0:
-            with self.summary_message_lock:
-                self.summary_message += failed_message
-            GLib.idle_add(self.completed_backup, False, failed_message)
+            self._append_summary_message(failed_message)
             return False, failed_message
         return True, None
 
@@ -885,9 +875,7 @@ class BackupManager:
         GLib.idle_add(self.display_status, _("Saving: {file}").format(file=info_lshw_filepath), "")
         process, flat_command_string, failed_message = Utility.run("Saving Info-lshw.txt", ["lshw"], use_c_locale=True, output_filepath=info_lshw_filepath, logger=self.logger)
         if process.returncode != 0:
-            with self.summary_message_lock:
-                self.summary_message += failed_message
-            GLib.idle_add(self.completed_backup, False, failed_message)
+            self._append_summary_message(failed_message)
             return False, failed_message
         return True, None
 
@@ -900,9 +888,7 @@ class BackupManager:
             filehandle.flush()
         process, flat_command_string, failed_message = Utility.run("Saving Info-dmi.txt", ["dmidecode"], use_c_locale=True, output_filepath=info_dmi_txt_filepath, logger=self.logger)
         if process.returncode != 0:
-            with self.summary_message_lock:
-                self.summary_message += failed_message
-            GLib.idle_add(self.completed_backup, False, failed_message)
+            self._append_summary_message(failed_message)
             return False, failed_message
         return True, None
 
@@ -916,9 +902,7 @@ class BackupManager:
 
         process, flat_command_string, failed_message = Utility.run("Appending `lspci` output to Info-lspci.txt", ["lspci"], use_c_locale=True, output_filepath=info_lspci_filepath, logger=self.logger)
         if process.returncode != 0:
-            with self.summary_message_lock:
-                self.summary_message += failed_message
-            GLib.idle_add(self.completed_backup, False, failed_message)
+            self._append_summary_message(failed_message)
             return False, failed_message
 
 
@@ -930,11 +914,14 @@ class BackupManager:
         # Show PCI vendor and device codes as numbers instead of looking them up in the PCI ID list.
         process, flat_command_string, failed_message = Utility.run("Appending `lspci -n` output to Info-lspci.txt", ["lspci", "-n"], use_c_locale=True, output_filepath=info_lspci_filepath, logger=self.logger)
         if process.returncode != 0:
-            with self.summary_message_lock:
-                self.summary_message += failed_message
-            GLib.idle_add(self.completed_backup, False, failed_message)
+            self._append_summary_message(failed_message)
             return False, failed_message
         return True, None
+
+    def _append_summary_message(self, failed_message):
+        with self.summary_message_lock:
+            self.summary_message += failed_message
+        GLib.idle_add(self.completed_backup, False, failed_message)
 
 
     def _save_short_device_node_ebr(self, partition_key: str, short_device_node: str) -> tuple[bool, str]:
@@ -944,9 +931,7 @@ class BackupManager:
                                                     ["dd", "if=" + partition_key, "of=" + filepath, "bs=512",
                                                     "count=1"], use_c_locale=False, logger=self.logger)
         if process.returncode != 0:
-            with self.summary_message_lock:
-                self.summary_message += failed_message
-            GLib.idle_add(self.completed_backup, False, failed_message)
+            self._append_summary_message(failed_message)
             return False, failed_message
 
         # TODO: Handle exit code
@@ -963,9 +948,7 @@ class BackupManager:
                                                     ["dd", "if=" + self.selected_drive_key, "of=" + filepath,
                                                     "bs=512", "count=1"], use_c_locale=False, logger=self.logger)
         if process.returncode != 0:
-            with self.summary_message_lock:
-                self.summary_message += failed_message
-            GLib.idle_add(self.completed_backup, False, failed_message)
+            self._append_summary_message(failed_message)
             return False, failed_message, filepath
         return True, None, filepath
 
@@ -976,9 +959,7 @@ class BackupManager:
                                                         ["dd", "if=" + self.selected_drive_key, "of=" + os.path.join(self.dest_dir, first_gpt_filename),
                                                         "bs=512", "count=34"], use_c_locale=False, logger=self.logger)
         if dd_process.returncode != 0:
-            with self.summary_message_lock:
-                self.summary_message += failed_message
-            GLib.idle_add(self.completed_backup, False, failed_message)
+            self._append_summary_message(failed_message)
             return False, failed_message
         return True, None
 
@@ -1007,9 +988,7 @@ class BackupManager:
                                                     "skip=" + str(to_skip),
                                                     "bs=512", "count=33"], use_c_locale=False, logger=self.logger)
         if process.returncode != 0:
-            with self.summary_message_lock:
-                self.summary_message += failed_message
-            GLib.idle_add(self.completed_backup, False, failed_message)
+            self._append_summary_message(failed_message)
             return False, failed_message
         return True, None
 
@@ -1060,9 +1039,7 @@ class BackupManager:
         process, flat_command_string, failed_message = Utility.run("Saving " + gdisk_filename,
                                                     ["sgdisk", "--backup", os.path.join(self.dest_dir, gdisk_filename), self.selected_drive_key], use_c_locale=True, logger=self.logger)
         if process.returncode != 0:
-            with self.summary_message_lock:
-                self.summary_message += failed_message
-            GLib.idle_add(self.completed_backup, False, failed_message)
+            self._append_summary_message(failed_message)
             return False, failed_message
         return True, None
 
@@ -1071,9 +1048,7 @@ class BackupManager:
         GLib.idle_add(self.display_status, _("Saving: {file}").format(file=sgdisk_filename), "")
         process, flat_command_string, failed_message = Utility.run("Saving " + sgdisk_filename, ["sgdisk", "--print", self.selected_drive_key], use_c_locale=True, output_filepath=os.path.join(self.dest_dir, sgdisk_filename), logger=self.logger)
         if process.returncode != 0:
-            with self.summary_message_lock:
-                self.summary_message += failed_message
-            GLib.idle_add(self.completed_backup, False, failed_message)
+            self._append_summary_message(failed_message)
             return False, failed_message
         return True, None
 
@@ -1115,9 +1090,7 @@ class BackupManager:
                                                     "skip=1", "bs=512",
                                                     "count=" + str(post_mbr_gap_sector_count)], use_c_locale=False, logger=self.logger)
         if process.returncode != 0:
-            with self.summary_message_lock:
-                self.summary_message += failed_message
-            GLib.idle_add(self.completed_backup, False, failed_message)
+            self._append_summary_message(failed_message)
             return False, failed_message
         if self.is_cloning:
             self.metadata_only_image_to_annotate.post_mbr_gap_dict['absolute_path'] = hidden_mbr_data_filepath
