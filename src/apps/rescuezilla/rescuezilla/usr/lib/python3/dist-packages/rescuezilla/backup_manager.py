@@ -311,18 +311,11 @@ class BackupManager:
                                 self.partitions_to_backup[lv_path] = self.drive_state[lv_dm_path]['partitions'][logical_volume]
                                 self.partitions_to_backup[lv_path]['type'] = 'part'
 
-                        lvm_vgname_filepath = os.path.join(self.dest_dir, "lvm_" + vg_name + ".conf")
-                        # TODO: Evaluate the Clonezilla message from 2013 message that this command won't work on NFS
-                        # TODO: due to a vgcfgbackup file lock issue.
-                        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=lvm_vgname_filepath), "")
-                        vgcfgbackup_process, flat_command_string, failed_message = Utility.run("Saving LVM VG config " + lvm_vgname_filepath,
-                                                                               ["vgcfgbackup", "--file",
-                                                                                lvm_vgname_filepath, vg_name], use_c_locale=True, logger=self.logger)
-                        if vgcfgbackup_process.returncode != 0:
-                            with self.summary_message_lock:
-                                self.summary_message += failed_message
-                            GLib.idle_add(self.completed_backup, False, failed_message)
-                            return False, failed_message
+
+                        is_success, message = self._save_lvm_vg_name_conf(self, vg_name)
+                        if not is_success:
+                            return is_success, message
+
 
         self._save_dev_fs_list()
 
@@ -546,6 +539,22 @@ class BackupManager:
 
         GLib.idle_add(self.completed_backup, True, "")
         return True, ""
+
+    def _save_lvm_vg_name_conf(self, vg_name):
+        lvm_vgname_filepath = os.path.join(self.dest_dir, "lvm_" + vg_name + ".conf")
+        # TODO: Evaluate the Clonezilla message from 2013 message that this command won't work on NFS
+        # TODO: due to a vgcfgbackup file lock issue.
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=lvm_vgname_filepath), "")
+        vgcfgbackup_process, flat_command_string, failed_message = Utility.run("Saving LVM VG config " + lvm_vgname_filepath,
+                                                                ["vgcfgbackup", "--file",
+                                                                lvm_vgname_filepath, vg_name], use_c_locale=True, logger=self.logger)
+        if vgcfgbackup_process.returncode != 0:
+            with self.summary_message_lock:
+                self.summary_message += failed_message
+            GLib.idle_add(self.completed_backup, False, failed_message)
+            return False, failed_message
+        return True, None
+
 
     def _append_lvm_logv_list(self, lv_path):
         file_command_process, flat_command_string, failed_message = Utility.run("logical volume file info",
