@@ -296,13 +296,7 @@ class BackupManager:
                                               "Could not find physical volume UUID pv_uuid in " + str(vg_dict))
                                 continue
                             relevant_vg_name_dict[vg_name] = partition_key
-                            lvm_vg_dev_list_filepath = os.path.join(self.dest_dir, "lvm_vg_dev.list")
-                            GLib.idle_add(self.display_status, _("Saving: {file}").format(file=lvm_vg_dev_list_filepath), "")
-                            with open(lvm_vg_dev_list_filepath, 'a+') as filehandle:
-                                if partition_key == vg_dict['pv_name']:
-                                   filehandle.write(vg_name + " " + partition_key + " " + pv_uuid + "\n")
-                                elif self.selected_drive_key == vg_dict['pv_name']:
-                                   filehandle.write(vg_name + " " + self.selected_drive_key + " " + pv_uuid + "\n")
+                            self._save_lvm_vg_dev_list(partition_key, vg_dict, vg_name, pv_uuid)
 
             lv_state_dict = Lvm.get_logical_volume_state_dict(self.logger)
             for report_dict in lv_state_dict['report']:
@@ -587,6 +581,15 @@ class BackupManager:
 
         GLib.idle_add(self.completed_backup, True, "")
         return True, ""
+
+    def _save_lvm_vg_dev_list(self, partition_key, vg_dict, vg_name, pv_uuid):
+        lvm_vg_dev_list_filepath = os.path.join(self.dest_dir, "lvm_vg_dev.list")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=lvm_vg_dev_list_filepath), "")
+        with open(lvm_vg_dev_list_filepath, 'a+') as filehandle:
+            if partition_key == vg_dict['pv_name']:
+               filehandle.write(vg_name + " " + partition_key + " " + pv_uuid + "\n")
+            elif self.selected_drive_key == vg_dict['pv_name']:
+               filehandle.write(vg_name + " " + self.selected_drive_key + " " + pv_uuid + "\n")
 
     def _handle_swap_partition(self, partition_key: str, short_device_node: str) -> None:
         filepath = os.path.join(self.dest_dir, "swappt-" + short_device_node + ".info")
