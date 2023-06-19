@@ -15,6 +15,14 @@ mount none -t devpts /dev/pts
 export HOME=/root
 export LC_ALL=C
 
+# By default, Ubuntu puts a laptop to sleep whenever the lid is closed.
+# Users have requested the Rescuezilla operation continue even if a laptop is closed
+update_logind_conf_to_ignore_laptop_lid_switch() {
+    sed --in-place 's/^[#]HandleLidSwitch=.*/HandleLidSwitch=ignore/g' /etc/systemd/logind.conf
+    sed --in-place 's/^[#]HandleLidSwitchExternalPower=.*/HandleLidSwitchExternalPower=ignore/g' /etc/systemd/logind.conf
+    sed --in-place 's/^[#]HandleLidSwitchDocked=.*/HandleLidSwitchDocked=ignore/g' /etc/systemd/logind.conf
+}
+
 # Ensure all Dockerfile package installation operations are non-interactive, DEBIAN_FRONTEND=noninteractive is insufficient [1]
 # [1] https://github.com/phusion/baseimage-docker/issues/58
 echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
@@ -399,6 +407,8 @@ sed --in-place s/COMPRESS=lz4/COMPRESS=gzip/g /etc/initramfs-tools/initramfs.con
 #
 # [1] https://askubuntu.com/a/893614/394984
 touch /etc/NetworkManager/conf.d/10-globally-managed-devices.conf
+
+update_logind_conf_to_ignore_laptop_lid_switch
 
 # Prevent GParted from launching if there is an instance of Rescuezilla running.
 #
