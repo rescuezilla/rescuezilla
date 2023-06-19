@@ -273,30 +273,7 @@ class BackupManager:
             # TODO: process matches how Clonezilla does it, which is sufficient for now.
             # FIXME: This section is duplicated in partitions_to_restore.py.
             # Start the Logical Volume Manager (LVM). Caller raises Exception on failure
-            Lvm.start_lvm2(self.logger)
-            relevant_vg_name_dict = {}
-            vg_state_dict = Lvm.get_volume_group_state_dict(self.logger)
-            for partition_key in list(self.partitions_to_backup.keys()):
-                for report_dict in vg_state_dict['report']:
-                    for vg_dict in report_dict['vg']:
-                        if 'pv_name' in vg_dict.keys() and (partition_key == vg_dict['pv_name']
-                                                            or self.selected_drive_key == vg_dict['pv_name']):
-                            if 'vg_name' in vg_dict.keys():
-                                vg_name = vg_dict['vg_name']
-                            else:
-                                GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
-                                              "Could not find volume group name vg_name in " + str(vg_dict))
-                                # TODO: Re-evaluate how exactly Clonezilla uses /NOT_FOUND and whether introducing it here
-                                # TODO: could improve Rescuezilla/Clonezilla interoperability.
-                                continue
-                            if 'pv_uuid' in vg_dict.keys():
-                                pv_uuid = vg_dict['pv_uuid']
-                            else:
-                                GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
-                                              "Could not find physical volume UUID pv_uuid in " + str(vg_dict))
-                                continue
-                            relevant_vg_name_dict[vg_name] = partition_key
-                            self._save_lvm_vg_dev_list(partition_key, vg_dict, vg_name, pv_uuid)
+            relevant_vg_name_dict = self._save_lvm_vg_dev_list()
 
             lv_state_dict = Lvm.get_logical_volume_state_dict(self.logger)
             for report_dict in lv_state_dict['report']:
@@ -582,7 +559,34 @@ class BackupManager:
         GLib.idle_add(self.completed_backup, True, "")
         return True, ""
 
-    def _save_lvm_vg_dev_list(self, partition_key, vg_dict, vg_name, pv_uuid):
+    def _save_lvm_vg_dev_list(self):
+        Lvm.start_lvm2(self.logger)
+        relevant_vg_name_dict = {}
+        vg_state_dict = Lvm.get_volume_group_state_dict(self.logger)
+        for partition_key in list(self.partitions_to_backup.keys()):
+            for report_dict in vg_state_dict['report']:
+                for vg_dict in report_dict['vg']:
+                    if 'pv_name' in vg_dict.keys() and (partition_key == vg_dict['pv_name']
+                                                            or self.selected_drive_key == vg_dict['pv_name']):
+                        if 'vg_name' in vg_dict.keys():
+                            vg_name = vg_dict['vg_name']
+                        else:
+                            GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
+                                              "Could not find volume group name vg_name in " + str(vg_dict))
+                                # TODO: Re-evaluate how exactly Clonezilla uses /NOT_FOUND and whether introducing it here
+                                # TODO: could improve Rescuezilla/Clonezilla interoperability.
+                            continue
+                        if 'pv_uuid' in vg_dict.keys():
+                            pv_uuid = vg_dict['pv_uuid']
+                        else:
+                            GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
+                                              "Could not find physical volume UUID pv_uuid in " + str(vg_dict))
+                            continue
+                        relevant_vg_name_dict[vg_name] = partition_key
+                        self._append_lvm_vg_dev_list(partition_key, vg_dict, vg_name, pv_uuid)
+        return relevant_vg_name_dict
+
+    def _append_lvm_vg_dev_list(self, partition_key, vg_dict, vg_name, pv_uuid):
         lvm_vg_dev_list_filepath = os.path.join(self.dest_dir, "lvm_vg_dev.list")
         GLib.idle_add(self.display_status, _("Saving: {file}").format(file=lvm_vg_dev_list_filepath), "")
         with open(lvm_vg_dev_list_filepath, 'a+') as filehandle:
