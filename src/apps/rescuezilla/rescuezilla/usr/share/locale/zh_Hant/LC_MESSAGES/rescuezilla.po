@@ -1,12 +1,13 @@
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
 # 池边树下 <mzky@163.com>, 2021, 2022.
+# Haowei Hsu <hwhsu1231@gmail.com>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2022-08-11 05:40+0000\n"
-"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
+"PO-Revision-Date: 2023-06-23 20:34+0000\n"
+"Last-Translator: Haowei Hsu <hwhsu1231@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
 "rescuezilla/rescuezilla/zh_Hant/>\n"
 "Language: zh_Hant\n"
@@ -14,22 +15,22 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 4.18.1\n"
 
 msgid "Welcome"
 msgstr "歡迎"
 
 msgid "Select an Option"
-msgstr "選擇選項"
+msgstr "選取選項"
 
 msgid "Easily create a backup image of your computer, or completely restore from one.  Click an option to begin:"
-msgstr "輕鬆創建電腦的備份圖像，或從計算機中完全恢復。 點選選項開始："
+msgstr "輕鬆建立電腦的備份映像，或從電腦中完全還原。點擊選項開始："
 
 msgid "Backup"
 msgstr "備份"
 
 msgid "Restore"
-msgstr "恢復"
+msgstr "還原"
 
 msgid "Verify Image"
 msgstr "驗證映像"
@@ -66,7 +67,7 @@ msgstr "正在執行：{app}"
 
 #, python-brace-format
 msgid "Running {app} on {device}"
-msgstr "在{device}上運行{app}"
+msgstr "在 {device} 上執行 {app}"
 
 msgid "Failed to run command: "
 msgstr "無法執行指令： "
@@ -75,7 +76,7 @@ msgid "Error querying drives: "
 msgstr "錯誤查詢驅動程式： "
 
 msgid "Clone"
-msgstr "複製"
+msgstr "拓製"
 
 msgid "Step 1: Understanding Cloning"
 msgstr "第 1 步：瞭解克隆"
@@ -101,25 +102,26 @@ msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
 msgstr "要開始\"克隆\"嚮導，請單擊 <b> 下一個 </b>"
 
 msgid "Step 2: Select Source Drive"
-msgstr "第 2 步：選擇源驅動器"
+msgstr "第 2 步：選取來源驅動器"
 
 msgid "Select the <b>source drive</b> to clone."
-msgstr "選擇 <b> 源驅動器 </b> 進行克隆。"
+msgstr "選取 <b> 來源驅動器 </b> 進行拓製。"
 
 msgid "Select the <b>destination drive</b> to overwrite."
-msgstr "選擇 <b> 目的地驅動器 </b> 以覆蓋。"
+msgstr "選取 <b> 目的地驅動器 </b> 以覆寫。"
 
 msgid "Step 4: Select Partitions to Clone"
-msgstr "第 4 步：選擇克隆分區"
+msgstr "第 4 步：選取要拓製的分區"
 
 msgid "Select which partitions from the source drive to clone, and whether to overwrite the partition table. <b>Leave everything selected to completely clone the source drive to the destination drive.</b>"
-msgstr "選擇從源驅動器到克隆的分區，以及是否覆蓋分區表。<b>將選擇的一切完全克隆源驅動器留到目的地驅動器。</b>"
+msgstr "選取從來源驅動器到拓製的分區，以及是否覆寫分區表。<b>將選取的一切完全拓製來源"
+"驅動器留到目的地驅動器。</b>"
 
 msgid "Step 5: Confirm Cloning Configuration"
-msgstr "第 5 步：確認克隆配置"
+msgstr "第 5 步：確認克隆組態"
 
 msgid "Confirm the following cloning configuration."
-msgstr "確認以下克隆配置。"
+msgstr "確認以下克隆組態。"
 
 msgid "Cloning the following partitions"
 msgstr "克隆以下分區"
@@ -129,31 +131,33 @@ msgstr "要開始克隆，請單擊 <b>下一個 </b>。"
 
 #, python-brace-format
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
-msgstr "您是否確定要將驅動器克隆到{destination_drive}？這樣做將永久覆蓋此驅動器上的資料！"
+msgstr "您是否確定要將驅動器拓製到 "
+"{destination_drive}？這樣做將永久覆寫此驅動器上的資料！"
 
 msgid "Step 6: Cloning Disk"
 msgstr "第 6 步：克隆磁碟"
 
 msgid "Cloning the drive you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
-msgstr "複製您選擇的驅動器。 這可能需要一個小時或更長的時間，具體取決於計算機的速度和數據量。"
+msgstr "拓製您選取的驅動器。 "
+"這可能需要一個小時或更長的時間，具體取決於電腦的速率和資料量。"
 
 msgid "Summary of Clone"
-msgstr "克隆的摘要"
+msgstr "拓製的摘要"
 
 msgid "Clone Summary"
-msgstr "克隆摘要"
+msgstr "拓製摘要"
 
 msgid "Confirm the clone summary."
-msgstr "確認克隆摘要。"
+msgstr "確認拓製摘要。"
 
 msgid "Unable to shutdown Image Explorer"
-msgstr "無法關閉圖像資源瀏覽器"
+msgstr "未能關閉映像總管"
 
 msgid "Step 1: Select Drive To Backup"
-msgstr "第 1 步：選擇驅動器進行備份"
+msgstr "第 1 步：選取要備份的驅動器"
 
 msgid "Select the <b>source drive</b> that you would like to create a backup image from."
-msgstr "選擇要建立備份圖像的 <b> 源驅動器 </b>。"
+msgstr "選取要建立備份映像的 <b> 來源驅動器 </b>。"
 
 msgid "Drive"
 msgstr "驅動器"
@@ -174,10 +178,10 @@ msgid "Show hidden devices (for advanced users)"
 msgstr "顯示隱藏裝置 （用於進階使用者 ）"
 
 msgid "Step 2: Select Partitions to Save"
-msgstr "第 2 步：選擇分區以保存"
+msgstr "第 2 步：選取要儲存的分區"
 
 msgid "Select which partitions to create a backup of. <b>Leave all partitions selected if you are unsure.</b>"
-msgstr "選擇創建備份的分區。<b>如果您不確定，請保留選擇的所有分區。</b>"
+msgstr "選取要建立備份的分區。<b>如果您不確定，請保留選取的所有分區。</b>"
 
 msgid "Save"
 msgstr "儲存"
@@ -194,7 +198,7 @@ msgid "Partition {partition_number}"
 msgstr "分區{partition_number}"
 
 msgid "Step 3: Select Destination Drive"
-msgstr "第 3 步：選擇目的地驅動器"
+msgstr "第 3 步：選取目的地驅動器"
 
 msgid "Click on the box below to select the source drive that you would like to create a backup image from."
 msgstr "按下下面的框以選擇要建立備份圖像的源驅動器。"
@@ -212,7 +216,7 @@ msgid "Windows shared folder (SMB/CIFS, Samba)"
 msgstr "視窗共用資料夾（SMB/CIFS，Samba）"
 
 msgid "Search network"
-msgstr "搜索網路"
+msgstr "搜尋網路"
 
 msgid "Server"
 msgstr "伺服器"
@@ -221,7 +225,7 @@ msgid "Share location (UNC path)"
 msgstr "分享位置 （UNC 路徑）"
 
 msgid "Username"
-msgstr "帳號"
+msgstr "使用者名稱"
 
 msgid "Password"
 msgstr "密碼"
@@ -248,7 +252,7 @@ msgid "Select network-shared storage location:"
 msgstr "選擇網路分享儲存位置："
 
 msgid "Select the partition where the image files will be saved to"
-msgstr "選擇將影像檔保存到的分區"
+msgstr "選取映像檔將要儲存的分區"
 
 msgid "Partition"
 msgstr "分區"
@@ -266,7 +270,7 @@ msgid "Must provide either password or SSH identity file."
 msgstr "必須提供密碼或SSH身份檔。"
 
 msgid "Scanning folder for backup images..."
-msgstr "掃描資料夾以檢視備份影像..."
+msgstr "掃描資料夾以檢視備份映像..."
 
 #, python-brace-format
 msgid "({timeout_seconds} second timeout)"
@@ -280,25 +284,25 @@ msgid "Scanning: {filename}"
 msgstr "掃描：{filename}"
 
 msgid "Error processing the following images:"
-msgstr "錯誤處理以下影像："
+msgstr "錯誤處理以下映像："
 
 msgid "Unable to fully process the image associated with the following partitions:"
-msgstr "無法完全處理與以下分割區相關的影像："
+msgstr "無法完全處理與以下分割區相關的映像："
 
 msgid "Unable to fully process the following image:"
-msgstr "無法完全處理以下影像："
+msgstr "無法完全處理以下映像："
 
 msgid "Cannot find partition's associated partclone image"
-msgstr "找不到分區的相關部分圖像"
+msgstr "找不到分區的相關部分映像"
 
 msgid "This can happen when loading images which Clonezilla was unable to completely backup."
-msgstr "當載入克隆齊拉無法完全備份的圖像時，可能會發生這種情況。"
+msgstr "當載入再生龍（Clonezilla）無法完全備份的映像時，可能會發生這種情況。"
 
 msgid "Note: This image format cannot distinguish between failed partclone backup and a user who chose not to backup a partition."
 msgstr "注意：此圖像格式無法區分失敗的部分備份和選擇不備份分區的使用者。"
 
 msgid "Any other filesystems within the image should be restorable as normal."
-msgstr "圖像中的任何其他文件系統應正常恢復。"
+msgstr "映像中的任何其他檔案系統應該可以正常還原。"
 
 msgid "Needs decryption"
 msgstr "需要解密"
@@ -317,7 +321,7 @@ msgid "The backup's bootloader data is shorter than expected. If the backup cont
 msgstr "備份的引導載入器數據比預期的要短。如果備份包含某些引導載入器（如 GRUB），則在恢復操作期間，救援團隊將嘗試重新安裝引導載入器。"
 
 msgid "Step 4: Select Destination Folder"
-msgstr "第 4 步：選擇目的地資料夾"
+msgstr "第 4 步：選取目的地資料夾"
 
 msgid "Click <b>Browse</b> to select the folder on the destination drive where your new backup image will be saved.\n"
 "\n"
@@ -338,7 +342,7 @@ msgid "The table below lists the backup images that are already in this folder (
 msgstr "下表列出了該資料夾中已出現的備份圖像（如果有）。"
 
 msgid "Browse..."
-msgstr "流覽..."
+msgstr "瀏覽..."
 
 msgid "Filename"
 msgstr "檔名"
@@ -367,10 +371,10 @@ msgid "Optional: Provide a short description."
 msgstr "可選：提供簡短的描述。"
 
 msgid "Step 6: Customize Compression Settings"
-msgstr "第 6 步：自定義壓縮設置"
+msgstr "第 6 步：客製化壓縮設定"
 
 msgid "Customize image compression settings. <b>Don't make any changes if you are unsure.</b>"
-msgstr "自定義圖像壓縮設置。<b>如果您不確定，請不要做任何更改。</b>"
+msgstr "客製化映像壓縮設定。<b>如果您不確定，請不要做任何變更。</b>"
 
 msgid "Compression format: "
 msgstr "壓縮格式： "
@@ -379,13 +383,13 @@ msgid "gzip"
 msgstr "Gzip壓縮"
 
 msgid "default"
-msgstr "默認"
+msgstr "預設"
 
 msgid "zstandard"
 msgstr "zstandard壓縮"
 
 msgid "Uncompressed (Suitable for use with Image Explorer)"
-msgstr "未壓縮（適合與影像資源管理員使用）"
+msgstr "未壓縮（適合與映像總管使用）"
 
 msgid "Compression level: "
 msgstr "壓縮等級： "
@@ -397,10 +401,10 @@ msgid "Best"
 msgstr "最好"
 
 msgid "When you are happy with the compression settings, click <b>Next</b>."
-msgstr "當您對壓縮設置感到滿意時，請單擊 <b>下一個</b>。"
+msgstr "當您對壓縮設定感到滿意時，請單擊 <b>下一個</b>。"
 
 msgid "Step 7: Confirm Backup Configuration"
-msgstr "第 7 步：確認備份配置"
+msgstr "第 7 步：確認備份組態"
 
 msgid "Source drive"
 msgstr "源驅動器"
@@ -410,10 +414,10 @@ msgstr "備份以下分區"
 
 #, python-brace-format
 msgid "The backup image will be written into folder {dest_dir} on {description}"
-msgstr "備份影像將寫入資料夾{dest_dir}在{description}"
+msgstr "備份映像將寫入 {description} 上的資料夾 {dest_dir}"
 
 msgid "Confirm the following backup configuration."
-msgstr "確認以下備份配置。"
+msgstr "確認以下備份組態。"
 
 msgid "On successful completion of the task, perform the following action: "
 msgstr "工作完成後，執行以下操作： "
@@ -425,10 +429,10 @@ msgid "Shutdown"
 msgstr "關閉"
 
 msgid "Reboot"
-msgstr "重新啟動"
+msgstr "重新開機"
 
 msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
-msgstr "救援：忽略文件系統不一致和壞扇區"
+msgstr "救援：忽略檔案系統不一致和壞磁區"
 
 msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
 msgstr "<b>啟用“救援”可能會抑制重要錯誤。謹慎使用。 </b>"
@@ -437,7 +441,7 @@ msgid "To start the backup, click <b>Next</b>."
 msgstr "要啟動備份，請單擊 <b>下一個</b>。"
 
 msgid "Step 8: Creating Backup Image"
-msgstr "第 8 步：創建備份圖像"
+msgstr "第 8 步：建立備份映像"
 
 msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr "將系統備份到您選擇的位置。 這可能需要一個小時或更長的時間，具體取決於計算機的速度和數據量。"
@@ -451,7 +455,7 @@ msgid "Backup {partition_name} containing filesystem {filesystem} to {destinatio
 msgstr "備份{partition_name}包含檔案系統{filesystem}到{destination}"
 
 msgid "Summary of Backup"
-msgstr "備份摘要"
+msgstr "備份的摘要"
 
 msgid "Confirm the backup summary."
 msgstr "確認備份摘要。"
@@ -472,7 +476,7 @@ msgid "Error creating backup: "
 msgstr "建立備份的錯誤： "
 
 msgid "Failed to write destination file. Please confirm it is valid to create the provided file path, and try again."
-msgstr "未能編寫目標檔。請確認創建所提供的文件路徑有效，並重試。"
+msgstr "未能編寫目的地檔。請確認建立所提供的檔案路徑有效，並重試。"
 
 #, python-brace-format
 msgid "Successful backup of swap partition {partition_name}"
@@ -506,34 +510,35 @@ msgid "To start a new session, click <b>Next</b>"
 msgstr "要開始新會話，請單擊 <b> 下一個 </b>"
 
 msgid "Step 1: Select Image Location"
-msgstr "第 1 步：選擇圖像位置"
+msgstr "第 1 步：選取映像位置"
 
 msgid "Where are the image files stored?"
 msgstr "圖像檔存儲在哪裡？"
 
 msgid "Select the partition which contains the image files:"
-msgstr "選擇包含影像檔案的分割區："
+msgstr "選取包含映像檔的分割區："
 
 msgid "Step 2: Select Backup Image"
-msgstr "第 2 步：選擇備份圖像"
+msgstr "第 2 步：選取備份映像"
 
 msgid "Click <b>Browse</b> to select the folder containing image files."
-msgstr "按下 <b>流覽 </b> 以選擇包含圖像檔的資料夾。"
+msgstr "點擊\\ <b>瀏覽</b>\\ 以選取包含映像檔的資料夾。"
 
 msgid "Select the image file to restore."
-msgstr "選擇要還原的圖像檔。"
+msgstr "選取要還原的映像檔。"
 
 msgid "Step 3: Select Drive To Restore"
-msgstr "第 3 步：選擇恢復驅動器"
+msgstr "第 3 步：選取要還原的驅動器"
 
 msgid "Select the destination drive to restore with the selected image."
 msgstr "選擇目的地驅動器，用選定的圖像恢復。"
 
 msgid "Step 4: Select Partitions to Restore"
-msgstr "第 4 步：選擇分區以恢復"
+msgstr "第 4 步：選取要還原的分區"
 
 msgid "Select which partitions from the backup image to restore, and whether to overwrite the partition table. <b>Leave everything selected to completely restore the destination drive.</b>"
-msgstr "選擇備份圖像中的哪些分區以恢復，以及是否覆蓋分區表。<b>保留所選擇的一切以完全恢復目標驅動器。</b>"
+msgstr "選取要還原備份映像中的哪些分區，以及是否覆寫分區表。<b>保留所選取的一切以完全"
+"還原目的地驅動器。</b>"
 
 msgid "Selected image"
 msgstr "選定的圖像"
@@ -545,7 +550,7 @@ msgid "Destination partition"
 msgstr "目的地分區"
 
 msgid "Overwrite partition table"
-msgstr "覆蓋分區表"
+msgstr "覆寫分區表"
 
 msgid "You will be overwriting the partition table."
 msgstr "您將覆蓋分割區表。"
@@ -601,14 +606,15 @@ msgstr ""
 "{url}"
 
 msgid "Step 5: Confirm Restore Configuration"
-msgstr "第 5 步：確認恢復配置"
+msgstr "第 5 步：確認還原組態"
 
 msgid "Confirm the following restore configuration."
-msgstr "確認以下恢復配置。"
+msgstr "確認以下還原組態。"
 
 #, python-brace-format
 msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!"
-msgstr "您是否確定要將備份恢復為{destination_drive}？這樣做將永久覆蓋此驅動器上的資料！"
+msgstr "您是否確定要將備份還原為 "
+"{destination_drive}？這樣做將永久覆寫此驅動器上的資料！"
 
 msgid "Source image"
 msgstr "源映像"
@@ -617,7 +623,7 @@ msgid "Destination drive"
 msgstr "目的地驅動器"
 
 msgid "Restoring the following partitions"
-msgstr "恢復以下分區"
+msgstr "還原以下分區"
 
 msgid "WILL BE OVERWRITING PARTITION TABLE"
 msgstr "將覆蓋分區表"
@@ -626,20 +632,21 @@ msgid "Will <b>NOT</b> be overwriting partition table"
 msgstr "將 <b> 不會 </b> 覆蓋分區表"
 
 msgid "To start the restore, click <b>Next</b>."
-msgstr "要開始恢復，請單擊 <b>下一個 </b>。"
+msgstr "要開始還原，請單擊 <b>下一個 </b>。"
 
 msgid "Restoring From Backup"
-msgstr "從備份恢復"
+msgstr "從備份還原"
 
 msgid "Restoring your system from the image you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
-msgstr "從您選擇的影像中恢復系統。 這可能需要一個小時或更長的時間，具體取決於計算機的速度和數據量。"
+msgstr "從您選取的映像中還原系統。 "
+"這可能需要一個小時或更長的時間，具體取決於電腦的速率和資料量。"
 
 msgid "Refreshing partition table"
-msgstr "刷新分區表"
+msgstr "重新整理分區表"
 
 #, python-brace-format
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
-msgstr "將{description} 恢復為{destination_partition} ({destination_description})"
+msgstr "將 {description} 還原為 {destination_partition} ({destination_description})"
 
 msgid "Synchronizing disks..."
 msgstr "同步磁碟..."
@@ -662,7 +669,7 @@ msgstr "調整分割區{partition}({filesystem}) 失敗：{msg}"
 
 #, python-brace-format
 msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
-msgstr "使用{geometry_source}中的值成功調整了 {ntfs_device} NTFS文件系統幾何形狀"
+msgstr "使用 {geometry_source} 中的值成功調整了 {ntfs_device} NTFS 檔案系統幾何形狀"
 
 #, python-brace-format
 msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
@@ -699,58 +706,59 @@ msgid "Successfully updated EFI NVRAM"
 msgstr "成功更新了EFI NVRAM"
 
 msgid "Error restoring image: "
-msgstr "錯誤還原影像： "
+msgstr "錯誤還原映像： "
 
 msgid "Could not restore sfdisk partition table as file has zero length: "
 msgstr "無法回復sfdisk分割區表，因為檔案的長度為零： "
 
 msgid "Successfully restored partition table."
-msgstr "成功恢復分區表。"
+msgstr "成功還原分區表。"
 
 msgid "Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."
-msgstr "未能刷新設備的分區表。如果另一個過程正在訪問分區表，則可能發生這種情況。"
+msgstr "未能重新整理裝置的分區表。如果另一個行程正在存取分區表，則可能發生這種情況。"
 
 #, python-brace-format
 msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
-msgstr "無法恢復分區{destination_partition} ，因為沒有與之相關的保存圖像： {description}。"
+msgstr "無法還原分區 {destination_partition} ，因為沒有與之相關的儲存圖像： "
+"{description}。"
 
 msgid "This may occur if Clonezilla was originally unable to backup this partition."
-msgstr "如果Clonezilla無法備份此分區，則可能發生這種情況。"
+msgstr "如果 Clonezilla 無法備份此分區，則可能發生這種情況。"
 
 #, python-brace-format
 msgid "Error restoring partition {image_key} to {destination_partition}."
-msgstr "錯誤復原分割區 {image_key} 到{destination_partition}。"
+msgstr "錯誤還原分割區 {image_key} 到 {destination_partition}。"
 
 #, python-brace-format
 msgid "Successfully restored image partition {image} to {destination_partition}"
-msgstr "成功復原影像分區{image}至{destination_partition}"
+msgstr "成功還原映像分區 {image} 到 {destination_partition}"
 
 msgid "Summary of Restore"
-msgstr "恢復摘要"
+msgstr "還原的摘要"
 
 msgid "Restore Summary"
-msgstr "恢復摘要"
+msgstr "還原摘要"
 
 msgid "Confirm the restore summary."
-msgstr "確認恢復摘要。"
+msgstr "確認還原摘要。"
 
 msgid "Backup restored successfully."
-msgstr "備份已成功恢復。"
+msgstr "備份已成功還原。"
 
 msgid "Image Explorer\n"
 "      (beta)"
 msgstr ""
-"圖像資源管理員\n"
-"    （測試版）"
+"映像總管\n"
+"      （測試版）"
 
 msgid "Image Explorer (beta)"
-msgstr "影像資源瀏覽器（測試版）"
+msgstr "映像總管（測試版）"
 
 msgid "Select the image file to explore"
 msgstr "選擇要探索的圖像檔"
 
 msgid "Step 3: Select Partition to Explore"
-msgstr "第 3 步：選擇分區進行探索"
+msgstr "第 3 步：選取要探索的分區"
 
 msgid "Select the partition to access files from."
 msgstr "選擇分區以訪問檔。"
@@ -793,7 +801,7 @@ msgid "Verifying {image_name}"
 msgstr "正在驗證 {image_name}"
 
 msgid "Summary of Verification"
-msgstr "驗證摘要"
+msgstr "驗證的摘要"
 
 msgid "Confirm the verification summary."
 msgstr "確認驗證摘要。"
@@ -827,4 +835,4 @@ msgstr "無法驗證。"
 
 #, python-brace-format
 msgid "{partition}: filesystem image successfully verified."
-msgstr "{partition}：文件系統映像已成功驗證。"
+msgstr "{partition}：檔案系統映像已成功驗證。"
