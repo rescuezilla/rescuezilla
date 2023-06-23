@@ -441,29 +441,7 @@ class BackupManager:
                 # [1] https://bugs.python.org/issue35182
                 self.logger.write("Exception during communicate:" + str(e))
             if self.proc['partclone_backup_' + partition_key].returncode != 0:
-                partition_summary = _("<b>Failed to backup partition</b> {partition_name}").format(partition_name=partition_key) + "\n"
-                with self.summary_message_lock:
-                    self.summary_message += partition_summary
-                self.at_least_one_non_fatal_error = True
-                proc_stdout = self.proc['partclone_backup_' + partition_key].stdout
-                proc_stderr = self.proc['partclone_backup_' + partition_key].stderr
-                extra_info = "\nThe command used internally was:\n\n" + flat_command_string + "\n\n" + "The output of the command was: " + partclone_stderr
-                compression_stderr = self.proc['compression_' + partition_key].stderr
-                if compression_stderr is not None and compression_stderr != "":
-                    extra_info += "\n\n" + str(compression_cmd_list) + " stderr: " + compression_stderr
-
-                # TODO: Try to backup again, but using partclone.dd
-                GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
-                              partition_summary + extra_info)
-                # Delete failed partclone files
-                failed_partclone_img_path_list = glob.glob(filepath + "*")
-                for file_path in failed_partclone_img_path_list:
-                    try:
-                        os.remove(file_path)
-                    except OSError:
-                        self.logger.write("Unable to remove: " + file_path)
-                        with self.summary_message_lock:
-                            self.summary_message += "Unable to remove: " + file_path
+                self._handle_partclone_error(filepath, partition_key, compression_cmd_list, flat_command_string, partclone_stderr)
 
             else:
                 with self.summary_message_lock:
@@ -514,6 +492,31 @@ class BackupManager:
 
         GLib.idle_add(self.completed_backup, True, "")
         return True, ""
+
+    def _handle_partclone_error(self, filepath: str, partition_key: str, compression_cmd_list: str, flat_command_string: str, partclone_stderr) -> None:
+        partition_summary = _("<b>Failed to backup partition</b> {partition_name}").format(partition_name=partition_key) + "\n"
+        with self.summary_message_lock:
+            self.summary_message += partition_summary
+        self.at_least_one_non_fatal_error = True
+        proc_stdout = self.proc['partclone_backup_' + partition_key].stdout
+        proc_stderr = self.proc['partclone_backup_' + partition_key].stderr
+        extra_info = "\nThe command used internally was:\n\n" + flat_command_string + "\n\n" + "The output of the command was: " + partclone_stderr
+        compression_stderr = self.proc['compression_' + partition_key].stderr
+        if compression_stderr is not None and compression_stderr != "":
+            extra_info += "\n\n" + str(compression_cmd_list) + " stderr: " + compression_stderr
+
+                # TODO: Try to backup again, but using partclone.dd
+        GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
+                              partition_summary + extra_info)
+                # Delete failed partclone files
+        failed_partclone_img_path_list = glob.glob(filepath + "*")
+        for file_path in failed_partclone_img_path_list:
+            try:
+                os.remove(file_path)
+            except OSError:
+                self.logger.write("Unable to remove: " + file_path)
+                with self.summary_message_lock:
+                    self.summary_message += "Unable to remove: " + file_path
 
     def _save_lvm_vg_name_conf(self, vg_name):
         lvm_vgname_filepath = os.path.join(self.dest_dir, "lvm_" + vg_name + ".conf")
