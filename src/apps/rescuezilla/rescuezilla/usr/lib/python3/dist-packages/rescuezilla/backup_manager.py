@@ -421,32 +421,14 @@ class BackupManager:
                                                                        'compression_' + partition_key].stdout,
                                                                    stdout=subprocess.PIPE, env=env, encoding='utf-8')
 
-            partclone_stderr = ""
+
             # Process partclone output. Partclone outputs an update every 3 seconds, so processing the data
             # on the current thread, for simplicity.
             # Poll process.stdout to show stdout live
-            while True:
-                if self.requested_stop:
-                    GLib.idle_add(self.completed_backup, False, _("User requested operation to stop."))
-                    return False, _("User requested operation to stop.")
+            is_success, message, partclone_stderr = self._process_partclone_output_loop(self, partition_key, total_size, partition_number, filesystem_backup_message)
+            if not is_success:
+                return is_success, message
 
-                output = self.proc['partclone_backup_' + partition_key].stderr.readline()
-                if self.proc['partclone_backup_' + partition_key].poll() is not None:
-                    break
-                if output:
-                    partclone_stderr += output
-                    temp_dict = Partclone.parse_partclone_output(output)
-                    if 'completed' in temp_dict.keys():
-                        total_progress_float = Utility.calculate_progress_ratio(
-                            current_partition_completed_percentage=temp_dict['completed'] / 100.0,
-                            current_partition_bytes=self.partitions_to_backup[partition_key]['size'],
-                            cumulative_bytes=self.partitions_to_backup[partition_key]['cumulative_bytes'],
-                            total_bytes=total_size,
-                            image_number=partition_number,
-                            num_partitions=len(self.partitions_to_backup))
-                        GLib.idle_add(self.update_backup_progress_bar, total_progress_float)
-                    if 'remaining' in temp_dict.keys():
-                        GLib.idle_add(self.update_backup_progress_status, filesystem_backup_message + "\n\n" + output)
             rc = self.proc['partclone_backup_' + partition_key].poll()
 
             self.proc['partclone_backup_' + partition_key].stdout.close()  # Allow p1 to receive a SIGPIPE if p2 exits.
@@ -1102,6 +1084,36 @@ class BackupManager:
             self.metadata_only_image_to_annotate.post_mbr_gap_dict['absolute_path'] = hidden_mbr_data_filepath
 
         return True, None
+
+
+    def _process_partclone_output_loop(self, partition_key: str, total_size: int, partition_number: int, filesystem_backup_message: str) -> tuple[bool, str, str]:
+        partclone_stderr = ""
+        # Process partclone output. Partclone outputs an update every 3 seconds, so processing the data
+        # on the current thread, for simplicity.
+        # Poll process.stdout to show stdout live
+        while True:
+            if self.requested_stop:
+                GLib.idle_add(self.completed_backup, False, _("User requested operation to stop."))
+                return False, _("User requested operation to stop."), partclone_stderr
+
+            output = self.proc['partclone_backup_' + partition_key].stderr.readline()
+            if self.proc['partclone_backup_' + partition_key].poll() is not None:
+                break
+            if output:
+                partclone_stderr += output
+                temp_dict = Partclone.parse_partclone_output(output)
+                if 'completed' in temp_dict.keys():
+                    total_progress_float = Utility.calculate_progress_ratio(
+                        current_partition_completed_percentage=temp_dict['completed'] / 100.0,
+                        current_partition_bytes=self.partitions_to_backup[partition_key]['size'],
+                        cumulative_bytes=self.partitions_to_backup[partition_key]['cumulative_bytes'],
+                        total_bytes=total_size,
+                        image_number=partition_number,
+                        num_partitions=len(self.partitions_to_backup))
+                    GLib.idle_add(self.update_backup_progress_bar, total_progress_float)
+                if 'remaining' in temp_dict.keys():
+                    GLib.idle_add(self.update_backup_progress_status, filesystem_backup_message + "\n\n" + output)
+        return True, None, partclone_stderr
 
     # Implementation of Clonezilla "check_if_windows_boot_reserve_part" function
     def is_partition_windows_boot_reserved(self, partition_key, mount_point):
