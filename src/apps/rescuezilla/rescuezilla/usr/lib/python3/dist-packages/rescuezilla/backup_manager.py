@@ -158,16 +158,9 @@ class BackupManager:
         short_selected_device_node = re.sub('/dev/', '', self.selected_drive_key)
         enduser_date = datetime.today().strftime('%Y-%m-%d-%H%M')
         clonezilla_img_filepath = os.path.join(self.dest_dir, "clonezilla-img")
-        with open(clonezilla_img_filepath, 'w') as filehandle:
-            try:
-                output = "This image was saved by Rescuezilla at " + enduser_date + "\nSaved by " + self.human_readable_version + "\nThe log during saving:\n----------------------------------------------------------\n\n"
-                filehandle.write(output)
-            except:
-                tb = traceback.format_exc()
-                traceback.print_exc()
-                error_message = _("Failed to write destination file. Please confirm it is valid to create the provided file path, and try again.") + "\n\n" + tb
-                GLib.idle_add(self.completed_backup, False, error_message)
-                return False, error_message
+        is_success, message = self._save_clonezilla_img(clonezilla_img_filepath, enduser_date)
+        if not is_success:
+            return is_success, message
 
         self.logger = Logger(clonezilla_img_filepath)
 
@@ -783,6 +776,19 @@ class BackupManager:
             self._append_summary_message(failed_message)
             return False, failed_message, efi_nvram_filepath
         return True, None, efi_nvram_filepath
+
+    def _save_clonezilla_img(self, clonezilla_img_filepath: str, enduser_date: str) -> tuple[bool, str]:
+        with open(clonezilla_img_filepath, 'w') as filehandle:
+            try:
+                output = "This image was saved by Rescuezilla at " + enduser_date + "\nSaved by " + self.human_readable_version + "\nThe log during saving:\n----------------------------------------------------------\n\n"
+                filehandle.write(output)
+            except:
+                tb = traceback.format_exc()
+                traceback.print_exc()
+                error_message = _("Failed to write destination file. Please confirm it is valid to create the provided file path, and try again.") + "\n\n" + tb
+                GLib.idle_add(self.completed_backup, False, error_message)
+                return False, error_message
+        return True, None
 
     def _create_file_parts(self) -> None:
         filepath = os.path.join(self.dest_dir, "parts")
