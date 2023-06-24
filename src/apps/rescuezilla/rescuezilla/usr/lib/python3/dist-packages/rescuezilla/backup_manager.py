@@ -454,7 +454,6 @@ class BackupManager:
             GLib.idle_add(self.completed_backup, False, _("User requested operation to stop."))
             return False, _("User requested operation to stop.")
 
-        i += 1
         sleep(1.0)
 
         """
