@@ -402,9 +402,9 @@ class BackupManager:
             # partition table returns an error using parted but Clonezilla is happy to continue. Rescuezilla does the
             # same (but displays the error to the user). For cloning, the not displaying any error message is fine.
             if not self.is_cloning:
-               with self.summary_message_lock:
+                with self.summary_message_lock:
                     self.summary_message += failed_message
-               GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, failed_message)
+                GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, failed_message)
 
         if os.path.isdir("/sys/firmware/efi/efivars"):
             # Save EFI NVRAM info. What we need is actually the label
@@ -524,7 +524,7 @@ class BackupManager:
                         error_message = _(
                             "Failed to write hidden data info file. Please confirm it is valid to create the provided file path, and try again.") + "\n\n" + tb
                         GLib.idle_add(self.completed_backup, False, error_message)
-                        return False, failed_message
+                        return False, error_message
 
             else:
                 first_partition_offset_sectors = int(first_partition_offset_bytes / 512)
@@ -613,9 +613,9 @@ class BackupManager:
                             GLib.idle_add(self.display_status, _("Saving: {file}").format(file=lvm_vg_dev_list_filepath), "")
                             with open(lvm_vg_dev_list_filepath, 'a+') as filehandle:
                                 if partition_key == vg_dict['pv_name']:
-                                   filehandle.write(vg_name + " " + partition_key + " " + pv_uuid + "\n")
+                                    filehandle.write(vg_name + " " + partition_key + " " + pv_uuid + "\n")
                                 elif self.selected_drive_key == vg_dict['pv_name']:
-                                   filehandle.write(vg_name + " " + self.selected_drive_key + " " + pv_uuid + "\n")
+                                    filehandle.write(vg_name + " " + self.selected_drive_key + " " + pv_uuid + "\n")
 
             lv_state_dict = Lvm.get_logical_volume_state_dict(self.logger)
             for report_dict in lv_state_dict['report']:
