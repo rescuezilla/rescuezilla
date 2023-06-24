@@ -59,6 +59,8 @@ class BackupManager:
         self.logger = None
 
         self.requested_stop = False
+        self._msg_delimiter_star_line = "*****************************************************."
+
 
     def is_backup_in_progress(self):
         with self.backup_in_progress_lock:
@@ -144,7 +146,7 @@ class BackupManager:
         self.proc.clear()
         self.summary_message_lock = threading.Lock()
         self.summary_message = ""
-        self._msg_delimiter_star_line = "*****************************************************."
+
 
         if self.is_rescue and not self.is_cloning:
             with self.summary_message_lock:
@@ -197,7 +199,7 @@ class BackupManager:
             # Not considering os-prober exit code as fatal, to match Clonezilla's behavior
             self._create_info_os_prober_txt(enduser_date)
 
-            self._create_info_packages_txt(enduser_date)
+            self._create_info_packages_txt()
 
 
         # TODO: Clonezilla creates a file named "Info-saved-by-cmd.txt" file, to allow users to re-run the exact
@@ -580,9 +582,9 @@ class BackupManager:
         GLib.idle_add(self.display_status, _("Saving: {file}").format(file=lvm_vg_dev_list_filepath), "")
         with open(lvm_vg_dev_list_filepath, 'a+') as filehandle:
             if partition_key == vg_dict['pv_name']:
-               filehandle.write(vg_name + " " + partition_key + " " + pv_uuid + "\n")
+                filehandle.write(vg_name + " " + partition_key + " " + pv_uuid + "\n")
             elif self.selected_drive_key == vg_dict['pv_name']:
-               filehandle.write(vg_name + " " + self.selected_drive_key + " " + pv_uuid + "\n")
+                filehandle.write(vg_name + " " + self.selected_drive_key + " " + pv_uuid + "\n")
 
     def _handle_swap_partition(self, partition_key: str, short_device_node: str) -> None:
         filepath = os.path.join(self.dest_dir, "swappt-" + short_device_node + ".info")
@@ -743,9 +745,9 @@ class BackupManager:
             # partition table returns an error using parted but Clonezilla is happy to continue. Rescuezilla does the
             # same (but displays the error to the user). For cloning, the not displaying any error message is fine.
             if not self.is_cloning:
-               with self.summary_message_lock:
+                with self.summary_message_lock:
                     self.summary_message += failed_message
-               GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, failed_message)
+                GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, failed_message)
         return parted_process
 
     def _create_file_efi_nvran_dat(self) -> tuple[bool, str, str]:
@@ -799,7 +801,7 @@ class BackupManager:
             # FIXME: cannot (a divergence of behavior).
             filehandle.write('\n')
 
-    def _create_info_packages_txt(self, enduser_date: str) -> None:
+    def _create_info_packages_txt(self) -> None:
         filepath = os.path.join(self.dest_dir, "Info-packages.txt")
         GLib.idle_add(self.display_status, _("Saving: {file}").format(file=filepath), "")
         # Save Debian package informtion
@@ -1068,7 +1070,7 @@ class BackupManager:
                     error_message = _(
                         "Failed to write hidden data info file. Please confirm it is valid to create the provided file path, and try again.") + "\n\n" + tb
                     GLib.idle_add(self.completed_backup, False, error_message)
-                    return False, failed_message
+                    return False, error_message
 
         else:
             first_partition_offset_sectors = int(first_partition_offset_bytes / 512)
@@ -1253,6 +1255,7 @@ class BackupManager:
                 self.logger.write("Populating summary page with:\n\n" + self.summary_message)
             else:
                 print(self.summary_message)
+
             text_to_display = """<b>{heading}</b>
 
 {message}""".format(heading=_("Backup Summary"), message=GObject.markup_escape_text(self.summary_message))
