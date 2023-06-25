@@ -407,20 +407,7 @@ class BackupManager:
             self.logger.write(filesystem_backup_message)
 
             flat_command_string = Utility.print_cli_friendly("Running ", [partclone_cmd_list, compression_cmd_list, split_cmd_list])
-            self.proc['partclone_backup_' + partition_key] = subprocess.Popen(partclone_cmd_list,
-                                                                              stdout=subprocess.PIPE,
-                                                                              stderr=subprocess.PIPE, env=env,
-                                                                              encoding='utf-8')
-
-            self.proc['compression_' + partition_key] = subprocess.Popen(compression_cmd_list,
-                                                                  stdin=self.proc[
-                                                                      'partclone_backup_' + partition_key].stdout,
-                                                                  stdout=subprocess.PIPE, env=env, encoding='utf-8')
-
-            self.proc['split_' + partition_key] = subprocess.Popen(split_cmd_list,
-                                                                   stdin=self.proc[
-                                                                       'compression_' + partition_key].stdout,
-                                                                   stdout=subprocess.PIPE, env=env, encoding='utf-8')
+            self._run_partclone_compression_and_split(env, partition_key, compression_cmd_list, partclone_cmd_list, split_cmd_list)
 
 
             # Process partclone output. Partclone outputs an update every 3 seconds, so processing the data
@@ -492,6 +479,22 @@ class BackupManager:
 
         GLib.idle_add(self.completed_backup, True, "")
         return True, ""
+
+    def _run_partclone_compression_and_split(self, env, partition_key, compression_cmd_list, partclone_cmd_list, split_cmd_list):
+        self.proc['partclone_backup_' + partition_key] = subprocess.Popen(partclone_cmd_list,
+                                                                              stdout=subprocess.PIPE,
+                                                                              stderr=subprocess.PIPE, env=env,
+                                                                              encoding='utf-8')
+
+        self.proc['compression_' + partition_key] = subprocess.Popen(compression_cmd_list,
+                                                                  stdin=self.proc[
+                                                                      'partclone_backup_' + partition_key].stdout,
+                                                                  stdout=subprocess.PIPE, env=env, encoding='utf-8')
+
+        self.proc['split_' + partition_key] = subprocess.Popen(split_cmd_list,
+                                                                   stdin=self.proc[
+                                                                       'compression_' + partition_key].stdout,
+                                                                   stdout=subprocess.PIPE, env=env, encoding='utf-8')
 
     def _handle_partclone_error(self, filepath: str, partition_key: str, compression_cmd_list: str, flat_command_string: str, partclone_stderr) -> None:
         partition_summary = _("<b>Failed to backup partition</b> {partition_name}").format(partition_name=partition_key) + "\n"
