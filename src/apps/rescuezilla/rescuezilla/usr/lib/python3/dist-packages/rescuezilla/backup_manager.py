@@ -306,7 +306,6 @@ class BackupManager:
                                 self.partitions_to_backup[lv_path] = self.drive_state[lv_dm_path]['partitions'][logical_volume]
                                 self.partitions_to_backup[lv_path]['type'] = 'part'
 
-
                         is_success, message = self._save_lvm_vg_name_conf(self, vg_name)
                         if not is_success:
                             return is_success, message
@@ -519,18 +518,7 @@ class BackupManager:
                 with self.summary_message_lock:
                     self.summary_message += "Unable to remove: " + file_path
 
-    def _save_lvm_vg_name_conf(self, vg_name):
-        lvm_vgname_filepath = os.path.join(self.dest_dir, "lvm_" + vg_name + ".conf")
-        # TODO: Evaluate the Clonezilla message from 2013 message that this command won't work on NFS
-        # TODO: due to a vgcfgbackup file lock issue.
-        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=lvm_vgname_filepath), "")
-        vgcfgbackup_process, flat_command_string, failed_message = Utility.run("Saving LVM VG config " + lvm_vgname_filepath,
-                                                                ["vgcfgbackup", "--file",
-                                                                lvm_vgname_filepath, vg_name], use_c_locale=True, logger=self.logger)
-        if vgcfgbackup_process.returncode != 0:
-            self._append_summary_message(failed_message)
-            return False, failed_message
-        return True, None
+
 
 
 
@@ -959,8 +947,7 @@ class BackupManager:
                 self.metadata_only_image_to_annotate.sfdisk_chs_dict = geometry_dict
         return True, None
 
-
-    def _save_lvm_vg_dev_list(self):
+    def _save_lvm_vg_dev_list(self) -> dict:
         Lvm.start_lvm2(self.logger)
         relevant_vg_name_dict = {}
         vg_state_dict = Lvm.get_volume_group_state_dict(self.logger)
@@ -987,7 +974,7 @@ class BackupManager:
                         self._append_lvm_vg_dev_list(partition_key, vg_dict, vg_name, pv_uuid)
         return relevant_vg_name_dict
 
-    def _append_lvm_logv_list(self, lv_path):
+    def _append_lvm_logv_list(self, lv_path: str) -> tuple[bool, str]:
         file_command_process, flat_command_string, failed_message = Utility.run("logical volume file info",
                                                                 ["file", "--dereference",
                                                                     "--special-files", lv_path], use_c_locale=True, logger=self.logger)
@@ -1001,6 +988,19 @@ class BackupManager:
         # Append to file
         with open(lvm_logv_list_filepath, 'a+') as filehandle:
             filehandle.write(lv_path + "  " + output + "\n")
+        return True, None
+
+    def _save_lvm_vg_name_conf(self, vg_name: str) -> tuple[bool, str]:
+        lvm_vgname_filepath = os.path.join(self.dest_dir, "lvm_" + vg_name + ".conf")
+        # TODO: Evaluate the Clonezilla message from 2013 message that this command won't work on NFS
+        # TODO: due to a vgcfgbackup file lock issue.
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=lvm_vgname_filepath), "")
+        vgcfgbackup_process, flat_command_string, failed_message = Utility.run("Saving LVM VG config " + lvm_vgname_filepath,
+                                                                ["vgcfgbackup", "--file",
+                                                                lvm_vgname_filepath, vg_name], use_c_locale=True, logger=self.logger)
+        if vgcfgbackup_process.returncode != 0:
+            self._append_summary_message(failed_message)
+            return False, failed_message
         return True, None
 
     def _save_dev_fs_list(self) -> None:
