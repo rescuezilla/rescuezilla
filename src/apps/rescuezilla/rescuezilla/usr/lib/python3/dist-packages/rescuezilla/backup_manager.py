@@ -763,6 +763,10 @@ class BackupManager:
             return False, failed_message, efi_nvram_filepath
         return True, None, efi_nvram_filepath
 
+##########################################
+##########################################
+##########################################
+
     def _save_clonezilla_img(self, clonezilla_img_filepath: str, enduser_date: str) -> tuple[bool, str]:
         with open(clonezilla_img_filepath, 'w') as filehandle:
             try:
@@ -775,6 +779,146 @@ class BackupManager:
                 GLib.idle_add(self.completed_backup, False, error_message)
                 return False, error_message
         return True, None
+
+    # Backup RAID information (Clonezilla's dump_software_raid_info_if_exists function)
+    def _dump_software_raid_info_if_exists(self):
+        original_proc_mdstat_filepath = "/proc/mdstat"
+        if os.path.isfile(original_proc_mdstat_filepath):
+            proc_mdstat_string = Utility.read_file_into_string(original_proc_mdstat_filepath)
+            proc_mdstat_dict = ProcMdstat.parse_proc_mdstat_string(proc_mdstat_string)
+            if len(proc_mdstat_dict.keys()) > 0:
+                # Copy the mdstat file to the destination disk, as CLonezilla
+                copied_proc_mdstat_filepath = os.path.join(self.dest_dir, "mdstat.txt")
+                GLib.idle_add(self.display_status, _("Saving: {file}").format(file=copied_proc_mdstat_filepath), "")
+                with open(copied_proc_mdstat_filepath, 'w') as filehandle:
+                    filehandle.write(proc_mdstat_string)
+                    filehandle.flush()
+                # Save mdadm.conf
+                mdadm_conf_filepath = os.path.join(self.dest_dir, "mdadm.conf")
+                GLib.idle_add(self.display_status, _("Saving: {file}").format(file=mdadm_conf_filepath), "")
+                process, flat_command_string, failed_message = Utility.run("Saving mdadm.conf", ["mdadm", "--detail", "--scan"],
+                                                                               use_c_locale=True,
+                                                                               output_filepath=mdadm_conf_filepath,
+                                                                               logger=self.logger)
+                if process.returncode != 0:
+                    # Clonezilla doesn't handle non-zero return code, so to maximize compatibility Rescuezilla doesn't
+                    # either
+                    GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, failed_message)
+                # Export details for each RAID device
+                for raid_dev_key in proc_mdstat_dict.keys():
+                    raid_device_query_filepath = os.path.join(self.dest_dir, raid_dev_key + ".txt")
+                    GLib.idle_add(self.display_status, _("Saving: {file}").format(file=raid_device_query_filepath), "")
+                    process, flat_command_string, failed_message = Utility.run("Saving " + raid_device_query_filepath,
+                                                                               ["mdadm", "--query", "--detail", "--export", "/dev/" + raid_dev_key],
+                                                                               use_c_locale=True,
+                                                                               output_filepath=raid_device_query_filepath,
+                                                                               logger=self.logger)
+                    if process.returncode != 0:
+                        # Clonezilla doesn't handle non-zero return code, so to maximize compatibility Rescuezilla
+                        # doesn't either
+                        GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
+                                      failed_message)
+
+    def _create_rescuezilla_description_txt(self):
+        backup_notes_filepath = os.path.join(self.dest_dir, "rescuezilla.description.txt")
+        if self.backup_notes.strip() != "":
+            self.logger.write("Writing backup description file to " + backup_notes_filepath)
+            GLib.idle_add(self.display_status, _("Saving: {file}").format(file=backup_notes_filepath), "")
+            with open(backup_notes_filepath, 'w') as filehandle:
+                filehandle.write(self.backup_notes)
+                filehandle.flush()
+
+    def _create_blkdev_list(self) -> tuple[bool, str]:
+        blkdev_list_filepath = os.path.join(self.dest_dir, "blkdev.list")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=blkdev_list_filepath), "")
+        process, flat_command_string, failed_message = Utility.run("Saving blkdev.list", ["lsblk", "-oKNAME,NAME,SIZE,TYPE,FSTYPE,MOUNTPOINT,MODEL", self.selected_drive_key], use_c_locale=True, output_filepath=blkdev_list_filepath, logger=self.logger)
+        if process.returncode != 0:
+            self._append_summary_message(failed_message)
+            return False, failed_message
+        return True, None
+
+    def _create_blkid_list(self) -> tuple[bool, str]:
+        blkid_list_filepath = os.path.join(self.dest_dir, "blkid.list")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=blkid_list_filepath), "")
+        blkid_cmd_list = ["blkid"]
+        sort_cmd_list = ["sort", "-V"]
+        Utility.print_cli_friendly("blkid ", [blkid_cmd_list, sort_cmd_list])
+        process, flat_command_string, failed_message = Utility.run("Saving blkid.list", ["blkid"], use_c_locale=True, output_filepath=blkid_list_filepath, logger=self.logger)
+        if process.returncode != 0:
+            self._append_summary_message(failed_message)
+            return False, failed_message
+        return True, None
+
+    def _create_info_lshw_txt(self) -> tuple[bool,str]:
+        info_lshw_filepath = os.path.join(self.dest_dir, "Info-lshw.txt")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=info_lshw_filepath), "")
+        process, flat_command_string, failed_message = Utility.run("Saving Info-lshw.txt", ["lshw"], use_c_locale=True, output_filepath=info_lshw_filepath, logger=self.logger)
+        if process.returncode != 0:
+            self._append_summary_message(failed_message)
+            return False, failed_message
+        return True, None
+
+    def _create_info_dmi_txt(self, enduser_date: str) -> tuple[bool,str]:
+        info_dmi_txt_filepath = os.path.join(self.dest_dir, "Info-dmi.txt")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=info_dmi_txt_filepath), "")
+        with open(info_dmi_txt_filepath, 'w') as filehandle:
+            filehandle.write("# This image was saved from this machine with DMI info at " + enduser_date + ":\n")
+            filehandle.flush()
+        process, flat_command_string, failed_message = Utility.run("Saving Info-dmi.txt", ["dmidecode"], use_c_locale=True, output_filepath=info_dmi_txt_filepath, logger=self.logger)
+        if process.returncode != 0:
+            self._append_summary_message(failed_message)
+            return False, failed_message
+        return True, None
+
+    def _create_info_lspci_txt(self, enduser_date: str) -> tuple[bool, str]:
+        info_lspci_filepath = os.path.join(self.dest_dir, "Info-lspci.txt")
+        with open(info_lspci_filepath, 'w') as filehandle:
+            # TODO: Improve datetime format string.
+            filehandle.write("This image was saved from this machine with PCI info at " + enduser_date + "\n")
+            filehandle.write("'lspci' results:\n")
+            filehandle.flush()
+
+        process, flat_command_string, failed_message = Utility.run("Appending `lspci` output to Info-lspci.txt", ["lspci"], use_c_locale=True, output_filepath=info_lspci_filepath, logger=self.logger)
+        if process.returncode != 0:
+            self._append_summary_message(failed_message)
+            return False, failed_message
+
+
+        with open(info_lspci_filepath, 'a+') as filehandle:
+            filehandle.write(self._msg_delimiter_star_line + "\n")
+            filehandle.write("'lspci -n' results:\n")
+            filehandle.flush()
+
+        # Show PCI vendor and device codes as numbers instead of looking them up in the PCI ID list.
+        process, flat_command_string, failed_message = Utility.run("Appending `lspci -n` output to Info-lspci.txt", ["lspci", "-n"], use_c_locale=True, output_filepath=info_lspci_filepath, logger=self.logger)
+        if process.returncode != 0:
+            self._append_summary_message(failed_message)
+            return False, failed_message
+        return True, None
+
+    def _create_info_smart_txt(self, enduser_date: str) -> None:
+        info_smart_filepath = os.path.join(self.dest_dir, "Info-smart.txt")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=info_smart_filepath), "")
+        with open(info_smart_filepath, 'w') as filehandle:
+            filehandle.write("This image was saved from this machine with hard drive S.M.A.R.T. info at " + enduser_date + "\n")
+            filehandle.write(self._msg_delimiter_star_line + "\n")
+            filehandle.write("For the drive: " + self.selected_drive_key + "\n")
+            filehandle.flush()
+
+        # VirtualBox doesn't support smart, so ignoring the exit code here.
+        # FIXME: Improve this.
+        process, flat_command_string, failed_message = Utility.run("Saving Info-smart.txt", ["smartctl", "--all", self.selected_drive_key], use_c_locale=True, output_filepath=info_smart_filepath, logger=self.logger)
+
+
+
+
+
+
+
+
+
+
+
 
     def _create_file_parts(self) -> None:
         filepath = os.path.join(self.dest_dir, "parts")
@@ -819,96 +963,6 @@ class BackupManager:
                 filehandle.write("\nSaved by " + self.human_readable_version + ".\n")
 
 
-    def _create_info_smart_txt(self, enduser_date: str) -> None:
-        info_smart_filepath = os.path.join(self.dest_dir, "Info-smart.txt")
-        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=info_smart_filepath), "")
-        with open(info_smart_filepath, 'w') as filehandle:
-            filehandle.write("This image was saved from this machine with hard drive S.M.A.R.T. info at " + enduser_date + "\n")
-            filehandle.write(self._msg_delimiter_star_line + "\n")
-            filehandle.write("For the drive: " + self.selected_drive_key + "\n")
-            filehandle.flush()
-
-        # VirtualBox doesn't support smart, so ignoring the exit code here.
-        # FIXME: Improve this.
-        process, flat_command_string, failed_message = Utility.run("Saving Info-smart.txt", ["smartctl", "--all", self.selected_drive_key], use_c_locale=True, output_filepath=info_smart_filepath, logger=self.logger)
-
-    def _create_rescuezilla_description_txt(self):
-        backup_notes_filepath = os.path.join(self.dest_dir, "rescuezilla.description.txt")
-        if self.backup_notes.strip() != "":
-            self.logger.write("Writing backup description file to " + backup_notes_filepath)
-            GLib.idle_add(self.display_status, _("Saving: {file}").format(file=backup_notes_filepath), "")
-            with open(backup_notes_filepath, 'w') as filehandle:
-                filehandle.write(self.backup_notes)
-                filehandle.flush()
-
-    def _create_blkdev_list(self) -> tuple[bool, str]:
-        blkdev_list_filepath = os.path.join(self.dest_dir, "blkdev.list")
-        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=blkdev_list_filepath), "")
-        process, flat_command_string, failed_message = Utility.run("Saving blkdev.list", ["lsblk", "-oKNAME,NAME,SIZE,TYPE,FSTYPE,MOUNTPOINT,MODEL", self.selected_drive_key], use_c_locale=True, output_filepath=blkdev_list_filepath, logger=self.logger)
-        if process.returncode != 0:
-            self._append_summary_message(failed_message)
-            return False, failed_message
-        return True, None
-
-    def _create_blkid_list(self) -> tuple[bool, str]:
-        blkid_list_filepath = os.path.join(self.dest_dir, "blkid.list")
-        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=blkid_list_filepath), "")
-        blkid_cmd_list = ["blkid"]
-        sort_cmd_list = ["sort", "-V"]
-        Utility.print_cli_friendly("blkid ", [blkid_cmd_list, sort_cmd_list])
-        process, flat_command_string, failed_message = Utility.run("Saving blkid.list", ["blkid"], use_c_locale=True, output_filepath=blkid_list_filepath, logger=self.logger)
-        if process.returncode != 0:
-            self._append_summary_message(failed_message)
-            return False, failed_message
-        return True, None
-
-    def _create_info_lshw_txt(self) -> tuple[bool,str]:
-        info_lshw_filepath = os.path.join(self.dest_dir, "Info-lshw.txt")
-        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=info_lshw_filepath), "")
-        process, flat_command_string, failed_message = Utility.run("Saving Info-lshw.txt", ["lshw"], use_c_locale=True, output_filepath=info_lshw_filepath, logger=self.logger)
-        if process.returncode != 0:
-            self._append_summary_message(failed_message)
-            return False, failed_message
-        return True, None
-
-
-    def _create_info_dmi_txt(self, enduser_date: str) -> tuple[bool,str]:
-        info_dmi_txt_filepath = os.path.join(self.dest_dir, "Info-dmi.txt")
-        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=info_dmi_txt_filepath), "")
-        with open(info_dmi_txt_filepath, 'w') as filehandle:
-            filehandle.write("# This image was saved from this machine with DMI info at " + enduser_date + ":\n")
-            filehandle.flush()
-        process, flat_command_string, failed_message = Utility.run("Saving Info-dmi.txt", ["dmidecode"], use_c_locale=True, output_filepath=info_dmi_txt_filepath, logger=self.logger)
-        if process.returncode != 0:
-            self._append_summary_message(failed_message)
-            return False, failed_message
-        return True, None
-
-    def _create_info_lspci_txt(self, enduser_date: str) -> tuple[bool, str]:
-        info_lspci_filepath = os.path.join(self.dest_dir, "Info-lspci.txt")
-        with open(info_lspci_filepath, 'w') as filehandle:
-            # TODO: Improve datetime format string.
-            filehandle.write("This image was saved from this machine with PCI info at " + enduser_date + "\n")
-            filehandle.write("'lspci' results:\n")
-            filehandle.flush()
-
-        process, flat_command_string, failed_message = Utility.run("Appending `lspci` output to Info-lspci.txt", ["lspci"], use_c_locale=True, output_filepath=info_lspci_filepath, logger=self.logger)
-        if process.returncode != 0:
-            self._append_summary_message(failed_message)
-            return False, failed_message
-
-
-        with open(info_lspci_filepath, 'a+') as filehandle:
-            filehandle.write(self._msg_delimiter_star_line + "\n")
-            filehandle.write("'lspci -n' results:\n")
-            filehandle.flush()
-
-        # Show PCI vendor and device codes as numbers instead of looking them up in the PCI ID list.
-        process, flat_command_string, failed_message = Utility.run("Appending `lspci -n` output to Info-lspci.txt", ["lspci", "-n"], use_c_locale=True, output_filepath=info_lspci_filepath, logger=self.logger)
-        if process.returncode != 0:
-            self._append_summary_message(failed_message)
-            return False, failed_message
-        return True, None
 
     def _append_summary_message(self, failed_message):
         with self.summary_message_lock:
@@ -983,46 +1037,6 @@ class BackupManager:
             self._append_summary_message(failed_message)
             return False, failed_message
         return True, None
-
-    # Backup RAID information (Clonezilla's dump_software_raid_info_if_exists function)
-    def _dump_software_raid_info_if_exists(self):
-        original_proc_mdstat_filepath = "/proc/mdstat"
-        if os.path.isfile(original_proc_mdstat_filepath):
-            proc_mdstat_string = Utility.read_file_into_string(original_proc_mdstat_filepath)
-            proc_mdstat_dict = ProcMdstat.parse_proc_mdstat_string(proc_mdstat_string)
-            if len(proc_mdstat_dict.keys()) > 0:
-                # Copy the mdstat file to the destination disk, as CLonezilla
-                copied_proc_mdstat_filepath = os.path.join(self.dest_dir, "mdstat.txt")
-                GLib.idle_add(self.display_status, _("Saving: {file}").format(file=copied_proc_mdstat_filepath), "")
-                with open(copied_proc_mdstat_filepath, 'w') as filehandle:
-                    filehandle.write(proc_mdstat_string)
-                    filehandle.flush()
-                # Save mdadm.conf
-                mdadm_conf_filepath = os.path.join(self.dest_dir, "mdadm.conf")
-                GLib.idle_add(self.display_status, _("Saving: {file}").format(file=mdadm_conf_filepath), "")
-                process, flat_command_string, failed_message = Utility.run("Saving mdadm.conf", ["mdadm", "--detail", "--scan"],
-                                                                               use_c_locale=True,
-                                                                               output_filepath=mdadm_conf_filepath,
-                                                                               logger=self.logger)
-                if process.returncode != 0:
-                    # Clonezilla doesn't handle non-zero return code, so to maximize compatibility Rescuezilla doesn't
-                    # either
-                    GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, failed_message)
-                # Export details for each RAID device
-                for raid_dev_key in proc_mdstat_dict.keys():
-                    raid_device_query_filepath = os.path.join(self.dest_dir, raid_dev_key + ".txt")
-                    GLib.idle_add(self.display_status, _("Saving: {file}").format(file=raid_device_query_filepath), "")
-                    process, flat_command_string, failed_message = Utility.run("Saving " + raid_device_query_filepath,
-                                                                               ["mdadm", "--query", "--detail", "--export", "/dev/" + raid_dev_key],
-                                                                               use_c_locale=True,
-                                                                               output_filepath=raid_device_query_filepath,
-                                                                               logger=self.logger)
-                    if process.returncode != 0:
-                        # Clonezilla doesn't handle non-zero return code, so to maximize compatibility Rescuezilla
-                        # doesn't either
-                        GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
-                                      failed_message)
-
 
     def _save_short_selected_device_node_gpt_gdisk(self, short_selected_device_node: str) -> tuple[bool, str]:
         # LC_ALL=C sgdisk -b $target_dir_fullpath/$(to_filename ${ihd})-gpt.gdisk /dev/$ihd | tee --append ${OCS_LOGFILE}
