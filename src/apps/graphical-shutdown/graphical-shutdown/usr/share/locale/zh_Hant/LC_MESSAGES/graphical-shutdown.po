@@ -1,18 +1,19 @@
 # 池边树下 <mzky@163.com>, 2021.
+# Haowei Hsu <hwhsu1231@gmail.com>, 2023.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2021-05-29 02:38+0000\n"
-"Last-Translator: 池边树下 <mzky@163.com>\n"
+"PO-Revision-Date: 2023-06-23 20:34+0000\n"
+"Last-Translator: Haowei Hsu <hwhsu1231@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
 "rescuezilla/graphical-shutdown/zh_Hant/>\n"
 "Language: zh_Hant\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 4.18.1\n"
 
 msgid "End Session"
-msgstr "結束會話"
+msgstr "結束作業階段"
 
 msgid "Cancel"
 msgstr "取消"
@@ -21,7 +22,7 @@ msgid "Shutdown"
 msgstr "關閉"
 
 msgid "Reboot"
-msgstr "重新啟動"
+msgstr "重新開機"
 
 msgid "Choose action."
-msgstr "選擇行動。"
+msgstr "選擇動作。"

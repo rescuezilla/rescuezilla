@@ -5,13 +5,14 @@
 # Submitted at: https://github.com/rescuezilla/rescuezilla/issues/191
 #
 # 池边树下 <mzky@163.com>, 2021.
+# Eric <hamburger2048@users.noreply.hosted.weblate.org>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2021-12-03 02:51+0000\n"
-"Last-Translator: 池边树下 <mzky@163.com>\n"
+"PO-Revision-Date: 2023-06-23 20:34+0000\n"
+"Last-Translator: Eric <hamburger2048@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Chinese (Simplified) <https://hosted.weblate.org/projects/"
 "rescuezilla/rescuezilla/zh_Hans/>\n"
 "Language: zh\n"
@@ -19,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.10-dev\n"
+"X-Generator: Weblate 4.18.1\n"
 
 msgid "Welcome"
 msgstr "欢迎"
@@ -135,7 +136,8 @@ msgstr "要开始克隆，点击<b>下一步</b>。"
 
 #, python-brace-format
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
-msgstr "您确定要将备份镜像还原到 {destination_drive} 吗？这样做将永久覆盖该磁盘上的数据！"
+msgstr "您确定要将磁盘克隆到 {destination_drive} "
+"吗？这样做将永久覆盖目标磁盘上的数据！"
 
 msgid "Step 6: Cloning Disk"
 msgstr "第6步：克隆磁盘"
@@ -610,7 +612,7 @@ msgstr "确认还原配置。"
 
 #, python-brace-format
 msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!"
-msgstr "您确定要将备份镜像还原到 {destination_drive} 吗？这样做将永久覆盖该磁盘上的数据！"
+msgstr "您确定要将备份还原到 {destination_drive} 吗？这样做将永久覆盖该磁盘上的数据！"
 
 msgid "Source image"
 msgstr "源镜像"
@@ -785,7 +787,7 @@ msgid "To begin verification, click <b>Next</b>."
 msgstr "要开始验证，请单击 <b> 下一步 </b>。"
 
 msgid "Verifying Image"
-msgstr "验证镜像"
+msgstr "正在验证镜像"
 
 msgid "Verifying the selected image(s)."
 msgstr "验证所选镜像。"
@@ -795,13 +797,13 @@ msgid "Verifying {image_name}"
 msgstr "正在验证 {image_name}"
 
 msgid "Summary of Verification"
-msgstr "核查摘要"
+msgstr "验证摘要"
 
 msgid "Confirm the verification summary."
 msgstr "确认核查摘要。"
 
 msgid "Verification Summary"
-msgstr "核查摘要"
+msgstr "验证摘要"
 
 msgid "To verify another image, click <b>Back</b>."
 msgstr "要验证其它镜像，请单击 <b> 返回 </b>。"
