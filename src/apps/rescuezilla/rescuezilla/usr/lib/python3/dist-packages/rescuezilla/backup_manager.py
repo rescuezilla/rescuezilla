@@ -247,7 +247,7 @@ class BackupManager:
                 return is_success, message
 
         elif "msdos" == partition_table:
-            is_success, message = self._save_msdos_partition_table(self, short_selected_device_node)
+            is_success, message = self._save_msdos_partition_table(short_selected_device_node)
             if not is_success:
                 return is_success, message
         else:
@@ -257,7 +257,7 @@ class BackupManager:
         if partition_table is not None and partition_table != "loop":
             self._save_short_selected_device_node_pt_sf(short_selected_device_node)
 
-        is_success, message = self._save_short_selected_device_node_chs_sf(self, short_selected_device_node)
+        is_success, message = self._save_short_selected_device_node_chs_sf(short_selected_device_node)
         if not is_success:
             return is_success, message
 
@@ -282,7 +282,7 @@ class BackupManager:
                             GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
                                           "Could not find lv_path name in " + str(lv_dict))
                             continue
-                        is_success, message = self._append_lvm_logv_list(self, lv_path)
+                        is_success, message = self._append_lvm_logv_list(lv_path)
                         if not is_success:
                             return is_success, message
 
@@ -306,7 +306,7 @@ class BackupManager:
                                 self.partitions_to_backup[lv_path] = self.drive_state[lv_dm_path]['partitions'][logical_volume]
                                 self.partitions_to_backup[lv_path]['type'] = 'part'
 
-                        is_success, message = self._save_lvm_vg_name_conf(self, vg_name)
+                        is_success, message = self._save_lvm_vg_name_conf(vg_name)
                         if not is_success:
                             return is_success, message
 
@@ -413,7 +413,7 @@ class BackupManager:
             # Process partclone output. Partclone outputs an update every 3 seconds, so processing the data
             # on the current thread, for simplicity.
             # Poll process.stdout to show stdout live
-            is_success, message, partclone_stderr = self._process_partclone_output_loop(self, partition_key, total_size, partition_number, filesystem_backup_message)
+            is_success, message, partclone_stderr = self._process_partclone_output_loop(partition_key, total_size, partition_number, filesystem_backup_message)
             if not is_success:
                 return is_success, message
 
