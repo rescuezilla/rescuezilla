@@ -1021,6 +1021,22 @@ class BackupManager:
                 filesystem = self.partitions_to_backup[partition_key]['filesystem']
                 filehandle.write('%s %s\n' % (partition_key, filesystem))
 
+    def _save_short_device_node_ebr(self, partition_key: str, short_device_node: str) -> tuple[bool, str]:
+        filepath = os.path.join(self.dest_dir, short_device_node + "-ebr")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=filepath), "")
+        process, flat_command_string, failed_message = Utility.run("Saving " + filepath,
+                                                    ["dd", "if=" + partition_key, "of=" + filepath, "bs=512",
+                                                    "count=1"], use_c_locale=False, logger=self.logger)
+        if process.returncode != 0:
+            self._append_summary_message(failed_message)
+            return False, failed_message
+
+        # TODO: Handle exit code
+        if self.is_cloning:
+            self.metadata_only_image_to_annotate.ebr_dict = {'short_device_node': short_device_node,
+                                                                'absolute_path': filepath}
+        return True, None
+
     def _handle_swap_partition(self, partition_key: str, short_device_node: str) -> None:
         filepath = os.path.join(self.dest_dir, "swappt-" + short_device_node + ".info")
         GLib.idle_add(self.display_status, _("Saving: {file}").format(file=filepath), "")
@@ -1078,21 +1094,7 @@ class BackupManager:
         GLib.idle_add(self.completed_backup, False, failed_message)
 
 
-    def _save_short_device_node_ebr(self, partition_key: str, short_device_node: str) -> tuple[bool, str]:
-        filepath = os.path.join(self.dest_dir, short_device_node + "-ebr")
-        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=filepath), "")
-        process, flat_command_string, failed_message = Utility.run("Saving " + filepath,
-                                                    ["dd", "if=" + partition_key, "of=" + filepath, "bs=512",
-                                                    "count=1"], use_c_locale=False, logger=self.logger)
-        if process.returncode != 0:
-            self._append_summary_message(failed_message)
-            return False, failed_message
 
-        # TODO: Handle exit code
-        if self.is_cloning:
-            self.metadata_only_image_to_annotate.ebr_dict = {'short_device_node': short_device_node,
-                                                                'absolute_path': filepath}
-        return True, None
 
 
     def _process_partclone_output_loop(self, partition_key: str, total_size: int, partition_number: int, filesystem_backup_message: str) -> tuple[bool, str, str]:
