@@ -528,33 +528,8 @@ class BackupManager:
 
 
 
-    def _append_lvm_vg_dev_list(self, partition_key, vg_dict, vg_name, pv_uuid):
-        lvm_vg_dev_list_filepath = os.path.join(self.dest_dir, "lvm_vg_dev.list")
-        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=lvm_vg_dev_list_filepath), "")
-        with open(lvm_vg_dev_list_filepath, 'a+') as filehandle:
-            if partition_key == vg_dict['pv_name']:
-                filehandle.write(vg_name + " " + partition_key + " " + pv_uuid + "\n")
-            elif self.selected_drive_key == vg_dict['pv_name']:
-                filehandle.write(vg_name + " " + self.selected_drive_key + " " + pv_uuid + "\n")
 
-    def _create_file_short_selected_device_node_pt_parted(self, short_selected_device_node: str):
-        # Parted drive information with standard sector units. Clonezilla doesn't output easily parsable output using
-        # the --machine flag, so for maximum Clonezilla compatibility neither does Rescuezilla.
-        parted_filepath = os.path.join(self.dest_dir, short_selected_device_node + "-pt.parted")
-        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=parted_filepath), "")
-        parted_process, flat_command_string, failed_message = Utility.run("Saving " + parted_filepath,
-                                                          ["parted", "--script", self.selected_drive_key, "unit", "s",
-                                                           "print"], use_c_locale=True, output_filepath=parted_filepath, logger=self.logger)
-        if parted_process.returncode != 0:
-            print(failed_message)
-            # Clonezilla doesn't consider non-zero parted return code as fatal. Indeed, RAID md devices without a
-            # partition table returns an error using parted but Clonezilla is happy to continue. Rescuezilla does the
-            # same (but displays the error to the user). For cloning, the not displaying any error message is fine.
-            if not self.is_cloning:
-                with self.summary_message_lock:
-                    self.summary_message += failed_message
-                GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, failed_message)
-        return parted_process
+
 
     def _create_file_efi_nvran_dat(self) -> tuple[bool, str, str]:
         # Save EFI NVRAM info. What we need is actually the label
@@ -802,6 +777,25 @@ class BackupManager:
             if not self.is_cloning:
                 GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, failed_message)
 
+    def _create_file_short_selected_device_node_pt_parted(self, short_selected_device_node: str):
+        # Parted drive information with standard sector units. Clonezilla doesn't output easily parsable output using
+        # the --machine flag, so for maximum Clonezilla compatibility neither does Rescuezilla.
+        parted_filepath = os.path.join(self.dest_dir, short_selected_device_node + "-pt.parted")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=parted_filepath), "")
+        parted_process, flat_command_string, failed_message = Utility.run("Saving " + parted_filepath,
+                                                          ["parted", "--script", self.selected_drive_key, "unit", "s",
+                                                           "print"], use_c_locale=True, output_filepath=parted_filepath, logger=self.logger)
+        if parted_process.returncode != 0:
+            print(failed_message)
+            # Clonezilla doesn't consider non-zero parted return code as fatal. Indeed, RAID md devices without a
+            # partition table returns an error using parted but Clonezilla is happy to continue. Rescuezilla does the
+            # same (but displays the error to the user). For cloning, the not displaying any error message is fine.
+            if not self.is_cloning:
+                with self.summary_message_lock:
+                    self.summary_message += failed_message
+                GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, failed_message)
+        return parted_process
+
     def _save_mbr(self, short_selected_device_node: str) -> tuple[bool, str, str]:
         filepath = os.path.join(self.dest_dir, short_selected_device_node + "-mbr")
         GLib.idle_add(self.display_status, _("Saving: {file}").format(file=filepath), "")
@@ -976,6 +970,16 @@ class BackupManager:
                         relevant_vg_name_dict[vg_name] = partition_key
                         self._append_lvm_vg_dev_list(partition_key, vg_dict, vg_name, pv_uuid)
         return relevant_vg_name_dict
+
+    def _append_lvm_vg_dev_list(self, partition_key, vg_dict, vg_name, pv_uuid):
+        lvm_vg_dev_list_filepath = os.path.join(self.dest_dir, "lvm_vg_dev.list")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=lvm_vg_dev_list_filepath), "")
+        with open(lvm_vg_dev_list_filepath, 'a+') as filehandle:
+            if partition_key == vg_dict['pv_name']:
+                filehandle.write(vg_name + " " + partition_key + " " + pv_uuid + "\n")
+            elif self.selected_drive_key == vg_dict['pv_name']:
+                filehandle.write(vg_name + " " + self.selected_drive_key + " " + pv_uuid + "\n")
+
 
     def _append_lvm_logv_list(self, lv_path: str) -> tuple[bool, str]:
         file_command_process, flat_command_string, failed_message = Utility.run("logical volume file info",
