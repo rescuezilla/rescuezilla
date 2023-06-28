@@ -1092,15 +1092,6 @@ class BackupManager:
                     self.summary_message += "Unable to remove: " + file_path
 
 
-    def _append_summary_message(self, failed_message):
-        with self.summary_message_lock:
-            self.summary_message += failed_message
-        GLib.idle_add(self.completed_backup, False, failed_message)
-
-
-
-
-
     def _process_partclone_output_loop(self, partition_key: str, total_size: int, partition_number: int, filesystem_backup_message: str) -> tuple[bool, str, str]:
         partclone_stderr = ""
         # Process partclone output. Partclone outputs an update every 3 seconds, so processing the data
@@ -1129,6 +1120,13 @@ class BackupManager:
                 if 'remaining' in temp_dict.keys():
                     GLib.idle_add(self.update_backup_progress_status, filesystem_backup_message + "\n\n" + output)
         return True, None, partclone_stderr
+
+
+    def _append_summary_message(self, failed_message):
+        with self.summary_message_lock:
+            self.summary_message += failed_message
+        GLib.idle_add(self.completed_backup, False, failed_message)
+
 
     # Implementation of Clonezilla "check_if_windows_boot_reserve_part" function
     def is_partition_windows_boot_reserved(self, partition_key, mount_point):
