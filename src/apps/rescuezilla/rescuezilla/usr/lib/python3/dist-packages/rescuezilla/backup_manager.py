@@ -59,6 +59,8 @@ class BackupManager:
         self.logger = None
 
         self.requested_stop = False
+        self._msg_delimiter_star_line = "*****************************************************."
+
 
     def is_backup_in_progress(self):
         with self.backup_in_progress_lock:
@@ -145,6 +147,7 @@ class BackupManager:
         self.summary_message_lock = threading.Lock()
         self.summary_message = ""
 
+
         if self.is_rescue and not self.is_cloning:
             with self.summary_message_lock:
                 self.summary_message += _("Rescue option is enabled.") + "\n"
@@ -157,269 +160,61 @@ class BackupManager:
         short_selected_device_node = re.sub('/dev/', '', self.selected_drive_key)
         enduser_date = datetime.today().strftime('%Y-%m-%d-%H%M')
         clonezilla_img_filepath = os.path.join(self.dest_dir, "clonezilla-img")
-        with open(clonezilla_img_filepath, 'w') as filehandle:
-            try:
-                output = "This image was saved by Rescuezilla at " + enduser_date + "\nSaved by " + self.human_readable_version + "\nThe log during saving:\n----------------------------------------------------------\n\n"
-                filehandle.write(output)
-            except:
-                tb = traceback.format_exc()
-                traceback.print_exc()
-                error_message = _("Failed to write destination file. Please confirm it is valid to create the provided file path, and try again.") + "\n\n" + tb
-                GLib.idle_add(self.completed_backup, False, error_message)
-                return False, error_message
+        is_success, message = self._save_clonezilla_img(clonezilla_img_filepath, enduser_date)
+        if not is_success:
+            return is_success, message
 
         self.logger = Logger(clonezilla_img_filepath)
 
         # Backup RAID information (Clonezilla's dump_software_raid_info_if_exists function)
-        original_proc_mdstat_filepath = "/proc/mdstat"
-        if os.path.isfile(original_proc_mdstat_filepath):
-            proc_mdstat_string = Utility.read_file_into_string(original_proc_mdstat_filepath)
-            proc_mdstat_dict = ProcMdstat.parse_proc_mdstat_string(proc_mdstat_string)
-            if len(proc_mdstat_dict.keys()) > 0:
-                # Copy the mdstat file to the destination disk, as CLonezilla
-                copied_proc_mdstat_filepath = os.path.join(self.dest_dir, "mdstat.txt")
-                GLib.idle_add(self.display_status, _("Saving: {file}").format(file=copied_proc_mdstat_filepath), "")
-                with open(copied_proc_mdstat_filepath, 'w') as filehandle:
-                    filehandle.write(proc_mdstat_string)
-                    filehandle.flush()
-                # Save mdadm.conf
-                mdadm_conf_filepath = os.path.join(self.dest_dir, "mdadm.conf")
-                GLib.idle_add(self.display_status, _("Saving: {file}").format(file=mdadm_conf_filepath), "")
-                process, flat_command_string, failed_message = Utility.run("Saving mdadm.conf", ["mdadm", "--detail", "--scan"],
-                                                                               use_c_locale=True,
-                                                                               output_filepath=mdadm_conf_filepath,
-                                                                               logger=self.logger)
-                if process.returncode != 0:
-                    # Clonezilla doesn't handle non-zero return code, so to maximize compatibility Rescuezilla doesn't
-                    # either
-                    GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, failed_message)
-                # Export details for each RAID device
-                for raid_dev_key in proc_mdstat_dict.keys():
-                    raid_device_query_filepath = os.path.join(self.dest_dir, raid_dev_key + ".txt")
-                    GLib.idle_add(self.display_status, _("Saving: {file}").format(file=raid_device_query_filepath), "")
-                    process, flat_command_string, failed_message = Utility.run("Saving " + raid_device_query_filepath,
-                                                                               ["mdadm", "--query", "--detail", "--export", "/dev/" + raid_dev_key],
-                                                                               use_c_locale=True,
-                                                                               output_filepath=raid_device_query_filepath,
-                                                                               logger=self.logger)
-                    if process.returncode != 0:
-                        # Clonezilla doesn't handle non-zero return code, so to maximize compatibility Rescuezilla
-                        # doesn't either
-                        GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
-                                      failed_message)
+        self._dump_software_raid_info_if_exists()
 
         if not self.is_cloning:
-            backup_notes_filepath = os.path.join(self.dest_dir, "rescuezilla.description.txt")
-            if self.backup_notes.strip() != "":
-                self.logger.write("Writing backup description file to " + backup_notes_filepath)
-                GLib.idle_add(self.display_status, _("Saving: {file}").format(file=backup_notes_filepath), "")
-                with open(backup_notes_filepath, 'w') as filehandle:
-                    filehandle.write(self.backup_notes)
-                    filehandle.flush()
+            self._create_rescuezilla_description_txt()
 
-            blkdev_list_filepath = os.path.join(self.dest_dir, "blkdev.list")
-            GLib.idle_add(self.display_status, _("Saving: {file}").format(file=blkdev_list_filepath), "")
-            process, flat_command_string, failed_message = Utility.run("Saving blkdev.list", ["lsblk", "-oKNAME,NAME,SIZE,TYPE,FSTYPE,MOUNTPOINT,MODEL", self.selected_drive_key], use_c_locale=True, output_filepath=blkdev_list_filepath, logger=self.logger)
-            if process.returncode != 0:
-                with self.summary_message_lock:
-                    self.summary_message += failed_message
-                GLib.idle_add(self.completed_backup, False, failed_message)
-                return False, failed_message
+            is_success, message = self._create_blkdev_list()
+            if not is_success:
+                return is_success, message
 
-            blkid_list_filepath = os.path.join(self.dest_dir, "blkid.list")
-            GLib.idle_add(self.display_status, _("Saving: {file}").format(file=blkid_list_filepath), "")
-            blkid_cmd_list = ["blkid"]
-            sort_cmd_list = ["sort", "-V"]
-            Utility.print_cli_friendly("blkid ", [blkid_cmd_list, sort_cmd_list])
-            process, flat_command_string, failed_message = Utility.run("Saving blkid.list", ["blkid"], use_c_locale=True, output_filepath=blkid_list_filepath, logger=self.logger)
-            if process.returncode != 0:
-                with self.summary_message_lock:
-                    self.summary_message += failed_message
-                GLib.idle_add(self.completed_backup, False, failed_message)
-                return False, failed_message
+            is_success, message = self._create_blkid_list()
+            if not is_success:
+                return is_success, message
 
+            is_success, message = self._create_info_lshw_txt()
+            if not is_success:
+                return is_success, message
 
+            is_success, message = self._create_info_dmi_txt(enduser_date)
+            if not is_success:
+                return is_success, message
 
-            info_lshw_filepath = os.path.join(self.dest_dir, "Info-lshw.txt")
-            GLib.idle_add(self.display_status, _("Saving: {file}").format(file=info_lshw_filepath), "")
-            process, flat_command_string, failed_message = Utility.run("Saving Info-lshw.txt", ["lshw"], use_c_locale=True, output_filepath=info_lshw_filepath, logger=self.logger)
-            if process.returncode != 0:
-                with self.summary_message_lock:
-                    self.summary_message += failed_message
-                GLib.idle_add(self.completed_backup, False, failed_message)
-                return False, failed_message
-
-            info_dmi_txt_filepath = os.path.join(self.dest_dir, "Info-dmi.txt")
-            GLib.idle_add(self.display_status, _("Saving: {file}").format(file=info_dmi_txt_filepath), "")
-            with open(info_dmi_txt_filepath, 'w') as filehandle:
-                filehandle.write("# This image was saved from this machine with DMI info at " + enduser_date + ":\n")
-                filehandle.flush()
-            process, flat_command_string, failed_message = Utility.run("Saving Info-dmi.txt", ["dmidecode"], use_c_locale=True, output_filepath=info_dmi_txt_filepath, logger=self.logger)
-            if process.returncode != 0:
-                with self.summary_message_lock:
-                    self.summary_message += failed_message
-                GLib.idle_add(self.completed_backup, False, failed_message)
-                return False, failed_message
-
-            info_lspci_filepath = os.path.join(self.dest_dir, "Info-lspci.txt")
-            with open(info_lspci_filepath, 'w') as filehandle:
-                # TODO: Improve datetime format string.
-                filehandle.write("This image was saved from this machine with PCI info at " + enduser_date + "\n")
-                filehandle.write("'lspci' results:\n")
-                filehandle.flush()
-
-            process, flat_command_string, failed_message = Utility.run("Appending `lspci` output to Info-lspci.txt", ["lspci"], use_c_locale=True, output_filepath=info_lspci_filepath, logger=self.logger)
-            if process.returncode != 0:
-                with self.summary_message_lock:
-                    self.summary_message += failed_message
-                GLib.idle_add(self.completed_backup, False, failed_message)
-                return False, failed_message
-
-            msg_delimiter_star_line = "*****************************************************."
-            with open(info_lspci_filepath, 'a+') as filehandle:
-                filehandle.write(msg_delimiter_star_line + "\n")
-                filehandle.write("'lspci -n' results:\n")
-                filehandle.flush()
-
-            # Show PCI vendor and device codes as numbers instead of looking them up in the PCI ID list.
-            process, flat_command_string, failed_message = Utility.run("Appending `lspci -n` output to Info-lspci.txt", ["lspci", "-n"], use_c_locale=True, output_filepath=info_lspci_filepath, logger=self.logger)
-            if process.returncode != 0:
-                with self.summary_message_lock:
-                    self.summary_message += failed_message
-                GLib.idle_add(self.completed_backup, False, failed_message)
-                return False, failed_message
-
-            info_smart_filepath = os.path.join(self.dest_dir, "Info-smart.txt")
-            GLib.idle_add(self.display_status, _("Saving: {file}").format(file=info_smart_filepath), "")
-            with open(info_smart_filepath, 'w') as filehandle:
-                filehandle.write("This image was saved from this machine with hard drive S.M.A.R.T. info at " + enduser_date + "\n")
-                filehandle.write(msg_delimiter_star_line + "\n")
-                filehandle.write("For the drive: " + self.selected_drive_key + "\n")
-                filehandle.flush()
+            is_success, message = self._create_info_lspci_txt(enduser_date)
+            if not is_success:
+                return is_success, message
 
             # VirtualBox doesn't support smart, so ignoring the exit code here.
             # FIXME: Improve this.
-            process, flat_command_string, failed_message = Utility.run("Saving Info-smart.txt", ["smartctl", "--all", self.selected_drive_key], use_c_locale=True, output_filepath=info_smart_filepath, logger=self.logger)
+            self._create_info_smart_txt(enduser_date)
 
-            info_os_prober_filepath = os.path.join(self.dest_dir, "Info-OS-prober.txt")
-            GLib.idle_add(self.display_status, _("Saving: {file}").format(file=info_os_prober_filepath), "")
-            with open(info_os_prober_filepath, 'w') as filehandle:
-                filehandle.write("This OS-related info was saved from this machine with os-prober at " + enduser_date + "\n")
-                filehandle.flush()
-            process, flat_command_string, failed_message = Utility.run("Running os-prober and appending output to Info-OS-prober.txt",
-                                                                           ["os-prober"],
-                                                                           use_c_locale=True,
-                                                                           output_filepath=info_os_prober_filepath,
-                                                                           logger=self.logger)
-            if process.returncode != 0:
-                self.logger.write(failed_message)
-                # Not considering os-prober exit code as fatal, to match Clonezilla's behavior
+            # Not considering os-prober exit code as fatal, to match Clonezilla's behavior
+            self._create_info_os_prober_txt(enduser_date)
 
-            with open(info_os_prober_filepath, 'a+') as filehandle:
-                filehandle.write(msg_delimiter_star_line + "\n")
-                filehandle.write("This Linux boot related info was saved from this machine with linux-boot-prober at " + enduser_date + "\n")
-                filehandle.flush()
+            self._create_info_packages_txt()
 
-            for partition_key in self.partitions_to_backup:
-                process, flat_command_string, failed_message = Utility.run("Running linux-boot-prober for " + partition_key,
-                                                                           ["linux-boot-prober", partition_key],
-                                                                           use_c_locale=True,
-                                                                           output_filepath=info_os_prober_filepath,
-                                                                           logger=self.logger)
-                if process.returncode != 0:
-                    self.logger.write(failed_message)
-                    # Not considering os-prober exit code as fatal, to match Clonezilla's behavior
-
-            filepath = os.path.join(self.dest_dir, "Info-packages.txt")
-            GLib.idle_add(self.display_status, _("Saving: {file}").format(file=filepath), "")
-            # Save Debian package informtion
-            if shutil.which("dpkg") is not None:
-                rescuezilla_package_list = ["rescuezilla", "partclone", "util-linux", "gdisk"]
-                with open(filepath, 'w') as filehandle:
-                    filehandle.write("Image was saved by these Rescuezilla-related packages:\n ")
-                    for pkg in rescuezilla_package_list:
-                        dpkg_process = subprocess.run(['dpkg', "--status", pkg], capture_output=True, encoding="UTF-8")
-                        if dpkg_process.returncode != 0:
-                            continue
-                        for line in dpkg_process.stdout.split("\n"):
-                            if re.search("^Version: ", line):
-                                version = line[len("Version: "):]
-                                filehandle.write(pkg + "-" + version + " ")
-                    filehandle.write("\nSaved by " + self.human_readable_version + ".\n")
 
         # TODO: Clonezilla creates a file named "Info-saved-by-cmd.txt" file, to allow users to re-run the exact
         #  command again without going through the wizard. The proposed Rescuezilla approach to this feature is
         #  discussed here: https://github.com/rescuezilla/rescuezilla/issues/106
 
-        filepath = os.path.join(self.dest_dir, "parts")
-        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=filepath), "")
-        with open(filepath, 'w') as filehandle:
-            i = 0
-            for partition_key in self.partitions_to_backup:
-                short_partition_key = re.sub('/dev/', '', partition_key)
-                to_backup_dict = self.partitions_to_backup[partition_key]
-                is_swap = False
-                if 'filesystem' in to_backup_dict.keys() and to_backup_dict['filesystem'] == "swap":
-                    is_swap = True
-                if 'type' not in to_backup_dict.keys() or 'type' in to_backup_dict.keys() and 'extended' != to_backup_dict['type'] and not is_swap:
-                    # Clonezilla does not write the extended partition node into the parts file,
-                    # nor does it write swap partition node
-                    filehandle.write('%s' % short_partition_key)
-                    # Ensure no trailing space on final iteration (to match Clonezilla format exactly)
-                    if i + 1 != len(self.partitions_to_backup.keys()):
-                        filehandle.write(' ')
-                i += 1
-            # FIXME: This diverges from Clonezilla behavior. It's possible for Rescuezilla to write just a newline for
-            # FIXME: eg, disk full of only swap partitions. Rescuezilla can handle restoring such images, but Clonezilla
-            # FIXME: cannot (a divergence of behavior).
-            filehandle.write('\n')
-
-        filepath = os.path.join(self.dest_dir, "disk")
-        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=filepath), "")
-        with open(filepath, 'w') as filehandle:
-            filehandle.write('%s\n' % short_selected_device_node)
-
-        compact_parted_filepath = os.path.join(self.dest_dir, short_selected_device_node + "-pt.parted.compact")
-        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=compact_parted_filepath), "")
-        # Parted drive information with human-readable "compact" units: KB/MB/GB rather than sectors.
-        process, flat_command_string, failed_message = Utility.run("Saving " + compact_parted_filepath, ["parted", "--script", self.selected_drive_key, "unit", "compact", "print"], use_c_locale=True, output_filepath=compact_parted_filepath, logger=self.logger)
-        if process.returncode != 0:
-            # Human-readable compact units is not that important.
-            print(failed_message)
-            if not self.is_cloning:
-                GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, failed_message)
-
-        # Parted drive information with standard sector units. Clonezilla doesn't output easily parsable output using
-        # the --machine flag, so for maximum Clonezilla compatibility neither does Rescuezilla.
-        parted_filepath = os.path.join(self.dest_dir, short_selected_device_node + "-pt.parted")
-        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=parted_filepath), "")
-        parted_process, flat_command_string, failed_message = Utility.run("Saving " + parted_filepath,
-                                                          ["parted", "--script", self.selected_drive_key, "unit", "s",
-                                                           "print"], use_c_locale=True, output_filepath=parted_filepath, logger=self.logger)
-        if parted_process.returncode != 0:
-            print(failed_message)
-            # Clonezilla doesn't consider non-zero parted return code as fatal. Indeed, RAID md devices without a
-            # partition table returns an error using parted but Clonezilla is happy to continue. Rescuezilla does the
-            # same (but displays the error to the user). For cloning, the not displaying any error message is fine.
-            if not self.is_cloning:
-                with self.summary_message_lock:
-                    self.summary_message += failed_message
-                GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, failed_message)
+        self._create_file_parts()
+        self._create_file_disk(short_selected_device_node)
+        self._create_file_short_selected_device_node_pt_parted_compact(short_selected_device_node)
+        parted_process = self._create_file_short_selected_device_node_pt_parted(short_selected_device_node)
 
         if os.path.isdir("/sys/firmware/efi/efivars"):
-            # Save EFI NVRAM info. What we need is actually the label
-            efi_nvram_filepath = os.path.join(self.dest_dir, "efi-nvram.dat")
-            GLib.idle_add(self.display_status, _("Saving: {file}").format(file=efi_nvram_filepath), "")
-            process, flat_command_string, failed_message = Utility.run("Saving EFI NVRAM info",
-                                                                              ["efibootmgr", "--verbose"],
-                                                                              use_c_locale=True,
-                                                                              output_filepath=efi_nvram_filepath,
-                                                                              logger=self.logger)
-            if process.returncode != 0:
-                with self.summary_message_lock:
-                    self.summary_message += failed_message
-                GLib.idle_add(self.completed_backup, False, failed_message)
-                return False, failed_message
+            is_success, message, efi_nvram_filepath = self._create_file_efi_nvran_dat()
+            if not is_success:
+                return is_success, message
             if self.is_cloning:
                 self.metadata_only_image_to_annotate.efi_nvram_dat_absolute_path = efi_nvram_filepath
 
@@ -428,156 +223,43 @@ class BackupManager:
 
         # Save MBR for both msdos and GPT disks
         if "gpt" == partition_table or "msdos" == partition_table:
-            filepath = os.path.join(self.dest_dir, short_selected_device_node + "-mbr")
-            GLib.idle_add(self.display_status, _("Saving: {file}").format(file=filepath), "")
-            process, flat_command_string, failed_message = Utility.run("Saving " + filepath,
-                                                       ["dd", "if=" + self.selected_drive_key, "of=" + filepath,
-                                                        "bs=512", "count=1"], use_c_locale=False, logger=self.logger)
-            if process.returncode != 0:
-                with self.summary_message_lock:
-                    self.summary_message += failed_message
-                GLib.idle_add(self.completed_backup, False, failed_message)
-                return False, failed_message
+            is_success, message, filepath = self._save_mbr(short_selected_device_node)
+            if not is_success:
+                return is_success, message
             if self.is_cloning:
                 self.metadata_only_image_to_annotate._mbr_absolute_path = filepath
 
         if "gpt" == partition_table and not self.is_cloning:
-            first_gpt_filename = short_selected_device_node + "-gpt-1st"
-            GLib.idle_add(self.display_status, _("Saving: {file}").format(file=first_gpt_filename), "")
-            dd_process, flat_command_string, failed_message = Utility.run("Saving " + first_gpt_filename,
-                                                          ["dd", "if=" + self.selected_drive_key, "of=" + os.path.join(self.dest_dir, first_gpt_filename),
-                                                           "bs=512", "count=34"], use_c_locale=False, logger=self.logger)
-            if dd_process.returncode != 0:
-                with self.summary_message_lock:
-                    self.summary_message += failed_message
-                GLib.idle_add(self.completed_backup, False, failed_message)
-                return False, failed_message
+            is_success, message = self._save_gpt_first_partition(short_selected_device_node)
+            if not is_success:
+                return is_success, message
 
-            # From Clonezilla's scripts/sbin/ocs-functions:
-            # We need to get the total size of disk so that we can skip and dump the last block:
-            # The output of 'parted -s /dev/sda unit s print' is like:
-            # --------------------
-            # Disk /dev/hda: 16777215s
-            # Sector size (logical/physical): 512B/512B
-            # Partition Table: gpt
-            #
-            # Number  Start     End        Size       File system  Name     Flags
-            #  1      34s       409640s    409607s    fat32        primary  msftres
-            #  2      409641s   4316406s   3906766s   ext2         primary
-            #  3      4316407s  15625000s  11308594s  reiserfs     primary
-            # --------------------
-            # to_seek = "$((${src_disk_size_sec}-33+1))"
-            to_skip = parted_dict['capacity'] - 32
-            second_gpt_filename = short_selected_device_node + "-gpt-2nd"
-            GLib.idle_add(self.display_status, _("Saving: {file}").format(file=second_gpt_filename), "")
-            process, flat_command_string, failed_message = Utility.run("Saving " + second_gpt_filename,
-                                                       ["dd", "if=" + self.selected_drive_key, "of=" + os.path.join(self.dest_dir, second_gpt_filename),
-                                                        "skip=" + str(to_skip),
-                                                        "bs=512", "count=33"], use_c_locale=False, logger=self.logger)
-            if process.returncode != 0:
-                with self.summary_message_lock:
-                    self.summary_message += failed_message
-                GLib.idle_add(self.completed_backup, False, failed_message)
-                return False, failed_message
+            is_success, message = self._save_gpt_second_partition(short_selected_device_node, parted_dict['capacity'])
+            if not is_success:
+                return is_success, message
 
-            # LC_ALL=C sgdisk -b $target_dir_fullpath/$(to_filename ${ihd})-gpt.gdisk /dev/$ihd | tee --append ${OCS_LOGFILE}
-            gdisk_filename = short_selected_device_node + "-gpt.gdisk"
-            GLib.idle_add(self.display_status, _("Saving: {file}").format(file=gdisk_filename), "")
-            process, flat_command_string, failed_message = Utility.run("Saving " + gdisk_filename,
-                                                       ["sgdisk", "--backup", os.path.join(self.dest_dir, gdisk_filename), self.selected_drive_key], use_c_locale=True, logger=self.logger)
-            if process.returncode != 0:
-                with self.summary_message_lock:
-                    self.summary_message += failed_message
-                GLib.idle_add(self.completed_backup, False, failed_message)
-                return False, failed_message
+            is_success, message = self._save_short_selected_device_node_gpt_gdisk(short_selected_device_node)
+            if not is_success:
+                return is_success, message
 
-            sgdisk_filename = short_selected_device_node + "-gpt.sgdisk"
-            GLib.idle_add(self.display_status, _("Saving: {file}").format(file=sgdisk_filename), "")
-            process, flat_command_string, failed_message = Utility.run("Saving " + sgdisk_filename, ["sgdisk", "--print", self.selected_drive_key], use_c_locale=True, output_filepath=os.path.join(self.dest_dir, sgdisk_filename), logger=self.logger)
-            if process.returncode != 0:
-                with self.summary_message_lock:
-                    self.summary_message += failed_message
-                GLib.idle_add(self.completed_backup, False, failed_message)
-                return False, failed_message
+            is_success, message = self._save_short_selected_device_node_gpt_sgdisk(short_selected_device_node)
+            if not is_success:
+                return is_success, message
+
         elif "msdos" == partition_table:
-            # image_save
-            first_partition_key, first_partition_offset_bytes = CombinedDriveState.get_first_partition(
-                self.partitions_to_backup)
-            # Maximum hidden data to backup is 1024MB
-            hidden_data_after_mbr_limit = 1024 * 1024 * 1024
-            self.logger.write("Detected first partition is " + first_partition_key + " at byte offset " + str(first_partition_offset_bytes) + "\n")
-            if first_partition_offset_bytes > hidden_data_after_mbr_limit:
-                # If the post-mbr gap is too large, Clonezilla does not backup the data but instead creates a notes file
-                # FIXME: Rescuezilla doesn't yet match Clonezilla's ability to re-install GRUB, so it makes sense to
-                # FIXME: continue to backup a post-mbr gap until full parity with Clonezilla is achieved.
-                post_mbr_gap_sector_count = 2047
-                self.logger.write("Calculated very large hidden data after MBR size, so copying minimal post-MBR gap")
-                not_creating_hidden_data_info_filepath = os.path.join(self.dest_dir, short_selected_device_node + "-hidden-data-after-mbr.notes.txt")
-                GLib.idle_add(self.display_status, _("Saving: {file}").format(file=not_creating_hidden_data_info_filepath))
-                with open(not_creating_hidden_data_info_filepath, 'w') as filehandle:
-                    try:
-                        output = "The hidden data space size (" + str(first_partition_offset_bytes) + " bytes) is larger than the " + str(hidden_data_after_mbr_limit) + " byte limit. Copying minimal post-MBR gap.\n"
-                        filehandle.write(output)
-                    except:
-                        tb = traceback.format_exc()
-                        traceback.print_exc()
-                        error_message = _(
-                            "Failed to write hidden data info file. Please confirm it is valid to create the provided file path, and try again.") + "\n\n" + tb
-                        GLib.idle_add(self.completed_backup, False, error_message)
-                        return False, error_message
-
-            else:
-                first_partition_offset_sectors = int(first_partition_offset_bytes / 512)
-                post_mbr_gap_sector_count = first_partition_offset_sectors - 1
-
-            hidden_mbr_data_filepath =  os.path.join(self.dest_dir, short_selected_device_node + "-hidden-data-after-mbr")
-            GLib.idle_add(self.display_status, _("Saving: {file}").format(file=hidden_mbr_data_filepath), "")
-            process, flat_command_string, failed_message = Utility.run("Saving " + hidden_mbr_data_filepath,
-                                                       ["dd", "if=" + self.selected_drive_key, "of=" + hidden_mbr_data_filepath,
-                                                        "skip=1", "bs=512",
-                                                        "count=" + str(post_mbr_gap_sector_count)], use_c_locale=False, logger=self.logger)
-            if process.returncode != 0:
-                with self.summary_message_lock:
-                    self.summary_message += failed_message
-                GLib.idle_add(self.completed_backup, False, failed_message)
-                return False, failed_message
-            if self.is_cloning:
-                self.metadata_only_image_to_annotate.post_mbr_gap_dict['absolute_path'] = hidden_mbr_data_filepath
-
+            is_success, message = self._save_msdos_partition_table(short_selected_device_node)
+            if not is_success:
+                return is_success, message
         else:
             self.logger.write("Partition table is: " + partition_table)
 
         # Parted sees drives with direct filesystem applied as loop partition table.
         if partition_table is not None and partition_table != "loop":
-            sfdisk_filepath = os.path.join(self.dest_dir, short_selected_device_node + "-pt.sf")
-            GLib.idle_add(self.display_status, _("Saving: {file}").format(file=sfdisk_filepath), "")
-            process, flat_command_string, failed_message = Utility.run("Saving " + sfdisk_filepath, ["sfdisk", "--dump", self.selected_drive_key], output_filepath=sfdisk_filepath, use_c_locale=True, logger=self.logger)
-            if process.returncode != 0:
-                print(failed_message)
-                if not self.is_cloning:
-                    with self.summary_message_lock:
-                        self.summary_message += failed_message
-                    # Matches Clonezilla by not considering sfdisk failure as fatal.
-                    GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, failed_message)
+            self._save_short_selected_device_node_pt_sf(short_selected_device_node)
 
-        filepath = os.path.join(self.dest_dir, short_selected_device_node + "-chs.sf")
-        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=filepath), "")
-        process, flat_command_string, failed_message = Utility.run("Retreiving disk geometry with sfdisk ", ["sfdisk", "--show-geometry", self.selected_drive_key], use_c_locale=True, logger=self.logger)
-        if process.returncode != 0:
-            self.logger.write(failed_message)
-            with self.summary_message_lock:
-                self.summary_message += "Failed to retrieve disk geometry for " + self.selected_drive_key + "."
-            GLib.idle_add(self.completed_backup, False, failed_message)
-            return False, failed_message
-        else:
-            geometry_dict = Sfdisk.parse_sfdisk_show_geometry(process.stdout)
-            with open(filepath, 'w') as filehandle:
-                for key in geometry_dict.keys():
-                    output = key + "=" + str(geometry_dict[key])
-                    self.logger.write(output)
-                    filehandle.write('%s\n' % output)
-            if self.is_cloning:
-                self.metadata_only_image_to_annotate.sfdisk_chs_dict = geometry_dict
+        is_success, message = self._save_short_selected_device_node_chs_sf(short_selected_device_node)
+        if not is_success:
+            return is_success, message
 
         if not self.is_cloning:
             # Query all Physical Volumes (PV), Volume Group (VG) and Logical Volume (LV). See unit test for a worked example.
@@ -586,36 +268,7 @@ class BackupManager:
             # TODO: process matches how Clonezilla does it, which is sufficient for now.
             # FIXME: This section is duplicated in partitions_to_restore.py.
             # Start the Logical Volume Manager (LVM). Caller raises Exception on failure
-            Lvm.start_lvm2(self.logger)
-            relevant_vg_name_dict = {}
-            vg_state_dict = Lvm.get_volume_group_state_dict(self.logger)
-            for partition_key in list(self.partitions_to_backup.keys()):
-                for report_dict in vg_state_dict['report']:
-                    for vg_dict in report_dict['vg']:
-                        if 'pv_name' in vg_dict.keys() and (partition_key == vg_dict['pv_name']
-                                                            or self.selected_drive_key == vg_dict['pv_name']):
-                            if 'vg_name' in vg_dict.keys():
-                                vg_name = vg_dict['vg_name']
-                            else:
-                                GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
-                                              "Could not find volume group name vg_name in " + str(vg_dict))
-                                # TODO: Re-evaluate how exactly Clonezilla uses /NOT_FOUND and whether introducing it here
-                                # TODO: could improve Rescuezilla/Clonezilla interoperability.
-                                continue
-                            if 'pv_uuid' in vg_dict.keys():
-                                pv_uuid = vg_dict['pv_uuid']
-                            else:
-                                GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
-                                              "Could not find physical volume UUID pv_uuid in " + str(vg_dict))
-                                continue
-                            relevant_vg_name_dict[vg_name] = partition_key
-                            lvm_vg_dev_list_filepath = os.path.join(self.dest_dir, "lvm_vg_dev.list")
-                            GLib.idle_add(self.display_status, _("Saving: {file}").format(file=lvm_vg_dev_list_filepath), "")
-                            with open(lvm_vg_dev_list_filepath, 'a+') as filehandle:
-                                if partition_key == vg_dict['pv_name']:
-                                    filehandle.write(vg_name + " " + partition_key + " " + pv_uuid + "\n")
-                                elif self.selected_drive_key == vg_dict['pv_name']:
-                                    filehandle.write(vg_name + " " + self.selected_drive_key + " " + pv_uuid + "\n")
+            relevant_vg_name_dict = self._save_lvm_vg_dev_list()
 
             lv_state_dict = Lvm.get_logical_volume_state_dict(self.logger)
             for report_dict in lv_state_dict['report']:
@@ -629,21 +282,9 @@ class BackupManager:
                             GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
                                           "Could not find lv_path name in " + str(lv_dict))
                             continue
-                        file_command_process, flat_command_string, failed_message = Utility.run("logical volume file info",
-                                                                                ["file", "--dereference",
-                                                                                 "--special-files", lv_path], use_c_locale=True, logger=self.logger)
-                        if file_command_process.returncode != 0:
-                            with self.summary_message_lock:
-                                self.summary_message += failed_message
-                            GLib.idle_add(self.completed_backup, False, failed_message)
-                            return False, failed_message
-
-                        output = file_command_process.stdout.split(" ", maxsplit=1)[1].strip()
-                        lvm_logv_list_filepath = os.path.join(self.dest_dir, "lvm_logv.list")
-                        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=lvm_logv_list_filepath), "")
-                        # Append to file
-                        with open(lvm_logv_list_filepath, 'a+') as filehandle:
-                            filehandle.write(lv_path + "  " + output + "\n")
+                        is_success, message = self._append_lvm_logv_list(lv_path)
+                        if not is_success:
+                            return is_success, message
 
                         if 'lv_dm_path' in lv_dict.keys():
                             # Device mapper path, eg /dev/mapper/vgtest-lvtest
@@ -665,28 +306,12 @@ class BackupManager:
                                 self.partitions_to_backup[lv_path] = self.drive_state[lv_dm_path]['partitions'][logical_volume]
                                 self.partitions_to_backup[lv_path]['type'] = 'part'
 
-                        lvm_vgname_filepath = os.path.join(self.dest_dir, "lvm_" + vg_name + ".conf")
-                        # TODO: Evaluate the Clonezilla message from 2013 message that this command won't work on NFS
-                        # TODO: due to a vgcfgbackup file lock issue.
-                        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=lvm_vgname_filepath), "")
-                        vgcfgbackup_process, flat_command_string, failed_message = Utility.run("Saving LVM VG config " + lvm_vgname_filepath,
-                                                                               ["vgcfgbackup", "--file",
-                                                                                lvm_vgname_filepath, vg_name], use_c_locale=True, logger=self.logger)
-                        if vgcfgbackup_process.returncode != 0:
-                            with self.summary_message_lock:
-                                self.summary_message += failed_message
-                            GLib.idle_add(self.completed_backup, False, failed_message)
-                            return False, failed_message
+                        is_success, message = self._save_lvm_vg_name_conf(vg_name)
+                        if not is_success:
+                            return is_success, message
 
-        filepath = os.path.join(self.dest_dir, "dev-fs.list")
-        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=filepath), "")
-        with open(filepath, 'w') as filehandle:
-            filehandle.write('# <Device name>   <File system>\n')
-            filehandle.write(
-                '# The file systems detected below are a combination of several sources. The values may differ from `blkid` and `parted`.\n')
-            for partition_key in self.partitions_to_backup.keys():
-                filesystem = self.partitions_to_backup[partition_key]['filesystem']
-                filehandle.write('%s %s\n' % (partition_key, filesystem))
+
+        self._save_dev_fs_list()
 
         # Determine the size of each partition, and the total size. This is used for the weighted progress bar
         total_size = 0
@@ -720,72 +345,19 @@ class BackupManager:
             if 'type' in self.partitions_to_backup[partition_key].keys() and 'extended' in \
                     self.partitions_to_backup[partition_key]['type']:
                 self.logger.write("Detected " + partition_key + " as extended partition. Backing up EBR")
-                filepath = os.path.join(self.dest_dir, short_device_node + "-ebr")
-                GLib.idle_add(self.display_status, _("Saving: {file}").format(file=filepath), "")
-                process, flat_command_string, failed_message = Utility.run("Saving " + filepath,
-                                                           ["dd", "if=" + partition_key, "of=" + filepath, "bs=512",
-                                                            "count=1"], use_c_locale=False, logger=self.logger)
-                if process.returncode != 0:
-                    with self.summary_message_lock:
-                        self.summary_message += failed_message
-                    GLib.idle_add(self.completed_backup, False, failed_message)
-                    return False, failed_message
-
-                # TODO: Handle exit code
-                if self.is_cloning:
-                    self.metadata_only_image_to_annotate.ebr_dict = {'short_device_node': short_device_node,
-                                                                     'absolute_path': filepath}
+                is_success, message = self._save_short_device_node_ebr(partition_key, short_device_node)
+                if not is_success:
+                    return is_success, message
                 continue
 
             if filesystem == 'swap':
-                filepath = os.path.join(self.dest_dir, "swappt-" + short_device_node + ".info")
-                GLib.idle_add(self.display_status, _("Saving: {file}").format(file=filepath), "")
-                with open(filepath, 'w') as filehandle:
-                    uuid = ""
-                    label = ""
-                    if 'uuid' in self.partitions_to_backup[partition_key].keys():
-                        uuid = self.partitions_to_backup[partition_key]['uuid']
-                    if 'label' in self.partitions_to_backup[partition_key].keys():
-                        label = self.partitions_to_backup[partition_key]['label']
-                    filehandle.write('UUID="%s"\n' % uuid)
-                    filehandle.write('LABEL="%s"\n' % label)
-                    with self.summary_message_lock:
-                        self.summary_message += _("Successful backup of swap partition {partition_name}").format(
-                            partition_name=partition_key) + "\n"
-                    if self.is_cloning:
-                        self.metadata_only_image_to_annotate.image_format_dict_dict[short_device_node] = Swappt.parse_swappt_info(
-                            Utility.read_file_into_string(filepath))
-                        self.metadata_only_image_to_annotate.image_format_dict_dict[short_device_node]['type'] = "swap"
-                        self.metadata_only_image_to_annotate.image_format_dict_dict[short_device_node]['prefix'] = short_device_node
-                        self.metadata_only_image_to_annotate.image_format_dict_dict[short_device_node]['is_lvm_logical_volume'] = False
+                self._handle_swap_partition(partition_key, short_device_node)
                 continue
 
             if filesystem == "ntfs":
-                GLib.idle_add(self.display_status, _("Running {app} on {device}").format(app="ntfsfix", device=partition_key), "")
-                is_success, failed_message = Utility.run_ntfsfix(partition_key)
+                is_success, message = self._handle_ntfs_partition(partition_key, short_device_node)
                 if not is_success:
-                    self.logger.write(failed_message + "\n")
-                    GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, failed_message)
-                    with self.summary_message_lock:
-                        self.summary_message += failed_message + "\n"
-
-                # Create Clonezilla's NTFS boot reserved partition "sda1.info"
-                tmp_mount = "/tmp/rescuezilla.ntfs.mount"
-                if self.is_partition_windows_boot_reserved(partition_key, tmp_mount):
-                    partition_info_filepath = os.path.join(self.dest_dir, short_device_node + ".info")
-                    GLib.idle_add(self.display_status, _("Saving: {file}").format(file=partition_info_filepath), "")
-                    self.logger.write("Detected partition " + partition_key + " is a Windows NTFS boot reserved partition. Writing " + partition_info_filepath)
-                    with open(partition_info_filepath, 'w') as filehandle:
-                        try:
-                            output = "PARTITION_TYPE=Win_boot_reserved\n"
-                            filehandle.write(output)
-                        except:
-                            tb = traceback.format_exc()
-                            traceback.print_exc()
-                            error_message = _(
-                                "Failed to write NTFS boot reserve file. Please confirm it is valid to create the provided file path, and try again.") + "\n\n" + tb
-                            GLib.idle_add(self.completed_backup, False, error_message)
-                            return False, error_message
+                    return is_success, message
 
             # Clonezilla uses -q2 priority by default (partclone > partimage > dd).
             # PartImage does not appear to be maintained software, so for simplicity, Rescuezilla is using a
@@ -835,47 +407,16 @@ class BackupManager:
             self.logger.write(filesystem_backup_message)
 
             flat_command_string = Utility.print_cli_friendly("Running ", [partclone_cmd_list, compression_cmd_list, split_cmd_list])
-            self.proc['partclone_backup_' + partition_key] = subprocess.Popen(partclone_cmd_list,
-                                                                              stdout=subprocess.PIPE,
-                                                                              stderr=subprocess.PIPE, env=env,
-                                                                              encoding='utf-8')
+            self._run_partclone_compression_and_split(env, partition_key, compression_cmd_list, partclone_cmd_list, split_cmd_list)
 
-            self.proc['compression_' + partition_key] = subprocess.Popen(compression_cmd_list,
-                                                                  stdin=self.proc[
-                                                                      'partclone_backup_' + partition_key].stdout,
-                                                                  stdout=subprocess.PIPE, env=env, encoding='utf-8')
 
-            self.proc['split_' + partition_key] = subprocess.Popen(split_cmd_list,
-                                                                   stdin=self.proc[
-                                                                       'compression_' + partition_key].stdout,
-                                                                   stdout=subprocess.PIPE, env=env, encoding='utf-8')
-
-            partclone_stderr = ""
             # Process partclone output. Partclone outputs an update every 3 seconds, so processing the data
             # on the current thread, for simplicity.
             # Poll process.stdout to show stdout live
-            while True:
-                if self.requested_stop:
-                    GLib.idle_add(self.completed_backup, False, _("User requested operation to stop."))
-                    return False, _("User requested operation to stop.")
+            is_success, message, partclone_stderr = self._process_partclone_output_loop(partition_key, total_size, partition_number, filesystem_backup_message)
+            if not is_success:
+                return is_success, message
 
-                output = self.proc['partclone_backup_' + partition_key].stderr.readline()
-                if self.proc['partclone_backup_' + partition_key].poll() is not None:
-                    break
-                if output:
-                    partclone_stderr += output
-                    temp_dict = Partclone.parse_partclone_output(output)
-                    if 'completed' in temp_dict.keys():
-                        total_progress_float = Utility.calculate_progress_ratio(
-                            current_partition_completed_percentage=temp_dict['completed'] / 100.0,
-                            current_partition_bytes=self.partitions_to_backup[partition_key]['size'],
-                            cumulative_bytes=self.partitions_to_backup[partition_key]['cumulative_bytes'],
-                            total_bytes=total_size,
-                            image_number=partition_number,
-                            num_partitions=len(self.partitions_to_backup))
-                        GLib.idle_add(self.update_backup_progress_bar, total_progress_float)
-                    if 'remaining' in temp_dict.keys():
-                        GLib.idle_add(self.update_backup_progress_status, filesystem_backup_message + "\n\n" + output)
             rc = self.proc['partclone_backup_' + partition_key].poll()
 
             self.proc['partclone_backup_' + partition_key].stdout.close()  # Allow p1 to receive a SIGPIPE if p2 exits.
@@ -888,29 +429,7 @@ class BackupManager:
                 # [1] https://bugs.python.org/issue35182
                 self.logger.write("Exception during communicate:" + str(e))
             if self.proc['partclone_backup_' + partition_key].returncode != 0:
-                partition_summary = _("<b>Failed to backup partition</b> {partition_name}").format(partition_name=partition_key) + "\n"
-                with self.summary_message_lock:
-                    self.summary_message += partition_summary
-                self.at_least_one_non_fatal_error = True
-                proc_stdout = self.proc['partclone_backup_' + partition_key].stdout
-                proc_stderr = self.proc['partclone_backup_' + partition_key].stderr
-                extra_info = "\nThe command used internally was:\n\n" + flat_command_string + "\n\n" + "The output of the command was: " + partclone_stderr
-                compression_stderr = self.proc['compression_' + partition_key].stderr
-                if compression_stderr is not None and compression_stderr != "":
-                    extra_info += "\n\n" + str(compression_cmd_list) + " stderr: " + compression_stderr
-
-                # TODO: Try to backup again, but using partclone.dd
-                GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
-                              partition_summary + extra_info)
-                # Delete failed partclone files
-                failed_partclone_img_path_list = glob.glob(filepath + "*")
-                for file_path in failed_partclone_img_path_list:
-                    try:
-                        os.remove(file_path)
-                    except OSError:
-                        self.logger.write("Unable to remove: " + file_path)
-                        with self.summary_message_lock:
-                            self.summary_message += "Unable to remove: " + file_path
+                self._handle_partclone_error(filepath, partition_key, compression_cmd_list, flat_command_string, partclone_stderr)
 
             else:
                 with self.summary_message_lock:
@@ -960,6 +479,654 @@ class BackupManager:
 
         GLib.idle_add(self.completed_backup, True, "")
         return True, ""
+
+
+
+
+
+
+
+
+
+
+
+
+
+    def _create_file_efi_nvran_dat(self) -> tuple[bool, str, str]:
+        # Save EFI NVRAM info. What we need is actually the label
+        efi_nvram_filepath = os.path.join(self.dest_dir, "efi-nvram.dat")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=efi_nvram_filepath), "")
+        process, flat_command_string, failed_message = Utility.run("Saving EFI NVRAM info",
+                                                                            ["efibootmgr", "--verbose"],
+                                                                            use_c_locale=True,
+                                                                            output_filepath=efi_nvram_filepath,
+                                                                            logger=self.logger)
+        if process.returncode != 0:
+            self._append_summary_message(failed_message)
+            return False, failed_message, efi_nvram_filepath
+        return True, None, efi_nvram_filepath
+
+
+    def _save_clonezilla_img(self, clonezilla_img_filepath: str, enduser_date: str) -> tuple[bool, str]:
+        with open(clonezilla_img_filepath, 'w') as filehandle:
+            try:
+                output = "This image was saved by Rescuezilla at " + enduser_date + "\nSaved by " + self.human_readable_version + "\nThe log during saving:\n----------------------------------------------------------\n\n"
+                filehandle.write(output)
+            except:
+                tb = traceback.format_exc()
+                traceback.print_exc()
+                error_message = _("Failed to write destination file. Please confirm it is valid to create the provided file path, and try again.") + "\n\n" + tb
+                GLib.idle_add(self.completed_backup, False, error_message)
+                return False, error_message
+        return True, None
+
+    # Backup RAID information (Clonezilla's dump_software_raid_info_if_exists function)
+    def _dump_software_raid_info_if_exists(self):
+        original_proc_mdstat_filepath = "/proc/mdstat"
+        if os.path.isfile(original_proc_mdstat_filepath):
+            proc_mdstat_string = Utility.read_file_into_string(original_proc_mdstat_filepath)
+            proc_mdstat_dict = ProcMdstat.parse_proc_mdstat_string(proc_mdstat_string)
+            if len(proc_mdstat_dict.keys()) > 0:
+                # Copy the mdstat file to the destination disk, as CLonezilla
+                copied_proc_mdstat_filepath = os.path.join(self.dest_dir, "mdstat.txt")
+                GLib.idle_add(self.display_status, _("Saving: {file}").format(file=copied_proc_mdstat_filepath), "")
+                with open(copied_proc_mdstat_filepath, 'w') as filehandle:
+                    filehandle.write(proc_mdstat_string)
+                    filehandle.flush()
+                # Save mdadm.conf
+                mdadm_conf_filepath = os.path.join(self.dest_dir, "mdadm.conf")
+                GLib.idle_add(self.display_status, _("Saving: {file}").format(file=mdadm_conf_filepath), "")
+                process, flat_command_string, failed_message = Utility.run("Saving mdadm.conf", ["mdadm", "--detail", "--scan"],
+                                                                               use_c_locale=True,
+                                                                               output_filepath=mdadm_conf_filepath,
+                                                                               logger=self.logger)
+                if process.returncode != 0:
+                    # Clonezilla doesn't handle non-zero return code, so to maximize compatibility Rescuezilla doesn't
+                    # either
+                    GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, failed_message)
+                # Export details for each RAID device
+                for raid_dev_key in proc_mdstat_dict.keys():
+                    raid_device_query_filepath = os.path.join(self.dest_dir, raid_dev_key + ".txt")
+                    GLib.idle_add(self.display_status, _("Saving: {file}").format(file=raid_device_query_filepath), "")
+                    process, flat_command_string, failed_message = Utility.run("Saving " + raid_device_query_filepath,
+                                                                               ["mdadm", "--query", "--detail", "--export", "/dev/" + raid_dev_key],
+                                                                               use_c_locale=True,
+                                                                               output_filepath=raid_device_query_filepath,
+                                                                               logger=self.logger)
+                    if process.returncode != 0:
+                        # Clonezilla doesn't handle non-zero return code, so to maximize compatibility Rescuezilla
+                        # doesn't either
+                        GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
+                                      failed_message)
+
+    def _create_rescuezilla_description_txt(self):
+        backup_notes_filepath = os.path.join(self.dest_dir, "rescuezilla.description.txt")
+        if self.backup_notes.strip() != "":
+            self.logger.write("Writing backup description file to " + backup_notes_filepath)
+            GLib.idle_add(self.display_status, _("Saving: {file}").format(file=backup_notes_filepath), "")
+            with open(backup_notes_filepath, 'w') as filehandle:
+                filehandle.write(self.backup_notes)
+                filehandle.flush()
+
+    def _create_blkdev_list(self) -> tuple[bool, str]:
+        blkdev_list_filepath = os.path.join(self.dest_dir, "blkdev.list")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=blkdev_list_filepath), "")
+        process, flat_command_string, failed_message = Utility.run("Saving blkdev.list", ["lsblk", "-oKNAME,NAME,SIZE,TYPE,FSTYPE,MOUNTPOINT,MODEL", self.selected_drive_key], use_c_locale=True, output_filepath=blkdev_list_filepath, logger=self.logger)
+        if process.returncode != 0:
+            self._append_summary_message(failed_message)
+            return False, failed_message
+        return True, None
+
+    def _create_blkid_list(self) -> tuple[bool, str]:
+        blkid_list_filepath = os.path.join(self.dest_dir, "blkid.list")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=blkid_list_filepath), "")
+        blkid_cmd_list = ["blkid"]
+        sort_cmd_list = ["sort", "-V"]
+        Utility.print_cli_friendly("blkid ", [blkid_cmd_list, sort_cmd_list])
+        process, flat_command_string, failed_message = Utility.run("Saving blkid.list", ["blkid"], use_c_locale=True, output_filepath=blkid_list_filepath, logger=self.logger)
+        if process.returncode != 0:
+            self._append_summary_message(failed_message)
+            return False, failed_message
+        return True, None
+
+    def _create_info_lshw_txt(self) -> tuple[bool,str]:
+        info_lshw_filepath = os.path.join(self.dest_dir, "Info-lshw.txt")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=info_lshw_filepath), "")
+        process, flat_command_string, failed_message = Utility.run("Saving Info-lshw.txt", ["lshw"], use_c_locale=True, output_filepath=info_lshw_filepath, logger=self.logger)
+        if process.returncode != 0:
+            self._append_summary_message(failed_message)
+            return False, failed_message
+        return True, None
+
+    def _create_info_dmi_txt(self, enduser_date: str) -> tuple[bool,str]:
+        info_dmi_txt_filepath = os.path.join(self.dest_dir, "Info-dmi.txt")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=info_dmi_txt_filepath), "")
+        with open(info_dmi_txt_filepath, 'w') as filehandle:
+            filehandle.write("# This image was saved from this machine with DMI info at " + enduser_date + ":\n")
+            filehandle.flush()
+        process, flat_command_string, failed_message = Utility.run("Saving Info-dmi.txt", ["dmidecode"], use_c_locale=True, output_filepath=info_dmi_txt_filepath, logger=self.logger)
+        if process.returncode != 0:
+            self._append_summary_message(failed_message)
+            return False, failed_message
+        return True, None
+
+    def _create_info_lspci_txt(self, enduser_date: str) -> tuple[bool, str]:
+        info_lspci_filepath = os.path.join(self.dest_dir, "Info-lspci.txt")
+        with open(info_lspci_filepath, 'w') as filehandle:
+            # TODO: Improve datetime format string.
+            filehandle.write("This image was saved from this machine with PCI info at " + enduser_date + "\n")
+            filehandle.write("'lspci' results:\n")
+            filehandle.flush()
+
+        process, flat_command_string, failed_message = Utility.run("Appending `lspci` output to Info-lspci.txt", ["lspci"], use_c_locale=True, output_filepath=info_lspci_filepath, logger=self.logger)
+        if process.returncode != 0:
+            self._append_summary_message(failed_message)
+            return False, failed_message
+
+
+        with open(info_lspci_filepath, 'a+') as filehandle:
+            filehandle.write(self._msg_delimiter_star_line + "\n")
+            filehandle.write("'lspci -n' results:\n")
+            filehandle.flush()
+
+        # Show PCI vendor and device codes as numbers instead of looking them up in the PCI ID list.
+        process, flat_command_string, failed_message = Utility.run("Appending `lspci -n` output to Info-lspci.txt", ["lspci", "-n"], use_c_locale=True, output_filepath=info_lspci_filepath, logger=self.logger)
+        if process.returncode != 0:
+            self._append_summary_message(failed_message)
+            return False, failed_message
+        return True, None
+
+    def _create_info_smart_txt(self, enduser_date: str) -> None:
+        info_smart_filepath = os.path.join(self.dest_dir, "Info-smart.txt")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=info_smart_filepath), "")
+        with open(info_smart_filepath, 'w') as filehandle:
+            filehandle.write("This image was saved from this machine with hard drive S.M.A.R.T. info at " + enduser_date + "\n")
+            filehandle.write(self._msg_delimiter_star_line + "\n")
+            filehandle.write("For the drive: " + self.selected_drive_key + "\n")
+            filehandle.flush()
+
+        # VirtualBox doesn't support smart, so ignoring the exit code here.
+        # FIXME: Improve this.
+        process, flat_command_string, failed_message = Utility.run("Saving Info-smart.txt", ["smartctl", "--all", self.selected_drive_key], use_c_locale=True, output_filepath=info_smart_filepath, logger=self.logger)
+
+    def _create_info_os_prober_txt(self, enduser_date: str) -> None:
+        info_os_prober_filepath = os.path.join(self.dest_dir, "Info-OS-prober.txt")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=info_os_prober_filepath), "")
+        with open(info_os_prober_filepath, 'w') as filehandle:
+            filehandle.write("This OS-related info was saved from this machine with os-prober at " + enduser_date + "\n")
+            filehandle.flush()
+        process, flat_command_string, failed_message = Utility.run("Running os-prober and appending output to Info-OS-prober.txt",
+                                                                        ["os-prober"],
+                                                                        use_c_locale=True,
+                                                                        output_filepath=info_os_prober_filepath,
+                                                                        logger=self.logger)
+        if process.returncode != 0:
+            self.logger.write(failed_message)
+            # Not considering os-prober exit code as fatal, to match Clonezilla's behavior
+
+        with open(info_os_prober_filepath, 'a+') as filehandle:
+            filehandle.write(self._msg_delimiter_star_line + "\n")
+            filehandle.write("This Linux boot related info was saved from this machine with linux-boot-prober at " + enduser_date + "\n")
+            filehandle.flush()
+
+        for partition_key in self.partitions_to_backup:
+            process, flat_command_string, failed_message = Utility.run("Running linux-boot-prober for " + partition_key,
+                                                                        ["linux-boot-prober", partition_key],
+                                                                        use_c_locale=True,
+                                                                        output_filepath=info_os_prober_filepath,
+                                                                        logger=self.logger)
+            if process.returncode != 0:
+                self.logger.write(failed_message)
+                # Not considering os-prober exit code as fatal, to match Clonezilla's behavior
+
+    def _create_info_packages_txt(self) -> None:
+        filepath = os.path.join(self.dest_dir, "Info-packages.txt")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=filepath), "")
+        # Save Debian package informtion
+        if shutil.which("dpkg") is not None:
+            rescuezilla_package_list = ["rescuezilla", "partclone", "util-linux", "gdisk"]
+            with open(filepath, 'w') as filehandle:
+                filehandle.write("Image was saved by these Rescuezilla-related packages:\n ")
+                for pkg in rescuezilla_package_list:
+                    dpkg_process = subprocess.run(['dpkg', "--status", pkg], capture_output=True, encoding="UTF-8")
+                    if dpkg_process.returncode != 0:
+                        continue
+                    for line in dpkg_process.stdout.split("\n"):
+                        if re.search("^Version: ", line):
+                            version = line[len("Version: "):]
+                            filehandle.write(pkg + "-" + version + " ")
+                filehandle.write("\nSaved by " + self.human_readable_version + ".\n")
+
+    def _create_file_parts(self) -> None:
+        filepath = os.path.join(self.dest_dir, "parts")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=filepath), "")
+        with open(filepath, 'w') as filehandle:
+            i = 0
+            for partition_key in self.partitions_to_backup:
+                short_partition_key = re.sub('/dev/', '', partition_key)
+                to_backup_dict = self.partitions_to_backup[partition_key]
+                is_swap = False
+                if 'filesystem' in to_backup_dict.keys() and to_backup_dict['filesystem'] == "swap":
+                    is_swap = True
+                if 'type' not in to_backup_dict.keys() or 'type' in to_backup_dict.keys() and 'extended' != to_backup_dict['type'] and not is_swap:
+                    # Clonezilla does not write the extended partition node into the parts file,
+                    # nor does it write swap partition node
+                    filehandle.write('%s' % short_partition_key)
+                    # Ensure no trailing space on final iteration (to match Clonezilla format exactly)
+                    if i + 1 != len(self.partitions_to_backup.keys()):
+                        filehandle.write(' ')
+                i += 1
+            # FIXME: This diverges from Clonezilla behavior. It's possible for Rescuezilla to write just a newline for
+            # FIXME: eg, disk full of only swap partitions. Rescuezilla can handle restoring such images, but Clonezilla
+            # FIXME: cannot (a divergence of behavior).
+            filehandle.write('\n')
+
+    def _create_file_disk(self, short_selected_device_node: str) -> None:
+        filepath = os.path.join(self.dest_dir, "disk")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=filepath), "")
+        with open(filepath, 'w') as filehandle:
+            filehandle.write('%s\n' % short_selected_device_node)
+
+    def _create_file_short_selected_device_node_pt_parted_compact(self, short_selected_device_node: str) -> None:
+        compact_parted_filepath = os.path.join(self.dest_dir, short_selected_device_node + "-pt.parted.compact")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=compact_parted_filepath), "")
+        # Parted drive information with human-readable "compact" units: KB/MB/GB rather than sectors.
+        process, flat_command_string, failed_message = Utility.run("Saving " + compact_parted_filepath, ["parted", "--script", self.selected_drive_key, "unit", "compact", "print"], use_c_locale=True, output_filepath=compact_parted_filepath, logger=self.logger)
+        if process.returncode != 0:
+            # Human-readable compact units is not that important.
+            print(failed_message)
+            if not self.is_cloning:
+                GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, failed_message)
+
+    def _create_file_short_selected_device_node_pt_parted(self, short_selected_device_node: str):
+        # Parted drive information with standard sector units. Clonezilla doesn't output easily parsable output using
+        # the --machine flag, so for maximum Clonezilla compatibility neither does Rescuezilla.
+        parted_filepath = os.path.join(self.dest_dir, short_selected_device_node + "-pt.parted")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=parted_filepath), "")
+        parted_process, flat_command_string, failed_message = Utility.run("Saving " + parted_filepath,
+                                                          ["parted", "--script", self.selected_drive_key, "unit", "s",
+                                                           "print"], use_c_locale=True, output_filepath=parted_filepath, logger=self.logger)
+        if parted_process.returncode != 0:
+            print(failed_message)
+            # Clonezilla doesn't consider non-zero parted return code as fatal. Indeed, RAID md devices without a
+            # partition table returns an error using parted but Clonezilla is happy to continue. Rescuezilla does the
+            # same (but displays the error to the user). For cloning, the not displaying any error message is fine.
+            if not self.is_cloning:
+                with self.summary_message_lock:
+                    self.summary_message += failed_message
+                GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, failed_message)
+        return parted_process
+
+    def _save_mbr(self, short_selected_device_node: str) -> tuple[bool, str, str]:
+        filepath = os.path.join(self.dest_dir, short_selected_device_node + "-mbr")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=filepath), "")
+        process, flat_command_string, failed_message = Utility.run("Saving " + filepath,
+                                                    ["dd", "if=" + self.selected_drive_key, "of=" + filepath,
+                                                    "bs=512", "count=1"], use_c_locale=False, logger=self.logger)
+        if process.returncode != 0:
+            self._append_summary_message(failed_message)
+            return False, failed_message, filepath
+        return True, None, filepath
+
+    def _save_gpt_first_partition(self, short_selected_device_node: str) -> tuple[bool, str]:
+        first_gpt_filename = short_selected_device_node + "-gpt-1st"
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=first_gpt_filename), "")
+        dd_process, flat_command_string, failed_message = Utility.run("Saving " + first_gpt_filename,
+                                                        ["dd", "if=" + self.selected_drive_key, "of=" + os.path.join(self.dest_dir, first_gpt_filename),
+                                                        "bs=512", "count=34"], use_c_locale=False, logger=self.logger)
+        if dd_process.returncode != 0:
+            self._append_summary_message(failed_message)
+            return False, failed_message
+        return True, None
+
+    def _save_gpt_second_partition(self, short_selected_device_node: str, capacity: int) -> tuple[bool, str]:
+        # From Clonezilla's scripts/sbin/ocs-functions:
+        # We need to get the total size of disk so that we can skip and dump the last block:
+        # The output of 'parted -s /dev/sda unit s print' is like:
+        # --------------------
+        # Disk /dev/hda: 16777215s
+        # Sector size (logical/physical): 512B/512B
+        # Partition Table: gpt
+        #
+        # Number  Start     End        Size       File system  Name     Flags
+        #  1      34s       409640s    409607s    fat32        primary  msftres
+        #  2      409641s   4316406s   3906766s   ext2         primary
+        #  3      4316407s  15625000s  11308594s  reiserfs     primary
+        # --------------------
+        # to_seek = "$((${src_disk_size_sec}-33+1))"
+
+        # to_skip = parted_dict['capacity'] - 32
+        to_skip = capacity - 32
+        second_gpt_filename = short_selected_device_node + "-gpt-2nd"
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=second_gpt_filename), "")
+        process, flat_command_string, failed_message = Utility.run("Saving " + second_gpt_filename,
+                                                    ["dd", "if=" + self.selected_drive_key, "of=" + os.path.join(self.dest_dir, second_gpt_filename),
+                                                    "skip=" + str(to_skip),
+                                                    "bs=512", "count=33"], use_c_locale=False, logger=self.logger)
+        if process.returncode != 0:
+            self._append_summary_message(failed_message)
+            return False, failed_message
+        return True, None
+
+    def _save_short_selected_device_node_gpt_gdisk(self, short_selected_device_node: str) -> tuple[bool, str]:
+        # LC_ALL=C sgdisk -b $target_dir_fullpath/$(to_filename ${ihd})-gpt.gdisk /dev/$ihd | tee --append ${OCS_LOGFILE}
+        gdisk_filename = short_selected_device_node + "-gpt.gdisk"
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=gdisk_filename), "")
+        process, flat_command_string, failed_message = Utility.run("Saving " + gdisk_filename,
+                                                    ["sgdisk", "--backup", os.path.join(self.dest_dir, gdisk_filename), self.selected_drive_key], use_c_locale=True, logger=self.logger)
+        if process.returncode != 0:
+            self._append_summary_message(failed_message)
+            return False, failed_message
+        return True, None
+
+    def _save_short_selected_device_node_gpt_sgdisk(self, short_selected_device_node: str) -> tuple[bool, str]:
+        sgdisk_filename = short_selected_device_node + "-gpt.sgdisk"
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=sgdisk_filename), "")
+        process, flat_command_string, failed_message = Utility.run("Saving " + sgdisk_filename, ["sgdisk", "--print", self.selected_drive_key], use_c_locale=True, output_filepath=os.path.join(self.dest_dir, sgdisk_filename), logger=self.logger)
+        if process.returncode != 0:
+            self._append_summary_message(failed_message)
+            return False, failed_message
+        return True, None
+
+    def _save_msdos_partition_table(self, short_selected_device_node) -> tuple[bool, str]:
+        # image_save
+        first_partition_key, first_partition_offset_bytes = CombinedDriveState.get_first_partition(self.partitions_to_backup)
+        # Maximum hidden data to backup is 1024MB
+        hidden_data_after_mbr_limit = 1024 * 1024 * 1024
+        self.logger.write("Detected first partition is " + first_partition_key + " at byte offset " + str(first_partition_offset_bytes) + "\n")
+        if first_partition_offset_bytes > hidden_data_after_mbr_limit:
+            # If the post-mbr gap is too large, Clonezilla does not backup the data but instead creates a notes file
+            # FIXME: Rescuezilla doesn't yet match Clonezilla's ability to re-install GRUB, so it makes sense to
+            # FIXME: continue to backup a post-mbr gap until full parity with Clonezilla is achieved.
+            post_mbr_gap_sector_count = 2047
+            self.logger.write("Calculated very large hidden data after MBR size, so copying minimal post-MBR gap")
+            not_creating_hidden_data_info_filepath = os.path.join(self.dest_dir, short_selected_device_node + "-hidden-data-after-mbr.notes.txt")
+            GLib.idle_add(self.display_status, _("Saving: {file}").format(file=not_creating_hidden_data_info_filepath))
+            with open(not_creating_hidden_data_info_filepath, 'w') as filehandle:
+                try:
+                    output = "The hidden data space size (" + str(first_partition_offset_bytes) + " bytes) is larger than the " + str(hidden_data_after_mbr_limit) + " byte limit. Copying minimal post-MBR gap.\n"
+                    filehandle.write(output)
+                except:
+                    tb = traceback.format_exc()
+                    traceback.print_exc()
+                    error_message = _(
+                        "Failed to write hidden data info file. Please confirm it is valid to create the provided file path, and try again.") + "\n\n" + tb
+                    GLib.idle_add(self.completed_backup, False, error_message)
+                    return False, error_message
+
+        else:
+            first_partition_offset_sectors = int(first_partition_offset_bytes / 512)
+            post_mbr_gap_sector_count = first_partition_offset_sectors - 1
+
+        hidden_mbr_data_filepath =  os.path.join(self.dest_dir, short_selected_device_node + "-hidden-data-after-mbr")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=hidden_mbr_data_filepath), "")
+        process, flat_command_string, failed_message = Utility.run("Saving " + hidden_mbr_data_filepath,
+                                                    ["dd", "if=" + self.selected_drive_key, "of=" + hidden_mbr_data_filepath,
+                                                    "skip=1", "bs=512",
+                                                    "count=" + str(post_mbr_gap_sector_count)], use_c_locale=False, logger=self.logger)
+        if process.returncode != 0:
+            self._append_summary_message(failed_message)
+            return False, failed_message
+        if self.is_cloning:
+            self.metadata_only_image_to_annotate.post_mbr_gap_dict['absolute_path'] = hidden_mbr_data_filepath
+
+        return True, None
+
+    def _save_short_selected_device_node_pt_sf(self, short_selected_device_node: str) -> None:
+        sfdisk_filepath = os.path.join(self.dest_dir, short_selected_device_node + "-pt.sf")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=sfdisk_filepath), "")
+        process, flat_command_string, failed_message = Utility.run("Saving " + sfdisk_filepath, ["sfdisk", "--dump", self.selected_drive_key], output_filepath=sfdisk_filepath, use_c_locale=True, logger=self.logger)
+        if process.returncode != 0:
+            print(failed_message)
+            if not self.is_cloning:
+                with self.summary_message_lock:
+                    self.summary_message += failed_message
+                    # Matches Clonezilla by not considering sfdisk failure as fatal.
+                GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, failed_message)
+
+    def _save_short_selected_device_node_chs_sf(self, short_selected_device_node: str) -> tuple[bool, str]:
+        filepath = os.path.join(self.dest_dir, short_selected_device_node + "-chs.sf")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=filepath), "")
+        process, flat_command_string, failed_message = Utility.run("Retreiving disk geometry with sfdisk ", ["sfdisk", "--show-geometry", self.selected_drive_key], use_c_locale=True, logger=self.logger)
+        if process.returncode != 0:
+            self.logger.write(failed_message)
+            with self.summary_message_lock:
+                self.summary_message += "Failed to retrieve disk geometry for " + self.selected_drive_key + "."
+            GLib.idle_add(self.completed_backup, False, failed_message)
+            return False, failed_message
+        else:
+            geometry_dict = Sfdisk.parse_sfdisk_show_geometry(process.stdout)
+            with open(filepath, 'w') as filehandle:
+                for key in geometry_dict.keys():
+                    output = key + "=" + str(geometry_dict[key])
+                    self.logger.write(output)
+                    filehandle.write('%s\n' % output)
+            if self.is_cloning:
+                self.metadata_only_image_to_annotate.sfdisk_chs_dict = geometry_dict
+        return True, None
+
+    def _save_lvm_vg_dev_list(self) -> dict:
+        Lvm.start_lvm2(self.logger)
+        relevant_vg_name_dict = {}
+        vg_state_dict = Lvm.get_volume_group_state_dict(self.logger)
+        for partition_key in list(self.partitions_to_backup.keys()):
+            for report_dict in vg_state_dict['report']:
+                for vg_dict in report_dict['vg']:
+                    if 'pv_name' in vg_dict.keys() and (partition_key == vg_dict['pv_name']
+                                                            or self.selected_drive_key == vg_dict['pv_name']):
+                        if 'vg_name' in vg_dict.keys():
+                            vg_name = vg_dict['vg_name']
+                        else:
+                            GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
+                                              "Could not find volume group name vg_name in " + str(vg_dict))
+                                # TODO: Re-evaluate how exactly Clonezilla uses /NOT_FOUND and whether introducing it here
+                                # TODO: could improve Rescuezilla/Clonezilla interoperability.
+                            continue
+                        if 'pv_uuid' in vg_dict.keys():
+                            pv_uuid = vg_dict['pv_uuid']
+                        else:
+                            GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
+                                              "Could not find physical volume UUID pv_uuid in " + str(vg_dict))
+                            continue
+                        relevant_vg_name_dict[vg_name] = partition_key
+                        self._append_lvm_vg_dev_list(partition_key, vg_dict, vg_name, pv_uuid)
+        return relevant_vg_name_dict
+
+    def _append_lvm_vg_dev_list(self, partition_key, vg_dict, vg_name, pv_uuid):
+        lvm_vg_dev_list_filepath = os.path.join(self.dest_dir, "lvm_vg_dev.list")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=lvm_vg_dev_list_filepath), "")
+        with open(lvm_vg_dev_list_filepath, 'a+') as filehandle:
+            if partition_key == vg_dict['pv_name']:
+                filehandle.write(vg_name + " " + partition_key + " " + pv_uuid + "\n")
+            elif self.selected_drive_key == vg_dict['pv_name']:
+                filehandle.write(vg_name + " " + self.selected_drive_key + " " + pv_uuid + "\n")
+
+
+    def _append_lvm_logv_list(self, lv_path: str) -> tuple[bool, str]:
+        file_command_process, flat_command_string, failed_message = Utility.run("logical volume file info",
+                                                                ["file", "--dereference",
+                                                                    "--special-files", lv_path], use_c_locale=True, logger=self.logger)
+        if file_command_process.returncode != 0:
+            self._append_summary_message(failed_message)
+            return False, failed_message
+
+        output = file_command_process.stdout.split(" ", maxsplit=1)[1].strip()
+        lvm_logv_list_filepath = os.path.join(self.dest_dir, "lvm_logv.list")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=lvm_logv_list_filepath), "")
+        # Append to file
+        with open(lvm_logv_list_filepath, 'a+') as filehandle:
+            filehandle.write(lv_path + "  " + output + "\n")
+        return True, None
+
+    def _save_lvm_vg_name_conf(self, vg_name: str) -> tuple[bool, str]:
+        lvm_vgname_filepath = os.path.join(self.dest_dir, "lvm_" + vg_name + ".conf")
+        # TODO: Evaluate the Clonezilla message from 2013 message that this command won't work on NFS
+        # TODO: due to a vgcfgbackup file lock issue.
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=lvm_vgname_filepath), "")
+        vgcfgbackup_process, flat_command_string, failed_message = Utility.run("Saving LVM VG config " + lvm_vgname_filepath,
+                                                                ["vgcfgbackup", "--file",
+                                                                lvm_vgname_filepath, vg_name], use_c_locale=True, logger=self.logger)
+        if vgcfgbackup_process.returncode != 0:
+            self._append_summary_message(failed_message)
+            return False, failed_message
+        return True, None
+
+    def _save_dev_fs_list(self) -> None:
+        filepath = os.path.join(self.dest_dir, "dev-fs.list")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=filepath), "")
+        with open(filepath, 'w') as filehandle:
+            filehandle.write('# <Device name>   <File system>\n')
+            filehandle.write(
+                '# The file systems detected below are a combination of several sources. The values may differ from `blkid` and `parted`.\n')
+            for partition_key in self.partitions_to_backup.keys():
+                filesystem = self.partitions_to_backup[partition_key]['filesystem']
+                filehandle.write('%s %s\n' % (partition_key, filesystem))
+
+    def _save_short_device_node_ebr(self, partition_key: str, short_device_node: str) -> tuple[bool, str]:
+        filepath = os.path.join(self.dest_dir, short_device_node + "-ebr")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=filepath), "")
+        process, flat_command_string, failed_message = Utility.run("Saving " + filepath,
+                                                    ["dd", "if=" + partition_key, "of=" + filepath, "bs=512",
+                                                    "count=1"], use_c_locale=False, logger=self.logger)
+        if process.returncode != 0:
+            self._append_summary_message(failed_message)
+            return False, failed_message
+
+        # TODO: Handle exit code
+        if self.is_cloning:
+            self.metadata_only_image_to_annotate.ebr_dict = {'short_device_node': short_device_node,
+                                                                'absolute_path': filepath}
+        return True, None
+
+    def _handle_swap_partition(self, partition_key: str, short_device_node: str) -> None:
+        filepath = os.path.join(self.dest_dir, "swappt-" + short_device_node + ".info")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=filepath), "")
+        with open(filepath, 'w') as filehandle:
+            uuid = ""
+            label = ""
+            if 'uuid' in self.partitions_to_backup[partition_key].keys():
+                uuid = self.partitions_to_backup[partition_key]['uuid']
+            if 'label' in self.partitions_to_backup[partition_key].keys():
+                label = self.partitions_to_backup[partition_key]['label']
+            filehandle.write('UUID="%s"\n' % uuid)
+            filehandle.write('LABEL="%s"\n' % label)
+            with self.summary_message_lock:
+                self.summary_message += _("Successful backup of swap partition {partition_name}").format(
+                            partition_name=partition_key) + "\n"
+            if self.is_cloning:
+                self.metadata_only_image_to_annotate.image_format_dict_dict[short_device_node] = Swappt.parse_swappt_info(
+                            Utility.read_file_into_string(filepath))
+                self.metadata_only_image_to_annotate.image_format_dict_dict[short_device_node]['type'] = "swap"
+                self.metadata_only_image_to_annotate.image_format_dict_dict[short_device_node]['prefix'] = short_device_node
+                self.metadata_only_image_to_annotate.image_format_dict_dict[short_device_node]['is_lvm_logical_volume'] = False
+
+
+    def _handle_ntfs_partition(self, partition_key: str, short_device_node: str) -> tuple[bool, str]:
+        GLib.idle_add(self.display_status, _("Running {app} on {device}").format(app="ntfsfix", device=partition_key), "")
+        is_success, failed_message = Utility.run_ntfsfix(partition_key)
+        if not is_success:
+            self.logger.write(failed_message + "\n")
+            GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder, failed_message)
+            with self.summary_message_lock:
+                self.summary_message += failed_message + "\n"
+
+        # Create Clonezilla's NTFS boot reserved partition "sda1.info"
+        tmp_mount = "/tmp/rescuezilla.ntfs.mount"
+        if self.is_partition_windows_boot_reserved(partition_key, tmp_mount):
+            partition_info_filepath = os.path.join(self.dest_dir, short_device_node + ".info")
+            GLib.idle_add(self.display_status, _("Saving: {file}").format(file=partition_info_filepath), "")
+            self.logger.write("Detected partition " + partition_key + " is a Windows NTFS boot reserved partition. Writing " + partition_info_filepath)
+            with open(partition_info_filepath, 'w') as filehandle:
+                try:
+                    output = "PARTITION_TYPE=Win_boot_reserved\n"
+                    filehandle.write(output)
+                except:
+                    tb = traceback.format_exc()
+                    traceback.print_exc()
+                    error_message = _(
+                        "Failed to write NTFS boot reserve file. Please confirm it is valid to create the provided file path, and try again.") + "\n\n" + tb
+                    GLib.idle_add(self.completed_backup, False, error_message)
+                    return False, error_message
+        return True, None
+
+
+    def _run_partclone_compression_and_split(self, env, partition_key, compression_cmd_list, partclone_cmd_list, split_cmd_list):
+        self.proc['partclone_backup_' + partition_key] = subprocess.Popen(partclone_cmd_list,
+                                                                              stdout=subprocess.PIPE,
+                                                                              stderr=subprocess.PIPE, env=env,
+                                                                              encoding='utf-8')
+
+        self.proc['compression_' + partition_key] = subprocess.Popen(compression_cmd_list,
+                                                                  stdin=self.proc[
+                                                                      'partclone_backup_' + partition_key].stdout,
+                                                                  stdout=subprocess.PIPE, env=env, encoding='utf-8')
+
+        self.proc['split_' + partition_key] = subprocess.Popen(split_cmd_list,
+                                                                   stdin=self.proc[
+                                                                       'compression_' + partition_key].stdout,
+                                                                   stdout=subprocess.PIPE, env=env, encoding='utf-8')
+
+    def _handle_partclone_error(self, filepath: str, partition_key: str, compression_cmd_list: str, flat_command_string: str, partclone_stderr) -> None:
+        partition_summary = _("<b>Failed to backup partition</b> {partition_name}").format(partition_name=partition_key) + "\n"
+        with self.summary_message_lock:
+            self.summary_message += partition_summary
+        self.at_least_one_non_fatal_error = True
+        proc_stdout = self.proc['partclone_backup_' + partition_key].stdout
+        proc_stderr = self.proc['partclone_backup_' + partition_key].stderr
+        extra_info = "\nThe command used internally was:\n\n" + flat_command_string + "\n\n" + "The output of the command was: " + partclone_stderr
+        compression_stderr = self.proc['compression_' + partition_key].stderr
+        if compression_stderr is not None and compression_stderr != "":
+            extra_info += "\n\n" + str(compression_cmd_list) + " stderr: " + compression_stderr
+
+                # TODO: Try to backup again, but using partclone.dd
+        GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
+                              partition_summary + extra_info)
+                # Delete failed partclone files
+        failed_partclone_img_path_list = glob.glob(filepath + "*")
+        for file_path in failed_partclone_img_path_list:
+            try:
+                os.remove(file_path)
+            except OSError:
+                self.logger.write("Unable to remove: " + file_path)
+                with self.summary_message_lock:
+                    self.summary_message += "Unable to remove: " + file_path
+
+
+    def _process_partclone_output_loop(self, partition_key: str, total_size: int, partition_number: int, filesystem_backup_message: str) -> tuple[bool, str, str]:
+        partclone_stderr = ""
+        # Process partclone output. Partclone outputs an update every 3 seconds, so processing the data
+        # on the current thread, for simplicity.
+        # Poll process.stdout to show stdout live
+        while True:
+            if self.requested_stop:
+                GLib.idle_add(self.completed_backup, False, _("User requested operation to stop."))
+                return False, _("User requested operation to stop."), partclone_stderr
+
+            output = self.proc['partclone_backup_' + partition_key].stderr.readline()
+            if self.proc['partclone_backup_' + partition_key].poll() is not None:
+                break
+            if output:
+                partclone_stderr += output
+                temp_dict = Partclone.parse_partclone_output(output)
+                if 'completed' in temp_dict.keys():
+                    total_progress_float = Utility.calculate_progress_ratio(
+                        current_partition_completed_percentage=temp_dict['completed'] / 100.0,
+                        current_partition_bytes=self.partitions_to_backup[partition_key]['size'],
+                        cumulative_bytes=self.partitions_to_backup[partition_key]['cumulative_bytes'],
+                        total_bytes=total_size,
+                        image_number=partition_number,
+                        num_partitions=len(self.partitions_to_backup))
+                    GLib.idle_add(self.update_backup_progress_bar, total_progress_float)
+                if 'remaining' in temp_dict.keys():
+                    GLib.idle_add(self.update_backup_progress_status, filesystem_backup_message + "\n\n" + output)
+        return True, None, partclone_stderr
+
+
+    def _append_summary_message(self, failed_message):
+        with self.summary_message_lock:
+            self.summary_message += failed_message
+        GLib.idle_add(self.completed_backup, False, failed_message)
+
 
     # Implementation of Clonezilla "check_if_windows_boot_reserve_part" function
     def is_partition_windows_boot_reserved(self, partition_key, mount_point):
@@ -1096,6 +1263,7 @@ class BackupManager:
                 self.logger.write("Populating summary page with:\n\n" + self.summary_message)
             else:
                 print(self.summary_message)
+
             text_to_display = """<b>{heading}</b>
 
 {message}""".format(heading=_("Backup Summary"), message=GObject.markup_escape_text(self.summary_message))
