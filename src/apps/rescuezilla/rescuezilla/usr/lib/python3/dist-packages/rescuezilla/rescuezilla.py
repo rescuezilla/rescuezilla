@@ -37,7 +37,6 @@ from handler import Handler
 
 
 def is_root():
-    return True
     return os.geteuid() == 0
 
 
@@ -45,8 +44,6 @@ def main():
     if not is_root():
         print("Rescuezilla must run as root.")
         exit(0)
-
-    Gtk.Settings.get_default().set_property("gtk-button-images", True)
 
     gettext_translation_search_path = sys.base_prefix + "/share/locale/{LANGUAGE,LC_ALL,LC_MESSAGES,LANG}/LC_MESSAGES/rescuezilla.mo"
     print("Setting GTK translation domain by searching: " + gettext_translation_search_path)
@@ -71,7 +68,7 @@ def main():
     # the wizard. The tab menu itself is useful when viewing and editing the GUI with Glade, but should not be
     # displayed to end-users because the application design relies on users not being able to skip steps.
     builder.get_object("mode_tabs").set_show_tabs(False)
-    builder.get_object("backup_tabs").set_show_tabs(True)
+    builder.get_object("backup_tabs").set_show_tabs(False)
     builder.get_object("restore_tabs").set_show_tabs(False)
     builder.get_object("verify_tabs").set_show_tabs(False)
     builder.get_object("clone_tabs").set_show_tabs(False)
