@@ -67,15 +67,20 @@ class BitLocker:
         print("mount_bitlocker_image_with_dislocker")
         tempfolder = mkdtemp(prefix=f"dislocker_{partition_dev_node.split('/')[-1]}_")
         password_bytes = f"{password}\n"
-        cmd = f"dislocker-fuse -u {partition_dev_node} {tempfolder}".split(" ")
-        process, flat_command_string, _ = Utility.run(
-            f"Mounting bitlocked disk with dislocker",
-            cmd,
-            use_c_locale=True,
-            input=password_bytes,
-        )
+        cmd_string= f"dislocker-fuse -u {partition_dev_node} {tempfolder}"
+        cmd = cmd_string.split(" ")
+        try:
+            process, flat_command_string, _ignored_ = Utility.run(
+                f"Mounting bitlocked disk with dislocker",
+                cmd,
+                use_c_locale=True,
+                input=password_bytes,
+            )
+        except FileNotFoundError as e:
+            msg = _(f"Error attemping to run dislocker to decrypt the partition {partition_dev_node}.\n" + f"Command: {cmd_string}\nError:{e}")
+            return None, msg
         if process.returncode != 0:
-            msg = _(f"Error attemptng to run dislocker to decrypt the partition {partition_dev_node}.\n" + f"Command: {flat_command_string}\nReturnCode: {process.returncode}\nOutput: {process.stdout}")
+            msg = _(f"Error attemping to run dislocker to decrypt the partition {partition_dev_node}.\n" + f"Command: {flat_command_string}\nReturnCode: {process.returncode}\nOutput: {process.stdout}")
             return None, msg
 
         unencrypted_partition = os.path.join(tempfolder, "dislocker-file")
