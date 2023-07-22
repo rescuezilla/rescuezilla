@@ -1,3 +1,4 @@
+import subprocess
 from tempfile import mkdtemp
 import os.path
 
@@ -14,7 +15,6 @@ from encryption import EncryptionState
 #       "type": "part"
 #     },
 
-
 def _get_partition_info(drive_state: dict, partition_dev_node: str) -> dict:
     for drive, data in drive_state.items():
         if not partition_dev_node.startswith(drive):
@@ -29,6 +29,10 @@ def _get_partition_info2(drive_dict: dict, drive_key: str, partition_key: str) -
 
 
 class BitLocker:
+
+    def __init__(self):
+        self.mounted_disks = []
+
     @staticmethod
     def is_filesystem_bitlocker(filesystem_name: str) -> bool:
         return filesystem_name == "BitLocker"
@@ -62,15 +66,22 @@ class BitLocker:
         else:
             return EncryptionState.NOT_ENCRYPTED
 
-    @staticmethod
-    def mount_bitlocker_image_with_dislocker(partition_dev_node: str, password: str) -> tuple[dict, str]:
+    def unmount_every_bitlocker_mounted_disk(self) -> None:
+        print("unmount_every_bitlocker_mounted_disk")
+        for disk in self.mounted_disks:
+            print(f"Unmounting bitlocked disk {disk}")
+            subprocess.Popen(["umount", disk]) # this runs in the background
+        self.mounted_disks = []
+
+
+    def mount_bitlocker_image_with_dislocker(self, partition_dev_node: str, password: str) -> tuple[dict, str]:
         print("mount_bitlocker_image_with_dislocker")
         tempfolder = mkdtemp(prefix=f"dislocker_{partition_dev_node.split('/')[-1]}_")
         password_bytes = f"{password}\n"
         cmd_string= f"dislocker-fuse -u {partition_dev_node} {tempfolder}"
         cmd = cmd_string.split(" ")
         try:
-            process, flat_command_string, _ignored_ = Utility.run(
+            process, flat_command_string, fail_description = Utility.run(
                 f"Mounting bitlocked disk with dislocker",
                 cmd,
                 use_c_locale=True,
@@ -83,12 +94,18 @@ class BitLocker:
             msg = _(f"Error attemping to run dislocker to decrypt the partition {partition_dev_node}.\n" + f"Command: {flat_command_string}\nReturnCode: {process.returncode}\nOutput: {process.stdout}")
             return None, msg
 
+        self.mounted_disks.append(tempfolder)
+
         unencrypted_partition = os.path.join(tempfolder, "dislocker-file")
         print(f"Dislocker was able to mount the encrypted disk successfully at {unencrypted_partition}!")
         return BitLocker._parse_new_partition(unencrypted_partition), None
 
     @staticmethod
     def _parse_new_partition(filename: str):
+        # sample output from blkid for bitlocked partition
+        # /dev/nvme0n2p3: TYPE="BitLocker" PARTLABEL="Basic data partition" PARTUUID="e14cdc72-06f4-422f-ba43-3badc8c1be07"
+        # sample output from blkid for a dislocked bitlocker ntfs partition
+        # /tmp/dislocked/dislocker-file: LABEL="BitLocked" BLOCK_SIZE="512" UUID="2A4092134091E5BB" TYPE="ntfs"
         blkid_cmd_list = ["blkid", filename]
         process, flat_command_string, fail_description = Utility.run(f"blkid {filename}", blkid_cmd_list, use_c_locale=True)
         blkid_dict = Blkid.parse_blkid_output(process.stdout)[filename]

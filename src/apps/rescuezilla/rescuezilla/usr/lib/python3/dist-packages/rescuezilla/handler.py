@@ -122,6 +122,7 @@ class Handler:
         compression_format_combobox.set_active(0)
         self.compression_tool_changed(compression_format_combobox)
 
+        self.bitlocker_manager = BitLocker()
         self.backup_manager = BackupManager(builder, self.human_readable_version)
         self.restore_manager = RestoreManager(builder)
         self.verify_manager = VerifyManager(builder)
@@ -1008,7 +1009,7 @@ class Handler:
 
         partition = list_store.get(iters[0], SavePartitionList.PARTITION_SHORT_DEVICE_NODE.value)[0]
         print(partition)
-        unencrypted_partition_info, error_msg = BitLocker.mount_bitlocker_image_with_dislocker(partition, the_password)
+        unencrypted_partition_info, error_msg = self.bitlocker_manager.mount_bitlocker_image_with_dislocker(partition, the_password)
         BitLocker.update_drive_state(self.drive_query.drive_state, partition, unencrypted_partition_info)
         if error_msg is not None:
             ErrorMessageModalPopup(self.builder, error_msg)
@@ -1050,6 +1051,7 @@ class Handler:
             # Launch subprocess to unmount target directory. Subprocess is detached so it doesn't block Rescuezilla's
             # shutdown.
             subprocess.Popen(["umount", MOUNT_DIR])
+            self.bitlocker_manager.unmount_every_bitlocker_mounted_disk()
         except Exception as e:
             tb = traceback.format_exc()
             traceback.print_exc()
