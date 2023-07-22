@@ -180,6 +180,10 @@ class BackupManager:
             if not is_success:
                 return is_success, message
 
+            is_success, message = self._create_blkid_unencrypted_list()
+            if not is_success:
+                return is_success, message
+
             is_success, message = self._create_info_lshw_txt()
             if not is_success:
                 return is_success, message
@@ -322,11 +326,13 @@ class BackupManager:
 
         partition_number = 0
         for partition_key in self.partitions_to_backup.keys():
+            unencrypted_partition_key = partition_key
+            partition_data = self.partitions_to_backup[partition_key]
             GLib.idle_add(self.display_status, "", "")
             partition_number += 1
             total_progress_float = Utility.calculate_progress_ratio(current_partition_completed_percentage=0,
-                                                                    current_partition_bytes=self.partitions_to_backup[partition_key]['size'],
-                                                                    cumulative_bytes=self.partitions_to_backup[partition_key]['cumulative_bytes'],
+                                                                    current_partition_bytes=partition_data['size'],
+                                                                    cumulative_bytes=partition_data['cumulative_bytes'],
                                                                     total_bytes=total_size,
                                                                     image_number=partition_number,
                                                                     num_partitions=len(self.partitions_to_backup))
@@ -340,24 +346,32 @@ class BackupManager:
 
             short_device_node = re.sub('/dev/', '', partition_key)
             short_device_node = re.sub('/', '-', short_device_node)
-            filesystem = self.partitions_to_backup[partition_key]['filesystem']
+            filesystem = partition_data['filesystem']
 
-            if 'type' in self.partitions_to_backup[partition_key].keys() and 'extended' in \
-                    self.partitions_to_backup[partition_key]['type']:
+            if 'type' in partition_data.keys() and 'extended' in \
+                    partition_data['type']:
                 self.logger.write("Detected " + partition_key + " as extended partition. Backing up EBR")
                 is_success, message = self._save_short_device_node_ebr(partition_key, short_device_node)
                 if not is_success:
                     return is_success, message
                 continue
 
+
             if filesystem == 'swap':
                 self._handle_swap_partition(partition_key, short_device_node)
                 continue
 
-            if filesystem == "ntfs":
-                is_success, message = self._handle_ntfs_partition(partition_key, short_device_node)
+            if filesystem == "BitLocker" and "unencrypted_data" in partition_data:
+                print(f"Handling dislocked bitlocker partition {partition_key}")
+                filesystem = partition_data["unencrypted_data"]["filesystem"]
+                unencrypted_partition_key = partition_data["unencrypted_data"]["device_path"]
+
+            if filesystem == "ntfs": # and dislocked bitlocker partitions
+                is_success, message = self._handle_ntfs_partition(unencrypted_partition_key, short_device_node)
                 if not is_success:
                     return is_success, message
+
+
 
             # Clonezilla uses -q2 priority by default (partclone > partimage > dd).
             # PartImage does not appear to be maintained software, so for simplicity, Rescuezilla is using a
@@ -377,7 +391,7 @@ class BackupManager:
             # [1] https://github.com/rescuezilla/rescuezilla/issues/65
             if shutil.which("partclone." + filesystem) is not None and filesystem != "apfs":
                 partclone_cmd_list = ["partclone." + filesystem] + Utility.get_partclone_rescue_options(self.is_rescue) + ["--logfile", "/var/log/partclone.log", "--clone",
-                                      "--source", partition_key, "--output", "-"]
+                                      "--source", unencrypted_partition_key, "--output", "-"]
                 filepath = os.path.join(self.dest_dir,
                                         short_device_node + "." + filesystem + "-ptcl-img." + compression_suffix + ".")
                 split_cmd_list = ["split", "--suffix-length=2", "--bytes=" + split_size, "-", filepath]
@@ -589,6 +603,24 @@ class BackupManager:
             return False, failed_message
         return True, None
 
+    def _create_blkid_unencrypted_list(self) -> tuple[bool, str]:
+        blkid_unencrypted_list_filepath = os.path.join(self.dest_dir, "blkid_unencrypted.list")
+        GLib.idle_add(self.display_status, _("Saving: {file}").format(file=blkid_unencrypted_list_filepath), "")
+        with open(blkid_unencrypted_list_filepath, 'w') as filehandle:
+            for partition_data in self.partitions_to_backup.values():
+                unencrypted_device_path = partition_data.get("unencrypted_data", {}).get("device_path")
+                if unencrypted_device_path is None:
+                    continue
+
+                process, flat_command_string, failed_message = Utility.run("Saving blkid_unencrypted.list", ["blkid", unencrypted_device_path], use_c_locale=True, output_filepath=None, logger=None)
+                filehandle.write(process.stdout)
+
+            if process.returncode != 0:
+                self._append_summary_message(failed_message)
+                return False, failed_message
+        return True, None
+
+
     def _create_info_lshw_txt(self) -> tuple[bool,str]:
         info_lshw_filepath = os.path.join(self.dest_dir, "Info-lshw.txt")
         GLib.idle_add(self.display_status, _("Saving: {file}").format(file=info_lshw_filepath), "")
@@ -684,7 +716,7 @@ class BackupManager:
         GLib.idle_add(self.display_status, _("Saving: {file}").format(file=filepath), "")
         # Save Debian package informtion
         if shutil.which("dpkg") is not None:
-            rescuezilla_package_list = ["rescuezilla", "partclone", "util-linux", "gdisk"]
+            rescuezilla_package_list = ["rescuezilla", "partclone", "util-linux", "gdisk", "dislocker"]
             with open(filepath, 'w') as filehandle:
                 filehandle.write("Image was saved by these Rescuezilla-related packages:\n ")
                 for pkg in rescuezilla_package_list:

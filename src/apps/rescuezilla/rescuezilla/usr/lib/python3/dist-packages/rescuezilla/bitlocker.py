@@ -15,6 +15,7 @@ from encryption import EncryptionState
 #       "type": "part"
 #     },
 
+
 def _get_partition_info(drive_state: dict, partition_dev_node: str) -> dict:
     for drive, data in drive_state.items():
         if not partition_dev_node.startswith(drive):
@@ -29,7 +30,6 @@ def _get_partition_info2(drive_dict: dict, drive_key: str, partition_key: str) -
 
 
 class BitLocker:
-
     def __init__(self):
         self.mounted_disks = []
 
@@ -70,15 +70,14 @@ class BitLocker:
         print("unmount_every_bitlocker_mounted_disk")
         for disk in self.mounted_disks:
             print(f"Unmounting bitlocked disk {disk}")
-            subprocess.Popen(["umount", disk]) # this runs in the background
+            subprocess.Popen(["umount", disk])  # this runs in the background
         self.mounted_disks = []
-
 
     def mount_bitlocker_image_with_dislocker(self, partition_dev_node: str, password: str) -> tuple[dict, str]:
         print("mount_bitlocker_image_with_dislocker")
         tempfolder = mkdtemp(prefix=f"dislocker_{partition_dev_node.split('/')[-1]}_")
         password_bytes = f"{password}\n"
-        cmd_string= f"dislocker-fuse -u {partition_dev_node} {tempfolder}"
+        cmd_string = f"dislocker-fuse -u {partition_dev_node} {tempfolder}"
         cmd = cmd_string.split(" ")
         try:
             process, flat_command_string, fail_description = Utility.run(

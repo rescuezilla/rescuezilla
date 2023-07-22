@@ -860,7 +860,7 @@
                                                 <child>
                                                   <object class="GtkTreeViewColumn">
                                                     <property name="resizable">True</property>
-                                                    <property name="title" translatable="yes">Encryption</property>
+                                                    <property name="title" translatable="yes">Disk</property>
                                                     <child>
                                                       <object class="GtkCellRendererPixbuf"/>
                                                       <attributes>

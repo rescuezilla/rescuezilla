@@ -7,4 +7,3 @@ pkg.cache/*
 /**/__pycache__
 /**/*.pyc
 .vscode
-deb/
