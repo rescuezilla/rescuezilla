@@ -160,6 +160,21 @@
     <property name="can-focus">False</property>
     <property name="pixbuf">padlock_icon.png</property>
   </object>
+  <object class="GtkImage" id="drive_partition_not_encrypted">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="pixbuf">drive_partition_not_encrypted.png</property>
+  </object>
+  <object class="GtkImage" id="drive_partition_encrypted_and_unlocked">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="pixbuf">drive_partition_encrypted_and_unlocked.png</property>
+  </object>
+  <object class="GtkImage" id="drive_partition_encrypted_and_locked">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="pixbuf">drive_partition_encrypted_and_locked.png</property>
+  </object>
   <object class="GtkListStore" id="partition_selection_list">
     <columns>
       <!-- column-name partition_short_device_node -->
@@ -226,6 +241,8 @@
       <column type="gchararray"/>
       <!-- column-name save_toggle -->
       <column type="gboolean"/>
+      <!-- column-name encryption_state -->
+      <column type="GdkPixbuf"/>
       <!-- column-name partition_description -->
       <column type="gchararray"/>
     </columns>
@@ -807,6 +824,7 @@
                                                 <property name="model">save_partition_list</property>
                                                 <property name="search-column">0</property>
                                                 <property name="enable-grid-lines">both</property>
+                                                <signal name="cursor-changed" handler="show_hide_encryption_info" swapped="no"/>
                                                 <signal name="row-activated" handler="row_activated_backup_partition_toggle" swapped="no"/>
                                                 <child internal-child="selection">
                                                   <object class="GtkTreeSelection" id="backup_partitions_treeselection">
@@ -842,11 +860,23 @@
                                                 <child>
                                                   <object class="GtkTreeViewColumn">
                                                     <property name="resizable">True</property>
+                                                    <property name="title" translatable="yes">Disk</property>
+                                                    <child>
+                                                      <object class="GtkCellRendererPixbuf"/>
+                                                      <attributes>
+                                                        <attribute name="pixbuf">2</attribute>
+                                                      </attributes>
+                                                    </child>
+                                                  </object>
+                                                </child>
+                                                <child>
+                                                  <object class="GtkTreeViewColumn">
+                                                    <property name="resizable">True</property>
                                                     <property name="title" translatable="yes">Description</property>
                                                     <child>
                                                       <object class="GtkCellRendererText"/>
                                                       <attributes>
-                                                        <attribute name="text">2</attribute>
+                                                        <attribute name="text">3</attribute>
                                                       </attributes>
                                                     </child>
                                                   </object>
@@ -874,6 +904,24 @@
                                             <property name="expand">False</property>
                                             <property name="fill">True</property>
                                             <property name="position">2</property>
+                                          </packing>
+                                        </child>
+                                        <child>
+                                        <!-- Click &lt;a&gt;HERE&lt;/a&gt;  -->
+                                          <object class="GtkLabel" id="unlock_encrypted_partition_if_possible_label">
+                                            <property name="can-focus">False</property>
+                                            <property name="ypad">20</property>
+                                            <property name="label" translatable="yes">The current partition is encrypted and locked. Click &lt;a href='attempt_to_unlock_encrypted_partition2'&gt;HERE&lt;/a&gt; if you want to unlock it. That will create a &lt;b&gt;decrypted&lt;/b&gt; backup, which will be smaller and will be created quicker.</property>
+                                            <property name="use-markup">True</property>
+                                            <property name="wrap">True</property>
+                                            <property name="yalign">1</property>
+                                            <!-- <signal name="activate-current-link" handler="attempt_to_unlock_encrypted_partition" swapped="no"/> -->
+                                            <signal name="activate-link" handler="attempt_to_unlock_encrypted_partition2" swapped="no"/>
+                                          </object>
+                                          <packing>
+                                            <property name="expand">False</property>
+                                            <property name="fill">True</property>
+                                            <property name="position">3</property>
                                           </packing>
                                         </child>
                                       </object>

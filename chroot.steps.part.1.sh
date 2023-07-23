@@ -28,7 +28,7 @@ else
     diff $APT_SOURCES_CHECKSUM /var/lib/apt/lists.cache/apt.sources.checksum.txt
     if [ $? -ne 0 ]; then
         apt-get update
-    else 
+    else
         rm -rf /var/lib/apt/lists
         mv /var/lib/apt/lists.cache /var/lib/apt/lists
     fi
@@ -277,6 +277,9 @@ common_pkgs=("discover"
              "dosfstools"
              "mtools"
              "ntfs-3g"
+             "dislocker"
+             "nano"
+             "curl"
              "hfsutils"
              "reiser4progs"
              "jfsutils"
@@ -356,7 +359,7 @@ sed --in-place 's/#DefaultTimeoutStopSec=90s/DefaultTimeoutStopSec=10s/g' /etc/s
 
 # Prevent "initramfs unpacking failed: Decoding failed" message on Ubuntu 19.10
 # and Ubuntu 20.04 systems [1] [2]. Using gzip means supposedly slower boot
-# than lz4 compression, but it's a worthwhile trade-off to prevent any 
+# than lz4 compression, but it's a worthwhile trade-off to prevent any
 # non-technical end-users from seeing an error message.
 # [1] https://bugs.launchpad.net/ubuntu/+source/ubuntu-meta/+bug/1870260
 # [2] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1835660

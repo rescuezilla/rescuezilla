@@ -1,4 +1,4 @@
-[![Rescuezilla banner](docs/images/banner.big.png)](https://rescuezilla.com) 
+[![Rescuezilla banner](docs/images/banner.big.png)](https://rescuezilla.com)
 
 # Rescuezilla [![Build Status](https://github.com/rescuezilla/rescuezilla/actions/workflows/build-rescuezilla-iso.yml/badge.svg?event=push&branch=master)](https://github.com/rescuezilla/rescuezilla/actions) [![Translation status](https://hosted.weblate.org/widgets/rescuezilla/-/svg-badge.svg)](https://hosted.weblate.org/engage/rescuezilla/)
 
@@ -31,6 +31,7 @@ Rescuezilla was forked from _Redo Backup and Recovery_ (now called Redo Rescue) 
 * Web browser for downloading drivers, reading documentation
 * File explorer for copying and editing files even if system won't boot
 * Based on Ubuntu and partclone
+* Can unlock any bitlocked encrypted disk supported by [dislocker](https://github.com/Aorimn/dislocker) and backup them up unencrypted, which is quicker and uses less disk space.
 
 Note: Rescuezilla does NOT yet _automatically_ shrink partitions to restore to disks _smaller_ than original. This feature will be added in future version.
 
@@ -105,11 +106,62 @@ Below table shows an abridged history of Rescuezilla. For more information, see 
 | Redo Backup 0.9.8   | 2011-03-10 | Ubuntu 10.10     | Redo author [deleted](https://sourceforge.net/p/redobackup/discussion/help/thread/4ea6ca31/) v0.9.2-v0.9.7
 | Redo Backup 0.9.2   | 2010-06-24 | xPUD             |
 
+## About Bitlocker Disk Decryption using Dislocker
+
+Rescuezilla is now able to unlock bitlocker encrypted partitions (as long as they are supported by [dislocker](https://github.com/Aorimn/dislocker) and backup them unencrypted, using `partclone.ntfs`.
+The advantages are that we don't need to backup empty disk space and that compressing the backup is effective again. So it saves time and disk space!
+
+During tests, it was possible to backup up and restore a Windows 11 VM and it booted perfectly after the restore.
+
+How it works:
+* on the source partition list, there are 3 icons, which mean:
+	* unencrypted disk
+	* encrypted and locked (red, closed padlock)
+	* encrypted and unlocked (green, opened padlock)
+* Whenever clicking on a encrypted and locked disk, one has the option of typing the password to unlock it.
+
+From the UI point of view, nothing else changes.
+
+Under the hood:
+
+* [dislocker](https://github.com/Aorimn/dislocker) fuse mounts the bitlocker encrypted disk is mounted to a temporary folder, which contains only one file, the unencrypted ntfs partition.
+* Some metadata is added to `self.partitions_to_backup[partition_key]`
+* both `_handle_ntfs_partition` (which calls ntfsfix) and the section that creates `partclone_cmd_list` are aware of the metadata above and therefore backup the unlocked file created by dislocker instead of the original partition
+
+No code change had to be done on the restore method. The partition type is the same and `partclone.ntfs` is automatically infered to restore the partition using the above process.
+
+One may use Windows to bitlock encrypt the disk again after the restore if needed.
+
+Since [dislocker](https://github.com/Aorimn/dislocker) currently does not support the TPM module, one needs to encrypt the disk in a special way for it to work:
+
+Using Windows 10 or 11, click on
+
+    * Start Menu
+    * type `run`
+    * Go to "Local Computer Policy > Administrative Templates > Windows Components > BitLocker Drive Encryption > Operating System Drives"
+    * Select the following Item: "Require additional authentication at startup"
+    * Change the following:
+        * Change the policy itself to "Enabled"
+        * Uncheck "Allow BitLocker without a compatible TPM"
+        * Change "Configure TPM startup" to "Do not allow TPM"
+        * Change "Configure TPM startup PIN" to "Require startup PIN with TPM"
+        * Change "Configure TPM startup key" to "Do not allow startup key with TPM"
+        * Change "Configure TPM startup key and PIN" to "Do not allow startup key and PIN with TPM"
+        * Click "Apply" and "OK"
+
+    * Now open an Adminstator Power Shell and type
+
+```
+gpupdate /force /target:computer
+$SecureString = ConvertTo-SecureString "YOUR_PASSWORD_HERE" -AsPlainText -Force
+Enable-BitLocker -MountPoint "C:" -EncryptionMethod Aes256 -PasswordProtector -Password $SecureString
+```
+
 ## Reviews and testimonials
 
 Please consider posting a review of Rescuezilla on the very useful website [AlternativeTo.Net](https://alternativeto.net/software/rescuezilla/reviews/). Consider giving the project a like too! :-)
 
-## Building 
+## Building
 
 See [Building ISO image](docs/build_instructions/BUILD.ISO.IMAGE.md)
 
@@ -124,3 +176,4 @@ If you need help, start by checking the [frequently asked questions](https://res
 ## Downloads
 
 [Download the latest Rescuezilla ISO image on the GitHub Release page](https://github.com/rescuezilla/rescuezilla/releases/latest)
+

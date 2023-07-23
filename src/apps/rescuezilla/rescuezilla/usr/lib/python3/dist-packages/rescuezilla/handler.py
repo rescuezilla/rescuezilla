@@ -23,6 +23,7 @@ import subprocess
 import threading
 import traceback
 from datetime import datetime
+from enum import Enum
 
 import gi
 
@@ -44,8 +45,16 @@ from partitions_to_restore import PartitionsToRestore
 from drive_query import DriveQuery
 from image_folder_query import ImageFolderQuery
 from parser.sfdisk import Sfdisk
-from utility import ErrorMessageModalPopup, BrowseSelectionPopup, Utility, AreYouSureModalPopup, _
+from bitlocker import BitLocker
+from utility import ErrorMessageModalPopup, BrowseSelectionPopup, Utility, AreYouSureModalPopup, ask_for_password_popup, _
 from wizard_state import Mode, Page, MOUNT_DIR, IMAGE_EXPLORER_DIR, NETWORK_UI_WIDGET_MODES, RESCUEZILLA_MOUNT_TMP_DIR
+
+
+class SavePartitionList(Enum):
+    PARTITION_SHORT_DEVICE_NODE = 0
+    SAVE_TOGGLE = 1
+    ENCRYPTION_STATE = 2
+    PARTITION_DESCRIPTION = 3
 
 
 class Handler:
@@ -113,6 +122,7 @@ class Handler:
         compression_format_combobox.set_active(0)
         self.compression_tool_changed(compression_format_combobox)
 
+        self.bitlocker_manager = BitLocker()
         self.backup_manager = BackupManager(builder, self.human_readable_version)
         self.restore_manager = RestoreManager(builder)
         self.verify_manager = VerifyManager(builder)
@@ -374,9 +384,9 @@ class Handler:
                     has_atleast_one = False
                     for row in partition_list_store:
                         print("row is " + str(row))
-                        if row[1]:
-                            self.partitions_to_backup[row[0]] = self.drive_query.drive_state[self.selected_drive_key]['partitions'][row[0]]
-                            self.partitions_to_backup[row[0]]['description'] = row[2]
+                        if row[SavePartitionList.SAVE_TOGGLE.value]:
+                            self.partitions_to_backup[row[SavePartitionList.PARTITION_SHORT_DEVICE_NODE.value]] = self.drive_query.drive_state[self.selected_drive_key]['partitions'][row[SavePartitionList.PARTITION_SHORT_DEVICE_NODE.value]]
+                            self.partitions_to_backup[row[SavePartitionList.PARTITION_SHORT_DEVICE_NODE.value]]['description'] = row[SavePartitionList.PARTITION_DESCRIPTION.value]
                             has_atleast_one = True
                     if not has_atleast_one:
                         error = ErrorMessageModalPopup(self.builder, "Nothing selected!")
@@ -975,9 +985,52 @@ class Handler:
         # invert toggle
         self.save_partition_list_store.set_value(iterator, 1, not state)
 
+    def show_hide_encryption_info(self, treeview):
+        print("row-selected")
+        list_store, iters = self.get_rows("backup_partitions_treeselection")
+        partition_dev_node = list_store.get(iters[0], 0)[0]
+        print(partition_dev_node)
+        show_encryption_banner = BitLocker.show_hide_decryption_gui(self.drive_query.drive_state, partition_dev_node)
+        self.builder.get_object("unlock_encrypted_partition_if_possible_label").set_visible(show_encryption_banner)
+
+    def _ask_for_password_popup(self, list_store, iters) -> str:
+        partition_dev_node = list_store.get(iters[0], 0)[0]
+        title = _("Partition: ") + partition_dev_node
+        msg = _("Please type the password to unlock the encrypted partition")
+        the_password = ask_for_password_popup(self.builder, msg, title)
+        return the_password
+
+    def attempt_to_unlock_encrypted_partition2(self, *args, **kwargs):
+        print("attempt_to_unlock_encrypted_partition2")
+        list_store, iters = self.get_rows("backup_partitions_treeselection")
+        the_password = self._ask_for_password_popup(list_store, iters)
+        if the_password is None:
+            return
+
+        partition = list_store.get(iters[0], SavePartitionList.PARTITION_SHORT_DEVICE_NODE.value)[0]
+        print(partition)
+        unencrypted_partition_info, error_msg = self.bitlocker_manager.mount_bitlocker_image_with_dislocker(partition, the_password)
+        BitLocker.update_drive_state(self.drive_query.drive_state, partition, unencrypted_partition_info)
+        if error_msg is not None:
+            ErrorMessageModalPopup(self.builder, error_msg)
+            return
+
+        self._update_ui_with_unlocked_partition(list_store, iters, unencrypted_partition_info)
+
+    def _update_ui_with_unlocked_partition(self, list_store, iters, unencrypted_partition_info):
+        new_description = list_store.get(iters[0], SavePartitionList.PARTITION_DESCRIPTION.value)[0] + unencrypted_partition_info.get("filesystem", "") + " " + unencrypted_partition_info.get("os_label", "")
+        list_store.set(iters[0], SavePartitionList.PARTITION_DESCRIPTION.value, new_description)
+
+        partition_icon = self.drive_query.icon_pixbufs["drive_partition_encrypted_and_unlocked"]
+        list_store.set(iters[0], SavePartitionList.ENCRYPTION_STATE.value, partition_icon)
+
+        self.builder.get_object("unlock_encrypted_partition_if_possible_label").set_visible(False)
+
+
     # Callback for double click (row-activate) on backup mode partitions to backup toggle
     # TODO: Directly call save_partition_toggled from above, to reduce duplication
     def row_activated_backup_partition_toggle(self, treeview, path, view_column):
+        print("Row Activated")
         list_store, iters = self.get_rows("backup_partitions_treeselection")
         state = list_store.get(iters[0], 1)[0]
         list_store.set_value(iters[0], 1, not state)
@@ -998,6 +1051,7 @@ class Handler:
             # Launch subprocess to unmount target directory. Subprocess is detached so it doesn't block Rescuezilla's
             # shutdown.
             subprocess.Popen(["umount", MOUNT_DIR])
+            self.bitlocker_manager.unmount_every_bitlocker_mounted_disk()
         except Exception as e:
             tb = traceback.format_exc()
             traceback.print_exc()
