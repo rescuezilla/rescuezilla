@@ -10,13 +10,14 @@
 # Marcel Küsters <Marcel_Kuesters@t-online.de>, 2022.
 # Ettore Atalan <atalanttore@googlemail.com>, 2022.
 # Markus Merkle <mae.mm1172@gmail.com>, 2023.
+# hutt <iuoifjlffdla@trashmail.de>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2023-07-06 09:52+0000\n"
-"Last-Translator: Markus Merkle <mae.mm1172@gmail.com>\n"
+"PO-Revision-Date: 2023-07-19 07:06+0000\n"
+"Last-Translator: hutt <iuoifjlffdla@trashmail.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/de/>\n"
 "Language: de\n"
@@ -488,7 +489,7 @@ msgstr "Bestätige die nachfolgende Konfiguration für die Sicherungskopie."
 
 msgid "On successful completion of the task, perform the following action: "
 msgstr ""
-"Bei erfolgreichem Abschluss des Vorganges, die folgende Aktion ausführen: "
+"Bei erfolgreichem Abschluss des Vorganges die folgende Aktion ausführen: "
 
 msgid "Do nothing"
 msgstr "Nichts tun"
@@ -505,8 +506,8 @@ msgstr ""
 
 msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
 msgstr ""
-"<b>Die Aktivierung von \"Rescue\" kann wichtige Fehler unterdrücken. Seien "
-"Sie vorsichtig.</b>"
+"<b>Die Aktivierung der Rettungsoption kann wichtige Fehler unterdrücken. "
+"Seien Sie vorsichtig.</b>"
 
 msgid "To start the backup, click <b>Next</b>."
 msgstr "Klicke zum Starten des Sicherungsvorgangs auf <b>Weiter</b>."
