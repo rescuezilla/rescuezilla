@@ -9,13 +9,15 @@
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
 # Marcel Küsters <Marcel_Kuesters@t-online.de>, 2022.
 # Ettore Atalan <atalanttore@googlemail.com>, 2022.
+# Markus Merkle <mae.mm1172@gmail.com>, 2023.
+# hutt <iuoifjlffdla@trashmail.de>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2022-10-12 18:29+0000\n"
-"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
+"PO-Revision-Date: 2023-07-19 07:06+0000\n"
+"Last-Translator: hutt <iuoifjlffdla@trashmail.de>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/de/>\n"
 "Language: de\n"
@@ -23,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.15-dev\n"
+"X-Generator: Weblate 5.0-dev\n"
 
 msgid "Welcome"
 msgstr "Willkommen"
@@ -97,7 +99,7 @@ msgstr "Schritt 1: Klonen erklärt"
 
 msgid "Please understand how \"cloning\" differs from \"imaging\"."
 msgstr ""
-"Mache dich mit den Unterschieden zwischen \"Klonen\" und \"Sicherungskopie\" "
+"Mache Dich mit den Unterschieden zwischen \"Klonen\" und \"Sicherungskopie\" "
 "vertraut."
 
 msgid "This mode is for \"disk cloning\". Cloning means copying one drive and directly overwriting another drive. This is a direct one-step operation with no temporary storage required.\n"
@@ -487,7 +489,7 @@ msgstr "Bestätige die nachfolgende Konfiguration für die Sicherungskopie."
 
 msgid "On successful completion of the task, perform the following action: "
 msgstr ""
-"Bei erfolgreichem Abschluss des Vorganges, die folgende Aktion ausführen: "
+"Bei erfolgreichem Abschluss des Vorganges die folgende Aktion ausführen: "
 
 msgid "Do nothing"
 msgstr "Nichts tun"
@@ -504,8 +506,8 @@ msgstr ""
 
 msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
 msgstr ""
-"<b>Die Aktivierung von \"Rescue\" kann wichtige Fehler unterdrücken. Seien "
-"Sie vorsichtig.</b>"
+"<b>Die Aktivierung der Rettungsoption kann wichtige Fehler unterdrücken. "
+"Seien Sie vorsichtig.</b>"
 
 msgid "To start the backup, click <b>Next</b>."
 msgstr "Klicke zum Starten des Sicherungsvorgangs auf <b>Weiter</b>."
@@ -917,10 +919,10 @@ msgid "To begin verification, click <b>Next</b>."
 msgstr "Um mit der Überprüfung zu beginnen, klicken Sie auf <b>Weiter</b>."
 
 msgid "Verifying Image"
-msgstr "Image überprüfen"
+msgstr "Festplattenabbild überprüfen"
 
 msgid "Verifying the selected image(s)."
-msgstr "Überprüfung des/der ausgewählten Image(s)."
+msgstr "Überprüfung des ausgewählten Festplattenabbilds"
 
 #, python-brace-format
 msgid "Verifying {image_name}"

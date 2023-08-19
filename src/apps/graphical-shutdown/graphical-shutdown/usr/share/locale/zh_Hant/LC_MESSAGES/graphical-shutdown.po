@@ -2,7 +2,7 @@
 # Haowei Hsu <hwhsu1231@gmail.com>, 2023.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2023-06-23 20:34+0000\n"
+"PO-Revision-Date: 2023-07-25 06:04+0000\n"
 "Last-Translator: Haowei Hsu <hwhsu1231@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
 "rescuezilla/graphical-shutdown/zh_Hant/>\n"
@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.18.1\n"
+"X-Generator: Weblate 5.0-dev\n"
 
 msgid "End Session"
 msgstr "結束作業階段"
@@ -19,7 +19,7 @@ msgid "Cancel"
 msgstr "取消"
 
 msgid "Shutdown"
-msgstr "關閉"
+msgstr "關機"
 
 msgid "Reboot"
 msgstr "重新開機"
