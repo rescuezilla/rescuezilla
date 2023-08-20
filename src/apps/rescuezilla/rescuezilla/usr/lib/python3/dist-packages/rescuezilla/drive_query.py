@@ -229,131 +229,70 @@ class DriveQuery:
         blkid_cmd_list = ["blkid"]
         os_prober_cmd_list = ["os-prober"]
 
-        lsblk_json_dict = {}
-        blkid_dict = {}
-        os_prober_dict = {}
         parted_dict_dict = collections.OrderedDict([])
         sfdisk_dict_dict = collections.OrderedDict([])
 
         # Clonezilla combines drive, partition and filesystem from multiple data sources (lsblk, blkid, parted etc)
         # Rescuezilla continues this approach to reach best possible Clonezilla compatibility.
         #
-        # However this sequential querying is slow. A parallel approach should be in theory much faster (but might be
-        # less reliable if internal commands are creating file locks etc.)
-        #
-        # In practice, the sequential approach was about 25% faster than a first-cut (polling-based) parallel approach.
-        # Parallel mode currently disabled, but kept for further development/analysis.
-        mode = "sequential-drive-query"
-        if mode == "sequential-drive-query":
-            print("Running drive query in sequential mode")
+        # This sequential querying is slow. A parallel approach should be in theory much faster (but might be
+        # less reliable if internal commands are creating file locks etc.) In practice, the sequential approach was
+        # about 25% faster than a first-cut (polling-based) parallel approach, so parallel mode removed.
+        # TODO: Run with Utility.interruptable_run() so that even long-lived commands can have a signal sent to it
+        #  to shutdown early.
 
-            # TODO: Run with Utility.interruptable_run() so that even long-lived commands can have a signal sent to it
-            #  to shutdown early.
+        # Not checking return codes here because Clonezilla does not, and some of these commands are expected to
+        # fail. The Utility.run() command prints the output to stdout.
+        GLib.idle_add(self.please_wait_popup.set_secondary_label_text,  _("Running: {app}").format(app="lsblk"))
+        process, flat_command_string, fail_description = Utility.run("lsblk", lsblk_cmd_list, use_c_locale=True)
+        lsblk_json_dict = json.loads(process.stdout)
 
-            # Not checking return codes here because Clonezilla does not, and some of these commands are expected to
-            # fail. The Utility.run() command prints the output to stdout.
-            GLib.idle_add(self.please_wait_popup.set_secondary_label_text,  _("Running: {app}").format(app="lsblk"))
-            process, flat_command_string, fail_description = Utility.run("lsblk", lsblk_cmd_list, use_c_locale=True)
-            lsblk_json_dict = json.loads(process.stdout)
+        if self.is_stop_requested():
+            GLib.idle_add(self.error_message_callback, False, _("Operation cancelled by user."))
+            return
 
-            if self.is_stop_requested():
-                GLib.idle_add(self.error_message_callback, False, _("Operation cancelled by user."))
-                return
+        GLib.idle_add(self.please_wait_popup.set_secondary_label_text,  _("Running: {app}").format(app="blkid"))
+        process, flat_command_string, fail_description = Utility.run("blkid", blkid_cmd_list, use_c_locale=True)
+        blkid_dict = Blkid.parse_blkid_output(process.stdout)
 
-            GLib.idle_add(self.please_wait_popup.set_secondary_label_text,  _("Running: {app}").format(app="blkid"))
-            process, flat_command_string, fail_description = Utility.run("blkid", blkid_cmd_list, use_c_locale=True)
-            blkid_dict = Blkid.parse_blkid_output(process.stdout)
+        if self.is_stop_requested():
+            GLib.idle_add(self.error_message_callback, False, _("Operation cancelled by user."))
+            return
 
-            if self.is_stop_requested():
-                GLib.idle_add(self.error_message_callback, False, _("Operation cancelled by user."))
-                return
+        GLib.idle_add(self.please_wait_popup.set_secondary_label_text, _("Running: {app}").format(app="os-prober"))
+        # Use os-prober to get OS information (running WITH original locale information
+        process, flat_command_string, fail_description = Utility.run("osprober", os_prober_cmd_list, use_c_locale=True)
+        os_prober_dict = OsProber.parse_os_prober_output(process.stdout)
 
-            GLib.idle_add(self.please_wait_popup.set_secondary_label_text, _("Running: {app}").format(app="os-prober"))
-            # Use os-prober to get OS information (running WITH original locale information
-            process, flat_command_string, fail_description = Utility.run("osprober", os_prober_cmd_list, use_c_locale=True)
-            os_prober_dict = OsProber.parse_os_prober_output(process.stdout)
-
-            if self.is_stop_requested():
-                GLib.idle_add(self.error_message_callback, False, _("Operation cancelled by user."))
-                return
+        if self.is_stop_requested():
+            GLib.idle_add(self.error_message_callback, False, _("Operation cancelled by user."))
+            return
 
 
-            for lsblk_dict in lsblk_json_dict['blockdevices']:
-                partition_longdevname = lsblk_dict['name']
-                print("Going to run parted and sfdisk on " + partition_longdevname)
-                try:
-                    GLib.idle_add(self.please_wait_popup.set_secondary_label_text, _("Running {app} on {device}").format(app="parted", device=partition_longdevname))
-                    process, flat_command_string, fail_description = Utility.run("parted", self._get_parted_cmd_list(partition_longdevname), use_c_locale=True)
-                    if "unrecognized disk label" not in process.stderr:
-                        parted_dict_dict[partition_longdevname] = Parted.parse_parted_output(process.stdout)
-                    else:
-                        print("Parted says " + process.stderr)
+        for lsblk_dict in lsblk_json_dict['blockdevices']:
+            partition_longdevname = lsblk_dict['name']
+            print("Going to run parted and sfdisk on " + partition_longdevname)
+            try:
+                GLib.idle_add(self.please_wait_popup.set_secondary_label_text, _("Running {app} on {device}").format(app="parted", device=partition_longdevname))
+                process, flat_command_string, fail_description = Utility.run("parted", self._get_parted_cmd_list(partition_longdevname), use_c_locale=True)
+                if "unrecognized disk label" not in process.stderr:
+                    parted_dict_dict[partition_longdevname] = Parted.parse_parted_output(process.stdout)
+                else:
+                    print("Parted says " + process.stderr)
 
-                    if self.is_stop_requested():
-                        GLib.idle_add(self.error_message_callback, False, _("Operation cancelled by user."))
-                        return
-                    GLib.idle_add(self.please_wait_popup.set_secondary_label_text, _("Running {app} on {device}").format(app="sfdisk", device=partition_longdevname))
-                    process, flat_command_string, fail_description = Utility.run("sfdisk", self._get_sfdisk_cmd_list(partition_longdevname), use_c_locale=True)
-                    sfdisk_dict_dict[partition_longdevname] = Sfdisk.parse_sfdisk_dump_output(process.stdout)
-                    if self.is_stop_requested():
-                        GLib.idle_add(self.error_message_callback, False, _("Operation cancelled by user."))
-                        return
+                if self.is_stop_requested():
+                    GLib.idle_add(self.error_message_callback, False, _("Operation cancelled by user."))
+                    return
+                GLib.idle_add(self.please_wait_popup.set_secondary_label_text, _("Running {app} on {device}").format(app="sfdisk", device=partition_longdevname))
+                process, flat_command_string, fail_description = Utility.run("sfdisk", self._get_sfdisk_cmd_list(partition_longdevname), use_c_locale=True)
+                sfdisk_dict_dict[partition_longdevname] = Sfdisk.parse_sfdisk_dump_output(process.stdout)
+                if self.is_stop_requested():
+                    GLib.idle_add(self.error_message_callback, False, _("Operation cancelled by user."))
+                    return
 
-                except Exception:
-                    print("Could run run parted on " + partition_longdevname)
-        elif mode == "parallel-drive-query":
-            print("Running drive query in parallel mode")
-            # Launch drive query in parallel. Parallel Python subprocess.Popen() approach adapted from [1]
-            # [1] https://stackoverflow.com/a/636601
-            cmd_dict = {
-                ('lsblk', ""): subprocess.Popen(lsblk_cmd_list, env=env_C_locale, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                                                encoding="utf-8", universal_newlines=True),
-                ('blkid', ""): subprocess.Popen(blkid_cmd_list, env=env_C_locale, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                                                encoding="utf-8", universal_newlines=True),
-                ('os_prober', ""): subprocess.Popen(os_prober_cmd_list, env=env_C_locale, stdout=subprocess.PIPE,
-                                                    stderr=subprocess.PIPE, encoding="utf-8", universal_newlines=True),
-            }
-            while cmd_dict:
-                print("drive_query_process is length " + str(len(cmd_dict)) + " with contents " + str(cmd_dict))
-                for key in list(cmd_dict.keys()):
-                    proc = cmd_dict[key]
-                    retcode = proc.poll()
-                    if retcode is not None:  # Process finished.
-                        cmd_dict.pop(key, None)
-                        if key[0] == "lsblk" and retcode == 0:
-                            # lsblk is complete, partition information can be used to launch the parted/sfdisk
-                            lsblk_json_dict = json.loads(proc.stdout.read())
-                            for lsblk_dict in lsblk_json_dict['blockdevices']:
-                                partition_longdevname = lsblk_dict['name']
-                                print("Launching parted and sfdisk on " + partition_longdevname)
-                                try:
-                                    cmd_dict[("parted", partition_longdevname)] = subprocess.Popen(self._get_parted_cmd_list(partition_longdevname), env=env_C_locale, encoding="utf-8", universal_newlines=True)
-                                    cmd_dict[("sfdisk", partition_longdevname)] = subprocess.Popen(self._get_sfdisk_cmd_list(partition_longdevname), env=env_C_locale, encoding="utf-8", universal_newlines=True)
-                                except Exception:
-                                    print("Could launch sfdisk or parted on " + partition_longdevname)
-                        elif key[0] == "blkid" and retcode == 0:
-                            blkid_dict = Blkid.parse_blkid_output(proc.stdout.read())
-                        elif key[0] == "osprober" and retcode == 0:
-                            os_prober_dict = OsProber.parse_os_prober_output(proc.stdout.read())
-                        elif key[0] == "sfdisk" and retcode == 0 and proc.stdout is not None:
-                            sfdisk_dict_dict[key[1]] = Sfdisk.parse_sfdisk_dump_output(proc.stdout.read())
-                        elif key[0] == "parted" and retcode == 0 and proc.stdout is not None:
-                            if proc.stderr is not None:
-                                stderr = proc.stderr.read()
-                                print("parted with key " + str(key) + " had stderr " + stderr)
-                                if "unrecognized disk label" not in stderr:
-                                    parted_dict_dict[key[1]] = Parted.parse_parted_output(proc.stdout.read())
-                        else:
-                            print("COULD NOT PROCESS process launched with key " + str(key) + " return code" + str(retcode))
-                            if proc.stdout is not None:
-                                print("stdout:" + proc.stdout.read())
-                            if proc.stderr is not None:
-                                print(" stderr:" + proc.stderr.read())
-                    else:  # No process is done, wait a bit and check again.
-                        time.sleep(0.1)
-                        continue
-        else:
-            raise Exception("Invalid drive query mode")
+            except Exception:
+                print("Could run run parted on " + partition_longdevname)
+
         self.drive_state = CombinedDriveState.construct_combined_drive_state_dict(lsblk_json_dict, blkid_dict, os_prober_dict, parted_dict_dict, sfdisk_dict_dict)
         pp = pprint.PrettyPrinter(indent=4)
         pp.pprint(self.drive_state)
