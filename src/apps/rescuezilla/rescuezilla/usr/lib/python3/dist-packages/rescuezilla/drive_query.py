@@ -26,6 +26,7 @@ import threading
 import time
 import traceback
 from datetime import datetime
+from typing import Optional, Callable
 
 import gi
 
@@ -181,48 +182,95 @@ class DriveQuery:
                 ErrorMessageModalPopup.display_nonfatal_warning_message(self.builder, tb)
         return
 
-    def _get_parted_cmd_list(self, partition_longdevname):
-        # TODO: Consider switching to using parted's --machine flag to get easily parseable output for internal
-        # TODO: Rescuezilla usage. Note: The Clonezilla image format does *not* use the --machine flag.
-        return ["parted", "-s", partition_longdevname, "unit", "B", "print"]
-
-    def _get_sfdisk_cmd_list(self, partition_longdevname):
-        return ["sfdisk", "--dump", partition_longdevname]
-
     def _do_drive_query_wrapper(self):
         try:
-            self._do_drive_query()
+            ui_manager = GtkDriveQuery(please_wait_popup=self.please_wait_popup,
+                                       error_message_callback=self.error_message_callback,
+                                       is_stop_requested_callable=self.is_stop_requested)
+            drive_query = DriveQueryInternal(ui_manager=ui_manager)
+            self.drive_state = drive_query._do_drive_query()
+            GLib.idle_add(self.populate_drive_selection_table)
         except Exception as exception:
             tb = traceback.format_exc()
             traceback.print_exc()
             GLib.idle_add(self.error_message_callback, False, _("Error querying drives: ") + tb)
             return
 
+
+# Quick abstraction of GTK calls. Not the nicest design, but gets the job done.
+class GtkDriveQuery:
+    def __init__(self,
+                 please_wait_popup: PleaseWaitModalPopup,
+                 error_message_callback,
+                 is_stop_requested_callable: Callable[[], bool]):
+        self.please_wait_popup = please_wait_popup
+        self.error_message_callback = error_message_callback
+        self.is_stop_requested_callable = is_stop_requested_callable
+
+    def is_stop_requested(self) -> bool:
+        return self.is_stop_requested_callable()
+
+    def popup_set_text(self, text: str):
+        GLib.idle_add(self.please_wait_popup.set_secondary_label_text, text)
+
+    def popup_destroy(self):
+        GLib.idle_add(self.please_wait_popup.destroy)
+
+    def error_message_handler(self, first_line: str, second_line: Optional[str]):
+        if second_line:
+            GLib.idle_add(self.error_message_callback, False, first_line + "\n\n" + second_line)
+        else:
+            GLib.idle_add(self.error_message_callback, False, first_line)
+
+
+class CliDriveQuery(GtkDriveQuery):
+    def __init__(self):
+        # Return without calling super
+        return
+
+    def is_stop_requested(self) -> bool:
+        # Always return false, as not expected to run in thread
+        return False
+    def popup_set_text(self, text: str):
+        print(text)
+
+    def popup_destroy(self):
+        return
+
+    def error_message_handler(self, first_line: str, second_line: Optional[str]):
+        print(first_line)
+        if second_line:
+            print(second_line)
+
+class DriveQueryInternal:
+    def __init__(self, ui_manager: GtkDriveQuery):
+        self.ui_manager = ui_manager
+
     def _do_drive_query(self):
         env_C_locale = Utility.get_env_C_locale()
 
         drive_query_start_time = datetime.now()
 
-        GLib.idle_add(self.please_wait_popup.set_secondary_label_text, _("Unmounting: {path}").format(path=IMAGE_EXPLORER_DIR))
+        self.ui_manager.popup_set_text(_("Unmounting: {path}").format(path=IMAGE_EXPLORER_DIR))
         returncode, failed_message = ImageExplorerManager._do_unmount(IMAGE_EXPLORER_DIR)
         if not returncode:
-            GLib.idle_add(self.error_message_callback, False, _("Unable to shutdown Image Explorer") + "\n\n" + failed_message)
-            GLib.idle_add(self.please_wait_popup.destroy)
+            self.ui_manager.error_message_handler(first_line=_("Unable to shutdown Image Explorer"), second_line=failed_message)
+            self.ui_manager.popup_destroy()
             return
 
-        if self.is_stop_requested():
-            GLib.idle_add(self.error_message_callback, False, _("Operation cancelled by user."))
+        if self.ui_manager.is_stop_requested():
+            self.ui_manager.error_message_handler(_("Operation cancelled by user."))
             return
 
-        GLib.idle_add(self.please_wait_popup.set_secondary_label_text,  _("Unmounting: {path}").format(path=RESCUEZILLA_MOUNT_TMP_DIR))
+        self.ui_manager.popup_set_text(text=_("Unmounting: {path}").format(path=RESCUEZILLA_MOUNT_TMP_DIR))
         returncode, failed_message = ImageExplorerManager._do_unmount(RESCUEZILLA_MOUNT_TMP_DIR)
         if not returncode:
-            GLib.idle_add(self.error_message_callback, False, _("Unable to unmount {path}").format(path=RESCUEZILLA_MOUNT_TMP_DIR) + "\n\n" + failed_message)
-            GLib.idle_add(self.please_wait_popup.destroy)
+            self.ui_manager.error_message_handler(first_line=_("Unable to unmount {path}").format(path=RESCUEZILLA_MOUNT_TMP_DIR), second_line=failed_message)
+            self.ui_manager.popup_destroy()
             return
 
-        if self.is_stop_requested():
-            GLib.idle_add(self.error_message_callback, False, _("Operation cancelled by user."))
+        if self.ui_manager.is_stop_requested():
+            self.ui_manager.error_message_handler(first_line=_("Operation cancelled by user."))
             return
 
         lsblk_cmd_list = ["lsblk", "-o", "KNAME,NAME,SIZE,TYPE,FSTYPE,MOUNTPOINT,MODEL,SERIAL", "--paths", "--bytes", "--json"]
@@ -243,29 +291,29 @@ class DriveQuery:
 
         # Not checking return codes here because Clonezilla does not, and some of these commands are expected to
         # fail. The Utility.run() command prints the output to stdout.
-        GLib.idle_add(self.please_wait_popup.set_secondary_label_text,  _("Running: {app}").format(app="lsblk"))
+        self.ui_manager.popup_set_text(text=_("Running: {app}").format(app="lsblk"))
         process, flat_command_string, fail_description = Utility.run("lsblk", lsblk_cmd_list, use_c_locale=True)
         lsblk_json_dict = json.loads(process.stdout)
 
-        if self.is_stop_requested():
-            GLib.idle_add(self.error_message_callback, False, _("Operation cancelled by user."))
+        if self.ui_manager.is_stop_requested():
+            self.ui_manager.error_message_handler(first_line=_("Operation cancelled by user."))
             return
 
-        GLib.idle_add(self.please_wait_popup.set_secondary_label_text,  _("Running: {app}").format(app="blkid"))
+        self.ui_manager.popup_set_text(text=_("Running: {app}").format(app="blkid"))
         process, flat_command_string, fail_description = Utility.run("blkid", blkid_cmd_list, use_c_locale=True)
         blkid_dict = Blkid.parse_blkid_output(process.stdout)
 
-        if self.is_stop_requested():
-            GLib.idle_add(self.error_message_callback, False, _("Operation cancelled by user."))
+        if self.ui_manager.is_stop_requested():
+            self.ui_manager.error_message_handler(first_line=_("Operation cancelled by user."))
             return
 
-        GLib.idle_add(self.please_wait_popup.set_secondary_label_text, _("Running: {app}").format(app="os-prober"))
+        self.ui_manager.popup_set_text(text=_("Running: {app}").format(app="os-prober"))
         # Use os-prober to get OS information (running WITH original locale information
         process, flat_command_string, fail_description = Utility.run("osprober", os_prober_cmd_list, use_c_locale=True)
         os_prober_dict = OsProber.parse_os_prober_output(process.stdout)
 
-        if self.is_stop_requested():
-            GLib.idle_add(self.error_message_callback, False, _("Operation cancelled by user."))
+        if self.ui_manager.is_stop_requested():
+            self.ui_manager.error_message_handler(first_line=_("Operation cancelled by user."))
             return
 
 
@@ -273,31 +321,38 @@ class DriveQuery:
             partition_longdevname = lsblk_dict['name']
             print("Going to run parted and sfdisk on " + partition_longdevname)
             try:
-                GLib.idle_add(self.please_wait_popup.set_secondary_label_text, _("Running {app} on {device}").format(app="parted", device=partition_longdevname))
+                self.ui_manager.popup_set_text(text=_("Running {app} on {device}").format(app="parted", device=partition_longdevname))
                 process, flat_command_string, fail_description = Utility.run("parted", self._get_parted_cmd_list(partition_longdevname), use_c_locale=True)
                 if "unrecognized disk label" not in process.stderr:
                     parted_dict_dict[partition_longdevname] = Parted.parse_parted_output(process.stdout)
                 else:
                     print("Parted says " + process.stderr)
 
-                if self.is_stop_requested():
-                    GLib.idle_add(self.error_message_callback, False, _("Operation cancelled by user."))
+                if self.ui_manager.is_stop_requested():
+                    self.ui_manager.error_message_handler(first_line=_("Operation cancelled by user."))
                     return
-                GLib.idle_add(self.please_wait_popup.set_secondary_label_text, _("Running {app} on {device}").format(app="sfdisk", device=partition_longdevname))
+                self.ui_manager.popup_set_text(text=_("Running {app} on {device}").format(app="sfdisk", device=partition_longdevname))
                 process, flat_command_string, fail_description = Utility.run("sfdisk", self._get_sfdisk_cmd_list(partition_longdevname), use_c_locale=True)
                 sfdisk_dict_dict[partition_longdevname] = Sfdisk.parse_sfdisk_dump_output(process.stdout)
-                if self.is_stop_requested():
-                    GLib.idle_add(self.error_message_callback, False, _("Operation cancelled by user."))
+                if self.ui_manager.is_stop_requested():
+                    self.ui_manager.error_message_handler(first_line=_("Operation cancelled by user."))
                     return
 
             except Exception:
                 print("Could run run parted on " + partition_longdevname)
 
-        self.drive_state = CombinedDriveState.construct_combined_drive_state_dict(lsblk_json_dict, blkid_dict, os_prober_dict, parted_dict_dict, sfdisk_dict_dict)
+        drive_state = CombinedDriveState.construct_combined_drive_state_dict(lsblk_json_dict, blkid_dict, os_prober_dict, parted_dict_dict, sfdisk_dict_dict)
         pp = pprint.PrettyPrinter(indent=4)
-        pp.pprint(self.drive_state)
+        pp.pprint(drive_state)
 
         drive_query_end_time = datetime.now()
         print("Drive query took: " + str((drive_query_end_time - drive_query_start_time)))
-        GLib.idle_add(self.populate_drive_selection_table)
+        return drive_state
 
+    def _get_parted_cmd_list(self, partition_longdevname):
+        # TODO: Consider switching to using parted's --machine flag to get easily parseable output for internal
+        # TODO: Rescuezilla usage. Note: The Clonezilla image format does *not* use the --machine flag.
+        return ["parted", "-s", partition_longdevname, "unit", "B", "print"]
+
+    def _get_sfdisk_cmd_list(self, partition_longdevname):
+        return ["sfdisk", "--dump", partition_longdevname]
