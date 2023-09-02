@@ -28,7 +28,7 @@ else
     diff $APT_SOURCES_CHECKSUM /var/lib/apt/lists.cache/apt.sources.checksum.txt
     if [ $? -ne 0 ]; then
         apt-get update
-    else 
+    else
         rm -rf /var/lib/apt/lists
         mv /var/lib/apt/lists.cache /var/lib/apt/lists
     fi
@@ -356,7 +356,7 @@ sed --in-place 's/#DefaultTimeoutStopSec=90s/DefaultTimeoutStopSec=10s/g' /etc/s
 
 # Prevent "initramfs unpacking failed: Decoding failed" message on Ubuntu 19.10
 # and Ubuntu 20.04 systems [1] [2]. Using gzip means supposedly slower boot
-# than lz4 compression, but it's a worthwhile trade-off to prevent any 
+# than lz4 compression, but it's a worthwhile trade-off to prevent any
 # non-technical end-users from seeing an error message.
 # [1] https://bugs.launchpad.net/ubuntu/+source/ubuntu-meta/+bug/1870260
 # [2] https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1835660
@@ -368,6 +368,17 @@ sed --in-place s/COMPRESS=lz4/COMPRESS=gzip/g /etc/initramfs-tools/initramfs.con
 #
 # [1] https://askubuntu.com/a/893614/394984
 touch /etc/NetworkManager/conf.d/10-globally-managed-devices.conf
+
+# Ubuntu, by default, puts a laptop to sleep whenever the lid is closed
+# That is very counter productive if one wants to backup his/her laptop before going to bed
+# and don't want the screen to lighten the room.
+# the settings below solve that:
+
+echo ""                                       >> /etc/systemd/logind.conf
+echo "HandleLidSwitch=ignore"                 >> /etc/systemd/logind.conf
+echo "HandleLidSwitchExternalPower=ignore"    >> /etc/systemd/logind.conf
+echo "HandleLidSwitchDocked=ignore"           >> /etc/systemd/logind.conf
+echo ""                                       >> /etc/systemd/logind.conf
 
 # Prevent GParted from launching if there is an instance of Rescuezilla running.
 #
