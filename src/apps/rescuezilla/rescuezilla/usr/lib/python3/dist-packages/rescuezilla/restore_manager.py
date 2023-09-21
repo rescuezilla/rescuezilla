@@ -1085,23 +1085,23 @@ class RestoreManager:
             for image_key in self.restore_mapping_dict.keys():
                 dest_partition_short_dev_node_string += re.sub('/dev/', '', self.restore_mapping_dict[image_key]['dest_key']) + " "
 
-            if shutil.which("ocs-tux-postprocess") is not None:
-                GLib.idle_add(self.display_status, _("Removing udev MAC address records (if any)"), "")
-                # TODO: Port Clonezilla's ocs-tux-postprocess bash script to Python instead of relying on Clonezilla's script
-                process, flat_command_string, failed_message = Utility.run(
-                   "Remove the udev MAC address records on the restored GNU/Linux (if any)",
-                    ["ocs-tux-postprocess", dest_partition_short_dev_node_string], use_c_locale=False, logger=self.logger)
-                if process.returncode == 0:
-                    message = "Successfully removed any udev MAC address records"
-                    self.logger.write(message + "\n")
-                    # Not displaying this to users because it wil lbe confusing for end-users.
-            else:
-                message = "Not removing udev MAC address records: Unable to find ocs-tux-postprocess. Is Clonezilla installed?"
-                self.logger.write(message + "\n")
-                with self.summary_message_lock:
-                    self.summary_message += message + "\n"
-
             if self.is_reinstall_bootloader:
+                if shutil.which("ocs-tux-postprocess") is not None:
+                    GLib.idle_add(self.display_status, _("Removing udev MAC address records (if any)"), "")
+                    # TODO: Port Clonezilla's ocs-tux-postprocess bash script to Python instead of relying on Clonezilla's script
+                    process, flat_command_string, failed_message = Utility.run(
+                       "Remove the udev MAC address records on the restored GNU/Linux (if any)",
+                        ["ocs-tux-postprocess", dest_partition_short_dev_node_string], use_c_locale=False, logger=self.logger)
+                    if process.returncode == 0:
+                        message = "Successfully removed any udev MAC address records"
+                        self.logger.write(message + "\n")
+                        # Not displaying this to users because it wil lbe confusing for end-users.
+                else:
+                    message = "Not removing udev MAC address records: Unable to find ocs-tux-postprocess. Is Clonezilla installed?"
+                    self.logger.write(message + "\n")
+                    with self.summary_message_lock:
+                        self.summary_message += message + "\n"
+
                 if shutil.which("ocs-update-syslinux") is not None:
                     GLib.idle_add(self.display_status, _("Re-installing syslinux (if any)"), "")
                     # TODO: Port Clonezilla's ocs-update-syslinux bash script to Python instead of relying on Clonezilla's script
