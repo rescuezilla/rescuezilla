@@ -487,6 +487,8 @@ class Handler:
                 elif self.current_page == Page.RESTORE_DESTINATION_PARTITION_SELECTION:
                     self.is_overwriting_partition_table = self.builder.get_object(
                         "restore_overwrite_partition_table_checkbutton").get_active()
+                    self.is_reinstall_bootloader = self.builder.get_object(
+                        "restore_reinstall_bootloader_checkbutton").get_active()
                     partition_selection_list = self.builder.get_object("partition_selection_list")
                     self.partitions_to_restore = collections.OrderedDict()
                     has_atleast_one = False
@@ -645,6 +647,8 @@ class Handler:
                     self.is_overwriting_partition_table = self.builder.get_object(
                         "clone_overwrite_partition_table_checkbutton").get_active()
                     partition_selection_list = self.builder.get_object("partition_selection_list")
+                    self.is_reinstall_bootloader = self.builder.get_object(
+                        "clone_reinstall_bootloader_checkbutton").get_active()
                     self.partitions_to_clone = collections.OrderedDict()
                     has_atleast_one = False
                     for row in partition_selection_list:
@@ -918,6 +922,7 @@ class Handler:
                 self.restore_manager.update_progress_bar(0)
                 self.restore_manager.start_restore(self.selected_image, self.restore_destination_drive,
                                                    self.partitions_to_restore, self.is_overwriting_partition_table,
+                                                   self.is_reinstall_bootloader,
                                                    is_rescue,
                                                    self._on_operation_completed_callback)
             else:
@@ -927,6 +932,7 @@ class Handler:
                                                clone_mapping_dict=self.partitions_to_restore,
                                                drive_state=self.drive_query.drive_state,
                                                is_overwriting_partition_table=self.is_overwriting_partition_table,
+                                               is_reinstall_bootloader=self.is_reinstall_bootloader,
                                                is_rescue=is_rescue,
                                                completed_callback=self._on_operation_completed_callback)
             # Display the Patreon call-to-action.
@@ -1265,6 +1271,9 @@ class Handler:
 
     def overwrite_partition_table_toggle(self, toggle_button):
         self.backup_image.overwrite_partition_table_toggle(toggle_button.get_active())
+
+    def reinstall_bootloader_toggle(self, toggle_button):
+        self.backup_image.reinstall_bootloader_toggle(toggle_button.get_active())
 
     def show_hidden_devices_toggle(self, toggle_button):
         new_state = toggle_button.get_active()

@@ -55,12 +55,13 @@ class CloneManager:
             return self.clone_in_progress
 
     def start_clone(self, image, clone_destination_drive, clone_mapping_dict, drive_state,
-                    is_overwriting_partition_table, is_rescue, completed_callback):
+                    is_overwriting_partition_table, is_reinstall_bootloader, is_rescue, completed_callback):
         self.clone_timestart = datetime.now()
         self.image = image
         self.clone_destination_drive = clone_destination_drive
         self.clone_mapping_dict = clone_mapping_dict
         self.is_overwriting_partition_table = is_overwriting_partition_table
+        self.is_reinstall_bootloader = is_reinstall_bootloader
         self.is_rescue = is_rescue
         self.completed_callback = completed_callback
         GLib.idle_add(self.restore_manager.update_progress_bar, 0)
@@ -169,6 +170,7 @@ class CloneManager:
                                            restore_destination_drive=self.clone_destination_drive,
                                            restore_mapping_dict=self.clone_mapping_dict,
                                            is_overwriting_partition_table=self.is_overwriting_partition_table,
+                                           is_reinstall_bootloader=self.is_reinstall_bootloader,
                                            is_rescue=self.is_rescue,
                                            completed_callback = CloneManager._ignore_suboperation_callback,
                                            on_separate_thread = False)
