@@ -133,7 +133,7 @@ pkgs_specific_to_ubuntu2204_jammy=(
                        "plymouth-theme-ubuntu-logo"
 )
 
-pkgs_specific_to_ubuntu2210_kinetic=(
+pkgs_specific_to_ubuntu2310_mantic=(
                        "linux-generic"
                        "xserver-xorg"
                        "xserver-xorg-video-all"
@@ -316,8 +316,8 @@ elif  [ "$CODENAME" == "lunar" ]; then
   apt_pkg_list=("${pkgs_specific_to_ubuntu2304_lunar[@]}" "${common_pkgs[@]}")
 elif  [ "$CODENAME" == "jammy" ]; then
   apt_pkg_list=("${pkgs_specific_to_ubuntu2204_jammy[@]}" "${common_pkgs[@]}")
-elif  [ "$CODENAME" == "kinetic" ]; then
-  apt_pkg_list=("${pkgs_specific_to_ubuntu2210_kinetic[@]}" "${common_pkgs[@]}")
+elif  [ "$CODENAME" == "mantic" ]; then
+  apt_pkg_list=("${pkgs_specific_to_ubuntu2310_mantic[@]}" "${common_pkgs[@]}")
 else
   echo "Warning: Unknown release codename $CODENAME"
   exit 1

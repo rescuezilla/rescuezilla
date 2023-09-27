@@ -1,5 +1,5 @@
-.DEFAULT_GOAL := kinetic
-.PHONY: all focal lunar jammy kinetic bionic-i386 deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-latest partclone-utils partclone-nbd install test integration-test clean-build-dir clean clean-all
+.DEFAULT_GOAL := mantic
+.PHONY: all focal lunar jammy mantic bionic-i386 deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-latest partclone-utils partclone-nbd install test integration-test clean-build-dir clean clean-all
 
 # FIXME: Properly specify the build artifacts to allow the GNU make to actually be smart about what gets built and when.
 # FIXME: This lack of specifying dependency graph means requires eg, `make focal` and `make lunar` has to be done as separate invocations
@@ -36,12 +36,12 @@ export ARCH CODENAME
 jammy: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-utils partclone-nbd $(buildscripts)
 	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) ./src/build.sh	
 
-kinetic: ARCH=amd64
-kinetic: CODENAME=kinetic
+mantic: ARCH=amd64
+mantic: CODENAME=mantic
 export ARCH CODENAME
 # Not building partclone v0.3.20 yet as Kinetic uses 0.3.20+repack-1 already [1]
-# [1] https://packages.ubuntu.com/kinetic/partclone
-kinetic: deb sfdisk.v2.20.1.amd64 partclone-utils partclone-nbd $(buildscripts)
+# [1] https://packages.ubuntu.com/mantic/partclone
+mantic: deb sfdisk.v2.20.1.amd64 partclone-utils partclone-nbd $(buildscripts)
 	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) ./src/build.sh	
 
 # ISO image based on Ubuntu 18.04 Bionic LTS (Long Term Support) 32bit (the last 32bit/i386 Ubuntu LTS release)
@@ -241,8 +241,8 @@ docker-bash:
 docker-deb:
 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make deb
 
-docker-kinetic:
-	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make kinetic
+docker-mantic:
+	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make mantic
 
 docker-jammy:
 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make jammy

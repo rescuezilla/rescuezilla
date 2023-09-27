@@ -39,9 +39,9 @@ jobs:
         run: make docker-test
 
       - run: make docker-status
-      - name: Make Ubuntu 22.10 (Kinetic) ISO
-        run: make docker-kinetic
-      - run: sudo mv build/rescuezilla.amd64.kinetic.iso build/rescuezilla-${{github.ref_name}}-64bit.kinetic.iso
+      - name: Make Ubuntu 23.10 (Mantic) ISO
+        run: make docker-mantic
+      - run: sudo mv build/rescuezilla.amd64.mantic.iso build/rescuezilla-${{github.ref_name}}-64bit.mantic.iso
 
       - run: make docker-status
       - name: Make Ubuntu 23.04 LTS (Lunar) ISO
@@ -100,8 +100,8 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          name: rescuezilla-${{github.ref_name}}-64bit.kinetic.iso
-          path: build/rescuezilla-${{github.ref_name}}-64bit.kinetic.iso
+          name: rescuezilla-${{github.ref_name}}-64bit.mantic.iso
+          path: build/rescuezilla-${{github.ref_name}}-64bit.mantic.iso
 
       - uses: actions/upload-artifact@v3
         with:
