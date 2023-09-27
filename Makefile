@@ -15,14 +15,14 @@ THREADS = `cat /proc/cpuinfo | grep process | tail -1 | cut -d":" -f2 | cut -d" 
 
 all: focal
 
-buildscripts = build.sh chroot.steps.part.1.sh chroot.steps.part.2.sh
+buildscripts = src/build.sh src/chroot.steps.part.1.sh src/chroot.steps.part.2.sh
 
 # ISO image based on Ubuntu 20.04 Focal LTS (Long Term Support) 64bit
 focal: ARCH=amd64
 focal: CODENAME=focal
 export ARCH CODENAME
 focal: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-utils partclone-nbd $(buildscripts)
-	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) ./build.sh
+	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) ./src/build.sh
 
 # ISO image based on Ubuntu 21.10 Impish 64bit as a temporary measure to provide a newer Linux kernel for better support for
 # recent hardware because Ubuntu 20.04 Focal immediately offer a Hardware Enablement / LTS Enablement Linux kernel for those
@@ -31,13 +31,13 @@ impish: ARCH=amd64
 impish: CODENAME=impish
 export ARCH CODENAME
 impish: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-utils partclone-nbd $(buildscripts)
-	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) ./build.sh
+	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) ./src/build.sh
 	
 jammy: ARCH=amd64
 jammy: CODENAME=jammy
 export ARCH CODENAME
 jammy: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-utils partclone-nbd $(buildscripts)
-	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) ./build.sh	
+	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) ./src/build.sh	
 
 kinetic: ARCH=amd64
 kinetic: CODENAME=kinetic
@@ -45,14 +45,14 @@ export ARCH CODENAME
 # Not building partclone v0.3.20 yet as Kinetic uses 0.3.20+repack-1 already [1]
 # [1] https://packages.ubuntu.com/kinetic/partclone
 kinetic: deb sfdisk.v2.20.1.amd64 partclone-utils partclone-nbd $(buildscripts)
-	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) ./build.sh	
+	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) ./src/build.sh	
 
 # ISO image based on Ubuntu 18.04 Bionic LTS (Long Term Support) 32bit (the last 32bit/i386 Ubuntu LTS release)
 bionic-i386: ARCH=i386
 bionic-i386: CODENAME=bionic
 export ARCH CODENAME
 bionic-i386: deb $(buildscripts)
-	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) ./build.sh
+	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) ./src/build.sh
 
 deb: DEB_BUILD_DIR=$(abspath $(BASE_BUILD_DIRECTORY))/deb
 deb:
@@ -223,13 +223,13 @@ docker-build:
 
 docker-run:
 	docker run --rm --detach --privileged --name=builder.container --volume=$(shell pwd):/home/rescuezilla/ builder.image sleep infinity
-	docker exec --interactive --workdir=/home/rescuezilla/ builder.container ./git_add_safe_directory.sh
+	docker exec --interactive --workdir=/home/rescuezilla/ builder.container ./src/git_add_safe_directory.sh
 
 docker-stop:
 	docker stop builder.container
 
 docker-add-safe-directory:
-	docker exec --interactive --workdir=/home/rescuezilla/ builder.container ./git_add_safe_directory.sh
+	docker exec --interactive --workdir=/home/rescuezilla/ builder.container ./src/git_add_safe_directory.sh
 
 docker-test:
 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make test

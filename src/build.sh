@@ -26,8 +26,8 @@ CODENAME="${CODENAME:-INVALID}"
 # [1] https://help.ubuntu.com/lts/installation-guide/armhf/ch02s01.html
 ARCH="${ARCH:-INVALID}"
 
-# Directory containing this build script
-BASEDIR=$(dirname $(readlink -f "$0"))
+# One-higher than directory containing this build script
+BASEDIR=$(dirname $(readlink -f "$0"))/../
 
 RESCUEZILLA_ISO_FILENAME=rescuezilla.$ARCH.$CODENAME.iso
 # The base build directory is "build/", unless overridden by an environment variable
@@ -192,7 +192,7 @@ for apt_config_file in "${APT_CONFIG_FILES[@]}"; do
   sed --in-place s/CODENAME_SUBSTITUTE/$CODENAME/g $apt_config_file
 done
 
-cp "$BASEDIR/chroot.steps.part.1.sh" "$BASEDIR/chroot.steps.part.2.sh" chroot
+cp "$BASEDIR/src/chroot.steps.part.1.sh" "$BASEDIR/src/chroot.steps.part.2.sh" chroot
 # Launch first stage chroot. In other words, run commands within the root filesystem
 # that is being constructed using binaries from within that root filesystem.
 chroot chroot/ /bin/bash -c "IS_INTEGRATION_TEST=$IS_INTEGRATION_TEST ARCH=$ARCH CODENAME=$CODENAME /chroot.steps.part.1.sh"
