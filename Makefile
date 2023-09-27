@@ -1,8 +1,8 @@
 .DEFAULT_GOAL := kinetic
-.PHONY: all focal impish jammy kinetic bionic-i386 deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-latest partclone-utils partclone-nbd install test integration-test clean-build-dir clean clean-all
+.PHONY: all focal lunar jammy kinetic bionic-i386 deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-latest partclone-utils partclone-nbd install test integration-test clean-build-dir clean clean-all
 
 # FIXME: Properly specify the build artifacts to allow the GNU make to actually be smart about what gets built and when.
-# FIXME: This lack of specifying dependency graph means requires eg, `make focal` and `make impish` has to be done as separate invocations
+# FIXME: This lack of specifying dependency graph means requires eg, `make focal` and `make lunar` has to be done as separate invocations
 #        and things get recompiled when they don't need to be etc.
 # TODO:  Read the GNU make manual: https://www.gnu.org/software/make/manual/html_node/index.html and update this Makefile accordingly.
 #
@@ -24,13 +24,10 @@ export ARCH CODENAME
 focal: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-utils partclone-nbd $(buildscripts)
 	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) ./src/build.sh
 
-# ISO image based on Ubuntu 21.10 Impish 64bit as a temporary measure to provide a newer Linux kernel for better support for
-# recent hardware because Ubuntu 20.04 Focal immediately offer a Hardware Enablement / LTS Enablement Linux kernel for those
-# releases.
-impish: ARCH=amd64
-impish: CODENAME=impish
+lunar: ARCH=amd64
+lunar: CODENAME=lunar
 export ARCH CODENAME
-impish: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-utils partclone-nbd $(buildscripts)
+lunar: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-utils partclone-nbd $(buildscripts)
 	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) ./src/build.sh
 	
 jammy: ARCH=amd64
