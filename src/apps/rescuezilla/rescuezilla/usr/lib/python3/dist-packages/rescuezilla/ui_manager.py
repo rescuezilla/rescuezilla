@@ -86,6 +86,10 @@ class UiManager:
         callable_fn(succeeded=succeeded, message=message)
         return succeeded, message
 
+    # TODO: Better abstract from handler.py
+    def _on_operation_completed_callback(self, is_success):
+        pass
+
     def escape_text(self, input: str) -> str:
         # No need to escape GTK text for CLI
         return input

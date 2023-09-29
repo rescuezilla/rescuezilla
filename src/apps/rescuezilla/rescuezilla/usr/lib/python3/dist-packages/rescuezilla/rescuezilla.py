@@ -29,6 +29,9 @@ import gi
 
 from backup_manager import BackupManager
 from cli.args import parse_arguments
+from parser.clonezilla_image import ClonezillaImage
+from parser.metadata_only_image import MetadataOnlyImage
+from partitions_to_restore import PartitionsToRestore
 from ui_manager import UiManager
 from clone_manager import CloneManager
 from drive_query import CliDriveQuery, DriveQueryInternal
@@ -90,7 +93,6 @@ def cli_mode(args: argparse.Namespace,
              human_readable_version: str):
         print(str(args))
 
-
         cli_ui_manager = UiManager()
         if args.command == "backup":
             backup_manager = BackupManager(ui_manager=cli_ui_manager,
@@ -105,37 +107,53 @@ def cli_mode(args: argparse.Namespace,
                                         backup_notes=args.description,
                                         compression_dict={"format": args.compression_format, "level": args.compression_level},
                                         is_rescue=args.rescue,
-                                        completed_backup_callback=cli_ui_manager.completed_operation,
+                                        completed_backup_callback=cli_ui_manager._on_operation_completed_callback,
                                         metadata_only_image_to_annotate=None,
                                         on_separate_thread=False)
         elif args.command == "restore":
+            image = get_clonezilla_img(source_path=args.source)
             restore_manager = RestoreManager(ui_manager=cli_ui_manager)
-            """restore_manager.start_restore(image,
-                                          restore_destination_drive,
-                                          restore_mapping_dict,
-                                          is_overwriting_partition_table,
-                                          is_rescue,
-                                          completed_callback,
-                                          on_separate_thread=False)"""
+            # Get the partitions in the image, and the partitions on the destination disk, with the assumption the
+            # partition table is being overwritten
+            restore_mapping_dict = PartitionsToRestore.get_partition_to_restore(selected_image=image,
+                                                                                dest_drive_node=args.destination,
+                                                                                partitions_to_restore=args.partitions)
+            restore_manager.start_restore(image=image,
+                                          restore_destination_drive=args.destination,
+                                          restore_mapping_dict=restore_mapping_dict,
+                                          is_overwriting_partition_table=args.overwrite_partition_table,
+                                          is_rescue=args.rescue,
+                                          completed_callback=cli_ui_manager._on_operation_completed_callback,
+                                          on_separate_thread=False)
         elif args.command == "clone":
             backup_manager = BackupManager(ui_manager=cli_ui_manager,
                                            human_readable_version=human_readable_version)
+            cli_drive_query = CliDriveQuery()
+            drive_query = DriveQueryInternal(ui_manager=cli_drive_query)
+            drive_state = drive_query._do_drive_query()
             restore_manager = RestoreManager(ui_manager=cli_ui_manager)
             clone_manager = CloneManager(ui_manager=cli_ui_manager,
                                          backup_manager=backup_manager,
                                          restore_manager=restore_manager)
-            """clone_manager.start_clone(image,
-                                      clone_destination_drive,
-                                      clone_mapping_dict,
-                                      drive_state,
-                                      is_overwriting_partition_table,
-                                      is_rescue,
-                                      on_separate_thread=False)"""
+            metadata_img = get_metadata_only_img(source_drive_key=args.source)
+            # Get the partitions in the image, and the partitions on the destination disk, with the assumption the
+            # partition table is being overwritten
+            clone_mapping_dict = PartitionsToRestore.get_partition_to_restore(selected_image=metadata_img,
+                                                                              dest_drive_node=args.destination,
+                                                                              partitions_to_restore=args.partitions)
+            clone_manager.start_clone(image=metadata_img,
+                                      clone_destination_drive=args.destination,
+                                      clone_mapping_dict=clone_mapping_dict,
+                                      drive_state=drive_state,
+                                      is_overwriting_partition_table=args.overwrite_partition_table,
+                                      is_rescue=args.rescue,
+                                      completed_callback=cli_ui_manager._on_operation_completed_callback,
+                                      on_separate_thread=False)
         elif args.command == "verify":
             verify_manager = VerifyManager(ui_manager=cli_ui_manager)
-            # TODO: ImageFolderQuery
-            verify_manager.start_verify(image_list=args.source,
-                                        completed_callback=cli_ui_manager.completed_operation,
+            image = get_clonezilla_img(source_path=args.source)
+            verify_manager.start_verify(image_list=[image],
+                                        completed_callback=cli_ui_manager._on_operation_completed_callback,
                                         on_separate_thread=False)
         elif args.command == "mount":
             image_explorer_manager = ImageExplorerManager()
@@ -145,6 +163,30 @@ def cli_mode(args: argparse.Namespace,
             #image_explorer_manager.umount_partition(selected_partition_key=args.partitions)
         else:
             print("unknown mode")
+
+# Get Clonezilla image for CLI purposes
+# TODO: Better abstract logic of ImageFolderQuery, so this logic can be removed, and CLI works with all supported
+# image types
+def get_clonezilla_img(source_path: str):
+    if not source_path.endswith("parts"):
+        source_path = os.path.join(source_path, "parts")
+    dirname = os.path.dirname(source_path)
+    abspath = os.path.abspath(source_path)
+    img = ClonezillaImage.get_clonezilla_image_dict(abspath, dirname)
+    # HACK: return first Clonezilla disk in image (a single clonezilla image can hold multiple disks)
+    return img[list(img.keys())[0]]
+
+# TODO: Better abstract logic from CloneManager, so this logic can be removed, and CLI works with all supported
+def get_metadata_only_img(source_drive_key: str):
+    # FIXME: Do on separate thread, with please wait popup. Like eg, mounting paths
+    print("Creating MetadataOnlyImage (currently temporarily done on UI thread). This may take a moment...")
+    source_drive_metadata_only_image = MetadataOnlyImage(source_drive_key)
+    if len(source_drive_metadata_only_image.warning_dict) > 0:
+        error_msg = ""
+        for value in source_drive_metadata_only_image.warning_dict.values():
+            error_msg += value + "\n"
+            print(("Unable to process {source}:").format(source=source_drive_key) + "\n\n" + error_msg)
+    return source_drive_metadata_only_image
 
 def launch_gui(human_readable_version: str):
     builder = Gtk.Builder()

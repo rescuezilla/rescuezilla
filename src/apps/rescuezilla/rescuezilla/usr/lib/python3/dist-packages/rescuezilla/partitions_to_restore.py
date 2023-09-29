@@ -19,6 +19,7 @@
 import copy
 import threading
 import traceback
+from typing import List
 
 import gi
 
@@ -421,3 +422,42 @@ class PartitionsToRestore:
         old_value = self.partition_selection_list.get_value(liststore_iter, 6)
         self.partition_selection_list.set_value(liststore_iter, 4, old_value)
         self.partition_selection_list.set_value(liststore_iter, 6, current_value)
+
+    # HACK: Duplication of UI-integrated logic above. combined with handler.py's "partition_to_restore" dictionary
+    # HACK: and the restore_mapping_dict in the RestoreManager. Done for rapid integration of Clonezilla support into
+    # HACK: the command-line interface.
+    # TODO: Redesign and better abstract everything to reduce the massive Don't Repeat Yourself violation and general
+    # TODO: kludginess.
+    @staticmethod
+    def get_partition_to_restore(selected_image,
+                                 dest_drive_node: str,
+                                 # User listed partitions to restore
+                                 partitions_to_restore: List[str]):
+        restore_mapping_dict = {}
+        for image_format_dict_key in selected_image.image_format_dict_dict.keys():
+            print("ClonezillaImage contains partition " + image_format_dict_key)
+            if selected_image.does_image_key_belong_to_device(image_format_dict_key):
+                if selected_image.image_format_dict_dict[image_format_dict_key]['is_lvm_logical_volume']:
+                    # The destination of an LVM logical volume within a partition (eg /dev/cl/root) is unchanged
+                    dest_partition = selected_image.image_format_dict_dict[image_format_dict_key][
+                        'logical_volume_long_device_node']
+                    flat_description = "Logical Volume " + image_format_dict_key + ": " + selected_image.flatten_partition_string(image_format_dict_key)
+                else:
+                    # The destination partition of a regular partition in the image (eg, /dev/sda4) is dependent on
+                    # the destination drive node (eg /dev/sdb) so we need to split and join the device so the
+                    # mapping correctly reads "/dev/sdb4".
+                    image_base_device_node, image_partition_number = Utility.split_device_string(image_format_dict_key)
+                    # Combine image partition number with destination device node base
+                    dest_partition = Utility.join_device_string(dest_drive_node, image_partition_number)
+                    flat_description = _("Partition {partition_number}").format(partition_number=str(
+                        image_partition_number)) + ": " + selected_image.flatten_partition_string(image_format_dict_key)
+                # If the user has said restore all partitions (default)
+                if 'all' in partitions_to_restore or image_format_dict_key in partitions_to_restore:
+                    # Fill out the partition to restore mapping dictionary based on the use image partition table logic above
+                    # TODO: Improve support for case where user selects 'use existing partition table'
+                    restore_mapping_dict[image_format_dict_key] = {
+                        "description": flat_description,
+                        "dest_key": dest_partition,
+                        "dest_description": flat_description
+                    }
+        return restore_mapping_dict
