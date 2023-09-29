@@ -164,8 +164,17 @@ class BackupManager:
 
         env = Utility.get_env_C_locale()
 
-        print("mkdir " + self.dest_dir)
-        os.mkdir(self.dest_dir)
+        failed_to_write = _("Failed to write destination file. Please confirm it is valid to create the provided file path, and try again.")
+        try:
+            print("mkdir " + self.dest_dir)
+            os.mkdir(self.dest_dir)
+        except:
+            tb = traceback.format_exc()
+            traceback.print_exc()
+            error_message = failed_to_write + "\n\n" + tb
+            self.ui_manager.completed_operation(callable_fn=self.completed_backup, succeeded=False,
+                                                message=error_message)
+            return False, error_message
 
         short_selected_device_node = re.sub('/dev/', '', self.selected_drive_key)
         enduser_date = datetime.today().strftime('%Y-%m-%d-%H%M')
@@ -175,9 +184,10 @@ class BackupManager:
                 output = "This image was saved by Rescuezilla at " + enduser_date + "\nSaved by " + self.human_readable_version + "\nThe log during saving:\n----------------------------------------------------------\n\n"
                 filehandle.write(output)
             except:
+
                 tb = traceback.format_exc()
                 traceback.print_exc()
-                error_message = _("Failed to write destination file. Please confirm it is valid to create the provided file path, and try again.") + "\n\n" + tb
+                error_message = failed_to_write + "\n\n" + tb
                 self.ui_manager.completed_operation(callable_fn=self.completed_backup, succeeded=False, message=error_message)
                 return False, error_message
 
