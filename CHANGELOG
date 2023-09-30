@@ -1,4 +1,24 @@
 -------------------------------------------------------------------------------
+  "Weekly" Rolling Release (2023-11-26)
+-------------------------------------------------------------------------------
+
+* Adds releases based on Ubuntu 23.10 (Mantic), and Ubuntu 23.04 (Lunar) for best support of new hardware
+* Adds release based on the still-in-development Ubuntu 24.04 (Noble), but setting Ubuntu 23.10 (Mantic) as default version
+* Upgrades to latest partclone release `v0.3.27` (released October 2023) from `v0.3.20` (which was released in April 2022)
+  * This should improve issues with BTRFS filesystems, as it supports BTRFS v6.3.3, rather than v5.11 (#393)
+* Added experimental command-line interface (CLI) (#258)
+  * CLI should be considered EXPERIMENTAL and UNSTABLE, and behavior may change between versions without notice
+  * CLI only supports images created by Clonezilla and Rescuezilla (the other supported formats coming in future)
+  * CLI only supports backup, verify, restore and clone operations (mount and unmount operations coming in future)
+* Integrated Rescuezilla into the automated integration test suite scripts, to hopefully enable faster project iteration
+* Continue image scan after an error, so permission denied on irrelevant folders no longer block populating the image list
+* Fixed issue causing backup of Linux md RAID devices containing MBR partition tables to fail (#448)
+* Installs 'hashdeep' package as stop-gap command-line workaround for a specific user niche until Rescuezilla's UI handles it (#441)
+* Fixed failing restore and clone operations when Rescuezilla v2.4.2 booted into Portuguese language, due to a minor typo (#438)
+
+Rescuezilla v2.5 will be the above, plus fixes to the UnicodeDecodeError (#402, #412, #443, #454) that are persistently impacting some users
+
+-------------------------------------------------------------------------------
   Version 2.4.2 (2023-03-05)
 -------------------------------------------------------------------------------
 
