@@ -12,7 +12,7 @@
 #         nc -l -p 2000 -q 1 > /tmp/install.sh
 #
 #     On the host environment, send over file:
-#         cat install_linux_query_tcp_server.sh | nc -q 1 192.168.60.2 2000
+#         cat install-linux-query-tcp-server.sh | nc -q 1 192.168.60.2 2000
 # 
 # To install, run the following:
 #     # On guest VM:

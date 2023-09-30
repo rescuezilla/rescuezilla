@@ -158,7 +158,7 @@ if [[ $RET -ne 0 ]]; then
 fi
 
 if  [ "$IS_INTEGRATION_TEST" == "true" ]; then
-    LINUX_QUERY_SERVER_INSTALLER="$BASEDIR/src/integration-test/scripts/install_linux_query_tcp_server.sh"
+    LINUX_QUERY_SERVER_INSTALLER="$BASEDIR/src/integration-test/scripts/install-linux-query-tcp-server.sh"
     rsync --archive "$LINUX_QUERY_SERVER_INSTALLER" "$BUILD_DIRECTORY/chroot/"
     RET=$?
     if [[ $RET -ne 0 ]]; then
@@ -192,16 +192,16 @@ for apt_config_file in "${APT_CONFIG_FILES[@]}"; do
   sed --in-place s/CODENAME_SUBSTITUTE/$CODENAME/g $apt_config_file
 done
 
-cp "$BASEDIR/src/chroot.steps.part.1.sh" "$BASEDIR/src/chroot.steps.part.2.sh" chroot
+cp "$BASEDIR/src/chroot-steps-part-1.sh" "$BASEDIR/src/chroot-steps-part-2.sh" chroot
 # Launch first stage chroot. In other words, run commands within the root filesystem
 # that is being constructed using binaries from within that root filesystem.
-chroot chroot/ /bin/bash -c "IS_INTEGRATION_TEST=$IS_INTEGRATION_TEST ARCH=$ARCH CODENAME=$CODENAME /chroot.steps.part.1.sh"
+chroot chroot/ /bin/bash -c "IS_INTEGRATION_TEST=$IS_INTEGRATION_TEST ARCH=$ARCH CODENAME=$CODENAME /chroot-steps-part-1.sh"
 if [[ $? -ne 0 ]]; then
     echo "Error: Failed to execute chroot steps part 1."
     exit 1
 fi
 
-rm "$BUILD_DIRECTORY/chroot/install_linux_query_tcp_server.sh"
+rm "$BUILD_DIRECTORY/chroot/install-linux-query-tcp-server.sh"
 
 cd "$BASEDIR"
 # Copy the source FHS filesystem tree onto the build's chroot FHS tree, overwriting the base files where conflicts occur.
@@ -273,7 +273,7 @@ done
 
 # Enter chroot again
 cd "$BUILD_DIRECTORY"
-chroot chroot/ /bin/bash /chroot.steps.part.2.sh
+chroot chroot/ /bin/bash /chroot-steps-part-2.sh
 if [[ $? -ne 0 ]]; then
     echo "Error: Failed to execute chroot steps part 2."
     exit 1
@@ -295,7 +295,7 @@ rm -rf chroot/var.lib.apt.lists
 
 umount -lf chroot/dev/
 rm chroot/root/.bash_history
-rm chroot/chroot.steps.part.1.sh chroot/chroot.steps.part.2.sh
+rm chroot/chroot-steps-part-1.sh chroot/chroot-steps-part-2.sh
 
 mkdir -p image/casper image/memtest
 cp chroot/boot/vmlinuz-*-generic image/casper/vmlinuz

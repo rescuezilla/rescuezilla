@@ -59,7 +59,7 @@ jobs:
       - run: sudo mv build/rescuezilla.i386.bionic.iso build/rescuezilla-${{github.ref_name}}-32bit.bionic.iso
 
       - name: Create checksums for ISO images
-        run: cd build && sudo ../src/scripts/create_iso_checksums.sh rescuezilla_${{env.DEB_VERSION}}-1_all.deb  rescuezilla-${{github.ref_name}}-*.iso
+        run: cd build && sudo ../src/scripts/create-iso-checksums.sh rescuezilla_${{env.DEB_VERSION}}-1_all.deb  rescuezilla-${{github.ref_name}}-*.iso
 
       - name: Upload release assets (on tag push)
         uses: softprops/action-gh-release@v1

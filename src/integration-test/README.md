@@ -45,7 +45,7 @@ For Rescuezilla's test operating system VDI files and image repository files (se
 
 **As of writing, the Rescuezilla operating system VDI files, and image repository has not yet been publicly released.** Constructing such an image repository is extremely time consuming (involving installing many different operating systems and making backups with many different tools), so this repository will eventually be made available for anybody interested in contributing to Rescuezilla and Clonezilla.
 
-Each OS is simply a standard OS install, plus the Rescuezilla Integration Test TCP query server that's configured as an auto-restarting service (see: scripts/ folder for the installers: install_linux_query_tcp_server.sh and install_windows_query_tcp_server.bat).
+Each OS is simply a standard OS install, plus the Rescuezilla Integration Test TCP query server that's configured as an auto-restarting service (see: scripts/ folder for the installers: install-linux-query-tcp-server.sh and install_windows_query_tcp_server.bat).
 
 ## Usage
 

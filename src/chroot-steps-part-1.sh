@@ -346,7 +346,7 @@ if  [ "$CODENAME" == "bionic" ]; then
 fi
 
 if  [ "$IS_INTEGRATION_TEST" == "true" ]; then
-    bash /install_linux_query_tcp_server.sh
+    bash /install-linux-query-tcp-server.sh
 fi
 
 # Lowers systemd timeout if a service cannot start, as a 90 second delay in boot/shutdown

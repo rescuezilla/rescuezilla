@@ -15,7 +15,7 @@ THREADS = `cat /proc/cpuinfo | grep process | tail -1 | cut -d":" -f2 | cut -d" 
 
 all: focal
 
-buildscripts = src/build.sh src/chroot.steps.part.1.sh src/chroot.steps.part.2.sh
+buildscripts = src/build.sh src/chroot-steps-part-1.sh src/chroot-steps-part-2.sh
 
 # ISO image based on Ubuntu 20.04 Focal LTS (Long Term Support) 64bit
 focal: ARCH=amd64
@@ -199,7 +199,7 @@ integration-test:
 	$(RESCUEZILLA_INTEGRATION_TEST_DIR)/integration_test.py deinit 2>&1 | tee $(INIT_LOG)
 	$(RESCUEZILLA_INTEGRATION_TEST_DIR)/integration_test.py init 2>&1 | tee $(INIT_LOG)
 	$(info * Run all tests, return number of failures. Follow the log files using: tail -f $(INTEGRATION_TEST_LOG_DIR)/[...].txt)
-	cd "$(RESCUEZILLA_INTEGRATION_TEST_DIR)/tests/" && ls test.*.sh | parallel -P$(THREADS) --tty "bash {} | tee \"$(INTEGRATION_TEST_LOG_DIR)/{}.log_file.txt\""
+	cd "$(RESCUEZILLA_INTEGRATION_TEST_DIR)/tests/" && ls test-*.sh | parallel -P$(THREADS) --tty "bash {} | tee \"$(INTEGRATION_TEST_LOG_DIR)/{}.log_file.txt\""
 
 clean: clean-build-dir
 	$(info )
@@ -223,13 +223,13 @@ docker-build:
 
 docker-run:
 	docker run --rm --detach --privileged --name=builder.container --volume=$(shell pwd):/home/rescuezilla/ builder.image sleep infinity
-	docker exec --interactive --workdir=/home/rescuezilla/ builder.container ./src/git_add_safe_directory.sh
+	docker exec --interactive --workdir=/home/rescuezilla/ builder.container ./src/git-add-safe-directory.sh
 
 docker-stop:
 	docker stop builder.container
 
 docker-add-safe-directory:
-	docker exec --interactive --workdir=/home/rescuezilla/ builder.container ./src/git_add_safe_directory.sh
+	docker exec --interactive --workdir=/home/rescuezilla/ builder.container ./src/git-add-safe-directory.sh
 
 docker-test:
 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make test

@@ -13,11 +13,11 @@ run_cmd_in_rescuezilla_vm() {
     SSH_SERVER="ubuntu@$TARGET_IP"
     ssh-keygen -R $TARGET_IP
     # Copy a script to detect if the machine is a VirtualBox VM, and also to mount the VirtualBox shared folder
-    scp -o "CheckHostIP=no" -o "StrictHostKeyChecking=no" "scripts/is_virtualbox_vm.sh" $SSH_SERVER:/tmp/
+    scp -o "CheckHostIP=no" -o "StrictHostKeyChecking=no" "scripts/is-virtualbox-vm.sh" $SSH_SERVER:/tmp/
     # DANGER: Run a command within the VM. The command could be eg, restoring a backup on to /dev/sda, which can be very dangerous.
     # Notice there are two key protections against accidentally overwriting the wrong SSH server: it is connecting as the ubuntu user
     # with a pretrusted SSH key, and the careful syntax which first checks for whether the machine the command is being run on is a VM.
-    ssh -o "CheckHostIP=no" -o "StrictHostKeyChecking=no" -t $SSH_SERVER "/tmp/is_virtualbox_vm.sh && sudo $RUN_CMD_IN_VM"
+    ssh -o "CheckHostIP=no" -o "StrictHostKeyChecking=no" -t $SSH_SERVER "/tmp/is-virtualbox-vm.sh && sudo $RUN_CMD_IN_VM"
     if [ $? -ne 0 ]; then
         echo "Test failed"
         exit 1
