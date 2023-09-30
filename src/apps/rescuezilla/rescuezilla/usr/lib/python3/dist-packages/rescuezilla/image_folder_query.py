@@ -20,7 +20,7 @@ import os
 import threading
 import traceback
 from os.path import join, isfile, isdir
-
+from typing import Dict
 
 import gi
 
@@ -295,6 +295,7 @@ class ImageFolderQuery:
         self.image_dict.clear()
         self.ignore_folder_set.clear()
         self.failed_to_read_image_dict.clear()
+        exception_tracebacks: Dict[str, str] = {}
         try:
             # list files and directories
             for filename in os.listdir(self.query_path):
@@ -309,17 +310,36 @@ class ImageFolderQuery:
                     GLib.idle_add(self.please_wait_popup.set_secondary_label_text,
                                   _("Scanning: {filename}").format(filename=abs_base_scan_path))
                     # List the subdirectory (1 level deep)
-                    for subdir_filename in os.listdir(abs_base_scan_path):
+                    subdir_list = []
+                    try:
+                        subdir_list = os.listdir(abs_base_scan_path)
+                    except Exception as e:
+                        # Typically Permission denied error
+                        exception_tracebacks[abs_base_scan_path] = traceback.format_exc()
+
+                    for subdir_filename in subdir_list:
                         if self.is_stop_requested():
                             break
                         absolute_path = join(abs_base_scan_path, subdir_filename)
                         enduser_filename = os.path.join(filename, subdir_filename)
                         if isfile(absolute_path):
                             print("Scanning subdir file " + absolute_path)
-                            self.scan_file(absolute_path, enduser_filename)
+                            try:
+                                self.scan_file(absolute_path, enduser_filename)
+                            except Exception as e:
+                                exception_tracebacks[absolute_path] = traceback.format_exc()
         except Exception as e:
-            tb = traceback.format_exc()
+            exception_tracebacks[self.query_path] = traceback.format_exc()
+        if len(exception_tracebacks) > 0:
+            formatted_exceptions = ImageFolderQuery.prettify_tracebacks(exception_tracebacks)
             GLib.idle_add(ErrorMessageModalPopup.display_nonfatal_warning_message, self.builder,
-                          "Failed to scan for images: " + tb)
+                          "Failed to scan for images:\n\n" + formatted_exceptions)
         # Relying on CPython GIL to access the self.image_dict
         GLib.idle_add(self._populate_image_list_table)
+
+    @staticmethod
+    def prettify_tracebacks(exception_traceback: Dict[str, str]) -> str:
+        readable_msg = ""
+        for filename in exception_traceback.keys():
+            readable_msg += f"{filename}: {exception_traceback[filename]}\n\n"
+        return  readable_msg
