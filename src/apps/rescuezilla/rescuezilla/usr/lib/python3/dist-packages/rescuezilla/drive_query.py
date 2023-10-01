@@ -273,7 +273,7 @@ class DriveQueryInternal:
             self.ui_manager.error_message_handler(first_line=_("Operation cancelled by user."))
             return
 
-        lsblk_cmd_list = ["lsblk", "-o", "KNAME,NAME,SIZE,TYPE,FSTYPE,MOUNTPOINT,MODEL,SERIAL", "--paths", "--bytes", "--json"]
+        lsblk_cmd_list = ["lsblk", "-o", "KNAME,NAME,SIZE,TYPE,FSTYPE,MOUNTPOINT,MODEL,SERIAL", "--paths", "--bytes", "--json", "--merge"]
         blkid_cmd_list = ["blkid"]
         os_prober_cmd_list = ["os-prober"]
 
