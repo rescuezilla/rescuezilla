@@ -291,11 +291,12 @@ def stop_vms(machine_key_list):
             else:
                 timeout_ticks = timeout_ticks - 1
                 sleep(1)
-
+        print()
         if not has_shutdown:
-            print("\nSending poweroff to " + vm_name)
+            print("\nSending poweroff to " + vm_name + "\n")
             poweroff_vm_cmd_list = ["VBoxManage", "controlvm", vm_name, "poweroff"]
             subprocess.run(poweroff_vm_cmd_list, encoding='utf-8')
+    print()
 
 
 def check_vm(vm_name, contains):
