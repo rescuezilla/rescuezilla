@@ -69,6 +69,8 @@ pkgs_specific_to_ubuntu1804_bionic_32bit=("linux-generic-hwe-18.04"
                         "python3.7"
                         # Explicitly install dmidecode as it appears to have been pulled in on other distros by a dependency
                         "dmidecode"
+                        # Add support for crypto volumes mount (luks, bitlocker, crypt)
+                        "libblockdev-crypto2"
 )
 
 # Packages specific to Rescuezilla 64-bit build (currently based Ubuntu 20.04 Focal)
@@ -93,6 +95,8 @@ pkgs_specific_to_ubuntu2004_focal=("linux-generic-hwe-18.04"
                        "exfat-utils"
                        # Removed since 22.10 Kinetic
                        "plymouth-theme-ubuntu-logo"
+                        # Add support for crypto volumes mount (luks, bitlocker, crypt)
+                        "libblockdev-crypto2"
 )
 
 pkgs_specific_to_ubuntu2304_lunar=(
@@ -111,6 +115,8 @@ pkgs_specific_to_ubuntu2304_lunar=(
                        "nbdkit"
                        # Replaces exfat-utils
                        "exfatprogs"
+                        # Add support for crypto volumes mount (luks, bitlocker, crypt)
+                        "libblockdev-crypto2"
 )
 
 pkgs_specific_to_ubuntu2204_jammy=(
@@ -131,6 +137,8 @@ pkgs_specific_to_ubuntu2204_jammy=(
                        "exfatprogs"
                        # Removed since 22.10 Kinetic
                        "plymouth-theme-ubuntu-logo"
+                        # Add support for crypto volumes mount (luks, bitlocker, crypt)
+                        "libblockdev-crypto2"
 )
 
 pkgs_specific_to_ubuntu2310_mantic=(
@@ -149,6 +157,8 @@ pkgs_specific_to_ubuntu2310_mantic=(
                        "nbdkit"
                        # Replaces exfat-utils
                        "exfatprogs"
+                        # Add support for crypto volumes mount (luks, bitlocker, crypt)
+                        "libblockdev-crypto3"
 )
 
 
@@ -281,8 +291,6 @@ common_pkgs=("discover"
              "exfat-fuse"
              "btrfs-progs"
              "udisks2-btrfs"
-             # Add support for crypto volumes mount (luks, bitlocker, crypt)
-             "libblockdev-crypto2"
              # Add support to ext4/f2fs kernel FBE
              "fscrypt"
              "libpam-fscrypt"
