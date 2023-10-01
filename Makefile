@@ -22,19 +22,19 @@ focal: ARCH=amd64
 focal: CODENAME=focal
 export ARCH CODENAME
 focal: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-utils partclone-nbd $(buildscripts)
-	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) ./src/build.sh
+	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/build.sh
 
 lunar: ARCH=amd64
 lunar: CODENAME=lunar
 export ARCH CODENAME
 lunar: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-utils partclone-nbd $(buildscripts)
-	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) ./src/build.sh
+	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/build.sh
 	
 jammy: ARCH=amd64
 jammy: CODENAME=jammy
 export ARCH CODENAME
 jammy: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-utils partclone-nbd $(buildscripts)
-	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) ./src/build.sh	
+	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/build.sh	
 
 mantic: ARCH=amd64
 mantic: CODENAME=mantic
@@ -42,14 +42,14 @@ export ARCH CODENAME
 # Not building partclone v0.3.20 yet as Kinetic uses 0.3.20+repack-1 already [1]
 # [1] https://packages.ubuntu.com/mantic/partclone
 mantic: deb sfdisk.v2.20.1.amd64 partclone-utils partclone-nbd $(buildscripts)
-	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) ./src/build.sh	
+	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/build.sh	
 
 # ISO image based on Ubuntu 18.04 Bionic LTS (Long Term Support) 32bit (the last 32bit/i386 Ubuntu LTS release)
 bionic-i386: ARCH=i386
 bionic-i386: CODENAME=bionic
 export ARCH CODENAME
 bionic-i386: deb $(buildscripts)
-	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) ./src/build.sh
+	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/build.sh
 
 deb: DEB_BUILD_DIR=$(abspath $(BASE_BUILD_DIRECTORY))/deb
 deb:
@@ -196,7 +196,7 @@ integration-test:
 	$(RESCUEZILLA_INTEGRATION_TEST_DIR)/integration_test.py deinit 2>&1 | tee $(INIT_LOG)
 	$(RESCUEZILLA_INTEGRATION_TEST_DIR)/integration_test.py init 2>&1 | tee $(INIT_LOG)
 	$(info * Run all tests, return number of failures. Follow the log files using: tail -f $(INTEGRATION_TEST_LOG_DIR)/[...].txt)
-	cd "$(RESCUEZILLA_INTEGRATION_TEST_DIR)/tests/" && ls test-*.sh | parallel -P$(THREADS) --tty "bash {} | tee \"$(INTEGRATION_TEST_LOG_DIR)/{}.log_file.txt\""
+	cd "$(RESCUEZILLA_INTEGRATION_TEST_DIR)/tests/" && ls test-*.sh | parallel -P$(THREADS) --tty "/usr/bin/time bash {} | tee \"$(INTEGRATION_TEST_LOG_DIR)/{}.log_file.txt\""
 
 clean: clean-build-dir
 	$(info )

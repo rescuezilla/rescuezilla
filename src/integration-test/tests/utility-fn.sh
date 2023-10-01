@@ -63,7 +63,7 @@ _backup_with_rescuezilla_cli() {
 
     echo "Delete previous Rescuezilla image from within the VM $IMAGE_PATH"
     run_cmd_in_rescuezilla_vm $TARGET_IP "rm -rf $IMAGE_PATH"
-    run_cmd_in_rescuezilla_vm $TARGET_IP "rescuezillapy backup --source /dev/sda --destination $IMAGE_PATH"
+    time run_cmd_in_rescuezilla_vm $TARGET_IP "rescuezillapy backup --source /dev/sda --destination $IMAGE_PATH"
 }
 
 _restore_with_rescuezilla_cli() {
@@ -71,7 +71,7 @@ _restore_with_rescuezilla_cli() {
     IMAGE_NAME="$2"
     IMAGE_PATH="/mnt/rescuezilla.shared.folder/$IMAGE_NAME"
 
-    run_cmd_in_rescuezilla_vm $TARGET_IP "rescuezillapy restore --source $IMAGE_PATH --destination /dev/sda"
+    time run_cmd_in_rescuezilla_vm $TARGET_IP "rescuezillapy restore --source $IMAGE_PATH --destination /dev/sda"
 }
 
 _backup_with_clonezilla_cli() {
@@ -81,7 +81,7 @@ _backup_with_clonezilla_cli() {
 
     echo "Delete previous Clonezilla image from within the VM $IMAGE_PATH"
     run_cmd_in_rescuezilla_vm $TARGET_IP "rm -rf $IMAGE_PATH"
-    run_cmd_in_rescuezilla_vm $TARGET_IP "ocs_live_batch=yes /usr/sbin/ocs-sr -q2 -j2 -z1 -i 4096 -sfsck -senc -p command savedisk $IMAGE_NAME sda"
+    time run_cmd_in_rescuezilla_vm $TARGET_IP "ocs_live_batch=yes /usr/sbin/ocs-sr -q2 -j2 -z1 -i 4096 -sfsck -senc -p command savedisk $IMAGE_NAME sda"
 }
 
 _restore_with_clonezilla_cli() {
@@ -89,7 +89,7 @@ _restore_with_clonezilla_cli() {
     IMAGE_NAME="$2"
     IMAGE_PATH="/mnt/rescuezilla.shared.folder/$IMAGE_NAME"
     # Command copied from ChatGPT
-    run_cmd_in_rescuezilla_vm $TARGET_IP "sudo ocs-sr -g auto -e1 auto -e2 -j2 -r restoredisk source $IMAGE_PATH/parts --destination /dev/sda"
+    time run_cmd_in_rescuezilla_vm $TARGET_IP "sudo ocs-sr -g auto -e1 auto -e2 -j2 -r restoredisk source $IMAGE_PATH/parts --destination /dev/sda"
 }
 
 _stop_vm_reset_disk_and_boot_dvd() {

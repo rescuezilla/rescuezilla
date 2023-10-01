@@ -36,7 +36,7 @@ RUN apt-get update
 RUN apt-get install --yes \
                           # Install required dependencies for the build
                           make rsync sudo debootstrap squashfs-tools xorriso memtest86+ git git-lfs gettext \
-                          dosfstools mtools checkinstall cmake \
+                          dosfstools mtools checkinstall cmake time \
                           shim-signed grub-efi-amd64-signed grub-efi-amd64-bin grub-efi-ia32-bin grub-pc-bin \
                           devscripts debhelper ccache \
                           # Dependencies for "sfdisk" and "partclone.restore" build.

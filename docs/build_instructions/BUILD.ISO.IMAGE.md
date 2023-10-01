@@ -20,7 +20,7 @@ is based on a different version of Debian or Ubuntu.
 sudo apt update
 sudo apt install -f git-lfs git make sudo \
                      rsync debootstrap gettext squashfs-tools dosfstools mtools xorriso \
-                     memtest86+ devscripts debhelper checkinstall cmake \
+                     memtest86+ devscripts debhelper checkinstall cmake time parallel \
                      grub-efi-amd64-bin grub-efi-ia32-bin grub-pc-bin \
                      shim-signed grub-efi-amd64-signed \
                      libtool-bin gawk pkg-config comerr-dev docbook-xsl e2fslibs-dev fuse3 \
