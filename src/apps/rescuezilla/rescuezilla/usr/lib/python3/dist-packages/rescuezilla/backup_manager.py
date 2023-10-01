@@ -555,6 +555,16 @@ class BackupManager:
                 first_partition_offset_sectors = int(first_partition_offset_bytes / 512)
                 post_mbr_gap_sector_count = first_partition_offset_sectors - 1
 
+            if post_mbr_gap_sector_count < 0:
+                failed_message = ("Rescuezilla was unable to identify the location of the first partition which indicates "
+                                  "the program was unable to gather information about the drive correctly. Please report "
+                                  "this to the Rescuezilla developer, ideally with logs.")
+                with self.summary_message_lock:
+                    self.summary_message += failed_message
+                self.ui_manager.completed_operation(callable_fn=self.completed_backup, succeeded=False,
+                                                    message=failed_message)
+                return False, failed_message
+
             hidden_mbr_data_filepath =  os.path.join(self.dest_dir, short_selected_device_node + "-hidden-data-after-mbr")
             self.ui_manager.display_status(msg1=_("Saving: {file}").format(file=hidden_mbr_data_filepath), msg2="")
             process, flat_command_string, failed_message = Utility.run("Saving " + hidden_mbr_data_filepath,
