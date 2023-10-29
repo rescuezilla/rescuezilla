@@ -494,14 +494,15 @@ class Utility:
         return "{:.1f}".format(duration_minutes + frac)
 
     @staticmethod
-    def run(short_description, cmd_list, use_c_locale, output_filepath=None, logger=None):
+    def run(short_description, cmd_list, use_c_locale, encoding='utf-8', output_filepath=None, logger=None):
         if use_c_locale:
             env = Utility.get_env_C_locale()
         else:
             env = os.environ.copy()
         flat_command_string = Utility.print_cli_friendly(short_description, [cmd_list])
-        process = subprocess.run(cmd_list, encoding='utf-8', capture_output=True, env=env)
-        logging_output = short_description + ": " + flat_command_string + " returned " + str(process.returncode) + ": " + process.stdout + " " + process.stderr + "\n"
+        # Not specifying an encoding, as certain commands (efibootmgr, lshw) can output binary data (#412)
+        process = subprocess.run(cmd_list, encoding=encoding, capture_output=True, env=env)
+        logging_output = short_description + ": " + flat_command_string + " returned " + str(process.returncode) + ": " + str(process.stdout) + " " + str(process.stderr) + "\n"
         if logger is None:
             print(logging_output)
         else:
@@ -509,11 +510,10 @@ class Utility:
 
         if output_filepath is not None:
             with open(output_filepath, 'a+') as filehandle:
-                # TODO confirm encoding
-                filehandle.write('%s' % process.stdout)
+                filehandle.write(process.stdout)
                 filehandle.flush()
 
-        fail_description = _("Failed to run command: ") + flat_command_string + "\n\n" + process.stdout + "\n" + process.stderr + "\n\n"
+        fail_description = _("Failed to run command: ") + flat_command_string + "\n\n" + str(process.stdout) + "\n" + str(process.stderr) + "\n\n"
         return process, flat_command_string, fail_description
 
     # Similar to run above, but checks whether the is_shutdown() function has triggered.
