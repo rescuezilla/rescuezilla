@@ -5,13 +5,14 @@
 # Submitted at: https://github.com/rescuezilla/rescuezilla/issues/171
 #
 # Thanassis Katsageorgis <tkatsageorgis@gmail.com>, 2021, 2022.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2022-01-03 15:44+0000\n"
-"Last-Translator: Thanassis Katsageorgis <tkatsageorgis@gmail.com>\n"
+"PO-Revision-Date: 2023-10-29 21:07+0000\n"
+"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/el/>\n"
 "Language: el\n"
@@ -19,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.10.1\n"
+"X-Generator: Weblate 5.2-dev\n"
 
 msgid "Welcome"
 msgstr "Καλωσήρθατε"
@@ -254,10 +255,10 @@ msgid "Search network"
 msgstr "Αναζήτηση δικτύου"
 
 msgid "Server"
-msgstr "Διακομιστής ή τοποθεσία κοινής χρήσης"
+msgstr "Διακομιστής"
 
 msgid "Share location (UNC path)"
-msgstr "Διακομιστής ή τοποθεσία κοινής χρήσης"
+msgstr "τοποθεσία κοινής χρήσης"
 
 msgid "Username"
 msgstr "Όνομα Χρήστη"
