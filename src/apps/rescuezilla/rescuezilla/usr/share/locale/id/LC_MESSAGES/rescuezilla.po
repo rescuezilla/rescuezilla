@@ -4,13 +4,14 @@
 # liimee <alt3753.7@gmail.com>, 2021.
 # Reza Almanda <rezaalmanda27@gmail.com>, 2021.
 # pZan <padrisauzan@protonmail.com>, 2022.
+# zmni <zmni@outlook.com>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2022-01-16 23:57+0000\n"
-"Last-Translator: pZan <padrisauzan@protonmail.com>\n"
+"PO-Revision-Date: 2023-11-09 17:34+0000\n"
+"Last-Translator: zmni <zmni@outlook.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/id/>\n"
 "Language: id\n"
@@ -18,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.10.1\n"
+"X-Generator: Weblate 5.2-dev\n"
 
 msgid "Welcome"
 msgstr "Selamat Datang"
@@ -354,13 +355,13 @@ msgid "Browse..."
 msgstr "Jelajahi..."
 
 msgid "Filename"
-msgstr ""
+msgstr "Nama berkas"
 
 msgid "Size"
-msgstr ""
+msgstr "Ukuran"
 
 msgid "Last modified"
-msgstr ""
+msgstr "Terakhir dimodifikasi"
 
 msgid "When you are happy with the destination folder, click <b>Next</b>."
 msgstr ""
@@ -383,28 +384,28 @@ msgid "Customize image compression settings. <b>Don't make any changes if you ar
 msgstr ""
 
 msgid "Compression format: "
-msgstr ""
+msgstr "Format kompresi: "
 
 msgid "gzip"
-msgstr ""
+msgstr "gzip"
 
 msgid "default"
-msgstr ""
+msgstr "bawaan"
 
 msgid "zstandard"
-msgstr ""
+msgstr "zstandard"
 
 msgid "Uncompressed (Suitable for use with Image Explorer)"
 msgstr ""
 
 msgid "Compression level: "
-msgstr ""
+msgstr "Level kompresi: "
 
 msgid "Fastest"
-msgstr ""
+msgstr "Tercepat"
 
 msgid "Best"
-msgstr ""
+msgstr "Terbaik"
 
 msgid "When you are happy with the compression settings, click <b>Next</b>."
 msgstr ""
@@ -454,7 +455,7 @@ msgstr ""
 
 #, python-brace-format
 msgid "Saving: {file}"
-msgstr ""
+msgstr "Menyimpan: {file}"
 
 #, python-brace-format
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
