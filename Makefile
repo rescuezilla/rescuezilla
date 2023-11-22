@@ -39,9 +39,7 @@ jammy: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-utils partclone-nbd $
 mantic: ARCH=amd64
 mantic: CODENAME=mantic
 export ARCH CODENAME
-# Not building partclone v0.3.20 yet as Kinetic uses 0.3.20+repack-1 already [1]
-# [1] https://packages.ubuntu.com/mantic/partclone
-mantic: deb sfdisk.v2.20.1.amd64 partclone-utils partclone-nbd $(buildscripts)
+mantic: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-utils partclone-nbd $(buildscripts)
 	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/build.sh	
 
 # ISO image based on Ubuntu 18.04 Bionic LTS (Long Term Support) 32bit (the last 32bit/i386 Ubuntu LTS release)
@@ -105,7 +103,7 @@ partclone.restore.v0.2.43.amd64:
 partclone-latest: SRC_DIR=$(shell pwd)/src/third-party/partclone-latest
 partclone-latest: AMD64_BUILD_DIR=$(BASE_BUILD_DIRECTORY)/$(CODENAME).$(ARCH)
 partclone-latest: PARTCLONE_LATEST_BUILD_DIR=$(AMD64_BUILD_DIR)/partclone-latest
-partclone-latest: PARTCLONE_PKG_VERSION=0.3.26
+partclone-latest: PARTCLONE_PKG_VERSION=0.3.27
 partclone-latest:
 	# DANGER: Deletes build folder recursively. This can end very badly if a variable is not defined correctly.
 	# TODO: FIX THIS
