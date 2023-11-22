@@ -276,7 +276,8 @@ def _is_shutdown_aborted(vm_name):
     return 'VMState="poweroff"' in process.stdout or 'VMState="aborted"' in process.stdout or process.returncode != 0
 
 
-def stop_vms(machine_key_list):
+def stop_vms(machine_key_list) -> bool:
+    all_success = True
     for vm_name in machine_key_list:
         print("Sending ACPI shutdown " + vm_name)
         shutdown_vm_cmd_list = ["VBoxManage", "controlvm", vm_name, "acpipowerbutton"]
@@ -299,8 +300,11 @@ def stop_vms(machine_key_list):
         if not has_shutdown:
             print("\nSending poweroff to " + vm_name + "\n")
             poweroff_vm_cmd_list = ["VBoxManage", "controlvm", vm_name, "poweroff"]
-            subprocess.run(poweroff_vm_cmd_list, encoding='utf-8')
+            process = subprocess.run(poweroff_vm_cmd_list, encoding='utf-8')
+            if process.returncode != 0:
+                all_success = False
     print()
+    return all_success
 
 
 def check_vm(vm_name, contains):
@@ -439,7 +443,8 @@ def handle_command(args):
         ret_code = start_vms(machine_key_list)
         _exit(ret_code)
     elif args.command == "stop":
-        stop_vms(machine_key_list)
+        ret_code = stop_vms(machine_key_list)
+        _exit(ret_code)
     elif args.command == "check":
         all_success = True
         for vm_name in machine_key_list:
