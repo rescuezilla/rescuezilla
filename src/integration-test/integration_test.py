@@ -111,7 +111,7 @@ def deinitialize_vms(hd_key_list, machine_key_list):
                 os.remove(zeroed_hd)
 
 
-def deploy_hd(hd_prefix_list):
+def deploy_hd(hd_prefix_list) -> bool:
     for hd_prefix in hd_prefix_list:
         if hd_prefix in DEPLOY_DICT.keys():
             original_hd = os.path.join(VIRTUAL_BOX_FOLDER, hd_prefix + ".vdi")
@@ -119,15 +119,21 @@ def deploy_hd(hd_prefix_list):
 
             if not os.path.isfile(deploy_hd):
                 print("Could not find " + deploy_hd)
-                continue
+                return False
             else:
                 # Copy in hard drive
                 print("Copying " + deploy_hd + " to " + original_hd + ". This may take some time...")
-                subprocess.run(["rsync", "-aP", deploy_hd, original_hd])
+                process = subprocess.run(["rsync", "-aP", deploy_hd, original_hd])
+                if process.returncode != 0:
+                    return False
 
             # Update VirtualBox UUID of newly copied in hard drive
             set_uuid_cmd_list = ["VBoxManage", "internalcommands", "sethduuid", original_hd, DRIVE_DICT[hd_prefix]['uuid']]
-            subprocess.run(set_uuid_cmd_list, encoding='utf-8')
+            process = subprocess.run(set_uuid_cmd_list, encoding='utf-8')
+            if process.returncode != 0:
+                return False
+
+    return True
 
 
 def reset_hd(hd_prefix_list):
@@ -436,7 +442,8 @@ def handle_command(args):
     elif args.command == "reset":
         reset_hd(hd_key_list)
     elif args.command == "deploy":
-        deploy_hd(hd_key_list)
+        is_success = deploy_hd(hd_key_list)
+        _exit(is_success)
     elif args.command == "commit":
         commit_hd(hd_key_list, args.force)
     elif args.command == "start":
