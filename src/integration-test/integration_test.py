@@ -331,7 +331,7 @@ def stop_vms(machine_key_list) -> bool:
         has_shutdown = False
         # Number of 1 second ticks waiting for the ACPI shutdown to take effect before hard poweroff.
         timeout_ticks = 60
-        print("Sending poweroff in: ", end="")
+        print("Waiting for ACPI shutdown to complete. Will forcing VM to power off in: ", end="")
         sys.stdout.flush()
         while timeout_ticks > 0:
             print(str(timeout_ticks) + " ", end="")
