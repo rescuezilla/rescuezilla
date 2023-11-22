@@ -42,27 +42,37 @@ def initialize_vms(hd_key_list, machine_key_list):
 
     print("Removing host-only interface: " + VIRTUAL_BOX_HOSTONLYIFS)
     remove_hostonlyif_cmd_list = ["VBoxManage", "hostonlyif", "remove", VIRTUAL_BOX_HOSTONLYIFS]
+    # Ignore return code as it's OK if interface doesn't exist and therefore removal fails
     subprocess.run(remove_hostonlyif_cmd_list, encoding='utf-8')
 
     print("Add new host-only interface, which will automatically populate lowest free interface, ie " + VIRTUAL_BOX_HOSTONLYIFS)
     hostonlyif_create_cmd_list = ["VBoxManage", "hostonlyif", "create"]
-    subprocess.run(hostonlyif_create_cmd_list, encoding='utf-8')
+    process = subprocess.run(hostonlyif_create_cmd_list, encoding='utf-8')
+    if process.returncode != 0:
+        return False
 
     print("Set IP address on VirtualBox DHCP server" + VIRTUAL_BOX_HOSTONLYIFS)
     hostonlyif_create_cmd_list = ["VBoxManage", "hostonlyif", "ipconfig", VIRTUAL_BOX_HOSTONLYIFS, "--ip", "192.168.60.1", "--netmask", "255.255.255.0"]
-    subprocess.run(hostonlyif_create_cmd_list, encoding='utf-8')
+    process = subprocess.run(hostonlyif_create_cmd_list, encoding='utf-8')
+    if process.returncode != 0:
+        return False
 
     print("Add dhcp server on interface: " + VIRTUAL_BOX_HOSTONLYIFS)
     add_dhcp_server_cmd_list = ["VBoxManage", "dhcpserver", "add", "--interface", VIRTUAL_BOX_HOSTONLYIFS,
                                 "--server-ip", "192.168.60.1", "--netmask", "255.255.255.0", "--lower-ip",
                                 "192.168.60.2", "--upper-ip", "192.168.60.200", "--enable"]
-    subprocess.run(add_dhcp_server_cmd_list, encoding='utf-8')
+    process = subprocess.run(add_dhcp_server_cmd_list, encoding='utf-8')
+    if process.returncode != 0:
+        return False
 
     for hd_prefix in hd_key_list:
         create_hd(hd_prefix, DRIVE_DICT[hd_prefix]['size_gigabyte'])
 
     for vm_name in machine_key_list:
-        create_vm(vm_name, hd_key_list)
+        is_success = create_vm(vm_name, hd_key_list)
+        if not is_success:
+            return False
+    return True
 
 
 def deinitialize_vms(hd_key_list, machine_key_list):
@@ -193,14 +203,19 @@ def create_hd(hd_prefix, size_gigabyte):
             shutil.copyfile(original_hd, zeroed_hd)
 
 
-def create_vm(vm_name, hd_to_attach):
+def create_vm(vm_name, hd_to_attach) -> bool:
     print("Creating " + vm_name)
     create_vm_cmd_list = ["VBoxManage", "createvm", "--name", vm_name, "--ostype", "Windows10_64", "--register"]
-    subprocess.run(create_vm_cmd_list, encoding='utf-8')
+    process = subprocess.run(create_vm_cmd_list, encoding='utf-8')
+    if process.returncode != 0:
+        return False
+
     # Add to group
     group_cmd_list = ["VBoxManage", "modifyvm", vm_name,
                       "--groups", "/Rescuezilla.Integration.Suite"]
-    subprocess.run(group_cmd_list, encoding='utf-8')
+    process = subprocess.run(group_cmd_list, encoding='utf-8')
+    if process.returncode != 0:
+        return False
 
     # Set memory and network
     memory_network_cmd_list = ["VBoxManage", "modifyvm", vm_name,
@@ -208,20 +223,29 @@ def create_vm(vm_name, hd_to_attach):
                                "--memory", "2048", "--vram", "128",
                                "--nic1", "nat",
                                "--description", "VM created by Rescuezilla's Integration Test Suite script."]
-    subprocess.run(memory_network_cmd_list, encoding='utf-8')
+    process = subprocess.run(memory_network_cmd_list, encoding='utf-8')
+    if process.returncode != 0:
+        return False
 
     # Add DVD drive
     add_ide_cmd_list = ["VBoxManage", "storagectl", vm_name, "--name", "IDE Controller", "--add", "ide", "--controller",
                         "PIIX4"]
-    subprocess.run(add_ide_cmd_list, encoding='utf-8')
+    process = subprocess.run(add_ide_cmd_list, encoding='utf-8')
+    if process.returncode != 0:
+        return False
     add_dvd_drive_cmd_list = ["VBoxManage", "storageattach", vm_name, "--storagectl", "IDE Controller", "--port", "1",
                               "--device", "0", "--type", "dvddrive", "--medium", "emptydrive"]
-    subprocess.run(add_dvd_drive_cmd_list, encoding='utf-8')
+    process = subprocess.run(add_dvd_drive_cmd_list, encoding='utf-8')
+    if process.returncode != 0:
+        return False
 
     # Add SATA drives
     sata_controller_cmd_list = ["VBoxManage", "storagectl", vm_name, "--name", "SATA Controller", "--add", "sata",
                                 "--controller", "IntelAhci"]
-    subprocess.run(sata_controller_cmd_list, encoding='utf-8')
+    process = subprocess.run(sata_controller_cmd_list, encoding='utf-8')
+    if process.returncode != 0:
+        return False
+
     sata_port = 0
     for hd_prefix in MACHINE_DICT[vm_name]['hd_list']:
         if hd_prefix in hd_to_attach:
@@ -229,40 +253,56 @@ def create_vm(vm_name, hd_to_attach):
                                        "--port",
                                        str(sata_port), "--device", "0", "--type",
                                        "hdd", "--medium", hd_prefix + ".vdi"]
-            subprocess.run(attach_storage_cmd_list, encoding='utf-8')
+            process = subprocess.run(attach_storage_cmd_list, encoding='utf-8')
+            if process.returncode != 0:
+                return False
+
         sata_port += 1
 
     # Set firmware
     boot_order_cmd_list = ["VBoxManage", "modifyvm", vm_name, "--firmware", MACHINE_DICT[vm_name]['firmware']]
-    subprocess.run(boot_order_cmd_list, encoding='utf-8')
+    process = subprocess.run(boot_order_cmd_list, encoding='utf-8')
+    if process.returncode != 0:
+        return False
 
     # Configure boot order
     boot_order_cmd_list = ["VBoxManage", "modifyvm", vm_name, "--boot1", "dvd", "--boot2", "disk", "--boot3", "none",
                            "--boot4", "none"]
-    subprocess.run(boot_order_cmd_list, encoding='utf-8')
+    process = subprocess.run(boot_order_cmd_list, encoding='utf-8')
+    if process.returncode != 0:
+        return False
 
     # Configure a VirtualBox Shared Folder so the VM can read/write to the host machine
     # To mount, within the VM run: mkdir shared; mount -t vboxsf shared shared
     shared_folder_cmd_list = ["VBoxManage", "sharedfolder", "add", vm_name, "--name", "rescuezilla.shared.folder",
                               "--hostpath", HOST_SHARED_FOLDER, "--automount"]
-    subprocess.run(shared_folder_cmd_list, encoding='utf-8')
+    process = subprocess.run(shared_folder_cmd_list, encoding='utf-8')
+    if process.returncode != 0:
+        return False
 
     # Disable VM audio to stop a weird PulseAudio static issue on testing host Linux environment
     disable_audio_cmd_list = ["VBoxManage", "modifyvm", vm_name, "--audio", "none"]
-    subprocess.run(disable_audio_cmd_list, encoding='utf-8')
+    process = subprocess.run(disable_audio_cmd_list, encoding='utf-8')
+    if process.returncode != 0:
+        return False
 
     # Configure first network interface to use host-only adapter
     print("Configure first network interface to use host-only NIC: " + VIRTUAL_BOX_HOSTONLYIFS)
     hostonly_nic_cmd_list = ["VBoxManage", "modifyvm", vm_name, "--nic1", "hostonly", "--hostonlyadapter1",
                              VIRTUAL_BOX_HOSTONLYIFS]
-    subprocess.run(hostonly_nic_cmd_list, encoding='utf-8')
+    process = subprocess.run(hostonly_nic_cmd_list, encoding='utf-8')
+    if process.returncode != 0:
+        return False
 
     print("Configure DHCP server on " + VIRTUAL_BOX_HOSTONLYIFS + " with a static lease (reserved IP address) of " + MACHINE_DICT[vm_name]['ip'] +
                                                                   " associated with the MAC address of the first "
                                                                   "interface of the VM.")
     reserve_ip_address_cmd_list = ["VBoxManage", "dhcpserver", "modify", "--interface", VIRTUAL_BOX_HOSTONLYIFS, "--vm",
                                    vm_name, "--nic", "1", "--fixed-address", MACHINE_DICT[vm_name]['ip']]
-    subprocess.run(reserve_ip_address_cmd_list, encoding='utf-8')
+    process = subprocess.run(reserve_ip_address_cmd_list, encoding='utf-8')
+    if process.returncode != 0:
+        return False
+    return True
 
 
 def start_vms(machine_key_list) -> bool:
@@ -423,7 +463,8 @@ def handle_command(args):
             hd_key_list = args.hd
 
     if args.command == "init":
-        initialize_vms(hd_key_list, machine_key_list)
+        is_success = initialize_vms(hd_key_list, machine_key_list)
+        _exit(is_success)
     elif args.command == "listvm":
         for vm_key in machine_key_list:
             if set(MACHINE_DICT[vm_key]['hd_list']).intersection(set(hd_key_list)):
