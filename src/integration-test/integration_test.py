@@ -259,11 +259,15 @@ def create_vm(vm_name, hd_to_attach):
     subprocess.run(reserve_ip_address_cmd_list, encoding='utf-8')
 
 
-def start_vms(machine_key_list):
+def start_vms(machine_key_list) -> bool:
+    all_success = True
     for vm_name in machine_key_list:
         print("Run " + vm_name)
         run_vm_cmd_list = ["VBoxManage", "startvm", vm_name, "--type", "headless"]
-        subprocess.run(run_vm_cmd_list, encoding='utf-8')
+        process = subprocess.run(run_vm_cmd_list, encoding='utf-8')
+        if process.returncode != 0:
+            all_success = False
+    return all_success
 
 
 def _is_shutdown_aborted(vm_name):
@@ -432,7 +436,8 @@ def handle_command(args):
     elif args.command == "commit":
         commit_hd(hd_key_list, args.force)
     elif args.command == "start":
-        start_vms(machine_key_list)
+        ret_code = start_vms(machine_key_list)
+        _exit(ret_code)
     elif args.command == "stop":
         stop_vms(machine_key_list)
     elif args.command == "check":
