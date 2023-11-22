@@ -87,9 +87,9 @@ _backup_with_clonezilla_cli() {
 _restore_with_clonezilla_cli() {
     TARGET_IP="$1"
     IMAGE_NAME="$2"
-    IMAGE_PATH="/mnt/rescuezilla.shared.folder/$IMAGE_NAME"
-    # Command copied from ChatGPT
-    time run_cmd_in_rescuezilla_vm $TARGET_IP "sudo ocs-sr -g auto -e1 auto -e2 -j2 -r restoredisk source $IMAGE_PATH/parts --destination /dev/sda"
+    # Command adapted running Clonezilla restoredisk in Beginner mode using default settings
+    CLONEZILLA_COMMAND="ocs-sr -g auto -e1 auto -e2 -r -j2 -scr restoredisk $IMAGE_NAME sda"
+    time run_cmd_in_rescuezilla_vm $TARGET_IP "$CLONEZILLA_COMMAND"
 }
 
 _stop_vm_reset_disk_and_boot_dvd() {
