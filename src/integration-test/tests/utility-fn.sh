@@ -19,7 +19,7 @@ run_cmd_in_rescuezilla_vm() {
     # with a pretrusted SSH key, and the careful syntax which first checks for whether the machine the command is being run on is a VM.
     ssh -o "CheckHostIP=no" -o "StrictHostKeyChecking=no" -t $SSH_SERVER "/tmp/configure-virtualbox-vm.sh && sudo $RUN_CMD_IN_VM"
     if [ $? -ne 0 ]; then
-        echo "Test failed"
+        echo "** Test failed"
         exit 1
     fi
 }
@@ -46,7 +46,7 @@ check_primary_os_boots() {
     sleep 1
     ./integration_test.py removedvd --vm $VM
     if [ $? -ne 0 ]; then
-        echo "Could not remove DVD."
+        echo "** Could not remove DVD."
         return 1
     fi
     ./integration_test.py start --vm $VM
@@ -61,7 +61,7 @@ _backup_with_rescuezilla_cli() {
     IMAGE_NAME="$2"
     IMAGE_PATH="/mnt/rescuezilla.shared.folder/$IMAGE_NAME"
 
-    echo "Delete previous Rescuezilla image from within the VM $IMAGE_PATH"
+    echo "** Delete previous Rescuezilla image from within the VM $IMAGE_PATH"
     run_cmd_in_rescuezilla_vm $TARGET_IP "rm -rf $IMAGE_PATH"
     time run_cmd_in_rescuezilla_vm $TARGET_IP "rescuezillapy backup --source /dev/sda --destination $IMAGE_PATH"
 }
@@ -79,7 +79,7 @@ _backup_with_clonezilla_cli() {
     IMAGE_NAME="$2"
     IMAGE_PATH="/mnt/rescuezilla.shared.folder/$IMAGE_NAME"
 
-    echo "Delete previous Clonezilla image from within the VM $IMAGE_PATH"
+    echo "** Delete previous Clonezilla image from within the VM $IMAGE_PATH"
     run_cmd_in_rescuezilla_vm $TARGET_IP "rm -rf $IMAGE_PATH"
     time run_cmd_in_rescuezilla_vm $TARGET_IP "ocs_live_batch=yes /usr/sbin/ocs-sr -q2 -j2 -z1 -i 4096 -sfsck -senc -p command savedisk $IMAGE_NAME sda"
 }
@@ -131,43 +131,43 @@ backup_restore_test() {
     TARGET_IP=`./integration_test.py listip --vm $VM_NAME`
 
     VM_INFO="\"$VM_NAME\" ($CLONEZILLA_IMAGE_NAME and $RESCUEZILLA_IMAGE_NAME) with boot check: \"$PRIMARY_OS_CHECK_MATCH\""
-    echo "Starting backup/restore test for $VM_INFO"
+    echo "* Starting backup/restore test for $VM_INFO"
 
-    echo "Redeploy primary OS"
+    echo "* Redeploy primary OS"
     ./integration_test.py stop --vm $VM_NAME
     ./integration_test.py reset --vm $VM_NAME
     ./integration_test.py deploy --vm $VM_NAME
-    echo "Sanity check primary OS boots, and correctly configured for integration test to confirm"
+    echo "* Sanity check primary OS boots, and correctly configured for integration test to confirm"
     check_primary_os_boots "$VM_NAME" "$PRIMARY_OS_CHECK_MATCH"
     _print_summary $? "$VM_INFO" "Sanity check primary OS configuration before doing any operation" true
 
-    # Boot into Rescuezilla DVD to begin tests
+    echo "* Boot into Rescuezilla DVD to begin tests"
     boot_dvd "$VM_NAME" "$ISO_PATH" "$ISO_CHECK_MATCH"
 
-    echo "Creating backup image using Rescuezilla CLI"
+    echo "* Creating backup image using Rescuezilla CLI"
     _backup_with_rescuezilla_cli "$TARGET_IP" "$RESCUEZILLA_IMAGE_NAME"
-    echo "Creating backup image using Clonezilla CLI"
+    echo "* Creating backup image using Clonezilla CLI"
     _backup_with_clonezilla_cli "$TARGET_IP" "$CLONEZILLA_IMAGE_NAME"
 
-    echo "Testing restore of Rescuezilla image with Rescuezilla CLI"
+    echo "* Testing restore of Rescuezilla image with Rescuezilla CLI"
     _stop_vm_reset_disk_and_boot_dvd "$VM_NAME" "$ISO_PATH" "$ISO_CHECK_MATCH" true
     _restore_with_rescuezilla_cli "$TARGET_IP" "$RESCUEZILLA_IMAGE_NAME"
     check_primary_os_boots "$VM_NAME" "$PRIMARY_OS_CHECK_MATCH"
     _print_summary $? "$VM_INFO" "Restore attempt of Rescuezilla image using Rescuezilla CLI" true
 
-    echo "Testing restore of Clonezilla image with Rescuezilla CLI"
+    echo "* Testing restore of Clonezilla image with Rescuezilla CLI"
     _stop_vm_reset_disk_and_boot_dvd "$VM_NAME" "$ISO_PATH" "$ISO_CHECK_MATCH" false
     _restore_with_rescuezilla_cli "$TARGET_IP" "$CLONEZILLA_IMAGE_NAME"
     check_primary_os_boots "$VM_NAME" "$PRIMARY_OS_CHECK_MATCH"
     _print_summary $? "$VM_INFO" "Restore attempt of Clonezilla image using Rescuezilla CLI" true
 
-    echo "Testing restore of Rescuezilla image with Clonezilla CLI"
+    echo "* Testing restore of Rescuezilla image with Clonezilla CLI"
     _stop_vm_reset_disk_and_boot_dvd "$VM_NAME" "$ISO_PATH" "$ISO_CHECK_MATCH" false
     _restore_with_clonezilla_cli "$TARGET_IP" "$CLONEZILLA_IMAGE_NAME"
     check_primary_os_boots "$VM_NAME" "$PRIMARY_OS_CHECK_MATCH"
     _print_summary $? "$VM_INFO" "Restore attempt of Rescuezilla image using Clonezilla CLI" true
 
-    echo "Testing restore of Clonezilla image with Clonezilla CLI (to identify any regressions within Clonezilla)"
+    echo "* Testing restore of Clonezilla image with Clonezilla CLI (to identify any regressions within Clonezilla)"
     _stop_vm_reset_disk_and_boot_dvd "$VM_NAME" "$ISO_PATH" "$ISO_CHECK_MATCH" false
     _restore_with_clonezilla_cli "$TARGET_IP" "$CLONEZILLA_IMAGE_NAME"
     check_primary_os_boots "$VM_NAME" "$PRIMARY_OS_CHECK_MATCH"
