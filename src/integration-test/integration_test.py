@@ -33,6 +33,16 @@ from constants import DRIVE_DICT, MACHINE_DICT, VIRTUAL_BOX_FOLDER, DEPLOY_DICT,
     HOST_SHARED_FOLDER
 
 
+def run_command(command, **kwargs):
+    print("Running: " + " ".join(map(str, command)))
+    process = subprocess.run(command, stderr=subprocess.STDOUT, **kwargs)
+    # Flush buffer to prevent stderr errors from confusingly being printed very separate from the command being run.
+    sys.stdout.flush()
+    sys.stderr.flush()
+    print(f"Exit code: {process.returncode}")
+    return process
+
+
 # Create VMs
 def initialize_vms(hd_key_list, machine_key_list):
     if not os.path.isdir(HOST_SHARED_FOLDER):
@@ -43,17 +53,17 @@ def initialize_vms(hd_key_list, machine_key_list):
     print("Removing host-only interface: " + VIRTUAL_BOX_HOSTONLYIFS)
     remove_hostonlyif_cmd_list = ["VBoxManage", "hostonlyif", "remove", VIRTUAL_BOX_HOSTONLYIFS]
     # Ignore return code as it's OK if interface doesn't exist and therefore removal fails
-    subprocess.run(remove_hostonlyif_cmd_list, encoding='utf-8')
+    run_command(remove_hostonlyif_cmd_list, encoding='utf-8')
 
     print("Add new host-only interface, which will automatically populate lowest free interface, ie " + VIRTUAL_BOX_HOSTONLYIFS)
     hostonlyif_create_cmd_list = ["VBoxManage", "hostonlyif", "create"]
-    process = subprocess.run(hostonlyif_create_cmd_list, encoding='utf-8')
+    process = run_command(hostonlyif_create_cmd_list, encoding='utf-8')
     if process.returncode != 0:
         return False
 
     print("Set IP address on VirtualBox DHCP server" + VIRTUAL_BOX_HOSTONLYIFS)
     hostonlyif_create_cmd_list = ["VBoxManage", "hostonlyif", "ipconfig", VIRTUAL_BOX_HOSTONLYIFS, "--ip", "192.168.60.1", "--netmask", "255.255.255.0"]
-    process = subprocess.run(hostonlyif_create_cmd_list, encoding='utf-8')
+    process = run_command(hostonlyif_create_cmd_list, encoding='utf-8')
     if process.returncode != 0:
         return False
 
@@ -61,7 +71,7 @@ def initialize_vms(hd_key_list, machine_key_list):
     add_dhcp_server_cmd_list = ["VBoxManage", "dhcpserver", "add", "--interface", VIRTUAL_BOX_HOSTONLYIFS,
                                 "--server-ip", "192.168.60.1", "--netmask", "255.255.255.0", "--lower-ip",
                                 "192.168.60.2", "--upper-ip", "192.168.60.200", "--enable"]
-    process = subprocess.run(add_dhcp_server_cmd_list, encoding='utf-8')
+    process = run_command(add_dhcp_server_cmd_list, encoding='utf-8')
     if process.returncode != 0:
         return False
 
@@ -80,11 +90,11 @@ def initialize_vms(hd_key_list, machine_key_list):
 def deinitialize_vms(hd_key_list, machine_key_list):
     print("Remove DHCP server associated with host-only interface " + VIRTUAL_BOX_HOSTONLYIFS)
     remove_dhcpserver_cmd_list = ["VBoxManage", "dhcpserver", "remove", "--interface", VIRTUAL_BOX_HOSTONLYIFS]
-    subprocess.run(remove_dhcpserver_cmd_list, encoding='utf-8')
+    run_command(remove_dhcpserver_cmd_list, encoding='utf-8')
 
     print("Remove host-only interface: " + VIRTUAL_BOX_HOSTONLYIFS)
     remove_hostonlyif_cmd_list = ["VBoxManage", "hostonlyif", "remove", VIRTUAL_BOX_HOSTONLYIFS]
-    subprocess.run(remove_hostonlyif_cmd_list, encoding='utf-8')
+    run_command(remove_hostonlyif_cmd_list, encoding='utf-8')
 
     for vm_name in machine_key_list:
         print("Removing " + vm_name)
@@ -96,25 +106,25 @@ def deinitialize_vms(hd_key_list, machine_key_list):
                 detach_storage_cmd_list = ["VBoxManage", "storageattach", vm_name, "--storagectl", "SATA Controller",
                                            "--port", str(sata_port), "--device", "0", "--type", "hdd", "--medium",
                                            "none"]
-                subprocess.run(detach_storage_cmd_list, encoding='utf-8')
+                run_command(detach_storage_cmd_list, encoding='utf-8')
                 sata_port += 1
                 # Remove
                 # remove_hdd_cmd_list = ["VBoxManage", "storagectl", vm_name, "--name", hd_prefix + ".vdi", "--remove"]
-                # subprocess.run(remove_hdd_cmd_list, encoding='utf-8')
+                # run_command(remove_hdd_cmd_list, encoding='utf-8')
             else:
                 sata_port += 1
                 continue
 
         # Delete VM
         delete_vm_cmd_list = ["VBoxManage", "unregistervm", vm_name, "--delete"]
-        subprocess.run(delete_vm_cmd_list, encoding='utf-8')
+        run_command(delete_vm_cmd_list, encoding='utf-8')
 
         for hd_prefix in MACHINE_DICT[vm_name]['hd_list']:
             if hd_prefix not in hd_key_list:
                 continue
             # Attempt to delete drive if it's not attached to any other VMs
             delete_hdd_cmd_list = ["VBoxManage", "closemedium", "disk", hd_prefix + ".vdi", "--delete"]
-            subprocess.run(delete_hdd_cmd_list, encoding='utf-8')
+            run_command(delete_hdd_cmd_list, encoding='utf-8')
 
             original_hd = os.path.join(VIRTUAL_BOX_FOLDER, hd_prefix + ".vdi")
             zeroed_hd = os.path.join(VIRTUAL_BOX_FOLDER, hd_prefix + ".zeroed.vdi")
@@ -135,16 +145,15 @@ def deploy_hd(hd_prefix_list) -> bool:
             else:
                 # Copy in hard drive
                 print("Copying " + deploy_hd + " to " + original_hd + ". This may take some time...")
-                process = subprocess.run(["rsync", "-aP", deploy_hd, original_hd])
+                process = run_command(["rsync", "-aP", deploy_hd, original_hd])
                 if process.returncode != 0:
                     return False
 
             # Update VirtualBox UUID of newly copied in hard drive
             set_uuid_cmd_list = ["VBoxManage", "internalcommands", "sethduuid", original_hd, DRIVE_DICT[hd_prefix]['uuid']]
-            process = subprocess.run(set_uuid_cmd_list, encoding='utf-8')
+            process = run_command(set_uuid_cmd_list, encoding='utf-8')
             if process.returncode != 0:
                 return False
-
     return True
 
 
@@ -175,7 +184,7 @@ def commit_hd(hd_prefix_list, do_overwrite):
             else:
                 print("Copying " + original_hd + " to " + deploy_hd + ". This may take a while...")
                 if do_overwrite:
-                    subprocess.run(["rsync", "-aP", original_hd, deploy_hd])
+                    run_command(["rsync", "-aP", original_hd, deploy_hd])
                 else:
                     print("  Skipping because --force not provided.")
 
@@ -190,19 +199,19 @@ def create_hd(hd_prefix, size_gigabyte) -> bool:
         print("Creating drive " + original_hd)
         create_hd_cmd_list = ["VBoxManage", "createhd", "--filename", hd_prefix + ".vdi", "--sizebyte", str(size_byte),
                               "--format", "VDI"]
-        create_hd_process = subprocess.run(create_hd_cmd_list, encoding='utf-8')
+        create_hd_process = run_command(create_hd_cmd_list, encoding='utf-8')
         if create_hd_process.returncode != 0:
             return False
 
         print("Removing " + original_hd + " from VirtualBox media registry so UUID can be changed")
         closemedium_cmd_list = ["VBoxManage", "closemedium", "disk", hd_prefix + ".vdi"]
-        closemedium_process = subprocess.run(closemedium_cmd_list, encoding='utf-8')
+        closemedium_process = run_command(closemedium_cmd_list, encoding='utf-8')
         if closemedium_process.returncode != 0:
             return False
 
         # Update VirtualBox UUID of newly copied in hard drive
         set_uuid_cmd_list = ["VBoxManage", "internalcommands", "sethduuid", original_hd, DRIVE_DICT[hd_prefix]['uuid']]
-        sethduuid_process = subprocess.run(set_uuid_cmd_list, encoding='utf-8')
+        sethduuid_process = run_command(set_uuid_cmd_list, encoding='utf-8')
         if sethduuid_process.returncode != 0:
             return False
         print("Backup of " + original_hd + " to " + zeroed_hd)
@@ -213,14 +222,14 @@ def create_hd(hd_prefix, size_gigabyte) -> bool:
 def create_vm(vm_name, hd_to_attach) -> bool:
     print("Creating virtual machine " + vm_name)
     create_vm_cmd_list = ["VBoxManage", "createvm", "--name", vm_name, "--ostype", "Windows10_64", "--register"]
-    process = subprocess.run(create_vm_cmd_list, encoding='utf-8')
+    process = run_command(create_vm_cmd_list, encoding='utf-8')
     if process.returncode != 0:
         return False
 
     # Add to group
     group_cmd_list = ["VBoxManage", "modifyvm", vm_name,
                       "--groups", "/Rescuezilla.Integration.Suite"]
-    process = subprocess.run(group_cmd_list, encoding='utf-8')
+    process = run_command(group_cmd_list, encoding='utf-8')
     if process.returncode != 0:
         return False
 
@@ -230,26 +239,26 @@ def create_vm(vm_name, hd_to_attach) -> bool:
                                "--memory", "2048", "--vram", "128",
                                "--nic1", "nat",
                                "--description", "VM created by Rescuezilla's Integration Test Suite script."]
-    process = subprocess.run(memory_network_cmd_list, encoding='utf-8')
+    process = run_command(memory_network_cmd_list, encoding='utf-8')
     if process.returncode != 0:
         return False
 
     # Add DVD drive
     add_ide_cmd_list = ["VBoxManage", "storagectl", vm_name, "--name", "IDE Controller", "--add", "ide", "--controller",
                         "PIIX4"]
-    process = subprocess.run(add_ide_cmd_list, encoding='utf-8')
+    process = run_command(add_ide_cmd_list, encoding='utf-8')
     if process.returncode != 0:
         return False
     add_dvd_drive_cmd_list = ["VBoxManage", "storageattach", vm_name, "--storagectl", "IDE Controller", "--port", "1",
                               "--device", "0", "--type", "dvddrive", "--medium", "emptydrive"]
-    process = subprocess.run(add_dvd_drive_cmd_list, encoding='utf-8')
+    process = run_command(add_dvd_drive_cmd_list, encoding='utf-8')
     if process.returncode != 0:
         return False
 
     # Add SATA drives
     sata_controller_cmd_list = ["VBoxManage", "storagectl", vm_name, "--name", "SATA Controller", "--add", "sata",
                                 "--controller", "IntelAhci"]
-    process = subprocess.run(sata_controller_cmd_list, encoding='utf-8')
+    process = run_command(sata_controller_cmd_list, encoding='utf-8')
     if process.returncode != 0:
         return False
 
@@ -260,7 +269,7 @@ def create_vm(vm_name, hd_to_attach) -> bool:
                                        "--port",
                                        str(sata_port), "--device", "0", "--type",
                                        "hdd", "--medium", hd_prefix + ".vdi"]
-            process = subprocess.run(attach_storage_cmd_list, encoding='utf-8')
+            process = run_command(attach_storage_cmd_list, encoding='utf-8')
             if process.returncode != 0:
                 return False
 
@@ -268,14 +277,14 @@ def create_vm(vm_name, hd_to_attach) -> bool:
 
     # Set firmware
     boot_order_cmd_list = ["VBoxManage", "modifyvm", vm_name, "--firmware", MACHINE_DICT[vm_name]['firmware']]
-    process = subprocess.run(boot_order_cmd_list, encoding='utf-8')
+    process = run_command(boot_order_cmd_list, encoding='utf-8')
     if process.returncode != 0:
         return False
 
     # Configure boot order
     boot_order_cmd_list = ["VBoxManage", "modifyvm", vm_name, "--boot1", "dvd", "--boot2", "disk", "--boot3", "none",
                            "--boot4", "none"]
-    process = subprocess.run(boot_order_cmd_list, encoding='utf-8')
+    process = run_command(boot_order_cmd_list, encoding='utf-8')
     if process.returncode != 0:
         return False
 
@@ -283,13 +292,13 @@ def create_vm(vm_name, hd_to_attach) -> bool:
     # To mount, within the VM run: mkdir shared; mount -t vboxsf shared shared
     shared_folder_cmd_list = ["VBoxManage", "sharedfolder", "add", vm_name, "--name", "rescuezilla.shared.folder",
                               "--hostpath", HOST_SHARED_FOLDER, "--automount"]
-    process = subprocess.run(shared_folder_cmd_list, encoding='utf-8')
+    process = run_command(shared_folder_cmd_list, encoding='utf-8')
     if process.returncode != 0:
         return False
 
     # Disable VM audio to stop a weird PulseAudio static issue on testing host Linux environment
     disable_audio_cmd_list = ["VBoxManage", "modifyvm", vm_name, "--audio-driver", "none"]
-    process = subprocess.run(disable_audio_cmd_list, encoding='utf-8')
+    process = run_command(disable_audio_cmd_list, encoding='utf-8')
     if process.returncode != 0:
         return False
 
@@ -297,7 +306,7 @@ def create_vm(vm_name, hd_to_attach) -> bool:
     print("Configure first network interface to use host-only NIC: " + VIRTUAL_BOX_HOSTONLYIFS)
     hostonly_nic_cmd_list = ["VBoxManage", "modifyvm", vm_name, "--nic1", "hostonly", "--hostonlyadapter1",
                              VIRTUAL_BOX_HOSTONLYIFS]
-    process = subprocess.run(hostonly_nic_cmd_list, encoding='utf-8')
+    process = run_command(hostonly_nic_cmd_list, encoding='utf-8')
     if process.returncode != 0:
         return False
 
@@ -306,7 +315,7 @@ def create_vm(vm_name, hd_to_attach) -> bool:
                                                                   "interface of the VM.")
     reserve_ip_address_cmd_list = ["VBoxManage", "dhcpserver", "modify", "--interface", VIRTUAL_BOX_HOSTONLYIFS, "--vm",
                                    vm_name, "--nic", "1", "--fixed-address", MACHINE_DICT[vm_name]['ip']]
-    process = subprocess.run(reserve_ip_address_cmd_list, encoding='utf-8')
+    process = run_command(reserve_ip_address_cmd_list, encoding='utf-8')
     if process.returncode != 0:
         return False
     return True
@@ -317,7 +326,7 @@ def start_vms(machine_key_list) -> bool:
     for vm_name in machine_key_list:
         print("Run " + vm_name)
         run_vm_cmd_list = ["VBoxManage", "startvm", vm_name, "--type", "headless"]
-        process = subprocess.run(run_vm_cmd_list, encoding='utf-8')
+        process = run_command(run_vm_cmd_list, encoding='utf-8')
         if process.returncode != 0:
             all_success = False
     return all_success
@@ -334,7 +343,7 @@ def stop_vms(machine_key_list) -> bool:
     for vm_name in machine_key_list:
         print("Sending ACPI shutdown " + vm_name)
         shutdown_vm_cmd_list = ["VBoxManage", "controlvm", vm_name, "acpipowerbutton"]
-        subprocess.run(shutdown_vm_cmd_list, encoding='utf-8')
+        run_command(shutdown_vm_cmd_list, encoding='utf-8')
         has_shutdown = False
         # Number of 1 second ticks waiting for the ACPI shutdown to take effect before hard poweroff.
         timeout_ticks = 60
@@ -353,7 +362,7 @@ def stop_vms(machine_key_list) -> bool:
         if not has_shutdown:
             print("\nSending poweroff to " + vm_name + "\n")
             poweroff_vm_cmd_list = ["VBoxManage", "controlvm", vm_name, "poweroff"]
-            process = subprocess.run(poweroff_vm_cmd_list, encoding='utf-8')
+            process = run_command(poweroff_vm_cmd_list, encoding='utf-8')
             if process.returncode != 0:
                 all_success = False
     print()
@@ -424,14 +433,14 @@ def insertdvd_vm(vm_name, path_to_dvd):
     print("Inserting DVD " + abs_path_to_dvd + " into " + vm_name)
     insert_dvd_cmd_list = ["VBoxManage", "storageattach", vm_name, "--storagectl", "IDE Controller", "--port",
                               "1", "--device", "0", "--type", "dvddrive", "--medium", abs_path_to_dvd]
-    subprocess.run(insert_dvd_cmd_list, encoding='utf-8')
+    run_command(insert_dvd_cmd_list, encoding='utf-8')
 
 
 def removedvd_vm(vm_name):
     print("Removing DVD from " + vm_name)
     insert_dvd_cmd_list = ["VBoxManage", "storageattach", vm_name, "--storagectl", "IDE Controller", "--port",
                               "1", "--device", "0", "--type", "dvddrive", "--medium", "emptydrive"]
-    subprocess.run(insert_dvd_cmd_list, encoding='utf-8')
+    run_command(insert_dvd_cmd_list, encoding='utf-8')
 
 
 def _exit(is_success):
