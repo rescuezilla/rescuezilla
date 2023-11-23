@@ -89,6 +89,8 @@ def initialize_vms(hd_key_list, machine_key_list):
 
 def detach_hds(vm_name, hd_to_detach, replace_with="none"):
     sata_port = 0
+    if len(hd_to_detach) == 0:
+        hd_to_detach = MACHINE_DICT[vm_name]['hd_list']
     for hd_prefix in MACHINE_DICT[vm_name]['hd_list']:
         if hd_prefix in hd_to_detach:
             print(" Detaching " + hd_prefix + ".vdi")
@@ -225,6 +227,8 @@ def create_hd(hd_prefix, size_gigabyte) -> bool:
 
 def attach_hds(vm_name, hd_to_attach) -> bool:
     sata_port = 0
+    if len(hd_to_attach) == 0:
+        hd_to_attach = MACHINE_DICT[vm_name]['hd_list']
     for hd_prefix in MACHINE_DICT[vm_name]['hd_list']:
         if hd_prefix in hd_to_attach:
             attach_storage_cmd_list = ["VBoxManage", "storageattach", vm_name, "--storagectl", "SATA Controller",
@@ -511,6 +515,13 @@ def handle_command(args):
     elif args.command == "deploy":
         is_success = deploy_hd(hd_key_list)
         _exit(is_success)
+    elif args.command == "attachhd":
+        for vm_key in machine_key_list:
+            attach_hds(vm_key, hd_key_list)
+    elif args.command == "detachhd":
+        for vm_key in machine_key_list:
+            # HACK: Hotswap with 1gb HDD to allow hot swapping back in (removing entirely doesn't allow hotswap)
+            detach_hds(vm_key, hd_key_list, replace_with="1gb.vdi")
     elif args.command == "commit":
         commit_hd(hd_key_list, args.force)
     elif args.command == "start":
@@ -577,6 +588,14 @@ def main():
         'deploy': {'help': "Overwrites test suite's VirtualBox drives with the pre-configured OS VDI images",
                    'vm_help': "Deploy drives in specific machine(s) (note drives may be shared with other machines)",
                    "hd_help": "Deploy a specific drive(s)"},
+        'attachhd': {
+            'help': "Enable (by 'attaching') the hotpluggable HD from a VirtualBox VM",
+            'vm_help': "Enable (by 'attaching') drive in specific machine (note drives may be shared with other machines)",
+            "hd_help": "Enable (by 'attaching') a specific drive"},
+        'detachhd': {
+            'help': "Disable (by 'detaching') the hotpluggable HD from a VirtualBox VM",
+            'vm_help': "Disable (by 'detaching') drive in specific machine (note drives may be shared with other machines)",
+            "hd_help": "Disable (by 'detaching') a specific drive"},
         'insertdvd': {'help': "Insert a DVD into VirtualBox VM", 'vm_help': "Machine(s) to which insert DVD"},
         'removedvd': {'help': "Remove DVD from VirtualBox VM", 'vm_help': "Machine(s) to remove DVD"},
         'commit': {
