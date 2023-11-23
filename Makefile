@@ -13,6 +13,9 @@ BASE_BUILD_DIRECTORY ?= $(shell pwd)/build
 # Set threads variable to N-1 cpu cores.
 THREADS = `cat /proc/cpuinfo | grep process | tail -1 | cut -d":" -f2 | cut -d" " -f2`
 
+# Set shell to bash, so can use 'pipefail' to cause Make to exit when certain commands below (that pipe into tee) fails
+SHELL=/bin/bash
+
 all: focal
 
 buildscripts = src/build.sh src/chroot-steps-part-1.sh src/chroot-steps-part-2.sh
@@ -190,11 +193,11 @@ integration-test: INIT_LOG=$(INTEGRATION_TEST_LOG_DIR)/init.txt
 integration-test: THREADS=1
 integration-test:
 	mkdir --parents $(INTEGRATION_TEST_LOG_DIR)
-	$(RESCUEZILLA_INTEGRATION_TEST_DIR)/integration_test.py stop 2>&1 | tee $(INIT_LOG)
-	$(RESCUEZILLA_INTEGRATION_TEST_DIR)/integration_test.py deinit 2>&1 | tee $(INIT_LOG)
-	$(RESCUEZILLA_INTEGRATION_TEST_DIR)/integration_test.py init 2>&1 | tee $(INIT_LOG)
+	set -o pipefail; $(RESCUEZILLA_INTEGRATION_TEST_DIR)/integration_test.py stop 2>&1 | tee $(INIT_LOG)
+	set -o pipefail; $(RESCUEZILLA_INTEGRATION_TEST_DIR)/integration_test.py deinit 2>&1 | tee $(INIT_LOG)
+	set -o pipefail; $(RESCUEZILLA_INTEGRATION_TEST_DIR)/integration_test.py init 2>&1 | tee $(INIT_LOG)
 	$(info * Run all tests, return number of failures. Follow the log files using: tail -f $(INTEGRATION_TEST_LOG_DIR)/[...].txt)
-	cd "$(RESCUEZILLA_INTEGRATION_TEST_DIR)/tests/" && ls test-*.sh | parallel -P$(THREADS) --tty "/usr/bin/time bash {} | tee \"$(INTEGRATION_TEST_LOG_DIR)/{}.log_file.txt\""
+	set -o pipefail; cd "$(RESCUEZILLA_INTEGRATION_TEST_DIR)/tests/" && ls test-*.sh | parallel -P$(THREADS) --tty "/usr/bin/time bash {} | tee \"$(INTEGRATION_TEST_LOG_DIR)/{}.log_file.txt\""
 
 clean: clean-build-dir
 	$(info )
