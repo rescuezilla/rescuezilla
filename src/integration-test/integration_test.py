@@ -281,7 +281,7 @@ def create_vm(vm_name, hd_to_attach) -> bool:
         return False
 
     # Disable VM audio to stop a weird PulseAudio static issue on testing host Linux environment
-    disable_audio_cmd_list = ["VBoxManage", "modifyvm", vm_name, "--audio", "none"]
+    disable_audio_cmd_list = ["VBoxManage", "modifyvm", vm_name, "--audio-driver", "none"]
     process = subprocess.run(disable_audio_cmd_list, encoding='utf-8')
     if process.returncode != 0:
         return False
