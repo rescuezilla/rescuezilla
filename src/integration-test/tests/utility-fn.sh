@@ -31,7 +31,18 @@ boot_dvd() {
      ISO_CHECK_MATCH="${3:-Ubuntu 22.04}"
      ./integration_test.py stop --vm $VM
      ./integration_test.py insertdvd --vm $VM --path-to-dvd "$ISO_PATH"
+
+     echo "** HACK: Temporary disconnect virtual HD from VM to workaround VirtualBox bug where systems configured as EFI don't respect boot order"
+     echo "** HACK: so always boot from HD rather than optical media [1] (doesn't happen on BIOS systems but use same detach logic for simplicity)"
+     echo "** HACK: It's expected for VirtualBox to say 'The machine is not mutable (state is Running)'"
+     echo "** [1] https://www.virtualbox.org/ticket/19364"
+     ./integration_test.py detachhd --vm $VM
      ./integration_test.py start --vm $VM
+
+     echo "** HACK: Reattach HD after booting from DVD after a short sleep, as a workaround for the VirtualBox EFI boot order bug described above"
+     sleep 10
+     ./integration_test.py attachhd --vm $VM
+
      # Check to confirm Rescuezilla environment is online
      ./integration_test.py check --vm $VM --contains "$ISO_CHECK_MATCH"
      # It takes time for the Ubuntu user account to be generated
