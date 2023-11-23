@@ -185,7 +185,7 @@ def create_hd(hd_prefix, size_gigabyte):
     if os.path.isfile(original_hd):
         print("File exists: " + original_hd)
     else:
-        print("Creating " + original_hd)
+        print("Creating drive " + original_hd)
         create_hd_cmd_list = ["VBoxManage", "createhd", "--filename", hd_prefix + ".vdi", "--sizebyte", str(size_byte),
                               "--format", "VDI"]
         create_hd_process = subprocess.run(create_hd_cmd_list, encoding='utf-8')
@@ -204,7 +204,7 @@ def create_hd(hd_prefix, size_gigabyte):
 
 
 def create_vm(vm_name, hd_to_attach) -> bool:
-    print("Creating " + vm_name)
+    print("Creating virtual machine " + vm_name)
     create_vm_cmd_list = ["VBoxManage", "createvm", "--name", vm_name, "--ostype", "Windows10_64", "--register"]
     process = subprocess.run(create_vm_cmd_list, encoding='utf-8')
     if process.returncode != 0:
