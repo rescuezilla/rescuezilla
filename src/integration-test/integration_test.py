@@ -87,15 +87,15 @@ def initialize_vms(hd_key_list, machine_key_list):
     return True
 
 
-def detach_hds(vm_name, hd_to_detach):
+def detach_hds(vm_name, hd_to_detach, replace_with="none"):
     sata_port = 0
     for hd_prefix in MACHINE_DICT[vm_name]['hd_list']:
         if hd_prefix in hd_to_detach:
             print(" Detaching " + hd_prefix + ".vdi")
             # Detach drive by inserting 'none' device
             detach_storage_cmd_list = ["VBoxManage", "storageattach", vm_name, "--storagectl", "SATA Controller",
-                                       "--port", str(sata_port), "--device", "0", "--type", "hdd", "--medium",
-                                       "none"]
+                                       "--port", str(sata_port), "--device", "0", "--hotpluggable", "on",
+                                       "--type", "hdd", "--medium", replace_with]
             run_command(detach_storage_cmd_list, encoding='utf-8')
             sata_port += 1
             # Remove
@@ -229,7 +229,7 @@ def attach_hds(vm_name, hd_to_attach) -> bool:
         if hd_prefix in hd_to_attach:
             attach_storage_cmd_list = ["VBoxManage", "storageattach", vm_name, "--storagectl", "SATA Controller",
                                        "--port",
-                                       str(sata_port), "--device", "0", "--type",
+                                       str(sata_port), "--device", "0", "--hotpluggable", "on", "--type",
                                        "hdd", "--medium", hd_prefix + ".vdi"]
             process = run_command(attach_storage_cmd_list, encoding='utf-8')
             if process.returncode != 0:
