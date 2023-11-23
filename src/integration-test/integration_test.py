@@ -87,6 +87,25 @@ def initialize_vms(hd_key_list, machine_key_list):
     return True
 
 
+def detach_hds(vm_name, hd_to_detach):
+    sata_port = 0
+    for hd_prefix in MACHINE_DICT[vm_name]['hd_list']:
+        if hd_prefix in hd_to_detach:
+            print(" Detaching " + hd_prefix + ".vdi")
+            # Detach drive by inserting 'none' device
+            detach_storage_cmd_list = ["VBoxManage", "storageattach", vm_name, "--storagectl", "SATA Controller",
+                                       "--port", str(sata_port), "--device", "0", "--type", "hdd", "--medium",
+                                       "none"]
+            run_command(detach_storage_cmd_list, encoding='utf-8')
+            sata_port += 1
+            # Remove
+            # remove_hdd_cmd_list = ["VBoxManage", "storagectl", vm_name, "--name", hd_prefix + ".vdi", "--remove"]
+            # run_command(remove_hdd_cmd_list, encoding='utf-8')
+        else:
+            sata_port += 1
+            continue
+
+
 def deinitialize_vms(hd_key_list, machine_key_list):
     print("Remove DHCP server associated with host-only interface " + VIRTUAL_BOX_HOSTONLYIFS)
     remove_dhcpserver_cmd_list = ["VBoxManage", "dhcpserver", "remove", "--interface", VIRTUAL_BOX_HOSTONLYIFS]
@@ -98,22 +117,7 @@ def deinitialize_vms(hd_key_list, machine_key_list):
 
     for vm_name in machine_key_list:
         print("Removing " + vm_name)
-        sata_port = 0
-        for hd_prefix in MACHINE_DICT[vm_name]['hd_list']:
-            if hd_prefix in hd_key_list:
-                print(" Detaching " + hd_prefix + ".vdi")
-                # Detach drive by inserting 'none' device
-                detach_storage_cmd_list = ["VBoxManage", "storageattach", vm_name, "--storagectl", "SATA Controller",
-                                           "--port", str(sata_port), "--device", "0", "--type", "hdd", "--medium",
-                                           "none"]
-                run_command(detach_storage_cmd_list, encoding='utf-8')
-                sata_port += 1
-                # Remove
-                # remove_hdd_cmd_list = ["VBoxManage", "storagectl", vm_name, "--name", hd_prefix + ".vdi", "--remove"]
-                # run_command(remove_hdd_cmd_list, encoding='utf-8')
-            else:
-                sata_port += 1
-                continue
+        detach_hds(vm_name, hd_key_list)
 
         # Delete VM
         delete_vm_cmd_list = ["VBoxManage", "unregistervm", vm_name, "--delete"]
