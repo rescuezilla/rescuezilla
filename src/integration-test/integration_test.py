@@ -219,6 +219,22 @@ def create_hd(hd_prefix, size_gigabyte) -> bool:
     return True
 
 
+def attach_hds(vm_name, hd_to_attach) -> bool:
+    sata_port = 0
+    for hd_prefix in MACHINE_DICT[vm_name]['hd_list']:
+        if hd_prefix in hd_to_attach:
+            attach_storage_cmd_list = ["VBoxManage", "storageattach", vm_name, "--storagectl", "SATA Controller",
+                                       "--port",
+                                       str(sata_port), "--device", "0", "--type",
+                                       "hdd", "--medium", hd_prefix + ".vdi"]
+            process = run_command(attach_storage_cmd_list, encoding='utf-8')
+            if process.returncode != 0:
+                return False
+
+        sata_port += 1
+    return True
+
+
 def create_vm(vm_name, hd_to_attach) -> bool:
     print("Creating virtual machine " + vm_name)
     create_vm_cmd_list = ["VBoxManage", "createvm", "--name", vm_name, "--ostype", "Windows10_64", "--register"]
@@ -262,18 +278,8 @@ def create_vm(vm_name, hd_to_attach) -> bool:
     if process.returncode != 0:
         return False
 
-    sata_port = 0
-    for hd_prefix in MACHINE_DICT[vm_name]['hd_list']:
-        if hd_prefix in hd_to_attach:
-            attach_storage_cmd_list = ["VBoxManage", "storageattach", vm_name, "--storagectl", "SATA Controller",
-                                       "--port",
-                                       str(sata_port), "--device", "0", "--type",
-                                       "hdd", "--medium", hd_prefix + ".vdi"]
-            process = run_command(attach_storage_cmd_list, encoding='utf-8')
-            if process.returncode != 0:
-                return False
-
-        sata_port += 1
+    if not attach_hds(vm_name, hd_to_attach):
+        return False
 
     # Set firmware
     boot_order_cmd_list = ["VBoxManage", "modifyvm", vm_name, "--firmware", MACHINE_DICT[vm_name]['firmware']]
