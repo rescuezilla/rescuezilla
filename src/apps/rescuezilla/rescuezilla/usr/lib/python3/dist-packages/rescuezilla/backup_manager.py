@@ -542,7 +542,7 @@ class BackupManager:
                 post_mbr_gap_sector_count = 2047
                 self.logger.write("Calculated very large hidden data after MBR size, so copying minimal post-MBR gap")
                 not_creating_hidden_data_info_filepath = os.path.join(self.dest_dir, short_selected_device_node + "-hidden-data-after-mbr.notes.txt")
-                self.ui_manager.display_status(msg1=_("Saving: {file}").format(file=not_creating_hidden_data_info_filepath))
+                self.ui_manager.display_status(msg1=_("Saving: {file}").format(file=not_creating_hidden_data_info_filepath), msg2="")
                 with open(not_creating_hidden_data_info_filepath, 'w') as filehandle:
                     try:
                         output = "The hidden data space size (" + str(first_partition_offset_bytes) + " bytes) is larger than the " + str(hidden_data_after_mbr_limit) + " byte limit. Copying minimal post-MBR gap.\n"

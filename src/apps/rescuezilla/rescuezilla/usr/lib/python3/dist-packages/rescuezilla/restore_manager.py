@@ -1224,7 +1224,7 @@ class RestoreManager:
                             with self.summary_message_lock:
                                 self.summary_message += message + "\n"
                         else:
-                            self.ui_manager.display_status(msg1=_("Updating EFI NVRAM..."))
+                            self.ui_manager.display_status(msg1=_("Updating EFI NVRAM..."), msg2="")
                             # TODO: Port Clonezilla's ocs-update-initrd bash script to Python instead of relying on Clonezilla's script
                             # Unlike Clonezilla, no need to specify a -f/--efi-boot-file-info option
                             process, flat_command_string, failed_message = Utility.run(
