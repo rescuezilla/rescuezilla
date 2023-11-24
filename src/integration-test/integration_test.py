@@ -66,7 +66,9 @@ def initialize_vms(hd_key_list, machine_key_list):
         return False
 
     for hd_prefix in hd_key_list:
-        create_hd(hd_prefix, DRIVE_DICT[hd_prefix]['size_gigabyte'])
+        # Create HDs and return if failed
+        if not create_hd(hd_prefix, DRIVE_DICT[hd_prefix]['size_gigabyte']):
+            return False
 
     for vm_name in machine_key_list:
         is_success = create_vm(vm_name, hd_key_list)
@@ -178,7 +180,7 @@ def commit_hd(hd_prefix_list, do_overwrite):
                     print("  Skipping because --force not provided.")
 
 
-def create_hd(hd_prefix, size_gigabyte):
+def create_hd(hd_prefix, size_gigabyte) -> bool:
     size_byte = size_gigabyte * 1024 * 1024 * 1024
     original_hd = os.path.join(VIRTUAL_BOX_FOLDER, hd_prefix + ".vdi")
     zeroed_hd = os.path.join(VIRTUAL_BOX_FOLDER, hd_prefix + ".zeroed.vdi")
@@ -189,18 +191,23 @@ def create_hd(hd_prefix, size_gigabyte):
         create_hd_cmd_list = ["VBoxManage", "createhd", "--filename", hd_prefix + ".vdi", "--sizebyte", str(size_byte),
                               "--format", "VDI"]
         create_hd_process = subprocess.run(create_hd_cmd_list, encoding='utf-8')
+        if create_hd_process.returncode != 0:
+            return False
 
         print("Removing " + original_hd + " from VirtualBox media registry so UUID can be changed")
         closemedium_cmd_list = ["VBoxManage", "closemedium", "disk", hd_prefix + ".vdi"]
         closemedium_process = subprocess.run(closemedium_cmd_list, encoding='utf-8')
+        if closemedium_process.returncode != 0:
+            return False
 
-        if closemedium_process.returncode == 0:
-            # Update VirtualBox UUID of newly copied in hard drive
-            set_uuid_cmd_list = ["VBoxManage", "internalcommands", "sethduuid", original_hd, DRIVE_DICT[hd_prefix]['uuid']]
-            subprocess.run(set_uuid_cmd_list, encoding='utf-8')
-
-            print("Backup of " + original_hd + " to " + zeroed_hd)
-            shutil.copyfile(original_hd, zeroed_hd)
+        # Update VirtualBox UUID of newly copied in hard drive
+        set_uuid_cmd_list = ["VBoxManage", "internalcommands", "sethduuid", original_hd, DRIVE_DICT[hd_prefix]['uuid']]
+        sethduuid_process = subprocess.run(set_uuid_cmd_list, encoding='utf-8')
+        if sethduuid_process.returncode != 0:
+            return False
+        print("Backup of " + original_hd + " to " + zeroed_hd)
+        shutil.copyfile(original_hd, zeroed_hd)
+    return True
 
 
 def create_vm(vm_name, hd_to_attach) -> bool:
