@@ -537,8 +537,6 @@ class BackupManager:
             self.logger.write("Detected first partition is " + first_partition_key + " at byte offset " + str(first_partition_offset_bytes) + "\n")
             if first_partition_offset_bytes > hidden_data_after_mbr_limit:
                 # If the post-mbr gap is too large, Clonezilla does not backup the data but instead creates a notes file
-                # FIXME: Rescuezilla doesn't yet match Clonezilla's ability to re-install GRUB, so it makes sense to
-                # FIXME: continue to backup a post-mbr gap until full parity with Clonezilla is achieved.
                 post_mbr_gap_sector_count = 2047
                 self.logger.write("Calculated very large hidden data after MBR size, so copying minimal post-MBR gap")
                 not_creating_hidden_data_info_filepath = os.path.join(self.dest_dir, short_selected_device_node + "-hidden-data-after-mbr.notes.txt")
