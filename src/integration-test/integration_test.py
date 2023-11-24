@@ -438,7 +438,14 @@ def handle_command(args):
     elif args.command == "check":
         all_success = True
         for vm_name in machine_key_list:
-            all_success = all_success and check_vm(vm_name, args.contains)
+            is_check = check_vm(vm_name, args.contains)
+            if not is_check:
+                print(f"Failed to verify that {vm_name} is online running the expected OS.")
+                print("Please confirm the VM is booted, and ping the IP address to confirm network settings are correct")
+                print("If this is a Rescuezilla ISO image, ensure it was built using 'IS_INTEGRATION_TEST=true' option.")
+                print("For other environments, ensure the 'install-linux-query-tcp-server.sh' or 'install_windows_query_tcp_server.bat' were installed")
+                print("")
+            all_success = (all_success and is_check)
         _exit(all_success)
     elif args.command == "ping":
         all_success = True
