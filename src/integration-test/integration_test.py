@@ -192,9 +192,9 @@ def create_hd(hd_prefix, size_gigabyte):
 
         print("Removing " + original_hd + " from VirtualBox media registry so UUID can be changed")
         closemedium_cmd_list = ["VBoxManage", "closemedium", "disk", hd_prefix + ".vdi"]
-        create_hd_process = subprocess.run(closemedium_cmd_list, encoding='utf-8')
+        closemedium_process = subprocess.run(closemedium_cmd_list, encoding='utf-8')
 
-        if create_hd_process.returncode == 0:
+        if closemedium_process.returncode == 0:
             # Update VirtualBox UUID of newly copied in hard drive
             set_uuid_cmd_list = ["VBoxManage", "internalcommands", "sethduuid", original_hd, DRIVE_DICT[hd_prefix]['uuid']]
             subprocess.run(set_uuid_cmd_list, encoding='utf-8')
