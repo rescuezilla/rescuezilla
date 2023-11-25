@@ -193,11 +193,12 @@ integration-test: INIT_LOG=$(INTEGRATION_TEST_LOG_DIR)/init.txt
 integration-test: THREADS=1
 integration-test:
 	mkdir --parents $(INTEGRATION_TEST_LOG_DIR)
+	# Reset and reinitialize the entire integration test VirtualBox VM environments
 	set -o pipefail; $(RESCUEZILLA_INTEGRATION_TEST_DIR)/integration_test.py stop 2>&1 | tee $(INIT_LOG)
 	set -o pipefail; $(RESCUEZILLA_INTEGRATION_TEST_DIR)/integration_test.py deinit 2>&1 | tee $(INIT_LOG)
 	set -o pipefail; $(RESCUEZILLA_INTEGRATION_TEST_DIR)/integration_test.py init 2>&1 | tee $(INIT_LOG)
-	$(info * Run all tests, return number of failures. Follow the log files using: tail -f $(INTEGRATION_TEST_LOG_DIR)/[...].txt)
-	set -o pipefail; cd "$(RESCUEZILLA_INTEGRATION_TEST_DIR)/tests/" && ls test-*.sh | parallel -P$(THREADS) --tty "/usr/bin/time bash {} | tee \"$(INTEGRATION_TEST_LOG_DIR)/{}.log_file.txt\""
+	# Execute all integration tests
+	cd "$(RESCUEZILLA_INTEGRATION_TEST_DIR)/tests/" && ./run-all.sh "$(BASE_BUILD_DIRECTORY)" "$(INTEGRATION_TEST_LOG_DIR)"
 
 clean: clean-build-dir
 	$(info )
