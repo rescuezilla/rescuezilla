@@ -159,6 +159,8 @@ pkgs_specific_to_ubuntu2310_mantic=(
                        "exfatprogs"
                        # Add support for crypto volumes mount (luks, bitlocker, crypt)
                        "libblockdev-crypto3"
+                       # "Legacy "local authority" (.pkla) backend for polkitd" required so polkit works on Mantic
+                       "polkitd-pkla"
 )
 
 
