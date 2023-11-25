@@ -157,8 +157,8 @@ pkgs_specific_to_ubuntu2310_mantic=(
                        "nbdkit"
                        # Replaces exfat-utils
                        "exfatprogs"
-                        # Add support for crypto volumes mount (luks, bitlocker, crypt)
-                        "libblockdev-crypto3"
+                       # Add support for crypto volumes mount (luks, bitlocker, crypt)
+                       "libblockdev-crypto3"
 )
 
 
