@@ -1,3 +1,5 @@
+set -x
+
 # Directory containing this build script
 INTEGRATION_TEST_FOLDER=$(dirname $(readlink -f "$0"))/../
 cd "$INTEGRATION_TEST_FOLDER"
