@@ -9,7 +9,7 @@
 	url = https://github.com/rescuezilla/partclone-nbd
 [submodule "src/third-party/debootstrap"]
 	path = src/third-party/debootstrap
-	url = https://salsa.debian.org/installer-team/debootstrap
+	url = https://github.com/rescuezilla/debootstrap
 [submodule "src/third-party/partclone-latest"]
 	path = src/third-party/partclone-latest
 	url = https://github.com/Thomas-Tsai/partclone
