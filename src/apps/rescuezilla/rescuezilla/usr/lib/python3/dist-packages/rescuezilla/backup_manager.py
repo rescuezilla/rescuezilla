@@ -266,8 +266,6 @@ class BackupManager:
             self.ui_manager.display_status(msg1=_("Saving: {file}").format(file=info_lshw_filepath), msg2="")
             process, flat_command_string, failed_message = Utility.run("Saving Info-lshw.txt", ["lshw"],
                                                                        use_c_locale=True,
-                                                                       # lshw can output data in binary
-                                                                       encoding=None,
                                                                        output_filepath=info_lshw_filepath,
                                                                        logger=self.logger)
             if process.returncode != 0:
@@ -440,8 +438,6 @@ class BackupManager:
             process, flat_command_string, failed_message = Utility.run("Saving EFI NVRAM info",
                                                                               ["efibootmgr", "--verbose"],
                                                                               use_c_locale=True,
-                                                                              # efibootmgr can output data in binary
-                                                                              encoding=None,
                                                                               output_filepath=efi_nvram_filepath,
                                                                               logger=self.logger)
             if process.returncode != 0:
