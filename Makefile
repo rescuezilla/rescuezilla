@@ -251,6 +251,9 @@ docker-bash:
 docker-deb:
 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make deb
 
+docker-lunar:
+	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make lunar
+
 docker-mantic:
 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make mantic
 
