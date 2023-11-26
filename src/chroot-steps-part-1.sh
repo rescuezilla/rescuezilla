@@ -163,6 +163,27 @@ pkgs_specific_to_ubuntu2310_mantic=(
                        "polkitd-pkla"
 )
 
+pkgs_specific_to_ubuntu2404_noble=(
+                       "linux-generic"
+                       "xserver-xorg"
+                       "xserver-xorg-video-all"
+                       "xserver-xorg-video-intel"
+                       "xserver-xorg-video-qxl"
+                       "xserver-xorg-video-mga"
+                        # Packages which may assist users needing to do a GRUB repair (64-bit EFI)
+                       "shim-signed"
+                       "grub-efi-amd64-signed"
+                       "grub-efi-amd64-bin"
+                       "grub-efi-ia32-bin"
+                       # Dependency for partclone-utils' imagemount
+                       "nbdkit"
+                       # Replaces exfat-utils
+                       "exfatprogs"
+                       # Add support for crypto volumes mount (luks, bitlocker, crypt)
+                       "libblockdev-crypto3"
+                       # "Legacy "local authority" (.pkla) backend for polkitd" required so polkit works on Mantic
+                       "polkitd-pkla"
+)
 
 # Languages on the system
 lang_codes=(
@@ -329,6 +350,8 @@ elif  [ "$CODENAME" == "jammy" ]; then
   apt_pkg_list=("${pkgs_specific_to_ubuntu2204_jammy[@]}" "${common_pkgs[@]}")
 elif  [ "$CODENAME" == "mantic" ]; then
   apt_pkg_list=("${pkgs_specific_to_ubuntu2310_mantic[@]}" "${common_pkgs[@]}")
+elif  [ "$CODENAME" == "noble" ]; then
+  apt_pkg_list=("${pkgs_specific_to_ubuntu2404_noble[@]}" "${common_pkgs[@]}")
 else
   echo "Warning: Unknown release codename $CODENAME"
   exit 1

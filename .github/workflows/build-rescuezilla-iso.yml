@@ -39,6 +39,11 @@ jobs:
         run: make docker-test
 
       - run: make docker-status
+      - name: Make Ubuntu 24.04 LTS (Noble) ISO
+        run: make docker-noble
+      - run: sudo mv build/rescuezilla.amd64.noble.iso build/rescuezilla-${{github.ref_name}}-64bit.noble-unreleased.iso
+
+      - run: make docker-status
       - name: Make Ubuntu 23.10 (Mantic) ISO
         run: make docker-mantic
       - run: sudo mv build/rescuezilla.amd64.mantic.iso build/rescuezilla-${{github.ref_name}}-64bit.mantic.iso
@@ -102,6 +107,11 @@ jobs:
         with:
           name: rescuezilla-${{github.ref_name}}-64bit.mantic.iso
           path: build/rescuezilla-${{github.ref_name}}-64bit.mantic.iso
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: rescuezilla-${{github.ref_name}}-64bit.noble.unreleased.iso
+          path: build/rescuezilla-${{github.ref_name}}-64bit.noble.unreleased.iso
 
       - uses: actions/upload-artifact@v3
         with:
