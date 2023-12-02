@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2023-11-15 18:04+0000\n"
+"PO-Revision-Date: 2023-12-02 09:04+0000\n"
 "Last-Translator: Matěj Valášek <valmatej@seznam.cz>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/cs/>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 5.2-dev\n"
+"X-Generator: Weblate 5.3-dev\n"
 
 msgid "Welcome"
 msgstr "Vitejte"
@@ -54,7 +54,7 @@ msgid "Next >"
 msgstr "Další>"
 
 msgid "Please wait..."
-msgstr "Prosím vyčkejte..."
+msgstr "Prosím čekejte..."
 
 msgid "Identifying disk drives..."
 msgstr "Identifikace disků..."
@@ -143,7 +143,7 @@ msgid "Cloning the following partitions"
 msgstr "Klonování následujících oddílů"
 
 msgid "To start cloning, click <b>Next</b>."
-msgstr "Pro zahájení klonování klikněte na <b>Další</b>."
+msgstr "Pro zahájení klonování klikněte na tlačítko <b>Další</b>."
 
 #, python-brace-format
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
@@ -219,11 +219,11 @@ msgid "Partition {partition_number}"
 msgstr "Oddíl {partition_number}"
 
 msgid "Step 3: Select Destination Drive"
-msgstr "Krok 3: Vyberte Cílový disk"
+msgstr "Krok 3: Vyberte Cílový Disk"
 
 msgid "Click on the box below to select the source drive that you would like to create a backup image from."
 msgstr ""
-"Kliknutím na pole níže vyberte zdrojový disk, ze které chcete vytvořit "
+"Kliknutím na pole níže vyberte zdrojový disk, ze kterého chcete vytvořit "
 "záložní obraz."
 
 msgid "Connected directly to my computer"
@@ -288,8 +288,8 @@ msgstr "Pro zrušení připojení disku zavřete toto vyskakovací okno."
 
 msgid "Please ensure the username, password and other fields provided are correct, and try again."
 msgstr ""
-"Prosím zkontrolujte zda uživatelské jméno, heslo a další pole jsou správně, "
-"a zkuste to znovu."
+"Prosím zkontrolujte zda uživatelské jméno, heslo a další pole jsou správně a "
+"zkuste to znovu."
 
 msgid "Must provide either password or SSH identity file."
 msgstr "Musíte zadat heslo nebo SSH identity soubor."
@@ -324,8 +324,8 @@ msgstr "Nelze najít přidružený partclone obraz oddílu"
 
 msgid "This can happen when loading images which Clonezilla was unable to completely backup."
 msgstr ""
-"K tomu může dojít při načítání obrázků, které Clonezilla nedokázala "
-"kompletně zálohovat."
+"K tomu může dojít při načítání obrazů, které Clonezilla nedokázala kompletně "
+"zálohovat."
 
 msgid "Note: This image format cannot distinguish between failed partclone backup and a user who chose not to backup a partition."
 msgstr ""
@@ -588,7 +588,7 @@ msgid "Step 3: Select Drive To Restore"
 msgstr "Krok 3: Vyberte disk, který chcete obnovit"
 
 msgid "Select the destination drive to restore with the selected image."
-msgstr "Vyberte cílový disk pro obnovení vybrané bitové kopie."
+msgstr "Vyberte cílový disk pro obnovení vybranou bitovou kopií."
 
 msgid "Step 4: Select Partitions to Restore"
 msgstr "Krok 4: Vyberte oddíly, které chcete obnovit"
@@ -600,7 +600,7 @@ msgstr ""
 "zaškrtnuté.</b>"
 
 msgid "Selected image"
-msgstr "Vyberte obraz"
+msgstr "Vybraný obraz"
 
 msgid "Destination device"
 msgstr "Cílové zařízení"
@@ -623,7 +623,7 @@ msgstr ""
 "nainstalovány další operační systémy<i>od vytvoření záložního obrazu</i>, "
 "pak tabulka oddílů cílové jednotky nebude odpovídat záložnímu obrazu a "
 "přepsání tabulky oddílů cílové jednotky způsobí, že tyto změněné a další "
-"oddíly budou trvale nepřístupné.</b>Pokud jste od vytvoření této zálohy "
+"oddíly budou trvale nepřístupné.</b> Pokud jste od vytvoření této zálohy "
 "tabulku oddílů nijak nezměnili, je přepsání tabulky oddílů zcela bezpečné a "
 "nebude mít žádné negativní účinky."
 
@@ -737,7 +737,7 @@ msgstr "Dotaz na geometrii pevného disku {device}"
 
 #, python-brace-format
 msgid "Probing {device} with {app}"
-msgstr "Sondování{device} pomocí {app}"
+msgstr "Sondování {device} pomocí {app}"
 
 #, python-brace-format
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
@@ -819,13 +819,13 @@ msgstr "Chyba při obnovení oddílu {image_key} na {destination_partition}."
 
 #, python-brace-format
 msgid "Successfully restored image partition {image} to {destination_partition}"
-msgstr "Úspěšně obnoven oddíl image {image} na {destination_partition}"
+msgstr "Úspěšně obnoven oddíl obrazu {image} na {destination_partition}"
 
 msgid "Summary of Restore"
 msgstr "Shrnutí obnovení"
 
 msgid "Restore Summary"
-msgstr "Obnovení souhrn"
+msgstr "Souhrn obnovení"
 
 msgid "Confirm the restore summary."
 msgstr "Potvrďte souhrn obnovení."
@@ -860,7 +860,7 @@ msgid "Mount"
 msgstr "Připojit"
 
 msgid "Mounting as read-only..."
-msgstr "Připojit jen pro čtení…"
+msgstr "Připojování jen pro čtení…"
 
 msgid "Unmount"
 msgstr "Odpojit"
@@ -874,7 +874,7 @@ msgid "Open in file manager"
 msgstr "Otevřít ve správci souborů"
 
 msgid "Verify"
-msgstr "Ověřit"
+msgstr "Ověření"
 
 msgid "Select one or more image(s) to verify."
 msgstr "Vyberte jeden nebo více obrazů k ověření."
@@ -886,7 +886,7 @@ msgid "Verifying Image"
 msgstr "Ověřování obrazu"
 
 msgid "Verifying the selected image(s)."
-msgstr "Ověřování vybraných obrazu(ů)."
+msgstr "Ověřování vybraného obrazu(ů)."
 
 #, python-brace-format
 msgid "Verifying {image_name}"
