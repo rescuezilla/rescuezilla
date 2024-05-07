@@ -1,12 +1,12 @@
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
 # 池边树下 <mzky@163.com>, 2021, 2022.
-# Haowei Hsu <hwhsu1231@gmail.com>, 2023.
+# Haowei Hsu <hwhsu1231@gmail.com>, 2023, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2023-08-01 06:06+0000\n"
+"PO-Revision-Date: 2024-05-07 18:07+0000\n"
 "Last-Translator: Haowei Hsu <hwhsu1231@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
 "rescuezilla/rescuezilla/zh_Hant/>\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.0-dev\n"
+"X-Generator: Weblate 5.5.4-rc\n"
 
 msgid "Welcome"
 msgstr "歡迎"
@@ -253,7 +253,7 @@ msgid "Optional"
 msgstr "選用"
 
 msgid "Select network-shared storage location:"
-msgstr "選擇網路分享儲存位置："
+msgstr "選取網路共享儲存位置："
 
 msgid "Select the partition where the image files will be saved to"
 msgstr "選取映像檔將要儲存的分區"
