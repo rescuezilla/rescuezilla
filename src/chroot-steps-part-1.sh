@@ -79,6 +79,7 @@ pkgs_specific_to_ubuntu1804_bionic_32bit=("linux-generic-hwe-18.04"
                         "dmidecode"
                         # Add support for crypto volumes mount (luks, bitlocker, crypt)
                         "libblockdev-crypto2"
+                        "ibus-anthy"
 )
 
 # Packages specific to Rescuezilla 64-bit build (currently based Ubuntu 20.04 Focal)
@@ -105,6 +106,7 @@ pkgs_specific_to_ubuntu2004_focal=("linux-generic-hwe-18.04"
                        "plymouth-theme-ubuntu-logo"
                         # Add support for crypto volumes mount (luks, bitlocker, crypt)
                         "libblockdev-crypto2"
+                        "ibus-anthy"
 )
 
 pkgs_specific_to_ubuntu2304_lunar=(
@@ -125,6 +127,7 @@ pkgs_specific_to_ubuntu2304_lunar=(
                        "exfatprogs"
                         # Add support for crypto volumes mount (luks, bitlocker, crypt)
                         "libblockdev-crypto2"
+                        "ibus-anthy"
 )
 
 pkgs_specific_to_ubuntu2204_jammy=(
@@ -147,6 +150,7 @@ pkgs_specific_to_ubuntu2204_jammy=(
                        "plymouth-theme-ubuntu-logo"
                         # Add support for crypto volumes mount (luks, bitlocker, crypt)
                         "libblockdev-crypto2"
+                        "ibus-anthy"
 )
 
 pkgs_specific_to_ubuntu2310_mantic=(
@@ -169,6 +173,7 @@ pkgs_specific_to_ubuntu2310_mantic=(
                        "libblockdev-crypto3"
                        # "Legacy "local authority" (.pkla) backend for polkitd" required so polkit works on Mantic
                        "polkitd-pkla"
+                       "ibus-anthy"
 )
 
 pkgs_specific_to_ubuntu2404_noble=(
@@ -260,7 +265,6 @@ common_pkgs=("discover"
              "${firefox_locale_pkgs[@]}"
               # Japanese font
              "fonts-takao-mincho"
-             "ibus-anthy"
              # Chinese font
              "fonts-wqy-zenhei"
              # Korean font
