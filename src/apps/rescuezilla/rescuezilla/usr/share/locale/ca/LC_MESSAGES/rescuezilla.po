@@ -1,12 +1,12 @@
-# Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022, 2024.
 # BennyBeat <bennybeat@gmail.com>, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2023-02-28 17:39+0000\n"
-"Last-Translator: BennyBeat <bennybeat@gmail.com>\n"
+"PO-Revision-Date: 2024-05-12 23:31+0000\n"
+"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/ca/>\n"
 "Language: ca\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.16-rc\n"
+"X-Generator: Weblate 5.5.4\n"
 
 msgid "Welcome"
 msgstr "Us donem la benvinguda"
@@ -521,7 +521,7 @@ msgstr ""
 "{filesystem} a: {destination}"
 
 msgid "Summary of Backup"
-msgstr "Resum de la còpia de seguretat"
+msgstr "Resultat de la còpia de seguretat"
 
 msgid "Confirm the backup summary."
 msgstr "Confirmeu el resum de la còpia de seguretat."
@@ -859,7 +859,7 @@ msgstr ""
 "correctament"
 
 msgid "Summary of Restore"
-msgstr "Resum de la restauració"
+msgstr "Resultat de la restauració"
 
 msgid "Restore Summary"
 msgstr "Resum de la restauració"
@@ -928,7 +928,7 @@ msgid "Verifying {image_name}"
 msgstr "S'està verificant {image_name}"
 
 msgid "Summary of Verification"
-msgstr "Resum de la verificació"
+msgstr "Resultat de la verificació"
 
 msgid "Confirm the verification summary."
 msgstr "Confirmeu el resum de la verificació."
