@@ -31,9 +31,13 @@ jobs:
       - name: Trust the git folder
         run: make docker-add-safe-directory
 
+      - name: Create completed artifacts folder
+        run: mkdir completed-artifacts/
+
       - run: make docker-status
       - name: Make DEB package
         run: make docker-deb
+      - run: sudo mv build/rescuezilla_${{env.DEB_VERSION}}-1_all.deb completed-artifacts/rescuezilla_${{env.DEB_VERSION}}-1_all.deb
 
       - name: Run unit tests within the Docker container
         run: make docker-test
@@ -41,44 +45,50 @@ jobs:
       - run: make docker-status
       - name: Make Ubuntu 24.04 LTS (Noble) ISO
         run: make docker-noble
-      - run: sudo mv build/rescuezilla.amd64.noble.iso build/rescuezilla-${{github.ref_name}}-64bit.noble-unreleased.iso
+      - run: sudo mv build/rescuezilla.amd64.noble.iso completed-artifacts/rescuezilla-${{github.ref_name}}-64bit.noble.iso
+      - run: sudo make clean-all
 
       - run: make docker-status
       - name: Make Ubuntu 23.10 (Mantic) ISO
         run: make docker-mantic
-      - run: sudo mv build/rescuezilla.amd64.mantic.iso build/rescuezilla-${{github.ref_name}}-64bit.mantic.iso
+      - run: sudo mv build/rescuezilla.amd64.mantic.iso completed-artifacts/rescuezilla-${{github.ref_name}}-64bit.mantic.iso
+      - run: sudo make clean-all
 
       - run: make docker-status
       - name: Make Ubuntu 23.04 LTS (Lunar) ISO
         run: make docker-lunar
-      - run: sudo mv build/rescuezilla.amd64.lunar.iso build/rescuezilla-${{github.ref_name}}-64bit.lunar.iso
+      - run: sudo mv build/rescuezilla.amd64.lunar.iso completed-artifacts/rescuezilla-${{github.ref_name}}-64bit.lunar.iso
+      - run: sudo make clean-all
 
       - run: make docker-status
       - name: Make Ubuntu 22.04 LTS (Jammy) ISO [LTS  = Long Term Support]
         run: make docker-jammy
-      - run: sudo mv build/rescuezilla.amd64.jammy.iso build/rescuezilla-${{github.ref_name}}-64bit.jammy.iso
+      - run: sudo mv build/rescuezilla.amd64.jammy.iso completed-artifacts/rescuezilla-${{github.ref_name}}-64bit.jammy.iso
+      - run: sudo make clean-all
 
       - run: make docker-status
       - name: Make Ubuntu 20.04 LTS (Focal) ISO [LTS  = Long Term Support]
         run: make docker-focal
-      - run: sudo mv build/rescuezilla.amd64.focal.iso build/rescuezilla-${{github.ref_name}}-64bit.focal.iso
+      - run: sudo mv build/rescuezilla.amd64.focal.iso completed-artifacts/rescuezilla-${{github.ref_name}}-64bit.focal.iso
+      - run: sudo make clean-all
 
       - run: make docker-status
       - name: Make Ubuntu 18.04 LTS (Bionic) ISO (i386)
         run: make docker-bionic-i386
-      - run: sudo mv build/rescuezilla.i386.bionic.iso build/rescuezilla-${{github.ref_name}}-32bit.bionic.iso
+      - run: sudo mv build/rescuezilla.i386.bionic.iso completed-artifacts/rescuezilla-${{github.ref_name}}-32bit.bionic.iso
+      - run: sudo make clean-all
 
       - name: Create checksums for ISO images
-        run: cd build && sudo ../src/scripts/create-iso-checksums.sh rescuezilla_${{env.DEB_VERSION}}-1_all.deb  rescuezilla-${{github.ref_name}}-*.iso
+        run: cd completed-artifacts && sudo ../src/scripts/create-iso-checksums.sh rescuezilla_${{env.DEB_VERSION}}-1_all.deb  rescuezilla-${{github.ref_name}}-*.iso
 
       - name: Upload release assets (on tag push)
         uses: softprops/action-gh-release@v1
         if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
         with:
           files: |
-            build/*SUM
-            build/rescuezilla_${{env.DEB_VERSION}}-1_all.deb
-            build/rescuezilla-${{github.ref_name}}-*.iso
+            completed-artifacts/*SUM
+            completed-artifacts/rescuezilla_${{env.DEB_VERSION}}-1_all.deb
+            completed-artifacts/rescuezilla-${{github.ref_name}}-*.iso
 
       # Upload GitHub Action workflow *artifacts*. Note "artifacts" are a different concept to GitHub release rssets. The former is available on each GitHub Actions
       # workflow run. The latter is associated with only a pushed tag.
@@ -86,45 +96,45 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: SHA256SUM
-          path: build/SHA256SUM
+          path: completed-artifacts/SHA256SUM
 
       - uses: actions/upload-artifact@v3
         with:
           name: MD5SUM
-          path: build/MD5SUM
+          path: completed-artifacts/MD5SUM
 
       - uses: actions/upload-artifact@v3
         with:
           name: SHA1SUM
-          path: build/SHA1SUM
+          path: completed-artifacts/SHA1SUM
 
       - uses: actions/upload-artifact@v3
         with:
           name: rescuezilla_${{env.DEB_VERSION}}-1_all.deb
-          path: build/rescuezilla_${{env.DEB_VERSION}}-1_all.deb
+          path: completed-artifacts/rescuezilla_${{env.DEB_VERSION}}-1_all.deb
 
       - uses: actions/upload-artifact@v3
         with:
           name: rescuezilla-${{github.ref_name}}-64bit.mantic.iso
-          path: build/rescuezilla-${{github.ref_name}}-64bit.mantic.iso
+          path: completed-artifacts/rescuezilla-${{github.ref_name}}-64bit.mantic.iso
 
       - uses: actions/upload-artifact@v3
         with:
-          name: rescuezilla-${{github.ref_name}}-64bit.noble.unreleased.iso
-          path: build/rescuezilla-${{github.ref_name}}-64bit.noble.unreleased.iso
+          name: rescuezilla-${{github.ref_name}}-64bit.noble.iso
+          path: completed-artifacts/rescuezilla-${{github.ref_name}}-64bit.noble.iso
 
       - uses: actions/upload-artifact@v3
         with:
           name: rescuezilla-${{github.ref_name}}-64bit.jammy.iso
-          path: build/rescuezilla-${{github.ref_name}}-64bit.jammy.iso
+          path: completed-artifacts/rescuezilla-${{github.ref_name}}-64bit.jammy.iso
 
       - uses: actions/upload-artifact@v3
         with:
           name: rescuezilla-${{github.ref_name}}-64bit.focal.iso
-          path: build/rescuezilla-${{github.ref_name}}-64bit.focal.iso
+          path: completed-artifacts/rescuezilla-${{github.ref_name}}-64bit.focal.iso
 
       - uses: actions/upload-artifact@v3
         with:
           name: rescuezilla-${{github.ref_name}}-32bit.bionic.iso
-          path: build/rescuezilla-${{github.ref_name}}-32bit.bionic.iso
+          path: completed-artifacts/rescuezilla-${{github.ref_name}}-32bit.bionic.iso
 
