@@ -156,7 +156,9 @@ class BackupManager:
         self.summary_message_lock = threading.Lock()
         self.summary_message = ""
 
-        if len(self.partitions_to_backup) == 1 and self.partitions_to_backup[0] == "all":
+        # partitions_to_backup is normally dictionary, except when it's set by the CLI argument then it's a list.
+        # TODO: this is a silly quick-fix and the CLI argument should be refactored.
+        if len(self.partitions_to_backup) == 1 and isinstance(self.partitions_to_backup, list) and self.partitions_to_backup[0] == "all":
             self.partitions_to_backup = self._get_all_partitions()
 
         if self.is_rescue and not self.is_cloning:
