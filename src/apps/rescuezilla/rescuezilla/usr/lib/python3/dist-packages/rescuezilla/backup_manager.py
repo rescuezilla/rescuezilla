@@ -145,10 +145,8 @@ class BackupManager:
                                                                                                        self.selected_drive_key,
                                                                                                        partition_key)
         return to_return
-    def do_backup(self):
-        if len(self.partitions_to_backup) == 1 and self.partitions_to_backup[0] == "all":
-            self.partitions_to_backup = self._get_all_partitions()
 
+    def do_backup(self):
         pp = pprint.PrettyPrinter(indent=4)
         pp.pprint(self.partitions_to_backup)
         self.at_least_one_non_fatal_error = False
@@ -157,6 +155,9 @@ class BackupManager:
         self.proc.clear()
         self.summary_message_lock = threading.Lock()
         self.summary_message = ""
+
+        if len(self.partitions_to_backup) == 1 and self.partitions_to_backup[0] == "all":
+            self.partitions_to_backup = self._get_all_partitions()
 
         if self.is_rescue and not self.is_cloning:
             with self.summary_message_lock:
