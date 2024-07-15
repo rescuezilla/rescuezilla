@@ -1,4 +1,27 @@
 -------------------------------------------------------------------------------
+  Version 2.5.1 (2024-09-08)
+-------------------------------------------------------------------------------
+* Stops running the `ntfsfix --clear-dirty` on NTFS filesystems on the SOURCE DISK during backup and clone operations (#466)
+  * Running this command (the only command in Rescuezilla that modifies the source disk) appears to be the root cause of a critical
+    severity error that impacted a small number of (hibernated) Windows disks since the command was added in Rescuezilla v2.3 (2021-12-24)
+    where creating a backup image or clone appears to cause some kind of corruption that can break the Windows boot with a Blue Screen of
+    Death, possibly due to corruption in the Windows BCD (Boot Configuration Data)
+  * However, I still have not been able to reproduce the error in despite many hours of testing
+  * Removing this command will certainly mean more 'hibernated NTFS disk' errors on backup or clone of Windows disks if not booting into
+    Rescuezilla with the 'Restart' Start Menu command -- but removing the apparently dangerous command is obviously worthwhile
+* Fixed 'stuck at 0%' bug for backup and cloning when only one partition is selected, bug introduced in v2.5.0 (#482)
+* Fixed several user-interface disconnects where upon an restore error the user-interface correctly jumps to the Summary page but
+  the backup, clone or restore operation can mistakenly continue in background, causing a disconnect in what the user-interface shows
+  compared to the operation that's occurring. The cases identified were:
+  * On backup/clone if an NTFS filesystem fails to unmount after being checked for Windows Boot Reserved partition information (#501)
+  * On backup/clone/restore if a Logical Volume Manager (LVM) is fails to be shutdown (#501)
+  * If partition fails to unmount when when a backup or clone operation (#501)
+* Upgraded to latest partclone `v0.3.32` (released mid-July 2024) from partclone `v0.3.27` (released October 2023)
+  * Examining the partclone projects commit log indicates key changes are:
+    * Several partclone errors cases now no longer return success upon failure
+    * Upgraded BTRFS support to BTRFS v6.8.1 from BTRFS v6.3.3
+
+-------------------------------------------------------------------------------
   Version 2.5 (2024-05-12)
 -------------------------------------------------------------------------------
 

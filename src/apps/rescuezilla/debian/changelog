@@ -1,3 +1,9 @@
+rescuezilla (2.5.1-1) unstable; urgency=high
+
+  * New version. For full changes: See https://raw.githubusercontent.com/rescuezilla/rescuezilla/master/CHANGELOG
+
+ -- Shasheen Ediriweera <rescuezilla@gmail.com>  Sun, 08 Sept 2024 18:00:00 -0800
+
 rescuezilla (2.5-1) unstable; urgency=low
 
   * New version. For full changes: See https://raw.githubusercontent.com/rescuezilla/rescuezilla/master/CHANGELOG
