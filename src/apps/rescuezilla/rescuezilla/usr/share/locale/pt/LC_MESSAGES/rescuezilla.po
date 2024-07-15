@@ -4,17 +4,17 @@
 # Vinicios de Lima Clarindo <vinicioslc@outlook.com>, 2020
 # Submitted at: https://github.com/rescuezilla/rescuezilla/issues/128
 # Vinicios Clarindo <vinicioslc@outlook.com>, 2021, 2022.
-# Shasheen Ediriweera <shasheene@gmail.com>, 2022.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2022, 2024.
 # Alexandre Hideki Watanabe <hidekiw@gmail.com>, 2023.
 # Bruno Batista <brucb879@gmail.com>, 2023.
-# Hugo Carvalho <hugokarvalho@hotmail.com>, 2023.
+# Hugo Carvalho <hugokarvalho@hotmail.com>, 2023, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2023-03-07 11:39+0000\n"
-"Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
+"PO-Revision-Date: 2024-07-15 03:33+0000\n"
+"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/pt/>\n"
 "Language: pt\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.16.2-dev\n"
+"X-Generator: Weblate 5.7-dev\n"
 
 msgid "Welcome"
 msgstr "Bem-vindo"
@@ -249,10 +249,10 @@ msgid "Search network"
 msgstr "Rede de pesquisa"
 
 msgid "Server"
-msgstr "Local do servidor ou compartilhado"
+msgstr "Servidor"
 
 msgid "Share location (UNC path)"
-msgstr "Local do servidor ou compartilhado"
+msgstr "Partilhar localização (caminho UNC)"
 
 msgid "Username"
 msgstr "Nome de Usuário"
@@ -276,7 +276,7 @@ msgid "Identity File"
 msgstr "Arquivo de identificação"
 
 msgid "Optional"
-msgstr "opcional"
+msgstr "Opcional"
 
 msgid "Select network-shared storage location:"
 msgstr "Selecione o local de armazenamento compartilhado na rede :"
@@ -411,7 +411,7 @@ msgid "Optional: Provide a short description."
 msgstr "Opcional: Forneça uma breve descrição."
 
 msgid "Step 6: Customize Compression Settings"
-msgstr "Etapa 6: personalizar as configurações de compactação"
+msgstr "Etapa 6: Personalizar as configurações de compactação"
 
 msgid "Customize image compression settings. <b>Don't make any changes if you are unsure.</b>"
 msgstr ""
