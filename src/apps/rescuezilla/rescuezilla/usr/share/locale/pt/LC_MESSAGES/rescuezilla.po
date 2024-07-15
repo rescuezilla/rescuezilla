@@ -4,7 +4,7 @@
 # Vinicios de Lima Clarindo <vinicioslc@outlook.com>, 2020
 # Submitted at: https://github.com/rescuezilla/rescuezilla/issues/128
 # Vinicios Clarindo <vinicioslc@outlook.com>, 2021, 2022.
-# Shasheen Ediriweera <shasheene@gmail.com>, 2022.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2022, 2024.
 # Alexandre Hideki Watanabe <hidekiw@gmail.com>, 2023.
 # Bruno Batista <brucb879@gmail.com>, 2023.
 # Hugo Carvalho <hugokarvalho@hotmail.com>, 2023, 2024.
@@ -14,7 +14,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
 "PO-Revision-Date: 2024-07-15 03:33+0000\n"
-"Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
+"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/pt/>\n"
 "Language: pt\n"
@@ -249,10 +249,10 @@ msgid "Search network"
 msgstr "Rede de pesquisa"
 
 msgid "Server"
-msgstr "Local do servidor ou compartilhado"
+msgstr "Servidor"
 
 msgid "Share location (UNC path)"
-msgstr "Local do servidor ou compartilhado"
+msgstr "Partilhar localização (caminho UNC)"
 
 msgid "Username"
 msgstr "Nome de Usuário"
