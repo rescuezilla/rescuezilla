@@ -549,8 +549,8 @@ class BackupManager:
                         traceback.print_exc()
                         error_message = _(
                             "Failed to write hidden data info file. Please confirm it is valid to create the provided file path, and try again.") + "\n\n" + tb
-                        self.ui_manager.completed_operation(callable_fn=self.completed_backup, succeeded=False, message=error_message)
-                        return False, failed_message
+                        return self.ui_manager.completed_operation(callable_fn=self.completed_backup, succeeded=False, message=error_message)
+                        return False, error_message
 
             else:
                 first_partition_offset_sectors = int(first_partition_offset_bytes / 512)
