@@ -28,7 +28,7 @@ from datetime import datetime
 from pathlib import Path
 from time import sleep
 import re
-from typing import Any, Dict
+from typing import Any, Dict, Tuple
 
 from ui_manager import UiManager
 from logger import Logger
@@ -798,7 +798,13 @@ class BackupManager:
             if filesystem == "ntfs":
                 # Create Clonezilla's NTFS boot reserved partition "sda1.info"
                 tmp_mount = "/tmp/rescuezilla.ntfs.mount"
-                if self.is_partition_windows_boot_reserved(partition_key, tmp_mount):
+                is_success, message, is_partition_windows_boot_reserved = self.is_partition_windows_boot_reserved(partition_key, tmp_mount)
+                if not is_success:
+                    with self.summary_message_lock:
+                        self.summary_message += message + "\n"
+                    self.ui_manager.completed_operation(callable_fn=self.completed_backup, succeeded=False, message=message)
+                    return False, message
+                if is_partition_windows_boot_reserved:
                     partition_info_filepath = os.path.join(self.dest_dir, short_device_node + ".info")
                     self.ui_manager.display_status(msg1=_("Saving: {file}").format(file=partition_info_filepath), msg2="")
                     self.logger.write("Detected partition " + partition_key + " is a Windows NTFS boot reserved partition. Writing " + partition_info_filepath)
@@ -988,7 +994,13 @@ class BackupManager:
         return True, ""
 
     # Implementation of Clonezilla "check_if_windows_boot_reserve_part" function
-    def is_partition_windows_boot_reserved(self, partition_key, mount_point):
+    def is_partition_windows_boot_reserved(self, partition_key, mount_point) -> Tuple[bool, str, bool]:
+        """
+        :param partition_key: Partition to check
+        :param mount_point: Location to mount
+        :returns: whether the operation was a fatal error, the error message string (empty string if operation was a
+                  success), and finally whether the partition is a Windows Boot Reserved partition
+        """
         is_windows_reserved = False
         if not os.path.exists(mount_point) and not os.path.isdir(mount_point):
             os.mkdir(mount_point, 0o755)
@@ -1001,7 +1013,8 @@ class BackupManager:
             # Not being able to mount the NTFS partition to check if it's NTFS boot reserved is NOT fatal in Clonezilla.
             self.ui_manager.display_error_message(summary_message=failed_message)
             print("Unable to mount NTFS filesystem, assuming *not* Windows boot reserved")
-            return is_windows_reserved
+            # Again, not a fatal error so returning true
+            return True, failed_message, is_windows_reserved
 
         boot_dir_path = os.path.join(mount_point, "Boot")
         bootmgr_path = os.path.join(mount_point, "bootmgr")
@@ -1014,10 +1027,8 @@ class BackupManager:
         if not is_unmounted:
             # Being unable to unmount the partition that was just mounted is considered fatal.
             self.logger.write(message)
-            with self.summary_message_lock:
-                self.summary_message += message + "\n"
-            self.ui_manager.completed_operation(callable_fn=self.completed_backup, succeeded=False, message=message)
-        return is_windows_reserved
+            return False, message, is_windows_reserved
+        return True, "", is_windows_reserved
 
     def completed_backup(self, succeeded, message):
         self.ui_manager.update_progress_status(message="")
