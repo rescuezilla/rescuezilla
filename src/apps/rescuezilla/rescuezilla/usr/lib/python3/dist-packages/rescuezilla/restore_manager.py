@@ -310,9 +310,9 @@ class RestoreManager:
 
         is_successfully_shutdown, message = self._shutdown_lvm()
         if not is_successfully_shutdown:
-            self.ui_manager.completed_operation(callable_fn=self.completed_restore,
-                                                succeeded=False,
-                                                message=message)
+            return self.ui_manager.completed_operation(callable_fn=self.completed_restore,
+                                                       succeeded=False,
+                                                       message=message)
 
         # Determine the size of each partition, and the total size. This is used for the weighted progress bar
         total_size_estimate = 0
