@@ -747,6 +747,7 @@ class BackupManager:
                 with self.summary_message_lock:
                     self.summary_message += message + "\n"
                 self.ui_manager.completed_operation(callable_fn=self.completed_backup, succeeded=False, message=message)
+                return False, message
 
             short_device_node = re.sub('/dev/', '', partition_key)
             short_device_node = re.sub('/', '-', short_device_node)
