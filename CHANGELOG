@@ -10,8 +10,8 @@
   * Removing this command will certainly mean more 'hibernated NTFS disk' errors on backup or clone of Windows disks if not booting into
     Rescuezilla with the 'Restart' Start Menu command -- but removing the apparently dangerous command is obviously worthwhile
 * Fixed 'stuck at 0%' bug for backup and cloning when only one partition is selected, bug introduced in v2.5.0 (#482)
-* Fixed several user-interface disconnects where upon an restore error the user-interface correctly jumps to the Summary page but
-  the backup, clone or restore operation can mistakenly continue in background, causing a disconnect in what the user-interface shows
+* Fixed several user-interface disconnects where upon an error the user-interface correctly jumped to the Summary page but the
+  backup, clone or restore operation mistakenly continues in background, causing a disconnect in what the user-interface shows
   compared to the operation that's occurring. The cases identified were:
   * On backup/clone if an NTFS filesystem fails to unmount after being checked for Windows Boot Reserved partition information (#501)
   * On backup/clone/restore if a Logical Volume Manager (LVM) is fails to be shutdown (#501)
