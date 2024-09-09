@@ -91,7 +91,7 @@ Below table shows an abridged history of Rescuezilla. For more information, see 
 | Release             | Release Date | Operating System | Notes |
 | ------------------- | ---------- | ---------------- | ---------------------------------- |
 | Rescuezilla Rolling | 2023-XX-XX | Ubuntu 24.04     | Periodic [rolling release](https://github.com/rescuezilla/rescuezilla/releases) with bleeding-edge features and translations
-| Rescuezilla 2.5     | 2024-03-05 | Ubuntu 24.04     | Added command-line interface
+| Rescuezilla 2.5.1   | 2024-09-08 | Ubuntu 24.04     | Added command-line interface
 | Rescuezilla 2.4.2   | 2023-03-05 | Ubuntu 22.04     | Began compiling latest partclone
 | Rescuezilla 2.3.1   | 2022-01-02 | Ubuntu 21.10     | Added 'Verify Image'
 | Rescuezilla 2.2     | 2021-06-04 | Ubuntu 21.04     | Added 'Clone', VM image support.
