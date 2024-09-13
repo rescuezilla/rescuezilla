@@ -268,6 +268,7 @@ common_pkgs=("discover"
              # Firmware package for NVidia cards from ~2009 (newer cards have firmware in the kernel)
              "nouveau-firmware"
              "x11-xserver-utils"
+             "xserver-xorg-input-libinput"
              "xterm"
              "network-manager-gnome"
              "plymouth-x11"

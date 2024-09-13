@@ -6,9 +6,10 @@
 * Renabled Image Explorer (beta) after it was temporarily disabled in v2.6.0 ([#557](https://github.com/rescuezilla/rescuezilla/issues/557))
     * Switched packaging the underlying "partclone-nbd" executable from the "checkinstall" wrapper to a more canonical packaging strategy using CMake's CPack (to avoid bug in 'checkinstall' script)
 * Enabled Firefox on the Ubuntu 24.10 (Oracular) release after it was temporarily excluded in v2.6.0 ([#556](https://github.com/rescuezilla/rescuezilla/issues/556))
-    * Switched to installing Firefox deb package from "packages.mozilla.org" rather than the "mozillateam" Ubuntu Personal Packaging Archive (thanks engstk!)
+    * Switched to installing Firefox deb package from "packages.mozilla.org" rather than the "mozillateam" Ubuntu Personal Packaging Archive [#506](https://github.com/rescuezilla/rescuezilla/issues/506) (thanks engstk!)
     * The "mozillateam" Ubuntu Personal Packaging Archive now wraps snap-based packages like the official Ubuntu repositories, which remain incompatible with Rescuezilla's "chroot"-based build scripts ([#364](https://github.com/rescuezilla/rescuezilla/issues/364))
 * Added ability to specify NFS version: NFSv3, NFSv4 and the (existing default) of automatcally negotiating down [#408](https://github.com/rescuezilla/rescuezilla/issues/408) (thanks OAM7575!)
+* Improved touchpad support for tap-to-click and multifinger gestures using libinput driver [#506](https://github.com/rescuezilla/rescuezilla/issues/506) (thanks engstk!)  
 
 #  Rescuezilla v2.6 (2025-03-23)
 
