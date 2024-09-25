@@ -170,6 +170,10 @@ class Handler:
         self.network_share_protocol_version_list.append(["3.0",     _("3.0 (Introduced in Windows 8,  Windows Server 2012)")])
         self.network_share_protocol_version_list.append(["3.0.2",   _("3.0.2 (Introduced in Windows 8.1, Windows Server 2012R2)")])
         self.network_share_protocol_version_list.append(["3.1.1",   _("3.1.1 (Introduced in Windows 10, Windows Server 2016)")])
+        ## NFS ITEMS
+        self.network_share_protocol_version_list.append(["3",     _("NFSv3")])
+        self.network_share_protocol_version_list.append(["4",     _("NFSv4")])
+
         # Manage all network protocol UI widgets
         self.network_protocol_widget_dict = {
             'network_protocol_combobox': {},
@@ -1142,8 +1146,9 @@ class Handler:
                 self.network_protocol_widget_dict['network_password'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_domain_label'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_domain'][mode].set_visible(False)
-                self.network_protocol_widget_dict['network_version_label'][mode].set_visible(False)
-                self.network_protocol_widget_dict['network_version_combobox'][mode].set_visible(False)
+                self.network_protocol_widget_dict['network_version_label'][mode].set_visible(True)
+                self.network_protocol_widget_dict['network_version_label'][mode].set_text(_("Version"))
+                self.network_protocol_widget_dict['network_version_combobox'][mode].set_visible(True)
                 self.network_protocol_widget_dict['network_ssh_idfile_label'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_ssh_idfile_box'][mode].set_visible(False)
                 self.network_protocol_widget_dict['network_port_label'][mode].set_visible(False)
