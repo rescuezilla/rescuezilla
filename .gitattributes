@@ -7,4 +7,4 @@
 *.exe filter=lfs diff=lfs merge=lfs -text
 src/livecd/chroot/usr/sbin/sfdisk.v2.20.1.32bit filter=lfs diff=lfs merge=lfs -text
 src/livecd/chroot/usr/sbin/partclone.restore.v0.2.43.32bit filter=lfs diff=lfs merge=lfs -text
-src/livecd/chroot/etc/apt/trusted.gpg.d/mozillateam-ubuntu-ppa.gpg filter=lfs diff=lfs merge=lfs -text
+src/livecd/chroot/etc/apt/keyrings/packages.mozilla.org.asc filter=lfs diff=lfs merge=lfs -text

@@ -184,17 +184,9 @@ mv "89_CODENAME_SUBSTITUTE-backports_default" "89_$CODENAME-backports_default"
 mv "90_CODENAME_SUBSTITUTE-proposed_default" "90_$CODENAME-proposed_default"
 popd
 
-mv "chroot/etc/apt/sources.list.d/mozillateam-ubuntu-ppa-CODENAME_SUBSTITUTE.list" "chroot/etc/apt/sources.list.d/mozillateam-ubuntu-ppa-$CODENAME.list"
-
-pushd "chroot/etc/apt/sources.list.d/"
-# Since Ubuntu 22.04 (Jammy) firefox packaged as snap, which is not easily installed in a chroot
-# [1] https://bugs.launchpad.net/snappy/+bug/1609903
-mv "mozillateam-ubuntu-ppa-CODENAME_SUBSTITUTE.list" "mozillateam-ubuntu-ppa-CODENAME_SUBSTITUTE.list"
-popd
 APT_CONFIG_FILES=(
     "chroot/etc/apt/preferences.d/89_$CODENAME-backports_default"
     "chroot/etc/apt/preferences.d/90_$CODENAME-proposed_default"
-    "chroot/etc/apt/sources.list.d/mozillateam-ubuntu-ppa-$CODENAME.list"
     "chroot/etc/apt/sources.list"
 )
 # Substitute Ubuntu code name into relevant apt configuration files
