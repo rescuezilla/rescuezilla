@@ -2,13 +2,14 @@
 # yesinmsg <yesinmsg@gmail.com>, 2021.
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021.
 # Long Nguyễn Khánh <khanhlong17112000@gmail.com>, 2021.
+# Thanh Le <lxthanhlph@gmail.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2021-08-30 06:19+0000\n"
-"Last-Translator: Long Nguyễn Khánh <khanhlong17112000@gmail.com>\n"
+"PO-Revision-Date: 2024-11-16 21:00+0000\n"
+"Last-Translator: Thanh Le <lxthanhlph@gmail.com>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/vi/>\n"
 "Language: vi\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.8.1-dev\n"
+"X-Generator: Weblate 5.9-dev\n"
 
 msgid "Welcome"
 msgstr "Chào mừng"
@@ -34,7 +35,7 @@ msgid "Restore"
 msgstr "Khôi phục"
 
 msgid "Verify Image"
-msgstr ""
+msgstr "Xác minh ảnh ổ đĩa"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
 msgstr ""
@@ -183,7 +184,7 @@ msgid "Drive Model"
 msgstr "Model ổ cứng"
 
 msgid "Serial Number"
-msgstr ""
+msgstr "Số thứ tự"
 
 msgid "Partitions"
 msgstr "Các phân vùng"
