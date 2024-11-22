@@ -8,7 +8,7 @@
 # Mirko Hanker <Mirko1984@pm.me>, 2021.
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
 # Marcel Küsters <Marcel_Kuesters@t-online.de>, 2022.
-# Ettore Atalan <atalanttore@googlemail.com>, 2022.
+# Ettore Atalan <atalanttore@googlemail.com>, 2022, 2024.
 # Markus Merkle <mae.mm1172@gmail.com>, 2023.
 # hutt <iuoifjlffdla@trashmail.de>, 2023.
 msgid ""
@@ -16,8 +16,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2023-09-26 19:51+0000\n"
-"Last-Translator: Markus Merkle <mae.mm1172@gmail.com>\n"
+"PO-Revision-Date: 2024-09-30 19:16+0000\n"
+"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/de/>\n"
 "Language: de\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.1-dev\n"
+"X-Generator: Weblate 5.8-dev\n"
 
 msgid "Welcome"
 msgstr "Willkommen"
@@ -64,22 +64,22 @@ msgid "Next >"
 msgstr "Weiter ▶"
 
 msgid "Please wait..."
-msgstr "Bitte warten…"
+msgstr "Bitte warten …"
 
 msgid "Identifying disk drives..."
 msgstr "Suche Laufwerke …"
 
 #, python-brace-format
 msgid "Unmounting: {path}"
-msgstr "Sicher Trennen: {path}"
+msgstr "Aushängen: {path}"
 
 #, python-brace-format
 msgid "Unable to unmount {path}"
-msgstr "{path} konnte nicht abgemeldet werden"
+msgstr "{path} konnte nicht ausgehängt werden"
 
 #, python-brace-format
 msgid "Running: {app}"
-msgstr "{app} wird ausgeführt"
+msgstr "Läuft: {app}"
 
 #, python-brace-format
 msgid "Running {app} on {device}"
@@ -95,12 +95,12 @@ msgid "Clone"
 msgstr "Klonen"
 
 msgid "Step 1: Understanding Cloning"
-msgstr "Schritt 1: Klonen erklärt"
+msgstr "Schritt 1: Klonen verstehen"
 
 msgid "Please understand how \"cloning\" differs from \"imaging\"."
 msgstr ""
-"Mache Dich mit den Unterschieden zwischen \"Klonen\" und \"Sicherungskopie\" "
-"vertraut."
+"Bitte mache dich mit den Unterschieden zwischen „Klonen“ und "
+"„Sicherungskopie“ vertraut."
 
 msgid "This mode is for \"disk cloning\". Cloning means copying one drive and directly overwriting another drive. This is a direct one-step operation with no temporary storage required.\n"
 "\n"
@@ -128,7 +128,7 @@ msgstr ""
 "<b>Zurück</b> und wählen Sie <b>Sicherung</b> oder <b>Wiederherstellung</b>."
 
 msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
-msgstr "Um den Assistenten für das \"Klonen\" zu starten, klicke <b>Weiter</b>"
+msgstr "Um den Assistenten für das „Klonen“ zu starten, klicke <b>Weiter</b>"
 
 msgid "Step 2: Select Source Drive"
 msgstr "Schritt 2: Quell-Laufwerk auswählen"

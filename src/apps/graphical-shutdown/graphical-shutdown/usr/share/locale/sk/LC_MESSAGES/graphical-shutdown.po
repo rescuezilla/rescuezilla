@@ -1,21 +1,22 @@
 # radosdesign <radek82@gmail.com>, 2022.
+# Pa Di <padi@tutanota.com>, 2024.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2022-01-08 09:54+0000\n"
-"Last-Translator: radosdesign <radek82@gmail.com>\n"
+"PO-Revision-Date: 2024-10-10 16:15+0000\n"
+"Last-Translator: Pa Di <padi@tutanota.com>\n"
 "Language-Team: Slovak <https://hosted.weblate.org/projects/rescuezilla/"
 "graphical-shutdown/sk/>\n"
 "Language: sk\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 4.10.1\n"
+"Plural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\n"
+"X-Generator: Weblate 5.8-dev\n"
 
 msgid "End Session"
 msgstr "Ukončiť reláciu"
 
 msgid "Cancel"
-msgstr "Storno"
+msgstr "Zrušiť"
 
 msgid "Shutdown"
 msgstr "Vypnúť"
@@ -24,4 +25,4 @@ msgid "Reboot"
 msgstr "Reštartovať"
 
 msgid "Choose action."
-msgstr "Vyber akciu."
+msgstr "Vyberte akciu."
