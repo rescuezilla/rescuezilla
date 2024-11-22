@@ -1,166 +1,140 @@
--------------------------------------------------------------------------------
-  Version 2.5.1 (2024-09-08)
--------------------------------------------------------------------------------
-* Stops running the `ntfsfix --clear-dirty` on NTFS filesystems on the SOURCE DISK during backup and clone operations (#466)
-  * Running this command (the only command in Rescuezilla that modifies the source disk) appears to be the root cause of a critical
-    severity error that impacted a small number of (hibernated) Windows disks since the command was added in Rescuezilla v2.3 (2021-12-24)
-    where creating a backup image or clone appears to cause some kind of corruption that can break the Windows boot with a Blue Screen of
-    Death, possibly due to corruption in the Windows BCD (Boot Configuration Data)
+# Rescuezilla v2.5.1 (2024-09-08)
+
+* Stops running the `ntfsfix --clear-dirty` on NTFS filesystems on the SOURCE DISK during backup and clone operations ([#466](https://github.com/rescuezilla/rescuezilla/issues/466))
+  * Running this command (the only command in Rescuezilla that modifies the source disk) appears to be the root cause of a critical severity error that impacted a small number of (hibernated) Windows disks since the command was added in Rescuezilla v2.3 (2021-12-24) where creating a backup image or clone appears to cause some kind of corruption that can break the Windows boot with a Blue Screen of Death, possibly due to corruption in the Windows BCD (Boot Configuration Data)
   * However, I still have not been able to reproduce the error in despite many hours of testing
-  * Removing this command will certainly mean more 'hibernated NTFS disk' errors on backup or clone of Windows disks if not booting into
-    Rescuezilla with the 'Restart' Start Menu command -- but removing the apparently dangerous command is obviously worthwhile
-* Fixed 'stuck at 0%' bug for backup and cloning when only one partition is selected, bug introduced in v2.5.0 (#482)
-* Fixed several user-interface disconnects where upon an error the user-interface correctly jumped to the Summary page but the
-  backup, clone or restore operation mistakenly continues in background, causing a disconnect in what the user-interface shows
-  compared to the operation that's occurring. The cases identified were:
-  * On backup/clone if an NTFS filesystem fails to unmount after being checked for Windows Boot Reserved partition information (#501)
-  * On backup/clone/restore if a Logical Volume Manager (LVM) is fails to be shutdown (#501)
-  * If partition fails to unmount when when a backup or clone operation (#501)
+  * Removing this command will likely mean more 'hibernated NTFS disk' errors on backup or clone of Windows disks if not booting into Rescuezilla with the 'Restart' Start Menu command -- but removing the apparently dangerous command is obviously worthwhile
+* Fixed 'stuck at 0%' bug for backup and cloning when only one partition is selected, bug introduced in v2.5.0 ([#482](https://github.com/rescuezilla/rescuezilla/issues/482))
+* Fixed several user-interface disconnects where upon an error the user-interface correctly jumped to the Summary page but the backup, clone or restore operation mistakenly continues in background, causing a disconnect in what the user-interface shows compared to the operation that's occurring. The cases identified were:
+  * On backup/clone if an NTFS filesystem fails to unmount after being checked for Windows Boot Reserved partition information ([#501](https://github.com/rescuezilla/rescuezilla/issues/501))
+  * On backup/clone/restore if a Logical Volume Manager (LVM) is fails to be shutdown ([#501](https://github.com/rescuezilla/rescuezilla/issues/501))
+  * If partition fails to unmount when when a backup or clone operation ([#501](https://github.com/rescuezilla/rescuezilla/issues/501))
 * Upgraded to latest partclone `v0.3.32` (released mid-July 2024) from partclone `v0.3.27` (released October 2023)
   * Examining the partclone projects commit log indicates key changes are:
     * Several partclone errors cases now no longer return success upon failure
     * Upgraded BTRFS support to BTRFS v6.8.1 from BTRFS v6.3.3
 
--------------------------------------------------------------------------------
-  Version 2.5 (2024-05-12)
--------------------------------------------------------------------------------
+ # Rescuezilla v2.5 (2024-05-12)
 
 * Adds release based on Ubuntu 24.04 (Noble), Ubuntu 23.10 (Mantic) and Ubuntu 23.04 (Lunar) for best support of new hardware
 * Upgrades to latest partclone release `v0.3.27` (released October 2023) from `v0.3.20` (which was released in April 2022)
-  * This should improve issues with BTRFS filesystems, as it supports BTRFS v6.3.3, rather than v5.11 (#393)
-* Added experimental command-line interface (CLI) (#258)
+  * This should improve issues with BTRFS filesystems, as it supports BTRFS v6.3.3, rather than v5.11 ([#393](https://github.com/rescuezilla/rescuezilla/issues/393#issuecomment-1718658170))
+* Added experimental command-line interface (CLI) ([#258](https://github.com/rescuezilla/rescuezilla/issues/258))
   * CLI should be considered EXPERIMENTAL and UNSTABLE, and behavior may change between versions without notice
   * CLI only supports images created by Clonezilla and Rescuezilla (the other supported formats coming in future)
   * CLI only supports backup, verify, restore and clone operations (mount and unmount operations coming in future)
 * Integrated Rescuezilla into the automated integration test suite scripts, to hopefully enable faster project iteration
 * Continue image scan after an error, so permission denied on irrelevant folders no longer block populating the image list
-* Fixed issue causing backup of Linux md RAID devices containing MBR partition tables to fail (#448)
-* Installs 'hashdeep' package as stop-gap command-line workaround for a specific user niche until Rescuezilla's UI handles it (#441)
-* Fixed failing restore and clone operations when Rescuezilla v2.4.2 booted into Portuguese language, due to a minor typo (#438)
-* Prevent laptops from sleeping when is lid closed (#427)
+* Fixed issue causing backup of Linux md RAID devices containing MBR partition tables to fail ([#448](https://github.com/rescuezilla/rescuezilla/issues/448))
+* Installs 'hashdeep' package as stop-gap command-line workaround for a specific user niche until Rescuezilla's UI handles it ([#441](https://github.com/rescuezilla/rescuezilla/issues/441))
+* Fixed failing restore and clone operations when Rescuezilla v2.4.2 booted into Portuguese language, due to a minor typo ([#438](https://github.com/rescuezilla/rescuezilla/issues/438))
+* Prevent laptops from sleeping when is lid closed ([#427](https://github.com/rescuezilla/rescuezilla/issues/427))
 
--------------------------------------------------------------------------------
-  Version 2.4.2 (2023-03-05)
--------------------------------------------------------------------------------
+# Rescuezilla v2.4.2 (2023-03-05)
 
-* Removes the Intel screen tearing fix introduced for v2.3 (2021-12-24), which should fix black screens on Intel graphics (#281)
-* Introduces Ubuntu 22.10 (Kinetic) for best support of new hardware, but leaves default build as Ubuntu 22.04 (Jammy) 
-* Reintroduces a 32-bit (Intel i386) build, currently based on Ubuntu 18.04 (Bionic) (#232) after it was temporarily dropped in v2.0 (2020-10-14)
+* Removes the Intel screen tearing fix introduced for v2.3 (2021-12-24), which should fix black screens on Intel graphics ([#281](https://github.com/rescuezilla/rescuezilla/issues/281#issuecomment-1345457445))
+* Introduces Ubuntu 22.10 (Kinetic) for best support of recent hardware, but leaves default build as Ubuntu 22.04 (Jammy)
+* Reintroduces a 32-bit (Intel i386) build, currently based on Ubuntu 18.04 (Bionic) (#232) after it was temporarily dropped in Rescuezilla v2.0 (2020-10-14) 
     * Note: Partclone backwards compatibility is imperfect and 32-bit release uses old Ubuntu repository partclone version, not latest compiled version
-* Fixes Backup mode's broken SSH port field introduced in v2.4 (#385)
-* Installs lxappearance (#274), hexdump (bsdmainutils) (#382), flashrom (#388)
-* Installed packages which improve ability to mount encrypted drives with pcmanfm file manager (#379)
+* Fixes Backup mode's broken SSH port field introduced in v2.4 ([#385](https://github.com/rescuezilla/rescuezilla/issues/385))
+* Installs lxappearance ([#274](https://github.com/rescuezilla/rescuezilla/issues/274)), hexdump (bsdmainutils) ([#382](https://github.com/rescuezilla/rescuezilla/issues/382)), flashrom ([#388](https://github.com/rescuezilla/rescuezilla/issues/388))
+* Installed packages which improve ability to mount encrypted drives with pcmanfm file manager ([#379](https://github.com/rescuezilla/rescuezilla/issues/379))
 * Replaces out-of-service Travis-CI build bot integration with GitHub Actions, for improved quality-control, and to assist Rescuezilla contributors
 * Many existing translations updated, but also added:
   * Albanian/Shqip (sq-AL) (Translation in-progress)
   * Lithuanian/Lietuvių (lt-LT)
   * Dutch/Nederlands (nl-NL)
 
--------------------------------------------------------------------------------
-  Version 2.4.1 (2022-09-05)
--------------------------------------------------------------------------------
+# Rescuezilla v2.4.1 (2022-09-05)
 
-* Fixed broken wifi after v2.4 broke it (due to change in Ubuntu 22.04 Jammy leading to a key package not being installed (#366)
+* Fixed broken wifi after v2.4 broke it (due to a change in Ubuntu 22.04 Jammy [leading to a key package not being installed (#366)](https://github.com/rescuezilla/rescuezilla/issues/366#issuecomment-1214413260)
 * Reintroduced ISO variant based on Ubuntu 20.04 (Focal), to assist users with AMD/Intel graphics
-    * AMD/Intel graphics still expected to be broken on "Jammy" variant except when using Graphical Fallback Mode (#351)
-* Fixed image verification for German language (broken for all images in v2.4 German language mode, due to a typo in a translation string) (#352)
+    * AMD/Intel graphics still expected to be broken on "Jammy" variant except when using Graphical Fallback Mode ([#351](https://github.com/rescuezilla/rescuezilla/issues/351))
+* Fixed image verification for German language [(broken for all images in v2.4 German language mode, due to a typo in a translation string) (#352)]((https://github.com/rescuezilla/rescuezilla/issues/352))
     * Fixed similar fatal user-facing error messages caused by translation typos in the French, Danish and Catalan translations
 * Add the font to fix display of the cross mark character "❌" in the image verification summary
-* Fixed "stuck at 0%" progress bar when the destination is read-only (#363)
+* Fixed "stuck at 0%" progress bar when the destination is read-only ([#363](https://github.com/rescuezilla/rescuezilla/issues/363))
     * Added protection to prevent other unexpected situations from leading to the same behavior
 * Many existing translations updated, but also added:
   * Thai/ภาษาไทย (th-TH)
 
--------------------------------------------------------------------------------
-  Version 2.4 (2022-08-07)
--------------------------------------------------------------------------------
+# Rescuezilla v2.4 (2022-08-07)
 
-* Replaces Ubuntu 21.10 (Impish) build with build based on Ubuntu 22.04 (Jammy) for best support of new hardware
-* Builds latest version of partclone from source code `v0.3.20`, instead of OS package (#168, #309 and #335)
+* Replaces Ubuntu 21.10 (Impish) build with build based on Ubuntu 22.04 (Jammy) for best support of new hardware 
+* Builds latest version of partclone from source code `v0.3.20`, instead of OS package ([#168](https://github.com/rescuezilla/rescuezilla/issues/168), [#309](https://github.com/rescuezilla/rescuezilla/issues/309), [#335](https://github.com/rescuezilla/rescuezilla/issues/335))
     * This fixes "unsupported feature" error for users of compressed BTRFS filesystems (such as Fedora Workstation 33 and newer)
 * Removed old partclone v0.2.43 used to _maximize_ legacy Redo Backup compatibility (modern partclone still provides good backwards compatibility)
-* Switched Firefox to Mozilla Team PPA repository, because new "snap" packages incompatible with chroots (#364)
-* Added ability to compress images using bzip2 algorithm (#290)
-* Moved post-completion action to in-progress page (#316)
-* Added ability to set custom SSH port (#336)
 * Fixed execution of Clonezilla EFI NVRAM script to better correctly handle reboot on EFI systems (#348)
+* Switched Firefox to using the Mozilla Team PPA repository, because new "snap" packaging is incompatible with Rescuezilla's build scripts ([#364](https://github.com/rescuezilla/rescuezilla/issues/364))
+* Added ability to compress images using bzip2 algorithm ([#290](https://github.com/rescuezilla/rescuezilla/issues/290))
+* Moved post-completion action to in-progress page ([#316](https://github.com/rescuezilla/rescuezilla/issues/316))
+    *  **This has caused at least 1 user an issue during cloning, which I'm yet unable to reproduce: [#337](https://github.com/rescuezilla/rescuezilla/issues/337)**
+* Added ability to set custom SSH port ([#336](https://github.com/rescuezilla/rescuezilla/issues/336))
 * Many existing translations updated, but also added:
   * Arabic/ﺎﻠﻋﺮﺒﻳﺓ (ar-EG)
-  * Catalan/Català (ca-ES) (Translation in-progress)
-  * Czech/Čeština (cs-CZ) (Translation in-progress)
-  * Hungarian/Magyar (hu-HU) Translation in-progress)
-  * Slovak/Slovenčina (sk-SK) (Translation in-progress)
+  * Catalan/Català (ca-ES) (Translation [in-progress](https://hosted.weblate.org/translate/rescuezilla/-/ca/?offset=1&q=state%3A%3Ctranslated+AND+NOT+has%3Asuggestion&sort_by=-priority%2Cposition&checksum=))
+  * Czech/Čeština (cs-CZ) (Translation [in-progress](https://hosted.weblate.org/translate/rescuezilla/-/cs/?offset=1&q=state%3A%3Ctranslated+AND+NOT+has%3Asuggestion&sort_by=-priority%2Cposition&checksum=))
+  * Hungarian/Magyar (hu-HU) Translation [in-progress](https://hosted.weblate.org/translate/rescuezilla/-/hu/?offset=1&q=state%3A%3Ctranslated+AND+NOT+has%3Asuggestion&sort_by=-priority%2Cposition&checksum=))
+  * Slovak/Slovenčina (sk-SK) (Translation [in-progress](https://hosted.weblate.org/translate/rescuezilla/-/sk/?offset=1&q=state%3A%3Ctranslated+AND+NOT+has%3Asuggestion&sort_by=-priority%2Cposition&checksum=))
 
--------------------------------------------------------------------------------
-  "Weekly" Rolling Release (2022-07-24) 
--------------------------------------------------------------------------------
+#  Rescuezilla Pre-release (2022-07-24) 
 
 * Replaces Ubuntu 21.10 (Impish) build with build based on Ubuntu 22.04 (Jammy) for best support of new hardware
-* Builds latest version of partclone from source code `v0.3.20`, instead of OS package (#168, #309 and #335)
+* Builds latest version of partclone from source code `v0.3.20`, instead of OS package ([#168](https://github.com/rescuezilla/rescuezilla/issues/168), [#309](https://github.com/rescuezilla/rescuezilla/issues/309), [#335](https://github.com/rescuezilla/rescuezilla/issues/335))
     * This fixes "unsupported feature" error for users of compressed BTRFS filesystems (such as Fedora Workstation 33 and newer)
 * Removed old partclone v0.2.43 used to _maximize_ legacy Redo Backup compatibility (modern partclone still provides good backwards compatibility)
-* Switched Firefox to Mozilla Team PPA repository, because new "snap" packages incompatible with chroots (#364)
+* Switched Firefox to using the Mozilla Team PPA repository, because new "snap" packaging is still incompatible with Rescuezilla's "chroot-based" build scripts ([#364](https://github.com/rescuezilla/rescuezilla/issues/364))
 
--------------------------------------------------------------------------------
-  Weekly Rolling Release (2022-06-26) 
--------------------------------------------------------------------------------
+**KNOWN BUG: When cloning, user reported the auto-restart/auto-shutdown drop-down breaks the clone ([#337](https://github.com/rescuezilla/rescuezilla/issues/337))**. I tried in the "restore" mode on my environment with several images and it worked fine. This report is still being further investigated for the "clone" mode, but I didn't want it to block release of the Jammy upgrade.
+  
+# Rescuezilla Pre-release (2022-06-26) 
 
-* Added ability to compress images using bzip2 algorithm (#290)
-* Moved post-completion action to in-progress page (#316)
-* Added ability to set custom SSH port (#336)
+* Added ability to compress images using bzip2 algorithm ([#290](https://github.com/rescuezilla/rescuezilla/issues/290))
+* Moved post-completion action to in-progress page ([#316](https://github.com/rescuezilla/rescuezilla/issues/316))
+* Added ability to set custom SSH port ([#336](https://github.com/rescuezilla/rescuezilla/issues/336))
 * Many existing translations updated, but also added:
-  * Arabic/ﺎﻠﻋﺮﺒﻳﺓ (ar-EG) (Translation in-progress)
-  * Catalan/Català (ca-ES) (Translation in-progress)
-  * Czech/Čeština (cs-CZ) (Translation in-progress)
-  * Hungarian/Magyar (hu-HU) Translation in-progress)
-  * Slovak/Slovenčina (sk-SK) (Translation in-progress)
+  * Arabic/ﺎﻠﻋﺮﺒﻳﺓ (ar-EG) (translation now complete!)
+  * Catalan/Català (ca-ES) (Translation [in-progress](https://hosted.weblate.org/translate/rescuezilla/-/ca/?offset=1&q=state%3A%3Ctranslated+AND+NOT+has%3Asuggestion&sort_by=-priority%2Cposition&checksum=))
+  * Czech/Čeština (cs-CZ) (Translation [in-progress](https://hosted.weblate.org/translate/rescuezilla/-/cs/?offset=1&q=state%3A%3Ctranslated+AND+NOT+has%3Asuggestion&sort_by=-priority%2Cposition&checksum=))
+  * Hungarian/Magyar (hu-HU) Translation [in-progress](https://hosted.weblate.org/translate/rescuezilla/-/hu/?offset=1&q=state%3A%3Ctranslated+AND+NOT+has%3Asuggestion&sort_by=-priority%2Cposition&checksum=))
+  * Slovak/Slovenčina (sk-SK) (Translation [in-progress](https://hosted.weblate.org/translate/rescuezilla/-/sk/?offset=1&q=state%3A%3Ctranslated+AND+NOT+has%3Asuggestion&sort_by=-priority%2Cposition&checksum=))
 
--------------------------------------------------------------------------------
-  Version 2.3.1 (2022-01-02) 
--------------------------------------------------------------------------------
+# Rescuezilla v2.3.1 (2022-01-02) 
 
-* Fixed "Clone always stuck at 0%" issue introduced in v2.3.0 (#297)
-* Added Korean/한국어 translation (ko-KR)
-* Significantly updated Italian/Italiano translation (it-IT)
+* Fixed "Clone always stuck at 0%" issue introduced in v2.3.0 ([#297](https://github.com/rescuezilla/rescuezilla/issues/297))
+* Added Korean/한국어 translation (ko-KR) ([using Weblate](https://hosted.weblate.org/projects/rescuezilla/#languages))
+* Significantly updated existing Italian/Italiano translation (it-IT) ([using Weblate](https://hosted.weblate.org/projects/rescuezilla/#languages))
 
--------------------------------------------------------------------------------
-  Version 2.3 (2021-12-24) 
--------------------------------------------------------------------------------
+# Rescuezilla v2.3 (2021-12-24) 
 
-* Implemented initial image verification feature (#30)
-* Adds "Rescue" option to ignore filesystem inconsistencies and bad sectors (#237)
+* Implemented image verification feature ([#30](https://github.com/rescuezilla/rescuezilla/issues/30))
+* Adds "Rescue" option to ignore filesystem inconsistencies and bad sectors ([#237](https://github.com/rescuezilla/rescuezilla/issues/237))
 * Replaces Ubuntu 21.04 (Hirsute) build with build based on Ubuntu 21.10 (Impish) for best support of new hardware
-* Added ability to restore and explore images created by "Apart" partclone GUI (#230)
-* Improved image scanning to try to fix report of where some images not scanning except with Browse (#251)
-* Fixed display of LVM shutdown error message (#250)
-* Displayed error message on duplicate image name (#283)
-* Displayed error message when mounting swap partition attempted (#259)
-* Displayed serial number of drives in response to feedback (#227)
-* Added lxappearance package to make it easy to set the dark theme (#275)
-* Added ability to open file manager as root using right-click (#281)
-* Added user-provided Intel Xorg conf file to hopefully stop screen tearing (#281)
-* Fixed issue preventing restoring of images created by FSArchiver/qtfsarchiver (#255)
-* Fixed ability to click certain URLs and open a web browser
-* Listed 'lvm2' as a dependency to assist installing Rescuezilla as standalone package
+* Added ability to restore and explore images created by "Apart" partclone GUI ([#230](https://github.com/rescuezilla/rescuezilla/issues/230))
+* Improved image scanning to try to fix report of where some images not scanning except with Browse ([#251](https://github.com/rescuezilla/rescuezilla/issues/251))
+* Fixed display of LVM shutdown error message ([#250](https://github.com/rescuezilla/rescuezilla/issues/250))
+* Displayed serial number of drives in response to feedback ([#227](https://github.com/rescuezilla/rescuezilla/issues/227))
+* Added lxappearance package to make it easy to set the dark theme ([#275](https://github.com/rescuezilla/rescuezilla/issues/275))
+* Added ability to open file manager as root using right-click ([#281](https://github.com/rescuezilla/rescuezilla/issues/281))
+* Added user-provided Intel Xorg conf file to hopefully stop screen tearing ([#281](https://github.com/rescuezilla/rescuezilla/issues/281))
+* Fixed issue preventing restoring of images created by FSArchiver/qtfsarchiver ([#255](https://github.com/rescuezilla/rescuezilla/issues/255))
 * Switched to "xdg-open" to launch file manager and web browser, rather than hardcoding pcmanfm and Firefox
 * Added (or significantly updated) translations:
-  * Hebrew/עִברִית (he-IL) (#244)
-  * Tiếng Việt (vi-VN) (#263)
-  * Danish/Dansk (da-DK) (#248)
-  * Russian/Русский (ru-RU) (#270)
-  * Indonesian/Bahasa Indonesia (id-ID) (in-progress)
+  * Hebrew/עִברִית (he-IL) ([#244](https://github.com/rescuezilla/rescuezilla/issues/244))
+  * Vietnamese/Tiếng Việt (vi-VN) ([#263](https://github.com/rescuezilla/rescuezilla/issues/263))
+  * Danish/Dansk (da-DK) ([#248](https://github.com/rescuezilla/rescuezilla/issues/248))
+  * Russian/Русский (ru-RU) ([#270](https://github.com/rescuezilla/rescuezilla/issues/270))
 
--------------------------------------------------------------------------------
-  Version 2.2 (2021-06-04) 
--------------------------------------------------------------------------------
+# Rescuezilla v2.2 (2021-06-04) 
 
-* Implemented cloning (direct 'device-to-device' mode) (#47)
-* Added ability to restore and explore all virtual machine image formats supported by qemu-nbd (#192)
+
+* Implemented cloning (direct 'device-to-device' mode) ([#47](https://github.com/rescuezilla/rescuezilla/issues/47))
+* Added ability to restore and explore all virtual machine image formats supported by qemu-nbd ([#192](https://github.com/rescuezilla/rescuezilla/issues/192))
   (VirtualBox’s VDI, VMWare’s VMDK, Qemu’s QCOW2, HyperV's VHDx, raw .dd/.img and many more) 
-* Added ability to restore and explore images created by all remaining open-source imaging frontends (#194)
+* Added ability to restore and explore images created by all remaining open-source imaging frontends ([#194](https://github.com/rescuezilla/rescuezilla/issues/194))
   (Redo Rescue, Foxclone, FSArchiver, Redo v0.9.2 and very-early handling of FOG Project images)
-* Added ability to customize compression format (gzip, zstandard, uncompressed) and compression level (#170)
-* Implemented remaining Clonezilla image restore logic to improve handling of many corner cases: (task #146)
+* Added ability to customize compression format (gzip, zstandard, uncompressed) and compression level ([#170](https://github.com/rescuezilla/rescuezilla/issues/170))
+* Implemented remaining Clonezilla image restore logic to improve handling of many corner cases: ([#146](https://github.com/rescuezilla/rescuezilla/issues/146))
   * Grows filesystem to fit partition size (but almost always filesystem size is already equal to partition size)
   * Runs filesystem check on all restored filesystems
   * Clears the NTFS volume dirty flag, for source during backup/clone and destination for restore/clone
@@ -170,218 +144,148 @@
   * Update initramfs (if any) using Clonezilla script
   * Relocates all NTFS filesystems using geometry from sfdisk or (if available) EDD (Enhanced Disk Device)
   * Restores LVM VG metadata with --force to match a recent Clonezilla patch referring to thin-pool LVs 
-  * Ensures each LVM VG metadata once is only restored once, to support newer versions of vgcfgrestore
+  * Ensures each LVM VG metadata once is only restored once to support newer versions of vgcfgrestore
   * Updates EFI NVRAM for the boot device
 * Replaces Ubuntu 20.10 (Groovy) build with build based on Ubuntu 21.04 (Hirsute) for best support of new hardware
-* Added option to shutdown or reboot after operation completes successfully (#165)
-* Added ability to connect to NFS and SSH (SFTP) network shared folders (#81, #118)
-* Added ability to write a description for backup images (#137)
-* Added ability to make a screenshot by pressing Print Screen (#166)
-* Added ability to cancel mount operations by closing the 'please wait' popup
-* Switched SMB/CIFS version number field to dropdown menu to make valid options much more clear (#161)
-* Fixed ability to connect to unauthenticated/anonymous Windows network shares (#190)
-* Improved handling of Clonezilla images that contain multiple disks (#123)
-* Improved ability to double-click on rows during backup to toggle them (instead of going to the next page)
-* Switched from lxterminal to xfce4-terminal for features like select-all and search
-* Switched the compression of ISO image's mksquashfs root filesystem to zstd level 19 (from gzip level 9) (#161)
-* Fixed Image Explorer (beta) "Error: Socket failed: Connection refused" errors by polling nbd device
-* Displays error when trying to restore to disk smaller-than-original if disk not correctly prepared
-* Unmounts '/isodevice' on boot to improve when Rescuezilla ISO is itself installed as GRUB boot menu item (#207)
-* Ignores the common executable files that have names matching backup images: eg /bin/parts, /sbin/parts, partclone.dd
-* Fixed display of keep/overwrite partition table info message without needing to first click the checkbox
-* Added ability to backup CD/DVDs as Clonezilla image containing a raw sector-by-sector dd backup (experimental)
-* Switched error dialog box to be scrollable and resizable
-* Ensured progress bar better reflects the amount of data being copied (#129)
-* Ensured consistent 'last modified' timestamp string across all image formats
-* Ensured ecryptfs-utils, partimage packages are installed as intended
-* Added Firefox bookmarks for Rescuezilla FAQ, Patreon
-* Improved information provided to user during partition table refresh, LVM shutdown, image scan
-* Improved filesystem size estimates for Clonezilla LVM logical volumes
-* Suppressed unnecessary confirmation when mounting uncompressed images using Image Explorer (beta)
-* Fixed slow scanning of legacy Rescuezilla v1.0.5-v1.0.6.1 images
-* Calculated filesystem sizes of Redo Backup v0.9.2-v1.0.4 images based on partclone.info
-* Resets progress bar at the start of backup/restore/clone operation, rather than showing 100% initially
-* Improves warning messages when legacy Redo Backup images are missing image files
-* Improves truncated MBR, missing sfdisk file warning messages
-* Added dependency on the Clonezilla package for access to its udev/syslinux/GRUB/initramfs scripts (see above)
-* Added edd=on kernel boot option to assist with advanced NTFS filesystem geometry relocation
-* Switched to using Weblate to manage translations (#196): https://hosted.weblate.org/projects/rescuezilla
+* Added option to shutdown or reboot after operation completes successfully ([#165](https://github.com/rescuezilla/rescuezilla/issues/165))
+* Added ability to connect to NFS and SSH (SFTP) network shared folders ([#81](https://github.com/rescuezilla/rescuezilla/issues/81), [#118](https://github.com/rescuezilla/rescuezilla/issues/118))
+* Added ability to write a description for backup images ([#137](https://github.com/rescuezilla/rescuezilla/issues/137))
+* Added ability to make a screenshot by pressing Print Screen ([#166](https://github.com/rescuezilla/rescuezilla/issues/166))
+* Switched to using [Weblate](https://github.com/rescuezilla/rescuezilla/wiki/Translations-HOWTO) to manage translations:
 * Added translations:
-  * Swedish/Svenska (sv-SE) (#186)
-  * Turkish/Türkçe (tr-TR) (#89)
-  * Chinese (Simplified)/中文(简体) (zh-CN) (#191)
+  * Swedish/Svenska (sv-SE) ([#186](https://github.com/rescuezilla/rescuezilla/issues/186))
+  * Turkish/Türkçe (tr-TR) ([#89](https://github.com/rescuezilla/rescuezilla/issues/89))
+  * Chinese (Simplified)/中文(简体) (zh-CN) ([#191](https://github.com/rescuezilla/rescuezilla/issues/191))
   * Chinese (Traditional)/中文(繁體) (zh-Hant)
   * Norwegian Bokmål/Norsk Bokmål (nb-NO)
-  * Russian/Русский (ru-RU)
-  * Danish/Dansk (da-DK)
+  * Russian/Русский (ru-RU) \[[translation in-progress](https://github.com/rescuezilla/rescuezilla/issues/270#issuecomment-939196164)\]
+  * Dansk/Danish (da-DK)
 * Added scrollbar to GRUB boot menu to handle increasing number of languages
 * Removed 'localepurge' whitelist since number of translations is growing
 
--------------------------------------------------------------------------------
-  Version 2.1.3 (2021-01-29) 
--------------------------------------------------------------------------------
+# Rescuezilla v2.1.3 (2021-01-29) 
 
-* Added scrollbars to improve usability on low-resolution displays (#164)
-* Fixed automatic maximization of the Python-based Rescuezilla frontend window (#164)
-* Added Greek/Ελληνικά (el-GR) translation by tkatsageorgis (ευχαριστώ!) (#171) 
-* Added Japanese/日本語 (ja-JP) translation by AE720 (ありがとう！) (#176) 
+* Added scrollbars to improve usability on low-resolution displays ([#164](https://github.com/rescuezilla/rescuezilla/issues/164))
+* Fixed automatic maximization of Rescuezilla's main window ([#164](https://github.com/rescuezilla/rescuezilla/issues/164))
+* Added Greek/Ελληνικά (el-GR) translation by tkatsageorgis (ευχαριστώ!) ([#171](https://github.com/rescuezilla/rescuezilla/issues/171))
+* Added Japanese/日本語 (ja-JP) translation by AE720 (ありがとう！) ([#176](https://github.com/rescuezilla/rescuezilla/issues/176))
 
--------------------------------------------------------------------------------
-  Version 2.1.2 (2021-01-01) 
--------------------------------------------------------------------------------
+# Rescuezilla v2.1.2 (2021-01-01) 
 
-* Fixed incorrect pattern match that sometimes prevented booting after restoring an MBR disk (#162)
+* Fixed incorrect filename pattern match that prevented booting after restoring [MBR disks from **_some_** locations (#162)](https://github.com/rescuezilla/rescuezilla/issues/162)
 * Removed "Are You Sure" prompt on Image Explorer (beta) unmount
 
--------------------------------------------------------------------------------
-  Version 2.1.1 (2020-12-14) 
--------------------------------------------------------------------------------
+# Rescuezilla v2.1.1 (2020-12-14) 
 
-* Fixed restoring dual-boot GRUB bootloader on MBR systems after bug was introduced in v2.1 (#155)
-* Fixed display of error message if a partclone backup fails (#122)
+* Fixed restoring dual-boot GRUB bootloader on MBR systems after bug was introduced in v2.1 ([#155](https://github.com/rescuezilla/rescuezilla/issues/155))
+* Fixed display of error message if a partclone backup fails ([#122](https://github.com/rescuezilla/rescuezilla/issues/122#issuecomment-744176185))
 * Skipped making second backup of Extended Boot Record using partclone to better match Clonezilla
 * Removed partclone images on backup failure to better match Clonezilla's behavior
 * Added "Are You Sure" prompt to Image Explorer (beta) so users understand the limitations
-* Added Italian/Italiano (it-IT) translation by AlexTux87  (Grazie!) (#154) 
+* Added Italian/Italiano (it-IT) translation by AlexTux87  (Grazie!) ([#154](https://github.com/rescuezilla/rescuezilla/issues/154))
+* [**RESCUEZILLA IS OPEN FOR TRANSLATIONS!**](https://github.com/rescuezilla/rescuezilla/wiki/Translations-HOWTO)
 
--------------------------------------------------------------------------------
-  Version 2.1 (2020-12-12) 
--------------------------------------------------------------------------------
+# Rescuezilla v2.1 (2020-12-12) 
 
-* Added ‘Image Explorer’ (beta) to easily mount partclone images and extract files (#20)
-  Currently based on partclone-nbd. Feature is extremely fast for uncompressed images.
-  Both Clonezilla and Rescuezilla currently default to gzip compression which requires
-  decompressing a lot of data so mounting and exploring images over 50GB is relatively slow.
-* Added build based on Ubuntu 20.10 (Groovy) for improved NVidia graphics card support (#115)
-* Fixed slow backup speed after mistakenly switching away from pigz multithreaded compression (#125)
-* Fixed scan issue on some Redo Backup v0.9.8-v1.0.4, Rescuezilla v1.0.5-v1.0.6.1 images (#127)
-* Added ability to cancel the image scan by closing the progress bar popup (#126)
-* Displayed more progress details during drive query and image scan (#126)
-* Ensured that (unlike Clonezilla), disks with >1024MB still have 1MB post-MBR gap backup (#131)
-* Ensured all post-MBR gap always restored (whether 1MB or 1024MB), not just the first 256KB (#131)
-* Fixed post-MBR gap backup being one 512-byte sector too large (#131)
-* Fixed ability to specify the SMB/CIFS network share version field (#140)
-* Fixed “dev-fs.list” image scanning errors with recent Clonezilla “testing” releases (#139)
-* Ignored “sector-size” line in sfdisk partition table to maximize forward compatibility (#147)
-* Considered failure to query optional drive geometry information as non-fatal error (#122)
-* Ensured .info gets created for Microsoft Reserved Partitions to better match Clonezilla (#144)
-* Fixed rounding error for drive/partition sizes, and removed python hurry.filesize library (#148)
+* Added ‘Image Explorer’ (beta) to easily mount partclone images and extract files ([#20](https://github.com/rescuezilla/rescuezilla/issues/20))
+  * Currently based on `partclone-nbd`
+  * Rescuezilla intends on switching to using the more popular `partclone-utils` project (which can also mount `ntfsclone` images)
+  * Accessing files from **uncompressed** images (created by Clonezilla's Expert Mode) is _extremely_ fast even for very large images
+  * Both Clonezilla and Rescuezilla currently default to gzip compression, which requires decompressing a lot of data and makes mounting and exploring images over 50GB too slow.
+  * A future release of Rescuezilla will change the default compression format so mounting large images is always fast and efficient
+* Switched primary release to new build based on Ubuntu 20.10 (Groovy) for improved NVidia graphics card support ([#115](https://github.com/rescuezilla/rescuezilla/issues/115))
+* Fixed slow backup speed after mistakenly switching away from pigz multithreaded compression ([#125](https://github.com/rescuezilla/rescuezilla/issues/125))
+* Fixed scan issue on some Redo Backup v0.9.8-v1.0.4, Rescuezilla v1.0.5-v1.0.6.1 images ([#127](https://github.com/rescuezilla/rescuezilla/issues/127))
+* Added ability to cancel the image scan by closing the progress bar popup ([#126](https://github.com/rescuezilla/rescuezilla/issues/126))
+* Displayed more progress details during drive query and image scan ([#126](https://github.com/rescuezilla/rescuezilla/issues/126))
+* Ensured that (unlike Clonezilla), disks with >1024MB still have 1MB post-MBR gap backup ([#131](https://github.com/rescuezilla/rescuezilla/issues/131))
+* Ensured all post-MBR gap always restored (whether 1MB or 1024MB), not just the first 256KB ([#131](https://github.com/rescuezilla/rescuezilla/issues/131))
+* Fixed post-MBR gap backup being one 512-byte sector too large ([#131](https://github.com/rescuezilla/rescuezilla/issues/131))
+* Fixed ability to specify the SMB/CIFS network share version field ([#140](https://github.com/rescuezilla/rescuezilla/issues/140))
+* Fixed “dev-fs.list” image scanning errors with recent Clonezilla “testing” releases ([#139](https://github.com/rescuezilla/rescuezilla/issues/139))
+* Ignored “sector-size” line in sfdisk partition table to maximize forward compatibility ([#147](https://github.com/rescuezilla/rescuezilla/issues/147))
+* Considered failure to query optional drive geometry information as non-fatal error ([#122](https://github.com/rescuezilla/rescuezilla/issues/122))
+* Ensured .info gets created for Microsoft Reserved Partitions to better match Clonezilla ([#133](https://github.com/rescuezilla/rescuezilla/issues/144))
+* Fixed rounding error for drive/partition sizes, and removed python hurry.filesize library ([#148](https://github.com/rescuezilla/rescuezilla/issues/148))
 * Improved handling of read-only destination drives during backup
-* Added partclone-nbd v0.0.3 and partclone-utils v0.4.2 applications (#20)
-* Added Brazilian Portuguese/Português brasileiro (pt-BR) translation by vinicioslc (obrigado!) (#128)
-* Added Polish/Polski (pl-PL) translation by zeit439  (dzięki!) (#135) 
+* Added partclone-nbd v0.0.3 and partclone-utils v0.4.2 applications ([#20](https://github.com/rescuezilla/rescuezilla/issues/20))
+* Added Brazilian Portuguese/Português brasileiro (pt-BR) translation by vinicioslc (obrigado!) ([#128](https://github.com/rescuezilla/rescuezilla/issues/128))
+* Added Polish/Polski (pl-PL) translation by zeit439  (dzięki!) ([#135](https://github.com/rescuezilla/rescuezilla/issues/135))
 
--------------------------------------------------------------------------------
-  Version 2.0 (2020-10-14) 
--------------------------------------------------------------------------------
+# Rescuezilla v2.0 (2020-10-14) 
 
-* Switched to creating backups in Clonezilla format for full interoperability with Clonezilla
-  Rescuezilla is now a drop-in replacement to Clonezilla! (#4) This means backups created
-  using Clonezilla can be restored using Rescuezilla, and vice versa :)
-* Warning: Backups created with Rescuezilla v2.0 or newer cannot be restored using earlier
-  versions of Rescuezilla. Backups created with older versions of Rescuezilla can still of
-  course be restored with v2.0 or newer
-* Added ability to restore individual partitions, and not overwrite partition table (#46)
-* Rewrote the Rescuezilla frontend in the Python3 programming language (#49, #48, #111)
-* Added backup/restore confirmation and summary pages, back button (#6)
-* Improved exit code handling and error messages (#29, #114), image selection (#109)
-* Added the ability to backup and restore software RAID (md) devices (#45)
-* Added the ability to backup and restore SD card (mmcblk) devices (#95)
-* Added filesystem-aware backup/restore of Linux Logical Volume Manager (LVM) (#44)
-* Improved ability to restore to disks smaller or larger than original (#96)
-* Adapted GParted launcher script to temporarily shutdown file manager's one-click mount and
-  prevent GParted and Rescuezilla from running at the same time, to reduce risk of conflicts
-* Added GParted desktop shortcut
-* Released Rescuezilla as standalone deb file for advanced users on Ubuntu 20.04 (#119)
-* Disabled 32-bit ISO image temporarily until Python virtual environment configured (#120)
-* Switched from unmaintained SLiM (Simple Login Manager) to LightDM for reliability (#101, #115)
-* Separated 'Safe Mode' boot menu item to two: "Graphical fallback mode" and "Load USB into RAM"
-* Disabled Linux time sync to prevent hardware clock modification (thanks zebradots!) (#107)
-* Improved window auto-maximization settings for improved usability
-* Switches from GTK Bluebird theme to Breeze theme (#52)
-* Renamed existing photorec start menu shortcut to "Photograph deep scan" (112)
-* Added start menu shortcut for the TestDisk command-line undelete / file recovery app (#112)
-* Added nouveau-firmware package to improve support for ~2009 vintage NVidia graphics cards
-* Replaced start menu gear icon with lxpanel default icon based on user feedback
-* Added Patreon link to Rescuezilla's logo to help achieve sustainable funding
-                                    Project Announcements
-* RESCUEZILLA IS NOW OFFICIALLY OPEN FOR TRANSLATIONS! See the Translations HOWTO page for
-  more information.
+* Switched to creating backups in Clonezilla format for full interoperability with Clonezilla: Rescuezilla is now a drop-in replacement to Clonezilla!
+  In other words, backups created using Clonezilla can be restored using Rescuezilla, and vice versa :)
+* Warning: Backups created with Rescuezilla v2.0 cannot be restored using earlier versions of Rescuezilla. Backups created with older versions of Rescuezilla can still of course be restored with v2.0
+* Added ability to restore individual partitions, and optionally to not overwrite partition table ([#46](https://github.com/rescuezilla/rescuezilla/issues/46))
+* Rewrote the Rescuezilla frontend in the Python3 programming language ([#111](https://github.com/rescuezilla/rescuezilla/issues/111), [#49](https://github.com/rescuezilla/rescuezilla/issues/49), [#48](https://github.com/rescuezilla/rescuezilla/issues/48))
+* Added backup/restore confirmation and summary pages, back button ([#6](https://github.com/rescuezilla/rescuezilla/issues/6))
+* Improved exit code handling and error messages ([#29](https://github.com/rescuezilla/rescuezilla/issues/29), [#114](https://github.com/rescuezilla/rescuezilla/issues/114)), image selection ([#109](https://github.com/rescuezilla/rescuezilla/issues/109))
+* Disabled Linux time sync to prevent hardware clock modification (thanks zebradots!) ([#107](https://github.com/rescuezilla/rescuezilla/issues/107))
+* Added the ability to backup and restore software RAID (md) devices ([#45](https://github.com/rescuezilla/rescuezilla/issues/45))
+* Added the ability to backup and restore SD card (mmcblk) devices ([#95](https://github.com/rescuezilla/rescuezilla/issues/95))
+* Added filesystem-aware backup/restore of Linux Logical Volume Manager (LVM) ([#44](https://github.com/rescuezilla/rescuezilla/issues/44))
+* [**RESCUEZILLA IS NOW OFFICIALLY OPEN FOR TRANSLATIONS!**](https://github.com/rescuezilla/rescuezilla/wiki/Translations-HOWTO)
 
--------------------------------------------------------------------------------
-  Version 1.0.6.1 (2020-06-26) 
--------------------------------------------------------------------------------
+# Rescuezilla v1.0.6.1 (2020-06-26) 
 
-* Improved slow shutdown on Rescuezilla 64-bit (which was caused by file manager application) (#87)
-* Fixed French, German and Spanish keyboard layout not being selected (#99)
-* Skipped “Please remove the installation medium, then press ENTER” after shutdown (#87)
-* Fixed mousepad text editor’s shortcuts and file-associations (#98)
-* Added grub2-common package for /usr/sbin/grub-install executable, which was intended for v1.0.6 (#50)
-* Fixed version string indicating TravisCI build bot on v1.0.6 used non-pristine build directory (#102)
+* Improved shutdown speed on 64-bit which was being [delayed]( https://bugs.launchpad.net/ubuntu/+source/pcmanfm/+bug/1878625) by the file manager application ([#87](https://github.com/rescuezilla/rescuezilla/issues/87))
+* Fixed French, German and Spanish keyboard layout not being selected ([#99](https://github.com/rescuezilla/rescuezilla/issues/99))
+* Skipped “Please remove the installation medium, then press ENTER” after shutdown ([#87](https://github.com/rescuezilla/rescuezilla/issues/87))
+* Fixed mousepad text editor’s shortcuts and file-associations ([#98](https://github.com/rescuezilla/rescuezilla/issues/98))
+* Added grub2-common package for /usr/sbin/grub-install executable, which was intended for v1.0.6 ([#50](https://github.com/rescuezilla/rescuezilla/issues/50))
+* Fixed version string indicating that the TravisCI build bot used non-pristine build directory ([#102](https://github.com/rescuezilla/rescuezilla/issues/102))
 * Tweaked Rescuezilla wallpaper, splash screen, icon for aesthetics
 
--------------------------------------------------------------------------------
-  Version 1.0.6 (2020-06-18) 
--------------------------------------------------------------------------------
+# Rescuezilla v1.0.6 (2020-06-18) 
 
-* Added 64-bit version (this fixes the slow transfer rates issue on systems with >16GB RAM) (#3)
-* Added support for booting on EFI-only machines (including with Secure Boot enabled) [64-bit only] (#1)
+* Added 64-bit version (this fixes the [slow transfer rates](https://github.com/rescuezilla/rescuezilla/issues/15#issuecomment-611541952) issue on systems with >16GB RAM) ([#3](https://github.com/rescuezilla/rescuezilla/issues/3))
+* Added support for booting on EFI-only machines (including with Secure Boot enabled) [64-bit only] ([#1](https://github.com/rescuezilla/rescuezilla/issues/1))
 * Switched ISOLINUX bootloader to GRUB affecting all boot approaches: BIOS, EFI and CD-ROM
-* Upgraded OS base to Ubuntu 20.04 LTS (Focal) from 18.04 LTS (Bionic) [64-bit only] (#51)
+* Upgraded OS base to Ubuntu 20.04 LTS (Focal) from 18.04 LTS (Bionic) [64-bit only] ([#51](https://github.com/rescuezilla/rescuezilla/issues/51))
 * Ubuntu 20.04 has dropped 32-bit, so Rescuezilla 32-bit remains based on Ubuntu 18.04
-* Fixed issue preventing backup/restore of drives smaller than typically ~40 megabytes (#55)
-* Fixed broken GRUB backup affecting _some_ 1MiB-aligned filesystems on MBR-formatted disks,
-  by copying all of “post-MBR gap” between MBR and first partition, not just typical 32KiB. (#50)
-* Fixed a “stuck at 0%” issue when paths contain certain special characters (#15)
-* Removed false menu items such as “(Windows Boot Manager, )” by correctly merging items (#69)
+* Fixed issue preventing backup/restore of hard drives smaller than typically ~40 megabytes ([#55](https://github.com/rescuezilla/rescuezilla/issues/55))
+* Fixed broken GRUB backup affecting _some_ 1MiB-aligned filesystems on MBR-formatted disks, by copying all of “post-MBR gap” between MBR and first partition, not just typical 32KiB. ([#50](https://github.com/rescuezilla/rescuezilla/issues/50))
+* Added GRUB packages to assist users who want to use Rescuezilla to perform a GRUB repair ([#50](https://github.com/rescuezilla/rescuezilla/issues/50))
+* Fixed a “stuck at 0%” issue when paths contain certain special characters ([#15](https://github.com/rescuezilla/rescuezilla/issues/15#issuecomment-616976794))
+* Removed false menu items such as “(Windows Boot Manager, )” by correctly merging items ([#69](https://github.com/rescuezilla/rescuezilla/issues/69))
 * Removed restrictions which prevented users entering special characters in filenames and paths
-* Fixed use of silver “Bluebird” theme, replacing the dull grey default used by v1.0.5/v1.0.5.1 (#48)
+* Fixed use of silver “Bluebird” theme, replacing the dull grey default used by v1.0.5/v1.0.5.1 ([#48](https://github.com/rescuezilla/rescuezilla/issues/48#issuecomment-610106113))
 * Increased logging of internal commands for improved ability to track down reported bugs
-* Writes the log file into destination directory (so it always persists between reboots) (#61)
+* Writes the log file into destination directory (so it always persists between reboots) ([#61](https://github.com/rescuezilla/rescuezilla/issues/61))
 * Improved the error message when a mount (of CIFS/SMB network share) fails
 * Adds boot menu item to enter “BIOS” firmware setup [EFI-boot only]
-* Replaced Redo Backup logo with new Rescuezilla logo (with “Tux” pengiun mascot) (#62)
+* Replaced Redo Backup logo with new Rescuezilla logo (with “Tux” pengiun mascot) ([#62](https://github.com/rescuezilla/rescuezilla/issues/62))
 * Switched ISO naming to eg, “rescuezilla-1.0.6-32bit.iso” from “redobackup-livecd-1.0.6.iso”
-* Installs Rescuezilla frontend as a deb package, which increases flexibility of installation (#13)
-* Moved scripts from tertiary File Hierarchy Standard (eg, /usr/local/sbin/rescuezilla) to secondary 
-  FHS (eg, /usr/sbin/rescuezilla) as the rationale that scripts were “developed by the system 
-  administrator of the system it is deployed on” is no longer valid when installing as a deb package
-* Added GRUB packages to assist users who want to use Rescuezilla to perform a GRUB repair (#50)
+* Installs Rescuezilla frontend as a deb package, which increases flexibility of installation ([#13](https://github.com/rescuezilla/rescuezilla/issues/13))
+* Moved scripts from tertiary File Hierarchy Standard (eg, /usr/local/sbin/rescuezilla) to secondary FHS (eg, /usr/sbin/rescuezilla) as the rationale that scripts were “developed by the system administrator of the system it is deployed on” is no longer valid when installing as a deb package
 * Minimized divergence of Rescuezilla 32-bit and 64-bit package environment: (see below)
-* Replaced Chromium Web Browser with Firefox to avoid Ubuntu 20.04 snap-based packaging as snaps 
-  cannot yet (#63) be installed in chroot-based environments (which the Rescuezilla build uses)
-* Replaced unsupported ‘leafpad’ text editor with similarly lightweight ‘mousepad’ text editor
+* Replaced Chromium Web Browser with Firefox to avoid Ubuntu 20.04 snap-based packaging as [snaps cannot yet](https://github.com/rescuezilla/rescuezilla/issues/63) be installed in chroot-based environments (which the Rescuezilla build uses)
+* Replaced unsupported ‘leafpad’ text editor with similarly lightweight ‘mousepad’ text editor, as 'leafpad' not available on Ubuntu 20.04
 * Removed ‘maximus’ auto-maximize package (as behavior replaced by OpenBox config in v1.0.5)
-* Added [Patreon](https://www.patreon.com/join/rescuezilla) as a second Firefox homepage, to 
-  help achieve sustainable funding.
-                                    Project Announcements
-* The original Redo Backup and Recovery author has resurfaced after a 7.5 year absence to release
-  an incompatible update named Redo Rescue, with features planned for Rescuezilla v1.0.7.
-* Rescuezilla is moving to a new support forum, and will continue to provide world-class
-  user support, backwards compatibility, bugs fixes and features.
-* The Rescuezilla project will continue to be developed, with major upgrades planned for v1.0.7.
+* Added [Patreon](https://www.patreon.com/join/rescuezilla) as a second Firefox homepage, to help achieve sustainable funding
 
--------------------------------------------------------------------------------
-  Version 1.0.5.1 (2020-03-24) 
--------------------------------------------------------------------------------
-* Added support for NVMe hard drives (#27)
-* Fixed Redo Backup’s notorious “restore succeeded but all partitions unknown” bug (#36)
-* Fixed restoring of backups created with several old and buggy unofficial Redo Backup v1.0.4 updates
-* Fixed “stuck at text login prompt unless using Safe Mode” issue (#25)
-* Added version field for SMB/CIFS network drives for connecting to older shares (#22)
-* Added retry unmount box to fix backing up of unmountable partitions (#16)
-* Prevented Rescuezilla using swap partitions that are present (#37)
+# Rescuezilla v1.0.5.1 (2020-03-24) 
+
+* Added support for NVMe hard drives ([#27](https://github.com/rescuezilla/rescuezilla/issues/27))
+* Fixed Redo Backup’s notorious “restore succeeded but all partitions unknown” bug ([#36](https://github.com/rescuezilla/rescuezilla/issues/36))
+* Fixed restoring of backups created with several [unofficial Redo Backup v1.0.4 updates](https://github.com/rescuezilla/rescuezilla/wiki/Bugs-in-unofficial-Redo-Backup-updates)
+* Fixed “stuck at text login prompt unless using Safe Mode” issue ([#25](https://github.com/rescuezilla/rescuezilla/issues/25#issuecomment-577969658))
+* Added version field for SMB/CIFS network drives for connecting to older shares ([#22](https://github.com/rescuezilla/rescuezilla/issues/22))
+* Added retry unmount box to fix backing up of unmountable partitions ([#16](https://github.com/rescuezilla/rescuezilla/issues/16))
+* Prevented Rescuezilla using swap partitions that are present ([#37](https://github.com/rescuezilla/rescuezilla/issues/37))
 * Switched drive/partition list to sort by numeric not lexical ordering (1/2/3/10, not 1/10/2/3)
 * Fixed switch to multithreaded ‘pigz’ for backup compression, which was intended for v1.0.5
-* Lowered X11 text scaling back to 100%, not 125% to prevent excessive number of linebreaks
-* Added /etc/rescuezilla/no_source_overwrite to always prevent overwriting source drive
 * Ensured French Safe Mode boots into French-language with French keymap, not into English
-* Added Spanish/Español (ES-es) translation by caralu74 (¡gracias!) (#31)
-* Fixed French/German/Spanish translated strings not being substituted, glyph rendering issues
+* Added Spanish/Español (ES-es) translation by caralu74 (¡gracias!) ([#28](https://github.com/rescuezilla/rescuezilla/issues/28))
+* Ensured that every French/German/Spanish translated string gets displayed to end-users
+* Fixed an issue where some French/German/Spanish characters were not being rendered correctly
 
--------------------------------------------------------------------------------
-  Version 1.0.5 (2019-11-08) 
--------------------------------------------------------------------------------
+# Rescuezilla v1.0.5 (2019-11-08) 
+
+After 7 years without a release, the abandoned Redo Backup and Recovery application has been brought back
+from the dead by a new maintainer. This new fork is being developed under a new name, 'Rescuezilla'.
+
 * Upgraded base to Ubuntu 18.04 LTS (Bionic) from Ubuntu 12.04 LTS (Precise)
 * Renamed project Rescuezilla but keeping ‘Redo’ for v1.0.5 (See ‘Project Announcements’ below)
 * Switched to Hardware Enablement kernel for best support of new hardware (thanks OAM775!)
@@ -398,20 +302,20 @@
 * Replaced ‘maximus’ with openbox's builtin maximize settings, toggleable per-app
 * Switched to ‘pigz’ multithreaded gzip based on OAM775’s old releases (thanks!)
 * Fixed SMB/FTP passwords not working with special characters (thanks Dave Kipfer!)
-* Imported patches from Michal Suchanek’s git repo from 2012 and 2015, as practical (see next)
-* Added ability to restore partition to a drive smaller than the original (thanks Michal!)
-* Added ability to configure default share name via /etc/rescuezilla/share (thanks Michal!)
-* Added log file for each partition’s partclone operation (thanks Michal!)
-* Stopped printing of SMB credentials when mounting drives (thanks Michal!)
+* Imported patches from Michal Suchanek’s git repo from 2012 and 2015, as practical
+    * Added ability to restore partition to a drive smaller than the original (thanks Michal!)
+    * Added ability to configure default share name via /etc/rescuezilla/share (thanks Michal!)
+    * Added log file for each partition’s partclone operation (thanks Michal!)
+    * Stopped printing of SMB credentials when mounting drives (thanks Michal!)
 * Stopped printing of FTP credentials when mounting drives
 * Removed deprecated sfdisk ‘-x’ argument used to save extended partition information
-* Replaced deprecated ‘sfdisk -R’ call with ‘blockdev –rereadpt’, to force reload partition info
+* Replaced deprecated `sfdisk -R` call with `blockdev –rereadpt`, to force reload partition info
 * Writes Rescuezilla version in the backup directory to help backwards compatibility
 * Writes partition information during backup so Ubuntu 18.04 partclone can correctly restore
-* Moved script from /sbin/redobackup to /usr/local/sbin/rescuezilla as per File Hierarchy Standard
+* Moved script from `/sbin/redobackup` to `/usr/local/sbin/rescuezilla` as per File Hierarchy Standard
 * Added filesystem-aware backup/restore of btrfs, exfat, f2fs filesystems
 * Fixed backup/restore of ufs, vmfs, jfs, hfs, reiserfs filesystems
-* Add filesystem utilities so GParted can modify btfs, hfs+, ufs, xfs filesystems
+* Add filesystem utilities so GParted can modify btrfs, hfs+, ufs, xfs filesystems
 * Added GNU ddrescue command-line data recovery tool
 * Added to right-click menu a ‘change screen resolution’ function
 * Added to right-click menu an ‘open terminal here’ function
@@ -421,7 +325,7 @@
 * Added release timestamp to the status bar of the Redo Backup perl app
 * Replaced buggy lxrandr (resolution changer), with arandr (graphical screen resolution/layout)
 * Removed ‘nitrogen’ wallpaper manager application
-* Configured PCManFM file manger for desktop management and wallpaper display
+* Configured PCManFM file manager for desktop management and wallpaper display
 * Added desktop icons for important applications, mounted media
 * Writes all of redobackup/drivereset output to a file in a desktop directory, for easier bug reporting
 * Fixed pcmanfm Tools menu “Open Current Folder in Terminal” functionality
@@ -431,33 +335,9 @@
 * Added German/Deutsch translation adapted from chcatzsf’s old release (dankeschön!)
 * Appended translations to boot menu (future release will make this scalable to more languages)
 * ISO image grown to ~620MB mostly due to bloated Ubuntu, Chromium and language packs
-                                    Project Announcements
-* Redo Backup and Recovery is back, with a new maintainer and an active support forum
-* The author of Redo Backup and Recovery remains uncontactable (despite many attempts)
-* The new maintainer does not control redobackup.org or Redo Backup and Recovery Sourceforge
-* The most realistic path is continuing active development under a different name.
-* Redo Backup and Recovery is in the process of being rebranded Rescuezilla
-* Rescuezilla v1.0.5 can restore backups created with Redo Backup v1.0.4
-* For now, Redo Backup’s Sourceforge Project continues to be the official support forum
-                                    Development updates
-* Created GitHub organization to manage development (http://github.com/redobackup/redobackup)
-* Added automated build scripts (adapting the tedious build instructions from the Sourceforge Wiki)
-* Added Dockerfile to optionally construct the optimal build environment for any git commit
-* Integrated Travis-CI.org continious integration build bot, for increased release rigor
-* Added script to display differences between *any* two Redo Backup and Recovery ISO images
-* Imported source of the older versions (v0.9.8-v1.0.4) from the snapshot release tarballs
-* Reconstructed v0.9.8-v1.0.4 build scripts based on CHANGELOGs, official ISO images
-* Enhanced build scripts with deb package caching, to minimize network usage of a typical build
-* Unified the unofficial releases (OAM775’s pigz/HWE changes, louvetch’s French translation,
-  and chcatzsf’s German translation, Michal Suchanek’s v1.0.3 patches) into a git repository on GitHub
-* Reconstructed the official Redo Backup and Recovery webpage using the Wayback Machine
-* Added Project Roadmap, Translation HOWTO to GitHub Wiki
-* Uploaded reconstructed website to https://rescuezilla.com
-* Created Patreon account to help fund continued development
 
--------------------------------------------------------------------------------
-  Version 1.0.4 (2012-11-20)
--------------------------------------------------------------------------------
+# Redo Backup and Recovery v1.0.4 (2012-11-20)
+
   * Base upgrade to Ubuntu 12.04 LTS (Precise)
   * Percent complete now based on part sizes rather than total number of parts
   * Windows now have titlebars to ease minimizing, maximizing and closing
@@ -468,14 +348,12 @@
   * Drive reset utility can now operate on multiple drives simultaneously
   * Removed synaptic and boot-repair packages to reduce image size
 
--------------------------------------------------------------------------------
-  Version 1.0.3 (2012-05-10)
--------------------------------------------------------------------------------
+# Redo Backup and Recovery v1.0.3 (2012-05-10)
+
   * Restore now overwrites MBR and partition table upon completion
 
--------------------------------------------------------------------------------
-  Version 1.0.2 (2012-01-03)
--------------------------------------------------------------------------------
+# Redo Backup and Recovery v1.0.2 (2012-01-03)
+
   * Updated to latest partclone stable binaries
   * Shorten dropdown menus with an ellipsis after certain character limit
   * Ubuntu Maverick repos for updates and backports added; base upgraded
@@ -488,17 +366,15 @@
   * Show an error if any of the partitions to restore do not exist
   * Allow spaces in network shared folders
 
--------------------------------------------------------------------------------
-  Version 1.0.1 (2011-08-09)
--------------------------------------------------------------------------------
+# Redo Backup and Recovery v1.0.1 (2011-08-09)
+
   * LVM2 support added
   * Fixed HFS+ bug that prevented the proper partclone tool from being called
   * Minor changes to boot menu
   * Safe mode boot option now prompts user to select a valid video mode
 
--------------------------------------------------------------------------------
-  Version 1.0.0 (2011-07-01)
--------------------------------------------------------------------------------
+# Redo Backup and Recovery v1.0.0 (2011-07-01)
+
   * Added the wodim package for command-line CD burning
   * Password boxes now display hidden characters when typed in
   * Increased boot delay for machines that are slow to display it
@@ -507,15 +383,13 @@
   * Updated the boot help text to provide info about Ubuntu boot options
   * Removed enhanced security erase option in drive reset tool for reliability
 
--------------------------------------------------------------------------------
-  Version 0.9.9 (2011-06-10)
--------------------------------------------------------------------------------
+# Redo Backup and Recovery v0.9.9 (2011-06-10)
+
   * Added missing ntfs-3g package to allow saving backups to NTFS drives
   * Version number can be found in bottom left after booting into GUI
 
--------------------------------------------------------------------------------
-  Version 0.9.8 (2011-03-10)
--------------------------------------------------------------------------------
+# Redo Backup and Recovery v0.9.8 (2011-03-10)
+
   * Major platform shift; building from Ubuntu rather than xPUD in the future
   * Many base features not directly related to backup/restore have changed
   * Added boot menu option to check CD media for defects
@@ -523,16 +397,14 @@
   * Updated fsarchiver and partclone binaries to latest stable versions
   * Boot splash screen now displays version number for easy identification
 
--------------------------------------------------------------------------------
-  Version 0.9.7 (2010-09-22)
--------------------------------------------------------------------------------
+# Redo Backup and Recovery v0.9.7 (2010-09-22)
+
   * Added autorun.exe to help Windows users realize that a reboot is needed
   * Changed color of UI background from orange to soft blue
   * Copied VERSION and LICENSE files to root of CD-ROM for easier access
 
--------------------------------------------------------------------------------
-  Version 0.9.6 (2010-08-28)
--------------------------------------------------------------------------------
+# Redo Backup and Recovery v0.9.6 (2010-08-28)
+
   * Fixed: Backup required scanning net before specifying a share manually
   * Fixed: Verification for drive reset can detect success or failure
   * Fixed: Missing rsync CLI dependencies have been added to the live CD image
@@ -549,9 +421,8 @@
   * Added GUI lshw-gtk tool to easily identify computer hardware components
   * Added the baobab graphical disk usage tool
 
--------------------------------------------------------------------------------
-  Version 0.9.5 (2010-08-08)
--------------------------------------------------------------------------------
+# Redo Backup and Recovery v0.9.5 (2010-08-08)
+
   * Major speed improvements; backups and restores now 4x faster
   * Standalone gzip binary allows the compression level to be specified
   * Updated partclone to version 0.2.13
@@ -559,9 +430,8 @@
   * Back to using syslinux from the standard Ubuntu 9.10 repo version
   * Only one isolinux.cfg/syslinux.cfg file to maintain
 
--------------------------------------------------------------------------------
-  Version 0.9.4 (2010-08-02)
--------------------------------------------------------------------------------
+# Redo Backup and Recovery v0.9.4 (2010-08-02)
+
   * New option to manually specify a shared folder or FTP server
   * Allow retry if network mount fails or bad password is provided
   * Warning: New backup naming convention allows dashes, not underscores
@@ -581,9 +451,8 @@
   * Compatibility fixes and UI improvements to factory drive reset tool
   * Added reiserfsprogs, reiser4progs and mcheck for more filesystem support
 
--------------------------------------------------------------------------------
-  Version 0.9.3 (2010-07-04)
--------------------------------------------------------------------------------
+# Redo Backup and Recovery v0.9.3 (2010-07-04)
+
   * Warning: Not interoperable with images from previous versions
   * Updated partclone to version 0.2.12
   * Save partclone error log to /partclone.log during each operation
@@ -604,7 +473,6 @@
   * Splash screen implemented on USB stick installations
   * Modified boot menu appearance and help text
 
--------------------------------------------------------------------------------
-  Version 0.9.2 (2010-06-24)
--------------------------------------------------------------------------------
+# Redo Backup and Recovery v0.9.2 (2010-06-24)
+
   * Initial release
