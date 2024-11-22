@@ -18,32 +18,32 @@ SHELL=/bin/bash
 
 all: focal
 
-buildscripts = src/build.sh src/chroot-steps-part-1.sh src/chroot-steps-part-2.sh
+buildscripts = src/scripts/build.sh src/scripts/chroot-steps-part-1.sh src/scripts/chroot-steps-part-2.sh
 
 # ISO image based on Ubuntu 20.04 Focal LTS (Long Term Support) 64bit
 focal: ARCH=amd64
 focal: CODENAME=focal
 export ARCH CODENAME
 focal: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-utils partclone-nbd $(buildscripts)
-	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/build.sh
+	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/scripts/build.sh
 
 lunar: ARCH=amd64
 lunar: CODENAME=lunar
 export ARCH CODENAME
 lunar: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-utils partclone-nbd $(buildscripts)
-	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/build.sh
+	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/scripts/build.sh
 	
 jammy: ARCH=amd64
 jammy: CODENAME=jammy
 export ARCH CODENAME
 jammy: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-utils partclone-nbd $(buildscripts)
-	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/build.sh	
+	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/scripts/build.sh	
 
 mantic: ARCH=amd64
 mantic: CODENAME=mantic
 export ARCH CODENAME
 mantic: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-utils partclone-nbd $(buildscripts)
-	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/build.sh	
+	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/scripts/build.sh	
 
 # Note: Ubuntu 24.04 (Long Term Support) won't be released until around April 2024, as per the version string
 # Kept here as the unreleased version can be built and used as a kind of pre-alpha release
@@ -51,14 +51,14 @@ noble: ARCH=amd64
 noble: CODENAME=noble
 export ARCH CODENAME
 noble: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-utils partclone-nbd $(buildscripts)
-	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/build.sh	
+	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/scripts/build.sh	
 
 # ISO image based on Ubuntu 18.04 Bionic LTS (Long Term Support) 32bit (the last 32bit/i386 Ubuntu LTS release)
 bionic-i386: ARCH=i386
 bionic-i386: CODENAME=bionic
 export ARCH CODENAME
 bionic-i386: deb $(buildscripts)
-	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/build.sh
+	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/scripts/build.sh
 
 deb: DEB_BUILD_DIR=$(abspath $(BASE_BUILD_DIRECTORY))/deb
 deb:
@@ -230,13 +230,13 @@ docker-build:
 
 docker-run:
 	docker run --rm --detach --privileged --name=builder.container --volume=$(shell pwd):/home/rescuezilla/ builder.image sleep infinity
-	docker exec --interactive --workdir=/home/rescuezilla/ builder.container ./src/git-add-safe-directory.sh
+	docker exec --interactive --workdir=/home/rescuezilla/ builder.container ./src/scripts/git-add-safe-directory.sh
 
 docker-stop:
 	docker stop builder.container
 
 docker-add-safe-directory:
-	docker exec --interactive --workdir=/home/rescuezilla/ builder.container ./src/git-add-safe-directory.sh
+	docker exec --interactive --workdir=/home/rescuezilla/ builder.container ./src/scripts/git-add-safe-directory.sh
 
 docker-test:
 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make test
