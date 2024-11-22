@@ -27,7 +27,7 @@ CODENAME="${CODENAME:-INVALID}"
 ARCH="${ARCH:-INVALID}"
 
 # One-higher than directory containing this build script
-BASEDIR=$(dirname $(readlink -f "$0"))/../
+BASEDIR="$(git rev-parse --show-toplevel)"
 
 RESCUEZILLA_ISO_FILENAME=rescuezilla.$ARCH.$CODENAME.iso
 # The base build directory is "build/", unless overridden by an environment variable
