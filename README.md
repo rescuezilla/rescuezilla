@@ -36,40 +36,9 @@ Note: Rescuezilla does NOT yet _automatically_ shrink partitions to restore to d
 
 ## Supported Languages
 
-Rescuezilla has been translated into the following languages:
+You can help translate Rescuezilla on [Hosted Weblate](https://hosted.weblate.org/engage/rescuezilla/).
 
-* (ar-EG) ﺎﻠﻋﺮﺒﻳﺓ
-* Català (ca-ES)
-* Čeština (cs-CZ)
-* Dansk (da-DK)
-* Deutsch (de-DE)
-* Ελληνικά (el-GR)
-* English (en-US)
-* Español (es-ES)
-* Français (fr-FR)
-* 한국어 (ko-KR)
-* Italiano (it-IT)
-* Bahasa Indonesia (id-ID) (Translation [in-progress](https://hosted.weblate.org/translate/rescuezilla/-/id/?offset=1&q=state%3A%3Ctranslated+AND+NOT+has%3Asuggestion&sort_by=-priority%2Cposition&checksum=))
-* עִברִית (he-IL)
-* Magyar (hu-HU)
-* 日本語 (ja-JP) (Translation [in-progress](https://hosted.weblate.org/translate/rescuezilla/-/ja/?offset=1&q=state%3A%3Ctranslated+AND+NOT+has%3Asuggestion&sort_by=-priority%2Cposition&checksum=))
-* Lietuvių (lt-LT)
-* Nederlands (nl-NL)
-* Norsk Bokmål (nb-NO)
-* Polski (pl-PL)
-* Português brasileiro (pt-BR)
-* Русский (ru-RU)
-* Shqip (sq-AL) (Translation [in-progress](https://hosted.weblate.org/translate/rescuezilla/-/sq/?offset=1&q=state%3A%3Ctranslated+AND+NOT+has%3Asuggestion&sort_by=-priority%2Cposition&checksum=))
-* Slovenčina (sk-SK) (Translation [in-progress](https://hosted.weblate.org/translate/rescuezilla/-/sk/?offset=1&q=state%3A%3Ctranslated+AND+NOT+has%3Asuggestion&sort_by=-priority%2Cposition&checksum=))
-* Svenska (sv-SE)
-* ภาษาไทย (th-TH)
-* Türkçe (tr-TR)
-* Українська (uk-UA) (Translation [in-progress](https://hosted.weblate.org/translate/rescuezilla/-/uk/?offset=1&q=state%3A%3Ctranslated+AND+NOT+has%3Asuggestion&sort_by=-priority%2Cposition&checksum=))
-* Tiếng Việt (vi-VN) (Translation [in-progress](https://hosted.weblate.org/translate/rescuezilla/-/vi/?offset=1&q=state%3A%3Ctranslated+AND+NOT+has%3Asuggestion&sort_by=-priority%2Cposition&checksum=))
-* 中文(简体) (zh-CN)
-* 中文(繁體) (zh-Hant)
-
-Rescuezilla uses Weblate for translation. **Please see [Translations HOWTO](https://github.com/rescuezilla/rescuezilla/wiki/Translations-HOWTO) to submit or update a translation.**
+[![Translate status](https://hosted.weblate.org/widgets/rescuezilla/-/multi-auto.svg)](https://hosted.weblate.org/engage/rescuezilla/)
 
 ## Screenshots
 
