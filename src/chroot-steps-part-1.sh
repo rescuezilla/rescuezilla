@@ -206,7 +206,6 @@ lang_codes=(
              "da"
              "de"
              "el"
-             "es"
              "fr"
              "ko"
              "id"
@@ -216,19 +215,32 @@ lang_codes=(
              "hu"
              "nl"
              "ja"
-             "nb"
              "pl"
-             "pt"
              "ru"
              "sk"
              "sq"
-             "sv"
              "th"
              "tr"
              "uk"
              "vi"
+)
+
+lang_codes_g=(
+             "es"
+             "nb"
+             "pt"
+             "sv"
              "zh-hans"
              "zh-hant"
+)
+
+lang_codes_f=(
+             "es-es"
+             "nb-no"
+             "pt-br"
+             "sv-se"
+             "zh-cn"
+             "zh-tw"
 )
 
 # Prepare list of language packs to install
@@ -236,8 +248,18 @@ language_pack_gnome_base_pkgs=()
 firefox_locale_pkgs=()
 for lang in "${lang_codes[@]}"
 do
-     firefox_locale_pkgs+=("firefox-locale-$lang")
+     firefox_locale_pkgs+=("firefox-l10n-$lang")
      language_pack_gnome_base_pkg+=("language-pack-gnome-$lang-base")
+done
+
+for lang in "${lang_codes_g[@]}"
+do
+     language_pack_gnome_base_pkg+=("language-pack-gnome-$lang-base")
+done
+
+for lang in "${lang_codes_f[@]}"
+do
+     firefox_locale_pkgs+=("firefox-l10n-$lang")
 done
 
 # Packages common to both  32-bit and 64-bit build
@@ -251,6 +273,7 @@ common_pkgs=("discover"
              # Firmware package for NVidia cards from ~2009 (newer cards have firmware in the kernel)
              "nouveau-firmware"
              "x11-xserver-utils"
+             "xserver-xorg-input-libinput"
              "xterm"
              "network-manager-gnome"
              "plymouth-x11"
@@ -273,8 +296,7 @@ common_pkgs=("discover"
              "fonts-thai-tlwg"
              # Font for symbols like "❌"
              "fonts-symbola"
-             "breeze-gtk-theme"
-             "gtk3-engines-breeze"
+             "arc-theme"
              "gnome-icon-theme"
              "gnome-brave-icon-theme"
              "dmz-cursor-theme"
@@ -293,7 +315,6 @@ common_pkgs=("discover"
              "time"
              "psmisc"
              "openssh-client"
-             "gtk2-engines-pixbuf"
              "beep"
              "rsync"
              "smartmontools"
