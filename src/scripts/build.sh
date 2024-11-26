@@ -329,7 +329,9 @@ if [[ $? -ne 0 ]]; then
     exit 1
 fi
 
-cp /boot/memtest86+.bin image/memtest/
+# The memtest binaries are copied in from the host system (ie, the Docker build container)
+# TODO(#540): Support 64-bit and EFI memtest packages
+cp /boot/memtest86+ia32.bin image/memtest/
 if [[ $? -ne 0 ]]; then
     echo "Error: Failed to copy memtest86+ binary from host system."
     exit 1
