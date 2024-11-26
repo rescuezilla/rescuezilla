@@ -207,6 +207,7 @@ lang_codes=(
              "de"
              "el"
              "es"
+             "fa"
              "fr"
              "ko"
              "id"

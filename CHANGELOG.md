@@ -1,3 +1,8 @@
+#  Rescuezilla v2.6 (2024-XX-XX)
+
+* Many existing translations updated, but also added:
+  * Persian/فارسی (fa-IR) (in-progress)
+
 # Rescuezilla v2.5.1 (2024-09-08)
 
 * Stops running the `ntfsfix --clear-dirty` on NTFS filesystems on the SOURCE DISK during backup and clone operations ([#466](https://github.com/rescuezilla/rescuezilla/issues/466))
