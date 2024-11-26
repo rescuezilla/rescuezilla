@@ -220,6 +220,7 @@ lang_codes=(
              "nb"
              "pl"
              "pt"
+             "ro"
              "ru"
              "sk"
              "sq"
