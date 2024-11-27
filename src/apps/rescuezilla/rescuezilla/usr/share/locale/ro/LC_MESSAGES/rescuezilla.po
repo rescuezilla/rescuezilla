@@ -4,39 +4,44 @@
 # ttt113326 <tonio_k@mail.ru>, 2021.
 # МАН69К <weblate@mah69k.net>, 2022.
 # Languages add-on <noreply-addon-languages@weblate.org>, 2024.
+# Adrian <adriantnt@adriantnt.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2022-06-28 05:17+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2024-11-27 01:00+0000\n"
+"Last-Translator: Adrian <adriantnt@adriantnt.com>\n"
+"Language-Team: Romanian <https://hosted.weblate.org/projects/rescuezilla/"
+"rescuezilla/ro/>\n"
 "Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
-"X-Generator: Weblate 4.13.1-dev\n"
+"X-Generator: Weblate 5.9-dev\n"
 
 msgid "Welcome"
-msgstr ""
+msgstr "Bun venit"
 
 msgid "Select an Option"
-msgstr ""
+msgstr "Selecteaza o optiune"
 
 msgid "Easily create a backup image of your computer, or completely restore from one.  Click an option to begin:"
 msgstr ""
+"Creaza cu usurinta o imagine backup a calculatorului tau, sau restaureaza "
+"dintr-o imagine. Click pe o optiune pentru a incepe:"
 
+#, fuzzy
 msgid "Backup"
-msgstr ""
+msgstr "Backup"
 
 msgid "Restore"
-msgstr ""
+msgstr "Restaureaza"
 
 msgid "Verify Image"
-msgstr ""
+msgstr "Verifica imagine"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
 msgstr ""

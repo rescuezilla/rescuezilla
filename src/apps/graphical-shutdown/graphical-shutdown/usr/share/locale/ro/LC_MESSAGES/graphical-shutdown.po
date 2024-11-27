@@ -1,29 +1,31 @@
 # Artem <KovalevArtem.ru@gmail.com>, 2021.
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021.
 # Remus-Gabriel Chelu <remusgabriel.chelu@disroot.org>, 2024.
+# Adrian <adriantnt@adriantnt.com>, 2024.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2021-06-08 11:15+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2024-11-27 01:00+0000\n"
+"Last-Translator: Adrian <adriantnt@adriantnt.com>\n"
+"Language-Team: Romanian <https://hosted.weblate.org/projects/rescuezilla/"
+"graphical-shutdown/ro/>\n"
 "Language: ro\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 5.9-dev\n"
 
 msgid "End Session"
-msgstr ""
+msgstr "Inchide Sesiune"
 
 msgid "Cancel"
-msgstr ""
+msgstr "Anuleaza"
 
 msgid "Shutdown"
-msgstr ""
+msgstr "Inchide calculatorul"
 
 msgid "Reboot"
-msgstr ""
+msgstr "Reporneste calculatorul"
 
 msgid "Choose action."
-msgstr ""
+msgstr "Alege o actiune."
