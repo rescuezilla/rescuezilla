@@ -25,6 +25,10 @@ BASEDIR="$(dirname $(readlink -f "$0"))"
 # we would first have needed to configure the 'safe.directory' to use that command :)
 GIT_ROOT=$(cd "$BASEDIR/../../" && pwd)
 
+. "$BASEDIR/lib.sh"
+
+exit_if_missing_command git
+
 # Trust base Rescuezilla git repository
 git config --global --add safe.directory ${GIT_ROOT}
 
