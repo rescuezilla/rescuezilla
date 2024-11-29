@@ -5,14 +5,14 @@
 # Changing the URL to a mirror geographically closer mirror may increase
 # network transfer rates.
 #
-# [1] https://archive.ubuntu.com/ubuntu
+# [1] http://archive.ubuntu.com/ubuntu
 # [2] http://old-releases.ubuntu.com/ubuntu
 
-deb https://archive.ubuntu.com/ubuntu CODENAME_SUBSTITUTE main universe multiverse
-deb https://archive.ubuntu.com/ubuntu CODENAME_SUBSTITUTE-updates main universe multiverse
-deb https://archive.ubuntu.com/ubuntu CODENAME_SUBSTITUTE-security main universe multiverse
+deb http://archive.ubuntu.com/ubuntu CODENAME_SUBSTITUTE main universe multiverse
+deb http://archive.ubuntu.com/ubuntu CODENAME_SUBSTITUTE-updates main universe multiverse
+deb http://archive.ubuntu.com/ubuntu CODENAME_SUBSTITUTE-security main universe multiverse
 
 # Backports and proposed configured with a preference file to ensure its never
 # automatically selected
-deb https://archive.ubuntu.com/ubuntu CODENAME_SUBSTITUTE-backports main universe multiverse
-deb https://archive.ubuntu.com/ubuntu CODENAME_SUBSTITUTE-proposed main universe multiverse
+deb http://archive.ubuntu.com/ubuntu CODENAME_SUBSTITUTE-backports main universe multiverse
+deb http://archive.ubuntu.com/ubuntu CODENAME_SUBSTITUTE-proposed main universe multiverse
