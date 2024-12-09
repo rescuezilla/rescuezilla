@@ -135,7 +135,7 @@ pkgs_specific_to_ubuntu2204_jammy=(
                        "reiser4progs"
 )
 
-pkgs_specific_to_ubuntu2310_mantic=(
+pkgs_specific_to_ubuntu2410_oracular=(
                        "linux-generic"
                        "xserver-xorg"
                        "xserver-xorg-video-all"
@@ -156,7 +156,6 @@ pkgs_specific_to_ubuntu2310_mantic=(
                        # "Legacy "local authority" (.pkla) backend for polkitd" required so polkit works on Mantic
                        "polkitd-pkla"
                        "ibus-anthy"
-                       "reiser4progs"
 )
 
 pkgs_specific_to_ubuntu2404_noble=(
@@ -343,8 +342,8 @@ elif  [ "$CODENAME" == "focal" ]; then
   apt_pkg_list=("${pkgs_specific_to_ubuntu2004_focal[@]}" "${common_pkgs[@]}")
 elif  [ "$CODENAME" == "jammy" ]; then
   apt_pkg_list=("${pkgs_specific_to_ubuntu2204_jammy[@]}" "${common_pkgs[@]}")
-elif  [ "$CODENAME" == "mantic" ]; then
-  apt_pkg_list=("${pkgs_specific_to_ubuntu2310_mantic[@]}" "${common_pkgs[@]}")
+elif  [ "$CODENAME" == "oracular" ]; then
+  apt_pkg_list=("${pkgs_specific_to_ubuntu2410_oracular[@]}" "${common_pkgs[@]}")
 elif  [ "$CODENAME" == "noble" ]; then
   apt_pkg_list=("${pkgs_specific_to_ubuntu2404_noble[@]}" "${common_pkgs[@]}")
 else
