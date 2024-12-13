@@ -2,7 +2,8 @@
 
 * Many existing translations updated, but also added:
   * Persian/فارسی (fa-IR) (in-progress)
-  * Rolână (ro-RO) (in-progress)
+  * Finnish/Suomi (fi-FI)
+  * Romanian/Rolână (ro-RO) (in-progress)
 
 # Rescuezilla v2.5.1 (2024-09-08)
 

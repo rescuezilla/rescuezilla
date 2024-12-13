@@ -208,6 +208,7 @@ lang_codes=(
              "el"
              "es"
              "fa"
+             "fi"
              "fr"
              "ko"
              "id"
