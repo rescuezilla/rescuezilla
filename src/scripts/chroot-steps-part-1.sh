@@ -80,6 +80,7 @@ pkgs_specific_to_ubuntu1804_bionic_32bit=("linux-generic-hwe-18.04"
                         # Add support for crypto volumes mount (luks, bitlocker, crypt)
                         "libblockdev-crypto2"
                         "ibus-anthy"
+                        "reiser4progs"
 )
 
 # Packages specific to Rescuezilla 64-bit build (currently based Ubuntu 20.04 Focal)
@@ -104,9 +105,10 @@ pkgs_specific_to_ubuntu2004_focal=("linux-generic-hwe-18.04"
                        "exfat-utils"
                        # Removed since 22.10 Kinetic
                        "plymouth-theme-ubuntu-logo"
-                        # Add support for crypto volumes mount (luks, bitlocker, crypt)
-                        "libblockdev-crypto2"
-                        "ibus-anthy"
+                       # Add support for crypto volumes mount (luks, bitlocker, crypt)
+                       "libblockdev-crypto2"
+                       "ibus-anthy"
+                       "reiser4progs"
 )
 
 pkgs_specific_to_ubuntu2304_lunar=(
@@ -125,9 +127,10 @@ pkgs_specific_to_ubuntu2304_lunar=(
                        "nbdkit"
                        # Replaces exfat-utils
                        "exfatprogs"
-                        # Add support for crypto volumes mount (luks, bitlocker, crypt)
-                        "libblockdev-crypto2"
-                        "ibus-anthy"
+                       # Add support for crypto volumes mount (luks, bitlocker, crypt)
+                       "libblockdev-crypto2"
+                       "ibus-anthy"
+                       "reiser4progs"
 )
 
 pkgs_specific_to_ubuntu2204_jammy=(
@@ -148,9 +151,10 @@ pkgs_specific_to_ubuntu2204_jammy=(
                        "exfatprogs"
                        # Removed since 22.10 Kinetic
                        "plymouth-theme-ubuntu-logo"
-                        # Add support for crypto volumes mount (luks, bitlocker, crypt)
-                        "libblockdev-crypto2"
-                        "ibus-anthy"
+                       # Add support for crypto volumes mount (luks, bitlocker, crypt)
+                       "libblockdev-crypto2"
+                       "ibus-anthy"
+                       "reiser4progs"
 )
 
 pkgs_specific_to_ubuntu2310_mantic=(
@@ -174,6 +178,7 @@ pkgs_specific_to_ubuntu2310_mantic=(
                        # "Legacy "local authority" (.pkla) backend for polkitd" required so polkit works on Mantic
                        "polkitd-pkla"
                        "ibus-anthy"
+                       "reiser4progs"
 )
 
 pkgs_specific_to_ubuntu2404_noble=(
@@ -196,6 +201,7 @@ pkgs_specific_to_ubuntu2404_noble=(
                        "libblockdev-crypto3"
                        # "Legacy "local authority" (.pkla) backend for polkitd" required so polkit works on Mantic
                        "polkitd-pkla"
+                       "reiser4progs"
 )
 
 # Languages on the system
@@ -323,7 +329,6 @@ common_pkgs=("discover"
              "mtools"
              "ntfs-3g"
              "hfsutils"
-             "reiser4progs"
              "jfsutils"
              "wget"
              "exfat-fuse"
