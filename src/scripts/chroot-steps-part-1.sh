@@ -111,28 +111,6 @@ pkgs_specific_to_ubuntu2004_focal=("linux-generic-hwe-18.04"
                        "reiser4progs"
 )
 
-pkgs_specific_to_ubuntu2304_lunar=(
-			                 "linux-generic"
-                       "xserver-xorg"
-                       "xserver-xorg-video-all"
-                       "xserver-xorg-video-intel"
-                       "xserver-xorg-video-qxl"
-                       "xserver-xorg-video-mga"
-                       # Packages which may assist users needing to do a GRUB repair (64-bit EFI)
-                       "shim-signed"
-                       "grub-efi-amd64-signed"
-                       "grub-efi-amd64-bin"
-                       "grub-efi-ia32-bin"
-                       # Dependency for partclone-utils' imagemount
-                       "nbdkit"
-                       # Replaces exfat-utils
-                       "exfatprogs"
-                       # Add support for crypto volumes mount (luks, bitlocker, crypt)
-                       "libblockdev-crypto2"
-                       "ibus-anthy"
-                       "reiser4progs"
-)
-
 pkgs_specific_to_ubuntu2204_jammy=(
                        "linux-generic"
                        "xserver-xorg"
@@ -363,8 +341,6 @@ if    [ "$CODENAME" == "bionic" ]; then
   apt_pkg_list=("${pkgs_specific_to_ubuntu1804_bionic_32bit[@]}" "${common_pkgs[@]}")
 elif  [ "$CODENAME" == "focal" ]; then
   apt_pkg_list=("${pkgs_specific_to_ubuntu2004_focal[@]}" "${common_pkgs[@]}")
-elif  [ "$CODENAME" == "lunar" ]; then
-  apt_pkg_list=("${pkgs_specific_to_ubuntu2304_lunar[@]}" "${common_pkgs[@]}")
 elif  [ "$CODENAME" == "jammy" ]; then
   apt_pkg_list=("${pkgs_specific_to_ubuntu2204_jammy[@]}" "${common_pkgs[@]}")
 elif  [ "$CODENAME" == "mantic" ]; then

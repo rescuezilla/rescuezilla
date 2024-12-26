@@ -27,12 +27,6 @@ export ARCH CODENAME
 focal: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-utils partclone-nbd $(buildscripts)
 	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/scripts/build.sh
 
-lunar: ARCH=amd64
-lunar: CODENAME=lunar
-export ARCH CODENAME
-lunar: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-utils partclone-nbd $(buildscripts)
-	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/scripts/build.sh
-	
 jammy: ARCH=amd64
 jammy: CODENAME=jammy
 export ARCH CODENAME

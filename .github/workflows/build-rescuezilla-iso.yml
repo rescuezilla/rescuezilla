@@ -55,12 +55,6 @@ jobs:
       - run: sudo make clean-all
 
       - run: make docker-status
-      - name: Make Ubuntu 23.04 LTS (Lunar) ISO
-        run: make docker-lunar
-      - run: sudo mv build/rescuezilla.amd64.lunar.iso completed-artifacts/rescuezilla-${{github.ref_name}}-64bit.lunar.iso
-      - run: sudo make clean-all
-
-      - run: make docker-status
       - name: Make Ubuntu 22.04 LTS (Jammy) ISO [LTS  = Long Term Support]
         run: make docker-jammy
       - run: sudo mv build/rescuezilla.amd64.jammy.iso completed-artifacts/rescuezilla-${{github.ref_name}}-64bit.jammy.iso
