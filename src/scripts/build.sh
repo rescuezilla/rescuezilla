@@ -65,6 +65,16 @@ if [ "$CODENAME" = "INVALID" ] || [ "$ARCH" = "INVALID" ]; then
   exit 1
 fi
 
+# Disable the debootstrap GPG validation for Ubuntu 18.04 (Bionic) after its public key
+# failed to validate on the Docker build environment container for an unclear reason.
+# See [1] for full write-up.
+#
+# [1] https://github.com/rescuezilla/rescuezilla/issues/538
+GPG_CHECK_OPTS=""
+if [ "$CODENAME" = "bionic" ]; then
+    GPG_CHECK_OPTS="--no-check-gpg"
+fi
+
 # debootstrap part 1/2: If package cache doesn't exist, download the packages
 # used in a base Debian system into the package cache directory [1]
 #
@@ -79,7 +89,7 @@ if [ ! -d "$PKG_CACHE_DIRECTORY/$DEBOOTSTRAP_CACHE_DIRECTORY" ] ; then
     # [1] http://old-releases.ubuntu.com/ubuntu
     TARGET_FOLDER=`readlink -f $PKG_CACHE_DIRECTORY/$DEBOOTSTRAP_CACHE_DIRECTORY`
     pushd ${DEBOOTSTRAP_SCRIPT_DIRECTORY}
-    DEBOOTSTRAP_DIR=${DEBOOTSTRAP_SCRIPT_DIRECTORY} ./debootstrap --arch=$ARCH --foreign $CODENAME $TARGET_FOLDER http://archive.ubuntu.com/ubuntu/
+    DEBOOTSTRAP_DIR=${DEBOOTSTRAP_SCRIPT_DIRECTORY} ./debootstrap ${GPG_CHECK_OPTS} --arch=$ARCH --foreign $CODENAME $TARGET_FOLDER http://archive.ubuntu.com/ubuntu/
     RET=$?
     popd
     if [[ $RET -ne 0 ]]; then
@@ -98,7 +108,7 @@ if [[ $RET -ne 0 ]]; then
 fi
  
 # debootstrap part 2/2: Bootstrap a Debian root filesystem based on cached packages directory (part 2/2)
-chroot $BUILD_DIRECTORY/chroot/ /bin/bash -c 'DEBOOTSTRAP_DIR="debootstrap" ./debootstrap/debootstrap --second-stage'
+chroot $BUILD_DIRECTORY/chroot/ /bin/bash -c "DEBOOTSTRAP_DIR=\"debootstrap\" ./debootstrap/debootstrap --second-stage ${GPG_CHECK_OPTS}"
 RET=$?
 if [[ $RET -ne 0 ]]; then
     echo "debootstrap part 2/2 failed. This may occur if the package cache ($PKG_CACHE_DIRECTORY/$DEBOOTSTRAP_CACHE_DIRECTORY/)"

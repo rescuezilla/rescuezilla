@@ -1,5 +1,6 @@
 #  Rescuezilla v2.6 (2024-XX-XX)
 
+* Skips GPG check on Bionic 32-bit release to fix build (temporarily) until better solution identified ([#538](https://github.com/rescuezilla/rescuezilla/issues/538))
 * Many existing translations updated, but also added:
   * Persian/فارسی (fa-IR) (in-progress)
   * Finnish/Suomi (fi-FI)
