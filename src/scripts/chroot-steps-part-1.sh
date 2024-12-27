@@ -81,6 +81,7 @@ pkgs_specific_to_ubuntu1804_bionic_32bit=("linux-generic-hwe-18.04"
                         "libblockdev-crypto2"
                         "ibus-anthy"
                         "reiser4progs"
+                        "python3-whichcraft"
 )
 
 # Packages specific to Rescuezilla 64-bit build (currently based Ubuntu 20.04 Focal)
@@ -109,6 +110,7 @@ pkgs_specific_to_ubuntu2004_focal=("linux-generic-hwe-18.04"
                        "libblockdev-crypto2"
                        "ibus-anthy"
                        "reiser4progs"
+                       "python3-whichcraft"
 )
 
 pkgs_specific_to_ubuntu2204_jammy=(
@@ -133,6 +135,7 @@ pkgs_specific_to_ubuntu2204_jammy=(
                        "libblockdev-crypto2"
                        "ibus-anthy"
                        "reiser4progs"
+                       "python3-whichcraft"
 )
 
 pkgs_specific_to_ubuntu2410_oracular=(
@@ -179,6 +182,7 @@ pkgs_specific_to_ubuntu2404_noble=(
                        # "Legacy "local authority" (.pkla) backend for polkitd" required so polkit works on Mantic
                        "polkitd-pkla"
                        "reiser4progs"
+                       "python3-whichcraft"
 )
 
 # Languages on the system
