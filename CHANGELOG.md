@@ -2,6 +2,7 @@
 
 * Replaces Ubuntu 23.10 (Mantic) and Ubuntu 22.10 (Lunar) builds with build based on Ubuntu 24.10 (Oracular) for best support of new hardware 
 * Skips GPG check on Bionic 32-bit release to fix build (temporarily) until better solution identified ([#538](https://github.com/rescuezilla/rescuezilla/issues/538))
+* Upgraded to latest partclone `v0.3.33` (released mid-July 2024) from partclone `v0.3.27` (released October 2023)
 * Many existing translations updated, but also added:
   * Persian/فارسی (fa-IR) (in-progress)
   * Finnish/Suomi (fi-FI)
