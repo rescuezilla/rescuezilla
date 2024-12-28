@@ -68,6 +68,8 @@ if [ "$CODENAME" = "INVALID" ] || [ "$ARCH" = "INVALID" ]; then
   exit 1
 elif [ "$ARCH" = "amd64" ] || [ "$ARCH" = "i386" ]; then
   URL="http://archive.ubuntu.com/ubuntu"
+else
+  URL="http://ports.ubuntu.com/ubuntu-ports/ubuntu-ports"
 fi
 
 # Disable the debootstrap GPG validation for Ubuntu 18.04 (Bionic) after its public key
