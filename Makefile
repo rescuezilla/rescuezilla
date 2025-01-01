@@ -145,7 +145,7 @@ partclone-nbd:
 	mkdir --parents $(PARTCLONE_NBD_BUILD_DIR) $(AMD64_BUILD_DIR)/chroot/
 	cd $(PARTCLONE_NBD_BUILD_DIR) && cmake ${SRC_DIR}
 	# Create deb package from a standard Makefile's `make install` using the checkinstall tool (for cleaner uninstall)
-	cd $(PARTCLONE_NBD_BUILD_DIR) && checkinstall --install=no --pkgname partclone-nbd --pkgversion 0.0.3 --pkgrelease 1 --maintainer 'rescuezilla@gmail.com' -D --default  make CC='ccache cc' -j $(THREADS) install
+	cd $(PARTCLONE_NBD_BUILD_DIR) && checkinstall --install=no --pkgname partclone-nbd --pkgversion 0.0.3 --pkgrelease 1 --maintainer 'rescuezilla@gmail.com' -D --default  sudo make CC='ccache cc' -j $(THREADS) install
 	mv $(PARTCLONE_NBD_BUILD_DIR)/partclone-nbd_0.0.3-1_amd64.deb $(AMD64_BUILD_DIR)/chroot/
 
 clean-build-dir:
