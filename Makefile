@@ -24,19 +24,19 @@ buildscripts = src/scripts/build.sh src/scripts/chroot-steps-part-1.sh src/scrip
 focal: ARCH=amd64
 focal: CODENAME=focal
 export ARCH CODENAME
-focal: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-utils partclone-nbd $(buildscripts)
+focal: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-nbd $(buildscripts)
 	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/scripts/build.sh
 
 jammy: ARCH=amd64
 jammy: CODENAME=jammy
 export ARCH CODENAME
-jammy: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-utils partclone-nbd $(buildscripts)
+jammy: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-nbd $(buildscripts)
 	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/scripts/build.sh	
 
 oracular: ARCH=amd64
 oracular: CODENAME=oracular
 export ARCH CODENAME
-oracular: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-utils partclone-nbd $(buildscripts)
+oracular: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-nbd $(buildscripts)
 	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/scripts/build.sh	
 
 # Note: Ubuntu 24.04 (Long Term Support) won't be released until around April 2024, as per the version string
@@ -44,7 +44,7 @@ oracular: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-utils partclone-nb
 noble: ARCH=amd64
 noble: CODENAME=noble
 export ARCH CODENAME
-noble: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-utils partclone-nbd $(buildscripts)
+noble: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-nbd $(buildscripts)
 	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/scripts/build.sh	
 
 # ISO image based on Ubuntu 18.04 Bionic LTS (Long Term Support) 32bit (the last 32bit/i386 Ubuntu LTS release)

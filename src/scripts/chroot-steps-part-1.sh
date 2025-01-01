@@ -99,7 +99,7 @@ pkgs_specific_to_ubuntu2004_focal=("linux-generic-hwe-18.04"
                        "grub-efi-amd64-signed"
                        "grub-efi-amd64-bin"
                        "grub-efi-ia32-bin"
-                       # Dependency for partclone-utils' imagemount
+                       # Dependency for Rescuezilla Image Explorer
                        "nbdkit"
                        "lupin-casper"
                        # Replaced by exfatprogs
@@ -125,7 +125,7 @@ pkgs_specific_to_ubuntu2204_jammy=(
                        "grub-efi-amd64-signed"
                        "grub-efi-amd64-bin"
                        "grub-efi-ia32-bin"
-                       # Dependency for partclone-utils' imagemount
+                       # Dependency for Rescuezilla Image Explorer
                        "nbdkit"
                        # Replaces exfat-utils
                        "exfatprogs"
@@ -150,7 +150,7 @@ pkgs_specific_to_ubuntu2410_oracular=(
                        "grub-efi-amd64-signed"
                        "grub-efi-amd64-bin"
                        "grub-efi-ia32-bin"
-                       # Dependency for partclone-utils' imagemount
+                       # Dependency for Rescuezilla Image Explorer
                        "nbdkit"
                        # Replaces exfat-utils
                        "exfatprogs"
@@ -173,7 +173,7 @@ pkgs_specific_to_ubuntu2404_noble=(
                        "grub-efi-amd64-signed"
                        "grub-efi-amd64-bin"
                        "grub-efi-ia32-bin"
-                       # Dependency for partclone-utils' imagemount
+                       # Dependency for Rescuezilla Image Explorer
                        "nbdkit"
                        # Replaces exfat-utils
                        "exfatprogs"
