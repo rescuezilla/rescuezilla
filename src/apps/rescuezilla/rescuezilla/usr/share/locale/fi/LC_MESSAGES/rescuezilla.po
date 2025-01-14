@@ -4,13 +4,13 @@
 # ttt113326 <tonio_k@mail.ru>, 2021.
 # МАН69К <weblate@mah69k.net>, 2022.
 # Languages add-on <noreply-addon-languages@weblate.org>, 2024.
-# Matti Kupiainen <matti.kupiainen60@gmail.com>, 2024.
+# Matti Kupiainen <matti.kupiainen60@gmail.com>, 2024, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2024-12-13 07:25+0000\n"
+"PO-Revision-Date: 2025-01-14 13:13+0000\n"
 "Last-Translator: Matti Kupiainen <matti.kupiainen60@gmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/fi/>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.9-dev\n"
+"X-Generator: Weblate 5.10-dev\n"
 
 msgid "Welcome"
 msgstr "Tervetuloa"
@@ -39,12 +39,12 @@ msgid "Restore"
 msgstr "Palautus"
 
 msgid "Verify Image"
-msgstr "Levykuvan tarkistus"
+msgstr "Levykuvien tarkastus"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
 msgstr ""
-"Tarvitsetko apua? Aloita tarkistamalla Rescuezillan usein kysytyt kysymykset "
-"ja siirry sitten Rescuezilla-foorumiin."
+"Tarvitsetko apua? Aloita katsomalla Rescuezillan usein kysytyt kysymykset ja "
+"siirry sitten Rescuezilla foorumiin."
 
 msgid "Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed."
 msgstr ""
@@ -77,7 +77,7 @@ msgstr "Käynnissä: {app}"
 
 #, python-brace-format
 msgid "Running {app} on {device}"
-msgstr "Käynnissä {app} {device}"
+msgstr "{app} käynnissä laitteella {device}"
 
 msgid "Failed to run command: "
 msgstr "Komennon suorittaminen epäonnistui: "
@@ -92,7 +92,7 @@ msgid "Step 1: Understanding Cloning"
 msgstr "Vaihe 1: Kloonauksen ymmärtäminen"
 
 msgid "Please understand how \"cloning\" differs from \"imaging\"."
-msgstr "Ymmärrä, kuinka \"kloonaus\" eroaa \"kuvauksesta\"."
+msgstr "Ymmärrä, miten \"kloonaus\" eroaa \"kuvauksesta\"."
 
 msgid "This mode is for \"disk cloning\". Cloning means copying one drive and directly overwriting another drive. This is a direct one-step operation with no temporary storage required.\n"
 "\n"
@@ -101,7 +101,7 @@ msgid "This mode is for \"disk cloning\". Cloning means copying one drive and di
 ""
 "To use the \"imaging\" wizards, click <b>Back</b> and select <b>Backup</b> or <b>Restore</b>."
 msgstr ""
-"Tämä tila on \"levyn kloonaukseen\". Kloonaus tarkoittaa yhden aseman "
+"Tämä toiminto on \"levyn kloonaukseen\". Kloonaus tarkoittaa yhden aseman "
 "kopioimista ja suoraan toisen aseman päällekirjoittamista. Tämä on suora "
 "yksivaiheinen toiminto, jossa ei vaadita väliaikaista tallennusta.\n"
 "\n"
@@ -134,15 +134,15 @@ msgstr "Vaihe 4: Valitse kloonattavat osiot"
 
 msgid "Select which partitions from the source drive to clone, and whether to overwrite the partition table. <b>Leave everything selected to completely clone the source drive to the destination drive.</b>"
 msgstr ""
-"Valitse, mitkä lähdeaseman osiot kloonataan ja korvataanko osiotaulukko. "
+"Valitse, mitkä lähdeaseman osiot kloonataan ja korvataanko osiotaulu. "
 "<b>Jätä kaikki valituksi, jotta lähdeasema kloonataan kokonaan "
 "kohdeasemaan.</b>"
 
 msgid "Step 5: Confirm Cloning Configuration"
-msgstr "Vaihe 5: Vahvista kloonausasetukset"
+msgstr "Vaihe 5: Tarkista kloonausasetukset"
 
 msgid "Confirm the following cloning configuration."
-msgstr "Vahvista seuraavat kloonausasetukset."
+msgstr "Tarkista seuraavat kloonausasetukset."
 
 msgid "Cloning the following partitions"
 msgstr "Kloonataan seuraavat osiot"
@@ -153,28 +153,28 @@ msgstr "Aloita kloonaus napsauttamalla <b>Seuraava</b>."
 #, python-brace-format
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
-"Haluatko varmasti kloonata aseman kohteeseen {destination_drive}? Tämä "
-"korvaa pysyvästi kohdeaseman tiedot!"
+"Haluatko varmasti kloonata tämän levyaseman kohteeseen {destination_drive}? "
+"Tämä korvaa pysyvästi kohdeaseman tiedot!"
 
 msgid "Step 6: Cloning Disk"
-msgstr "Vaihe 6: Kloonataan levyä"
+msgstr "Vaihe 6: Kloonataan levyasema"
 
 msgid "Cloning the drive you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
-"Kloonataan valitsemaasi levyasemaa. Tämä voi kestää tunnin tai enemmän "
-"riippuen tietokoneesi nopeudesta ja tiedon määrästä."
+"Kloonataan valitsemaasi levyasemaa. Tämä voi kestää hetken, riippuen "
+"tietokoneesi nopeudesta ja tiedon määrästä."
 
 msgid "Summary of Clone"
-msgstr "Yhteenveto kloonista"
+msgstr "Yhteenveto kloonauksesta"
 
 msgid "Clone Summary"
-msgstr "Kloonin yhteenveto"
+msgstr "Kloonauksen yhteenveto"
 
 msgid "Confirm the clone summary."
-msgstr "Vahvista kloonin yhteenveto."
+msgstr "Tarkasta kloonauksen yhteenveto."
 
 msgid "Unable to shutdown Image Explorer"
-msgstr "Image Explorerin sulkeminen ei onnistu"
+msgstr "Levykuva selaimen sulkeminen ei onnistu"
 
 msgid "Step 1: Select Drive To Backup"
 msgstr "Vaihe 1: Valitse varmuuskopioitava levyasema"
@@ -189,7 +189,7 @@ msgid "Capacity"
 msgstr "Koko"
 
 msgid "Drive Model"
-msgstr "Aseman tyyppi"
+msgstr "Aseman malli"
 
 msgid "Serial Number"
 msgstr "Sarjanumero"
@@ -227,14 +227,14 @@ msgstr "Vaihe 3: Valitse kohdeasema"
 
 msgid "Click on the box below to select the source drive that you would like to create a backup image from."
 msgstr ""
-"Napsauta alla olevaa ruutua valitaksesi lähdeaseman, josta haluat luoda "
+"Valitse alla olevasta luettelosta lähdeasema, josta haluat luoda "
 "varmuuskopion."
 
 msgid "Connected directly to my computer"
-msgstr "Yhdistetty suoraan tietokoneeseeni"
+msgstr "Ulkoiselle asemalle"
 
 msgid "Shared over a network"
-msgstr "Jaettu verkon kautta"
+msgstr "Verkkoasemalle"
 
 msgid "Where would you like to save the image?"
 msgstr "Mihin haluat tallentaa levykuvan?"
@@ -276,7 +276,7 @@ msgid "Optional"
 msgstr "Valinnainen"
 
 msgid "Select network-shared storage location:"
-msgstr "Verkon jakama tallennuspaikka:"
+msgstr "Valitse verkon tallennuspaikka:"
 
 msgid "Select the partition where the image files will be saved to"
 msgstr "Valitse osio, johon kuvatiedostot tallennetaan"
@@ -292,8 +292,8 @@ msgstr "Sulje tämä ponnahdusikkuna peruuttaaksesi liittämistoiminnon."
 
 msgid "Please ensure the username, password and other fields provided are correct, and try again."
 msgstr ""
-"Varmista, että käyttäjätunnus, salasana ja muut toimitetut kentät ovat "
-"oikein ja yritä uudelleen."
+"Tarkista, että käyttäjätunnus, salasana ja kaikki muut kentät ovat oikein ja "
+"yritä uudelleen."
 
 msgid "Must provide either password or SSH identity file."
 msgstr "Anna joko salasana tai SSH-tunnistustiedosto."
@@ -307,12 +307,12 @@ msgstr "({timeout_seconds} toinen aikakatkaisu)"
 
 msgid "Close this popup to cancel scanning the selected folder and subfolders."
 msgstr ""
-"Sulje tämä ponnahdusikkuna peruuttaaksesi valitun kansion ja alikansioiden "
-"tarkistuksen."
+"Peruuta valitun kansion ja alikansioiden skannaus sulkemalla tämä "
+"ponnahdusikkuna."
 
 #, python-brace-format
 msgid "Scanning: {filename}"
-msgstr "Skannaus: {filename}"
+msgstr "Skannataan: {filename}"
 
 msgid "Error processing the following images:"
 msgstr "Virhe seuraavien levykuvien käsittelyssä:"
@@ -339,8 +339,7 @@ msgstr ""
 
 msgid "Any other filesystems within the image should be restorable as normal."
 msgstr ""
-"Kaikkien muiden levykuva tiedostojärjestelmien tulee olla palautettavissa "
-"normaalisti."
+"Kaikki muut levykuvatiedostojärjestelmät on palautettavissa normaalisti."
 
 msgid "Needs decryption"
 msgstr "Vaatii salauksen purkamisen"
@@ -371,10 +370,10 @@ msgid "Click <b>Browse</b> to select the folder on the destination drive where y
 "The folder a backup is saved in is usually a description of the computer, e.g. <b>office1</b> or <b>zack-laptop</b>."
 msgstr ""
 "Napsauta <b>Selaa</b> valitaksesi kohdeaseman kansion, johon uusi "
-"varmuuskopiotiedostosi tallennetaan.\n"
+"varmuuskopiotiedosto tallennetaan.\n"
 "\n"
 "Kansio, johon varmuuskopio tallennetaan, on yleensä kuvaus tietokoneesta, "
-"esim. <b>toimisto 1</b> tai <b>zack-kannettava</b>."
+"esim. <b>toimistokone</b> tai <b>kannettava</b>."
 
 #, python-brace-format
 msgid "You must select a folder inside {location}"
@@ -385,8 +384,8 @@ msgstr "Valitse eri kansio."
 
 msgid "The table below lists the backup images that are already in this folder (if any)."
 msgstr ""
-"Alla olevassa taulukossa on luettelo varmuuskopiokuvista, jotka ovat jo "
-"tässä kansiossa (jos sellaisia on)."
+"Alla on luettelo varmuuskopiokuvista, jotka ovat jo tässä kansiossa (jos "
+"sellaisia on)."
 
 msgid "Browse..."
 msgstr "Selaa..."
@@ -410,10 +409,10 @@ msgid "Provide a unique name for this backup image, such as the date.  Today's d
 "\n"
 "You may only use letters, numbers, and dashes in your backup name."
 msgstr ""
-"Anna tälle varmuuskopiokuvalle yksilöllinen nimi, kuten päivämäärä. Tämän "
-"päivän päivämäärä merkitään varmuuskopiokuvalle automaattisesti.\n"
+"Anna tälle varmuuskopiokuvalle yksilöllinen nimi. Tämän päivän päivämäärä "
+"merkitään varmuuskopiokuvalle automaattisesti.\n"
 "\n"
-"Varanimessäsi saa käyttää vain kirjaimia, numeroita ja väliviivoja."
+"Nimessä saa käyttää vain kirjaimia, numeroita ja väliviivoja."
 
 msgid "Optional: Provide a short description."
 msgstr "Valinnainen: Anna lyhyt kuvaus."
@@ -439,7 +438,7 @@ msgid "zstandard"
 msgstr "zstandardi"
 
 msgid "Uncompressed (Suitable for use with Image Explorer)"
-msgstr "Pakkaamaton (sopii käytettäväksi Image Explorerin kanssa)"
+msgstr "Pakkaamaton (sopii käytettäväksi levykuva selaimen kanssa)"
 
 msgid "Compression level: "
 msgstr "Pakkaustaso: "
@@ -454,7 +453,7 @@ msgid "When you are happy with the compression settings, click <b>Next</b>."
 msgstr "Kun olet tyytyväinen pakkausasetuksiin, napsauta <b>Seuraava</b>."
 
 msgid "Step 7: Confirm Backup Configuration"
-msgstr "Vaihe 7: Vahvista varmuuskopioinnin asetukset"
+msgstr "Vaihe 7: Tarkista varmuuskopiointiasetukset"
 
 msgid "Source drive"
 msgstr "Lähdeasema"
@@ -467,7 +466,7 @@ msgid "The backup image will be written into folder {dest_dir} on {description}"
 msgstr "Varmuuskopio luodaan kansioon {dest_dir} {description}"
 
 msgid "Confirm the following backup configuration."
-msgstr "Vahvista seuraavat varmuuskopiointiasetukset."
+msgstr "Tarkista seuraavat varmuuskopiointiasetukset."
 
 msgid "On successful completion of the task, perform the following action: "
 msgstr "Kun tehtävä on suoritettu onnistuneesti, suorita seuraava toimenpide: "
@@ -488,8 +487,8 @@ msgstr ""
 
 msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
 msgstr ""
-"<b>Rescue-toiminnon ottaminen käyttöön voi estää tärkeitä virheitä. Käytä "
-"varoen.</b>"
+"<b>Rescue-toiminnon ottaminen käyttöön voi estää tärkeitä virheitä "
+"näkymästä. Käytä varoen.</b>"
 
 msgid "To start the backup, click <b>Next</b>."
 msgstr "Aloita varmuuskopiointi napsauttamalla <b>Seuraava</b>."
@@ -499,8 +498,8 @@ msgstr "Vaihe 8: Luodaan varmuuskopiokuva"
 
 msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
-"Varmuuskopioi järjestelmä valitsemaasi sijaintiin. Tämä voi kestää tunnin "
-"tai enemmän riippuen tietokoneesi nopeudesta ja tiedon määrästä."
+"Varmuuskopioidaan järjestelmä valitsemaasi sijaintiin. Tämä voi kestää "
+"hetken, riippuen tietokoneesi nopeudesta ja tiedon määrästä."
 
 #, python-brace-format
 msgid "Saving: {file}"
@@ -509,17 +508,17 @@ msgstr "Tallennetaan: {file}"
 #, python-brace-format
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
 msgstr ""
-"Varmuuskopioi {partition_name}, joka sisältää tiedostojärjestelmän "
+"Varmuuskopioidaan {partition_name}, joka sisältää tiedostojärjestelmän "
 "{filesystem} kohteeseen {destination}"
 
 msgid "Summary of Backup"
-msgstr "Yhteenveto varmuuskopiosta"
+msgstr "Yhteenveto varmuuskopioinnista"
 
 msgid "Confirm the backup summary."
-msgstr "Vahvista varmuuskopion yhteenveto."
+msgstr "Tarkasta varmuuskopioinnin yhteenveto."
 
 msgid "Backup Summary"
-msgstr "Varmuuskopion yhteenveto"
+msgstr "Varmuuskopioinnin yhteenveto"
 
 msgid "An operation is in progress. Do you wish to cancel?"
 msgstr "Toiminto on käynnissä. Haluatko peruuttaa?"
@@ -535,8 +534,8 @@ msgstr "Varmuuskopion luomisessa tapahtui virhe: "
 
 msgid "Failed to write destination file. Please confirm it is valid to create the provided file path, and try again."
 msgstr ""
-"Kohdetiedoston kirjoittaminen epäonnistui. Vahvista, että se on virheetön "
-"luodaksesi annetun tiedostopolun, ja yritä uudelleen."
+"Kohdetiedoston kirjoittaminen epäonnistui. Tarkista, että annettu "
+"tiedostopolku on oikein ja yritä uudelleen."
 
 #, python-brace-format
 msgid "Successful backup of swap partition {partition_name}"
@@ -579,7 +578,7 @@ msgid "Select the partition which contains the image files:"
 msgstr "Valitse osio, joka sisältää levykuvatiedostot:"
 
 msgid "Step 2: Select Backup Image"
-msgstr "Vaihe 2: Valitse varmuuskopio"
+msgstr "Vaihe 2: Valitse varmuuskopiokuva"
 
 msgid "Click <b>Browse</b> to select the folder containing image files."
 msgstr ""
@@ -615,23 +614,23 @@ msgid "Overwrite partition table"
 msgstr "Korvaa osiotaulu"
 
 msgid "You will be overwriting the partition table."
-msgstr "Kirjoitetaan osiotaulun päälle."
+msgstr "Osiotaulu korvataan."
 
 msgid "The \"destination partition\" column has been updated using the information stored within the backup image.\n\n<b>If partitions have been resized, new partitions added, or additional operating systems installed <i>since the backup image was created</i>, then the destination drive's partition table will not match the backup image, and overwriting the destination drive's partition table will render these resized and additional partitions permanently inaccessible.</b> If you have not modified the partition table in such a way since creating this backup then overwriting the partition table is completely safe and will have no negative effects."
 msgstr ""
-"\"Kohdeosio\" -sarake on päivitetty käyttämällä varmuuskopiokuvaan "
-"tallennettuja tietoja.\n"
+"\"Kohdeosio\" päivitetään käyttämällä varmuuskopiokuvaan tallennettuja "
+"tietoja.\n"
 "\n"
 "<b>Jos osioiden kokoa on muutettu, uusia osioita on lisätty tai "
 "lisäkäyttöjärjestelmiä on asennettu <i>varmuuskopion luomisen jälkeen</i>, "
 "kohdeaseman osiotaulu ei vastaa varmuuskopion näköistiedostoa ja kohdeaseman "
-"osiotaulu ylikirjoitetaan. osiotaulu tekee näistä muutetuista osioista ja "
+"osiotaulu ylikirjoitetaan, osiotaulu tekee näistä muutetuista osioista ja "
 "lisäosioista pysyvästi käyttökelvottomia.</b> Jos et ole muokannut "
 "osiotaulua tällä tavalla tämän varmuuskopion luomisen jälkeen, osiotaulun "
 "korvaaminen on täysin turvallinen eikä sillä ole kielteisiä vaikutuksia."
 
 msgid "You will <b>not</b> be overwriting the partition table."
-msgstr "Ei <b>et</b> korvata osiotaulua."
+msgstr "Osiotaulua <b>ei</b> korvata."
 
 msgid "The source does not contain a partition table."
 msgstr "Lähde ei sisällä osiotaulua."
@@ -658,8 +657,8 @@ msgstr "Kun olet valmis jatkamaan, napsauta <b>Seuraava</b>."
 
 msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
 msgstr ""
-"Kaikkien Logical Volume Managerin (LVM) loogisten taltioiden skannaus ja "
-"asennuksen poistaminen..."
+"Skannataan ja irrotetaan mitkä tahansa LVM (Logical Volume Manager) "
+"-logiikkataltiot..."
 
 #, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
@@ -686,10 +685,10 @@ msgstr ""
 "{url}"
 
 msgid "Step 5: Confirm Restore Configuration"
-msgstr "Vaihe 5: Vahvista palautusasetukset"
+msgstr "Vaihe 5: Tarkista palautusasetukset"
 
 msgid "Confirm the following restore configuration."
-msgstr "Vahvista seuraavat palautusasetukset."
+msgstr "Tarkista seuraavat palautusasetukset."
 
 #, python-brace-format
 msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!"
@@ -707,21 +706,21 @@ msgid "Restoring the following partitions"
 msgstr "Palautetaan seuraavat osiot"
 
 msgid "WILL BE OVERWRITING PARTITION TABLE"
-msgstr "OSIOTAULU YLIKIRJOITETAAN"
+msgstr "OSIOTAULU KORVATAAN"
 
 msgid "Will <b>NOT</b> be overwriting partition table"
-msgstr "<b>EI</b> korvata osiotaulua"
+msgstr "Osiotaulua <b>ei</b> korvata"
 
 msgid "To start the restore, click <b>Next</b>."
 msgstr "Aloita palautus napsauttamalla <b>Seuraava</b>."
 
 msgid "Restoring From Backup"
-msgstr "Palauttaminen varmuuskopiosta"
+msgstr "Palautetaan varmuuskopiosta"
 
 msgid "Restoring your system from the image you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
-"Järjestelmän palauttaminen valitsemastasi levykuvasta. Tämä voi kestää "
-"tunnin tai enemmän riippuen tietokoneesi nopeudesta ja tiedon määrästä."
+"Järjestelmää palautetaan valitsemastasi levykuvasta. Tämä voi kestää hetken, "
+"riippuen tietokoneesi nopeudesta ja tiedon määrästä."
 
 msgid "Refreshing partition table"
 msgstr "Päivitetään osiotaulu"
@@ -781,7 +780,7 @@ msgid "Successfully re-installed GRUB bootloader"
 msgstr "GRUB-käynnistyslataimen uudelleenasennus onnistui"
 
 msgid "Did not update GRUB bootloader (if any)"
-msgstr "Ei päivitetä GRUB-käynnistyslatainta (jos sellainen on)"
+msgstr "GRUB-käynnistyslatainta ei päivitetä (jos sellainen on)"
 
 msgid "Updating initramfs (if any)"
 msgstr "Päivitetään initramfs (jos sellainen on)"
@@ -827,7 +826,8 @@ msgstr "Virhe palautettaessa osiota {image_key} osioon {destination_partition}."
 #, python-brace-format
 msgid "Successfully restored image partition {image} to {destination_partition}"
 msgstr ""
-"Levykuvaosio {image} palautettiin onnistuneesti osaan {destination_partition}"
+"Levykuvaosio {image} palautettiin onnistuneesti osioon "
+"{destination_partition}"
 
 msgid "Summary of Restore"
 msgstr "Yhteenveto palautuksesta"
@@ -836,7 +836,7 @@ msgid "Restore Summary"
 msgstr "Palautuksen yhteenveto"
 
 msgid "Confirm the restore summary."
-msgstr "Vahvista palautuksen yhteenveto."
+msgstr "Tarkasta palautuksen yhteenveto."
 
 msgid "Backup restored successfully."
 msgstr "Varmuuskopion palautus onnistui."
@@ -844,14 +844,14 @@ msgstr "Varmuuskopion palautus onnistui."
 msgid "Image Explorer\n"
 "      (beta)"
 msgstr ""
-"Image Explorer\n"
+"Levykuva selain\n"
 "      (beta)"
 
 msgid "Image Explorer (beta)"
-msgstr "Image Explorer (beta)"
+msgstr "Levykuva selain (beta)"
 
 msgid "Select the image file to explore"
-msgstr "Valitse tutkittava levykuvatiedosto"
+msgstr "Valitse levykuvatiedosto tutkittavaksi"
 
 msgid "Step 3: Select Partition to Explore"
 msgstr "Vaihe 3: Valitse osio tutkittavaksi"
@@ -880,35 +880,37 @@ msgid "Open in file manager"
 msgstr "Avaa tiedostonhallinta"
 
 msgid "Verify"
-msgstr "Tarkistus"
+msgstr "Levykuvan eheyden tarkastus"
 
 msgid "Select one or more image(s) to verify."
-msgstr "Valitse yksi tai useampi tarkistettava levykuva."
+msgstr "Valitse yksi tai useampi levykuva, eheyden tarkastukseen."
 
 msgid "To begin verification, click <b>Next</b>."
-msgstr "Aloita tarkistus napsauttamalla <b>Seuraava</b>."
+msgstr "Aloita eheyden tarkastus napsauttamalla <b>Seuraava</b>."
 
 msgid "Verifying Image"
-msgstr "Tarkistetaan levykuvaa"
+msgstr "Tarkastetaan levykuvan/-kuvien eheys"
 
 msgid "Verifying the selected image(s)."
-msgstr "Valittujen levykuvien tarkistaminen."
+msgstr "Tarkastetaan valittujen levykuvien eheys."
 
 #, python-brace-format
 msgid "Verifying {image_name}"
-msgstr "Tarkistetaan {image_name}"
+msgstr "Tarkastetaan {image_name} eheys"
 
 msgid "Summary of Verification"
-msgstr "Yhteenveto tarkistuksesta"
+msgstr "Yhteenveto eheyden tarkastuksesta"
 
 msgid "Confirm the verification summary."
-msgstr "Vahvista tarkistuksen yhteenveto."
+msgstr "Tarkasta eheyden tarkastuksen yhteenveto."
 
 msgid "Verification Summary"
-msgstr "Tarkistuksen yhteenveto"
+msgstr "Eheyden tarkastuksen yhteenveto"
 
 msgid "To verify another image, click <b>Back</b>."
-msgstr "Tarkista toinen kuva napsauttamalla <b>Takaisin</b>."
+msgstr ""
+"Voit jatkaa muiden levykuvien eheyden tarkastamista napsauttamalla "
+"<b>Takaisin</b>."
 
 msgid "✔"
 msgstr "✔"
@@ -929,8 +931,8 @@ msgid "Sfdisk partition table file is present."
 msgstr "Sfdisk-osiotaulutiedosto on olemassa."
 
 msgid "Unable to verify."
-msgstr "Ei voida tarkistaa."
+msgstr "Levykuvan/-kuvien eheyttä ei voida tarkastaa."
 
 #, python-brace-format
 msgid "{partition}: filesystem image successfully verified."
-msgstr "{partition}: tiedostojärjestelmän levykuva on tarkistettu."
+msgstr "{partition}: tiedostojärjestelmän levykuvan eheys on tarkastettu."
