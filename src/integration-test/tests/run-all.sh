@@ -8,8 +8,11 @@ set -x
 # Directory containing this build script
 BASEDIR=$(dirname $(readlink -f "$0"))
 
-ISO_BASE_PATH="${1}"
-LOG_BASE_PATH="${2}"
+# Git root directory
+GIT_ROOT_DIR="$(git rev-parse --show-toplevel)"
+
+ISO_BASE_PATH="${1:-"$GIT_ROOT_DIR/build"}"
+LOG_BASE_PATH="${2:-"$BASEDIR"}"
 
 # Mapping between the ISO image filename and the ISO check
 declare -A expected_version
