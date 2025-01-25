@@ -1,9 +1,13 @@
 #  Rescuezilla v2.6 (2024-XX-XX)
 
+* Updated the UEFI Secure Boot shim package to v1.58 after a Windows 11 update revoked older shims by incrementing the minimum "SBAT generation"[#525](https://github.com/rescuezilla/rescuezilla/issues/525)
+  * This fixes any "SBAT self-check failed" errors to ensure Rescuezilla continues boot on UEFI Secure Boot enabled systems which require the latest "SBAT generation"
+  * This also fixes the "revoked UEFI bootloader" message warning when creating a bootable USB stick using Rufus
 * Replaces Ubuntu 23.10 (Mantic) and Ubuntu 22.10 (Lunar) builds with build based on Ubuntu 24.10 (Oracular) for best support of new hardware 
 * Skips GPG check on Bionic 32-bit release to fix build (temporarily) until better solution identified ([#538](https://github.com/rescuezilla/rescuezilla/issues/538))
 * Upgraded to latest partclone `v0.3.33` (released mid-July 2024) from partclone `v0.3.27` (released October 2023)
 * Upgrades memtest86+ v5.31 to memtest86+ v7.00 ([#540](https://github.com/rescuezilla/rescuezilla/issues/540))
+* Updated the build environment OS to Ubuntu 24.04 (Noble) from Ubuntu 22.04 (Jammy), which was needed for the UEFI Secure Boot "SBAT" fix above [#539](https://github.com/rescuezilla/rescuezilla/issues/539)
 * Many existing translations updated, but also added:
   * Persian/فارسی (fa-IR) (in-progress)
   * Finnish/Suomi (fi-FI)
