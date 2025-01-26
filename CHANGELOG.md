@@ -1,10 +1,11 @@
-#  Rescuezilla v2.6 (2025-XX-XX)
+#  Rescuezilla v2.6 (2025-03-23)
 
 * Updated the UEFI Secure Boot shim package to v1.58 after a Windows 11 update revoked older shims by incrementing the minimum "SBAT generation"([#525](https://github.com/rescuezilla/rescuezilla/issues/525))
     * This fixes any "SBAT self-check failed" errors to ensure Rescuezilla continues boot on UEFI Secure Boot enabled systems which require the latest "SBAT generation"
     * This also fixes the "revoked UEFI bootloader" message warning when creating a bootable USB stick using Rufus
 * Replaced Ubuntu 23.10 (Mantic) and Ubuntu 22.10 (Lunar) builds with build based on Ubuntu 24.10 (Oracular) for best support of new hardware 
-    * Temporarily does not include Mozilla Firefox on Oracular release until switched to new source
+    * Temporarily does not include Mozilla Firefox on Oracular release until switched to new source (#556)
+    * Image Explorer (beta) temporarily out-of-service across variants (#557)
 * Fixed querying drives with the Bionic 32-bit version, which broke since Rescuezilla v2.5 due to using the --merge feature introduced in util-linux v2.34 ([#509](https://github.com/rescuezilla/rescuezilla/issues/509), [#531](https://github.com/rescuezilla/rescuezilla/issues/531))
 * Skips GPG check on Bionic 32-bit release to fix build (temporarily) until better solution identified ([#538](https://github.com/rescuezilla/rescuezilla/issues/538))
 * Upgraded to latest partclone `v0.3.33` (released mid-July 2024) from partclone `v0.3.27` (released October 2023)
