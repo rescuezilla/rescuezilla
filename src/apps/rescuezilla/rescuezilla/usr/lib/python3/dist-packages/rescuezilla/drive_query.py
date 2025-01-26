@@ -273,7 +273,11 @@ class DriveQueryInternal:
             self.ui_manager.error_message_handler(first_line=_("Operation cancelled by user."))
             return
 
-        lsblk_cmd_list = ["lsblk", "-o", "KNAME,NAME,SIZE,TYPE,FSTYPE,MOUNTPOINT,MODEL,SERIAL", "--paths", "--bytes", "--json", "--merge"]
+        lsblk_cmd_list = ["lsblk", "-o", "KNAME,NAME,SIZE,TYPE,FSTYPE,MOUNTPOINT,MODEL,SERIAL", "--paths", "--bytes", "--json"]
+        # Append "--merge" if possible, to improve handling of RAID devices
+        if self._check_lsblk_supports_merge_argument():
+            lsblk_cmd_list += ["--merge"]
+
         blkid_cmd_list = ["blkid"]
         os_prober_cmd_list = ["os-prober"]
 
@@ -348,6 +352,20 @@ class DriveQueryInternal:
         drive_query_end_time = datetime.now()
         print("Drive query took: " + str((drive_query_end_time - drive_query_start_time)))
         return drive_state
+
+    """
+    Check if this version of lsblk supports the --merge option, which improves handling of RAID devices.
+
+    util-linux v2.34 (released 2019-06-14) introduced a --merge option. From the --help:
+     -M, --merge          group parents of sub-trees (usable for RAIDs, Multi-path)
+
+    Earlier versions of util-linux (such as v2.33 released 2018-11-06) does not, and Ubuntu 18.04 Bionic (used for
+    Rescuezilla 32-bit) uses util-linux v2.31.1 so does not have this option, so we need to detect it.
+    """
+    def _check_lsblk_supports_merge_argument(self) -> bool:
+        # Check whether "--merge" string is present in lsblk --help output
+        process, flat_command_string, fail_description = Utility.run("lsblk capability check", ["lsblk", "--help"], use_c_locale=True)
+        return "--merge" in process.stdout
 
     def _get_parted_cmd_list(self, partition_longdevname):
         # TODO: Consider switching to using parted's --machine flag to get easily parseable output for internal
