@@ -3,13 +3,14 @@
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
 # ttt113326 <tonio_k@mail.ru>, 2021.
 # Ali <am30304030@gmail.com>, 2023.
+# Ali <alisojasi14@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2023-03-10 20:37+0000\n"
-"Last-Translator: Ali <am30304030@gmail.com>\n"
+"PO-Revision-Date: 2025-01-22 17:36+0000\n"
+"Last-Translator: Ali <alisojasi14@gmail.com>\n"
 "Language-Team: Persian <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/fa/>\n"
 "Language: fa\n"
@@ -17,13 +18,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.16.2-dev\n"
+"X-Generator: Weblate 5.10-dev\n"
 
 msgid "Welcome"
-msgstr ""
+msgstr "خوش آمدید"
 
 msgid "Select an Option"
-msgstr ""
+msgstr "یک گزینه را انتخاب کنید"
 
 msgid "Easily create a backup image of your computer, or completely restore from one.  Click an option to begin:"
 msgstr ""
@@ -63,34 +64,34 @@ msgstr "شناسایی درایوهای دیسک..."
 
 #, python-brace-format
 msgid "Unmounting: {path}"
-msgstr ""
+msgstr "در حال جداسازی:{path}"
 
 #, python-brace-format
 msgid "Unable to unmount {path}"
-msgstr ""
+msgstr "قادر به جداسازی {path} نبود"
 
 #, python-brace-format
 msgid "Running: {app}"
-msgstr "در حال اجرا: {برنامه}"
+msgstr "در حال اجرا: {app}"
 
 #, python-brace-format
 msgid "Running {app} on {device}"
-msgstr "اجرای {برنامه} در {دستگاه}"
+msgstr "اجرای {app} در {device}"
 
 msgid "Failed to run command: "
-msgstr "فرمان اجرا نشد: "
+msgstr "فرمان اجرا نشد "
 
 msgid "Error querying drives: "
-msgstr ""
+msgstr "خطا در یافتن درایو ها "
 
 msgid "Clone"
-msgstr "کپی دقیق"
+msgstr "نسخه کپی"
 
 msgid "Step 1: Understanding Cloning"
-msgstr ""
+msgstr "قدم اول: فهم ساختن نسخه کپی"
 
 msgid "Please understand how \"cloning\" differs from \"imaging\"."
-msgstr ""
+msgstr "لطفا توجه کنید که چگونه نسخه کپی گرفتن با ساخت Image تفاوت دارد."
 
 msgid "This mode is for \"disk cloning\". Cloning means copying one drive and directly overwriting another drive. This is a direct one-step operation with no temporary storage required.\n"
 "\n"
@@ -416,10 +417,10 @@ msgid "Do nothing"
 msgstr ""
 
 msgid "Shutdown"
-msgstr ""
+msgstr "خاموش کردن"
 
 msgid "Reboot"
-msgstr ""
+msgstr "ری استارت"
 
 msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
 msgstr ""
@@ -743,7 +744,7 @@ msgid "Mounting as read-only..."
 msgstr ""
 
 msgid "Unmount"
-msgstr ""
+msgstr "جداسازی"
 
 msgid "Once the partition has been mounted, click <b>Open in file manager</b> to access your files."
 msgstr ""
@@ -752,7 +753,7 @@ msgid "Open in file manager"
 msgstr ""
 
 msgid "Verify"
-msgstr ""
+msgstr "تصدیق کردن"
 
 msgid "Select one or more image(s) to verify."
 msgstr ""
@@ -783,10 +784,10 @@ msgid "To verify another image, click <b>Back</b>."
 msgstr ""
 
 msgid "✔"
-msgstr ""
+msgstr "✔"
 
 msgid "❌"
-msgstr ""
+msgstr "❌"
 
 msgid "MBR backup appears correct."
 msgstr ""
