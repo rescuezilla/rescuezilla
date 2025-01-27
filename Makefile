@@ -245,6 +245,10 @@ docker-bash:
 docker-deb:
 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make deb
 
+# Target for partclone-nbd in Docker, since it's been having permission problems on GitHub Actions
+docker-partclone-nbd:
+	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make partclone-nbd
+
 docker-lunar:
 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make lunar
 
