@@ -4,87 +4,96 @@
 # ttt113326 <tonio_k@mail.ru>, 2021.
 # МАН69К <weblate@mah69k.net>, 2022.
 # Languages add-on <noreply-addon-languages@weblate.org>, 2025.
+# தமிழ்நேரம் <anishprabu.t@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2022-06-28 05:17+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-03-01 19:19+0000\n"
+"Last-Translator: தமிழ்நேரம் <anishprabu.t@gmail.com>\n"
+"Language-Team: Tamil <https://hosted.weblate.org/projects/rescuezilla/"
+"rescuezilla/ta/>\n"
 "Language: ta\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.13.1-dev\n"
+"X-Generator: Weblate 5.10.3-dev\n"
 
 msgid "Welcome"
-msgstr ""
+msgstr "வரவேற்கிறோம்"
 
 msgid "Select an Option"
-msgstr ""
+msgstr "ஒரு விருப்பத்தைத் தேர்ந்தெடுக்கவும்"
 
 msgid "Easily create a backup image of your computer, or completely restore from one.  Click an option to begin:"
 msgstr ""
+"உங்கள் கணினியின் காப்புப்பிரதி படத்தை எளிதாக உருவாக்கவும் அல்லது ஒன்றிலிருந்து முழுமையா"
+"க மீட்டெடுக்கவும். தொடங்க ஒரு விருப்பத்தைக் சொடுக்கு செய்க:"
 
 msgid "Backup"
-msgstr ""
+msgstr "காப்புப்பிரதி"
 
 msgid "Restore"
-msgstr ""
+msgstr "மீட்டமை"
 
 msgid "Verify Image"
-msgstr ""
+msgstr "படத்தை சரிபார்க்கவும்"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
 msgstr ""
+"உதவி தேவையா? ரெச்க்யூசில்லா அடிக்கடி கேட்கப்படும் கேள்விகளைச் சரிபார்த்து தொடங்கவும், "
+"பின்னர் ரெச்க்யூசில்லா மன்றத்திற்குச் செல்லவும்."
 
 msgid "Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed."
 msgstr ""
+"க்ரூட்ஃபண்டிங் வலைத்தளமான பேட்ரியனில் மாதத்திற்கு $ 1 பங்களிப்பைக் கவனியுங்கள், எனவே "
+"ரெச்க்யூசில்லா தொடர்ந்து உருவாக்கப்படலாம்."
 
 msgid "Back"
-msgstr ""
+msgstr "பின்"
 
 msgid "Next >"
-msgstr ""
+msgstr "அடுத்து>"
 
 msgid "Please wait..."
-msgstr ""
+msgstr "தயவுசெய்து காத்திருங்கள் ..."
 
 msgid "Identifying disk drives..."
-msgstr ""
+msgstr "வட்டு இயக்கிகளை அடையாளம் காணுதல் ..."
 
 #, python-brace-format
 msgid "Unmounting: {path}"
-msgstr ""
+msgstr "Unsenuting: {path}"
 
 #, python-brace-format
 msgid "Unable to unmount {path}"
-msgstr ""
+msgstr "{path}"
 
 #, python-brace-format
 msgid "Running: {app}"
-msgstr ""
+msgstr "இயங்குகிறது: {app}"
 
 #, python-brace-format
 msgid "Running {app} on {device}"
-msgstr ""
+msgstr "{சாதனத்தில் {app} இயங்குகிறது"
 
 msgid "Failed to run command: "
-msgstr ""
+msgstr "கட்டளையை இயக்குவதில் தோல்வி: "
 
 msgid "Error querying drives: "
-msgstr ""
+msgstr "பிழை வினவல் இயக்கிகள்: "
 
 msgid "Clone"
-msgstr ""
+msgstr "நகலி"
 
 msgid "Step 1: Understanding Cloning"
-msgstr ""
+msgstr "படி 1: குளோனிங்கைப் புரிந்துகொள்வது"
 
 msgid "Please understand how \"cloning\" differs from \"imaging\"."
 msgstr ""
+"\"இமேசிங்\" இலிருந்து \"குளோனிங்\" எவ்வாறு வேறுபடுகிறது என்பதைப் புரிந்து கொள்ளுங்கள்."
 
 msgid "This mode is for \"disk cloning\". Cloning means copying one drive and directly overwriting another drive. This is a direct one-step operation with no temporary storage required.\n"
 "\n"
@@ -93,478 +102,576 @@ msgid "This mode is for \"disk cloning\". Cloning means copying one drive and di
 ""
 "To use the \"imaging\" wizards, click <b>Back</b> and select <b>Backup</b> or <b>Restore</b>."
 msgstr ""
+"இந்த பயன்முறை \"வட்டு குளோனிங்\" க்கானது. குளோனிங் என்பது ஒரு இயக்ககத்தை நகலெடுப்பது "
+"மற்றும் மற்றொரு இயக்ககத்தை நேரடியாக மேலெழுதும். தற்காலிக சேமிப்பு தேவையில்லாத நேரடி "
+"ஒரு-படி செயல்பாடு இது.\n"
+"\n"
+" குளோனிங் \"வட்டு இமேசிங்\" க்கு வேறுபட்டது. இமேசிங் என்பது ஒரு டிரைவிலிருந்து "
+"எல்லாவற்றையும் வெளிப்புற இயக்ககத்தில் ஒரு கோப்புறையில் சேமித்து வைத்திருக்கும் மிகப் பெரிய "
+"கோப்புகளில் நகலெடுப்பதாகும். ஒரே வெளிப்புற இயக்ககத்தில் பல படங்களை சேமிக்க முடியும். இந்"
+"த படங்களை அசல் வட்டுக்கு அல்லது கூடுதல் வட்டுகளுக்கு மீட்டெடுக்கலாம். வேறு வார்த்தைகளில் "
+"கூறுவதானால், காப்புப்பிரதி செயல்பாடு உங்கள் இயக்ககத்தை <i> கோப்புகள் </i> க்கு "
+"நகலெடுக்கிறது, அதை மீட்டெடுப்பதற்கு முன்பே தற்காலிகமாக ஒரு இயக்ககத்தில் சேமிக்க வேண்டும்."
+"\n"
+"\n"
+" \"இமேசிங்\" வழிகாட்டிகளைப் பயன்படுத்த, <b> பின் </b> என்பதைக் சொடுக்கு செய்து <b> "
+"காப்புப்பிரதி </b> அல்லது <b> மீட்டமை </b> ஐத் தேர்ந்தெடுக்கவும்."
 
 msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
-msgstr ""
+msgstr "\"குளோனிங்\" வழிகாட்டி தொடங்க, <b> அடுத்து </b> என்பதைக் சொடுக்கு செய்க"
 
 msgid "Step 2: Select Source Drive"
-msgstr ""
+msgstr "படி 2: மூல இயக்ககத்தைத் தேர்ந்தெடுக்கவும்"
 
 msgid "Select the <b>source drive</b> to clone."
-msgstr ""
+msgstr "குளோனுக்கு <b> மூல இயக்கி </b> ஐத் தேர்ந்தெடுக்கவும்."
 
 msgid "Select the <b>destination drive</b> to overwrite."
-msgstr ""
+msgstr "மேலெழுத <b> இலக்கு இயக்கி </b> ஐத் தேர்ந்தெடுக்கவும்."
 
 msgid "Step 4: Select Partitions to Clone"
-msgstr ""
+msgstr "படி 4: குளோனுக்கு பகிர்வுகளைத் தேர்ந்தெடுக்கவும்"
 
 msgid "Select which partitions from the source drive to clone, and whether to overwrite the partition table. <b>Leave everything selected to completely clone the source drive to the destination drive.</b>"
 msgstr ""
+"மூல இயக்கத்திலிருந்து குளோனுக்கு எந்த பகிர்வுகளைத் தேர்ந்தெடுக்கவும், பகிர்வு அட்டவணையை "
+"மேலெழுதலாமா என்பதைத் தேர்ந்தெடுக்கவும். <b> இலக்கு இயக்கத்திற்கு மூல இயக்கத்தை முழுவதுமா"
+"க நகலி செய்ய தேர்ந்தெடுக்கப்பட்ட அனைத்தையும் விட்டு விடுங்கள். </b>"
 
 msgid "Step 5: Confirm Cloning Configuration"
-msgstr ""
+msgstr "படி 5: குளோனிங் உள்ளமைவை உறுதிப்படுத்தவும்"
 
 msgid "Confirm the following cloning configuration."
-msgstr ""
+msgstr "பின்வரும் குளோனிங் உள்ளமைவை உறுதிப்படுத்தவும்."
 
 msgid "Cloning the following partitions"
-msgstr ""
+msgstr "பின்வரும் பகிர்வுகளை நகலி செய்தல்"
 
 msgid "To start cloning, click <b>Next</b>."
-msgstr ""
+msgstr "குளோனிங்கைத் தொடங்க, <b> அடுத்து </b> என்பதைக் சொடுக்கு செய்க."
 
 #, python-brace-format
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
+"{இலக்கு இயக்கி with க்கு இயக்ககத்தை நகலி செய்ய விரும்புகிறீர்களா? அவ்வாறு செய்வது இந்த "
+"இயக்ககத்தில் தரவை நிரந்தரமாக மேலெழுதும்!"
 
 msgid "Step 6: Cloning Disk"
-msgstr ""
+msgstr "படி 6: குளோனிங் வட்டு"
 
 msgid "Cloning the drive you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
+"நீங்கள் தேர்ந்தெடுத்த இயக்ககத்தை நகலி செய்தல். உங்கள் கணினியின் விரைவு மற்றும் தரவின் அளவைப் "
+"பொறுத்து இது ஒரு மணிநேரம் அல்லது அதற்கு மேற்பட்டதாக இருக்கலாம்."
 
 msgid "Summary of Clone"
-msgstr ""
+msgstr "குளோனின் சுருக்கம்"
 
 msgid "Clone Summary"
-msgstr ""
+msgstr "நகலி சுருக்கம்"
 
 msgid "Confirm the clone summary."
-msgstr ""
+msgstr "நகலி சுருக்கத்தை உறுதிப்படுத்தவும்."
 
 msgid "Unable to shutdown Image Explorer"
-msgstr ""
+msgstr "பட எக்ச்ப்ளோரரை நிறுத்த முடியவில்லை"
 
 msgid "Step 1: Select Drive To Backup"
-msgstr ""
+msgstr "படி 1: காப்புப்பிரதிக்கு இயக்கி என்பதைத் தேர்ந்தெடுக்கவும்"
 
 msgid "Select the <b>source drive</b> that you would like to create a backup image from."
 msgstr ""
+"நீங்கள் ஒரு காப்பு படத்தை உருவாக்க விரும்புகிறீர்கள் என்று <b> மூல இயக்கி </b> ஐத் "
+"தேர்ந்தெடுக்கவும்."
 
 msgid "Drive"
-msgstr ""
+msgstr "ஓட்டு"
 
 msgid "Capacity"
-msgstr ""
+msgstr "திறன்"
 
 msgid "Drive Model"
-msgstr ""
+msgstr "இயக்கி மாதிரி"
 
 msgid "Serial Number"
-msgstr ""
+msgstr "வரிசை எண்"
 
 msgid "Partitions"
-msgstr ""
+msgstr "பகிர்வுகள்"
 
 msgid "Show hidden devices (for advanced users)"
-msgstr ""
+msgstr "மறைக்கப்பட்ட சாதனங்களைக் காட்டு (மேம்பட்ட பயனர்களுக்கு)"
 
 msgid "Step 2: Select Partitions to Save"
-msgstr ""
+msgstr "படி 2: சேமிக்க பகிர்வுகளைத் தேர்ந்தெடுக்கவும்"
 
 msgid "Select which partitions to create a backup of. <b>Leave all partitions selected if you are unsure.</b>"
 msgstr ""
+"ஒரு காப்புப்பிரதியை உருவாக்க எந்த பகிர்வுகளைத் தேர்ந்தெடுக்கவும். <b> உங்களுக்குத் "
+"தெரியாவிட்டால் அனைத்து பகிர்வுகளையும் தேர்ந்தெடுக்கவும். </b>"
 
 msgid "Save"
-msgstr ""
+msgstr "சேமி"
 
 msgid "Description"
-msgstr ""
+msgstr "விவரம்"
 
 #, python-brace-format
 msgid "Drive {drive_number}"
-msgstr ""
+msgstr "இயக்கி {drive_number}"
 
 #, python-brace-format
 msgid "Partition {partition_number}"
-msgstr ""
+msgstr "பகிர்வு {partition_number}"
 
 msgid "Step 3: Select Destination Drive"
-msgstr ""
+msgstr "படி 3: இலக்கு இயக்கத்தைத் தேர்ந்தெடுக்கவும்"
 
 msgid "Click on the box below to select the source drive that you would like to create a backup image from."
 msgstr ""
+"நீங்கள் ஒரு காப்பு படத்தை உருவாக்க விரும்பும் மூல இயக்ககத்தைத் தேர்ந்தெடுக்க கீழே உள்ள "
+"பெட்டியைக் சொடுக்கு செய்க."
 
 msgid "Connected directly to my computer"
-msgstr ""
+msgstr "எனது கணினியுடன் நேரடியாக இணைக்கப்பட்டுள்ளது"
 
 msgid "Shared over a network"
-msgstr ""
+msgstr "ஒரு பிணையத்தில் பகிரப்பட்டது"
 
 msgid "Where would you like to save the image?"
-msgstr ""
+msgstr "படத்தை எங்கே சேமிக்க விரும்புகிறீர்கள்?"
 
 msgid "Windows shared folder (SMB/CIFS, Samba)"
-msgstr ""
+msgstr "சாளரங்கள் பகிரப்பட்ட கோப்புறை (SMB/CIFS, SAMBA)"
 
 msgid "Search network"
-msgstr ""
+msgstr "தேடல் பிணையம்"
 
 msgid "Server"
-msgstr ""
+msgstr "சேவையகம்"
 
 msgid "Share location (UNC path)"
-msgstr ""
+msgstr "இருப்பிடத்தைப் பகிரவும் (UNC பாதை)"
 
 msgid "Username"
-msgstr ""
+msgstr "பயனர்பெயர்"
 
 msgid "Password"
-msgstr ""
+msgstr "கடவுச்சொல்"
 
 msgid "Domain"
-msgstr ""
+msgstr "டொமைன்"
 
 msgid "Version"
-msgstr ""
+msgstr "பதிப்பு"
 
 msgid "Remote path"
-msgstr ""
+msgstr "தொலைநிலை பாதை"
 
 msgid "Exported path"
-msgstr ""
+msgstr "ஏற்றுமதி செய்யப்பட்ட பாதை"
 
 msgid "Identity File"
-msgstr ""
+msgstr "அடையாள கோப்பு"
 
 msgid "Optional"
-msgstr ""
+msgstr "விரும்பினால்"
 
 msgid "Select network-shared storage location:"
-msgstr ""
+msgstr "பிணையம் பகிரப்பட்ட சேமிப்பக இடத்தைத் தேர்ந்தெடுக்கவும்:"
 
 msgid "Select the partition where the image files will be saved to"
-msgstr ""
+msgstr "படக் கோப்புகள் சேமிக்கப்படும் பகிர்வைத் தேர்ந்தெடுக்கவும்"
 
 msgid "Partition"
-msgstr ""
+msgstr "பிரிவினை"
 
 msgid "Mounting..."
-msgstr ""
+msgstr "பெருகிவரும் ..."
 
 msgid "Close this popup to cancel the mount operation."
-msgstr ""
+msgstr "மவுண்ட் செயல்பாட்டை ரத்து செய்ய இந்த பாப்அப்பை மூடு."
 
 msgid "Please ensure the username, password and other fields provided are correct, and try again."
 msgstr ""
+"பயனர்பெயர், கடவுச்சொல் மற்றும் வழங்கப்பட்ட பிற புலங்கள் சரியானவை என்பதை உறுதிப்படுத்தவும், "
+"மீண்டும் முயற்சிக்கவும்."
 
 msgid "Must provide either password or SSH identity file."
-msgstr ""
+msgstr "கடவுச்சொல் அல்லது பாஓடு அடையாளக் கோப்பை வழங்க வேண்டும்."
 
 msgid "Scanning folder for backup images..."
-msgstr ""
+msgstr "காப்புப்பிரதி படங்களுக்கான கோப்புறையை ச்கேனிங் ..."
 
 #, python-brace-format
 msgid "({timeout_seconds} second timeout)"
-msgstr ""
+msgstr "({timeout_seconds} இரண்டாவது காலக்கெடு)"
 
 msgid "Close this popup to cancel scanning the selected folder and subfolders."
 msgstr ""
+"தேர்ந்தெடுக்கப்பட்ட கோப்புறை மற்றும் துணை கோப்புறைகளை ச்கேன் செய்வதை ரத்து செய்ய இந்த "
+"பாப்அப்பை மூடு."
 
 #, python-brace-format
 msgid "Scanning: {filename}"
-msgstr ""
+msgstr "ச்கேனிங்: {filename}"
 
 msgid "Error processing the following images:"
-msgstr ""
+msgstr "பின்வரும் படங்களை செயலாக்குவதில் பிழை:"
 
 msgid "Unable to fully process the image associated with the following partitions:"
 msgstr ""
+"பின்வரும் பகிர்வுகளுடன் தொடர்புடைய படத்தை முழுமையாக செயலாக்க முடியவில்லை:"
 
 msgid "Unable to fully process the following image:"
-msgstr ""
+msgstr "பின்வரும் படத்தை முழுமையாக செயலாக்க முடியவில்லை:"
 
 msgid "Cannot find partition's associated partclone image"
-msgstr ""
+msgstr "பகிர்வுடன் தொடர்புடைய பார்ட்க்ளோன் படத்தைக் கண்டுபிடிக்க முடியவில்லை"
 
 msgid "This can happen when loading images which Clonezilla was unable to completely backup."
 msgstr ""
+"குளோனெசில்லா முழுவதுமாக காப்புப் பிரதி எடுக்க முடியாத படங்களை ஏற்றும்போது இது "
+"நிகழலாம்."
 
 msgid "Note: This image format cannot distinguish between failed partclone backup and a user who chose not to backup a partition."
 msgstr ""
+"குறிப்பு: இந்த பட வடிவம் தோல்வியுற்ற பார்ட்க்ளோன் காப்புப்பிரதி மற்றும் ஒரு பகிர்வை காப்புப் "
+"பிரதி எடுக்க வேண்டாம் என்று தேர்வுசெய்த பயனரை வேறுபடுத்திப் பார்க்க முடியாது."
 
 msgid "Any other filesystems within the image should be restorable as normal."
 msgstr ""
+"படத்திற்குள் உள்ள வேறு எந்த கோப்பு முறைமைகளும் இயல்பாக மறுசீரமைக்கப்பட வேண்டும்."
 
 msgid "Needs decryption"
-msgstr ""
+msgstr "மறைகுறியாக்கம் தேவை"
 
 msgid "Unknown filesystem"
-msgstr ""
+msgstr "தெரியாத கோப்பு முறைமை"
 
 #, python-brace-format
 msgid "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance."
 msgstr ""
+"காப்புப்பிரதியின் நீட்டிக்கப்பட்ட பகிர்வு செய்தி காலியாக உள்ளது. காப்புப்பிரதியில் "
+"நீட்டிக்கப்பட்ட பகிர்வு இருந்தால் இது சரியாக மீட்டெடுக்காது. எல்லா தரவுகளும் இன்னும் "
+"முழுமையாக மீட்டெடுக்கப்படுகின்றன, ஆனால் நீட்டிக்கப்பட்ட பகிர்வுக்குள் தரவை முழுமையாக "
+"மீட்டெடுக்க கையேடு தலையீடு தேவைப்படுகிறது. செய்தி மற்றும் உதவிக்கு {url} ஐ அணுகவும்."
 
 msgid "The backup's bootloader data is shorter than expected. If the backup contained certain bootloaders like GRUB, during a restore operation Rescuezilla will try and re-install the bootloader."
 msgstr ""
+"காப்புப்பிரதியின் துவக்க ஏற்றி தரவு எதிர்பார்த்ததை விடக் குறைவானது. காப்புப்பிரதியில் க்ரப்"
+" போன்ற சில துவக்க ஏற்றிகள் இருந்தால், மீட்டெடுக்கும் செயல்பாட்டின் போது ரெச்க்யூசில்லா துவக்க "
+"ஏற்றியை மீண்டும் நிறுவ முயற்சிக்கும்."
 
 msgid "Step 4: Select Destination Folder"
-msgstr ""
+msgstr "படி 4: இலக்கு கோப்புறையைத் தேர்ந்தெடுக்கவும்"
 
 msgid "Click <b>Browse</b> to select the folder on the destination drive where your new backup image will be saved.\n"
 "\n"
 "The folder a backup is saved in is usually a description of the computer, e.g. <b>office1</b> or <b>zack-laptop</b>."
 msgstr ""
+"உங்கள் புதிய காப்புப்பிரதி படம் சேமிக்கப்படும் இலக்கு இயக்ககத்தில் கோப்புறையைத் தேர்ந்தெடுக்க "
+"<b> உலாவு </b> என்பதைக் சொடுக்கு செய்க.\n"
+"\n"
+" ஒரு காப்புப்பிரதி சேமிக்கப்படும் கோப்புறை பொதுவாக கணினியின் விளக்கமாகும், எ.கா. <b> "
+"Office1 </b> அல்லது <b> சாக்-லேப்டாப் </b>."
 
 #, python-brace-format
 msgid "You must select a folder inside {location}"
-msgstr ""
+msgstr "{இருப்பிடத்திற்குள் ஒரு கோப்புறையைத் தேர்ந்தெடுக்க வேண்டும்"
 
 msgid "Please select a different folder."
-msgstr ""
+msgstr "வேறு கோப்புறையைத் தேர்ந்தெடுக்கவும்."
 
 msgid "The table below lists the backup images that are already in this folder (if any)."
 msgstr ""
+"இந்த கோப்புறையில் ஏற்கனவே இருக்கும் காப்பு படங்களை கீழே உள்ள அட்டவணை பட்டியலிடுகிறது "
+"(ஏதேனும் இருந்தால்)."
 
 msgid "Browse..."
-msgstr ""
+msgstr "உலாவுக ..."
 
 msgid "Filename"
-msgstr ""
+msgstr "கோப்புப்பெயர்"
 
 msgid "Size"
-msgstr ""
+msgstr "அளவு"
 
 msgid "Last modified"
-msgstr ""
+msgstr "கடைசியாக மாற்றப்பட்டது"
 
 msgid "When you are happy with the destination folder, click <b>Next</b>."
 msgstr ""
+"இலக்கு கோப்புறையில் நீங்கள் மகிழ்ச்சியாக இருக்கும்போது, <b> அடுத்து </b> என்பதைக் சொடுக்கு "
+"செய்க."
 
 msgid "Step 5: Name Your Backup"
-msgstr ""
+msgstr "படி 5: உங்கள் காப்புப்பிரதிக்கு பெயரிடுங்கள்"
 
 msgid "Provide a unique name for this backup image, such as the date.  Today's date is automatically entered for you below.\n"
 "\n"
 "You may only use letters, numbers, and dashes in your backup name."
 msgstr ""
+"தேதி போன்ற இந்த காப்பு படத்திற்கு ஒரு தனித்துவமான பெயரை வழங்கவும். இன்றைய தேதி தானாகவே"
+" உங்களுக்காக கீழே உள்ளிடப்படுகிறது.\n"
+"\n"
+" உங்கள் காப்பு பெயரில் கடிதங்கள், எண்கள் மற்றும் கோடுகளை மட்டுமே பயன்படுத்தலாம்."
 
 msgid "Optional: Provide a short description."
-msgstr ""
+msgstr "விரும்பினால்: ஒரு குறுகிய விளக்கத்தை வழங்கவும்."
 
 msgid "Step 6: Customize Compression Settings"
-msgstr ""
+msgstr "படி 6: சுருக்க அமைப்புகளைத் தனிப்பயனாக்கவும்"
 
 msgid "Customize image compression settings. <b>Don't make any changes if you are unsure.</b>"
 msgstr ""
+"பட சுருக்க அமைப்புகளைத் தனிப்பயனாக்குங்கள். <b> உங்களுக்குத் தெரியாவிட்டால் எந்த "
+"மாற்றங்களையும் செய்ய வேண்டாம். </b>"
 
 msgid "Compression format: "
-msgstr ""
+msgstr "சுருக்க வடிவம்: "
 
 msgid "gzip"
-msgstr ""
+msgstr "gzip"
 
 msgid "default"
-msgstr ""
+msgstr "இயல்புநிலை"
 
 msgid "zstandard"
-msgstr ""
+msgstr "சச்டாண்டார்ட்"
 
 msgid "Uncompressed (Suitable for use with Image Explorer)"
-msgstr ""
+msgstr "சுருக்கப்படாத (பட எக்ச்ப்ளோரருடன் பயன்படுத்த ஏற்றது)"
 
 msgid "Compression level: "
-msgstr ""
+msgstr "சுருக்க நிலை: "
 
 msgid "Fastest"
-msgstr ""
+msgstr "வேகமான"
 
 msgid "Best"
-msgstr ""
+msgstr "சிறந்த"
 
 msgid "When you are happy with the compression settings, click <b>Next</b>."
 msgstr ""
+"சுருக்க அமைப்புகளில் நீங்கள் மகிழ்ச்சியாக இருக்கும்போது, <b> அடுத்து </b> என்பதைக் சொடுக்கு"
+" செய்க."
 
 msgid "Step 7: Confirm Backup Configuration"
-msgstr ""
+msgstr "படி 7: காப்பு உள்ளமைவை உறுதிப்படுத்தவும்"
 
 msgid "Source drive"
-msgstr ""
+msgstr "மூல இயக்கி"
 
 msgid "Backing up the following partition(s)"
-msgstr ""
+msgstr "பின்வரும் பகிர்வு (களை) காப்புப் பிரதி எடுக்கிறது"
 
 #, python-brace-format
 msgid "The backup image will be written into folder {dest_dir} on {description}"
 msgstr ""
+"காப்புப்பிரதி படம் {dest_dir} இல் {dest_dir the கோப்புறையில் எழுதப்படும்"
 
 msgid "Confirm the following backup configuration."
-msgstr ""
+msgstr "பின்வரும் காப்புப்பிரதி உள்ளமைவை உறுதிப்படுத்தவும்."
 
 msgid "On successful completion of the task, perform the following action: "
-msgstr ""
+msgstr "பணியை வெற்றிகரமாக முடித்தவுடன், பின்வரும் செயலைச் செய்யுங்கள்: "
 
 msgid "Do nothing"
-msgstr ""
+msgstr "எதுவும் செய்ய வேண்டாம்"
 
 msgid "Shutdown"
-msgstr ""
+msgstr "பணிநிறுத்தம்"
 
 msgid "Reboot"
-msgstr ""
+msgstr "மறுதொடக்கம் செய்யுங்கள்"
 
 msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
 msgstr ""
+"மீட்பு: கோப்பு முறைமை முரண்பாடுகள் மற்றும் மோசமான துறைகளை புறக்கணிக்கவும்"
 
 msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
 msgstr ""
+"<b> \"மீட்பு\" ஐ இயக்குவது முக்கியமான பிழைகளை அடக்கக்கூடும். எச்சரிக்கையுடன் "
+"பயன்படுத்தவும். </B>"
 
 msgid "To start the backup, click <b>Next</b>."
-msgstr ""
+msgstr "காப்புப்பிரதியைத் தொடங்க, <b> அடுத்து </b> என்பதைக் சொடுக்கு செய்க."
 
 msgid "Step 8: Creating Backup Image"
-msgstr ""
+msgstr "படி 8: காப்பு படத்தை உருவாக்குதல்"
 
 msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
+"நீங்கள் தேர்ந்தெடுத்த இடத்திற்கு உங்கள் கணினியை காப்புப் பிரதி எடுக்கவும். உங்கள் கணினியின் "
+"விரைவு மற்றும் தரவின் அளவைப் பொறுத்து இது ஒரு மணிநேரம் அல்லது அதற்கு மேற்பட்டதாக "
+"இருக்கலாம்."
 
 #, python-brace-format
 msgid "Saving: {file}"
-msgstr ""
+msgstr "சேமிப்பு: {file}"
 
 #, python-brace-format
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
 msgstr ""
+"காப்புப்பிரதி {partition_name} கோப்பு முறைமை {filesystem} முதல் {destination}"
 
 msgid "Summary of Backup"
-msgstr ""
+msgstr "காப்புப்பிரதியின் சுருக்கம்"
 
 msgid "Confirm the backup summary."
-msgstr ""
+msgstr "காப்புப்பிரதி சுருக்கத்தை உறுதிப்படுத்தவும்."
 
 msgid "Backup Summary"
-msgstr ""
+msgstr "காப்புப்பிரதி சுருக்கம்"
 
 msgid "An operation is in progress. Do you wish to cancel?"
-msgstr ""
+msgstr "ஒரு செயல்பாடு நடந்து வருகிறது. நீங்கள் ரத்து செய்ய விரும்புகிறீர்களா?"
 
 msgid "Operation cancelled by user."
-msgstr ""
+msgstr "செயல்பாடு பயனரால் ரத்து செய்யப்பட்டது."
 
 msgid "Rescue option is enabled."
-msgstr ""
+msgstr "மீட்பு விருப்பம் இயக்கப்பட்டது."
 
 msgid "Error creating backup: "
-msgstr ""
+msgstr "காப்புப்பிரதியை உருவாக்கும் பிழை: "
 
 msgid "Failed to write destination file. Please confirm it is valid to create the provided file path, and try again."
 msgstr ""
+"இலக்கு கோப்பை எழுதுவதில் தோல்வி. வழங்கப்பட்ட கோப்பு பாதையை உருவாக்குவது செல்லுபடியாகும் "
+"என்பதை உறுதிப்படுத்தவும், மீண்டும் முயற்சிக்கவும்."
 
 #, python-brace-format
 msgid "Successful backup of swap partition {partition_name}"
-msgstr ""
+msgstr "இடமாற்று பகிர்வின் வெற்றிகரமான காப்புப்பிரதி {partition_name}"
 
 #, python-brace-format
 msgid "<b>Failed to backup partition</b> {partition_name}"
-msgstr ""
+msgstr "<b> பகிர்வை காப்புப் பிரதி எடுக்கத் தவறிவிட்டது </b> {partition_name}"
 
 #, python-brace-format
 msgid "Successful backup of partition {partition_name}"
-msgstr ""
+msgstr "பகிர்வின் வெற்றிகரமான காப்புப்பிரதி {partition_name}"
 
 msgid "Backup saved successfully."
-msgstr ""
+msgstr "காப்பு வெற்றிகரமாக சேமிக்கப்பட்டது."
 
 msgid "Backup succeeded with some errors:"
-msgstr ""
+msgstr "சில பிழைகளுடன் காப்புப்பிரதி செய் பெற்றது:"
 
 msgid "Backup operation failed:"
-msgstr ""
+msgstr "காப்பு செயல்பாடு தோல்வியடைந்தது:"
 
 msgid "User requested operation to stop."
-msgstr ""
+msgstr "நிறுத்துமாறு பயனர் கோரினார்."
 
 #, python-brace-format
 msgid "Operation took {num_minutes} minutes."
-msgstr ""
+msgstr "செயல்பாடு {num_minutes} நிமிடங்கள் எடுத்தது."
 
 msgid "To start a new session, click <b>Next</b>"
-msgstr ""
+msgstr "புதிய அமர்வைத் தொடங்க, <b> அடுத்து </b> என்பதைக் சொடுக்கு செய்க"
 
 msgid "Step 1: Select Image Location"
-msgstr ""
+msgstr "படி 1: பட இருப்பிடத்தைத் தேர்ந்தெடுக்கவும்"
 
 msgid "Where are the image files stored?"
-msgstr ""
+msgstr "படக் கோப்புகள் எங்கே சேமிக்கப்படுகின்றன?"
 
 msgid "Select the partition which contains the image files:"
-msgstr ""
+msgstr "படக் கோப்புகளைக் கொண்ட பகிர்வைத் தேர்ந்தெடுக்கவும்:"
 
 msgid "Step 2: Select Backup Image"
-msgstr ""
+msgstr "படி 2: காப்பு படத்தைத் தேர்ந்தெடுக்கவும்"
 
 msgid "Click <b>Browse</b> to select the folder containing image files."
 msgstr ""
+"படக் கோப்புகளைக் கொண்ட கோப்புறையைத் தேர்ந்தெடுக்க <b> உலாவு </b> என்பதைக் சொடுக்கு செய்க."
 
 msgid "Select the image file to restore."
-msgstr ""
+msgstr "மீட்டமைக்க படக் கோப்பைத் தேர்ந்தெடுக்கவும்."
 
 msgid "Step 3: Select Drive To Restore"
-msgstr ""
+msgstr "படி 3: மீட்டமைக்க டிரைவைத் தேர்ந்தெடுக்கவும்"
 
 msgid "Select the destination drive to restore with the selected image."
 msgstr ""
+"தேர்ந்தெடுக்கப்பட்ட படத்துடன் மீட்டமைக்க இலக்கு இயக்கத்தைத் தேர்ந்தெடுக்கவும்."
 
 msgid "Step 4: Select Partitions to Restore"
-msgstr ""
+msgstr "படி 4: மீட்டமைக்க பகிர்வுகளைத் தேர்ந்தெடுக்கவும்"
 
 msgid "Select which partitions from the backup image to restore, and whether to overwrite the partition table. <b>Leave everything selected to completely restore the destination drive.</b>"
 msgstr ""
+"மீட்டெடுக்க காப்பு படத்திலிருந்து எந்த பகிர்வுகளைத் தேர்ந்தெடுக்கவும், பகிர்வு அட்டவணையை "
+"மேலெழுதலாமா என்பதைத் தேர்ந்தெடுக்கவும். <b> இலக்கு இயக்கத்தை முழுமையாக மீட்டெடுக்க "
+"தேர்ந்தெடுக்கப்பட்ட அனைத்தையும் விட்டு விடுங்கள். </b>"
 
 msgid "Selected image"
-msgstr ""
+msgstr "தேர்ந்தெடுக்கப்பட்ட படம்"
 
 msgid "Destination device"
-msgstr ""
+msgstr "இலக்கு சாதனம்"
 
 msgid "Destination partition"
-msgstr ""
+msgstr "இலக்கு பகிர்வு"
 
 msgid "Overwrite partition table"
-msgstr ""
+msgstr "பகிர்வு அட்டவணையை மேலெழுதும்"
 
 msgid "You will be overwriting the partition table."
-msgstr ""
+msgstr "நீங்கள் பகிர்வு அட்டவணையை மேலெழுதும்."
 
 msgid "The \"destination partition\" column has been updated using the information stored within the backup image.\n\n<b>If partitions have been resized, new partitions added, or additional operating systems installed <i>since the backup image was created</i>, then the destination drive's partition table will not match the backup image, and overwriting the destination drive's partition table will render these resized and additional partitions permanently inaccessible.</b> If you have not modified the partition table in such a way since creating this backup then overwriting the partition table is completely safe and will have no negative effects."
 msgstr ""
+"காப்புப்பிரதி படத்திற்குள் சேமிக்கப்பட்ட தகவல்களைப் பயன்படுத்தி \"இலக்கு பகிர்வு\" "
+"நெடுவரிசை புதுப்பிக்கப்பட்டுள்ளது.\n"
+"\n"
+" <b> பகிர்வுகள் மறுஅளவிடப்பட்டிருந்தால், புதிய பகிர்வுகள் சேர்க்கப்பட்டிருந்தால், அல்லது "
+"கூடுதல் இயக்க முறைமைகள் நிறுவப்பட்டிருந்தால் <i> காப்புப் படம் உருவாக்கப்பட்டதிலிருந்து </"
+"i>, பின்னர் இலக்கு டிரைவின் பகிர்வு அட்டவணை காப்புப் படத்துடன் பொருந்தாது, மேலும் இலக்கு "
+"இயக்ககத்தின் பகிர்வு அட்டவணையை மேலெழுதும் இந்த மறுசீரமைப்பை நிரந்தரமாக மாற்றியமைக்க "
+"முடியாதது. முற்றிலும் பாதுகாப்பானது மற்றும் எதிர்மறையான விளைவுகளை ஏற்படுத்தாது."
 
 msgid "You will <b>not</b> be overwriting the partition table."
-msgstr ""
+msgstr "நீங்கள் <b> இல்லை </b> பகிர்வு அட்டவணையை மேலெழுதும்."
 
 msgid "The source does not contain a partition table."
-msgstr ""
+msgstr "மூலத்தில் பகிர்வு அட்டவணை இல்லை."
 
 msgid "The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table."
 msgstr ""
+"இலக்கு டிரைவின் தற்போதைய பகிர்வு அட்டவணை தகவலுடன் \"இலக்கு பகிர்வு\" நெடுவரிசை "
+"புதுப்பிக்கப்பட்டுள்ளது.\n"
+"\n"
+" <b> இலக்கு பகிர்வு நெடுவரிசையை கீழ்தோன்றும் மெனுவாக மாற்றலாம். இலக்கு பகிர்வுகளை தவறா"
+"க மேப்பிங் செய்வது இயக்க முறைமைகளை இனி துவக்காது. </B> மேப்பிங் பற்றி உங்களுக்குத் "
+"தெரியாவிட்டால், பகிர்வு அட்டவணையை மேலெழுதுவது மிகவும் பொருத்தமானதா என்பதைக் "
+"கவனியுங்கள்."
 
 msgid "No destination partition selected. Use the destination partition drop-down menu to select the destination"
 msgstr ""
+"இலக்கு பகிர்வு எதுவும் தேர்ந்தெடுக்கப்படவில்லை. இலக்கைத் தேர்ந்தெடுக்க இலக்கு பகிர்வு "
+"கீழ்தோன்றும் மெனுவைப் பயன்படுத்தவும்"
 
 msgid "Not restoring this partition"
-msgstr ""
+msgstr "இந்த பகிர்வை மீட்டெடுக்கவில்லை"
 
 msgid "When you are ready to continue, click <b>Next</b>."
 msgstr ""
+"தொடர நீங்கள் தயாராக இருக்கும்போது, <b> அடுத்து </b> என்பதைக் சொடுக்கு செய்க."
 
 msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
 msgstr ""
+"எந்தவொரு தருக்க தொகுதி மேலாளரையும் (எல்விஎம்) தருக்க தொகுதிகளையும் ச்கேன் செய்தல் மற்றும் "
+"அன்மென்ட் ..."
 
 #, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
 msgstr ""
+"மூல பகிர்வு அட்டவணையின் இறுதி பகிர்வு ({source}: {source_size} bytes) இலக்கு "
+"வட்டுக்குள் ({destination_size} bytes) ஒரு பகுதியைக் குறிக்க வேண்டும்."
 
 #, python-brace-format
 msgid "Rescuezilla cannot yet automatically shrink partitions to restore from large disks to smaller disks. The final partition currently must always completely reside within the destination disk.\n"
@@ -573,230 +680,259 @@ msgid "Rescuezilla cannot yet automatically shrink partitions to restore from la
 "\n"
 "{url}"
 msgstr ""
+"பெரிய வட்டுகளிலிருந்து சிறிய வட்டுகளுக்கு மீட்டெடுக்க ரெச்க்யூசில்லா பகிர்வுகளை தானாகவே "
+"சுருக்க முடியாது. இறுதி பகிர்வு தற்போது எப்போதும் இலக்கு வட்டுக்குள் இருக்க வேண்டும்.\n"
+"\n"
+" தற்போது அசலை விட சிறிய வட்டுகளை மீட்டெடுப்பதற்கான ஒரே வழி, புதிய காப்புப்பிரதி படத்தை"
+" உருவாக்குவதற்கு முன் அசல் வட்டின் இறுதி பகிர்வை சுருக்கி முதலில் GPARTED பகிர்வு "
+"எடிட்டரைப் பயன்படுத்துவது. மேலும் தகவலுக்கு பின்வரும் வழிமுறைகளைப் படிக்கவும்:\n"
+"\n"
+" {url}"
 
 msgid "Step 5: Confirm Restore Configuration"
-msgstr ""
+msgstr "படி 5: உள்ளமைவை மீட்டெடு உறுதிப்படுத்தவும்"
 
 msgid "Confirm the following restore configuration."
-msgstr ""
+msgstr "பின்வரும் மீட்டெடுப்பு உள்ளமைவை உறுதிப்படுத்தவும்."
 
 #, python-brace-format
 msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
+"காப்புப்பிரதியை {Tinsition_drive க்கு க்கு மீட்டெடுக்க விரும்புகிறீர்களா? அவ்வாறு செய்வது"
+" இந்த இயக்ககத்தில் தரவை நிரந்தரமாக மேலெழுதும்!"
 
 msgid "Source image"
-msgstr ""
+msgstr "மூல படம்"
 
 msgid "Destination drive"
-msgstr ""
+msgstr "இலக்கு இயக்கி"
 
 msgid "Restoring the following partitions"
-msgstr ""
+msgstr "பின்வரும் பகிர்வுகளை மீட்டமைக்கிறது"
 
 msgid "WILL BE OVERWRITING PARTITION TABLE"
-msgstr ""
+msgstr "பகிர்வு அட்டவணையை மேலெழுதும்"
 
 msgid "Will <b>NOT</b> be overwriting partition table"
-msgstr ""
+msgstr "<b> இல்லை </b> பகிர்வு அட்டவணையை மேலெழுதும்"
 
 msgid "To start the restore, click <b>Next</b>."
-msgstr ""
+msgstr "மீட்டமைப்பைத் தொடங்க, <b> அடுத்து </b> என்பதைக் சொடுக்கு செய்க."
 
 msgid "Restoring From Backup"
-msgstr ""
+msgstr "காப்புப்பிரதியிலிருந்து மீட்டமைத்தல்"
 
 msgid "Restoring your system from the image you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
+"நீங்கள் தேர்ந்தெடுத்த படத்திலிருந்து உங்கள் கணினியை மீட்டமைத்தல். உங்கள் கணினியின் விரைவு "
+"மற்றும் தரவின் அளவைப் பொறுத்து இது ஒரு மணிநேரம் அல்லது அதற்கு மேற்பட்டதாக இருக்கலாம்."
 
 msgid "Refreshing partition table"
-msgstr ""
+msgstr "புத்துணர்ச்சியூட்டும் பகிர்வு அட்டவணை"
 
 #, python-brace-format
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
 msgstr ""
+"{description} க்கு {destination_partition} ({destination_description}) "
+"மீட்டமைத்தல்"
 
 msgid "Synchronizing disks..."
-msgstr ""
+msgstr "வட்டுகளை ஒத்திசைத்தல் ..."
 
 #, python-brace-format
 msgid "Querying hard drive geometry of {device}"
-msgstr ""
+msgstr "{சாதனம் of இன் ஆர்ட் இயக்கி வடிவவியலை வினவுகிறது"
 
 #, python-brace-format
 msgid "Probing {device} with {app}"
-msgstr ""
+msgstr "{device} உடன் {app} ஆய்வு செய்தல்"
 
 #, python-brace-format
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
 msgstr ""
+"வளரும் கோப்பு முறைமை {partition} ({filesystem}). இதற்கு சிறிது நேரம் ஆகலாம் ..."
 
 #, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
-msgstr ""
+msgstr "பகிர்வு {partition} ({filesystem}) தோல்வியுற்றது: {msg}"
 
 #, python-brace-format
 msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
 msgstr ""
+"{Ntfs_device of இன் வெற்றிகரமாக சரிசெய்யப்பட்ட NTFS கோப்பு முறைமை வடிவியல் {{"
+"gootimation_source இருந்து இலிருந்து மதிப்புகளைப் பயன்படுத்துதல்"
 
 #, python-brace-format
 msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
-msgstr ""
+msgstr "Nt ntfs_device of இன் NTFS கோப்பு முறைமை வடிவவியலை சரிசெய்வதில் தோல்வி"
 
 msgid "Removing udev MAC address records (if any)"
-msgstr ""
+msgstr "UDEV MAC முகவரி பதிவுகளை நீக்குதல் (ஏதேனும் இருந்தால்)"
 
 msgid "Re-installing syslinux (if any)"
-msgstr ""
+msgstr "சிச்லினக்ச் மீண்டும் நிறுவுதல் (ஏதேனும் இருந்தால்)"
 
 msgid "Successfully re-installed syslinux bootloader"
-msgstr ""
+msgstr "சிச்லினக்ச் துவக்க ஏற்றி வெற்றிகரமாக மீண்டும் நிறுவப்பட்டது"
 
 msgid "Re-installing GRUB bootloader (if any)"
-msgstr ""
+msgstr "க்ரப் துவக்க ஏற்றி மீண்டும் நிறுவுதல் (ஏதேனும் இருந்தால்)"
 
 msgid "Successfully re-installed GRUB bootloader"
-msgstr ""
+msgstr "GRUB துவக்க ஏற்றி வெற்றிகரமாக மீண்டும் நிறுவப்பட்டது"
 
 msgid "Did not update GRUB bootloader (if any)"
-msgstr ""
+msgstr "க்ரப் துவக்க ஏற்றி புதுப்பிக்கவில்லை (ஏதேனும் இருந்தால்)"
 
 msgid "Updating initramfs (if any)"
-msgstr ""
+msgstr "Initramfs ஐ புதுப்பித்தல் (ஏதேனும் இருந்தால்)"
 
 msgid "Successfully updated initramfs"
-msgstr ""
+msgstr "INITRAMFS ஐ வெற்றிகரமாக புதுப்பித்தது"
 
 msgid "Updating EFI NVRAM..."
-msgstr ""
+msgstr "EFI NVRAM ஐ புதுப்பித்தல் ..."
 
 msgid "Successfully updated EFI NVRAM"
-msgstr ""
+msgstr "EFI NVRAM ஐ வெற்றிகரமாக புதுப்பித்தது"
 
 msgid "Error restoring image: "
-msgstr ""
+msgstr "படத்தை மீட்டெடுப்பதில் பிழை: "
 
 msgid "Could not restore sfdisk partition table as file has zero length: "
 msgstr ""
+"கோப்பில் சுழிய நீளம் இருப்பதால் SFDISK பகிர்வு அட்டவணையை மீட்டெடுக்க முடியவில்லை: "
 
 msgid "Successfully restored partition table."
-msgstr ""
+msgstr "பகிர்வு அட்டவணை வெற்றிகரமாக மீட்டெடுக்கப்பட்டது."
 
 msgid "Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."
 msgstr ""
+"சாதனங்களின் பகிர்வு அட்டவணையைப் புதுப்பிக்கத் தவறிவிட்டது. மற்றொரு செயல்முறை பகிர்வு "
+"அட்டவணையை அணுகினால் இது நிகழலாம்."
 
 #, python-brace-format
 msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
 msgstr ""
+"பகிர்வை மீட்டெடுக்க முடியவில்லை {destination_partition} ஏனெனில் சேமிக்கப்பட்ட படம் "
+"எதுவும் இல்லை: {description}."
 
 msgid "This may occur if Clonezilla was originally unable to backup this partition."
 msgstr ""
+"இந்த பகிர்வை காப்புப்பிரதி எடுக்க முதலில் க்ளோனெசில்லாவால் முடியவில்லை என்றால் இது "
+"ஏற்படலாம்."
 
 #, python-brace-format
 msgid "Error restoring partition {image_key} to {destination_partition}."
-msgstr ""
+msgstr "பகிர்வை மீட்டெடுப்பதில் பிழை {image_key} {destination_partition}."
 
 #, python-brace-format
 msgid "Successfully restored image partition {image} to {destination_partition}"
 msgstr ""
+"வெற்றிகரமாக மீட்டெடுக்கப்பட்ட பட பகிர்வு {image} முதல் {destination_partition}"
 
 msgid "Summary of Restore"
-msgstr ""
+msgstr "மீட்டமைப்பின் சுருக்கம்"
 
 msgid "Restore Summary"
-msgstr ""
+msgstr "சுருக்கத்தை மீட்டமை"
 
 msgid "Confirm the restore summary."
-msgstr ""
+msgstr "மீட்டெடுப்பு சுருக்கத்தை உறுதிப்படுத்தவும்."
 
 msgid "Backup restored successfully."
-msgstr ""
+msgstr "காப்புப்பிரதி வெற்றிகரமாக மீட்டெடுக்கப்பட்டது."
 
 msgid "Image Explorer\n"
 "      (beta)"
 msgstr ""
+"பட எக்ச்ப்ளோரர்\n"
+" (பீட்டா)"
 
 msgid "Image Explorer (beta)"
-msgstr ""
+msgstr "பட எக்ச்ப்ளோரர் (பீட்டா)"
 
 msgid "Select the image file to explore"
-msgstr ""
+msgstr "ஆராய படக் கோப்பைத் தேர்ந்தெடுக்கவும்"
 
 msgid "Step 3: Select Partition to Explore"
-msgstr ""
+msgstr "படி 3: ஆராய பகிர்வைத் தேர்ந்தெடுக்கவும்"
 
 msgid "Select the partition to access files from."
-msgstr ""
+msgstr "கோப்புகளை அணுக பகிர்வைத் தேர்ந்தெடுக்கவும்."
 
 msgid "Click <b>Mount</b> to mount the backup image (as read-only)."
 msgstr ""
+"காப்புப்பிரதி படத்தை ஏற்ற <b> மவுண்ட் </b> என்பதைக் சொடுக்கு செய்க (படிக்க மட்டும்)."
 
 msgid "Mount"
-msgstr ""
+msgstr "மவுண்ட்"
 
 msgid "Mounting as read-only..."
-msgstr ""
+msgstr "படிக்க மட்டும் பெருகுவது ..."
 
 msgid "Unmount"
-msgstr ""
+msgstr "உமிழ்தல்"
 
 msgid "Once the partition has been mounted, click <b>Open in file manager</b> to access your files."
 msgstr ""
+"பகிர்வு ஏற்றப்பட்டதும், உங்கள் கோப்புகளை அணுக கோப்பு மேலாளரில் </b> இல் திறக்கவும்."
 
 msgid "Open in file manager"
-msgstr ""
+msgstr "கோப்பு மேலாளரில் திறக்கவும்"
 
 msgid "Verify"
-msgstr ""
+msgstr "சரிபார்க்கவும்"
 
 msgid "Select one or more image(s) to verify."
-msgstr ""
+msgstr "சரிபார்க்க ஒன்று அல்லது அதற்கு மேற்பட்ட படம் (களை) தேர்ந்தெடுக்கவும்."
 
 msgid "To begin verification, click <b>Next</b>."
-msgstr ""
+msgstr "சரிபார்ப்பைத் தொடங்க, <b> அடுத்து </b> என்பதைக் சொடுக்கு செய்க."
 
 msgid "Verifying Image"
-msgstr ""
+msgstr "படத்தை சரிபார்க்கிறது"
 
 msgid "Verifying the selected image(s)."
-msgstr ""
+msgstr "தேர்ந்தெடுக்கப்பட்ட படத்தை (களை) சரிபார்க்கிறது."
 
 #, python-brace-format
 msgid "Verifying {image_name}"
-msgstr ""
+msgstr "{image_name}"
 
 msgid "Summary of Verification"
-msgstr ""
+msgstr "சரிபார்ப்பின் சுருக்கம்"
 
 msgid "Confirm the verification summary."
-msgstr ""
+msgstr "சரிபார்ப்பு சுருக்கத்தை உறுதிப்படுத்தவும்."
 
 msgid "Verification Summary"
-msgstr ""
+msgstr "சரிபார்ப்பு சுருக்கம்"
 
 msgid "To verify another image, click <b>Back</b>."
-msgstr ""
+msgstr "மற்றொரு படத்தை சரிபார்க்க, <b> பின் </b> என்பதைக் சொடுக்கு செய்க."
 
 msgid "✔"
-msgstr ""
+msgstr "✔"
 
 msgid "❌"
-msgstr ""
+msgstr "❌"
 
 msgid "MBR backup appears correct."
-msgstr ""
+msgstr "MBR காப்புப்பிரதி சரியாகத் தோன்றுகிறது."
 
 msgid "No partition table found."
-msgstr ""
+msgstr "பகிர்வு அட்டவணை எதுவும் கிடைக்கவில்லை."
 
 msgid "Sfdisk partition table file is empty or missing."
-msgstr ""
+msgstr "SFDISK பகிர்வு அட்டவணை கோப்பு காலியாக உள்ளது அல்லது காணவில்லை."
 
 msgid "Sfdisk partition table file is present."
-msgstr ""
+msgstr "SFDISK பகிர்வு அட்டவணை கோப்பு உள்ளது."
 
 msgid "Unable to verify."
-msgstr ""
+msgstr "சரிபார்க்க முடியவில்லை."
 
 #, python-brace-format
 msgid "{partition}: filesystem image successfully verified."
-msgstr ""
+msgstr "{partition}: கோப்பு முறைமை படம் வெற்றிகரமாக சரிபார்க்கப்பட்டது."
