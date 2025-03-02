@@ -1,19 +1,20 @@
 # Allan Nordhøy <epost@anotheragency.no>, 2021.
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021.
+# ovl-1 <ovl-002@mailinator.com>, 2025.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2021-12-26 23:37+0000\n"
-"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
+"PO-Revision-Date: 2025-02-12 09:02+0000\n"
+"Last-Translator: ovl-1 <ovl-002@mailinator.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "rescuezilla/graphical-shutdown/nb_NO/>\n"
 "Language: nb_NO\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.10.1\n"
+"X-Generator: Weblate 5.10-dev\n"
 
 msgid "End Session"
-msgstr "Sluttfør økt"
+msgstr "Avslutt økt"
 
 msgid "Cancel"
 msgstr "Avbryt"
