@@ -262,6 +262,8 @@ common_pkgs=("discover"
              "fonts-unfonts-core"
              # Thai font
              "fonts-thai-tlwg"
+             # Tamil font
+             "fonts-taml"
              # Font for symbols like "❌"
              "fonts-symbola"
              "breeze-gtk-theme"
