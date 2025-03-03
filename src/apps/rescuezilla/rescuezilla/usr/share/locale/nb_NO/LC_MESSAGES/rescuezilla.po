@@ -1,12 +1,13 @@
 # Allan Nordhøy <epost@anotheragency.no>, 2021.
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022, 2023.
+# ovl-1 <ovl-002@mailinator.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2023-05-03 20:52+0000\n"
-"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
+"PO-Revision-Date: 2025-02-12 09:02+0000\n"
+"Last-Translator: ovl-1 <ovl-002@mailinator.com>\n"
 "Language-Team: Norwegian Bokmål <https://hosted.weblate.org/projects/"
 "rescuezilla/rescuezilla/nb_NO/>\n"
 "Language: nb_NO\n"
@@ -14,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.18-dev\n"
+"X-Generator: Weblate 5.10-dev\n"
 
 msgid "Welcome"
 msgstr "Velkommen"
@@ -28,13 +29,13 @@ msgstr ""
 "Klikk et alternativ for å begynne:"
 
 msgid "Backup"
-msgstr "Sikkerhetskopiering"
+msgstr "Sikkerhetskopier"
 
 msgid "Restore"
-msgstr "Gjenoppretting"
+msgstr "Gjenopprett"
 
 msgid "Verify Image"
-msgstr "Bekreft avtrykk"
+msgstr "Bekreft avbildning"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
 msgstr ""
@@ -43,8 +44,8 @@ msgstr ""
 
 msgid "Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed."
 msgstr ""
-"Overvei å bidra med 10kr/måneden på kronerullingsplattformen slik at "
-"Rescuezilla kan fortsette utviklingen."
+"Vurder å bidra med $1/måned på folkefinansieringsnettstedet Patreon, slik at "
+"Rescuezilla kan fortsette å bli utviklet."
 
 msgid "Back"
 msgstr "Tilbake"
@@ -87,7 +88,7 @@ msgid "Step 1: Understanding Cloning"
 msgstr "Steg 1: Forstå hva kloning er"
 
 msgid "Please understand how \"cloning\" differs from \"imaging\"."
-msgstr "Du må forstå at «kloning» er noe annet enn «avtrykking»."
+msgstr "Forstå hvordan «kloning» er forskjellig fra «avbildning»."
 
 msgid "This mode is for \"disk cloning\". Cloning means copying one drive and directly overwriting another drive. This is a direct one-step operation with no temporary storage required.\n"
 "\n"
@@ -96,20 +97,20 @@ msgid "This mode is for \"disk cloning\". Cloning means copying one drive and di
 ""
 "To use the \"imaging\" wizards, click <b>Back</b> and select <b>Backup</b> or <b>Restore</b>."
 msgstr ""
-"Dette er et modus for «diskkloning». Kloning betyr å kopiere en disk direkte "
-"over en annen. Dette er en direkte enstegsoperasjon der det ikke trengs noe "
-"midlertidig lagring.\n"
+"Denne modusen er for «diskkloning». Kloning betyr å kopiere en lagringsenhet "
+"og direkte overskrive en annen. Dette er en direkte ett-trinns operasjon "
+"uten behov for midlertidig lagring.\n"
 "\n"
-"Kloning er forskjellig fra å lage «avtrykk». Avtrykk betyr å kopiere alt fra "
-"en disk til veldig store filer lagret inne i en mappe på en ekstern disk. "
-"Flere avtrykk kan lagres på samme eksterne enhet. Disse avtrykkene kan "
-"gjenopprettes tilbake til opprinnelig disk, eller til flere disker. Med "
-"andre er «avtrykk» sikkerhetskopioperasjonen som kopierer din disk til "
-"<i>filer</i> som må lagres på en enhet ihvertfall midlertidig før den kan "
-"gjenopprettes.\n"
+"Kloning er forskjellig fra «diskavbildning». Avbildning betyr å kopiere alt "
+"fra en lagringsenhet til veldig store filer lagret inne i en mappe på en "
+"ekstern disk. Flere avbildninger kan lagres på samme eksterne disk. Disse "
+"avbildningene kan gjenopprettes tilbake til opprinnelig disk, eller til "
+"flere disker. Med andre ord, for «avbildning» kopierer "
+"sikkerhetskopioperasjonen din lagringsenhet til <i>filer</i> som må lagres "
+"på en lagringsenhet i det minste midlertidig før den kan gjenopprettes.\n"
 "\n"
-"For å bruke «avtrykks»-veiviserne, klikk <b>Tilbake</b> og velg "
-"<b>Sikkerhetskopiering</b> eller <b>Gjenoppretting</b>."
+"For å bruke «avbildnings»-veiviserne, klikk <b>Tilbake</b> og velg "
+"<b>Sikkerhetskopier</b> eller <b>Gjenopprett</b>."
 
 msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
 msgstr "For å begynne «klonings»-veiviseren, klikk <b>Neste</b>"
@@ -147,16 +148,16 @@ msgstr "Trykk <b>Neste</b> for å starte kloningen."
 #, python-brace-format
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
-"Vil du klone enheten til {destination_drive}? Å gjøre dette vil overskrive "
-"dataene på målenheten for godt!"
+"Er du sikker på at du vil du klone lagringsenheten til {destination_drive}? "
+"Hvis du gjør det, vil du overskrive data på denne lagringsenheten permanent!"
 
 msgid "Step 6: Cloning Disk"
 msgstr "Steg 6: Kloning av disk"
 
 msgid "Cloning the drive you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
-"Kloner enheten du valgte … Dette kan ta en time eller mer, avhengig av hvor "
-"rask datamaskinen din er, og mengden data."
+"Kloner lagringsenheten du valgte. Dette kan ta en time eller mer avhengig av "
+"hvor rask datamaskinen din er og datamengden."
 
 msgid "Summary of Clone"
 msgstr "Sammendrag av kloning"
@@ -171,21 +172,20 @@ msgid "Unable to shutdown Image Explorer"
 msgstr "Kunne ikke slå av bilde-utforskeren"
 
 msgid "Step 1: Select Drive To Backup"
-msgstr "Steg 1: Velg enhet å sikkerhetskopiere"
+msgstr "Steg 1: Velg lagringsenhet å sikkerhetskopiere"
 
 msgid "Select the <b>source drive</b> that you would like to create a backup image from."
 msgstr ""
-"Velg <b>kildeenheten</b> du ønsker å opprette et sikkerhetskopieringsavtrykk "
-"fra."
+"Velg <b>kildeenheten</b> du vil opprette en sikkerhetskopiavbildning fra."
 
 msgid "Drive"
-msgstr "Enhet"
+msgstr "Lagringsenhet"
 
 msgid "Capacity"
 msgstr "Kapasitet"
 
 msgid "Drive Model"
-msgstr "Enhetsmodell"
+msgstr "Lagringsenhetsmodell"
 
 msgid "Serial Number"
 msgstr "Serienummer"
@@ -223,8 +223,8 @@ msgstr "Steg 3: Velg målenhet"
 
 msgid "Click on the box below to select the source drive that you would like to create a backup image from."
 msgstr ""
-"Klikk i boksen nedenfor for å velge kildeenheten du ønsker å opprette "
-"sikkerhetskopieringsavtrykk fra."
+"Klikk i boksen nedenfor for å velge kildeenheten du vil opprette en "
+"sikkerhetskopiavbildning fra."
 
 msgid "Connected directly to my computer"
 msgstr "Koblet direkte til min datamaskin"
@@ -233,7 +233,7 @@ msgid "Shared over a network"
 msgstr "Delt over et nettverk"
 
 msgid "Where would you like to save the image?"
-msgstr "Hvor ønsker du å lagre avtrykket?"
+msgstr "Hvor vil du lagre avbildningen?"
 
 msgid "Windows shared folder (SMB/CIFS, Samba)"
 msgstr "Windows-delingsmappe (SMB/CIFS, Samba)"
@@ -260,7 +260,7 @@ msgid "Version"
 msgstr "Versjon"
 
 msgid "Remote path"
-msgstr "Fjern sti"
+msgstr "Fjern-sti"
 
 msgid "Exported path"
 msgstr "Eksportert sti"
@@ -275,7 +275,7 @@ msgid "Select network-shared storage location:"
 msgstr "Velg nettverksdelt lagringssted:"
 
 msgid "Select the partition where the image files will be saved to"
-msgstr "Velg partisjonen å lagre avtrykksfilene til"
+msgstr "Velg partisjonen å lagre avbildningsfilene til"
 
 msgid "Partition"
 msgstr "Partisjon"
@@ -295,7 +295,7 @@ msgid "Must provide either password or SSH identity file."
 msgstr "Enten passord eller SSH-identitetsfil må angis."
 
 msgid "Scanning folder for backup images..."
-msgstr "Skanner mappe for sikkerhetskopieringsavtrykk …"
+msgstr "Skanner mappe for sikkerhetskopiavbildninger…"
 
 #, python-brace-format
 msgid "({timeout_seconds} second timeout)"
@@ -311,30 +311,33 @@ msgid "Scanning: {filename}"
 msgstr "Skanner: {filename}"
 
 msgid "Error processing the following images:"
-msgstr "Klarte ikke å behandle følgende avtrykk:"
+msgstr "Klarte ikke å behandle følgende avbildninger:"
 
 msgid "Unable to fully process the image associated with the following partitions:"
-msgstr "Kunne ikke behandle bildefil tilknyttet følgende partisjoner:"
+msgstr ""
+"Kunne ikke fullt ut behandle avbildningen tilknyttet følgende partisjoner:"
 
 msgid "Unable to fully process the following image:"
-msgstr "Kunne ikke behandle avtrykket i sin helhet:"
+msgstr "Kunne ikke fullt ut behandle følgende avbildning:"
 
 msgid "Cannot find partition's associated partclone image"
-msgstr "Kunne ikke finne partisjonens tilknyttede partclone-avtrykk"
+msgstr "Kunne ikke finne partisjonens tilknyttede partclone-avbildning"
 
 msgid "This can happen when loading images which Clonezilla was unable to completely backup."
 msgstr ""
-"Dette kan skje ved innlasting av avtrykk som Clonezilla ikke kan "
+"Dette kan skje ved innlasting av avbildninger som Clonezilla ikke klarte å "
 "sikkerhetskopiere i sin helhet."
 
 msgid "Note: This image format cannot distinguish between failed partclone backup and a user who chose not to backup a partition."
 msgstr ""
-"Merk: Dette avtrykksformatet kan ikke skille mellom en mislykket partclone-"
-"sikkerhetskopi og en bruker som velger å ikke sikkerhetskopiere en partisjon."
+"Merk: Dette avbildningsformatet kan ikke skille mellom en mislykket "
+"partclone-sikkerhetskopi og en bruker som velger å ikke sikkerhetskopiere en "
+"partisjon."
 
 msgid "Any other filesystems within the image should be restorable as normal."
 msgstr ""
-"Alle andre filsystemer i dette avtrykket bør kunne gjenopprettes som normalt."
+"Alle andre filsystemer i denne avbildningen bør kunne gjenopprettes som "
+"normalt."
 
 msgid "Needs decryption"
 msgstr "Må dekrypteres"
@@ -345,11 +348,11 @@ msgstr "Ukjent filsystem"
 #, python-brace-format
 msgid "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance."
 msgstr ""
-"Sikkerhetskopiens utvidede pertisjonsinfo er tom. Hvis sikkerhetskopien "
-"inneholder en utvidet partisjon vil ikke denne gjenopprettes rett. All data "
-"er fremdeles helt gjenopprettbar, men manuell inngripen er nødvendig for å "
-"fullt ut gjenopprette data i den utvidede partisjonen. Sjekk {url} for info "
-"og hjelp."
+"Sikkerhetskopiens utvidede partisjonsinformasjon er tom. Hvis "
+"sikkerhetskopien inneholder en utvidet partisjon vil ikke denne "
+"gjenopprettes riktig. Alle data er fremdeles helt gjenopprettbare, men "
+"manuell inngripen er nødvendig for å fullt ut gjenopprette data i den "
+"utvidede partisjonen. Sjekk {url} for info og hjelp."
 
 msgid "The backup's bootloader data is shorter than expected. If the backup contained certain bootloaders like GRUB, during a restore operation Rescuezilla will try and re-install the bootloader."
 msgstr ""
@@ -364,11 +367,11 @@ msgid "Click <b>Browse</b> to select the folder on the destination drive where y
 "\n"
 "The folder a backup is saved in is usually a description of the computer, e.g. <b>office1</b> or <b>zack-laptop</b>."
 msgstr ""
-"Klikk <b>Utforsk</b> for å velge en mappe på målenheten der ditt nye "
-"sikkerhetsavtrykk vil bli lagret.\n"
+"Klikk <b>Bla gjennom</b> for å velge en mappe på målenheten der din nye "
+"sikkerhetskopiavbildning vil bli lagret.\n"
 "\n"
 "Mappen en sikkerhetskopi lagres i er vanligvis en beskrivelse av "
-"datamaskinen, f.eks. <b>kontor1</b>, eller <b>ola-bærbar</b>."
+"datamaskinen, f.eks. <b>kontor1</b> eller <b>ola-bærbar</b>."
 
 #, python-brace-format
 msgid "You must select a folder inside {location}"
@@ -379,11 +382,11 @@ msgstr "Velg en annen mappe."
 
 msgid "The table below lists the backup images that are already in this folder (if any)."
 msgstr ""
-"Tabellen nedenfor lister opp alle sikkerhetskopiavtrykkene som om mulig "
-"allerede finnes i denne mappen."
+"Tabellen nedenfor lister opp sikkerhetskopiavbildningene som allerede er i "
+"denne mappen (hvis noen)."
 
 msgid "Browse..."
-msgstr "Utforsk …"
+msgstr "Bla gjennom…"
 
 msgid "Filename"
 msgstr "Filnavn"
@@ -404,7 +407,7 @@ msgid "Provide a unique name for this backup image, such as the date.  Today's d
 "\n"
 "You may only use letters, numbers, and dashes in your backup name."
 msgstr ""
-"Angi et unikt navn for dette sikerhetskopiavtrykket, som f.eks. datoen. "
+"Angi et unikt navn for denne sikerhetskopiavbildningen, som f.eks. datoen. "
 "Dagens dato er automatisk innført for deg nedenfor.\n"
 "\n"
 "Du kan kun bruke bokstaver, tall, og bindestrek i ditt sikkerhetskopinavn."
@@ -413,15 +416,15 @@ msgid "Optional: Provide a short description."
 msgstr "Valgfritt: Legg til en kort beskrivelse."
 
 msgid "Step 6: Customize Compression Settings"
-msgstr "Steg 6: Tilpass sammenpakkingsinnstillinger"
+msgstr "Steg 6: Tilpass komprimeringsinnstillinger"
 
 msgid "Customize image compression settings. <b>Don't make any changes if you are unsure.</b>"
 msgstr ""
-"Tilpass innstillinger for bildekomprimering. <b>Ikke gjør noen endringer "
-"hvis du er usikker.</b>"
+"Tilpass innstillinger for avbildningskomprimering. <b>Ikke gjør noen "
+"endringer hvis du er usikker.</b>"
 
 msgid "Compression format: "
-msgstr "Sammenpakkingsformat: "
+msgstr "Komprimeringsformat: "
 
 msgid "gzip"
 msgstr "gzip"
@@ -433,10 +436,10 @@ msgid "zstandard"
 msgstr "zstandard"
 
 msgid "Uncompressed (Suitable for use with Image Explorer)"
-msgstr "Ukomprimert (passende for bruk med avtrykksutforsker)"
+msgstr "Ukomprimert (passende for bruk med avbildningsutforskeren)"
 
 msgid "Compression level: "
-msgstr "Sammenpakkingsnivå: "
+msgstr "Komprimeringsnivå: "
 
 msgid "Fastest"
 msgstr "Raskest"
@@ -455,17 +458,18 @@ msgid "Source drive"
 msgstr "Kildeenhet"
 
 msgid "Backing up the following partition(s)"
-msgstr "Sikkerhetskopierer følgende partisjoner"
+msgstr "Sikkerhetskopierer følgende partisjon(er)"
 
 #, python-brace-format
 msgid "The backup image will be written into folder {dest_dir} on {description}"
-msgstr "Sikkerhetskopi vil bli lagret i mappen {dest_dir} på {description}"
+msgstr ""
+"Sikkerhetskopiavbildningen blir lagret i mappen {dest_dir} på {description}"
 
 msgid "Confirm the following backup configuration."
 msgstr "Bekreft følgende sikkerhetskopi-oppsett."
 
 msgid "On successful completion of the task, perform the following action: "
-msgstr "Når handlingen er ferdig, utfør følgende: "
+msgstr "Når oppgaven er ferdig, utfør følgende handling: "
 
 msgid "Do nothing"
 msgstr "Gjør ikke noe"
@@ -488,7 +492,7 @@ msgid "To start the backup, click <b>Next</b>."
 msgstr "For å starte sikkerhetskopieringen, klikk <b>Neste</b>."
 
 msgid "Step 8: Creating Backup Image"
-msgstr "Steg 8: Oppretting av sikkerhetskopiavtrykk"
+msgstr "Steg 8: Oppretting av sikkerhetskopiavbildning"
 
 msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
@@ -554,7 +558,7 @@ msgid "Backup operation failed:"
 msgstr "Sikkerhetskopiering mislyktes:"
 
 msgid "User requested operation to stop."
-msgstr "Bruker forespurte operasjonsstsopp."
+msgstr "Bruker har bedt om å stoppe operasjonen."
 
 #, python-brace-format
 msgid "Operation took {num_minutes} minutes."
@@ -564,41 +568,41 @@ msgid "To start a new session, click <b>Next</b>"
 msgstr "Trykk <b>Neste</b> for å starte en ny økt"
 
 msgid "Step 1: Select Image Location"
-msgstr "Steg 1: Velg avtrykksplassering"
+msgstr "Steg 1: Velg avbildningsplassering"
 
 msgid "Where are the image files stored?"
-msgstr "Hvor lagres avtrykksfilene?"
+msgstr "Hvor lagres avbildningsfilene?"
 
 msgid "Select the partition which contains the image files:"
-msgstr "Velg partisjonen som inneholder avtrykksfilene:"
+msgstr "Velg partisjonen som inneholder avbildningsfilene:"
 
 msgid "Step 2: Select Backup Image"
-msgstr "Steg 2: Velg sikkerhetskopiavtrykk"
+msgstr "Steg 2: Velg sikkerhetskopiavbildning"
 
 msgid "Click <b>Browse</b> to select the folder containing image files."
-msgstr "Klikk <b>Utforsk</b> for å velge mappen som inneholder avtrykksfilene."
+msgstr ""
+"Klikk <b>Bla gjennom</b> for å velge mappen som inneholder avbildningsfilene."
 
 msgid "Select the image file to restore."
-msgstr "Velg avtrykksfilen å gjenopprette."
+msgstr "Velg avbildningsfilen som skal gjenopprettes."
 
 msgid "Step 3: Select Drive To Restore"
-msgstr "Steg 3: Velg disk å gjenopprette"
+msgstr "Steg 3: Velg lagringsenhet å gjenopprette"
 
 msgid "Select the destination drive to restore with the selected image."
-msgstr "Velg målenhet å gjenopprette med valgt avtrykk."
+msgstr "Velg målenhet å gjenopprette med valgt avbildning."
 
 msgid "Step 4: Select Partitions to Restore"
 msgstr "Steg 4: Velg partisjoner å gjenopprette"
 
-#, fuzzy
 msgid "Select which partitions from the backup image to restore, and whether to overwrite the partition table. <b>Leave everything selected to completely restore the destination drive.</b>"
 msgstr ""
-"Velg hvilke partisjoner fra sikkerhetskopiavtrykket du vil gjenopprette, og "
-"hvorvidt du vil overskrive partisjonstabellen. <b>La alt forbli valgt for å "
-"gjenopprette målenheten fullstendig.</b>"
+"Velg hvilke partisjoner fra sikkerhetskopiavbildningen du vil gjenopprette, "
+"og hvorvidt du vil overskrive partisjonstabellen. <b>La alt forbli valgt for "
+"å gjenopprette målenheten fullstendig.</b>"
 
 msgid "Selected image"
-msgstr "Valgt avtrykk"
+msgstr "Valgt avbildning"
 
 msgid "Destination device"
 msgstr "Målenhet"
@@ -614,13 +618,13 @@ msgstr "Du vil overskrive partisjonstabellen."
 
 msgid "The \"destination partition\" column has been updated using the information stored within the backup image.\n\n<b>If partitions have been resized, new partitions added, or additional operating systems installed <i>since the backup image was created</i>, then the destination drive's partition table will not match the backup image, and overwriting the destination drive's partition table will render these resized and additional partitions permanently inaccessible.</b> If you have not modified the partition table in such a way since creating this backup then overwriting the partition table is completely safe and will have no negative effects."
 msgstr ""
-"«Målpartisjon»-kolonnen har blitt oppdatert ved bruk av info lagret i "
-"sikkerhetskopiavtrykket.\n"
+"«Målpartisjon»-kolonnen har blitt oppdatert ved bruk av informasjon lagret i "
+"sikkerhetskopiavbildning.\n"
 "\n"
 "<b>Hvis partisjoner har fått størrelsen endret, nye partisjoner er lagt til, "
 "eller ytterligere operativsystemer er installert <i>siden "
-"sikkerhetskopiavtrykket ble opprettet</i> vil partisjonstabellen på "
-"målenheten ikke samsvare med sikkerhetskopiavtrykket, og overskriving av "
+"sikkerhetskopiavbildningen ble opprettet</i>, vil partisjonstabellen på "
+"målenheten ikke samsvare med sikkerhetskopiavbildningen, og overskriving av "
 "målenhetens partisjonstabell vil gjøre disse ytterligere partisjoner og dem "
 "med endret størrelse permanent utilgjengelige.</b> Hvis du ikke har endret "
 "partisjonstabellen på en slik måte siden du opprettet denne sikkerhetskopien "
@@ -633,22 +637,19 @@ msgstr "Du vil <b>ikke</b> overskrive partisjonstabellen."
 msgid "The source does not contain a partition table."
 msgstr "Kilden inneholder ikke en partisjonstabell."
 
-#, fuzzy
 msgid "The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table."
 msgstr ""
 "«Målpartisjon»-kolonnen har blitt oppdatert med eksisterende "
 "partisjonstabellinfo fra målenheten.\n"
 "\n"
-"<b>Målpartisjonskolonnen kan endres som en rullegardinsmeny. Feilaktig "
-"tilknytting av målpartisjoner kan forårsake at operativsystemer starter opp "
-"tregere.</b> Hvis du er usikker på tilknytningen, kan du overveie om det er "
-"mer passende å overskrive partisjonstabellen istedenfor."
+"<b>Målpartisjonskolonnen kan endres som en nedtrekksmeny. Feilaktig "
+"tilordning av målpartisjoner kan forårsake at operativsystemer ikke starter "
+"opp lenger.</b> Hvis du er usikker på tilordningen, kan du overveie om det "
+"er mer passende å overskrive partisjonstabellen istedenfor."
 
-#, fuzzy
 msgid "No destination partition selected. Use the destination partition drop-down menu to select the destination"
 msgstr ""
-"Ingen målpartisjon valgt. Bruk rullegardingsmenyen for målenhet for å velge "
-"mål."
+"Ingen målpartisjon valgt. Bruk målpartisjonens nedtrekksmeny for å velge mål"
 
 msgid "Not restoring this partition"
 msgstr "Gjenoppretter ikke denne partisjonen"
@@ -656,19 +657,15 @@ msgstr "Gjenoppretter ikke denne partisjonen"
 msgid "When you are ready to continue, click <b>Next</b>."
 msgstr "Klikk <b>Neste</b> når du er klar til å fortsette."
 
-#, fuzzy
 msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
-msgstr "Skanner og avmonterer alle (LVM) logiske volum …"
+msgstr "Skanner og avmonterer alle (LVM) logiske volumer..."
 
-#, fuzzy
 #, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
 msgstr ""
-"Endelig partisjon for kildens partisjonstabell ({source}: {source_size} "
-"bytes) må henvise til en region som helt å holdent får plass på målenheten "
-"({destination_size} bytes)."
+"Kildepartisjonstabellens endelige partisjon ({source}: {source_size} byte) "
+"må henvise til en region helt innenfor måldisken ({destination_size} byte)."
 
-#, fuzzy
 #, python-brace-format
 msgid "Rescuezilla cannot yet automatically shrink partitions to restore from large disks to smaller disks. The final partition currently must always completely reside within the destination disk.\n"
 "\n"
@@ -676,14 +673,14 @@ msgid "Rescuezilla cannot yet automatically shrink partitions to restore from la
 "\n"
 "{url}"
 msgstr ""
-"Rescuezilla kan ikke krympe partisjoner automatisk for å gjenopprette fre "
-"større til mindre disker enda. Den endelige partisjonen må for tiden alltid "
-"kunne få plass på målenheten.\n"
+"Rescuezilla kan ikke krympe partisjoner automatisk for å gjenopprette fra "
+"større til mindre disker enda. Den endelige partisjonen må nå alltid kunne "
+"få plass på målenheten.\n"
 "\n"
-"For tiden er den eneste måten å gjenopprette disker mindre enn originalen å "
-"bruke GParted sin partisjonsbehandler for å krympe målpartisjonen tilhørende "
-"den opprinnelige disken før et nytt sikkerhetskopiavtrykk lages. Les "
-"følgende instruks for mer info:\n"
+"For tiden er den eneste måten å gjenopprette til disker mindre enn "
+"originalen å bruke GParted sin partisjonsbehandler for å krympe partisjonen "
+"på den opprinnelige disken før en ny sikkerhetskopiavbildning lages. Les "
+"følgende instruksjoner for mer informasjon:\n"
 "\n"
 "{url}"
 
@@ -693,16 +690,15 @@ msgstr "Steg 5: Bekreft gjenopprettingsoppsett"
 msgid "Confirm the following restore configuration."
 msgstr "Bekreft følgende gjenopprettelsesoppsett."
 
-#, fuzzy
 #, python-brace-format
 msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
 "Er du sikker på at du vil gjenopprette sikkerhetskopien til "
-"{destination_drive}? Å gjøre dette vil overskrive data som finnes på enheten "
-"for godt!"
+"{destination_drive}? Hvis du gjør det, vil du overskrive data på denne "
+"lagringsenheten permanent!"
 
 msgid "Source image"
-msgstr "Kildeavtrykk"
+msgstr "Kildeavbildning"
 
 msgid "Destination drive"
 msgstr "Målenhet"
@@ -722,13 +718,11 @@ msgstr "Trykk <b>Neste</b> for å starte gjenopprettingen."
 msgid "Restoring From Backup"
 msgstr "Gjenoppretting fra sikkerhetskopi"
 
-#, fuzzy
 msgid "Restoring your system from the image you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
-"Gjenoppretter systemet ditt fra avtrykket du har valgt. Dette kan ta en time "
-"eller mer avhengig av hastigheten på din datamaskin og mengden data."
+"Gjenoppretter systemet ditt fra avbildningen du har valgt. Dette kan ta en "
+"time eller mer avhengig av hastigheten på din datamaskin og mengden data."
 
-#, fuzzy
 msgid "Refreshing partition table"
 msgstr "Gjenoppfrisking av partisjonstabell"
 
@@ -746,10 +740,9 @@ msgstr "Synkroniserer disker …"
 msgid "Querying hard drive geometry of {device}"
 msgstr "Utfører spørring av harddiskens geometri for {device}"
 
-#, fuzzy
 #, python-brace-format
 msgid "Probing {device} with {app}"
-msgstr "Utfører spørring av {device} med {app}"
+msgstr "Undersøker {device} med {app}"
 
 #, fuzzy
 #, python-brace-format
@@ -806,15 +799,13 @@ msgstr "Oppdaterer EFI NVRAM …"
 msgid "Successfully updated EFI NVRAM"
 msgstr "Oppdaterte EFI NVRAM"
 
-#, fuzzy
 msgid "Error restoring image: "
-msgstr "Kunne ikke gjenopprette avtrykk: "
+msgstr "Klarte ikke gjenopprette avbildning: "
 
 #, fuzzy
 msgid "Could not restore sfdisk partition table as file has zero length: "
 msgstr "Kunne ikke gjenopprette sfdisk-partisjonstabell siden filen er tom: "
 
-#, fuzzy
 msgid "Successfully restored partition table."
 msgstr "Gjenopprettet partisjonstabell."
 
@@ -824,12 +815,11 @@ msgstr ""
 "Klarte ikke å gjenoppfriske enhetens partisjonstabell. Dette kan skje hvis "
 "en annen prosess prøver å bruke partisjonstabellen."
 
-#, fuzzy
 #, python-brace-format
 msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
 msgstr ""
 "Kunne ikke gjenopprette partisjonen {destination_partition} fordi det ikke "
-"er noe lagret avtrykk tilknyttet: {description}."
+"er noen lagret avbildning tilknyttet: {description}."
 
 #, fuzzy
 msgid "This may occur if Clonezilla was originally unable to backup this partition."
@@ -837,45 +827,39 @@ msgstr ""
 "Dette kan skje hvis Clonezilla i utgangspunktet ikke kunne sikkerhetskopiere "
 "denne partisjonen."
 
-#, fuzzy
 #, python-brace-format
 msgid "Error restoring partition {image_key} to {destination_partition}."
 msgstr ""
 "Klarte ikke å gjenopprette partisjonen {image_key} til "
 "{destination_partition}."
 
-#, fuzzy
 #, python-brace-format
 msgid "Successfully restored image partition {image} to {destination_partition}"
-msgstr "Gjenopprettet avtrykkspartisjon {image} til {destination_partition}"
+msgstr "Gjenopprettet avbildningspartisjon {image} til {destination_partition}"
 
-#, fuzzy
 msgid "Summary of Restore"
 msgstr "Gjenopprettingssammendrag"
 
 msgid "Restore Summary"
 msgstr "Gjenopprettingssammendrag"
 
-#, fuzzy
 msgid "Confirm the restore summary."
 msgstr "Bekreft gjenopprettingssammendraget."
 
-#, fuzzy
 msgid "Backup restored successfully."
 msgstr "Sikkerhetskopi gjenopprettet."
 
 msgid "Image Explorer\n"
 "      (beta)"
 msgstr ""
-"Avtrykksutforsker\n"
+"Avbildningsutforskeren\n"
 "      (beta)"
 
-#, fuzzy
 msgid "Image Explorer (beta)"
-msgstr "Avtrykksutforsker (beta)"
+msgstr "Avbildningsutforskeren (beta)"
 
 msgid "Select the image file to explore"
-msgstr "Velg avtrykksfilen å utforske"
+msgstr "Velg avbildningsfilen å utforske"
 
 msgid "Step 3: Select Partition to Explore"
 msgstr "Steg 3: Velg partisjon å utforske"
@@ -884,26 +868,24 @@ msgstr "Steg 3: Velg partisjon å utforske"
 msgid "Select the partition to access files from."
 msgstr "Velg partisjonen filer skal åpnes fra."
 
-#, fuzzy
 msgid "Click <b>Mount</b> to mount the backup image (as read-only)."
 msgstr ""
-"Velg <b>Monter</b> for å montere sikkerhetskopiavtrykket (skrivebeskyttet)."
+"Velg <b>Monter</b> for å montere sikkerhetskopiavbildningen (som "
+"skrivebeskyttet)."
 
-#, fuzzy
 msgid "Mount"
 msgstr "Monter"
 
 msgid "Mounting as read-only..."
-msgstr "Monterer skrivebeskyttet …"
+msgstr "Monterer som skrivebeskyttet…"
 
 msgid "Unmount"
 msgstr "Avmonter"
 
-#, fuzzy
 msgid "Once the partition has been mounted, click <b>Open in file manager</b> to access your files."
 msgstr ""
-"Kun partisjonen har blitt montert, klikk <b>Åpne i filbehandleren</b> for å "
-"få adgang til filene dine."
+"Når partisjonen har blitt montert, klikk <b>Åpne i filbehandler</b> for å få "
+"adgang til filene dine."
 
 msgid "Open in file manager"
 msgstr "Åpne i filbehandler"
@@ -912,33 +894,32 @@ msgid "Verify"
 msgstr "Bekreft"
 
 msgid "Select one or more image(s) to verify."
-msgstr "Velg ett eller flere avtrykk å bekrefte."
+msgstr "Velg en eller flere avbildning(er) å bekrefte."
 
 msgid "To begin verification, click <b>Next</b>."
-msgstr "Trykk <b>Neste</b> for å begynne."
+msgstr "Trykk <b>Neste</b> for å begynne verifisering."
 
-#, fuzzy
 msgid "Verifying Image"
-msgstr "Bekrefting av avtrykk"
+msgstr "Verifisering av avbildning"
 
 msgid "Verifying the selected image(s)."
-msgstr "Bekrefter valgt(e) avtrykk."
+msgstr "Verifisering av valgt(e) avbildning(er)."
 
 #, python-brace-format
 msgid "Verifying {image_name}"
 msgstr "Bekrefter {image_name}"
 
 msgid "Summary of Verification"
-msgstr "Sammendrag av bekreftelse"
+msgstr "Sammendrag av verifisering"
 
 msgid "Confirm the verification summary."
-msgstr "Bekreft sammendraget."
+msgstr "Bekreft verifiseringsammendraget."
 
 msgid "Verification Summary"
-msgstr "Bekreftelsessammendrag"
+msgstr "Verifiseringsammendrag"
 
 msgid "To verify another image, click <b>Back</b>."
-msgstr "Trykk <b>Tilbake</b> for å bekrefte et nytt avtrykk."
+msgstr "Trykk <b>Tilbake</b> for å verifisere en annen avbildning."
 
 msgid "✔"
 msgstr "✔"
@@ -963,4 +944,4 @@ msgstr "Kunne ikke utføre bekreftelse."
 
 #, python-brace-format
 msgid "{partition}: filesystem image successfully verified."
-msgstr "{partition}: filsystemavtrykk bekreftet."
+msgstr "{partition}: filsystemavbildning bekreftet."

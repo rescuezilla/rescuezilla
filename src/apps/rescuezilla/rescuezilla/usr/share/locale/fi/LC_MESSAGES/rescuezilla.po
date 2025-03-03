@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2025-01-14 13:13+0000\n"
+"PO-Revision-Date: 2025-03-02 06:14+0000\n"
 "Last-Translator: Matti Kupiainen <matti.kupiainen60@gmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/fi/>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.10-dev\n"
+"X-Generator: Weblate 5.10.3-dev\n"
 
 msgid "Welcome"
 msgstr "Tervetuloa"
@@ -39,7 +39,7 @@ msgid "Restore"
 msgstr "Palautus"
 
 msgid "Verify Image"
-msgstr "Levykuvien tarkastus"
+msgstr "Levykuvan tarkastus"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
 msgstr ""
@@ -168,10 +168,10 @@ msgid "Summary of Clone"
 msgstr "Yhteenveto kloonauksesta"
 
 msgid "Clone Summary"
-msgstr "Kloonauksen yhteenveto"
+msgstr "Kloonauksen lopputulos"
 
 msgid "Confirm the clone summary."
-msgstr "Tarkasta kloonauksen yhteenveto."
+msgstr "Kloonauksen yhteenveto."
 
 msgid "Unable to shutdown Image Explorer"
 msgstr "Levykuva selaimen sulkeminen ei onnistu"
@@ -487,7 +487,7 @@ msgstr ""
 
 msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
 msgstr ""
-"<b>Rescue-toiminnon ottaminen käyttöön voi estää tärkeitä virheitä "
+"<b>Pelastus-toiminnon ottaminen käyttöön voi estää tärkeitä virheitä "
 "näkymästä. Käytä varoen.</b>"
 
 msgid "To start the backup, click <b>Next</b>."
@@ -515,10 +515,10 @@ msgid "Summary of Backup"
 msgstr "Yhteenveto varmuuskopioinnista"
 
 msgid "Confirm the backup summary."
-msgstr "Tarkasta varmuuskopioinnin yhteenveto."
+msgstr "Varmuuskopioinnin yhteenveto."
 
 msgid "Backup Summary"
-msgstr "Varmuuskopioinnin yhteenveto"
+msgstr "Varmuuskopioinnin lopputulos"
 
 msgid "An operation is in progress. Do you wish to cancel?"
 msgstr "Toiminto on käynnissä. Haluatko peruuttaa?"
@@ -833,10 +833,10 @@ msgid "Summary of Restore"
 msgstr "Yhteenveto palautuksesta"
 
 msgid "Restore Summary"
-msgstr "Palautuksen yhteenveto"
+msgstr "Palautuksen lopputulos"
 
 msgid "Confirm the restore summary."
-msgstr "Tarkasta palautuksen yhteenveto."
+msgstr "Palautuksen yhteenveto."
 
 msgid "Backup restored successfully."
 msgstr "Varmuuskopion palautus onnistui."
@@ -880,7 +880,7 @@ msgid "Open in file manager"
 msgstr "Avaa tiedostonhallinta"
 
 msgid "Verify"
-msgstr "Levykuvan eheyden tarkastus"
+msgstr "Tarkastus"
 
 msgid "Select one or more image(s) to verify."
 msgstr "Valitse yksi tai useampi levykuva, eheyden tarkastukseen."
@@ -889,10 +889,10 @@ msgid "To begin verification, click <b>Next</b>."
 msgstr "Aloita eheyden tarkastus napsauttamalla <b>Seuraava</b>."
 
 msgid "Verifying Image"
-msgstr "Tarkastetaan levykuvan/-kuvien eheys"
+msgstr "Tarkastetaan levykuvan eheys"
 
 msgid "Verifying the selected image(s)."
-msgstr "Tarkastetaan valittujen levykuvien eheys."
+msgstr "Levykuvan (-kuvien) eheyden tarkastus."
 
 #, python-brace-format
 msgid "Verifying {image_name}"
@@ -902,10 +902,10 @@ msgid "Summary of Verification"
 msgstr "Yhteenveto eheyden tarkastuksesta"
 
 msgid "Confirm the verification summary."
-msgstr "Tarkasta eheyden tarkastuksen yhteenveto."
+msgstr "Eheyden tarkastuksen yhteenveto."
 
 msgid "Verification Summary"
-msgstr "Eheyden tarkastuksen yhteenveto"
+msgstr "Eheyden tarkastuksen lopputulos"
 
 msgid "To verify another image, click <b>Back</b>."
 msgstr ""
@@ -931,8 +931,8 @@ msgid "Sfdisk partition table file is present."
 msgstr "Sfdisk-osiotaulutiedosto on olemassa."
 
 msgid "Unable to verify."
-msgstr "Levykuvan/-kuvien eheyttä ei voida tarkastaa."
+msgstr "Ei voida tarkastaa."
 
 #, python-brace-format
 msgid "{partition}: filesystem image successfully verified."
-msgstr "{partition}: tiedostojärjestelmän levykuvan eheys on tarkastettu."
+msgstr "{partition}: tiedostojärjestelmän levykuva on virheetön."
