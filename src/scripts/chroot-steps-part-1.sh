@@ -196,6 +196,7 @@ lang_codes=(
              "es"
              "fa"
              "fi"
+             "ta"
              "fr"
              "ko"
              "id"

@@ -13,6 +13,8 @@
     * Persian/فارسی (fa-IR) (in-progress)
     * Finnish/Suomi (fi-FI)
     * Romanian/Rolână (ro-RO) (in-progress)
+    * Tamil/தமிழ் (ta-IN)
+    * Norwegian Bokmål/Norsk Bokmål (nb-NO) (significantly updated)
 
 # Rescuezilla v2.5.1 (2024-09-08)
 
