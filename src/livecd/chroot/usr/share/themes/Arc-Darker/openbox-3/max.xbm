@@ -1,0 +1,4 @@
+#define titlebutton_max_2_width 8
+#define titlebutton_max_2_height 8
+static unsigned char titlebutton_max_2_bits[] = {
+   0xf8, 0xf0, 0xe0, 0xc1, 0x83, 0x07, 0x0f, 0x1f };

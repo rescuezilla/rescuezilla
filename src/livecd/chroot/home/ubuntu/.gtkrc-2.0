@@ -2,7 +2,7 @@
 # Any customization should be done in ~/.gtkrc-2.0.mine instead.
 
 include "/home/ubuntu/.gtkrc-2.0.mine"
-gtk-theme-name="Breeze"
+gtk-theme-name="Arc-Darker"
 gtk-icon-theme-name="gnome-brave"
 gtk-font-name="Sans 10"
 gtk-cursor-theme-name="DMZ-White"
