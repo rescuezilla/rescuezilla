@@ -5,13 +5,14 @@
 # Submitted at: https://github.com/rescuezilla/rescuezilla/issues/176
 #
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
+# ystk <ystk_k_fr@proton.me>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2022-08-23 02:49+0000\n"
-"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
+"PO-Revision-Date: 2025-03-14 12:03+0000\n"
+"Last-Translator: ystk <ystk_k_fr@proton.me>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/ja/>\n"
 "Language: ja\n"
@@ -19,74 +20,77 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 5.11-dev\n"
 
 msgid "Welcome"
-msgstr "ようこそ"
+msgstr "歓迎します"
 
 msgid "Select an Option"
-msgstr "オプションを選択してください"
+msgstr "オプションから内容を選んでください"
 
 msgid "Easily create a backup image of your computer, or completely restore from one.  Click an option to begin:"
-msgstr "コンピュータのバックアップイメージを簡単に作成したり、イメージから完全にレストアできます。\n\n オプションをクリックして開始します。:"
+msgstr "コンピューターのバックアップイメージが簡単に作成、また作成したものから完全な"
+"リストアが出来ます。  オプションのクリックで始まります："
 
 msgid "Backup"
-msgstr "バックアップ"
+msgstr "バックアップします"
 
 msgid "Restore"
-msgstr "レストア"
+msgstr "リストアします"
 
 msgid "Verify Image"
-msgstr ""
+msgstr "イメージの実証をします"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
-msgstr "ヘルプが必要ですか? まずはRescuezillaのよくある質問を\n確認し、その後、Rescuezillaフォーラムに進んでください。"
+msgstr "救援が必要ですか？ Rescuezilla のＦＡＱは見てから、 Rescuezilla "
+"のフォーラムに来てください。"
 
 msgid "Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed."
-msgstr "Rescuezillaを開発し続けることができるように、\nクラウドファンディングサイトPatreonでの$1/月の貢献を検討してください。"
+msgstr "Rescuezilla が作り続けられますようクラウドファンディングの Patreon "
+"でひと月につき／＄１の貢献をお考えください。"
 
 msgid "Back"
-msgstr "戻る"
+msgstr "戻ります"
 
 msgid "Next >"
-msgstr "次へ >"
+msgstr "続き ＞"
 
 msgid "Please wait..."
-msgstr "お待ちください..."
+msgstr "少し掛かります。。。"
 
 msgid "Identifying disk drives..."
-msgstr "ディスクドライブを認識中..."
+msgstr "ディスクの認証をしています。。。"
 
 #, python-brace-format
 msgid "Unmounting: {path}"
-msgstr ""
+msgstr "マウント解除しています： {path}"
 
 #, python-brace-format
 msgid "Unable to unmount {path}"
-msgstr ""
+msgstr "マウント解除出来ません {path}"
 
 #, python-brace-format
 msgid "Running: {app}"
-msgstr ""
+msgstr "実行しています： {app}"
 
 #, python-brace-format
 msgid "Running {app} on {device}"
-msgstr ""
+msgstr "{device} の {app} で実行しています"
 
 msgid "Failed to run command: "
-msgstr ""
+msgstr "コマンドの実行が出来ませんでした： "
 
 msgid "Error querying drives: "
-msgstr ""
+msgstr "ドライブの請求でエラーがありました： "
 
 msgid "Clone"
-msgstr ""
+msgstr "複製します"
 
 msgid "Step 1: Understanding Cloning"
-msgstr ""
+msgstr "ステップ １： 複製内容"
 
 msgid "Please understand how \"cloning\" differs from \"imaging\"."
-msgstr ""
+msgstr "“複製” がどう “イメージ作成” と区別するか理解していただきたいです。"
 
 msgid "This mode is for \"disk cloning\". Cloning means copying one drive and directly overwriting another drive. This is a direct one-step operation with no temporary storage required.\n"
 "\n"
@@ -95,65 +99,86 @@ msgid "This mode is for \"disk cloning\". Cloning means copying one drive and di
 ""
 "To use the \"imaging\" wizards, click <b>Back</b> and select <b>Backup</b> or <b>Restore</b>."
 msgstr ""
-""
+"このモードではディスクを “複製” します。 "
+"複製はこちらのドライブからそちらのドライブに直接上書します。 "
+"これは一直線の工程ですからデータ保存の必要がありません。\n"
+"\n"
+"複製は “イメージ作成” と別です。 "
+"イメージ作成はドライブひとつから外部ディスクのフォルダーで保存された実に大き"
+"なファイルまでもそっくり複製します。 "
+"イメージはいくつでもひとつの外部ドライブに保存出来ますが。 "
+"これらはもとのディスクにリストア出来ます、 別のディスクも選べます。 "
+"つまりは、 “イメージ作成” "
+"はバックアップ工程でドライブは複製しますがリストアされるまで "
+"<i>そのファイル</i> はどれかのドライブに保存されている必要があります。\n"
+"\n"
+"“イメージ作成” は、 <b>戻ります</b> のクリックをしたら <b>バックアップ</b> "
+"か <b>リストア</b> で選びます。"
 
 msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
-msgstr ""
+msgstr "“複製” します、 <b>続き</b> のクリックをしてください"
 
 msgid "Step 2: Select Source Drive"
-msgstr ""
+msgstr "ステップ ２： もとのドライブの選択"
 
 msgid "Select the <b>source drive</b> to clone."
-msgstr ""
+msgstr "選んだ <b>ドライブ</b> を複製します。"
 
 msgid "Select the <b>destination drive</b> to overwrite."
-msgstr ""
+msgstr "選んだ <b>保存先ドライブ</b> は上書きされます。"
 
 msgid "Step 4: Select Partitions to Clone"
-msgstr ""
+msgstr "ステップ ４： 複製するパーティションの選択"
 
 msgid "Select which partitions from the source drive to clone, and whether to overwrite the partition table. <b>Leave everything selected to completely clone the source drive to the destination drive.</b>"
 msgstr ""
+"もとのドライブから複製するパーティションを選び、 "
+"パーティション一覧で上書きするかどうか選びます。 "
+"<b>どれも選択していた場合もとのドライブから保存先ドライブに完全な複製がされま"
+"す。</b>"
 
 msgid "Step 5: Confirm Cloning Configuration"
-msgstr ""
+msgstr "ステップ ５： 複製工程の確認"
 
 msgid "Confirm the following cloning configuration."
-msgstr ""
+msgstr "この工程で複製するか確認してください。"
 
 msgid "Cloning the following partitions"
-msgstr ""
+msgstr "このパーティションを複製しています"
 
 msgid "To start cloning, click <b>Next</b>."
-msgstr ""
+msgstr "<b>続き</b> のクリックで、複製を始めます。"
 
 #, python-brace-format
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
-msgstr ""
+msgstr "こちらの {destination_drive}で本当に間違いないですか？ "
+"このドライブにデータが上書きされます！"
 
 msgid "Step 6: Cloning Disk"
-msgstr ""
+msgstr "ステップ ６： ディスクの複製"
 
 msgid "Cloning the drive you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
-msgstr ""
+msgstr "選ばれたドライブに複製しています。  "
+"これはコンピューターのスピードとデータ量とで一時間かそれ以上掛かるかもしれま"
+"せん。"
 
 msgid "Summary of Clone"
-msgstr ""
+msgstr "複製の要約"
 
 msgid "Clone Summary"
-msgstr ""
+msgstr "要約"
 
 msgid "Confirm the clone summary."
-msgstr ""
+msgstr "この要約の確認をしてください。"
 
 msgid "Unable to shutdown Image Explorer"
-msgstr ""
+msgstr "イメージ捜索が終了出来ません"
 
 msgid "Step 1: Select Drive To Backup"
-msgstr "ステップ1: バックアップするドライブを選択します"
+msgstr "ステップ １： バックアップするドライブの選択"
 
 msgid "Select the <b>source drive</b> that you would like to create a backup image from."
-msgstr "作成するバックアップイメージのソースとなるドライブを選択します。"
+msgstr "作成されるバックアップイメージは <b>ドライブ</b> から選びます。"
 
 msgid "Drive"
 msgstr "ドライブ"
@@ -162,28 +187,29 @@ msgid "Capacity"
 msgstr "容量"
 
 msgid "Drive Model"
-msgstr "モデル"
+msgstr "ドライブのモデル"
 
 msgid "Serial Number"
-msgstr ""
+msgstr "続き番号"
 
 msgid "Partitions"
-msgstr "パーティション"
+msgstr "パーティションたち"
 
 msgid "Show hidden devices (for advanced users)"
-msgstr "非表示のドライブを表示する (上級ユーザー向け)"
+msgstr "非表示だった装置を表示する （上級ユーザーとしての）"
 
 msgid "Step 2: Select Partitions to Save"
-msgstr "ステップ2: 保存するパーティションを選択します"
+msgstr "ステップ ２： 保存するパーティションの選択"
 
 msgid "Select which partitions to create a backup of. <b>Leave all partitions selected if you are unsure.</b>"
-msgstr "バックアップを作成するパーティションを選択します。よく分からない場合は、すべてのパーティションを選択したままにしてください。"
+msgstr "どのパーティションでバックアップ作成をするか選択します。 "
+"<b>よく分からない場合パーティションはどれも選択していてください。</b>"
 
 msgid "Save"
-msgstr "保存する"
+msgstr "保存します"
 
 msgid "Description"
-msgstr "説明"
+msgstr "詳細です"
 
 #, python-brace-format
 msgid "Drive {drive_number}"
@@ -194,34 +220,35 @@ msgid "Partition {partition_number}"
 msgstr "パーティション {partition_number}"
 
 msgid "Step 3: Select Destination Drive"
-msgstr "ステップ3: 宛先ドライブを選択します"
+msgstr "ステップ ３： 保存先ドライブの選択"
 
 msgid "Click on the box below to select the source drive that you would like to create a backup image from."
-msgstr "下のボックスをクリックして、作成するバックアップイメージのソースとなるドライブを選択します。"
+msgstr "どれのバックアップイメージを作成したいですか下辺のボックスのクリックでドライ"
+"ブを選んでください。"
 
 msgid "Connected directly to my computer"
-msgstr "コンピューターに直接保存する"
+msgstr "直接自分のコンピューターにつながりました"
 
 msgid "Shared over a network"
-msgstr "ネットワーク経由で保存する"
+msgstr "ネットワーク越しに共有された"
 
 msgid "Where would you like to save the image?"
-msgstr "宛先ドライブはどこですか？"
+msgstr "イメージの保存先はどこにしたいですか？"
 
 msgid "Windows shared folder (SMB/CIFS, Samba)"
-msgstr "以下に指定されているSMB/CIFS共有フォルダ"
+msgstr "ウィンドウズ共有フォルダーは （SMB／CIFS、 Samba）"
 
 msgid "Search network"
-msgstr "ネットワークを検索"
+msgstr "ネットワークから探します"
 
 msgid "Server"
-msgstr "サーバーもしくは共有フォルダの場所"
+msgstr "サーバー"
 
 msgid "Share location (UNC path)"
-msgstr "サーバーもしくは共有フォルダの場所"
+msgstr "共有フォルダーの場所 （UNC 経路）"
 
 msgid "Username"
-msgstr "ユーザー名"
+msgstr "ユーザーの名前"
 
 msgid "Password"
 msgstr "パスワード"
@@ -233,111 +260,129 @@ msgid "Version"
 msgstr "バージョン"
 
 msgid "Remote path"
-msgstr ""
+msgstr "遠隔経路"
 
 msgid "Exported path"
-msgstr ""
+msgstr "送出経路"
 
 msgid "Identity File"
-msgstr ""
+msgstr "認証ファイル"
 
 msgid "Optional"
-msgstr "任意"
+msgstr "オプション選択"
 
 msgid "Select network-shared storage location:"
-msgstr "ネットワーク共有フォルダーの場所を選択します:"
+msgstr "ネットワーク共有フォルダーの場所から選択します："
 
 msgid "Select the partition where the image files will be saved to"
-msgstr "宛先ドライブを選択します:"
+msgstr "イメージファイルの保存先とするパーティションを選択します"
 
 msgid "Partition"
 msgstr "パーティション"
 
 msgid "Mounting..."
-msgstr "マウント処理中..."
+msgstr "マウントしています。。。"
 
 msgid "Close this popup to cancel the mount operation."
-msgstr ""
+msgstr "ポップアップはとじるとマウントがキャンセルされます。"
 
 msgid "Please ensure the username, password and other fields provided are correct, and try again."
-msgstr "パスワードや他の項目が正しいか確認し、再試行してください。"
+msgstr "提示されたユーザーの名前、パスワードとほかが正しいか確認したら、もう一度実行"
+"してください。"
 
 msgid "Must provide either password or SSH identity file."
-msgstr ""
+msgstr "パスワードか SSH 認証ファイルの提示が必要です。"
 
 msgid "Scanning folder for backup images..."
-msgstr "バックアップイメージのフォルダを検索しています..."
+msgstr "バックアップイメージがあるフォルダーをスキャンしています。。。"
 
 #, python-brace-format
 msgid "({timeout_seconds} second timeout)"
-msgstr ""
+msgstr "（{timeout_seconds} 秒で中断）"
 
 msgid "Close this popup to cancel scanning the selected folder and subfolders."
-msgstr ""
+msgstr "ポップアップはとじるとフォルダーとその下位フォルダーのスキャンがキャンセルさ"
+"れます。"
 
 #, python-brace-format
 msgid "Scanning: {filename}"
-msgstr ""
+msgstr "スキャンしています： {filename}"
 
 msgid "Error processing the following images:"
-msgstr "次のイメージにエラーが発生しました:"
+msgstr "このイメージの工程でエラーがありました："
 
 msgid "Unable to fully process the image associated with the following partitions:"
-msgstr "次のパーティションに関連付けられているイメージを完全に処理できません:"
+msgstr "このパーティション関連のイメージが完全な処理は出来ませんでした："
 
 msgid "Unable to fully process the following image:"
-msgstr "次のイメージを完全に処理できません:"
+msgstr "このイメージは工程が終わりません："
 
 msgid "Cannot find partition's associated partclone image"
-msgstr ""
+msgstr "一部複製のイメージ関連のパーティションが見つかりません"
 
 msgid "This can happen when loading images which Clonezilla was unable to completely backup."
-msgstr "これは、Clonezillaが完全にバックアップできなかったイメージをロードしたために発生した可能性があります。"
+msgstr "これは Clonezilla "
+"で完全なバックアップが出来なかったイメージをロードする場合起きたりします。"
 
 msgid "Note: This image format cannot distinguish between failed partclone backup and a user who chose not to backup a partition."
-msgstr ""
+msgstr "留意: "
+"このイメージ形式は失敗した一部複製のバックアップとユーザーがパーティションの"
+"バックアップでしなかったものと区別が出来ません。"
 
 msgid "Any other filesystems within the image should be restorable as normal."
-msgstr "イメージ内の他のファイルシステムは、通常通りレストア可能と思われます。"
+msgstr "イメージのほかのファイルシステムは正常にリストア出来ると思われます。"
 
 msgid "Needs decryption"
-msgstr "復号化が必要"
+msgstr "暗号の解除をする必要があります"
 
 msgid "Unknown filesystem"
-msgstr "不明なファイルシステム"
+msgstr "ファイルシステムが不明です"
 
 #, python-brace-format
 msgid "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance."
 msgstr ""
+"バックアップの超過パーティションの情報が空です。 "
+"バックアップが超過パーティションを含むものだった場合正常にリストアされないで"
+"しょう。 "
+"それでもまだデータは完全な復旧が出来ますが超過パーティションの完全なデータ復"
+"旧は手作業でする必要があります。 詳細は {url} で情報と援助が求められます。"
 
 msgid "The backup's bootloader data is shorter than expected. If the backup contained certain bootloaders like GRUB, during a restore operation Rescuezilla will try and re-install the bootloader."
 msgstr ""
+"バックアップの起動データがどうやら短かすぎます。 "
+"そのバックアップに含まれるものが GRUB のような起動データである場合、 "
+"Rescuezilla はリストア工程で再度インストールを試みます。"
 
 msgid "Step 4: Select Destination Folder"
-msgstr "ステップ4: 宛先フォルダを選択します"
+msgstr "ステップ ４： 保存先フォルダーの選択"
 
 msgid "Click <b>Browse</b> to select the folder on the destination drive where your new backup image will be saved.\n"
 "\n"
 "The folder a backup is saved in is usually a description of the computer, e.g. <b>office1</b> or <b>zack-laptop</b>."
-msgstr "[<b>参照</b>]をクリックして、バックアップイメージを保存するドライブのフォルダを選択します。 "
+msgstr ""
+"<b>参照</b> "
+"をクリックして保存先ドライブのバックアップのイメージが保存されるあたらしいフ"
+"ォルダーの選択をします。\n"
 "\n"
-"バックアップを保存するフォルダ名は通常、コンピュータの説明文にします。 例えば <b>office1</b> や <b>zack-laptop</b>など。"
+"バックアップを保存するフォルダーは通常はコンピューターの詳細です、 例えば "
+"<b>office1</b> か <b>zack-laptop</b>。"
 
 #, python-brace-format
 msgid "You must select a folder inside {location}"
-msgstr "{location}のフォルダを選択する必要があります"
+msgstr "フォルダーは {location} から選ぶ必要があります"
 
 msgid "Please select a different folder."
-msgstr "別のフォルダを選択してください。"
+msgstr "別のフォルダーを選んでください。"
 
 msgid "The table below lists the backup images that are already in this folder (if any)."
-msgstr "このフォルダに既にに存在するバックアップイメージが下に表示されます (存在する場合)。"
+msgstr "このテーブルで用意されたフォルダーにバックアップイメージが表示されます "
+"（必要であれば）。"
 
 msgid "Browse..."
-msgstr "参照..."
+msgstr "参照します。。。"
 
 msgid "Filename"
-msgstr "ファイル名"
+msgstr "ファイルの名前"
 
 msgid "Size"
 msgstr "サイズ"
@@ -346,242 +391,268 @@ msgid "Last modified"
 msgstr "最終更新日"
 
 msgid "When you are happy with the destination folder, click <b>Next</b>."
-msgstr "宛先フォルダを選択したら、[<b>次へ</b>]をクリックします。"
+msgstr "保存先フォルダーがこれでよろしければ、 <b>続き</b> のクリックをしてください。"
 
 msgid "Step 5: Name Your Backup"
-msgstr "ステップ 5: バックアップ名を指定します"
+msgstr "ステップ ５： バックアップに名前を付けます"
 
 msgid "Provide a unique name for this backup image, such as the date.  Today's date is automatically entered for you below.\n"
 "\n"
 "You may only use letters, numbers, and dashes in your backup name."
-msgstr "日付など、このバックアップイメージの一意の名前を指定します。今日の日時が自動的に入力されています。"
+msgstr ""
+"日付など、このバックアップイメージに唯一の名前を提示します。  "
+"下辺の今日の日付は自動的入力されています。\n"
 "\n"
-"バックアップ名には、半角英数とダッシュ(\"-\")のみを使用できます。"
+"バックアップの名前は、半角英数とダッシュのみ使用できます。"
 
 msgid "Optional: Provide a short description."
-msgstr ""
+msgstr "オプション選択： 短い説明の提示。"
 
 msgid "Step 6: Customize Compression Settings"
-msgstr ""
+msgstr "ステップ ６： 圧縮設定のカスタム"
 
 msgid "Customize image compression settings. <b>Don't make any changes if you are unsure.</b>"
-msgstr ""
+msgstr "イメージの圧縮形式をカスタムします。 "
+"<b>よく分からない場合は何も変えないでください。</b>"
 
 msgid "Compression format: "
-msgstr ""
+msgstr "圧縮形式： "
 
 msgid "gzip"
-msgstr ""
+msgstr "GNU zip 形式"
 
 msgid "default"
-msgstr ""
+msgstr "初期"
 
 msgid "zstandard"
-msgstr ""
+msgstr "zstandard 圧縮形式"
 
 msgid "Uncompressed (Suitable for use with Image Explorer)"
-msgstr ""
+msgstr "圧縮しない （イメージ捜索に最適）"
 
 msgid "Compression level: "
-msgstr ""
+msgstr "圧縮深度： "
 
 msgid "Fastest"
-msgstr ""
+msgstr "最高速度"
 
 msgid "Best"
-msgstr ""
+msgstr "最上品質"
 
 msgid "When you are happy with the compression settings, click <b>Next</b>."
-msgstr ""
+msgstr "この圧縮形式でよろしいければ、 <b>続き</b> のクリックをしてください。"
 
 msgid "Step 7: Confirm Backup Configuration"
-msgstr "ステップ 6: バックアップの構成を確認します"
+msgstr "ステップ ７： バックアップの工程の確認"
 
 msgid "Source drive"
-msgstr "ソースドライブ"
+msgstr "もとのドライブ"
 
 msgid "Backing up the following partition(s)"
-msgstr "次のパーティションをバックアップします"
+msgstr "このパーティション（たち）をバックアップしています"
 
 #, python-brace-format
 msgid "The backup image will be written into folder {dest_dir} on {description}"
-msgstr "バックアップイメージは、{description}のフォルダ{dest_dir}に書き込まれます"
+msgstr "バックアップイメージは {description} のフォルダー {dest_dir} に書き込まれます"
 
 msgid "Confirm the following backup configuration."
-msgstr "バックアップの構成を確認してください。"
+msgstr "これらのバックアップ工程を確認してください。"
 
 msgid "On successful completion of the task, perform the following action: "
-msgstr ""
+msgstr "工程が終わりましたら、 Rescuezilla はこれを行います： "
 
 msgid "Do nothing"
-msgstr ""
+msgstr "何もしない"
 
 msgid "Shutdown"
-msgstr "シャットダウン"
+msgstr "パソコンをシャットダウンします"
 
 msgid "Reboot"
-msgstr "再起動"
+msgstr "パソコンを再起動します"
 
 msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
-msgstr ""
+msgstr "救援： 不定なファイルシステムと不良なセクターの看過"
 
 msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
-msgstr ""
+msgstr "<b>“救援” の使用は重大なエラーの排除が出来るかもしれませんが。 "
+"慎重にお使いください。</b>"
 
 msgid "To start the backup, click <b>Next</b>."
-msgstr "バックアップを開始するには、[<b>次へ</b>]をクリックします。"
+msgstr "<b>続き</b> のクリックで、 バックアップは始まります。"
 
 msgid "Step 8: Creating Backup Image"
-msgstr "ステップ 8 バックアップイメージの作成をしています"
+msgstr "ステップ ８： バックアップイメージの作成"
 
 msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
-msgstr "選択した場所にシステムをバックアップしています。 コンピュータのスペックやデータ量によっては、1時間以上かかる場合があります。"
+msgstr "選んだ場所にシステムをバックアップしています。  "
+"これはコンピューターのスピードとデータ量とで一時間かそれ以上掛かるかもしれま"
+"せん。"
 
 #, python-brace-format
 msgid "Saving: {file}"
-msgstr ""
+msgstr "保存しています： {file}"
 
 #, python-brace-format
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
-msgstr "{partition_name}(ファイルシステム:{filesystem})を{destination}にバックアップしています"
+msgstr ""
+"ファイルシステムを含む {filesystem}) から {destination} で {partition_name} "
+"のバックアップをします"
 
 msgid "Summary of Backup"
-msgstr "バックアップの概要"
+msgstr "バックアップの要約"
 
 msgid "Confirm the backup summary."
-msgstr "バックアップの概要を確認してください。"
+msgstr "要約を確認してください。"
 
 msgid "Backup Summary"
-msgstr "バックアップの概要"
+msgstr "要約"
 
 msgid "An operation is in progress. Do you wish to cancel?"
-msgstr ""
+msgstr "実行しています。 キャンセルしますか？"
 
 msgid "Operation cancelled by user."
-msgstr "ユーザーによってバックアップがキャンセルされました。"
+msgstr "バックアップはキャンセルされました。"
 
 msgid "Rescue option is enabled."
-msgstr ""
+msgstr "救援オプションは使用しています。"
 
 msgid "Error creating backup: "
-msgstr "バックアップの作成中にエラーが発生しました: "
+msgstr "バックアップ作成でエラーがありました： "
 
 msgid "Failed to write destination file. Please confirm it is valid to create the provided file path, and try again."
-msgstr "宛先ファイルの書き込みに失敗しました。 ファイルパスが有効であることを確認して、再試行してください。"
+msgstr "保存先のファイルで書き込みが失敗しました。 "
+"有効なファイル経路が提示されているか確認してから、もう一度実行してください。"
 
 #, python-brace-format
 msgid "Successful backup of swap partition {partition_name}"
-msgstr "スワップパーティションのバックアップは成功しました。 {partition_name}"
+msgstr "入れ替わりパーティションのバックアップは達成されました {partition_name}"
 
 #, python-brace-format
 msgid "<b>Failed to backup partition</b> {partition_name}"
-msgstr "<b>パーティションのバックアップに失敗しました</b> {partition_name}"
+msgstr "<b>パーティションのバックアップが失敗しました</b> {partition_name}"
 
 #, python-brace-format
 msgid "Successful backup of partition {partition_name}"
-msgstr "パーティションのバックアップが成功しました {partition_name}"
+msgstr "パーティションのバックアップが達成されました {partition_name}"
 
 msgid "Backup saved successfully."
-msgstr "バックアップが正常に保存されました。"
+msgstr "正常にバックアップが保存されました。"
 
 msgid "Backup succeeded with some errors:"
-msgstr "バックアップは成功しましたが、エラーが発生しています:"
+msgstr "バックアップは実行されましたがエラーがあります："
 
 msgid "Backup operation failed:"
-msgstr "バックアップ作業に失敗しました:"
+msgstr "バックアップは失敗しました："
 
 msgid "User requested operation to stop."
-msgstr ""
+msgstr "ユーザーが工程の中断を希望しました。"
 
 #, python-brace-format
 msgid "Operation took {num_minutes} minutes."
-msgstr "作業時間は{num_minutes}分でした。"
+msgstr "工程は {num_minutes} 分掛かりました。"
 
 msgid "To start a new session, click <b>Next</b>"
-msgstr "新しいセッションを開始するには、[<b>次へ</b>]をクリックします。"
+msgstr "<b>続き</b> のクリックで、 あたらしいセッションが始められます"
 
 msgid "Step 1: Select Image Location"
-msgstr "ステップ 1: イメージの場所を選択します"
+msgstr "ステップ １： イメージの場所選択"
 
 msgid "Where are the image files stored?"
-msgstr "ソースドライブはどこにありますか?"
+msgstr "イメージファイルが保存された場所はどこですか？"
 
 msgid "Select the partition which contains the image files:"
-msgstr "ソースドライブを選択します:"
+msgstr "イメージファイルがあるパーティションの選択："
 
 msgid "Step 2: Select Backup Image"
-msgstr "ステップ 2: バックアップイメージを選択します"
+msgstr "ステップ ２： バックアップイメージの選択"
 
 msgid "Click <b>Browse</b> to select the folder containing image files."
-msgstr "下のボックスをクリックして、イメージファイルを含むフォルダを選択します。"
+msgstr "<b>参照</b> のクリックでイメージファイルを含むフォルダーを選びます。"
 
 msgid "Select the image file to restore."
-msgstr "レストアするイメージファイルを選択します。"
+msgstr "リストアするイメージファイルの選択。"
 
 msgid "Step 3: Select Drive To Restore"
-msgstr "ステップ 3: レストアするドライブを選択します"
+msgstr "ステップ ３： リストアするドライブを選択"
 
 msgid "Select the destination drive to restore with the selected image."
-msgstr "選択したイメージで上書きし、レストアする宛先ドライブを選択します。"
+msgstr "選択したイメージでリストアするドライブの選択をします。"
 
 msgid "Step 4: Select Partitions to Restore"
-msgstr "ステップ 4: レストアするパーティションを選択します"
+msgstr "ステップ ４： リストアするパーティションの選択"
 
 msgid "Select which partitions from the backup image to restore, and whether to overwrite the partition table. <b>Leave everything selected to completely restore the destination drive.</b>"
-msgstr "バックアップ元からどのパーティションをレストアするか、パーティションテーブルを上書きするかを選択します。すべてを選択したままにすれば、宛先ドライブに完全にレストアされます。"
+msgstr ""
+"バックアップイメージからレストアするパーティションを選択、 "
+"パーティション一覧で上書きするかどうかを選択します。 "
+"<b>どれも選択していた場合保存先ドライブに完全な複製がされます。</b>"
 
 msgid "Selected image"
-msgstr "選択したイメージ"
+msgstr "選んだイメージ"
 
 msgid "Destination device"
-msgstr "宛先ドライブ"
+msgstr "保存先装置"
 
 msgid "Destination partition"
-msgstr "宛先パーティション"
+msgstr "保存先パーティション"
 
 msgid "Overwrite partition table"
-msgstr "パーティションテーブルを上書きします"
+msgstr "パーティション一覧に上書きします"
 
 msgid "You will be overwriting the partition table."
-msgstr "パーティションテーブルを上書きします。"
+msgstr "パーティション一覧に上書きしています。"
 
 msgid "The \"destination partition\" column has been updated using the information stored within the backup image.\n\n<b>If partitions have been resized, new partitions added, or additional operating systems installed <i>since the backup image was created</i>, then the destination drive's partition table will not match the backup image, and overwriting the destination drive's partition table will render these resized and additional partitions permanently inaccessible.</b> If you have not modified the partition table in such a way since creating this backup then overwriting the partition table is completely safe and will have no negative effects."
 msgstr ""
-"「宛先パーティション」列が、バックアップイメージ内に保存されている情報を元に"
-"更新されました。\n"
+"“保存先パーティション” "
+"がバックアップイメージに保存されている情報をもとにアップデートされました。\n"
 "\n"
-"<i>バックアップイメージを作成した後に</i>パーティションのサイズを変更したり、"
-"新しいパーティションを追加したり、オペレーティングシステムを追加した場合、宛"
-"先ドライブのパーティションテーブルがバックアップイメージと一致せず、そのまま"
-"パーティションテーブルを書きすると、これらの追加やサイズ変更されたパーティシ"
-"ョンに永久にアクセスできなくなります。バックアップを作成してからそのような方"
-"法でパーティションテーブルを変更していない場合は、パーティションテーブルを書"
-"きしても完全に安全であり、悪影響はありません。"
+"<b>パーティションのサイズ変更は、 あたらしいパーティションの追加、 "
+"オペレーティングシステムの追加と "
+"<i>バックアップイメージは作成されていますから</i>、 "
+"保存先ドライブのパーティション一覧がバックアップイメージと一致しない場合で、 "
+"そのまま保存先ドライブのパーティション一覧に上書きするとサイズ変更と追加がさ"
+"れたパーティション一覧は永遠にアクセス出来ないものになります。</b> "
+"バックアップを作成する場合にそのようなパーティション一覧の変更はしていない場"
+"合はバックアップされてから上書きしていますからパーティション一覧は完全に安全"
+"で、特に悪影響の心配はありません。"
 
 msgid "You will <b>not</b> be overwriting the partition table."
-msgstr "パーティションテーブルを上書き<b>しません</b>。"
+msgstr "パーティション一覧に上書きは <b>しない</b> です。"
 
 msgid "The source does not contain a partition table."
-msgstr ""
+msgstr "もとのデータにパーティション一覧が含まれていません。"
 
 msgid "The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table."
-msgstr "「宛先パーティション」列が、宛先ドライブの既存のパーティションテーブル情報を元に更新されました。\n\n<b>宛先パーティション列は、ドロップダウンメニューから変更できます。 宛先パーティションを誤ってマッピングすると、オペレーティングシステムが起動しなくなる可能性があります。</b> よく分からない場合は、パーティションテーブルの上書きを検討してください。"
+msgstr ""
+"“保存先パーティション”が保存先ドライブのもとのパーティション一覧の情報でアッ"
+"プデートされました。\n"
+"\n"
+"<b>保存先パーティションはドロップダウンメニューから変更できます。 "
+"誤った保存先パーティションをマッピングするとオペレーティングシステムが起動し"
+"なくなる要因となります。</b> マッピングがよく分からない場合は、 "
+"パーティション一覧の上書きはした方が適しているかでお考えください。"
 
 msgid "No destination partition selected. Use the destination partition drop-down menu to select the destination"
-msgstr "宛先パーティションが選択されていません。ドロップダウンメニューを使用して、宛先を選択します。"
+msgstr "保存先パーティションが選択されていません。 "
+"ドロップダウンメニューを使用して保存先パーティションを選んでください"
 
 msgid "Not restoring this partition"
-msgstr ""
+msgstr "このパーティションはリストアしていません"
 
 msgid "When you are ready to continue, click <b>Next</b>."
-msgstr ""
+msgstr "続けてよければ、 <b>続き</b> のクリックをしてください。"
 
 msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
-msgstr ""
+msgstr "ロジカルボリュームマネージャーの （LVM） "
+"ロジカルボリュームのスキャンとマウントをしています。。。"
 
 #, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
 msgstr ""
+"もとのデータの一番後ろのパーティション （{source}: {source_size} バイト） "
+"保存先のディスクで完全な領域が指定されているべきです （{destination_size} "
+"バイト）。"
 
 #, python-brace-format
 msgid "Rescuezilla cannot yet automatically shrink partitions to restore from large disks to smaller disks. The final partition currently must always completely reside within the destination disk.\n"
@@ -590,233 +661,258 @@ msgid "Rescuezilla cannot yet automatically shrink partitions to restore from la
 "\n"
 "{url}"
 msgstr ""
-""
+"一番後ろのパーティションまで完全に保存先に収まっているべきですが。 "
+"Rescuezilla "
+"は大きなディスクから小さなディスクのリストアでパーティションの縮小を自動では"
+"まだ出来ません。\n"
+"\n"
+"いまのところ小さなディスクでリストアする唯一の方法はバックアップイメージを作"
+"成しようとする前にまず GParted "
+"パーティションエディターを使ってパーティションを縮小します。 "
+"詳細な手引きはこちらを参照してください：\n"
+"\n"
+"{url}"
 
 msgid "Step 5: Confirm Restore Configuration"
-msgstr "ステップ 5: レストアの構成を確認します"
+msgstr "ステップ ５： リストアの工程確認"
 
 msgid "Confirm the following restore configuration."
-msgstr "レストアの構成を確認してください。"
+msgstr "リストア工程を確認してください。"
 
 #, python-brace-format
 msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!"
-msgstr "バックアップを{destination_drive}にレストアしてもよろしいですか？ この操作を行うと、このドライブのデータは完全に上書きされます！"
+msgstr "バックアップは {destination_drive} にレストアで間違いないですか？ "
+"このドライブのデータは完全に上書きされます！"
 
 msgid "Source image"
-msgstr "ソースイメージ"
+msgstr "もとのイメージ"
 
 msgid "Destination drive"
-msgstr "宛先ドライブ"
+msgstr "保存先ドライブ"
 
 msgid "Restoring the following partitions"
-msgstr "次のパーティションをレストアします"
+msgstr "このパーティションでリストアしています"
 
 msgid "WILL BE OVERWRITING PARTITION TABLE"
-msgstr "パーティションテーブルを上書き<b>します</b>"
+msgstr "パーティション一覧に上書きします"
 
 msgid "Will <b>NOT</b> be overwriting partition table"
-msgstr "パーティションテーブルを上書き<b>しません</b>"
+msgstr "パーティション一覧に上書き <b>しない</b> です"
 
 msgid "To start the restore, click <b>Next</b>."
-msgstr "レストアを開始するには、[<b>次へ</b>]をクリックします。"
+msgstr "<b>続き</b> のクリックで、 リストアを始めます。"
 
 msgid "Restoring From Backup"
-msgstr "バックアップからレストアをしています"
+msgstr "バックアップからリストアをしています"
 
 msgid "Restoring your system from the image you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
-msgstr "選択したイメージからシステムをレストアをしています。 コンピューターのスペックやデータ量によっては、1時間以上かかる場合があります。"
+msgstr "選んだイメージでシステムをリストアをしています。  "
+"これはコンピューターのスピードとデータ量とで一時間かそれ以上掛かるかもしれま"
+"せん。"
 
 msgid "Refreshing partition table"
-msgstr "パーティションテーブルを更新しています"
+msgstr "パーティション一覧をリフレッシュしています"
 
 #, python-brace-format
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
-msgstr "{description}を{destination_partition}にレストアしています ({destination_description})"
+msgstr ""
+"{description} を {destination_partition} にリストアしています "
+"（{destination_description}）"
 
 msgid "Synchronizing disks..."
-msgstr ""
+msgstr "ディスクを同期しています。。。"
 
 #, python-brace-format
 msgid "Querying hard drive geometry of {device}"
-msgstr ""
+msgstr "{device} のハードドライブジオメトリーを請求しています"
 
 #, python-brace-format
 msgid "Probing {device} with {app}"
-msgstr ""
+msgstr "{app} で {device} の認証をしています"
 
 #, python-brace-format
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
-msgstr ""
+msgstr "ファイルシステムの増加 {partition} （{filesystem}）。 少し掛かります。。。"
 
 #, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
-msgstr ""
+msgstr "パーティションのサイズ変更は {partition} （{filesystem}） 失敗です： {msg}"
 
 #, python-brace-format
 msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
-msgstr ""
+msgstr "{geometry_source} の数字から {ntfs_device} の NTFS "
+"ファイルシステムジオメトリーに適化出来ました"
 
 #, python-brace-format
 msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
-msgstr ""
+msgstr "{ntfs_device} の NTFS ファイルシステムに適化は失敗しました"
 
 msgid "Removing udev MAC address records (if any)"
-msgstr ""
+msgstr "udev MAC アドレス記録は削除しています （必要であれば）"
 
 msgid "Re-installing syslinux (if any)"
-msgstr ""
+msgstr "再度 syslinux をインストールしています （必要であれば）"
 
 msgid "Successfully re-installed syslinux bootloader"
-msgstr ""
+msgstr "syslinux 起動再度インストール出来ました"
 
 msgid "Re-installing GRUB bootloader (if any)"
-msgstr ""
+msgstr "GRUB 起動を再度インストールしています （必要であれば）"
 
 msgid "Successfully re-installed GRUB bootloader"
-msgstr ""
+msgstr "GRUB 起動を再度インストール出来ました"
 
 msgid "Did not update GRUB bootloader (if any)"
-msgstr ""
+msgstr "GRUB 起動はアップデートしませんでした （必要であれば）"
 
 msgid "Updating initramfs (if any)"
-msgstr ""
+msgstr "initramfs をアップデートしています （必要であれば）"
 
 msgid "Successfully updated initramfs"
-msgstr ""
+msgstr "initramfs をアップデート出来ました"
 
 msgid "Updating EFI NVRAM..."
-msgstr ""
+msgstr "EFI NVRAM をアップデートしています。。。"
 
 msgid "Successfully updated EFI NVRAM"
-msgstr ""
+msgstr "EFI NVRAM をアップデート出来ました"
 
 msgid "Error restoring image: "
-msgstr "イメージのレストア中にエラーが発生しました: "
+msgstr "イメージのリストアでエラーがあります： "
 
 msgid "Could not restore sfdisk partition table as file has zero length: "
-msgstr "ファイルの長さがゼロであるため、sfdiskパーティションテーブルをレストアできま"
-"せんでした: "
+msgstr "ファイル容量がゼロである sfdisk "
+"パーティション一覧はリストア出来ませんでした： "
 
 msgid "Successfully restored partition table."
-msgstr "パーティションテーブルのレストアに成功しました。"
+msgstr "パーティション一覧のリストアに成功しました。"
 
 msgid "Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."
-msgstr "ドライブのパーティションテーブルの更新に失敗しました。 別のプロセスがパーティションテーブルにアクセスしている可能性があります。"
+msgstr "装置のパーティション一覧のリフレッシュが失敗しました。 "
+"これはほかの工程がパーティション一覧にアクセスしていると起きます。"
 
 #, python-brace-format
 msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
-msgstr "{description}に関連付けられた保存済みイメージがないため、パーティション{destination_partition}をレストアできません。"
+msgstr ""
+"関連の保存したイメージがないためパーティション {destination_partition} "
+"をリストア出来ません： {description}。"
 
 msgid "This may occur if Clonezilla was originally unable to backup this partition."
-msgstr "これは、Clonezillaが元々このパーティションをバックアップできなかった場合に発生する可能性があります。"
+msgstr "これはもとの Clonezilla "
+"でパーティションがバックアップ出来ていない場合に起こります。"
 
 #, python-brace-format
 msgid "Error restoring partition {image_key} to {destination_partition}."
-msgstr "パーティション{image_key}を{destination_partition}にレストア中にエラーが発生しました。"
+msgstr "{image_key} から {destination_partition} "
+"のパーティションリストアでエラーがあります。"
 
 #, python-brace-format
 msgid "Successfully restored image partition {image} to {destination_partition}"
-msgstr "{destination_partition}に対するイメージパーティション{image}のレストアに成功しました"
+msgstr "{image} から {destination_partition} "
+"のイメージパーティションリストア達成しました"
 
 msgid "Summary of Restore"
-msgstr "レストアの概要"
+msgstr "リストアの要約"
 
 msgid "Restore Summary"
-msgstr "レストアの概要"
+msgstr "要約"
 
 msgid "Confirm the restore summary."
-msgstr "レストアの概要を確認してください。"
+msgstr "要約を確認してください。"
 
 msgid "Backup restored successfully."
-msgstr "バックアップのレストアは成功しました。"
+msgstr "バックアップのリストアは達成しました。"
 
 msgid "Image Explorer\n"
 "      (beta)"
 msgstr ""
-""
+"イメージ捜索\n"
+"      (（ベータ段階）"
 
 msgid "Image Explorer (beta)"
-msgstr ""
+msgstr "イメージ捜索 （ベータ段階）"
 
 msgid "Select the image file to explore"
-msgstr ""
+msgstr "捜索するイメージファイルを選びます"
 
 msgid "Step 3: Select Partition to Explore"
-msgstr ""
+msgstr "ステップ ３： 捜索するパーティションの選択"
 
 msgid "Select the partition to access files from."
-msgstr ""
+msgstr "ファイルのパーティションから選びます。"
 
 msgid "Click <b>Mount</b> to mount the backup image (as read-only)."
-msgstr ""
+msgstr "<b>マウント</b> のクリックでバックアップイメージのマウントをします "
+"（読み取り専用の）。"
 
 msgid "Mount"
-msgstr ""
+msgstr "マウントします"
 
 msgid "Mounting as read-only..."
-msgstr ""
+msgstr "読み取り専用のマウントをする。。。"
 
 msgid "Unmount"
-msgstr ""
+msgstr "マウント解除"
 
 msgid "Once the partition has been mounted, click <b>Open in file manager</b> to access your files."
-msgstr ""
+msgstr "パーティションがマウント出来たら、 <b>ファイルマネージャー</b> "
+"のクリックでファイルにアクセスしよう。"
 
 msgid "Open in file manager"
-msgstr ""
+msgstr "ファイルマネージャーで開く"
 
 msgid "Verify"
-msgstr ""
+msgstr "実証"
 
 msgid "Select one or more image(s) to verify."
-msgstr ""
+msgstr "ひとつかそれ以上のイメージ（たち） を選んで実証します。"
 
 msgid "To begin verification, click <b>Next</b>."
-msgstr ""
+msgstr "<b>続き</b> のクリックで実証を始めます。"
 
 msgid "Verifying Image"
-msgstr ""
+msgstr "イメージを実証しています"
 
 msgid "Verifying the selected image(s)."
-msgstr ""
+msgstr "選んだイメージ（たち） を実証しています。"
 
 #, python-brace-format
 msgid "Verifying {image_name}"
-msgstr ""
+msgstr "実証しています {image_name}"
 
 msgid "Summary of Verification"
-msgstr ""
+msgstr "実証の要約"
 
 msgid "Confirm the verification summary."
-msgstr ""
+msgstr "要約を確認してください。"
 
 msgid "Verification Summary"
-msgstr ""
+msgstr "要約"
 
 msgid "To verify another image, click <b>Back</b>."
-msgstr ""
+msgstr "<b>戻ります</b> のクリックで、 ほかのイメージの実証をします。"
 
 msgid "✔"
-msgstr ""
+msgstr "✔"
 
 msgid "❌"
-msgstr ""
+msgstr "❌"
 
 msgid "MBR backup appears correct."
-msgstr ""
+msgstr "MBR のバックアップは正常です。"
 
 msgid "No partition table found."
-msgstr ""
+msgstr "パーティション一覧がひとつも見つかりません。"
 
 msgid "Sfdisk partition table file is empty or missing."
-msgstr ""
+msgstr "sfdisk パーティション一覧のファイルが空か消失しています。"
 
 msgid "Sfdisk partition table file is present."
-msgstr ""
+msgstr "sfdisk パーティション一覧のファイルが見つかりました。"
 
 msgid "Unable to verify."
-msgstr ""
+msgstr "実証出来ませんでした。"
 
 #, python-brace-format
 msgid "{partition}: filesystem image successfully verified."
-msgstr ""
+msgstr "{partition}： ファイルシステムのイメージは実証されました。"

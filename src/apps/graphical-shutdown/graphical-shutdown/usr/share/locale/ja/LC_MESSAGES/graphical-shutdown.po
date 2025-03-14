@@ -1,27 +1,28 @@
 # Shasheen Ediriweera <shasheene@gmail.com>, 2022.
+# ystk <ystk_k_fr@proton.me>, 2025.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2022-08-23 02:49+0000\n"
-"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
+"PO-Revision-Date: 2025-03-14 02:38+0000\n"
+"Last-Translator: ystk <ystk_k_fr@proton.me>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/rescuezilla/"
 "graphical-shutdown/ja/>\n"
 "Language: ja\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 5.11-dev\n"
 
 msgid "End Session"
-msgstr "セッションを終了する"
+msgstr "セッションを終了します"
 
 msgid "Cancel"
-msgstr "キャンセル"
+msgstr "キャンセルします"
 
 msgid "Shutdown"
-msgstr "シャットダウン"
+msgstr "パソコンをシャットダウンします"
 
 msgid "Reboot"
-msgstr "再起動"
+msgstr "パソコンを再起動します"
 
 msgid "Choose action."
-msgstr "アクションを選択してください。"
+msgstr "行動を選んでください。"
