@@ -234,6 +234,12 @@ ln -s /usr/share/applications/rescuezilla.desktop "$BUILD_DIRECTORY/chroot/home/
 ln -s /usr/share/applications/org.xfce.mousepad.desktop "$BUILD_DIRECTORY/chroot/home/ubuntu/Desktop/mousepad.desktop"
 ln -s /usr/share/applications/gparted.desktop "$BUILD_DIRECTORY/chroot/home/ubuntu/Desktop/gparted.desktop"
 
+if  [ "$CODENAME" == "oracular" ]; then
+  # HACK: Remove the Firefox desktop shortcut that this build system copied in earlier
+  # as Oracular doesn't have a mozillateam PPA based Firefox unlike earlier releases
+  rm "$BUILD_DIRECTORY/chroot/home/ubuntu/Desktop/firefox.desktop"
+fi
+
 # Process GRUB locale files
 pushd "$BUILD_DIRECTORY/image/boot/grub/locale/"
 for grub_po_file in *.po; do
