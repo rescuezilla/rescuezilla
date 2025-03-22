@@ -55,7 +55,7 @@ You can help translate Rescuezilla on [Hosted Weblate](https://hosted.weblate.or
 
 ## History
 
-Below table shows an abridged history of Rescuezilla. For more information, see the [CHANGELOG](https://raw.githubusercontent.com/rescuezilla/rescuezilla/master/CHANGELOG).
+Below table shows an abridged history of Rescuezilla. For more information, see the [CHANGELOG.md](https://raw.githubusercontent.com/rescuezilla/rescuezilla/master/CHANGELOG.md) file.
 
 | Release             | Release Date | Operating System | Notes |
 | ------------------- | ---------- | ---------------- | ---------------------------------- |
