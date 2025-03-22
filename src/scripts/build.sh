@@ -229,12 +229,6 @@ if [[ $? -ne 0 ]]; then
     exit 1
 fi
 
-if  [ "$CODENAME" == "noble" ]; then
-  # HACK: Delete partclone deb for Ubuntu 24.04 (LTS) as current compiled partclone 0.3.27-1 is "older" than "0.3.27+repack-1"
-  # HACK: Find better way to do this
-  rm "$BUILD_DIRECTORY/chroot/partclone_0.3.27-1_amd64.deb"
-fi
-
 # Create desktop icon shortcuts
 ln -s /usr/share/applications/rescuezilla.desktop "$BUILD_DIRECTORY/chroot/home/ubuntu/Desktop/rescuezilla.desktop"
 ln -s /usr/share/applications/org.xfce.mousepad.desktop "$BUILD_DIRECTORY/chroot/home/ubuntu/Desktop/mousepad.desktop"
