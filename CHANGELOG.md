@@ -9,12 +9,13 @@
 * Upgraded to latest partclone `v0.3.33` (released mid-July 2024) from partclone `v0.3.27` (released October 2023)
 * Upgrades memtest86+ v5.31 to memtest86+ v7.00 ([#540](https://github.com/rescuezilla/rescuezilla/issues/540))
 * Updated the build environment OS to Ubuntu 24.04 (Noble) from Ubuntu 22.04 (Jammy) ([#539](https://github.com/rescuezilla/rescuezilla/issues/539)), which was needed for the UEFI Secure Boot "SBAT" fix above 
-* Many existing translations updated, but also added:
+* Many new and significantly updated translations submitted using Weblate:
     * Persian/فارسی (fa-IR) (in-progress)
     * Finnish/Suomi (fi-FI)
     * Romanian/Rolână (ro-RO) (in-progress)
     * Tamil/தமிழ் (ta-IN)
     * Norwegian Bokmål/Norsk Bokmål (nb-NO) (significantly updated)
+    * Japanese/日本語 (ja-JP) (significantly updated)
 
 # Rescuezilla v2.5.1 (2024-09-08)
 
