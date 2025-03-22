@@ -87,47 +87,47 @@ jobs:
       # Upload GitHub Action workflow *artifacts*. Note "artifacts" are a different concept to GitHub release rssets. The former is available on each GitHub Actions
       # workflow run. The latter is associated with only a pushed tag.
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: SHA256SUM
           path: completed-artifacts/SHA256SUM
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: MD5SUM
           path: completed-artifacts/MD5SUM
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: SHA1SUM
           path: completed-artifacts/SHA1SUM
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: rescuezilla_${{env.DEB_VERSION}}-1_all.deb
           path: completed-artifacts/rescuezilla_${{env.DEB_VERSION}}-1_all.deb
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: rescuezilla-${{github.ref_name}}-64bit.oracular.iso
           path: completed-artifacts/rescuezilla-${{github.ref_name}}-64bit.oracular.iso
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: rescuezilla-${{github.ref_name}}-64bit.noble.iso
           path: completed-artifacts/rescuezilla-${{github.ref_name}}-64bit.noble.iso
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: rescuezilla-${{github.ref_name}}-64bit.jammy.iso
           path: completed-artifacts/rescuezilla-${{github.ref_name}}-64bit.jammy.iso
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: rescuezilla-${{github.ref_name}}-64bit.focal.iso
           path: completed-artifacts/rescuezilla-${{github.ref_name}}-64bit.focal.iso
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: rescuezilla-${{github.ref_name}}-32bit.bionic.iso
           path: completed-artifacts/rescuezilla-${{github.ref_name}}-32bit.bionic.iso
