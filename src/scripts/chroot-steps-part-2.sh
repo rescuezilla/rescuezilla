@@ -29,7 +29,14 @@ do
     echo "Error: Failed to install Rescuezilla deb packages."
     exit 1
   fi
+  dpkg -c $f
 done
+
+# Extra validation for the Image Explorer (beta)'s underlying app, in case
+# something went wrong in its relatively complex build environment.
+if [[ ! -f "/usr/local/bin/partclone-nbd" ]]; then
+    echo "Error: failed to find partclone-nbd binary in expected location"
+fi
 
 # Delete the now-installed deb files from the chroot filesystem
 rm /*.deb
