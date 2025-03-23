@@ -82,7 +82,7 @@ class FsArchiverImage:
         else:
             self.last_modified_timestamp = format_datetime(datetime.fromtimestamp((os.stat(absolute_fsarchiver_fsa_path).st_mtime)))
             self.size_bytes = Utility.count_total_size_of_files_on_disk([absolute_fsarchiver_fsa_path], "unknown")
-            # Covert size in bytes to KB/MB/GB/TB as relevant
+            # Convert size in bytes to KB/MB/GB/TB as relevant
             self.enduser_readable_size = Utility.human_readable_filesize(int(self.size_bytes))
             if "password" in process.stderr:
                 print("Image is encrypted.")
@@ -104,7 +104,7 @@ class FsArchiverImage:
         self.size_bytes = 0
         for fs_key in self.fsa_dict['filesystems'].keys():
             self.size_bytes += self.fsa_dict['filesystems'][fs_key]['size_bytes']
-        # Covert size in bytes to KB/MB/GB/TB as relevant
+        # Convert size in bytes to KB/MB/GB/TB as relevant
         self.enduser_readable_size = Utility.human_readable_filesize(int(self.size_bytes))
 
     def has_partition_table(self):

@@ -29,7 +29,7 @@ from logger import Logger
 #
 # For a great 5 minute introduction to CHS addressing, watch Nostalgia Nerd's YouTube video [1]. Cylinder-head-sector
 # addressing is largely obsolete after having been replaced by LBA (logical block addressing) in the mid-1990s.
-# However by many accounts NTFS filesytems need their own CHS metadata updated when an NTFS filesystem is moved
+# However by many accounts NTFS filesystems need their own CHS metadata updated when an NTFS filesystem is moved
 # between physical hard drives of different geometries. Updating the NTFS CHS information is required not only on
 # older drives and operating systems (such as an IDE drive running Windows Server 2003) but also modern drives and
 # operating systems (such as NVMe drives with Windows 10).
@@ -122,7 +122,7 @@ class ChsUtilities:
 
         # The --show-geometry call takes just a fraction of a second to run, so unlike Clonezilla always run it, because
         # that places both values in the log file which may be useful for debugging.
-        process, flat_command_string, failed_message = Utility.run("Retreiving disk geometry with sfdisk",
+        process, flat_command_string, failed_message = Utility.run("Retrieving disk geometry with sfdisk",
                                                                    ["sfdisk", "--show-geometry", long_device_node],
                                                                    use_c_locale=True, logger=logger)
         if process.returncode == 0:

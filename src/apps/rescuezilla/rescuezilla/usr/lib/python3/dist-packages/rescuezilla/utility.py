@@ -844,7 +844,7 @@ class Utility:
             return False, message
 
         size_in_bytes=""
-        # Growing FAT filesystems require quering partition size which other filesystems don't.
+        # Growing FAT filesystems require querying partition size which other filesystems don't.
         if filesystem == "vfat" or filesystem == "fat16" or filesystem == "fat32":
             is_success, output = Utility.query_partition_size_bytes(long_device_node)
             if not is_success:
@@ -890,7 +890,7 @@ class Utility:
                     if process.returncode != 0:
                         return False, failed_message
                 if len(resize_cmd_list) > 0:
-                    resize_process, resize_flat_command_string, resize_failed_message = Utility.run("Growing filesytem " + combined_identifier, resize_cmd_list, use_c_locale=False, logger=logger)
+                    resize_process, resize_flat_command_string, resize_failed_message = Utility.run("Growing filesystem " + combined_identifier, resize_cmd_list, use_c_locale=False, logger=logger)
                     # Always umount, even on resize failure
                     if len(mount_cmd_list) > 0:
                         umount_process, umount_flat_command_string, umount_failed_message = Utility.run("Umounting " + combined_identifier, ["umount", long_device_node], use_c_locale=False, logger=logger)

@@ -41,7 +41,7 @@ from parser.sfdisk import Sfdisk
 from parser.swappt import Swappt
 from utility import Utility, _
 
-# Signals should automatically propogate to processes called with subprocess.run().
+# Signals should automatically propagate to processes called with subprocess.run().
 # TODO: This class uses 'subprocess.call', which provides exit code but not stdout/stderr. It would be
 # TODO: VERY useful to display stdout/stderr when the exit code is non-zero, like the RestoreManager does.
 class BackupManager:
@@ -360,7 +360,7 @@ class BackupManager:
 
             filepath = os.path.join(self.dest_dir, "Info-packages.txt")
             self.ui_manager.display_status(msg1=_("Saving: {file}").format(file=filepath), msg2="")
-            # Save Debian package informtion
+            # Save Debian package information
             if shutil.which("dpkg") is not None:
                 rescuezilla_package_list = ["rescuezilla", "partclone", "util-linux", "gdisk"]
                 with open(filepath, 'w') as filehandle:
@@ -598,7 +598,7 @@ class BackupManager:
 
         filepath = os.path.join(self.dest_dir, short_selected_device_node + "-chs.sf")
         self.ui_manager.display_status(msg1=_("Saving: {file}").format(file=filepath), msg2="")
-        process, flat_command_string, failed_message = Utility.run("Retreiving disk geometry with sfdisk ", ["sfdisk", "--show-geometry", self.selected_drive_key], use_c_locale=True, logger=self.logger)
+        process, flat_command_string, failed_message = Utility.run("Retrieving disk geometry with sfdisk ", ["sfdisk", "--show-geometry", self.selected_drive_key], use_c_locale=True, logger=self.logger)
         if process.returncode != 0:
             self.logger.write(failed_message)
             with self.summary_message_lock:
