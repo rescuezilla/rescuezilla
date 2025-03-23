@@ -26,7 +26,7 @@ chown -R ubuntu:ubuntu /home/ubuntu
 swapoff --all
 
 # When Rescuezilla is booted using "toram" kernel option, the /isodevice path is
-# automatically mounted for some reason. But after teh boot with "toram" is complete
+# automatically mounted for some reason. But after the boot with "toram" is complete
 # this path can be safely unmounted.
 #
 # [1] https://github.com/rescuezilla/rescuezilla/wiki/Installing-Rescuezilla-as-a-rescue-partition

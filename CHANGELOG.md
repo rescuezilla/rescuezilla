@@ -312,7 +312,7 @@ from the dead by a new maintainer. This new fork is being developed under a new 
 * Switched to Hardware Enablement kernel for best support of new hardware (thanks OAM775!)
 * Ensured official image bootable as both USB drive and CD (v1.0.4 was only bootable as a CD)
 * Added SliM (Simple Login Manager) to fix boot sometimes failing to start graphical environment
-* Switched to running the graphical session as unpriviliged user, for improved security
+* Switched to running the graphical session as unprivileged user, for improved security
 * Removed deprecated gksu (graphical frontend to su/sudo), which was never necessary
 * Added PolicyKit policies to provide root privileges to certain applications (via pkexec)
 * Removed deprecated system-config-lvm (graphical LVM editor)

@@ -345,7 +345,7 @@ class ClonezillaImage:
             if len(image_format_dict) == 0:
                 # Loop over all the volume groups (if any)
                 for vg_name in self.lvm_vg_dev_dict.keys():
-                    # TODO: Evalulate if there are Linux multipath device nodes that hold LVM Physical Volumes.
+                    # TODO: Evaluate if there are Linux multipath device nodes that hold LVM Physical Volumes.
                     # TODO: May need to adjust for multipath device node by replacing "/" with "-" for this node.
                     pv_short_device_node = re.sub('/dev/', '', self.lvm_vg_dev_dict[vg_name]['device_node'])
                     # Check if there is an associated LVM Physical Volume (PV) present
@@ -439,7 +439,7 @@ class ClonezillaImage:
             # size, so in that situation, summing the image sizes provides some kind of size estimate.
             self.size_bytes = total_size_estimate
 
-        # Covert size in bytes to KB/MB/GB/TB as relevant
+        # Convert size in bytes to KB/MB/GB/TB as relevant
         self.enduser_readable_size = Utility.human_readable_filesize(int(self.size_bytes))
 
         pp = pprint.PrettyPrinter(indent=4)

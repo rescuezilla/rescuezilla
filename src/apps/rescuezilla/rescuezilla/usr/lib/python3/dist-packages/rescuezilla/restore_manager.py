@@ -775,7 +775,7 @@ class RestoreManager:
 
                 dest_part = self.restore_mapping_dict[image_key]
                 if self.image.image_format_dict_dict[image_key]['is_lvm_logical_volume']:
-                    # Erase the filesytem header when it exists
+                    # Erase the filesystem header when it exists
                     is_success, failed_message = self.clean_filesystem_header_in_partition(dest_part['dest_key'])
                     if not is_success:
                         # Error callback handled in the function
@@ -1112,7 +1112,7 @@ class RestoreManager:
                 if process.returncode == 0:
                     message = "Successfully removed any udev MAC address records"
                     self.logger.write(message + "\n")
-                    # Not displaying this to users because it wil lbe confusing for end-users.
+                    # Not displaying this to users because it will be confusing for end-users.
             else:
                 message = "Not removing udev MAC address records: Unable to find ocs-tux-postprocess. Is Clonezilla installed?"
                 self.logger.write(message + "\n")

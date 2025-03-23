@@ -107,7 +107,7 @@ class ApartGtkImage:
         print("Last modified timestamp (max timestamp): " + self.last_modified_timestamp)
 
         self.size_bytes = estimated_num_byte
-        # Covert size in bytes to KB/MB/GB/TB as relevant
+        # Convert size in bytes to KB/MB/GB/TB as relevant
         self.enduser_readable_size = Utility.human_readable_filesize(int(self.size_bytes))
         self.is_needs_decryption = False
 

@@ -128,7 +128,7 @@ class PartitionsToRestore:
                       message=msg)
 
     # Starts LVM and umounts all relevant logical volumes
-    # FIXME: Similar code is is duplicated elsewhere in the codebase.
+    # FIXME: Similar code is duplicated elsewhere in the codebase.
     def _scan_and_unmount_existing_lvm(self, dest_partitions, is_overwriting_partition_table):
         with self.lvm_lv_path_lock:
             self.lvm_lv_path_list.clear()
@@ -401,7 +401,7 @@ class PartitionsToRestore:
                 num_combo_box_entries += 1
 
         # If there is no partitions on the destination disk, provide the option to remap the partitions to the whole
-        # destination disk. If the source image doesn't have a partition table, also want to be able to remap partitons
+        # destination disk. If the source image doesn't have a partition table, also want to be able to remap partitions
         # to the destination disk. Finally, if the destination disk already has a filesystem directly on disk then
         # that would have already been handled above and there's no need to add a new entry to the combobox.
         if (num_combo_box_entries == 0 or not self.selected_image.has_partition_table()) and not is_destination_partition_target_drive:

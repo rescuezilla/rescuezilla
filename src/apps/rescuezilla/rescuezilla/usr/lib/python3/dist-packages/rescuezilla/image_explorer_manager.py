@@ -451,7 +451,7 @@ class ImageExplorerManager:
                 # concatenation is actually occurring.
                 #
                 # nbdkit's "--filter=" arguments can be used to decompress requested blocks on-the-fly in a single nbdkit
-                # invokation. However for flexibility with the older nbdkit version in Ubuntu 20.04 (see below),
+                # invocation. However for flexibility with the older nbdkit version in Ubuntu 20.04 (see below),
                 # and the limited number of compression filters even in recent nbdkit versions, Rescuezilla does this in
                 # two steps: joining the files is a different step to decompressing the files. This approach provides
                 # greater flexibility for alternative decompression utilities such as perhaps `archivemount` or AVFS.
@@ -597,7 +597,7 @@ class ImageExplorerManager:
 
                 print("Adding partclone-nbd process with pid " + str(partclone_nbd_process.pid) + " to queue")
                 self.partclone_nbd_process_queue.put(partclone_nbd_process)
-                # Sentinal value for successful partclone-nbd mount. partclone-nbd is launched with C locale env, so this
+                # Sentinel value for successful partclone-nbd mount. partclone-nbd is launched with C locale env, so this
                 # string will match even for non-English locales.
                 partclone_nbd_ready_msg = "[ INF ] Waiting for requests ..."
 

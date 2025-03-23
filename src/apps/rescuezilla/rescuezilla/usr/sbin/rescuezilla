@@ -191,7 +191,7 @@ if test "x$HAVE_SYSTEMCTL" = "xyes"; then
       | egrep -v '^(dev-hugepages|dev-mqueue|proc-sys-fs-binfmt_misc|run-user-.*-gvfs|sys-fs-fuse-connections|sys-kernel-config|sys-kernel-debug)'`
     systemctl --runtime mask --quiet -- $MOUNTLIST
 
-    # The Rescuezilla live environment has a user named 'ubuntu' with user ID 999. The existance of a GNOME Virtual Filesystem (GVFS) mount causes
+    # The Rescuezilla live environment has a user named 'ubuntu' with user ID 999. The existence of a GNOME Virtual Filesystem (GVFS) mount causes
     # Rescuezilla to fail on some restore operations, due to gvfs preventing the partition table from refreshing.
     UBUNTU_USER_MOUNTLIST=$( run_systemctl_as_ubuntu "systemctl --user list-units --full --all -t mount --no-legend \
       | grep -v masked | cut -f1 -d' ' \
@@ -231,7 +231,7 @@ for rule in $UDEV_TEMP_MDADM_RULES; do
 done
 
 #
-#  Use udisks2-inhibit if udisks2-inhibit exists and deamon running.
+#  Use udisks2-inhibit if udisks2-inhibit exists and daemon running.
 #  Else use both udisks and hal-lock for invocation if both binaries exist and both
 #  daemons are running.
 #  Else use udisks if binary exists and daemon is running.
