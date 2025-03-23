@@ -17,7 +17,7 @@ curl "https://nmap.org/dist/nmap-7.92-setup.exe" -o "C:\nmap-7.92-setup.exe"
 :: Download Non-Sucking Service Manager (because Windows service manager can't run Batch files)
 curl "https://nssm.cc/release/nssm-2.24.zip" -o C:\nssm-2.24.zip
 
-echo "Runing the nmap installer. Make sure to install Nmap core files and Ncat"
+echo "Running the nmap installer. Make sure to install Nmap core files and Ncat"
 :: There does not appear to be a /s (silent) install option, so install it manually.
 C:\nmap-7.92-setup.exe
 

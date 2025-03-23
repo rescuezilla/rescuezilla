@@ -114,7 +114,7 @@ class MetadataOnlyImage:
         process, flat_command_string, fail_description = Utility.run("lsblk", lsblk_cmd_list, use_c_locale=True)
         lsblk_json_dict = json.loads(process.stdout)
 
-        # blkid is called in DriveQuery and without arugments it prints information about all *partitions* in the system
+        # blkid is called in DriveQuery and without arguments it prints information about all *partitions* in the system
         # (eg, /dev/sda1, /dev/sda2), but not th base device. But with an argument, it only prints out the base device.
         # But globbing using an wildcard match prints out the base device *and* the partitions. Not ideal, but it works.
         partition_device_glob_list = glob.glob(self.long_device_node + "*")
@@ -151,7 +151,7 @@ class MetadataOnlyImage:
         self.size_bytes = last_partition_final_byte
         if self.size_bytes == 0:
             self.size_bytes = self.parted_dict['capacity']
-        # Covert size in bytes to KB/MB/GB/TB as relevant
+        # Convert size in bytes to KB/MB/GB/TB as relevant
         self.enduser_readable_size = Utility.human_readable_filesize(int(self.size_bytes))
 
     # The BackupManager, needs partition information (filesystems etc) in certain structure. Clonezilla combines

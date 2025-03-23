@@ -38,7 +38,7 @@ git submodule update --recursive
 # Optional: Build only the standalone deb packages without bothering with the live environment
 make deb
 
-# Optional: A Rescuezilla contributor suggests building on a ramdisk for increased build perfomance.
+# Optional: A Rescuezilla contributor suggests building on a ramdisk for increased build performance.
 # Most users may choose to skip the ramdisk steps due to high RAM requirements, and the increased
 # build complexity. It's possible to build with eg, `BASE_BUILD_DIRECTORY=/mnt/ramdisk make focal`
 # or copy the whole source folder into ramdisk. It's recommended you skip these steps if unsure.

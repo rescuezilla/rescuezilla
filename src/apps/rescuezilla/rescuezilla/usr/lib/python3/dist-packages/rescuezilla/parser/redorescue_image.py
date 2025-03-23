@@ -97,7 +97,7 @@ class RedoRescueImage:
             self.warning_dict[enduser_filename] = Sfdisk.get_empty_sfdisk_msg()
 
         self.size_bytes = self.redo_dict['drive_bytes']
-        # Covert size in bytes to KB/MB/GB/TB as relevant
+        # Convert size in bytes to KB/MB/GB/TB as relevant
         self.enduser_readable_size = Utility.human_readable_filesize(int(self.size_bytes))
 
         self.image_format_dict_dict = collections.OrderedDict([])

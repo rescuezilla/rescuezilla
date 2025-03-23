@@ -93,7 +93,7 @@ class RedoBackupLegacyImage:
 
         self.size_bytes = int(Utility.read_file_into_string(os.path.join(dirname, prefix + ".size").strip()))
         print("Size: " + str(self.size_bytes))
-        # Covert size in bytes to KB/MB/GB/TB as relevant
+        # Convert size in bytes to KB/MB/GB/TB as relevant
         self.enduser_readable_size = Utility.human_readable_filesize(int(self.size_bytes))
 
         self._mbr_absolute_path = os.path.join(dirname, prefix + ".mbr")

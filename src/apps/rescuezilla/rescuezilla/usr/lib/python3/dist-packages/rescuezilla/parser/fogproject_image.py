@@ -211,7 +211,7 @@ class FogProjectImage:
             # When the file doesn't exist, estimate drive capacity from sfdisk partition table backup
             last_partition_key, last_partition_final_byte = Sfdisk.get_highest_offset_partition(self.normalized_sfdisk_dict)
             self.size_bytes = last_partition_final_byte
-        # Covert size in bytes to KB/MB/GB/TB as relevant
+        # Convert size in bytes to KB/MB/GB/TB as relevant
         self.enduser_readable_size = Utility.human_readable_filesize(int(self.size_bytes))
         self.is_needs_decryption = False
 
