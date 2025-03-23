@@ -483,7 +483,7 @@ def handle_command(args):
     else:
         machine_key_list = args.vm
         if args.hd == "all":
-            # If a list of VMs has been specified, carefully gather all hard drives assocated with those machines
+            # If a list of VMs has been specified, carefully gather all hard drives associated with those machines
             hd_set = set()
             for vm_key in machine_key_list:
                 for hd_key in MACHINE_DICT[vm_key]['hd_list']:

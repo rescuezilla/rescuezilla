@@ -89,7 +89,7 @@ class DriveQuery:
                 drive = self.drive_state[drive_key]
                 with self._is_displaying_advanced_information_lock:
                     if self._is_displaying_advanced_information:
-                        # Display a advanced-user partition name eg, "nvme0n1". Users coming from Clonezilla will often
+                        # Display an advanced-user partition name eg, "nvme0n1". Users coming from Clonezilla will often
                         # like to know the device node.
                         human_friendly_drive_name = drive_key
                     else:
@@ -159,14 +159,14 @@ class DriveQuery:
                 for partition_key in self.drive_state[drive_key]['partitions'].keys():
                     with self._is_displaying_advanced_information_lock:
                         if self._is_displaying_advanced_information:
-                            # Display a advanced-user partition name eg, "nvme0n1p1".
+                            # Display an advanced-user partition name eg, "nvme0n1p1".
                             human_friendly_partition_name = partition_key
                         else:
                             if self.drive_state[drive_key]['type'] == 'loop' or self.drive_state[drive_key]['has_raid_member_filesystem']:
                                 # Don't display certain non-block device if user has chosen to hide them.
                                 # TODO: Evaluate other partition types to be hidden.
                                 continue
-                            # Display a advanced-user partition name eg, "#4".
+                            # Display an advanced-user partition name eg, "#4".
                             human_friendly_partition_name = "#" + str(index + 1)
                         flattened_partition_description = CombinedDriveState.flatten_partition_description(self.drive_state, drive_key, partition_key)
                     if 'size' in self.drive_state[drive_key]['partitions'][partition_key].keys():
