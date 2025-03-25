@@ -7,14 +7,14 @@
 # Shasheen Ediriweera <shasheene@gmail.com>, 2022, 2024.
 # Alexandre Hideki Watanabe <hidekiw@gmail.com>, 2023.
 # Bruno Batista <brucb879@gmail.com>, 2023.
-# Hugo Carvalho <hugokarvalho@hotmail.com>, 2023, 2024.
+# Hugo Carvalho <hugokarvalho@hotmail.com>, 2023, 2024, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2024-07-15 03:33+0000\n"
-"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
+"PO-Revision-Date: 2025-03-25 12:44+0000\n"
+"Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/pt/>\n"
 "Language: pt\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.7-dev\n"
+"X-Generator: Weblate 5.11-dev\n"
 
 msgid "Welcome"
 msgstr "Bem-vindo"
@@ -57,35 +57,35 @@ msgid "Back"
 msgstr "Voltar"
 
 msgid "Next >"
-msgstr "Próximo >"
+msgstr "Seguinte >"
 
 msgid "Please wait..."
-msgstr "Por favor espere..."
+msgstr "Por favor aguarde..."
 
 msgid "Identifying disk drives..."
-msgstr "Identificando drives de disco ..."
+msgstr "A identificar unidades de disco..."
 
 #, python-brace-format
 msgid "Unmounting: {path}"
-msgstr "Desmontando: {path}"
+msgstr "A desmontar: {path}"
 
 #, python-brace-format
 msgid "Unable to unmount {path}"
-msgstr "Impossível montar {path}"
+msgstr "Não foi possível desmontar {path}"
 
 #, python-brace-format
 msgid "Running: {app}"
-msgstr "Executando: {app}"
+msgstr "A executar: {app}"
 
 #, python-brace-format
 msgid "Running {app} on {device}"
-msgstr "Executando {app} no {device}"
+msgstr "A executar {app} no {device}"
 
 msgid "Failed to run command: "
 msgstr "Falha ao executar comandos: "
 
 msgid "Error querying drives: "
-msgstr "Erro requisitando drives: "
+msgstr "Erro ao consultar as unidades: "
 
 msgid "Clone"
 msgstr "Clonar"
@@ -120,7 +120,7 @@ msgstr ""
 "<b>Backup</b> ou <b>Restaurar</b>."
 
 msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
-msgstr "Para começar o guia de \"clonagem\", clique em <b>Próximo</b>"
+msgstr "Para começar o assistente de \"clonagem\", clique em <b>Seguinte</b>"
 
 msgid "Step 2: Select Source Drive"
 msgstr "Passo 2: Selecione o drive de origem"
@@ -150,7 +150,7 @@ msgid "Cloning the following partitions"
 msgstr "Clonando as seguintes partições"
 
 msgid "To start cloning, click <b>Next</b>."
-msgstr "Para iniciar a clonagem, clique em <b>Próximo</b>."
+msgstr "Para iniciar a clonagem, clique em <b>Seguinte</b>."
 
 #, python-brace-format
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
@@ -393,7 +393,8 @@ msgid "Last modified"
 msgstr "Última modificação"
 
 msgid "When you are happy with the destination folder, click <b>Next</b>."
-msgstr "Quando estiver bem com a pasta de destino, clique em <b>Próximo</b>."
+msgstr ""
+"Quando estiver satisfeito com a pasta de destino, clique em <b>Seguinte</b>."
 
 msgid "Step 5: Name Your Backup"
 msgstr "Passo 5: Nomeie Seu Backup"
@@ -444,8 +445,8 @@ msgstr "Melhor"
 
 msgid "When you are happy with the compression settings, click <b>Next</b>."
 msgstr ""
-"Quando estiver satisfeito com as configurações de compactação, clique em "
-"<b>Avançar</b>."
+"Quando estiver satisfeito com as definições de compressão, clique em "
+"<b>Seguinte</b>."
 
 msgid "Step 7: Confirm Backup Configuration"
 msgstr "Etapa 7: confirmar a configuração de backup"
@@ -484,7 +485,7 @@ msgstr ""
 "<b>Ativar \"Resgate\" pode suprimir erros importantes. Use com cautela.</b>"
 
 msgid "To start the backup, click <b>Next</b>."
-msgstr "Para iniciar o backup, click <b>Próximo</b>."
+msgstr "Para iniciar o backup, clique em <b>Seguinte</b>."
 
 msgid "Step 8: Creating Backup Image"
 msgstr "Passo 8: Criando Imagem de Backup"
@@ -553,7 +554,7 @@ msgid "Operation took {num_minutes} minutes."
 msgstr "Operação levou {num_minutes} minutos."
 
 msgid "To start a new session, click <b>Next</b>"
-msgstr "Para iniciar uma nova sessão, clique <b>Next</b>"
+msgstr "Para iniciar uma nova sessão, clique em <b>Seguinte</b>"
 
 msgid "Step 1: Select Image Location"
 msgstr "Passo 1: Selecione a localização da imagem"
@@ -626,7 +627,7 @@ msgid "Not restoring this partition"
 msgstr "Não está restaurando esta partição"
 
 msgid "When you are ready to continue, click <b>Next</b>."
-msgstr "Quando estiver pronto para continuar, clique em <b>Avançar</b>."
+msgstr "Quando estiver pronto para continuar, clique em <b>Seguinte</b>."
 
 msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
 msgstr ""
@@ -684,7 +685,7 @@ msgid "Will <b>NOT</b> be overwriting partition table"
 msgstr "<b>NÃO</b> substituirá a tabela de partições"
 
 msgid "To start the restore, click <b>Next</b>."
-msgstr "Para iniciar a restauração, click <b>Próximo</b>."
+msgstr "Para iniciar o restauro, clique em <b>Seguinte</b>."
 
 msgid "Restoring From Backup"
 msgstr "Restaurando do Backup"
@@ -851,7 +852,7 @@ msgid "Select one or more image(s) to verify."
 msgstr "Selecione uma ou mais imagens para verificar."
 
 msgid "To begin verification, click <b>Next</b>."
-msgstr "Para iniciar a verificação, clique em <b>Avançar</b>."
+msgstr "Para iniciar a verificação, clique em <b>Seguinte</b>."
 
 msgid "Verifying Image"
 msgstr "Verificando Imagem"
