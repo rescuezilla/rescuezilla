@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2025-03-28 08:25+0000\n"
+"PO-Revision-Date: 2025-03-31 20:07+0000\n"
 "Last-Translator: Simple16 <ini1995@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/ru/>\n"
@@ -487,6 +487,8 @@ msgstr ""
 
 msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
 msgstr ""
+"<b>Включение \"Rescue\" может скрыть важные ошибки. Используйте с "
+"осторожностью.</b>"
 
 msgid "To start the backup, click <b>Next</b>."
 msgstr "Для начала резервного копирования нажмите <b>Далее</b>."
@@ -889,13 +891,13 @@ msgid "Verify"
 msgstr "Проверить"
 
 msgid "Select one or more image(s) to verify."
-msgstr ""
+msgstr "Выберите одно или несколько образов для проверки."
 
 msgid "To begin verification, click <b>Next</b>."
 msgstr "Чтобы начать проверку, нажмите <b>Далее</b>."
 
 msgid "Verifying Image"
-msgstr ""
+msgstr "Проверка образа"
 
 msgid "Verifying the selected image(s)."
 msgstr "Проверка выбранного(ых) образа(ов)"
@@ -905,16 +907,16 @@ msgid "Verifying {image_name}"
 msgstr "Проверка {image_name}"
 
 msgid "Summary of Verification"
-msgstr ""
+msgstr "Сводная информация о проверке"
 
 msgid "Confirm the verification summary."
 msgstr ""
 
 msgid "Verification Summary"
-msgstr ""
+msgstr "Сводная информация по проверке"
 
 msgid "To verify another image, click <b>Back</b>."
-msgstr ""
+msgstr "Чтобы проверить другой образ, нажмите <b>Назад</b>."
 
 msgid "✔"
 msgstr "✔"
@@ -923,7 +925,7 @@ msgid "❌"
 msgstr "❌"
 
 msgid "MBR backup appears correct."
-msgstr ""
+msgstr "Резервная копия MBR является корректной."
 
 msgid "No partition table found."
 msgstr "Таблица разделов не найдена."
@@ -932,11 +934,11 @@ msgid "Sfdisk partition table file is empty or missing."
 msgstr "Файл таблицы разделов Sfdisk пуст или отсутствует."
 
 msgid "Sfdisk partition table file is present."
-msgstr ""
+msgstr "Файл таблицы разделов Sfdisk присутствует."
 
 msgid "Unable to verify."
-msgstr ""
+msgstr "Не удалось проверить."
 
 #, python-brace-format
 msgid "{partition}: filesystem image successfully verified."
-msgstr ""
+msgstr "{partition}: образ файловой системы успешно проверен."
