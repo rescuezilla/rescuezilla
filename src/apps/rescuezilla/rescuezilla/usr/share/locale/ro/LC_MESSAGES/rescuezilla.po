@@ -5,13 +5,14 @@
 # МАН69К <weblate@mah69k.net>, 2022.
 # Languages add-on <noreply-addon-languages@weblate.org>, 2024.
 # Adrian <adriantnt@adriantnt.com>, 2024.
+# ac49724 <ac49724@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2024-11-27 01:00+0000\n"
-"Last-Translator: Adrian <adriantnt@adriantnt.com>\n"
+"PO-Revision-Date: 2025-04-03 18:12+0000\n"
+"Last-Translator: ac49724 <ac49724@gmail.com>\n"
 "Language-Team: Romanian <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/ro/>\n"
 "Language: ro\n"
@@ -20,7 +21,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
-"X-Generator: Weblate 5.9-dev\n"
+"X-Generator: Weblate 5.11-dev\n"
 
 msgid "Welcome"
 msgstr "Bun venit"
@@ -33,7 +34,6 @@ msgstr ""
 "Creaza cu usurinta o imagine backup a calculatorului tau, sau restaureaza "
 "dintr-o imagine. Click pe o optiune pentru a incepe:"
 
-#, fuzzy
 msgid "Backup"
 msgstr "Backup"
 
@@ -376,7 +376,7 @@ msgid "default"
 msgstr ""
 
 msgid "zstandard"
-msgstr ""
+msgstr "zstandard"
 
 msgid "Uncompressed (Suitable for use with Image Explorer)"
 msgstr ""
