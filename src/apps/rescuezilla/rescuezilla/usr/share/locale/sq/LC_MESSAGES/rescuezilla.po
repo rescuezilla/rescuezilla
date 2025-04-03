@@ -4,13 +4,14 @@
 # ttt113326 <tonio_k@mail.ru>, 2021.
 # МАН69К <weblate@mah69k.net>, 2022.
 # Besnik Bleta <besnik@programeshqip.org>, 2022.
+# ac49724 <ac49724@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2022-09-11 11:06+0000\n"
-"Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
+"PO-Revision-Date: 2025-04-03 18:12+0000\n"
+"Last-Translator: ac49724 <ac49724@gmail.com>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/sq/>\n"
 "Language: sq\n"
@@ -18,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1-dev\n"
+"X-Generator: Weblate 5.11-dev\n"
 
 msgid "Welcome"
 msgstr ""
@@ -365,13 +366,13 @@ msgid "Compression format: "
 msgstr ""
 
 msgid "gzip"
-msgstr ""
+msgstr "gzip"
 
 msgid "default"
 msgstr ""
 
 msgid "zstandard"
-msgstr ""
+msgstr "zstandard"
 
 msgid "Uncompressed (Suitable for use with Image Explorer)"
 msgstr ""
