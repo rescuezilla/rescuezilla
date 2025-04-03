@@ -4,13 +4,14 @@
 # ttt113326 <tonio_k@mail.ru>, 2021.
 # МАН69К <weblate@mah69k.net>, 2022.
 # Simple16 <ini1995@gmail.com>, 2025.
+# ac49724 <ac49724@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2025-03-31 20:07+0000\n"
-"Last-Translator: Simple16 <ini1995@gmail.com>\n"
+"PO-Revision-Date: 2025-04-03 18:12+0000\n"
+"Last-Translator: ac49724 <ac49724@gmail.com>\n"
 "Language-Team: Russian <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/ru/>\n"
 "Language: ru\n"
@@ -900,7 +901,7 @@ msgid "Verifying Image"
 msgstr "Проверка образа"
 
 msgid "Verifying the selected image(s)."
-msgstr "Проверка выбранного(ых) образа(ов)"
+msgstr "Проверка выбранного(ых) образа(ов)."
 
 #, python-brace-format
 msgid "Verifying {image_name}"
@@ -910,7 +911,7 @@ msgid "Summary of Verification"
 msgstr "Сводная информация о проверке"
 
 msgid "Confirm the verification summary."
-msgstr ""
+msgstr "Подтвердите сводку проверки."
 
 msgid "Verification Summary"
 msgstr "Сводная информация по проверке"
