@@ -3,13 +3,14 @@
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021.
 # Long Nguyễn Khánh <khanhlong17112000@gmail.com>, 2021.
 # Thanh Le <lxthanhlph@gmail.com>, 2024.
+# Trung Nguyen <trungnth@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2024-11-16 21:00+0000\n"
-"Last-Translator: Thanh Le <lxthanhlph@gmail.com>\n"
+"PO-Revision-Date: 2025-05-09 03:02+0000\n"
+"Last-Translator: Trung Nguyen <trungnth@gmail.com>\n"
 "Language-Team: Vietnamese <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/vi/>\n"
 "Language: vi\n"
@@ -17,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.9-dev\n"
+"X-Generator: Weblate 5.12-dev\n"
 
 msgid "Welcome"
 msgstr "Chào mừng"
@@ -470,9 +471,12 @@ msgstr "Khởi động lại"
 
 msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
 msgstr ""
+"Cứu hộ: Bỏ qua sự không nhất quán của tập tin hệ thống và các sector xấu"
 
 msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
 msgstr ""
+"<b>Bật \"Cứu hộ\" có thể làm các lỗi nghiêm trọng bị bỏ qua. Hãy sử dụng "
+"thận trọng.</b>"
 
 msgid "To start the backup, click <b>Next</b>."
 msgstr "Để bắt đầu sao lưu, nhấn <b>Tiếp theo</b>."
@@ -511,7 +515,7 @@ msgid "Operation cancelled by user."
 msgstr "Tiến trình bị hủy bởi người dùng."
 
 msgid "Rescue option is enabled."
-msgstr ""
+msgstr "Tùy chọn cứu hộ đã được bật."
 
 msgid "Error creating backup: "
 msgstr "Lỗi khi đang tạo bản sao lưu: "
