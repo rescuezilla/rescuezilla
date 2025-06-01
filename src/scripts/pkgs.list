@@ -1,0 +1,185 @@
+# Packages specific to Rescuezilla 32-bit build (currently based Ubuntu 18.04 Bionic)
+# Hardware Enablement (HWE, also called LTS Enablement Stack) [1] [2]
+# https://wiki.ubuntu.com/Kernel/LTSEnablementStack
+# https://ubuntu.com/about/release-cycle
+pkgs_specific_to_ubuntu1804_bionic_32bit=("linux-generic-hwe-18.04"
+                        "xserver-xorg-hwe-18.04"
+                        "xserver-xorg-video-all-hwe-18.04"
+                        "xserver-xorg-video-intel-hwe-18.04"
+                        "xserver-xorg-video-qxl-hwe-18.04"
+                        # Python3.7 as Rescuezilla uses subprocess's "capture_output" parameter
+                        "python3.7"
+                        # Explicitly install dmidecode as it appears to have been pulled in on other distros by a dependency
+                        "dmidecode"
+                        # Add support for crypto volumes mount (luks, bitlocker, crypt)
+                        "libblockdev-crypto2"
+                        "ibus-anthy"
+                        "reiser4progs"
+                        "python3-whichcraft"
+)
+
+# Packages specific to Rescuezilla 64-bit build (currently based Ubuntu 20.04 Focal)
+# TODO: Switch to Hardware Enablement (HWE, also called LTS Enablement Stack) [1] [2]
+#       when it is released.
+# https://wiki.ubuntu.com/Kernel/LTSEnablementStack
+# https://ubuntu.com/about/release-cycle
+pkgs_specific_to_ubuntu2004_focal=("linux-generic-hwe-18.04"
+                       "xserver-xorg-hwe-18.04"
+                       "xserver-xorg-video-all-hwe-18.04"
+                       "xserver-xorg-video-intel-hwe-18.04"
+                       "xserver-xorg-video-qxl-hwe-18.04"
+                       # Packages which may assist users needing to do a GRUB repair (64-bit EFI)
+                       "shim-signed"
+                       "grub-efi-amd64-signed"
+                       "grub-efi-amd64-bin"
+                       "grub-efi-ia32-bin"
+                       # Dependency for Rescuezilla Image Explorer
+                       "nbdkit"
+                       "lupin-casper"
+                       # Replaced by exfatprogs
+                       "exfat-utils"
+                       # Removed since 22.10 Kinetic
+                       "plymouth-theme-ubuntu-logo"
+                       # Add support for crypto volumes mount (luks, bitlocker, crypt)
+                       "libblockdev-crypto2"
+                       "ibus-anthy"
+                       "reiser4progs"
+                       "python3-whichcraft"
+)
+
+pkgs_specific_to_debian_bookworm=(
+                        "linux-image-amd64"
+                        "linux-headers-amd64"
+                        "firmware-linux"
+                        "firmware-linux-nonfree"
+                        "firmware-linux-free"
+                        "shim-signed"
+                        "grub-efi-amd64-signed"
+                        "grub-efi-amd64-bin"
+                        "grub-efi-ia32-bin"
+                        "nbdkit"
+                        "plymouth-theme-hamara"
+                        "exfatprogs"
+                        "libblockdev-crypto2"
+                        "reiser4progs"
+                        "python3-whichcraft"
+                        "xserver-xorg"
+                        "xserver-xorg-video-all"
+                        "xserver-xorg-input-all"
+)
+
+pkgs_specific_to_ubuntu2204_jammy=(
+                       "linux-generic"
+                       "xserver-xorg"
+                       "xserver-xorg-video-all"
+                       "xserver-xorg-video-intel"
+                       "xserver-xorg-video-qxl"
+                       "xserver-xorg-video-mga"
+                        # Packages which may assist users needing to do a GRUB repair (64-bit EFI)
+                       "shim-signed"
+                       "grub-efi-amd64-signed"
+                       "grub-efi-amd64-bin"
+                       "grub-efi-ia32-bin"
+                       # Dependency for Rescuezilla Image Explorer
+                       "nbdkit"
+                       # Replaces exfat-utils
+                       "exfatprogs"
+                       # Removed since 22.10 Kinetic
+                       "plymouth-theme-ubuntu-logo"
+                       # Add support for crypto volumes mount (luks, bitlocker, crypt)
+                       "libblockdev-crypto2"
+                       "ibus-anthy"
+                       "reiser4progs"
+                       "python3-whichcraft"
+)
+
+# Languages on the system
+lang_codes=(
+             "zh-hans"
+             "zh-hant"
+)
+
+# Packages common to both  32-bit and 64-bit build
+# TODO: Documentation each package with why these particular packages are present,
+# TODO: and what they do.
+common_pkgs=("discover"
+             "laptop-detect"
+             "openbox"
+             "lightdm"
+             "x11-xserver-utils"
+             "xterm"
+             "network-manager-gnome"
+             "plymouth-x11"
+             "plymouth-label"
+             "pcmanfm"
+             # Chinese font
+             "fonts-wqy-zenhei"
+             # Font for symbols like "❌"
+             "fonts-symbola"
+             "breeze-gtk-theme"
+             "gnome-icon-theme"
+             "gnome-brave-icon-theme"
+             "dmz-cursor-theme"
+             "gpicview"
+             "mousepad"
+             "lxmenu-data"
+             "arandr"
+             "xfce4-terminal"
+             "lxpanel"
+             "fonts-ubuntu"
+             "alsamixergui"
+             "volumeicon-alsa"
+             "pm-utils"
+             "notify-osd"
+             "time"
+             "psmisc"
+             "openssh-client"
+             "gtk2-engines-pixbuf"
+             "beep"
+             "rsync"
+             "smartmontools"
+             "gnome-disk-utility"
+             "policykit-1-gnome"
+             "baobab"
+             "gsettings-desktop-schemas"
+             "gparted"
+             "mdadm"
+             "lshw-gtk"
+             "ecryptfs-utils"
+             "partimage"
+             "clonezilla"
+             "testdisk"
+             "gddrescue"
+             "wodim"
+             "cryptsetup"
+             "reiserfsprogs"
+             "dosfstools"
+             "mtools"
+             "ntfs-3g"
+             "hfsutils"
+             "jfsutils"
+             "wget"
+             "exfat-fuse"
+             "btrfs-progs"
+             "udisks2-btrfs"
+             "fscrypt"
+             "libpam-fscrypt"
+             "hfsplus"
+             "hfsprogs"
+             "f2fs-tools"
+             "lvm2"
+             "xfsdump"
+             "xfsprogs"
+             "udftools"
+             "grub-pc-bin"
+             "grub2-common"
+             "qemu-utils"
+             "xfce4-screenshooter"
+             "wpasupplicant"
+             "lxappearance"
+             "flashrom"
+             "hashdeep"
+             "zstd"
+)
+
+

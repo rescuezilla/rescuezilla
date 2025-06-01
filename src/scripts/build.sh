@@ -3,45 +3,7 @@
 # Echo each command
 set -x
 
-# Flag to enable integration test mode [1]. Disabled by default.
-#
-# Images built with this flag include an SSH server, a simple netcat TCP query server,
-# and other changes to support Rescuezilla's automated end-to-end integration test suite [1].
-#
-# The flag is very useful for development and debugging too.  The SSH server is handy, as is
-# the lower compression ratio on the squashfs root filesystem (for faster builds during development).
-#
-# This flag is obviously never enabled in production builds, and users are able to easily
-# audit that no SSH server or netcat TCP query server is ever installed.
-#
-# [1] See src/integration-test/README.md for more information.
-#
-IS_INTEGRATION_TEST="${IS_INTEGRATION_TEST=:false}"
-
-# Set the default base operating system, using the Ubuntu release's shortened code name [1].
-# [1] https://wiki.ubuntu.com/Releases
-CODENAME="${CODENAME:-INVALID}"
-
-# Sets CPU architecture using Ubuntu designation [1]
-# [1] https://help.ubuntu.com/lts/installation-guide/armhf/ch02s01.html
-ARCH="${ARCH:-INVALID}"
-
-# One-higher than directory containing this build script
-BASEDIR="$(git rev-parse --show-toplevel)"
-
-RESCUEZILLA_ISO_FILENAME=rescuezilla.$ARCH.$CODENAME.iso
-# The base build directory is "build/", unless overridden by an environment variable
-BASE_BUILD_DIRECTORY=${BASE_BUILD_DIRECTORY:-build/${BASE_BUILD_DIRECTORY}}
-BUILD_DIRECTORY=${BUILD_DIRECTORY:-${BASE_BUILD_DIRECTORY}/${CODENAME}.${ARCH}}
-mkdir -p "$BUILD_DIRECTORY/chroot"
-# Ensure the build directory is an absolute path
-BUILD_DIRECTORY=$( readlink -f "$BUILD_DIRECTORY" )
-PKG_CACHE_DIRECTORY=${PKG_CACHE_DIRECTORY:-pkg.cache}
-# Use a recent version of debootstrap from git
-DEBOOTSTRAP_SCRIPT_DIRECTORY=${BASEDIR}/src/third-party/debootstrap
-DEBOOTSTRAP_CACHE_DIRECTORY=debootstrap.$CODENAME.$ARCH
-APT_PKG_CACHE_DIRECTORY=var.cache.apt.archives.$CODENAME.$ARCH
-APT_INDEX_CACHE_DIRECTORY=var.lib.apt.lists.$CODENAME.$ARCH
+source src/scripts/common.bash
 
 # If the current commit is not tagged, the version number from `git
 # describe--tags` is X.Y.Z-abc-gGITSHA-dirty, where X.Y.Z is the previous tag,
@@ -60,61 +22,7 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-if [ "$CODENAME" = "INVALID" ] || [ "$ARCH" = "INVALID" ]; then
-  echo "The variable CODENAME=${CODENAME} or ARCH=${ARCH} was not set correctly. Are you using the Makefile? Please consult build instructions."
-  exit 1
-fi
-
-# Disable the debootstrap GPG validation for Ubuntu 18.04 (Bionic) after its public key
-# failed to validate on the Docker build environment container for an unclear reason.
-# See [1] for full write-up.
-#
-# [1] https://github.com/rescuezilla/rescuezilla/issues/538
-GPG_CHECK_OPTS=""
-if [ "$CODENAME" = "bionic" ]; then
-    GPG_CHECK_OPTS="--no-check-gpg"
-fi
-
-# debootstrap part 1/2: If package cache doesn't exist, download the packages
-# used in a base Debian system into the package cache directory [1]
-#
-# [1] https://unix.stackexchange.com/a/397966
-if [ ! -d "$PKG_CACHE_DIRECTORY/$DEBOOTSTRAP_CACHE_DIRECTORY" ] ; then
-    mkdir -p $PKG_CACHE_DIRECTORY/$DEBOOTSTRAP_CACHE_DIRECTORY
-    # Selecting a geographically closer APT mirror may increase network transfer rates.
-    #
-    # Note: After the support window for a specific release ends, the packages are moved to the 'old-releases' 
-    # URL [1], which means substitution becomes mandatory in-order to build older releases from scratch.
-    #
-    # [1] http://old-releases.ubuntu.com/ubuntu
-    TARGET_FOLDER=`readlink -f $PKG_CACHE_DIRECTORY/$DEBOOTSTRAP_CACHE_DIRECTORY`
-    pushd ${DEBOOTSTRAP_SCRIPT_DIRECTORY}
-    DEBOOTSTRAP_DIR=${DEBOOTSTRAP_SCRIPT_DIRECTORY} ./debootstrap ${GPG_CHECK_OPTS} --arch=$ARCH --foreign $CODENAME $TARGET_FOLDER http://archive.ubuntu.com/ubuntu/
-    RET=$?
-    popd
-    if [[ $RET -ne 0 ]]; then
-        echo "debootstrap part 1/2 failed. This may occur if you're using an older version of deboostrap"
-        echo "that doesn't have a script for \"$CODENAME\". Please consult the build instructions." 
-        exit 1
-    fi
-fi
-
-echo "Copy debootstrap package cache"
-rsync --archive "$PKG_CACHE_DIRECTORY/$DEBOOTSTRAP_CACHE_DIRECTORY/" "$BUILD_DIRECTORY/chroot/"
-RET=$?
-if [[ $RET -ne 0 ]]; then
-    echo "Failed to copy"
-    exit 1
-fi
- 
-# debootstrap part 2/2: Bootstrap a Debian root filesystem based on cached packages directory (part 2/2)
-chroot $BUILD_DIRECTORY/chroot/ /bin/bash -c "DEBOOTSTRAP_DIR=\"debootstrap\" ./debootstrap/debootstrap --second-stage ${GPG_CHECK_OPTS}"
-RET=$?
-if [[ $RET -ne 0 ]]; then
-    echo "debootstrap part 2/2 failed. This may occur if the package cache ($PKG_CACHE_DIRECTORY/$DEBOOTSTRAP_CACHE_DIRECTORY/)"
-    echo "exists but is not fully populated. If so, deleting this directory might help. Please consult the build instructions." 
-    exit 1
-fi
+bash src/scripts/build-chroot-env.bash 2>&1 | tee build_chroot_env.log
 
 # Ensures tmp directory has correct mode, including sticky-bit
 chmod 1777 "$BUILD_DIRECTORY/chroot/tmp/"
@@ -177,24 +85,7 @@ if  [ "$IS_INTEGRATION_TEST" == "true" ]; then
     fi
 fi
 
-# Renames the apt-preferences file to ensure backports and proposed
-# repositories for the desired code name are never automatically selected.
-pushd "chroot/etc/apt/preferences.d/"
-mv "89_CODENAME_SUBSTITUTE-backports_default" "89_$CODENAME-backports_default"
-mv "90_CODENAME_SUBSTITUTE-proposed_default" "90_$CODENAME-proposed_default"
-popd
-
-mv "chroot/etc/apt/sources.list.d/mozillateam-ubuntu-ppa-CODENAME_SUBSTITUTE.list" "chroot/etc/apt/sources.list.d/mozillateam-ubuntu-ppa-$CODENAME.list"
-
-pushd "chroot/etc/apt/sources.list.d/"
-# Since Ubuntu 22.04 (Jammy) firefox packaged as snap, which is not easily installed in a chroot
-# [1] https://bugs.launchpad.net/snappy/+bug/1609903
-mv "mozillateam-ubuntu-ppa-CODENAME_SUBSTITUTE.list" "mozillateam-ubuntu-ppa-CODENAME_SUBSTITUTE.list"
-popd
 APT_CONFIG_FILES=(
-    "chroot/etc/apt/preferences.d/89_$CODENAME-backports_default"
-    "chroot/etc/apt/preferences.d/90_$CODENAME-proposed_default"
-    "chroot/etc/apt/sources.list.d/mozillateam-ubuntu-ppa-$CODENAME.list"
     "chroot/etc/apt/sources.list"
 )
 # Substitute Ubuntu code name into relevant apt configuration files
@@ -202,7 +93,7 @@ for apt_config_file in "${APT_CONFIG_FILES[@]}"; do
   sed --in-place s/CODENAME_SUBSTITUTE/$CODENAME/g $apt_config_file
 done
 
-cp "$BASEDIR/src/scripts/chroot-steps-part-1.sh" "$BASEDIR/src/scripts/chroot-steps-part-2.sh" chroot
+cp "$BASEDIR/src/scripts/chroot-steps-part-1.sh" "$BASEDIR/src/scripts/chroot-steps-part-2.sh" "$BASEDIR/src/scripts/common.bash" "$BASEDIR/src/scripts/pkgs.list"  chroot
 # Launch first stage chroot. In other words, run commands within the root filesystem
 # that is being constructed using binaries from within that root filesystem.
 chroot chroot/ /bin/bash -c "IS_INTEGRATION_TEST=$IS_INTEGRATION_TEST ARCH=$ARCH CODENAME=$CODENAME /chroot-steps-part-1.sh"
@@ -212,6 +103,8 @@ if [[ $? -ne 0 ]]; then
 fi
 
 rm "$BUILD_DIRECTORY/chroot/install-linux-query-tcp-server.sh"
+
+echo "chroot-steps-part-1 done"
 
 cd "$BASEDIR"
 # Copy the source FHS filesystem tree onto the build's chroot FHS tree, overwriting the base files where conflicts occur.
@@ -233,12 +126,6 @@ fi
 ln -s /usr/share/applications/rescuezilla.desktop "$BUILD_DIRECTORY/chroot/home/ubuntu/Desktop/rescuezilla.desktop"
 ln -s /usr/share/applications/org.xfce.mousepad.desktop "$BUILD_DIRECTORY/chroot/home/ubuntu/Desktop/mousepad.desktop"
 ln -s /usr/share/applications/gparted.desktop "$BUILD_DIRECTORY/chroot/home/ubuntu/Desktop/gparted.desktop"
-
-if  [ "$CODENAME" == "oracular" ]; then
-  # HACK: Remove the Firefox desktop shortcut that this build system copied in earlier
-  # as Oracular doesn't have a mozillateam PPA based Firefox unlike earlier releases
-  rm "$BUILD_DIRECTORY/chroot/home/ubuntu/Desktop/firefox.desktop"
-fi
 
 # Process GRUB locale files
 pushd "$BUILD_DIRECTORY/image/boot/grub/locale/"
@@ -311,11 +198,14 @@ fi
 rm -rf chroot/var.lib.apt.lists
 
 umount -lf chroot/dev/
-rm chroot/root/.bash_history
-rm chroot/chroot-steps-part-1.sh chroot/chroot-steps-part-2.sh
+rm chroot/root/.bash_history || true 
+rm chroot/chroot-steps-part-1.sh chroot/chroot-steps-part-2.sh chroot/pkgs.list || true 
+
+echo "chroot-steps-part-2 done"
+
 
 mkdir -p image/casper image/memtest
-cp chroot/boot/vmlinuz-*-generic image/casper/vmlinuz
+cp chroot/boot/vmlinuz-*-amd64 image/casper/vmlinuz
 if [[ $? -ne 0 ]]; then
     echo "Error: Failed to copy vmlinuz image."
     exit 1
@@ -323,17 +213,9 @@ fi
 # Ensures compressed Linux kernel image is readable during the MD5 checksum at boot
 chmod 644 image/casper/vmlinuz
 
-cp chroot/boot/initrd.img-*-generic image/casper/initrd.lz
+cp chroot/boot/initrd.img-*-amd64 image/casper/initrd.lz
 if [[ $? -ne 0 ]]; then
     echo "Error: Failed to copy initrd image."
-    exit 1
-fi
-
-# The memtest binaries are copied in from the host system (ie, the Docker build container)
-# TODO(#540): Support 64-bit and EFI memtest packages
-cp /boot/memtest86+ia32.bin image/memtest/
-if [[ $? -ne 0 ]]; then
-    echo "Error: Failed to copy memtest86+ binary from host system."
     exit 1
 fi
 
@@ -432,9 +314,9 @@ cp -r /usr/lib/grub/i386-pc "$BUILD_DIRECTORY/image/boot/grub/"
 #
 # [1] https://www.rodsbooks.com/efi-bootloaders/index.html
 ESP_FAT_IMAGE="$BUILD_DIRECTORY/image/boot/esp.img"
-rm "$ESP_FAT_IMAGE"
+rm -rf "$ESP_FAT_IMAGE" || true 
 # Create an zeroed 6MiB file
-dd if=/dev/zero of="$ESP_FAT_IMAGE" count=6 bs=1M
+dd if=/dev/zero of="$ESP_FAT_IMAGE" count=24 bs=1M
 if [[ $? -ne 0 ]]; then
     echo "Error: Failed to create blank file for EFI System Partition."
     exit 1
@@ -468,6 +350,9 @@ if [[ $? -ne 0 ]]; then
     echo "Error: Failed to create the GRUB bootstrap image required for El Torito CD-ROM boot."
     exit 1
 fi
+
+echo "build ESP done"
+
 
 # Pack the 'image' subdirectory to become a bootable ISO 9660 image using xorrisofs (which is "xorriso" but using the mkisofs/genisoimage
 # compatibility mode).

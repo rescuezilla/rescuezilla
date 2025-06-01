@@ -88,7 +88,7 @@ else
   exit 1
 fi
 
-apt-get install --yes --no-install-recommends "${apt_pkg_list[@]}"
+apt-get install --yes --no-install-recommends -o Dpkg::Options::="--force-confnew" "${apt_pkg_list[@]}"
 if [[ $? -ne 0 ]]; then
     echo "Error: Failed to install packages."
     exit 1

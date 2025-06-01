@@ -9,7 +9,8 @@ cd /
 
 # Install other rescuezilla frontend and all dependencies.
 # gdebi installs deb files and resolves dependencies from the apt repositories.
-DEBIAN_FRONTEND="noninteractive" apt-get -y --allow-downgrades install -o Dpkg::Options::="--force-confnew" /rescuezilla*deb
+DEBIAN_FRONTEND="noninteractive" apt-get -y --no-install-recommends --allow-downgrades install -o \
+        Dpkg::Options::="--force-confnew" /rescuezilla*deb
 
 if [[ $? -ne 0 ]]; then
   echo "Error: Failed to install Rescuezilla deb packages."

@@ -1,5 +1,7 @@
-.DEFAULT_GOAL := oracular
-.PHONY: all focal lunar jammy oracular noble bionic-i386 deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-latest partclone-utils partclone-nbd install test integration-test clean-build-dir clean clean-all
+.DEFAULT_GOAL := bookworm
+.PHONY: all bookworm deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-latest partclone-utils partclone-nbd clean-build-dir clean clean-all
+
+#.PHONY: all bookworm deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-latest partclone-utils partclone-nbd install test integration-test clean-build-dir clean clean-all
 
 # FIXME: Properly specify the build artifacts to allow the GNU make to actually be smart about what gets built and when.
 # FIXME: This lack of specifying dependency graph means requires eg, `make focal` and `make lunar` has to be done as separate invocations
@@ -16,36 +18,29 @@ THREADS = `cat /proc/cpuinfo | grep process | tail -1 | cut -d":" -f2 | cut -d" 
 # Set shell to bash, so can use 'pipefail' to cause Make to exit when certain commands below (that pipe into tee) fails
 SHELL=/bin/bash
 
-all: focal
+all: bookworm
 
-buildscripts = src/scripts/build.sh src/scripts/chroot-steps-part-1.sh src/scripts/chroot-steps-part-2.sh
+buildscripts = src/scripts/build.sh src/scripts/chroot-steps-part-1.sh src/scripts/chroot-steps-part-2.sh src/scripts/build-chroot-env.bash src/scripts/common.bash 
 
 # ISO image based on Ubuntu 20.04 Focal LTS (Long Term Support) 64bit
-focal: ARCH=amd64
-focal: CODENAME=focal
+
+bookworm: ARCH=amd64
+bookworm: CODENAME=bookworm
 export ARCH CODENAME
-focal: deb sfdisk.v2.20.1.amd64 partclone-latest $(buildscripts)
-	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/scripts/build.sh
+bookworm: deb sfdisk.v2.20.1.amd64 partclone-latest $(buildscripts)
+	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/scripts/build.sh	
+
+bookworm1: ARCH=amd64
+bookworm1: CODENAME=bookworm
+export ARCH CODENAME
+bookworm1: $(buildscripts)
+	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/scripts/build.sh	
 
 jammy: ARCH=amd64
 jammy: CODENAME=jammy
 export ARCH CODENAME
 jammy: deb sfdisk.v2.20.1.amd64 partclone-latest $(buildscripts)
-	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/scripts/build.sh	
-
-oracular: ARCH=amd64
-oracular: CODENAME=oracular
-export ARCH CODENAME
-oracular: deb sfdisk.v2.20.1.amd64 partclone-latest $(buildscripts)
-	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/scripts/build.sh	
-
-# Note: Ubuntu 24.04 (Long Term Support) won't be released until around April 2024, as per the version string
-# Kept here as the unreleased version can be built and used as a kind of pre-alpha release
-noble: ARCH=amd64
-noble: CODENAME=noble
-export ARCH CODENAME
-noble: deb sfdisk.v2.20.1.amd64 partclone-latest $(buildscripts)
-	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/scripts/build.sh	
+	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/scripts/build.sh
 
 # ISO image based on Ubuntu 18.04 Bionic LTS (Long Term Support) 32bit (the last 32bit/i386 Ubuntu LTS release)
 bionic-i386: ARCH=i386
@@ -233,11 +228,11 @@ docker-stop:
 docker-add-safe-directory:
 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container ./src/scripts/git-add-safe-directory.sh
 
-docker-test:
-	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make test
+# docker-test:
+# 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make test
 
-docker-status:
-	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make status
+# docker-status:
+# 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make status
 
 # Start an interactive bash session for live debugging
 docker-bash:
@@ -246,25 +241,28 @@ docker-bash:
 docker-deb:
 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make deb
 
+docker-bookworm:
+	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make bookworm
+
 # Target for partclone-nbd in Docker, since it's been having permission problems on GitHub Actions
 docker-partclone-nbd:
 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make partclone-nbd
 
-docker-lunar:
-	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make lunar
+# docker-lunar:
+# 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make lunar
 
-docker-oracular:
-	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make oracular
+# docker-oracular:
+# 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make oracular
 
-docker-noble:
-	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make noble
+# docker-noble:
+# 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make noble
 
-docker-jammy:
-	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make jammy
+# docker-jammy:
+# 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make jammy
 
-docker-focal:
-	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make focal
+# docker-focal:
+# 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make focal
 
-docker-bionic-i386:
-	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make bionic-i386
+# docker-bionic-i386:
+# 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make bionic-i386
 
