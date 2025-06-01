@@ -5,14 +5,12 @@
 # Changing the URL to a mirror geographically closer mirror may increase
 # network transfer rates.
 #
-# [1] http://archive.ubuntu.com/ubuntu
+# [1] http://ftp.us.debian.org/debian
 # [2] http://old-releases.ubuntu.com/ubuntu
 
-deb http://archive.ubuntu.com/ubuntu CODENAME_SUBSTITUTE main universe multiverse
-deb http://archive.ubuntu.com/ubuntu CODENAME_SUBSTITUTE-updates main universe multiverse
-deb http://archive.ubuntu.com/ubuntu CODENAME_SUBSTITUTE-security main universe multiverse
+deb http://ftp.us.debian.org/debian CODENAME_SUBSTITUTE main contrib non-free non-free-firmware 
+deb http://ftp.us.debian.org/debian CODENAME_SUBSTITUTE-updates main contrib non-free non-free-firmware
 
-# Backports and proposed configured with a preference file to ensure its never
-# automatically selected
-deb http://archive.ubuntu.com/ubuntu CODENAME_SUBSTITUTE-backports main universe multiverse
-deb http://archive.ubuntu.com/ubuntu CODENAME_SUBSTITUTE-proposed main universe multiverse
+
+deb http://security.debian.org/debian-security CODENAME_SUBSTITUTE-security main contrib non-free non-free-firmware
+
