@@ -4,13 +4,14 @@
 # ttt113326 <tonio_k@mail.ru>, 2021.
 # Ali <am30304030@gmail.com>, 2023.
 # Ali <alisojasi14@gmail.com>, 2025.
+# Barbod Emadoddin <barbod9292@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2025-01-22 17:36+0000\n"
-"Last-Translator: Ali <alisojasi14@gmail.com>\n"
+"PO-Revision-Date: 2025-05-02 10:30+0000\n"
+"Last-Translator: Barbod Emadoddin <barbod9292@gmail.com>\n"
 "Language-Team: Persian <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/fa/>\n"
 "Language: fa\n"
@@ -18,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.10-dev\n"
+"X-Generator: Weblate 5.12-dev\n"
 
 msgid "Welcome"
 msgstr "خوش آمدید"
@@ -38,23 +39,24 @@ msgid "Restore"
 msgstr "بازیابی"
 
 msgid "Verify Image"
-msgstr "تایید تصویر"
+msgstr "تایید پشتیبان"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
 msgstr ""
-"کمک خواستن؟ با بررسی سوالات متداول Rescuezilla شروع کنید، سپس به انجمن "
+"کمک میخواهید؟ با بررسی سوالات متداول Rescuezilla شروع کنید، سپس به انجمن "
 "Rescuezilla بروید."
 
+#, fuzzy
 msgid "Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed."
 msgstr ""
 "در نظر بگیرید که ماهانه 1 دلار در وب سایت سرمایه گذاری جمعی Patreon مشارکت "
 "کنید تا Rescuezilla بتواند به توسعه خود ادامه دهد."
 
 msgid "Back"
-msgstr "عقب"
+msgstr "قبلی"
 
 msgid "Next >"
-msgstr "بعد"
+msgstr "بعدی >"
 
 msgid "Please wait..."
 msgstr "لطفا صبر کنید..."
@@ -64,11 +66,11 @@ msgstr "شناسایی درایوهای دیسک..."
 
 #, python-brace-format
 msgid "Unmounting: {path}"
-msgstr "در حال جداسازی:{path}"
+msgstr "در حال جداسازی (آنمونت):{path}"
 
 #, python-brace-format
 msgid "Unable to unmount {path}"
-msgstr "قادر به جداسازی {path} نبود"
+msgstr "قادر به جداسازی (آنمونت) {path} نبود"
 
 #, python-brace-format
 msgid "Running: {app}"
@@ -76,7 +78,7 @@ msgstr "در حال اجرا: {app}"
 
 #, python-brace-format
 msgid "Running {app} on {device}"
-msgstr "اجرای {app} در {device}"
+msgstr "در حال اجرای {app} بر روی {device}"
 
 msgid "Failed to run command: "
 msgstr "فرمان اجرا نشد "

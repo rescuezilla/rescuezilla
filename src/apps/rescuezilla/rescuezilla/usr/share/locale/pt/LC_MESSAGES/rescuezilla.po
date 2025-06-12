@@ -7,14 +7,14 @@
 # Shasheen Ediriweera <shasheene@gmail.com>, 2022, 2024.
 # Alexandre Hideki Watanabe <hidekiw@gmail.com>, 2023.
 # Bruno Batista <brucb879@gmail.com>, 2023.
-# Hugo Carvalho <hugokarvalho@hotmail.com>, 2023, 2024.
+# Hugo Carvalho <hugokarvalho@hotmail.com>, 2023, 2024, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2024-07-15 03:33+0000\n"
-"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
+"PO-Revision-Date: 2025-03-26 13:01+0000\n"
+"Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/pt/>\n"
 "Language: pt\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.7-dev\n"
+"X-Generator: Weblate 5.11-dev\n"
 
 msgid "Welcome"
 msgstr "Bem-vindo"
@@ -57,35 +57,35 @@ msgid "Back"
 msgstr "Voltar"
 
 msgid "Next >"
-msgstr "Próximo >"
+msgstr "Seguinte >"
 
 msgid "Please wait..."
-msgstr "Por favor espere..."
+msgstr "Por favor aguarde..."
 
 msgid "Identifying disk drives..."
-msgstr "Identificando drives de disco ..."
+msgstr "A identificar unidades de disco..."
 
 #, python-brace-format
 msgid "Unmounting: {path}"
-msgstr "Desmontando: {path}"
+msgstr "A desmontar: {path}"
 
 #, python-brace-format
 msgid "Unable to unmount {path}"
-msgstr "Impossível montar {path}"
+msgstr "Não foi possível desmontar {path}"
 
 #, python-brace-format
 msgid "Running: {app}"
-msgstr "Executando: {app}"
+msgstr "A executar: {app}"
 
 #, python-brace-format
 msgid "Running {app} on {device}"
-msgstr "Executando {app} no {device}"
+msgstr "A executar {app} no {device}"
 
 msgid "Failed to run command: "
 msgstr "Falha ao executar comandos: "
 
 msgid "Error querying drives: "
-msgstr "Erro requisitando drives: "
+msgstr "Erro ao consultar as unidades: "
 
 msgid "Clone"
 msgstr "Clonar"
@@ -105,40 +105,40 @@ msgid "This mode is for \"disk cloning\". Cloning means copying one drive and di
 msgstr ""
 "Este modo é para \"clonagem de disco\". Clonagem significa clonar um drive e "
 "de imediato escrever em outro driver. Isto é uma cópia direta de apenas um-"
-"passo, sem necessitar armazenamento termporário.\n"
+"passo, sem necessitar armazenamento temporário.\n"
 "\n"
 "Clonar é diferente de \"imagem de disco\". Imagem significa copiar tudo de "
-"um drive em varios arquivos grandes armazenados em um drive externo. "
-"Multiplas imagens podem ser salvas em um drive externo (como um hd portátil)"
-". Essas imagens podem ser restauradas para o drive original, ou em drives "
-"adicionais. Em outras palavras, para \"imagem de disco\" como o nome já diz "
-"a operação de backup copia seu drive para <i>arquivos</i> que precisam ser "
-"salvas em um drive ao menos temporariamente até ser restaurado em outro "
-"local.\n"
+"um drive em vários ficheiros grandes armazenados numa unidade externo. "
+"Várias imagens podem ser guardadas numa unidade externa (como um disco "
+"portátil). Essas imagens podem ser restauradas para o drive original, ou em "
+"drives adicionais. Em outras palavras, para \"imagem de disco\" como o nome "
+"já diz a operação de backup copia seu drive para <i>arquivos</i> que "
+"precisam ser salvas em um drive ao menos temporariamente até ser restaurado "
+"em outro local.\n"
 "\n"
-"Para usar wizard de \"imagem de disco\", clique <b>Voltar</b> e selecione "
-"<b>Backup</b> ou <b>Restaurar</b>."
+"Para usar assistentes de \"imagem de disco\", clique <b>Voltar</b> e "
+"selecione <b>Backup</b> ou <b>Restaurar</b>."
 
 msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
-msgstr "Para começar o guia de \"clonagem\", clique em <b>Próximo</b>"
+msgstr "Para começar o assistente de \"clonagem\", clique em <b>Seguinte</b>"
 
 msgid "Step 2: Select Source Drive"
-msgstr "Passo 2: Selecione o drive de origem"
+msgstr "Passo 2: Selecione a unidade de origem"
 
 msgid "Select the <b>source drive</b> to clone."
-msgstr "Selecione o <b>drive origem</b> para clonar."
+msgstr "Selecione a <b>unidade de origem</b> para clonar."
 
 msgid "Select the <b>destination drive</b> to overwrite."
-msgstr "Selecione o <b>drive de destino</b> para sobrescrever."
+msgstr "Selecione a <b>unidade de destino</b> para substituir."
 
 msgid "Step 4: Select Partitions to Clone"
 msgstr "Passo 4: Selecione Partições para Clonar"
 
 msgid "Select which partitions from the source drive to clone, and whether to overwrite the partition table. <b>Leave everything selected to completely clone the source drive to the destination drive.</b>"
 msgstr ""
-"Selecione quais partições do drive de origem clonar, e em qual tabela de "
-"partição será sobrescrito. <b>Deixe todos selecionado para clonar o drive de "
-"origem completamente para o drive de destino.</b>"
+"Selecione quais partições da unidade de origem clonar, e em qual tabela de "
+"partição será sobrescrito. <b>Deixe todos selecionado para clonar o unidade "
+"de origem completamente para o unidade de destino.</b>"
 
 msgid "Step 5: Confirm Cloning Configuration"
 msgstr "Passo 5: Confirme a Configuração de Clonagem"
@@ -150,14 +150,13 @@ msgid "Cloning the following partitions"
 msgstr "Clonando as seguintes partições"
 
 msgid "To start cloning, click <b>Next</b>."
-msgstr "Para iniciar a clonagem, clique em <b>Próximo</b>."
+msgstr "Para iniciar a clonagem, clique em <b>Seguinte</b>."
 
 #, python-brace-format
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
-"Você tem certeza que quer clonar o drive para o drive {destination_drive} ? "
-"Fazendo isso você irá sobrepor permanentemente todos os dados do drive de "
-"destino!"
+"Tem a certeza que pretende clonar a unidade para {destination_drive} ? Ao "
+"fazer isto irá sobrepor permanentemente todos os dados do unidade de destino!"
 
 msgid "Step 6: Cloning Disk"
 msgstr "Passo 6: Clonar o disco"
@@ -221,7 +220,7 @@ msgstr "Descrição"
 
 #, python-brace-format
 msgid "Drive {drive_number}"
-msgstr "Drive {drive_number}"
+msgstr "Unidade {drive_number}"
 
 #, python-brace-format
 msgid "Partition {partition_number}"
@@ -231,7 +230,9 @@ msgid "Step 3: Select Destination Drive"
 msgstr "Passo 3: Selecione o Drive de Destino"
 
 msgid "Click on the box below to select the source drive that you would like to create a backup image from."
-msgstr "Clique na caixa abaixo para selecionar o drive de origem do qual deseja criar uma imagem de backup."
+msgstr ""
+"Clique na caixa abaixo para selecionar a unidade de origem do qual deseja "
+"criar uma imagem de backup."
 
 msgid "Connected directly to my computer"
 msgstr "Conectado diretamente ao meu computador"
@@ -366,9 +367,12 @@ msgstr "Passo 4: Selecione a Pasta de Destino"
 msgid "Click <b>Browse</b> to select the folder on the destination drive where your new backup image will be saved.\n"
 "\n"
 "The folder a backup is saved in is usually a description of the computer, e.g. <b>office1</b> or <b>zack-laptop</b>."
-msgstr "Click em <b>Buscar</b> para selecionar uma pasta no drive de destino, onde sua nova imagem de backup será salva.\n"
+msgstr ""
+"Clique em <b>Explorar</b> para selecionar uma pasta na unidade de destino, "
+"onde a sua nova imagem de backup será guardada.\n"
 "\n"
-"A pasta onde um backup é salvo, normalmente é definida com o nome do computador, como por ex.: <b>trabalho1</b>, <b>vinny-laptop</b>."
+"A pasta onde um backup é guardado, normalmente é definido com o nome do "
+"computador, como por ex: <b>trabalho1</b>, <b>vinny-laptop</b>."
 
 #, python-brace-format
 msgid "You must select a folder inside {location}"
@@ -393,7 +397,8 @@ msgid "Last modified"
 msgstr "Última modificação"
 
 msgid "When you are happy with the destination folder, click <b>Next</b>."
-msgstr "Quando estiver bem com a pasta de destino, clique em <b>Próximo</b>."
+msgstr ""
+"Quando estiver satisfeito com a pasta de destino, clique em <b>Seguinte</b>."
 
 msgid "Step 5: Name Your Backup"
 msgstr "Passo 5: Nomeie Seu Backup"
@@ -444,8 +449,8 @@ msgstr "Melhor"
 
 msgid "When you are happy with the compression settings, click <b>Next</b>."
 msgstr ""
-"Quando estiver satisfeito com as configurações de compactação, clique em "
-"<b>Avançar</b>."
+"Quando estiver satisfeito com as definições de compressão, clique em "
+"<b>Seguinte</b>."
 
 msgid "Step 7: Confirm Backup Configuration"
 msgstr "Etapa 7: confirmar a configuração de backup"
@@ -484,7 +489,7 @@ msgstr ""
 "<b>Ativar \"Resgate\" pode suprimir erros importantes. Use com cautela.</b>"
 
 msgid "To start the backup, click <b>Next</b>."
-msgstr "Para iniciar o backup, click <b>Próximo</b>."
+msgstr "Para iniciar o backup, clique em <b>Seguinte</b>."
 
 msgid "Step 8: Creating Backup Image"
 msgstr "Passo 8: Criando Imagem de Backup"
@@ -553,16 +558,16 @@ msgid "Operation took {num_minutes} minutes."
 msgstr "Operação levou {num_minutes} minutos."
 
 msgid "To start a new session, click <b>Next</b>"
-msgstr "Para iniciar uma nova sessão, clique <b>Next</b>"
+msgstr "Para iniciar uma nova sessão, clique em <b>Seguinte</b>"
 
 msgid "Step 1: Select Image Location"
 msgstr "Passo 1: Selecione a localização da imagem"
 
 msgid "Where are the image files stored?"
-msgstr "Onde está o drive de origem?"
+msgstr "Onde está a unidade de origem?"
 
 msgid "Select the partition which contains the image files:"
-msgstr "Selecione o drive origem:"
+msgstr "Selecione a partição que contém os ficheiros de imagem:"
 
 msgid "Step 2: Select Backup Image"
 msgstr "Passo 2: Selecione a imagem de backup"
@@ -606,7 +611,18 @@ msgid "You will be overwriting the partition table."
 msgstr "Você irá substituir a tabela de partição."
 
 msgid "The \"destination partition\" column has been updated using the information stored within the backup image.\n\n<b>If partitions have been resized, new partitions added, or additional operating systems installed <i>since the backup image was created</i>, then the destination drive's partition table will not match the backup image, and overwriting the destination drive's partition table will render these resized and additional partitions permanently inaccessible.</b> If you have not modified the partition table in such a way since creating this backup then overwriting the partition table is completely safe and will have no negative effects."
-msgstr "A Coluna \"partição de destino\" foi atualizada utilizando informações armazenadas com a imagem de backup.\n\n<b>Caso as partições tenham sido redimensionadas/adicionadas, ou até mesmo novos sistemas operacionais installados <i>desde que o backup foi criado</i>, então a tabela de partição do drive de destino, não irá casar com a imagem de backup, e substituirá a tabela de partição do drive destino, fazendo essas partições redimensionadas/adicionadas serem permanentemente incacessíveis.</b> Se você NÃO modificou a tabela de partição deste modo desde que criou o backup, então substituir as tabelas de partições será seguro e não haverá efeitos negativos."
+msgstr ""
+"A Coluna \"partição de destino\" foi atualizada utilizando informações "
+"armazenadas com a imagem de backup.\n"
+"\n"
+"<b>Caso as partições tenham sido redimensionadas/adicionadas, ou até mesmo "
+"novos sistemas operacionais installados <i>desde que o backup foi criado</"
+"i>, então a tabela de partição da unidade de destino, não irá casar com a "
+"imagem de backup, e substituirá a tabela de partição do unidade destino, "
+"fazendo essas partições redimensionadas/adicionadas serem permanentemente "
+"inacessíveis.</b> Se NÃO modificou a tabela de partição deste modo desde que "
+"criou o backup, então substituir as tabelas de partições será seguro e não "
+"haverá efeitos negativos."
 
 msgid "You will <b>not</b> be overwriting the partition table."
 msgstr "Você <b>não</b> substituirá a tabela de partição."
@@ -615,7 +631,14 @@ msgid "The source does not contain a partition table."
 msgstr "A origem não contém uma tabela de partição."
 
 msgid "The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table."
-msgstr "A Coluna \"partição de destino\" foi atualizada com as informações de tabelas da partição do drive de destino.\n\n<b>A coluna de partição de destino pode ser modificada como um menu drop-down. Mapeamente incorreto das partições de destino, pode fazer o sistema não relizar mais boot do SO.</b> Se você não tiver certeza do mapeamento, considere se seria mais adequado substituir a tabela de partição."
+msgstr ""
+"A Coluna \"partição de destino\" foi atualizada com as informações de "
+"tabelas da partição da unidade de destino.\n"
+"\n"
+"<b>A coluna de partição de destino pode ser modificada como um menu drop-"
+"down. Mapeamente incorreto das partições de destino, pode fazer o sistema "
+"não relizar mais boot do SO.</b> Se você não tiver certeza do mapeamento, "
+"considere se seria mais adequado substituir a tabela de partição."
 
 msgid "No destination partition selected. Use the destination partition drop-down menu to select the destination"
 msgstr ""
@@ -626,7 +649,7 @@ msgid "Not restoring this partition"
 msgstr "Não está restaurando esta partição"
 
 msgid "When you are ready to continue, click <b>Next</b>."
-msgstr "Quando estiver pronto para continuar, clique em <b>Avançar</b>."
+msgstr "Quando estiver pronto para continuar, clique em <b>Seguinte</b>."
 
 msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
 msgstr ""
@@ -684,7 +707,7 @@ msgid "Will <b>NOT</b> be overwriting partition table"
 msgstr "<b>NÃO</b> substituirá a tabela de partições"
 
 msgid "To start the restore, click <b>Next</b>."
-msgstr "Para iniciar a restauração, click <b>Próximo</b>."
+msgstr "Para iniciar o restauro, clique em <b>Seguinte</b>."
 
 msgid "Restoring From Backup"
 msgstr "Restaurando do Backup"
@@ -851,7 +874,7 @@ msgid "Select one or more image(s) to verify."
 msgstr "Selecione uma ou mais imagens para verificar."
 
 msgid "To begin verification, click <b>Next</b>."
-msgstr "Para iniciar a verificação, clique em <b>Avançar</b>."
+msgstr "Para iniciar a verificação, clique em <b>Seguinte</b>."
 
 msgid "Verifying Image"
 msgstr "Verificando Imagem"

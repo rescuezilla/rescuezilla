@@ -4,15 +4,15 @@
 # tkatsageorgis
 # Submitted at: https://github.com/rescuezilla/rescuezilla/issues/171
 #
-# Thanassis Katsageorgis <tkatsageorgis@gmail.com>, 2021, 2022.
+# Thanassis Katsageorgis <tkatsageorgis@gmail.com>, 2021, 2022, 2025.
 # Shasheen Ediriweera <shasheene@gmail.com>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2023-10-29 21:07+0000\n"
-"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
+"PO-Revision-Date: 2025-03-23 19:06+0000\n"
+"Last-Translator: Thanassis Katsageorgis <tkatsageorgis@gmail.com>\n"
 "Language-Team: Greek <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/el/>\n"
 "Language: el\n"
@@ -20,10 +20,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.2-dev\n"
+"X-Generator: Weblate 5.11-dev\n"
 
 msgid "Welcome"
-msgstr "Καλωσήρθατε"
+msgstr "Καλωσήλθατε"
 
 msgid "Select an Option"
 msgstr "Επιλέξτε"
@@ -38,7 +38,7 @@ msgid "Restore"
 msgstr "Επαναφορά"
 
 msgid "Verify Image"
-msgstr "Επαλήθευση Εικόνας"
+msgstr "Επαλήθευση Ειδώλου"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
 msgstr ""
@@ -249,7 +249,7 @@ msgid "Where would you like to save the image?"
 msgstr "Πού βρίσκεται η μονάδα προορισμού;"
 
 msgid "Windows shared folder (SMB/CIFS, Samba)"
-msgstr "SMB/CIFS κοινόχρηστος φάκελος καθορίζεται παρακάτω"
+msgstr "Κοινόχρηστος Φάκελος Windows (SMB/CIFS, Samba)"
 
 msgid "Search network"
 msgstr "Αναζήτηση δικτύου"
@@ -258,13 +258,13 @@ msgid "Server"
 msgstr "Διακομιστής"
 
 msgid "Share location (UNC path)"
-msgstr "τοποθεσία κοινής χρήσης"
+msgstr "Τοποθεσία κοινής χρήσης (UNC path)"
 
 msgid "Username"
 msgstr "Όνομα Χρήστη"
 
 msgid "Password"
-msgstr "κωδικός Πρόσβασης"
+msgstr "Κωδικός Πρόσβασης"
 
 msgid "Domain"
 msgstr "Τομέας"
@@ -288,7 +288,7 @@ msgid "Select network-shared storage location:"
 msgstr "Επιλέξτε την δικτυακή κοινόχρηστη τοποθεσία αποθήκευσης:"
 
 msgid "Select the partition where the image files will be saved to"
-msgstr "Επιλέξτε το διαμέρισμα στο οποίο θα αποθηκευτούν τα αρχεία εικόνας"
+msgstr "Επιλέξτε το διαμέρισμα στο οποίο θα αποθηκευτούν τα αρχεία ειδώλου"
 
 msgid "Partition"
 msgstr "Διαμέρισμα"
@@ -336,8 +336,7 @@ msgstr "Δεν είναι δυνατή η πλήρης επεξεργασία τ
 
 msgid "Cannot find partition's associated partclone image"
 msgstr ""
-"Δεν είναι δυνατή η εύρεση της συσχετισμένης εικόνας partclone του "
-"διαμερίσματος"
+"Δεν είναι δυνατή η εύρεση του συσχετισμένου διαμερίσματος ειδώλου partclone"
 
 msgid "This can happen when loading images which Clonezilla was unable to completely backup."
 msgstr "Αυτό μπορεί να συμβεί κατά τη φόρτωση ειδώλων για τις οποίες το Clonezilla δεν ολοκλήρωσε επιτυχώς τη διαδικασία των αντιγράφων ασφαλείας."
@@ -360,7 +359,7 @@ msgstr "Άγνωστο Σύστημα Αρχείων"
 #, python-brace-format
 msgid "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance."
 msgstr ""
-"Οι εκτεταμένες πληροφορίες διαμερίσματος του αντιγράφου ασφαλείας είναι "
+"Οι πληροφορίες του αντιγράφου ασφαλείας του εκτεταμένου διαμερίσματος είναι "
 "κενές. Εάν το αντίγραφο ασφαλείας περιέχει ένα εκτεταμένο διαμέρισμα, αυτό "
 "δεν θα αποκατασταθεί σωστά. Όλα τα δεδομένα εξακολουθούν να είναι πλήρως "
 "ανακτήσιμα, αλλά απαιτείται χειροκίνητη παρέμβαση για την πλήρη επαναφορά "
@@ -386,7 +385,7 @@ msgstr "Κάντε κλικ στο κουμπί <b>Αναζήτηση</b> για
 
 #, python-brace-format
 msgid "You must select a folder inside {location}"
-msgstr "Πρέπει να επιλέξετε ένα φάκελο μέσα στη {location}"
+msgstr "Πρέπει να επιλέξετε ένα φάκελο μέσα στο {location}"
 
 msgid "Please select a different folder."
 msgstr "Παρακαλώ επιλέξτε διαφορετικό φάκελο."
@@ -577,10 +576,10 @@ msgid "Step 1: Select Image Location"
 msgstr "Βήμα 1: Επιλογή Τοποθεσίας Ειδώλου"
 
 msgid "Where are the image files stored?"
-msgstr "Πού είναι η μονάδα προέλευσης;"
+msgstr "Πού αποθηκεύονται τα αρχεία ειδώλων;"
 
 msgid "Select the partition which contains the image files:"
-msgstr "Επιλέξτε μονάδα προέλευσης:"
+msgstr "Επιλέξτε το διαμέρισμα που περιέχει τα αρχεία ειδώλων:"
 
 msgid "Step 2: Select Backup Image"
 msgstr "Βήμα 2: Επιλέξτε Είδωλο Αντιγράφου Ασφαλείας"
@@ -588,7 +587,7 @@ msgstr "Βήμα 2: Επιλέξτε Είδωλο Αντιγράφου Ασφα�
 msgid "Click <b>Browse</b> to select the folder containing image files."
 msgstr ""
 "Κάντε κλικ στο <b>Εύρεση</b> για να επιλέξετε το φάκελο που περιέχει αρχεία "
-"εικόνας."
+"ειδώλων."
 
 msgid "Select the image file to restore."
 msgstr "Επιλέξτε το αρχείο ειδώλου για επαναφορά."
@@ -643,7 +642,7 @@ msgid "You will <b>not</b> be overwriting the partition table."
 msgstr "<b>Δεν</b> θα αντικαταστήσετε τον πίνακα διαμερισμάτων."
 
 msgid "The source does not contain a partition table."
-msgstr "Η προέλευση δεν περιέχει πίνακα διαμερισμάτων."
+msgstr "Η πηγή δεν περιέχει πίνακα διαμερισμάτων."
 
 msgid "The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table."
 msgstr "Η στήλη \"διαμέρισμα προορισμού\" έχει ενημερωθεί με τις υπάρχουσες πληροφορίες πίνακα διαμερισμάτων της μονάδας δίσκου προορισμού.\n\n<b>Η στήλη διαμερίσματος προορισμού μπορεί να τροποποιηθεί ως αναπτυσσόμενο μενού. Η εσφαλμένη αντιστοίχιση των διαμερισμάτων προορισμού ενδέχεται να προκαλέσει τη μη εκκίνηση.</b> Εάν δεν είστε βέβαιοι για την αντιστοίχιση, εξετάστε εάν είναι πιο κατάλληλο να αντικαταστήσετε τον πίνακα διαμερισμάτων."
@@ -841,7 +840,7 @@ msgid "Image Explorer (beta)"
 msgstr "Εξερεύνηση Εικόνων (βήτα)"
 
 msgid "Select the image file to explore"
-msgstr "Επιλέξτε το αρχείο εικόνας για εξερεύνηση"
+msgstr "Επιλέξτε το αρχείο ειδώλου για εξερεύνηση"
 
 msgid "Step 3: Select Partition to Explore"
 msgstr "Βήμα 3: Επιλογή Διαμερίσματος για Εξερεύνηση"
@@ -876,16 +875,16 @@ msgid "Verify"
 msgstr "Επαλήθευση"
 
 msgid "Select one or more image(s) to verify."
-msgstr "Επιλέξτε μία ή περισσότερες εικόνες για επαλήθευση."
+msgstr "Επιλέξτε ένα ή περισσότερα είδωλα για επαλήθευση."
 
 msgid "To begin verification, click <b>Next</b>."
 msgstr "Για να ξεκινήσετε την επαλήθευση, κάντε κλικ στο<b>Next</b>."
 
 msgid "Verifying Image"
-msgstr "Επαλήθευση Εικόνας"
+msgstr "Επαλήθευση Ειδώλου"
 
 msgid "Verifying the selected image(s)."
-msgstr "Επαλήθευση των επιλεγμένων εικόνων."
+msgstr "Επαλήθευση των επιλεγμένων ειδώλων."
 
 #, python-brace-format
 msgid "Verifying {image_name}"
@@ -901,7 +900,7 @@ msgid "Verification Summary"
 msgstr "Σύνοψη επαλήθευσης"
 
 msgid "To verify another image, click <b>Back</b>."
-msgstr "Για να επαληθεύσετε μια άλλη εικόνα, κάντε κλικ στο <b>Back</b>."
+msgstr "Για να επαληθεύσετε ένα άλλο είδωλο, κάντε κλικ στο <b>Back</b>."
 
 msgid "✔"
 msgstr "✔"
