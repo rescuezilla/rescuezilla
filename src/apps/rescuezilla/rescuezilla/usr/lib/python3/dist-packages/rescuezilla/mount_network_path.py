@@ -262,8 +262,19 @@ class MountNetworkPath:
                 GLib.idle_add(self.callback, False, "Must specify exported directory.")
                 return
 
-            mount_cmd_list = ["mount.nfs", server + ":" + exported_dir, settings['destination_path']]
-            mount_process, mount_flat_command_string, mount_failed_message = Utility.interruptable_run("Mounting network shared folder with NFS: ", mount_cmd_list, use_c_locale=False, is_shutdown_fn=self.is_stop_requested)
+            nfs_arguments = int(settings['version'])
+            if nfs_arguments is 3:
+                mount_cmd_list = ["mount.nfs", server + ":" + exported_dir, settings['destination_path'], "-o", "vers=" + settings['version']]
+                mount_process, mount_flat_command_string, mount_failed_message = Utility.interruptable_run("Mounting network shared folder with NFSv3: ", mount_cmd_list, use_c_locale=False, is_shutdown_fn=self.is_stop_requested)
+            elif nfs_arguments is 4:
+                mount_cmd_list = ["mount.nfs4", server + ":" + exported_dir, settings['destination_path']]
+                mount_process, mount_flat_command_string, mount_failed_message = Utility.interruptable_run("Mounting network shared folder with NFSv4: ", mount_cmd_list, use_c_locale=False, is_shutdown_fn=self.is_stop_requested)
+            else:
+                unknown_nfs_version_msg = _("Unknown NFS version selected, please try again")
+                GLib.idle_add(self.please_wait_popup.destroy)
+                GLib.idle_add(self.callback, False, unknown_nfs_version_msg)
+                return
+
             if mount_process.returncode != 0:
                 check_password_msg = _("Please ensure the server and exported path are correct, and try again.")
                 GLib.idle_add(self.please_wait_popup.destroy)
