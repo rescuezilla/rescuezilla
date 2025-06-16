@@ -65,14 +65,23 @@ if [ "$CODENAME" = "INVALID" ] || [ "$ARCH" = "INVALID" ]; then
   exit 1
 fi
 
-# Disable the debootstrap GPG validation for Ubuntu 18.04 (Bionic) after its public key
-# failed to validate on the Docker build environment container for an unclear reason.
-# See [1] for full write-up.
+# For some older/end-of-life Ubuntu releases, we need to specify the paths to the GPG keys manually.
 #
-# [1] https://github.com/rescuezilla/rescuezilla/issues/538
-GPG_CHECK_OPTS=""
-if [ "$CODENAME" = "bionic" ]; then
-    GPG_CHECK_OPTS="--no-check-gpg"
+# Specifically:
+# * Ubuntu 18.04 (Bionic) uses Ubuntu Archive Automatic Signing Key (2012)
+# * Ubuntu 20.04 (Focal) uses Ubuntu Archive Automatic Signing Key (2018) 
+#
+# The public keys to verify the GPG signatures of the Ubuntu DEB packages appear rotated every 6 or so years,
+# The build host machine (eg, Docker container)'s "ubuntu-keyring" package provides these GPG public keys, and the
+# "debootstrap" (eg, src/third-party/debootstrap submodule) references these paths.
+# Unfortunately since these two packages come from different sources (debootstrap is the latest upstream),
+# the paths aren't guaranteed to be aligned, so we specify them manually for now
+#
+# Useful commands :
+# * List all ubuntu GPG keys paths within the keyring package: dpkg -L ubuntu-keyring 
+# * List the keys within the keyring: gpg --show-keys /usr/share/keyrings/ubuntu-archive-keyring.gpg
+if [ "$CODENAME" == "bionic" ] || [ "$CODENAME" == "focal" ]; then
+    KEYRING_OPTS="--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg"
 fi
 
 # debootstrap part 1/2: If package cache doesn't exist, download the packages
@@ -89,7 +98,7 @@ if [ ! -d "$PKG_CACHE_DIRECTORY/$DEBOOTSTRAP_CACHE_DIRECTORY" ] ; then
     # [1] http://old-releases.ubuntu.com/ubuntu
     TARGET_FOLDER=`readlink -f $PKG_CACHE_DIRECTORY/$DEBOOTSTRAP_CACHE_DIRECTORY`
     pushd ${DEBOOTSTRAP_SCRIPT_DIRECTORY}
-    DEBOOTSTRAP_DIR=${DEBOOTSTRAP_SCRIPT_DIRECTORY} ./debootstrap ${GPG_CHECK_OPTS} --arch=$ARCH --foreign $CODENAME $TARGET_FOLDER http://archive.ubuntu.com/ubuntu/
+    DEBOOTSTRAP_DIR=${DEBOOTSTRAP_SCRIPT_DIRECTORY} ./debootstrap ${KEYRING_OPTS} --arch=$ARCH --foreign $CODENAME $TARGET_FOLDER http://archive.ubuntu.com/ubuntu/
     RET=$?
     popd
     if [[ $RET -ne 0 ]]; then
@@ -108,7 +117,7 @@ if [[ $RET -ne 0 ]]; then
 fi
  
 # debootstrap part 2/2: Bootstrap a Debian root filesystem based on cached packages directory (part 2/2)
-chroot $BUILD_DIRECTORY/chroot/ /bin/bash -c "DEBOOTSTRAP_DIR=\"debootstrap\" ./debootstrap/debootstrap --second-stage ${GPG_CHECK_OPTS}"
+chroot $BUILD_DIRECTORY/chroot/ /bin/bash -c "DEBOOTSTRAP_DIR=\"debootstrap\" ./debootstrap/debootstrap --second-stage"
 RET=$?
 if [[ $RET -ne 0 ]]; then
     echo "debootstrap part 2/2 failed. This may occur if the package cache ($PKG_CACHE_DIRECTORY/$DEBOOTSTRAP_CACHE_DIRECTORY/)"
