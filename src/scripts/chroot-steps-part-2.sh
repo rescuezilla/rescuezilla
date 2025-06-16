@@ -48,6 +48,11 @@ mv /partclone.xfs /usr/sbin/
 mkdir --parents /root/.local/share/applications/
 rsync -aP /home/ubuntu/.local/share/applications/mimeapps.list /root/.local/share/applications/
 
+# Set the default xdg-open MIME association for root user on folder paths
+# to use PCManFM file manager, rather that baobab (GNOME disks)
+# Required for Image Explorer, as it uses 'xdg-open' on a folder path
+xdg-mime default pcmanfm.desktop inode/directory
+
 update-alternatives --set x-terminal-emulator /usr/bin/xfce4-terminal
 update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/rescuezilla-logo/rescuezilla-logo.plymouth 100
 update-alternatives --set default.plymouth /usr/share/plymouth/themes/rescuezilla-logo/rescuezilla-logo.plymouth
