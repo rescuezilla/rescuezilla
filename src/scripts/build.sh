@@ -65,15 +65,27 @@ if [ "$CODENAME" = "INVALID" ] || [ "$ARCH" = "INVALID" ]; then
   exit 1
 fi
 
-# Disable the debootstrap GPG validation for Ubuntu 18.04 (Bionic) after its public key
-# failed to validate on the Docker build environment container for an unclear reason.
-# See [1] for full write-up.
-#
-# [1] https://github.com/rescuezilla/rescuezilla/issues/538
+# Explicitly import GPG keys for end-of-life Ubuntu releases for debootstrap GPG validation
 GPG_CHECK_OPTS=""
 if [ "$CODENAME" = "bionic" ]; then
-    GPG_CHECK_OPTS="--no-check-gpg"
+    ubuntu_archive_automatic_signing_key_2012="${BUILD_DIRECTORY}/ubuntu-archive-automatic-signing-key-2012.gpg"
+    # FIXME: apt-key is deprecated [1] because it writes the key to one big keyring file that all repositories trust
+    # [1] https://askubuntu.com/questions/1286545/what-commands-exactly-should-replace-the-deprecated-apt-key
+    gpg --lock-never --no-default-keyring --keyring "${ubuntu_archive_automatic_signing_key_2012}" --keyserver keyserver.ubuntu.com --recv-keys 3B4FE6ACC0B21F32
+    # Specify the keyring for the newly imported key
+    GPG_CHECK_OPTS="--keyring=${ubuntu_archive_automatic_signing_key_2012}"
 fi
+
+if [ "$CODENAME" = "focal" ]; then
+    ubuntu_archive_automatic_signing_key_2018="${BUILD_DIRECTORY}/ubuntu-archive-automatic-signing-key-2018.gpg"
+    # FIXME: apt-key is deprecated [1] because it writes the key to one big keyring file that all repositories trust
+    # [1] https://askubuntu.com/questions/1286545/what-commands-exactly-should-replace-the-deprecated-apt-key
+    gpg --lock-never --no-default-keyring --keyring "${ubuntu_archive_automatic_signing_key_2018}" --keyserver keyserver.ubuntu.com --recv-keys 871920D1991BC93C
+    # Specify the keyring for the newly imported key
+    GPG_CHECK_OPTS="--keyring=${ubuntu_archive_automatic_signing_key_2018}"
+fi
+
+
 
 # debootstrap part 1/2: If package cache doesn't exist, download the packages
 # used in a base Debian system into the package cache directory [1]
@@ -108,7 +120,7 @@ if [[ $RET -ne 0 ]]; then
 fi
  
 # debootstrap part 2/2: Bootstrap a Debian root filesystem based on cached packages directory (part 2/2)
-chroot $BUILD_DIRECTORY/chroot/ /bin/bash -c "DEBOOTSTRAP_DIR=\"debootstrap\" ./debootstrap/debootstrap --second-stage ${GPG_CHECK_OPTS}"
+chroot $BUILD_DIRECTORY/chroot/ /bin/bash -c "DEBOOTSTRAP_DIR=\"debootstrap\" ./debootstrap/debootstrap --second-stage"
 RET=$?
 if [[ $RET -ne 0 ]]; then
     echo "debootstrap part 2/2 failed. This may occur if the package cache ($PKG_CACHE_DIRECTORY/$DEBOOTSTRAP_CACHE_DIRECTORY/)"
