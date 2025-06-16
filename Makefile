@@ -143,11 +143,12 @@ partclone-nbd: AMD64_BUILD_DIR=$(BASE_BUILD_DIRECTORY)/$(CODENAME).$(ARCH)
 partclone-nbd: PARTCLONE_NBD_BUILD_DIR=$(BASE_BUILD_DIRECTORY)/partclone-nbd
 partclone-nbd:
 	mkdir --parents $(PARTCLONE_NBD_BUILD_DIR) $(AMD64_BUILD_DIR)/chroot/
+	# Create build scripts with cmake
 	cd $(PARTCLONE_NBD_BUILD_DIR) && cmake ${SRC_DIR}
-	cd $(PARTCLONE_NBD_BUILD_DIR) && make
-	# Create deb package from a standard Makefile's `make install` using the checkinstall tool (for cleaner uninstall)
-	cd $(PARTCLONE_NBD_BUILD_DIR) && sudo checkinstall --default --install=no --nodoc --pkgname partclone-nbd --pkgversion 0.0.3 --pkgrelease 1 --maintainer 'rescuezilla@gmail.com' make install
-	mv $(PARTCLONE_NBD_BUILD_DIR)/partclone-nbd_0.0.3-1_amd64.deb $(AMD64_BUILD_DIR)/chroot/
+	# Compile and package DEB. Override the user-managed /opt target installation directory with /usr/local since
+	# build scripts constitutes the system administrator of the operating system being constructed so /opt is less appropriate
+	cd $(PARTCLONE_NBD_BUILD_DIR) && cpack -D CPACK_PACKAGING_INSTALL_PREFIX="/usr/local" -G DEB
+	mv $(PARTCLONE_NBD_BUILD_DIR)/_packages/partclone-nbd_0.0.4_amd64.deb $(AMD64_BUILD_DIR)/chroot/
 
 clean-build-dir:
 	$(info * Unmounting chroot bind mounts)
