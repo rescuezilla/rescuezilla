@@ -1,5 +1,5 @@
-.DEFAULT_GOAL := oracular
-.PHONY: all focal lunar jammy oracular noble bionic-i386 deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-latest partclone-utils partclone-nbd install test integration-test clean-build-dir clean clean-all
+.DEFAULT_GOAL := plucky
+.PHONY: all focal lunar jammy oracular plucky noble bionic-i386 deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-latest partclone-utils partclone-nbd install test integration-test clean-build-dir clean clean-all
 
 # FIXME: Properly specify the build artifacts to allow the GNU make to actually be smart about what gets built and when.
 # FIXME: This lack of specifying dependency graph means requires eg, `make focal` and `make lunar` has to be done as separate invocations
@@ -37,6 +37,12 @@ oracular: ARCH=amd64
 oracular: CODENAME=oracular
 export ARCH CODENAME
 oracular: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-nbd $(buildscripts)
+	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/scripts/build.sh	
+
+plucky: ARCH=amd64
+plucky: CODENAME=plucky
+export ARCH CODENAME
+plucky: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-nbd $(buildscripts)
 	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/scripts/build.sh	
 
 # Note: Ubuntu 24.04 (Long Term Support) won't be released until around April 2024, as per the version string
@@ -256,6 +262,9 @@ docker-lunar:
 
 docker-oracular:
 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make oracular
+
+docker-plucky:
+	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make plucky
 
 docker-noble:
 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make noble

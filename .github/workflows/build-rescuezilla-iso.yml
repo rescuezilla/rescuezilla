@@ -43,6 +43,12 @@ jobs:
         run: make docker-test
 
       - run: make docker-status
+      - name: Make Ubuntu 25.04 (Plucky) ISO
+        run: make docker-plucky
+      - run: sudo mv build/rescuezilla.amd64.plucky.iso completed-artifacts/rescuezilla-${{github.ref_name}}-64bit.plucky.iso
+      - run: sudo make clean-all
+
+      - run: make docker-status
       - name: Make Ubuntu 24.04 LTS (Noble) ISO
         run: make docker-noble
       - run: sudo mv build/rescuezilla.amd64.noble.iso completed-artifacts/rescuezilla-${{github.ref_name}}-64bit.noble.iso

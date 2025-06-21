@@ -16,9 +16,9 @@ LOG_BASE_PATH="${2:-"$BASEDIR"}"
 
 # Mapping between the ISO image filename and the ISO check
 declare -A expected_version
-expected_version["rescuezilla.amd64.noble.iso"]="Ubuntu 24.04"
-expected_version["rescuezilla.amd64.mantic.iso"]="Ubuntu 23.10"
+expected_version["rescuezilla.amd64.plucky.iso"]="Ubuntu 25.04"
 expected_version["rescuezilla.amd64.oracular.iso"]="Ubuntu 24.10"
+expected_version["rescuezilla.amd64.noble.iso"]="Ubuntu 24.04"
 expected_version["rescuezilla.amd64.jammy.iso"]="Ubuntu 22.04"
 expected_version["rescuezilla.amd64.focal.iso"]="Ubuntu 20.04"
 expected_version["rescuezilla.i386.bionic.iso"]="Ubuntu 18.04"

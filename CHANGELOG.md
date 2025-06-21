@@ -1,5 +1,6 @@
 #  Rescuezilla v2.6.1 (unreleased)
 
+* Adds release based on Ubuntu 25.04 (Plucky) for best support of new hardware
 * Fixed regression where swap partitions stayed unintendedly mounted causing restore and clone operations to destination disks containing Linux swap partitions to fail ([#515](https://github.com/rescuezilla/rescuezilla/issues/515#issuecomment-2994462320))
     * Impacted Ubuntu 23.10 (Mantic) and newer variants of Ubuntu 24.04 (Noble) and Ubuntu 24.10 (Oracular) so on the newer variants since Rescuezilla v2.5 (2024-05-12) 
         * Fixed related (very minor) issue where the operating system time on these specific variants were not being initialized as intended due to 'hwclock' not being installed
