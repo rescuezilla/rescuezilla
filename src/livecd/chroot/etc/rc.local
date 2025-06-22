@@ -30,6 +30,8 @@ swapoff --all
 # this path can be safely unmounted.
 #
 # [1] https://github.com/rescuezilla/rescuezilla/wiki/Installing-Rescuezilla-as-a-rescue-partition
-sudo umount -lrf /isodevice
+if [ -d "/isodevice" ]; then
+    sudo umount -lrf /isodevice
+fi
 
 exit 0
