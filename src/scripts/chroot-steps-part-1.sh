@@ -159,6 +159,8 @@ pkgs_specific_to_ubuntu2410_oracular=(
                        # "Legacy "local authority" (.pkla) backend for polkitd" required so polkit works on Mantic
                        "polkitd-pkla"
                        "ibus-anthy"
+                       # Needed for 'hwclock' package used by "rc-local.service", moved from base "util-linux" since Ubuntu 23.10 (Mantic)
+                       "util-linux-extra"
 )
 
 pkgs_specific_to_ubuntu2404_noble=(
@@ -183,6 +185,8 @@ pkgs_specific_to_ubuntu2404_noble=(
                        "polkitd-pkla"
                        "reiser4progs"
                        "python3-whichcraft"
+                       # Needed for 'hwclock' package used by "rc-local.service", moved from base "util-linux" since Ubuntu 23.10 (Mantic)
+                       "util-linux-extra"
 )
 
 # Languages on the system

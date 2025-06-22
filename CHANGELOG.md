@@ -1,5 +1,7 @@
 #  Rescuezilla v2.6.1 (unreleased)
 
+* Fixed regression where swap partitions stayed unintendedly mounted causing restore and clone operations to destination disks containing Linux swap partitions to fail ([#515](https://github.com/rescuezilla/rescuezilla/issues/515#issuecomment-2994462320))
+    * Impacted Ubuntu 23.10 (Mantic) and newer variants of Ubuntu 24.04 (Noble) and Ubuntu 24.10 (Oracular) so on the newer variants since Rescuezilla v2.5 (2024-05-12) 
 * Renabled Image Explorer (beta) after it was temporarily disabled in v2.6.0 ([#557](https://github.com/rescuezilla/rescuezilla/issues/557))
     * Switched packaging the underlying "partclone-nbd" executable from the "checkinstall" wrapper to a more canonical packaging strategy using CMake's CPack (to avoid bug in 'checkinstall' script)
 * Enabled Firefox on the Ubuntu 24.10 (Oracular) release after it was temporarily excluded in v2.6.0 ([#556](https://github.com/rescuezilla/rescuezilla/issues/556))
