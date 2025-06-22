@@ -10,6 +10,21 @@
 # bits.
 #
 # By default this script does nothing.
+#
+# TODO(#575): Deprecate this script [1] in favor of better solutions and also native systemd services with proper dependency
+# management including eg, the issues around this script is launched with '-e' to exit on first error.
+#
+# [1] https://github.com/rescuezilla/rescuezilla/issues/575
+
+# Disable swap partitions as Rescuezilla for disaster recovery from dying disks
+# or in data forensics, situations where writing to a disk is a bad thing.
+#
+# FIXME(#576): Find a way ensure swap is never enabled including early in the boot process. 
+# It has been attempted to eg:
+# * Disabling 'systemd-gpt-auto-generator' (which includes the swap mounting code) with the kernel boot option 'systemd.gpt_auto=no'
+# * Masking the 'swap.target' systemd unit (`man 7 systemd.special`)
+# However this hasn't worked, but `swapoff --all` does.
+swapoff --all
 
 # Set the time to the local hardware clock
 hwclock -s --localtime --noadjfile
@@ -19,11 +34,6 @@ hwclock -s --localtime --noadjfile
 # FIXME: Find a better way. Permissions are managed by git works well, but
 # FIXME: user/group ownership are not tracked.
 chown -R ubuntu:ubuntu /home/ubuntu
-
-# Disable swap partitions as Rescuezilla for disaster recovery from dying disks
-# or in data forensics, situations where writing to a disk is a bad thing.
-# FIXME: Find a way ensure swap is never enabled including early in the boot process.
-swapoff --all
 
 # When Rescuezilla is booted using "toram" kernel option, the /isodevice path is
 # automatically mounted for some reason. But after the boot with "toram" is complete
