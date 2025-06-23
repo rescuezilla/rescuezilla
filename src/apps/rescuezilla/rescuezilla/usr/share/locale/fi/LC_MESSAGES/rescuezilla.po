@@ -272,6 +272,9 @@ msgstr "Viety polku"
 msgid "Identity File"
 msgstr "Identiteettitiedosto"
 
+msgid "Port"
+msgstr ""
+
 msgid "Optional"
 msgstr "Valinnainen"
 

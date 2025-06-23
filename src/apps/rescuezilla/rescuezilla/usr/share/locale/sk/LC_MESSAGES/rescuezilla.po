@@ -270,6 +270,9 @@ msgstr "Exportovaná cesta"
 msgid "Identity File"
 msgstr "Súbor identity"
 
+msgid "Port"
+msgstr ""
+
 msgid "Optional"
 msgstr "Voliteľné"
 

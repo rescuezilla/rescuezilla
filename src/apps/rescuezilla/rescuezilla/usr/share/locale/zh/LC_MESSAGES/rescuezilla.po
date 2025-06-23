@@ -249,6 +249,9 @@ msgstr "导出路径"
 msgid "Identity File"
 msgstr "身份文件"
 
+msgid "Port"
+msgstr ""
+
 msgid "Optional"
 msgstr "可选"
 

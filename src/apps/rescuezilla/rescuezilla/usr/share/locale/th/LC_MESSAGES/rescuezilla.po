@@ -293,6 +293,9 @@ msgstr "เส้นทางที่ใช้นำออก"
 msgid "Identity File"
 msgstr "ไฟล์ระบุอัตลักษณ์"
 
+msgid "Port"
+msgstr ""
+
 msgid "Optional"
 msgstr "ตัวเลือก"
 

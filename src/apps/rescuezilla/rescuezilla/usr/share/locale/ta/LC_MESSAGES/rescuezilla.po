@@ -274,6 +274,9 @@ msgstr "ஏற்றுமதி செய்யப்பட்ட பாதை"
 msgid "Identity File"
 msgstr "அடையாள கோப்பு"
 
+msgid "Port"
+msgstr ""
+
 msgid "Optional"
 msgstr "விரும்பினால்"
 

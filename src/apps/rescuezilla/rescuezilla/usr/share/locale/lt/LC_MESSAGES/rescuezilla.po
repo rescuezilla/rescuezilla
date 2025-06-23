@@ -274,6 +274,9 @@ msgstr "Eksportuotas kelias"
 msgid "Identity File"
 msgstr "Tapatybės failas"
 
+msgid "Port"
+msgstr ""
+
 msgid "Optional"
 msgstr "Neprivaloma"
 

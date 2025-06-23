@@ -264,6 +264,9 @@ msgstr "Đường dẫn xuất"
 msgid "Identity File"
 msgstr "Tập tin nhận dạng"
 
+msgid "Port"
+msgstr ""
+
 msgid "Optional"
 msgstr "Tùy chọn khác"
 

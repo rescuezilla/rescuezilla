@@ -247,6 +247,9 @@ msgstr "내보내질 경로"
 msgid "Identity File"
 msgstr "키 파일"
 
+msgid "Port"
+msgstr ""
+
 msgid "Optional"
 msgstr "선택 사항"
 

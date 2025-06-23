@@ -281,6 +281,9 @@ msgstr "Διαδρομή εξαγωγής"
 msgid "Identity File"
 msgstr "Αναγνώριση Αρχείου"
 
+msgid "Port"
+msgstr ""
+
 msgid "Optional"
 msgstr "Προαιρετικό"
 

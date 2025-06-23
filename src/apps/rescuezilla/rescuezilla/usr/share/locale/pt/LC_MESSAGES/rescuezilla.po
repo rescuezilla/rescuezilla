@@ -276,6 +276,9 @@ msgstr "Caminho exportado"
 msgid "Identity File"
 msgstr "Arquivo de identificação"
 
+msgid "Port"
+msgstr ""
+
 msgid "Optional"
 msgstr "Opcional"
 

@@ -278,6 +278,9 @@ msgstr "Ruta d'exportació"
 msgid "Identity File"
 msgstr "Fitxer d'identitat"
 
+msgid "Port"
+msgstr ""
+
 msgid "Optional"
 msgstr "Opcional"
 

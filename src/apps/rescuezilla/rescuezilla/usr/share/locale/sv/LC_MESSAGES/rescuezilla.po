@@ -273,6 +273,9 @@ msgstr "Exporterad sökväg"
 msgid "Identity File"
 msgstr "Identitetsfil"
 
+msgid "Port"
+msgstr ""
+
 msgid "Optional"
 msgstr "valfritt"
 

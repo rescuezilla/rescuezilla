@@ -272,6 +272,9 @@ msgstr "Geëxporteerd pad"
 msgid "Identity File"
 msgstr "Identificatiebestand"
 
+msgid "Port"
+msgstr ""
+
 msgid "Optional"
 msgstr "Optioneel"
 

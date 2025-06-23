@@ -274,6 +274,9 @@ msgstr "Exportált útvonal"
 msgid "Identity File"
 msgstr "Identitás Fájl"
 
+msgid "Port"
+msgstr ""
+
 msgid "Optional"
 msgstr "Opcionális"
 

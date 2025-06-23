@@ -265,6 +265,9 @@ msgstr "נתיב מיוצא"
 msgid "Identity File"
 msgstr "קובץ זהות"
 
+msgid "Port"
+msgstr ""
+
 msgid "Optional"
 msgstr "רשות"
 

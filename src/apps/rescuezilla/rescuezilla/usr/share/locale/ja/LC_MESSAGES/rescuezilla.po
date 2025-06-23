@@ -268,6 +268,9 @@ msgstr "送出経路"
 msgid "Identity File"
 msgstr "認証ファイル"
 
+msgid "Port"
+msgstr ""
+
 msgid "Optional"
 msgstr "オプション選択"
 

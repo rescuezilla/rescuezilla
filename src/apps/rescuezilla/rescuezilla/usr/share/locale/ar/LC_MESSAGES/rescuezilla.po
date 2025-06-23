@@ -270,6 +270,9 @@ msgstr "المسار المصدر"
 msgid "Identity File"
 msgstr "ملف الهوية"
 
+msgid "Port"
+msgstr ""
+
 msgid "Optional"
 msgstr "اختياري"
 

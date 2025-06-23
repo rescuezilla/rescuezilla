@@ -277,6 +277,9 @@ msgstr "Wyeksportowana ścieżka"
 msgid "Identity File"
 msgstr "Plik tożsamości"
 
+msgid "Port"
+msgstr ""
+
 msgid "Optional"
 msgstr "Opcjonalnie"
 

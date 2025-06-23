@@ -278,6 +278,9 @@ msgstr "Percorso esportato"
 msgid "Identity File"
 msgstr "Chiave SSH"
 
+msgid "Port"
+msgstr ""
+
 msgid "Optional"
 msgstr "Facoltativo"
 

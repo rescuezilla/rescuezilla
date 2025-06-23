@@ -288,6 +288,9 @@ msgstr "Exportierter Pfad"
 msgid "Identity File"
 msgstr "Ordner auswählen"
 
+msgid "Port"
+msgstr ""
+
 msgid "Optional"
 msgstr "optional"
 

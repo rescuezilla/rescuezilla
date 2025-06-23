@@ -276,6 +276,9 @@ msgstr "Экспортированный путь"
 msgid "Identity File"
 msgstr "Указанный файл"
 
+msgid "Port"
+msgstr ""
+
 msgid "Optional"
 msgstr "Опционально"
 

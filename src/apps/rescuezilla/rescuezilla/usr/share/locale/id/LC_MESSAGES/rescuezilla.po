@@ -254,6 +254,9 @@ msgstr "Path yang diekspor"
 msgid "Identity File"
 msgstr "Berkas Identitas"
 
+msgid "Port"
+msgstr ""
+
 msgid "Optional"
 msgstr "Opsional"
 
