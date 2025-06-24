@@ -1071,9 +1071,6 @@ class Handler:
         # ("True to stop other handlers from being invoked for the event. False to propagate the event further.")
         return True
 
-    def restore_file_changed(self):
-        print("test")
-
     def network_protocol_combobox_changed(self, combobox):
         # Shows and hides certain fields depending on the protocol.
         # Shows different label text depending on the protocol (eg, "Remote path" for SSH and "Exported path" for NFS).
