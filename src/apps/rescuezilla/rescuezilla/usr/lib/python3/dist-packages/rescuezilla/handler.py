@@ -162,7 +162,7 @@ class Handler:
 
         # Descriptions adapted from: https://manpages.ubuntu.com/manpages/focal/man8/mount.cifs.8.html
         self.network_share_protocol_version_list = self.builder.get_object("network_share_protocol_version_list")
-        self.network_share_protocol_version_list.append(["default", _("default") + " " + _("(Negotiate highest SMB2+ supported by client and server)")])
+        self.network_share_protocol_version_list.append(["default", _("default (Negotiate highest SMB2+ supported by client and server)")])
         self.network_share_protocol_version_list.append(["1.0",     _("1.0 (The classic CIFS/SMBv1 protocol)")])
         self.network_share_protocol_version_list.append(["2.0",     _("2.0 (Introduced in Vista SP1,  Windows Server 2008)")])
         self.network_share_protocol_version_list.append(["2.1",     _("2.1 (Introduced in Windows 7,   Windows Server 2008R2)")])
