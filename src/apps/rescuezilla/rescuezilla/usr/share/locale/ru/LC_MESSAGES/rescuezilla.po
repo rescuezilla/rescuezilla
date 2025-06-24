@@ -291,6 +291,15 @@ msgstr ""
 msgid "3.1.1 (Introduced in Windows 10, Windows Server 2016)"
 msgstr ""
 
+msgid "Unspecified (Tries NFS v4.2 first, then negotiates with server down until finds a supported version)"
+msgstr ""
+
+msgid "NFSv3"
+msgstr ""
+
+msgid "NFSv4"
+msgstr ""
+
 msgid "Remote path"
 msgstr "Удалённый путь"
 
