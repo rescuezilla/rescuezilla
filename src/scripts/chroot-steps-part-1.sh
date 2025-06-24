@@ -394,9 +394,12 @@ common_pkgs=("discover"
              "hashdeep"
 )
 
-# Install openssh-server only if the IS_INTEGRATION_TEST variable is enable
+# Install openssh-server, nfs-server only if the IS_INTEGRATION_TEST variable is enabled
 if  [ "$IS_INTEGRATION_TEST" == "true" ]; then
-    common_pkgs=("${common_pkgs[@]}" "openssh-server")
+    common_pkgs=("${common_pkgs[@]}" "openssh-server" "nfs-kernel-server")
+    printf "/srv/nfs 127.0.0.1(rw,sync,no_subtree_check)" >> /etc/exports
+    mkdir -p /srv/nfs
+    chmod 777 /srv/nfs
 fi
 
 if    [ "$CODENAME" == "bionic" ]; then
