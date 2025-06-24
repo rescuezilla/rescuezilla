@@ -261,16 +261,16 @@ class Handler:
             self.builder.get_object("button_back").set_sensitive(False)
 
         # TODO: Find more efficient way to do this
-        combobox_list = []
+        network_protocol_combobox_list = []
         # Re-initialize the image selection network protocol
         for mode in NETWORK_UI_WIDGET_MODES:
             self.network_protocol_widget_dict['network_use_local_radiobutton'][mode].set_active(True)
-            combobox_list.append(self.network_protocol_widget_dict['network_protocol_combobox'][mode])
+            network_protocol_combobox_list.append(self.network_protocol_widget_dict['network_protocol_combobox'][mode])
         # Reset all comboboxes
-        for combobox in combobox_list:
-            combobox.set_active(0)
-            combobox.set_active_iter(combobox.get_active_iter())
-            self.network_protocol_combobox_changed(combobox)
+        for network_protocol_combobox in network_protocol_combobox_list:
+            network_protocol_combobox.set_active(0)
+            network_protocol_combobox.set_active_iter(network_protocol_combobox.get_active_iter())
+            self.network_protocol_combobox_changed(network_protocol_combobox)
 
         # Post action comboboxes don't have signal handlers so no need to trigger anything
         self.builder.get_object("backup_step8_perform_action_combobox").set_active(0)
