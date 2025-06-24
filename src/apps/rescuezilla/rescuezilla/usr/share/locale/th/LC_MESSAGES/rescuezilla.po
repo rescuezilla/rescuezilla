@@ -290,16 +290,16 @@ msgstr ""
 msgid "1.0 (The classic CIFS/SMBv1 protocol)"
 msgstr ""
 
-msgid "2.0 (Introduced in Vista SP1,  Windows Server 2008)"
+msgid "2.0 (Introduced in Vista SP1, Windows Server 2008)"
 msgstr ""
 
-msgid "2.1 (Introduced in Windows 7,   Windows Server 2008R2)"
+msgid "2.1 (Introduced in Windows 7, Windows Server 2008R2)"
 msgstr ""
 
 msgid "3 (The SMBv3.0 protocol version and above)"
 msgstr ""
 
-msgid "3.0 (Introduced in Windows 8,  Windows Server 2012)"
+msgid "3.0 (Introduced in Windows 8, Windows Server 2012)"
 msgstr ""
 
 msgid "3.0.2 (Introduced in Windows 8.1, Windows Server 2012R2)"

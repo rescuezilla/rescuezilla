@@ -1069,10 +1069,10 @@ class Handler:
         # Descriptions adapted from: https://manpages.ubuntu.com/manpages/focal/man8/mount.cifs.8.html
         network_share_protocol_version_list.append(["default", _("default (Negotiate highest SMB2+ supported by client and server)")])
         network_share_protocol_version_list.append(["1.0", _("1.0 (The classic CIFS/SMBv1 protocol)")])
-        network_share_protocol_version_list.append(["2.0", _("2.0 (Introduced in Vista SP1,  Windows Server 2008)")])
-        network_share_protocol_version_list.append(["2.1", _("2.1 (Introduced in Windows 7,   Windows Server 2008R2)")])
+        network_share_protocol_version_list.append(["2.0", _("2.0 (Introduced in Vista SP1, Windows Server 2008)")])
+        network_share_protocol_version_list.append(["2.1", _("2.1 (Introduced in Windows 7, Windows Server 2008R2)")])
         network_share_protocol_version_list.append(["3", _("3 (The SMBv3.0 protocol version and above)")])
-        network_share_protocol_version_list.append(["3.0", _("3.0 (Introduced in Windows 8,  Windows Server 2012)")])
+        network_share_protocol_version_list.append(["3.0", _("3.0 (Introduced in Windows 8, Windows Server 2012)")])
         network_share_protocol_version_list.append(["3.0.2", _("3.0.2 (Introduced in Windows 8.1, Windows Server 2012R2)")])
         network_share_protocol_version_list.append(["3.1.1", _("3.1.1 (Introduced in Windows 10, Windows Server 2016)")])
         self.network_protocol_widget_dict['network_version_combobox'][mode].set_model(network_share_protocol_version_list)
