@@ -72,7 +72,7 @@ def parse_arguments(parser: argparse.ArgumentParser) -> argparse.Namespace:
     backup_parser.add_argument('--description', type=str, help='Textual description of the backup image', default="")
 
     # Add the --compression-format for the backup command
-    backup_parser.add_argument('--compression-format', type=str, choices=['gzip', 'none', 'zstd', 'bzip2'], default='gzip', help='The compression format')
+    backup_parser.add_argument('--compression-format', type=str, choices=['gzip', 'uncompressed', 'zstd', 'bzip2'], default='gzip', help='The compression format')
     #TODO fix
     backup_parser.add_argument('--compression-level', type=lambda x: valid_compression_level("gzip", int(x)), default=9)
 
