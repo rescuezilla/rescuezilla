@@ -94,6 +94,7 @@ pkgs_specific_to_ubuntu2004_focal=("linux-generic-hwe-18.04"
                        "xserver-xorg-video-all-hwe-18.04"
                        "xserver-xorg-video-intel-hwe-18.04"
                        "xserver-xorg-video-qxl-hwe-18.04"
+                       "xserver-xorg-input-libinput"
                        # Packages which may assist users needing to do a GRUB repair (64-bit EFI)
                        "shim-signed"
                        "grub-efi-amd64-signed"
@@ -120,6 +121,7 @@ pkgs_specific_to_ubuntu2204_jammy=(
                        "xserver-xorg-video-intel"
                        "xserver-xorg-video-qxl"
                        "xserver-xorg-video-mga"
+                       "xserver-xorg-input-libinput"
                         # Packages which may assist users needing to do a GRUB repair (64-bit EFI)
                        "shim-signed"
                        "grub-efi-amd64-signed"
@@ -145,6 +147,7 @@ pkgs_specific_to_ubuntu2410_oracular=(
                        "xserver-xorg-video-intel"
                        "xserver-xorg-video-qxl"
                        "xserver-xorg-video-mga"
+                       "xserver-xorg-input-libinput"
                         # Packages which may assist users needing to do a GRUB repair (64-bit EFI)
                        "shim-signed"
                        "grub-efi-amd64-signed"
@@ -170,6 +173,7 @@ pkgs_specific_to_ubuntu2404_noble=(
                        "xserver-xorg-video-intel"
                        "xserver-xorg-video-qxl"
                        "xserver-xorg-video-mga"
+                       "xserver-xorg-input-libinput"
                         # Packages which may assist users needing to do a GRUB repair (64-bit EFI)
                        "shim-signed"
                        "grub-efi-amd64-signed"
@@ -268,7 +272,6 @@ common_pkgs=("discover"
              # Firmware package for NVidia cards from ~2009 (newer cards have firmware in the kernel)
              "nouveau-firmware"
              "x11-xserver-utils"
-             "xserver-xorg-input-libinput"
              "xterm"
              "network-manager-gnome"
              "plymouth-x11"
