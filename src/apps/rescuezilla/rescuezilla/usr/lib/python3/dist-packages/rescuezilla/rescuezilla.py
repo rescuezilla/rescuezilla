@@ -179,7 +179,7 @@ def get_clonezilla_img(source_path: str):
 # TODO: Better abstract logic from CloneManager, so this logic can be removed, and CLI works with all supported
 def get_metadata_only_img(source_drive_key: str):
     # FIXME: Do on separate thread, with please wait popup. Like eg, mounting paths
-    print("Creating MetadataOnlyImage (currently temporarily done on UI thread). This may take a moment...")
+    print("Creating MetadataOnlyImage (currently temporarily done on UI thread). This may take a moment…")
     source_drive_metadata_only_image = MetadataOnlyImage(source_drive_key)
     if len(source_drive_metadata_only_image.warning_dict) > 0:
         error_msg = ""

@@ -616,7 +616,7 @@ class Handler:
                         self.source_drive_model = list_store.get(iters[0], 3)[0]
                         # Make metaimage
                         # FIXME: Do on separate thread, with please wait popup. Like eg, mounting paths
-                        print("Creating MetadataOnlyImage (currently temporarily done on UI thread). This may take a moment...")
+                        print("Creating MetadataOnlyImage (currently temporarily done on UI thread). This may take a moment…")
                         self.source_drive_metadata_only_image = MetadataOnlyImage(self.clone_source_drive_key)
                         if len(self.source_drive_metadata_only_image.warning_dict) > 0:
                             error_msg = ""

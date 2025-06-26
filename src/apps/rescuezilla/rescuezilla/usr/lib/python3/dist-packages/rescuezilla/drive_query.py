@@ -63,7 +63,7 @@ class DriveQuery:
             return self.requested_stop
 
     def start_query(self, error_message_callback):
-        print("Starting drive query...")
+        print("Starting drive query…")
         self.win.set_sensitive(False)
         self.requested_stop_lock = threading.Lock()
         self.requested_stop = False

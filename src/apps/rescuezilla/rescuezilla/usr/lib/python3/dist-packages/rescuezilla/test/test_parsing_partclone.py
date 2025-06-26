@@ -27,7 +27,7 @@ class PartcloneTest(unittest.TestCase):
     def test_partclone_restore_parsing_short(self):
         partclone_restore_example_contents = """Partclone v0.3.13 http://partclone.org
 Starting to restore image (-) to device (/dev/sdh5)
-Calculating bitmap... Please wait...
+Calculating bitmap… Please wait…
 done!
 File system:  EXTFS
 Device size:   52.4 MB = 12800 Blocks
@@ -41,7 +41,7 @@ Elapsed: 00:00:02, Remaining: 00:00:00, Completed: 100.00%, Rate: 176.58MB/min,
                                                                                 
 current block:       1437, total block:      12800, Complete: 100.00%
 Total Time: 00:00:02, Ave. Rate:  176.6MB/min, 100.00% completed!
-Syncing... OK!
+Syncing… OK!
 Partclone successfully restored the image (-) to the device (/dev/sdh5)
 Cloned successfully."""
         for line in partclone_restore_example_contents.splitlines():
@@ -53,7 +53,7 @@ Cloned successfully."""
         partclone_example_contents = """
     Partclone v0.3.13 http://partclone.org
 Starting to restore image (-) to device (/dev/sdc5)
-Calculating bitmap... Please wait...
+Calculating bitmap… Please wait…
 done!
 File system:  NTFS
 Device size:  983.6 MB = 240127 Blocks
@@ -116,7 +116,7 @@ Block size:   4096 Byte
                                                                                Elapsed: 00:01:46, Remaining: 00:00:00, Completed: 100.00%, Rate:   3.06MB/min
                                                                                current block:     121264, total block:     240127, Complete: 100.00%
 Total Time: 00:01:46, Ave. Rate:    3.1MB/min, 100.00% completed!
-Syncing... OK!
+Syncing… OK!
 Partclone successfully restored the image (-) to the device (/dev/sdc5)
 Cloned successfully.
 """

@@ -169,7 +169,7 @@ class CombinedDriveState:
                             if device['type'] != 'part':
                                 print("Appending " + str(device))
                                 block_device_list.append(device)
-                    # ...The final case to test is if the partition itself is not actually a partition:
+                    # …The final case to test is if the partition itself is not actually a partition:
                     elif lsblk_partition_dict['type'] != 'part':
                         print("Appending " + str(lsblk_partition_dict))
                         block_device_list.append(lsblk_partition_dict)

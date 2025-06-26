@@ -150,7 +150,7 @@ def deploy_hd(hd_prefix_list) -> bool:
                 return False
             else:
                 # Copy in hard drive
-                print("Copying " + deploy_hd + " to " + original_hd + ". This may take some time...")
+                print("Copying " + deploy_hd + " to " + original_hd + ". This may take some time…")
                 process = run_command(["rsync", "-aP", deploy_hd, original_hd])
                 if process.returncode != 0:
                     return False
@@ -188,7 +188,7 @@ def commit_hd(hd_prefix_list, do_overwrite):
             if not os.path.exists(original_hd):
                 print("Does not exist " + original_hd, file=sys.stderr)
             else:
-                print("Copying " + original_hd + " to " + deploy_hd + ". This may take a while...")
+                print("Copying " + original_hd + " to " + deploy_hd + ". This may take a while…")
                 if do_overwrite:
                     run_command(["rsync", "-aP", original_hd, deploy_hd])
                 else:
@@ -433,7 +433,7 @@ def ping_vm(vm_name):
         else:
             print("\nPinging: " + vm_name + " on " + MACHINE_DICT[vm_name]['ip'])
             response = os.system("ping -c 1 -w2 " + MACHINE_DICT[vm_name]['ip'] + " > /dev/null 2>&1")
-            # and then check the response...
+            # and then check the response…
             if response == 0:
                 print("Successfully pinged!")
                 return True

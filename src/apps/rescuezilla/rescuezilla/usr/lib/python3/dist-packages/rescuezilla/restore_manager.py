@@ -673,7 +673,7 @@ class RestoreManager:
                     uuid = self.image.lvm_vg_dev_dict[volume_group_key]['uuid']
                     lvm_vg_conf_filepath = os.path.join(image_dir, "lvm_" + volume_group_key + ".conf")
                     if volume_group_key == "/NOT_FOUND" or not os.path.isfile(lvm_vg_conf_filepath):
-                        # Prevent pvcreate returning an error like "Device /dev/[...] excluded by a filter."
+                        # Prevent pvcreate returning an error like "Device /dev/[…] excluded by a filter."
                         is_success, failed_message = self.clean_filesystem_header_in_partition(destination_pv_long_device_node)
                         if not is_success:
                             # Error callback handled in the function

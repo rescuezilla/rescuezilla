@@ -84,7 +84,7 @@ EOF
 # Helper function to update a submodule to its latest tag
 update_submodule_to_latest_tag() {
     local submodule_name="$1"
-    echo "Updating $submodule_name..."
+    echo "Updating $submodule_name…"
     
     # Fetch latest changes
     git fetch origin

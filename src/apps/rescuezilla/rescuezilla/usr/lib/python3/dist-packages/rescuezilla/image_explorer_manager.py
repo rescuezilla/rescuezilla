@@ -599,7 +599,7 @@ class ImageExplorerManager:
                 self.partclone_nbd_process_queue.put(partclone_nbd_process)
                 # Sentinel value for successful partclone-nbd mount. partclone-nbd is launched with C locale env, so this
                 # string will match even for non-English locales.
-                partclone_nbd_ready_msg = "[ INF ] Waiting for requests ..."
+                partclone_nbd_ready_msg = "[ INF ] Waiting for requests …"
 
                 # Poll the partclone-nbd stdout until the ready message has been received.
                 # This relies on partclone-nbd exiting immediately if an error is generated, if not, an infinite loop will

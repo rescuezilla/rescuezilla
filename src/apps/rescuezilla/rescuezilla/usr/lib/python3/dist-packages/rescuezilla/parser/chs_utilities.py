@@ -229,7 +229,7 @@ class ChsUtilities:
         else:
             return True, {'cylinders': raw_cylinder, 'heads': raw_head, 'sectors': raw_sector}
 
-    # Query the EDD (Enhanced Disk Device) sysfs path (/sys/firmware/edd/...) by first querying the 32-bit MBR disk
+    # Query the EDD (Enhanced Disk Device) sysfs path (/sys/firmware/edd/…) by first querying the 32-bit MBR disk
     # signature.
     #
     # This function is a port of Clonezilla's edd_id_map_by_mbr function from sbin/ocs-functions file, which references
@@ -255,7 +255,7 @@ class ChsUtilities:
                     return True, os.path.dirname(edd_mbr_signature_absolute_path)
         return False, "Could not find sysfs EDD for " + long_device_node + " using MBR signature"
 
-    # Query the EDD (Enhanced Disk Device) sysfs path (/sys/firmware/edd/...) by searching for the disk capacity as the
+    # Query the EDD (Enhanced Disk Device) sysfs path (/sys/firmware/edd/…) by searching for the disk capacity as the
     # search query.
     #
     # This function is a port of Clonezilla's edd_id_map_by_capacity function from sbin/ocs-functions file

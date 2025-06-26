@@ -150,7 +150,7 @@ class RedoBackupLegacyImage:
             if self.image_format == "REDOBACKUP_0.9.2_FORMAT":
                 # Redo Backup v0.9.2 are *not* split
                 image_match_string = os.path.join(dirname, prefix + "_part" + str(partition_number))
-                # ... and not compressed
+                # … and not compressed
                 compression = "uncompressed"
             else:
                 # Redo Backup v0.9.3-v1.0.4 and Rescuezilla v1.0.5 images are split up, eg "20200901_part2.000".

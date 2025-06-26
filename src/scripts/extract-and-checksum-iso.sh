@@ -53,14 +53,14 @@ trap cleanup EXIT
 mount "$PATH_TO_ISO_IMAGE" "$MOUNT_DIR"
 pushd "$MOUNT_DIR"
 printf "ISO9660 filesystem:\n" > "$PATH_TO_CHECKSUM_FILE"
-echo "Checksumming ISO9660 filesystem. This may take some time..."
+echo "Checksumming ISO9660 filesystem. This may take some time…"
 find . -type f -exec $HASH_FUNCTION {} \; >> "$PATH_TO_CHECKSUM_FILE"
 popd
 
 sudo unsquashfs -dest "$SQUASHFS_UNPACK_DIR/" "$MOUNT_DIR/casper/filesystem.squashfs"
 pushd "$SQUASHFS_UNPACK_DIR"
 printf "\nUnpacked squashfs filesystem:\n" >> "$PATH_TO_CHECKSUM_FILE"
-echo "Checksumming unpacked squashfs filesystem. This may take some time..."
+echo "Checksumming unpacked squashfs filesystem. This may take some time…"
 find . -type f -exec $HASH_FUNCTION {} \; >> "$PATH_TO_CHECKSUM_FILE"
 popd
 
