@@ -1,24 +1,25 @@
 # Hugo Carvalho <hugokarvalho@hotmail.com>, 2023, 2025.
+# Manuela Silva <mmsrs@sky.com>, 2025.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-03-25 12:44+0000\n"
-"Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
+"PO-Revision-Date: 2025-06-27 16:39+0000\n"
+"Last-Translator: Manuela Silva <mmsrs@sky.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/rescuezilla/"
 "graphical-shutdown/pt/>\n"
 "Language: pt\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.11-dev\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 msgid "End Session"
-msgstr "Terminar sessão"
+msgstr "Terminar Sessão"
 
 msgid "Cancel"
 msgstr "Cancelar"
 
 msgid "Shutdown"
-msgstr "Desligar"
+msgstr "Encerrar"
 
 msgid "Reboot"
 msgstr "Reiniciar"
