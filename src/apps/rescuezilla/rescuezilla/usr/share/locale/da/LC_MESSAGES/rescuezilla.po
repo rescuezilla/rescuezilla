@@ -919,7 +919,7 @@ msgstr "Åbn i filhåndtering"
 msgid "Verify"
 msgstr "Verificere"
 
-msgid "Select one or more image(s) to verify."
+msgid "Select one or more images to verify."
 msgstr "Vælg et eller flere diskafbildninger for at verificere."
 
 msgid "To begin verification, click <b>Next</b>."

@@ -947,7 +947,7 @@ msgstr "Obre a l'explorador de fitxers"
 msgid "Verify"
 msgstr "Verifica"
 
-msgid "Select one or more image(s) to verify."
+msgid "Select one or more images to verify."
 msgstr "Seleccioneu una o més imatges per verificar."
 
 msgid "To begin verification, click <b>Next</b>."

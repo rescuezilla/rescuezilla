@@ -873,7 +873,7 @@ msgstr "פתיחה במנהל הקבצים"
 msgid "Verify"
 msgstr "אימות"
 
-msgid "Select one or more image(s) to verify."
+msgid "Select one or more images to verify."
 msgstr "נא לבחור דמות אחת או יותר לאימות."
 
 msgid "To begin verification, click <b>Next</b>."

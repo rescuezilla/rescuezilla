@@ -895,7 +895,7 @@ msgstr "Otwórz w menedżerze plików"
 msgid "Verify"
 msgstr "Zweryfikuj"
 
-msgid "Select one or more image(s) to verify."
+msgid "Select one or more images to verify."
 msgstr "Wybierz jeden lub więcej obrazów do zweryfikowania."
 
 msgid "To begin verification, click <b>Next</b>."

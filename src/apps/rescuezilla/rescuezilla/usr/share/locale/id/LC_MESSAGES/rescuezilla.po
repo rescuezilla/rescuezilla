@@ -812,7 +812,7 @@ msgstr "Buka di manajer file"
 msgid "Verify"
 msgstr ""
 
-msgid "Select one or more image(s) to verify."
+msgid "Select one or more images to verify."
 msgstr ""
 
 msgid "To begin verification, click <b>Next</b>."

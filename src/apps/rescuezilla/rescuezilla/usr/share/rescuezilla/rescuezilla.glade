@@ -5451,7 +5451,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                 <property name="visible">True</property>
                                                 <property name="can-focus">False</property>
                                                 <property name="ypad">20</property>
-                                                <property name="label" translatable="yes">Select one or more image(s) to verify.</property>
+                                                <property name="label" translatable="yes">Select one or more images to verify.</property>
                                                 <property name="use-markup">True</property>
                                                 <property name="wrap">True</property>
                                                 <property name="yalign">1</property>

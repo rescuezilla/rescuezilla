@@ -918,7 +918,7 @@ msgstr "Otvoriť v správcovi súborov"
 msgid "Verify"
 msgstr "Overiť"
 
-msgid "Select one or more image(s) to verify."
+msgid "Select one or more images to verify."
 msgstr "Vyberte jeden alebo viac obrazov, ktoré chcete overiť."
 
 msgid "To begin verification, click <b>Next</b>."

@@ -818,7 +818,7 @@ msgstr "在文件管理器中打开"
 msgid "Verify"
 msgstr "验证"
 
-msgid "Select one or more image(s) to verify."
+msgid "Select one or more images to verify."
 msgstr "选择要验证的一个或多个镜像。"
 
 msgid "To begin verification, click <b>Next</b>."

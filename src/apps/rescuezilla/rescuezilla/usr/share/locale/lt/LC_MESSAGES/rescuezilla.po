@@ -922,7 +922,7 @@ msgstr "Atidaryti failų tvarkyklėje"
 msgid "Verify"
 msgstr "Patikrinti"
 
-msgid "Select one or more image(s) to verify."
+msgid "Select one or more images to verify."
 msgstr "Pasirinkite vieną ar daugiau atvaizdų, kuriuos norite patikrinti."
 
 msgid "To begin verification, click <b>Next</b>."

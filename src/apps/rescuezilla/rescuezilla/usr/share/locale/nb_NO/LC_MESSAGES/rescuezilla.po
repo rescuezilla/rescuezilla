@@ -929,7 +929,7 @@ msgstr "Åpne i filbehandler"
 msgid "Verify"
 msgstr "Bekreft"
 
-msgid "Select one or more image(s) to verify."
+msgid "Select one or more images to verify."
 msgstr "Velg en eller flere avbildning(er) å bekrefte."
 
 msgid "To begin verification, click <b>Next</b>."

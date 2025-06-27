@@ -943,7 +943,7 @@ msgstr "Nyisd meg fájl-menedzserrel"
 msgid "Verify"
 msgstr "Ellenőrizd"
 
-msgid "Select one or more image(s) to verify."
+msgid "Select one or more images to verify."
 msgstr "Válassz egy vagy több Mentést, melyeket ellenőrizzek."
 
 msgid "To begin verification, click <b>Next</b>."
