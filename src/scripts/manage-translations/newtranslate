@@ -1,0 +1,36 @@
+msgid "No source drive selected. Please select source drive to backup"
+msgstr ""
+
+msgid "Nothing selected!"
+msgstr ""
+
+msgid "No image selected"
+msgstr ""
+
+msgid "Please select destination drive to mount"
+msgstr ""
+
+msgid "Destination drive cannot be the same as source image device."
+msgstr ""
+
+msgid "Unable to initialize partition restore list:"
+msgstr ""
+
+msgid "Please select partitions to restore!"
+msgstr ""
+
+msgid "Destination drive cannot be the same as source device."
+msgstr ""
+
+msgid "Unable to initialize partition list:"
+msgstr ""
+
+msgid "Please select partitions to clone!"
+msgstr ""
+
+msgid "Unable to process image
+msgstr ""
+
+msgid "Please select drive to mount"
+msgstr ""
+
