@@ -645,7 +645,7 @@ msgstr ""
 msgid "Selected image"
 msgstr "Välj avbild"
 
-msgid "Destination device"
+msgid "Destination drive"
 msgstr "Målenhet"
 
 msgid "Destination partition"

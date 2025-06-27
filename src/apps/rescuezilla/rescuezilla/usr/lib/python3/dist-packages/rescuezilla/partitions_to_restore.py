@@ -106,7 +106,7 @@ class PartitionsToRestore:
             print("Got selected RedoBackupLegacy image: " + str(selected_image.normalized_sfdisk_dict))
         self._use_image_partition_table()
 
-        info_string = "<b>" + _("Selected image") + "</b> " + GObject.markup_escape_text(self.selected_image.absolute_path) + "\n" + "<b>" + _("Destination device") + "</b> " + GObject.markup_escape_text(self.dest_drive_desc)
+        info_string = "<b>" + _("Selected image") + "</b> " + GObject.markup_escape_text(self.selected_image.absolute_path) + "\n" + "<b>" + _("Destination drive") + "</b> " + GObject.markup_escape_text(self.dest_drive_desc)
         for mode in self.mode_list:
             self.selected_image_text_dict[mode].set_markup(info_string)
 

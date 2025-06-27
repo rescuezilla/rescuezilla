@@ -638,7 +638,7 @@ msgstr ""
 msgid "Selected image"
 msgstr "Vybraný obraz"
 
-msgid "Destination device"
+msgid "Destination drive"
 msgstr "Cílové zařízení"
 
 msgid "Destination partition"

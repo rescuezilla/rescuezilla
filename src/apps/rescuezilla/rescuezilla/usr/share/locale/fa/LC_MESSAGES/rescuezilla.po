@@ -571,7 +571,7 @@ msgstr ""
 msgid "Selected image"
 msgstr ""
 
-msgid "Destination device"
+msgid "Destination drive"
 msgstr ""
 
 msgid "Destination partition"

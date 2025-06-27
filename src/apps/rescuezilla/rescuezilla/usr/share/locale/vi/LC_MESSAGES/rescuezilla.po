@@ -626,7 +626,7 @@ msgstr ""
 msgid "Selected image"
 msgstr "Bản sao lưu đã chọn"
 
-msgid "Destination device"
+msgid "Destination drive"
 msgstr "Ổ đĩa đích"
 
 msgid "Destination partition"

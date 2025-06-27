@@ -677,7 +677,7 @@ msgstr ""
 msgid "Selected image"
 msgstr "ไฟล์สำรองข้อมูลที่เลือกไว้"
 
-msgid "Destination device"
+msgid "Destination drive"
 msgstr "ไดร์ฟปลายทาง"
 
 msgid "Destination partition"

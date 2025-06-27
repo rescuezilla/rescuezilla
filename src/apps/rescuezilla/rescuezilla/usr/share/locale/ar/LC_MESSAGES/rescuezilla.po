@@ -635,7 +635,7 @@ msgstr ""
 msgid "Selected image"
 msgstr "الصورة/النسخة المحددة"
 
-msgid "Destination device"
+msgid "Destination drive"
 msgstr "محرك الاقراص الوجهة"
 
 msgid "Destination partition"

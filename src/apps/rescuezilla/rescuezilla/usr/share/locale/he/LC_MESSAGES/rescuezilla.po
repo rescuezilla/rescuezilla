@@ -613,7 +613,7 @@ msgstr ""
 msgid "Selected image"
 msgstr "קובץ הגיבוי הנבחר"
 
-msgid "Destination device"
+msgid "Destination drive"
 msgstr "כונן היעד"
 
 msgid "Destination partition"

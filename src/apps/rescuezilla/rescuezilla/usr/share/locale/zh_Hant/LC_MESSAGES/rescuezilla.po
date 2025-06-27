@@ -587,7 +587,7 @@ msgstr "選取要還原備份映像中的哪些分區，以及是否覆寫分區
 msgid "Selected image"
 msgstr "選取的映像"
 
-msgid "Destination device"
+msgid "Destination drive"
 msgstr "目的地裝置"
 
 msgid "Destination partition"

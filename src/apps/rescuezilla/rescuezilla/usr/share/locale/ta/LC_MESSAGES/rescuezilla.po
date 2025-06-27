@@ -647,7 +647,7 @@ msgstr ""
 msgid "Selected image"
 msgstr "தேர்ந்தெடுக்கப்பட்ட படம்"
 
-msgid "Destination device"
+msgid "Destination drive"
 msgstr "இலக்கு சாதனம்"
 
 msgid "Destination partition"
