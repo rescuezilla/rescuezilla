@@ -662,9 +662,6 @@ msgstr ""
 msgid "Selected image"
 msgstr "Ausgewählte Sicherungskopie"
 
-msgid "Destination device"
-msgstr "Ziellaufwerk"
-
 msgid "Destination partition"
 msgstr "Zielpartition"
 

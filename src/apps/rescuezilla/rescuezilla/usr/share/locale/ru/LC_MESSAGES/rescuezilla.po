@@ -646,9 +646,6 @@ msgstr ""
 msgid "Selected image"
 msgstr "Выбранный образ"
 
-msgid "Destination device"
-msgstr "Целевое устройство"
-
 msgid "Destination partition"
 msgstr "Целевой раздел"
 

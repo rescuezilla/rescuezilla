@@ -638,9 +638,6 @@ msgstr ""
 msgid "Selected image"
 msgstr "Vybraný obraz"
 
-msgid "Destination device"
-msgstr "Cílové zařízení"
-
 msgid "Destination partition"
 msgstr "Cílový oddíl"
 

@@ -583,9 +583,6 @@ msgstr "从备份中选择要还原的分区，以及是否覆盖分区表。<b>
 msgid "Selected image"
 msgstr "选中镜像"
 
-msgid "Destination device"
-msgstr "目标设备"
-
 msgid "Destination partition"
 msgstr "目标分区"
 

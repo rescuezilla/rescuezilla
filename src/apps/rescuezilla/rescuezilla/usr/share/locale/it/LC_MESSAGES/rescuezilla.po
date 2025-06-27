@@ -649,9 +649,6 @@ msgstr ""
 msgid "Selected image"
 msgstr "Immagine selezionata"
 
-msgid "Destination device"
-msgstr "Dispositivo di destinazione"
-
 msgid "Destination partition"
 msgstr "Partizione di destinazione"
 

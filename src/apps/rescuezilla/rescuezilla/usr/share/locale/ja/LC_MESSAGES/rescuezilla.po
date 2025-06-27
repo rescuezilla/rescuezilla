@@ -626,9 +626,6 @@ msgstr ""
 msgid "Selected image"
 msgstr "選んだイメージ"
 
-msgid "Destination device"
-msgstr "保存先装置"
-
 msgid "Destination partition"
 msgstr "保存先パーティション"
 

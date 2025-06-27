@@ -639,9 +639,6 @@ msgstr ""
 msgid "Selected image"
 msgstr "Valgte sikkerhedskopi"
 
-msgid "Destination device"
-msgstr "Destinationsdrev"
-
 msgid "Destination partition"
 msgstr "Destinationspartition"
 

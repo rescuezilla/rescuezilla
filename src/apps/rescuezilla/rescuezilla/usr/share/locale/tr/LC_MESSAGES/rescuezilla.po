@@ -636,9 +636,6 @@ msgstr ""
 msgid "Selected image"
 msgstr "Seçilen kalıp"
 
-msgid "Destination device"
-msgstr "Hedef aygıt"
-
 msgid "Destination partition"
 msgstr "Hedef bölüm"
 

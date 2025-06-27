@@ -646,9 +646,6 @@ msgstr ""
 msgid "Selected image"
 msgstr "Επιλεγμένο είδωλο"
 
-msgid "Destination device"
-msgstr "Συσκευή προορισμού"
-
 msgid "Destination partition"
 msgstr "Διαμέρισμα προορισμού"
 

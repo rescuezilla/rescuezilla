@@ -600,9 +600,6 @@ msgstr ""
 msgid "Selected image"
 msgstr "Вибрані образи"
 
-msgid "Destination device"
-msgstr "Цільовий пристрій"
-
 msgid "Destination partition"
 msgstr "Цільовий розділ"
 

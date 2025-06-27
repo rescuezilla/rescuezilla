@@ -643,9 +643,6 @@ msgstr ""
 msgid "Selected image"
 msgstr "Pasirinktas atvaizdas"
 
-msgid "Destination device"
-msgstr "Paskirties įrenginys"
-
 msgid "Destination partition"
 msgstr "Paskirties skaidinys"
 

@@ -560,9 +560,6 @@ msgstr ""
 msgid "Selected image"
 msgstr ""
 
-msgid "Destination device"
-msgstr ""
-
 msgid "Destination partition"
 msgstr ""
 

@@ -651,9 +651,6 @@ msgstr ""
 msgid "Selected image"
 msgstr "Kiválasztott Lemezkép"
 
-msgid "Destination device"
-msgstr "Cél-eszköz"
-
 msgid "Destination partition"
 msgstr "Cél-partíció"
 

@@ -584,9 +584,6 @@ msgstr ""
 msgid "Selected image"
 msgstr "선택한 이미지"
 
-msgid "Destination device"
-msgstr "대상 장치"
-
 msgid "Destination partition"
 msgstr "대상 파티션"
 

@@ -640,9 +640,6 @@ msgstr ""
 msgid "Selected image"
 msgstr "Valittu levykuva"
 
-msgid "Destination device"
-msgstr "Kohdelaite"
-
 msgid "Destination partition"
 msgstr "Kohdeosio"
 
