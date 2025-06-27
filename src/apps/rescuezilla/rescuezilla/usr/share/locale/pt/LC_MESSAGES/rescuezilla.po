@@ -8,13 +8,14 @@
 # Alexandre Hideki Watanabe <hidekiw@gmail.com>, 2023.
 # Bruno Batista <brucb879@gmail.com>, 2023.
 # Hugo Carvalho <hugokarvalho@hotmail.com>, 2023, 2024, 2025.
+# Manuela Silva <mmsrs@sky.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2025-03-26 13:01+0000\n"
-"Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
+"PO-Revision-Date: 2025-06-27 16:39+0000\n"
+"Last-Translator: Manuela Silva <mmsrs@sky.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/pt/>\n"
 "Language: pt\n"
@@ -22,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.11-dev\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 msgid "Welcome"
 msgstr "Bem-vindo"
@@ -256,10 +257,10 @@ msgid "Share location (UNC path)"
 msgstr "Partilhar localização (caminho UNC)"
 
 msgid "Username"
-msgstr "Nome de Usuário"
+msgstr "Nome de utilizador"
 
 msgid "Password"
-msgstr "Senha"
+msgstr "Palavra-passe"
 
 msgid "Domain"
 msgstr "Domínio"
@@ -269,36 +270,39 @@ msgstr "Versão"
 
 msgid "default (Negotiate highest SMB2+ supported by client and server)"
 msgstr ""
+"predefinição (Negociar mais alto SMB2+ suportado pelo cliente e servidor)"
 
 msgid "1.0 (The classic CIFS/SMBv1 protocol)"
-msgstr ""
+msgstr "1.0 (O protocolo clássico CIFS/SMBv1)"
 
 msgid "2.0 (Introduced in Vista SP1, Windows Server 2008)"
-msgstr ""
+msgstr "2.0 (Introduzido no Vista SP1, Windows Server 2008)"
 
 msgid "2.1 (Introduced in Windows 7, Windows Server 2008R2)"
-msgstr ""
+msgstr "2.1 (Introduzido no Windows 7, Windows Server 2008R2)"
 
 msgid "3 (The SMBv3.0 protocol version and above)"
-msgstr ""
+msgstr "3 (A versão do protocolo SMBv3.0 e superior)"
 
 msgid "3.0 (Introduced in Windows 8, Windows Server 2012)"
-msgstr ""
+msgstr "3.0 (Introduzido no Windows 8, Windows Server 2012)"
 
 msgid "3.0.2 (Introduced in Windows 8.1, Windows Server 2012R2)"
-msgstr ""
+msgstr "3.0.2 (Introduzido no Windows 8.1, Windows Server 2012R2)"
 
 msgid "3.1.1 (Introduced in Windows 10, Windows Server 2016)"
-msgstr ""
+msgstr "3.1.1 (Introduzido no Windows 10, Windows Server 2016)"
 
 msgid "Unspecified (Tries NFS v4.2 first, then negotiates with server down until finds a supported version)"
 msgstr ""
+"Não especificado (Tente primeiro NFS v4.2 e depois negocie com o servidor "
+"até encontrar uma versão suportada)"
 
 msgid "NFSv3"
-msgstr ""
+msgstr "NFSv3"
 
 msgid "NFSv4"
-msgstr ""
+msgstr "NFSv4"
 
 msgid "Remote path"
 msgstr "Caminho remoto"
@@ -307,59 +311,63 @@ msgid "Exported path"
 msgstr "Caminho exportado"
 
 msgid "Identity File"
-msgstr "Arquivo de identificação"
+msgstr "Ficheiro de Identidade"
 
 msgid "Port"
-msgstr ""
+msgstr "Porta"
 
 msgid "Optional"
 msgstr "Opcional"
 
 msgid "Select network-shared storage location:"
-msgstr "Selecione o local de armazenamento compartilhado na rede :"
+msgstr "Selecione o local de armazenamento partilhado na rede:"
 
 msgid "Select the partition where the image files will be saved to"
-msgstr "Selecione a partição onde os arquivos de imagem serão salvos"
+msgstr "Selecione a partição onde os ficheiros de imagem serão guardados"
 
 msgid "Partition"
 msgstr "Partição"
 
 msgid "Mounting..."
-msgstr "Montando..."
+msgstr "A montar..."
 
 msgid "Close this popup to cancel the mount operation."
-msgstr "Feche essa janela para cancelar a operação de montagem."
+msgstr "Feche esta janela para cancelar a operação de montagem."
 
 msgid "Please ensure the username, password and other fields provided are correct, and try again."
-msgstr "Certifique-se de que o nome de usuário, senha e outros campos fornecidos estão corretos e tente novamente."
+msgstr ""
+"Por favor, certifique-se que o nome de utilizador, palavra-passe e os outros "
+"campos fornecidos estão corretos, e tente novamente."
 
 msgid "Must provide either password or SSH identity file."
-msgstr "Precisa informar senha ou arquivo de identidade SSH."
+msgstr "Deve fornecer a palavra-passe ou o ficheiro de identidade SSH."
 
 msgid "Scanning folder for backup images..."
-msgstr "Escaneando pasta por imagens de backup ..."
+msgstr "A pesquisar a pasta por imagens de cópia de segurança..."
 
-#, python-brace-format
+#, fuzzy, python-brace-format
 msgid "({timeout_seconds} second timeout)"
 msgstr "({timeout_seconds} segundos para finalizar)"
 
 msgid "Close this popup to cancel scanning the selected folder and subfolders."
 msgstr ""
-"Feche essa janela para cancelar a varredura das pastas e subpastas "
+"Feche esta janela para cancelar a pesquisa das pastas e subpastas "
 "selecionadas."
 
 #, python-brace-format
 msgid "Scanning: {filename}"
-msgstr "Escaneando: {filename}"
+msgstr "A pesquisar: {filename}"
 
 msgid "Error processing the following images:"
 msgstr "Erro ao processar as seguintes imagens:"
 
 msgid "Unable to fully process the image associated with the following partitions:"
-msgstr "Não foi possível processar totalmente a imagem associada às seguintes partições:"
+msgstr ""
+"Não é possível processar totalmente a imagem associada com as seguintes "
+"partições:"
 
 msgid "Unable to fully process the following image:"
-msgstr "Incapaz de processar totalmente a seguinte imagem:"
+msgstr "Não é possível processar totalmente a seguinte imagem:"
 
 msgid "Cannot find partition's associated partclone image"
 msgstr "Não é possível encontrar a imagem partclone associada à partição"
@@ -511,7 +519,7 @@ msgid "Do nothing"
 msgstr "Fazer nada"
 
 msgid "Shutdown"
-msgstr "Desligar"
+msgstr "Encerrar"
 
 msgid "Reboot"
 msgstr "Reiniciar"

@@ -1,12 +1,12 @@
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021.
-# Yaron Shahrabani <sh.yaron@gmail.com>, 2021.
+# Yaron Shahrabani <sh.yaron@gmail.com>, 2021, 2025.
 # Mike Kolesnik <mkolesni@redhat.com>, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2021-11-23 15:21+0000\n"
+"PO-Revision-Date: 2025-06-27 16:39+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/he/>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Weblate 4.10-dev\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 msgid "Welcome"
 msgstr "ברוך בואך"
@@ -284,10 +284,10 @@ msgid "Unspecified (Tries NFS v4.2 first, then negotiates with server down until
 msgstr ""
 
 msgid "NFSv3"
-msgstr ""
+msgstr "NFSv3"
 
 msgid "NFSv4"
-msgstr ""
+msgstr "NFSv4"
 
 msgid "Remote path"
 msgstr "נתיב מרוחק"
@@ -299,7 +299,7 @@ msgid "Identity File"
 msgstr "קובץ זהות"
 
 msgid "Port"
-msgstr ""
+msgstr "פתחה"
 
 msgid "Optional"
 msgstr "רשות"

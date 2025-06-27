@@ -1,20 +1,21 @@
+# Sopor <sopor@hotmail.com>, 2025.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2021-05-22 05:28+0000\n"
-"Last-Translator: OerjanS <oerjan.snell@gmail.com>\n"
+"PO-Revision-Date: 2025-06-27 16:39+0000\n"
+"Last-Translator: Sopor <sopor@hotmail.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/rescuezilla/"
 "graphical-shutdown/sv/>\n"
 "Language: sv\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 msgid "End Session"
-msgstr "Avsluta Rescuezilla session"
+msgstr "Avsluta session"
 
 msgid "Cancel"
-msgstr "Abryt"
+msgstr "Avbryt"
 
 msgid "Shutdown"
 msgstr "Stäng av"
