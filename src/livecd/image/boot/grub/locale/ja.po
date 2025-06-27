@@ -23,36 +23,18 @@ msgstr ""
 msgid "Start Rescuezilla"
 msgstr "Rescuezilla が起動します"
 
-msgid "If boot fails, reboot and try selecting Graphical fallback instead"
-msgstr "起動に失敗したら、 グラフィカルフォールバックで再起動してみてください"
-
 msgid "Graphical fallback mode"
 msgstr "グラフィカルフォールバックモード"
-
-msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
-msgstr "標準モードがハードウェアに似付かわしくない場合低解像度フォールバックグラフィ"
-"ックスのドライバーを使用してください"
 
 msgid "Load USB into RAM"
 msgstr "USB からラムメモリー にデータをロードします"
 
-msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
-msgstr "Rescuezilla がメモリーにロードされますと起動後の起動 USB は取り外し出来ます"
-
 msgid "Check USB for defects"
 msgstr "USB のデータ不全をチェックします"
-
-msgid "Verify integrity of USB drive"
-msgstr "USB ドライブの整合性を実証します"
 
 msgid "Enter BIOS Setup"
 msgstr "BIOS をセットアップします"
 
-msgid "Configure machine's firmware, boot options etc"
-msgstr "ブートオプションなど、 マシーンのファームウェアを設定します"
-
 msgid "Memory test"
 msgstr "メモリー確認"
 
-msgid "Check computer memory for errors"
-msgstr "コンピューターのメモリー不全をチェックします"

@@ -17,37 +17,18 @@ msgstr ""
 msgid "Start Rescuezilla"
 msgstr "เริ่มใช้งาน Rescuezilla"
 
-msgid "If boot fails, reboot and try selecting Graphical fallback instead"
-msgstr "ถ้าบูตไม่สำเร็จ ให้รีบูตและเลือกแสดงผลแบบกราฟิกแทน"
-
 msgid "Graphical fallback mode"
 msgstr "โหมดกราฟิก"
-
-msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
-msgstr "ใช้โหมดความละเอียดต่ำถ้าโหมดปกติไม่สามารถทำงานได้บนอุปกรณ์ของคุณ"
 
 msgid "Load USB into RAM"
 msgstr "โหลดข้อมูล USB ลงแรม"
 
-msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
-msgstr ""
-"โหลด Rescuezilla "
-"ลงที่หน่วยความจำเพื่อทำให้สามารถตัวอุปกรณ์บูดถอดออกได้หลังจากบูตสำเร็จ"
-
 msgid "Check USB for defects"
 msgstr "ตรวจหาจุดบกพร่องของ USB"
-
-msgid "Verify integrity of USB drive"
-msgstr "ตรวจสอบความสมบูรณ์ของไดร์ฟ USB"
 
 msgid "Enter BIOS Setup"
 msgstr "เข้าสู่โหมดตั้งค่าไบออส"
 
-msgid "Configure machine's firmware, boot options etc"
-msgstr "ตั้งค่าเฟิร์มแวร์เครื่อง, ตั้งค่าการบูต และอื่นๆ"
-
 msgid "Memory test"
 msgstr "ตัวทดสอบแรม"
 
-msgid "Check computer memory for errors"
-msgstr "เช็คข้อบกพร่องของแรมคอมพิวเตอร์"

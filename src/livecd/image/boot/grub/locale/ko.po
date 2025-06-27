@@ -17,35 +17,18 @@ msgstr ""
 msgid "Start Rescuezilla"
 msgstr "Rescuezilla 시작하기"
 
-msgid "If boot fails, reboot and try selecting Graphical fallback instead"
-msgstr "부팅이 실패하면 재부팅하고 대신 그래픽 대체를 선택하세요"
-
 msgid "Graphical fallback mode"
 msgstr "그래픽 대체 모드"
-
-msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
-msgstr "내 컴퓨터에서 표준 모드가 작동하지 않는 경우 저해상도 대체 그래픽 드라이버를 사용하세요"
 
 msgid "Load USB into RAM"
 msgstr "USB를 RAM에 불러오기"
 
-msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
-msgstr "Rescuezilla를 메모리로 불러와 부팅 후에 미디어를 꺼낼 수 있도록 합니다"
-
 msgid "Check USB for defects"
 msgstr "USB 오류 검사"
-
-msgid "Verify integrity of USB drive"
-msgstr "USB 드라이브의 무결성을 확인합니다"
 
 msgid "Enter BIOS Setup"
 msgstr "BIOS 설정 시작"
 
-msgid "Configure machine's firmware, boot options etc"
-msgstr "컴퓨터의 펌웨어나 부팅 옵션 등을 구성합니다"
-
 msgid "Memory test"
 msgstr "메모리 테스트"
 
-msgid "Check computer memory for errors"
-msgstr "컴퓨터의 메모리에 오류가 있는지 확인합니다"

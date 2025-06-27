@@ -17,41 +17,18 @@ msgstr ""
 msgid "Start Rescuezilla"
 msgstr "Mulai Rescuezilla"
 
-msgid "If boot fails, reboot and try selecting Graphical fallback instead"
-msgstr ""
-"Jika boot gagal, mulai ulang dan coba pilih Graphical fallback sebagai "
-"gantinya"
-
 msgid "Graphical fallback mode"
 msgstr "Mode graphical fallback"
-
-msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
-msgstr ""
-"Gunakan driver graphics fallback resolusi rendah jika mode standar tidak "
-"berfungsi pada perangkat anda"
 
 msgid "Load USB into RAM"
 msgstr "Muat USB ke RAM"
 
-msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
-msgstr ""
-"Memuat Rescuezilla ke dalam memori yang memungkinkan media boot dilepaskan "
-"setelah boot"
-
 msgid "Check USB for defects"
 msgstr "Periksa kerusakan USB"
-
-msgid "Verify integrity of USB drive"
-msgstr "Verifikasi integritas drive USB"
 
 msgid "Enter BIOS Setup"
 msgstr "Masuk ke Pengaturan BIOS"
 
-msgid "Configure machine's firmware, boot options etc"
-msgstr "Konfigurasikan firmware mesin, opsi boot, dll"
-
 msgid "Memory test"
 msgstr "Tes memori"
 
-msgid "Check computer memory for errors"
-msgstr "Periksa kerusakan memori komputer"

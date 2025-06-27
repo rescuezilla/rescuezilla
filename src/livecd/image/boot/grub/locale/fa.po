@@ -17,39 +17,18 @@ msgstr ""
 msgid "Start Rescuezilla"
 msgstr "شروع Rescuezilla"
 
-msgid "If boot fails, reboot and try selecting Graphical fallback instead"
-msgstr ""
-"اگر بوت ناموفق بود، ری استارت کنید و گزینه Graphical fallback را امتحان کنید"
-
 msgid "Graphical fallback mode"
 msgstr "حالت Graphical fallback"
-
-msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
-msgstr ""
-"استفاده از درایور Graphical fallback با رزولوشن کم اگر حالت استاندارد در "
-"سیستم شما کار نمی کند"
 
 msgid "Load USB into RAM"
 msgstr "بوت فلش مموری بر روی RAM"
 
-msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
-msgstr ""
-"سیستم در رم لود می شود و اجازه جدا سازی فلش مموری بعد از بوت شدن را می دهد"
-
 msgid "Check USB for defects"
 msgstr "تست فلش مموری برای عیب یابی"
-
-msgid "Verify integrity of USB drive"
-msgstr "تصدیق یکپارچگی فلش مموری"
 
 msgid "Enter BIOS Setup"
 msgstr "ورود به تنظیمات بایوس"
 
-msgid "Configure machine's firmware, boot options etc"
-msgstr "تنظیم firmware، گزینه های بوت و غیره"
-
 msgid "Memory test"
 msgstr "تست RAM"
 
-msgid "Check computer memory for errors"
-msgstr "RAM کامپیوتر را برای عیب یابی چک می کند"

@@ -18,41 +18,18 @@ msgstr ""
 msgid "Start Rescuezilla"
 msgstr "Запустить Rescuezilla"
 
-msgid "If boot fails, reboot and try selecting Graphical fallback instead"
-msgstr ""
-"Если загрузка не удалась, попробуйте загрузиться в резервном графическом "
-"режиме"
-
 msgid "Graphical fallback mode"
 msgstr "Графический резервный режим"
-
-msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
-msgstr ""
-"Выберите видео драйвер с низким разрешением, если стандартный режим не "
-"работает на вашем устройстве"
 
 msgid "Load USB into RAM"
 msgstr "Загрузить USB в RAM"
 
-msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
-msgstr ""
-"Загрузить Rescuezilla в память устройства, разрешив извлечение носителя "
-"после загрузки"
-
 msgid "Check USB for defects"
 msgstr "Проверка USB на ошибки"
-
-msgid "Verify integrity of USB drive"
-msgstr "Проверить целостность USB накопителя"
 
 msgid "Enter BIOS Setup"
 msgstr "Войти в настройки BIOS"
 
-msgid "Configure machine's firmware, boot options etc"
-msgstr "Конфигурирование ПО устройства, настройки загрузки и прочее"
-
 msgid "Memory test"
 msgstr "Тест памяти"
 
-msgid "Check computer memory for errors"
-msgstr "Проверка памяти компьютера на наличие ошибок"

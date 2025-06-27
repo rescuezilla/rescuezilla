@@ -17,40 +17,18 @@ msgstr ""
 msgid "Start Rescuezilla"
 msgstr "Start Rescuezilla"
 
-msgid "If boot fails, reboot and try selecting Graphical fallback instead"
-msgstr ""
-"Hvis oppstart mislykkes, start på nytt og velg da grafisk tilbakefallsmodus"
-
 msgid "Graphical fallback mode"
 msgstr "Grafisk tilbakefallsmodus"
-
-msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
-msgstr ""
-"Bruk en grafikkdriver for lav oppløsning hvis standardmodus ikke virker med "
-"din maskinvare"
 
 msgid "Load USB into RAM"
 msgstr "Last USB inn i minne"
 
-msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
-msgstr ""
-"Laster Rescuezilla inn i minne, noe som tillater oppstartsmedia å frakobles "
-"etter oppstart"
-
 msgid "Check USB for defects"
 msgstr "Kontroller USB for defekter"
-
-msgid "Verify integrity of USB drive"
-msgstr "Bekrefter USB-enhetens integritet"
 
 msgid "Enter BIOS Setup"
 msgstr "Gå inn i BIOS-oppsett"
 
-msgid "Configure machine's firmware, boot options etc"
-msgstr "Sett opp maskinens fastvare, oppstartsvalg, osv."
-
 msgid "Memory test"
 msgstr "Minnetest"
 
-msgid "Check computer memory for errors"
-msgstr "Sjekk datamaskinen for feil"

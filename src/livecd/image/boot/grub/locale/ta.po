@@ -17,41 +17,18 @@ msgstr ""
 msgid "Start Rescuezilla"
 msgstr "ரெச்குவேசில்லாவைத் தொடங்குங்கள்"
 
-msgid "If boot fails, reboot and try selecting Graphical fallback instead"
-msgstr ""
-"துவக்க தோல்வியுற்றால், மறுதொடக்கம் செய்து அதற்கு பதிலாக வரைகலை குறைவடையைத் தேர்ந்தெடுக்க "
-"முயற்சிக்கவும்"
-
 msgid "Graphical fallback mode"
 msgstr "வரைகலை குறைவடையும் முறை"
-
-msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
-msgstr ""
-"உங்கள் வன்பொருளுக்கு நிலையான பயன்முறை வேலை செய்யவில்லை என்றால் குறைந்த தெளிவுத்திறன் "
-"குறைவடையும் கிராபிக்ச் இயக்கியைப் பயன்படுத்தவும்"
 
 msgid "Load USB into RAM"
 msgstr "யூ.எச்.பி -ஐ ரேமில் ஏற்றவும்"
 
-msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
-msgstr ""
-"துவக்கத்திற்குப் பிறகு துவக்க ஊடகத்தை வெளியேற்ற அனுமதிக்கும் ரெச்க்யூசிலாவை நினைவகத்தில் "
-"ஏற்றுகிறது"
-
 msgid "Check USB for defects"
 msgstr "குறைபாடுகளுக்கு யூஎச்பி"
-
-msgid "Verify integrity of USB drive"
-msgstr "யூ.எச்.பி டிரைவின் ஒருமைப்பாட்டை சரிபார்க்கவும்"
 
 msgid "Enter BIOS Setup"
 msgstr "பயாச் அமைப்பை உள்ளிடவும்"
 
-msgid "Configure machine's firmware, boot options etc"
-msgstr "இயந்திரத்தின் ஃபார்ம்வேர், துவக்க விருப்பங்கள் போன்றவற்றை உள்ளமைக்கவும்"
-
 msgid "Memory test"
 msgstr "நினைவக சோதனை"
 
-msgid "Check computer memory for errors"
-msgstr "பிழைகளுக்கு கணினி நினைவகத்தை சரிபார்க்கவும்"

@@ -17,40 +17,18 @@ msgstr ""
 msgid "Start Rescuezilla"
 msgstr "Bắt đầu chạy Rescuezilla"
 
-msgid "If boot fails, reboot and try selecting Graphical fallback instead"
-msgstr ""
-"Nếu việc khởi động, hãy khởi động lại máy và chọn chế độ giao diện dự phòng"
-
 msgid "Graphical fallback mode"
 msgstr "Chế độ giao diện dự phòng"
-
-msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
-msgstr ""
-"Sử dụng driver đồ hoạ dự phòng độ phân giải thấp nếu chế độ mặc định không "
-"hoạt động"
 
 msgid "Load USB into RAM"
 msgstr "Nạp USB vào RAM"
 
-msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
-msgstr ""
-"Nạp Rescuezilla vào RAM cho phép rút thiết bị chứa boot khỏi máy sau khi "
-"boot lên"
-
 msgid "Check USB for defects"
 msgstr "Kiểm tra lỗi USB"
-
-msgid "Verify integrity of USB drive"
-msgstr "Kiểm tra tính toàn vẹn dữ liệu của ổ USB"
 
 msgid "Enter BIOS Setup"
 msgstr "Truy cập thiết lập BIOS"
 
-msgid "Configure machine's firmware, boot options etc"
-msgstr "Cấu hình firmware máy, tuỳ chọn khởi động,vv"
-
 msgid "Memory test"
 msgstr "Kiểm tra bộ nhớ khả biến"
 
-msgid "Check computer memory for errors"
-msgstr "Kiểm tra lỗi bộ nhớ máy tính"

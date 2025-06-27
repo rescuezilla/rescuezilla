@@ -17,41 +17,18 @@ msgstr ""
 msgid "Start Rescuezilla"
 msgstr "Spustit Rescuezillu"
 
-msgid "If boot fails, reboot and try selecting Graphical fallback instead"
-msgstr ""
-"Pokud boot selže, tak restartujte systém a zkuste namísto zvolit záložní "
-"grafický režim"
-
 msgid "Graphical fallback mode"
 msgstr "Grafický záložní režim"
-
-msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
-msgstr ""
-"Použijte ovladač grafického záložního režimu s nízkým rozlišením, pokud "
-"standartní režim nefunguje s Vaším hardwarem"
 
 msgid "Load USB into RAM"
 msgstr "Načíst USB do RAM"
 
-msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
-msgstr ""
-"Načíst Rescuezillu do paměti, což umožní odpojení bootovacího média po "
-"nabootování"
-
 msgid "Check USB for defects"
 msgstr "Zkontrolovat USB na korupci"
-
-msgid "Verify integrity of USB drive"
-msgstr "Zkontrolovat integritu USB disku"
 
 msgid "Enter BIOS Setup"
 msgstr "Vstoupit do BIOSu"
 
-msgid "Configure machine's firmware, boot options etc"
-msgstr "Nakonfigurovat firmware zařízení, možnosti bootování apod."
-
 msgid "Memory test"
 msgstr "Test paměti"
 
-msgid "Check computer memory for errors"
-msgstr "Zkontrolovat paměť počítače na chyby"

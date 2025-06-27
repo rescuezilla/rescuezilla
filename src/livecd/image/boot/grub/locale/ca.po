@@ -17,40 +17,18 @@ msgstr ""
 msgid "Start Rescuezilla"
 msgstr "Inicia el RescueZilla"
 
-msgid "If boot fails, reboot and try selecting Graphical fallback instead"
-msgstr ""
-"Si falla l'arrencada, reinicieu i trieu el mode «Resolució de vídeo bàsica»"
-
 msgid "Graphical fallback mode"
 msgstr "Resolució de vídeo bàsica"
-
-msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
-msgstr ""
-"Utilitza un mode de pantalla amb baixa resolució si el mode estàndard no "
-"funciona amb aquest maquinari"
 
 msgid "Load USB into RAM"
 msgstr "Carrega l'USB a la memòria RAM"
 
-msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
-msgstr ""
-"Carrega el RescueZilla en memòria, permetent extreure els mitjans després "
-"d'arrencar"
-
 msgid "Check USB for defects"
 msgstr "Cerca defectes a l'USB"
-
-msgid "Verify integrity of USB drive"
-msgstr "Verifica la integritat del dispositiu USB"
 
 msgid "Enter BIOS Setup"
 msgstr "Configuració del BIOS"
 
-msgid "Configure machine's firmware, boot options etc"
-msgstr "Configura les opcions d'arrencada d'aquest equip"
-
 msgid "Memory test"
 msgstr "Test de memòria"
 
-msgid "Check computer memory for errors"
-msgstr "Verifica si hi ha cap error de memòria en aquest ordinador"

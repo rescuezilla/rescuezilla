@@ -17,41 +17,18 @@ msgstr ""
 msgid "Start Rescuezilla"
 msgstr "Rescuezilla Indítása"
 
-msgid "If boot fails, reboot and try selecting Graphical fallback instead"
-msgstr ""
-"Ha az indítás sikertelen, próbáld inkább kiválasztani a \"grafikus "
-"kompatibilitási módot\""
-
 msgid "Graphical fallback mode"
 msgstr "Grafikus kompatibilitási mód"
-
-msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
-msgstr ""
-"Használj alacsony felbontású (régi) kompatibilis grafikus módot, ha a normál "
-"módot nem kezeli a hardver"
 
 msgid "Load USB into RAM"
 msgstr "Töltsd memóriába (RAM-ba) az USB-t"
 
-msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
-msgstr ""
-"A memóriába tölti be a Rescuezilla rendszerét, így indulás után rögtön "
-"eltávolítható lesz a boot eszköz"
-
 msgid "Check USB for defects"
 msgstr "Keress hibákat az USB-n"
-
-msgid "Verify integrity of USB drive"
-msgstr "Az USB meghajtó integritásának ellenőrzése"
 
 msgid "Enter BIOS Setup"
 msgstr "BIOS beállítása"
 
-msgid "Configure machine's firmware, boot options etc"
-msgstr "A gép firmware, boot, stb. konfigurálási opciói"
-
 msgid "Memory test"
 msgstr "Memória Teszt"
 
-msgid "Check computer memory for errors"
-msgstr "Keress memória-hibákat a gépen"

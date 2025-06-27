@@ -18,40 +18,18 @@ msgstr ""
 msgid "Start Rescuezilla"
 msgstr "Porneste Rescuezilla"
 
-msgid "If boot fails, reboot and try selecting Graphical fallback instead"
-msgstr ""
-"Daca bootarea esueaza, restarteaza sistemul si incearca modul grafic in loc"
-
 msgid "Graphical fallback mode"
 msgstr "Modul grafic alternativ"
-
-msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
-msgstr ""
-"Foloseste modul alternativ cu driver de rezolutie scazuta daca modul "
-"standard nu functioneaza pe calculatorul tau"
 
 msgid "Load USB into RAM"
 msgstr "Incarca USB in RAM"
 
-msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
-msgstr ""
-"Incarca Rescuezilla in memorie permitand mediului de stocare (CD/USB) sa fie "
-"scos / deconectat dupa bootare"
-
 msgid "Check USB for defects"
-msgstr ""
-
-msgid "Verify integrity of USB drive"
 msgstr ""
 
 msgid "Enter BIOS Setup"
 msgstr ""
 
-msgid "Configure machine's firmware, boot options etc"
-msgstr ""
-
 msgid "Memory test"
 msgstr ""
 
-msgid "Check computer memory for errors"
-msgstr ""

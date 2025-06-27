@@ -23,35 +23,18 @@ msgstr ""
 msgid "Start Rescuezilla"
 msgstr "启动Rescuezilla"
 
-msgid "If boot fails, reboot and try selecting Graphical fallback instead"
-msgstr "如果引导失败，请选择图形应急模式重试"
-
 msgid "Graphical fallback mode"
 msgstr "图形应急模式"
-
-msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
-msgstr "如果标准模式不适用于您的硬件时，请使用低分辨率的图形模式"
 
 msgid "Load USB into RAM"
 msgstr "USB设备启动"
 
-msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
-msgstr "将Rescuezilla加载到内存中启动，以便启动后弹出介质"
-
 msgid "Check USB for defects"
 msgstr "检测USB设备"
-
-msgid "Verify integrity of USB drive"
-msgstr "验证USB设备的完整性"
 
 msgid "Enter BIOS Setup"
 msgstr "进入BIOS设置"
 
-msgid "Configure machine's firmware, boot options etc"
-msgstr "配置机器的固件，引导选项等"
-
 msgid "Memory test"
 msgstr "内存检测"
 
-msgid "Check computer memory for errors"
-msgstr "检查计算机内存是否存在错误"

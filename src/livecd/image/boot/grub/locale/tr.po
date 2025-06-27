@@ -17,41 +17,18 @@ msgstr ""
 msgid "Start Rescuezilla"
 msgstr "Rescuezilla'yı başlat"
 
-msgid "If boot fails, reboot and try selecting Graphical fallback instead"
-msgstr ""
-"Önyükleme başarısız olursa, yeniden başlatın ve grafiksel yedek modu seçmeyi "
-"deneyin"
-
 msgid "Graphical fallback mode"
 msgstr "Grafiksel yedek mod"
-
-msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
-msgstr ""
-"Donanımınız için standart mod çalışmıyorsa düşük çözünürlüğe sahip yedek "
-"grafik sürücüsünü kullanın"
 
 msgid "Load USB into RAM"
 msgstr "USB'yi RAM'e yükle"
 
-msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
-msgstr ""
-"Rescuezilla'yı belleğe yükler, önyükleme ortamının önyükleme işleminden "
-"sonra çıkarılmasına izin verir"
-
 msgid "Check USB for defects"
 msgstr "Kusurlar için USB'yi denetle"
-
-msgid "Verify integrity of USB drive"
-msgstr "USB belleğin bütünlüğünü doğrulayın"
 
 msgid "Enter BIOS Setup"
 msgstr "BIOS menüsüne gir"
 
-msgid "Configure machine's firmware, boot options etc"
-msgstr "Makinenin ürün yazılımını, önyükleme seçeneklerini vb. yapılandırın"
-
 msgid "Memory test"
 msgstr "Bellek testi"
 
-msgid "Check computer memory for errors"
-msgstr "Bilgisayar belleğini hatalara karşı denetleyin"

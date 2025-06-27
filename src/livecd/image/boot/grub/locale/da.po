@@ -17,39 +17,18 @@ msgstr ""
 msgid "Start Rescuezilla"
 msgstr "Start Rescuezilla"
 
-msgid "If boot fails, reboot and try selecting Graphical fallback instead"
-msgstr ""
-"Hvis din computer ikke vil boote, prøv da at genstart og vælg den grafiske "
-"brugerflade"
-
 msgid "Graphical fallback mode"
 msgstr "Grafisk brugerflade"
-
-msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
-msgstr ""
-"Brug en grafikdriver med lav skærmopløsning, hvis standarddriveren ikke "
-"virker sammen med din hardware"
 
 msgid "Load USB into RAM"
 msgstr "Indlæs Rescuezilla i RAM'en"
 
-msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
-msgstr "Indlæser Rescuezilla i RAM'en, så du kan fjerne USB'en efter boot"
-
 msgid "Check USB for defects"
 msgstr "Kontrollerer USB'en for fejl"
-
-msgid "Verify integrity of USB drive"
-msgstr "Kontroller USB-drevet for mulige fejl"
 
 msgid "Enter BIOS Setup"
 msgstr "Gå ind i computerens BIOS"
 
-msgid "Configure machine's firmware, boot options etc"
-msgstr "Indstil computerens firmware, boot-rækkefølge etc"
-
 msgid "Memory test"
 msgstr "Test af RAM'en"
 
-msgid "Check computer memory for errors"
-msgstr "Undersøger RAM'en for fejl"

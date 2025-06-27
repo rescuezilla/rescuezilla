@@ -17,41 +17,18 @@ msgstr ""
 msgid "Start Rescuezilla"
 msgstr "Nis Rescuezilla-n"
 
-msgid "If boot fails, reboot and try selecting Graphical fallback instead"
-msgstr ""
-"Nëse nisja dështon, riniseni dhe provoni të përzgjidhni Grafiken si "
-"rrugëdalje"
-
 msgid "Graphical fallback mode"
 msgstr "Mënyra Grafike rrugëdalje"
-
-msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
-msgstr ""
-"Nëse mënyra standarde s’funksionon për hardware-in tuaj, si rrugëdalje "
-"përdorni përudhës grafik me qartësi të ulët"
 
 msgid "Load USB into RAM"
 msgstr "Ngarkoje USB-në në RAM"
 
-msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
-msgstr ""
-"E ngarkon Rescuezilla-n në kujtesë, duke lejuar nxjerrjen e medias së nisjes "
-"pas procesit përkatës"
-
 msgid "Check USB for defects"
 msgstr "Kontrollo USB-në për defekte"
-
-msgid "Verify integrity of USB drive"
-msgstr "Verifiko integritetin e diskut USB"
 
 msgid "Enter BIOS Setup"
 msgstr "Hap Ujdisje BIOS"
 
-msgid "Configure machine's firmware, boot options etc"
-msgstr "Formësoni firmware të makinës, mundësi nisjeje, etj"
-
 msgid "Memory test"
 msgstr "Provë kujtese"
 
-msgid "Check computer memory for errors"
-msgstr "Kontrollo kujtesën e kompjuterit për gabime"

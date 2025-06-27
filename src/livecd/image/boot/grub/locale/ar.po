@@ -18,39 +18,18 @@ msgstr ""
 msgid "Start Rescuezilla"
 msgstr "تشغيل Rescuezilla"
 
-msgid "If boot fails, reboot and try selecting Graphical fallback instead"
-msgstr ""
-"إذا فشل الاقلاع، قم باعادة تشغيل الجهاز وإختر وضعية واجهة المستخدم الرسومية"
-
 msgid "Graphical fallback mode"
 msgstr "وضعية واجهة المستخدم الرسومية"
-
-msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
-msgstr ""
-"استخدم تعريف كارت شاشة منخفض الدقة إذا كان الوضع القياسي لا يعمل مع قطع جهازك"
 
 msgid "Load USB into RAM"
 msgstr "تحميل الـUSB في ذاكرة الوصول العشوائي"
 
-msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
-msgstr ""
-"يقوم بتحميل Rescuezilla في الذاكرة مما يسمح بإخراج وسيط الاقلاع(مثل الفلاشة) "
-"بعد الاقلاع"
-
 msgid "Check USB for defects"
 msgstr "تحقق من وجود عيوب في الـUSB"
-
-msgid "Verify integrity of USB drive"
-msgstr "تحقق من سلامة الـUSB"
 
 msgid "Enter BIOS Setup"
 msgstr "أدخل الي إعدادات الـBIOS"
 
-msgid "Configure machine's firmware, boot options etc"
-msgstr "اضبط اعدادات الاقلاع،الفيرموير ..الخ"
-
 msgid "Memory test"
 msgstr "اختبار الذاكرة"
 
-msgid "Check computer memory for errors"
-msgstr "افحص ذاكرة الكمبيوتر بحثًا عن الأخطاء"

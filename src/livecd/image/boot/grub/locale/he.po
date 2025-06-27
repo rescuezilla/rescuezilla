@@ -18,38 +18,18 @@ msgstr ""
 msgid "Start Rescuezilla"
 msgstr "הפעלת Rescuezilla"
 
-msgid "If boot fails, reboot and try selecting Graphical fallback instead"
-msgstr "אם ההפעלה נכשלת, יש להפעיל מחדש ולבחור במצב גרפי חלופי במקום"
-
 msgid "Graphical fallback mode"
 msgstr "מצב גרפי חלופי"
-
-msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
-msgstr ""
-"להשתמש מנהל התקן גרפי ברזולוציה נמוכה כמצב חלופי אם המצב הרגיל לא עובד עם "
-"החומרה שלך"
 
 msgid "Load USB into RAM"
 msgstr "טעינת המערכת לזיכרון"
 
-msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
-msgstr ""
-"טוען את Rescuezilla לזיכרון כדי לאפשר להוציא את התקן האחסון לאחר עליית המערכת"
-
 msgid "Check USB for defects"
 msgstr "בדיקת תקלות ב־USB"
-
-msgid "Verify integrity of USB drive"
-msgstr "אימות אמינות כונן ה־USB"
 
 msgid "Enter BIOS Setup"
 msgstr "כניסה להגדרות ה־BIOS"
 
-msgid "Configure machine's firmware, boot options etc"
-msgstr "הגדרת קושחת המכונה, אפשרויות ההפעלה ועוד"
-
 msgid "Memory test"
 msgstr "בדיקת זיכרון"
 
-msgid "Check computer memory for errors"
-msgstr "בדיקת שגיאות בזיכרון המחשב"

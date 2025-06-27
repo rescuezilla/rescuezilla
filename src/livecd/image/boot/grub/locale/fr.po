@@ -22,38 +22,18 @@ msgstr ""
 msgid "Start Rescuezilla"
 msgstr "Démarrer Rescuezilla"
 
-msgid "If boot fails, reboot and try selecting Graphical fallback instead"
-msgstr "Si le démarrage échoue, redémarrez et essayez plutôt de sélectionner le mode de secours graphique"
-
 msgid "Graphical fallback mode"
 msgstr "Mode de secours graphique"
-
-msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
-msgstr ""
-"Utilisez le mode de secours graphique à basse résolution si le mode standard "
-"ne fonctionne pas pour votre matériel"
 
 msgid "Load USB into RAM"
 msgstr "Charger l'USB dans la RAM"
 
-msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
-msgstr "Charge Rescuezilla en mémoire, ce qui permet d'éjecter le support d'amorçage après le démarrage"
-
 msgid "Check USB for defects"
 msgstr "Vérifier l'intégrité du disque"
-
-msgid "Verify integrity of USB drive"
-msgstr "Vérifie l'intégrité du disque USB"
 
 msgid "Enter BIOS Setup"
 msgstr "Entrer dans la configuration du BIOS"
 
-msgid "Configure machine's firmware, boot options etc"
-msgstr ""
-"Configurer le micrologiciel de la machine, les options de démarrage, etc"
-
 msgid "Memory test"
 msgstr "Test mémoire"
 
-msgid "Check computer memory for errors"
-msgstr "Recherche les erreurs dans la mémoire de l'ordinateur"

@@ -17,41 +17,18 @@ msgstr ""
 msgid "Start Rescuezilla"
 msgstr "Käynnistä Rescuezilla ( Graafinen vakiotila )"
 
-msgid "If boot fails, reboot and try selecting Graphical fallback instead"
-msgstr ""
-"Jos ohjelmiston käynnistys epäonnistuu, käynnistä tietokone uudelleen ja "
-"yritä käynnistää ohjelmisto Graafisella varatilla"
-
 msgid "Graphical fallback mode"
 msgstr "Käynnistä Rescuezilla ( Graafinen varatila )"
-
-msgid "Use low-resolution fallback graphics driver if standard mode doesn't work for your hardware"
-msgstr ""
-"Yritä käynnistää tällä alhaisemman resoluution näytönohjaimella, jos "
-"Graafinen vakiotila ei toimi laitteistollasi"
 
 msgid "Load USB into RAM"
 msgstr "Lataa ohjelmisto RAM-muistiin"
 
-msgid "Loads Rescuezilla into memory allowing the boot media to be ejected after bootup"
-msgstr ""
-"Lataa ohjelmisto RAM-muistiin, mahdollistaen käynnistysmedian poistamisen "
-"käynnistyksen jälkeen"
-
 msgid "Check USB for defects"
 msgstr "Tarkasta USB-asema"
-
-msgid "Verify integrity of USB drive"
-msgstr "Tarkasta USB-aseman eheys"
 
 msgid "Enter BIOS Setup"
 msgstr "Siirry BIOS-asetuksiin"
 
-msgid "Configure machine's firmware, boot options etc"
-msgstr "Määritä koneen laiteohjelmisto, käynnistysasetukset jne"
-
 msgid "Memory test"
 msgstr "Muistitesti"
 
-msgid "Check computer memory for errors"
-msgstr "Tarkasta tietokoneen muisti virheiden varalta"
