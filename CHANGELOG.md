@@ -12,6 +12,7 @@
 * Improved touchpad support for tap-to-click and multifinger gestures using libinput driver [#506](https://github.com/rescuezilla/rescuezilla/issues/506) (thanks engstk!)  
 * Upgraded to latest partclone `0.3.37` (released June 2025) from partclone `0.3.33` (released December 2024)
 * Fixed some GTK theme readability and consistency issues eg, around the taskbar by switching from Breeze to Arc-Darker [#506](https://github.com/rescuezilla/rescuezilla/pull/506#issuecomment-3008830771) (thanks engstk!)
+* Extracted out a separate Portuguese (Brazillian) (pt_BR) translation entry from the existing Portuguese (Portugal) (pt) translation (#410) (thanks hugok79!)
 
 #  Rescuezilla v2.6 (2025-03-23)
 
