@@ -47,10 +47,10 @@ msgstr ""
 msgid "Next >"
 msgstr ""
 
-msgid "Please wait..."
+msgid "Please wait…"
 msgstr ""
 
-msgid "Identifying disk drives..."
+msgid "Identifying disk drives…"
 msgstr ""
 
 #, python-brace-format
@@ -284,7 +284,7 @@ msgstr ""
 msgid "Partition"
 msgstr ""
 
-msgid "Mounting..."
+msgid "Mounting…"
 msgstr ""
 
 msgid "Close this popup to cancel the mount operation."
@@ -296,7 +296,7 @@ msgstr ""
 msgid "Must provide either password or SSH identity file."
 msgstr ""
 
-msgid "Scanning folder for backup images..."
+msgid "Scanning folder for backup images…"
 msgstr ""
 
 #, python-brace-format
@@ -362,7 +362,7 @@ msgstr ""
 msgid "The table below lists the backup images that are already in this folder (if any)."
 msgstr ""
 
-msgid "Browse..."
+msgid "Browse…"
 msgstr ""
 
 msgid "Filename"
@@ -593,7 +593,7 @@ msgstr ""
 msgid "When you are ready to continue, click <b>Next</b>."
 msgstr ""
 
-msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
+msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes…"
 msgstr ""
 
 #, python-brace-format
@@ -649,7 +649,7 @@ msgstr ""
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
 msgstr ""
 
-msgid "Synchronizing disks..."
+msgid "Synchronizing disks…"
 msgstr ""
 
 #, python-brace-format
@@ -661,7 +661,7 @@ msgid "Probing {device} with {app}"
 msgstr ""
 
 #, python-brace-format
-msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
+msgid "Growing filesystem {partition} ({filesystem}). This may take a while…"
 msgstr ""
 
 #, python-brace-format
@@ -700,7 +700,7 @@ msgstr ""
 msgid "Successfully updated initramfs"
 msgstr ""
 
-msgid "Updating EFI NVRAM..."
+msgid "Updating EFI NVRAM…"
 msgstr ""
 
 msgid "Successfully updated EFI NVRAM"
@@ -767,7 +767,7 @@ msgstr ""
 msgid "Mount"
 msgstr ""
 
-msgid "Mounting as read-only..."
+msgid "Mounting as read-only…"
 msgstr ""
 
 msgid "Unmount"

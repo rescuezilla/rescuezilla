@@ -54,10 +54,10 @@ msgstr "חזרה"
 msgid "Next >"
 msgstr "הבא >"
 
-msgid "Please wait..."
+msgid "Please wait…"
 msgstr "נא להמתין…"
 
-msgid "Identifying disk drives..."
+msgid "Identifying disk drives…"
 msgstr "הכוננים הקשיחים מזוהים…"
 
 #, python-brace-format
@@ -313,7 +313,7 @@ msgstr "נא לבחור את המחיצה אליה יישמרו קובצי הג�
 msgid "Partition"
 msgstr "מחיצה"
 
-msgid "Mounting..."
+msgid "Mounting…"
 msgstr "מתבצע חיבור…"
 
 msgid "Close this popup to cancel the mount operation."
@@ -325,7 +325,7 @@ msgstr "נא לוודא ששם המשתמש, הססמה ושאר השדות שצ
 msgid "Must provide either password or SSH identity file."
 msgstr "יש לספק סיסמה או קובץ זהות SSH."
 
-msgid "Scanning folder for backup images..."
+msgid "Scanning folder for backup images…"
 msgstr "התיקייה נסרקת לאיתור קובצי גיבוי…"
 
 #, python-brace-format
@@ -404,7 +404,7 @@ msgstr "נא לבחור בתיקייה אחרת."
 msgid "The table below lists the backup images that are already in this folder (if any)."
 msgstr "הטבלה שלהלן מציגה את קובצי הגיבוי שכבר נמצאים בתיקייה הזאת (אם ישנם)."
 
-msgid "Browse..."
+msgid "Browse…"
 msgstr "עיון…"
 
 msgid "Filename"
@@ -659,7 +659,7 @@ msgstr "מחיצה זו לא תשוחזר"
 msgid "When you are ready to continue, click <b>Next</b>."
 msgstr "כשסיימת להתכונן, יש ללחוץ על <b>הבא</b>."
 
-msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
+msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes…"
 msgstr "מתבצעת סריקה וניתוק של כוננים לוגיים ממנהל הכוננים הלוגיים (LVM)…"
 
 #, python-brace-format
@@ -730,7 +730,7 @@ msgid "Restoring {description} to {destination_partition} ({destination_descript
 msgstr ""
 "{description} משוחזר אל {destination_partition} ({destination_description})"
 
-msgid "Synchronizing disks..."
+msgid "Synchronizing disks…"
 msgstr "הכוננים מסונכרנים…"
 
 #, python-brace-format
@@ -742,7 +742,7 @@ msgid "Probing {device} with {app}"
 msgstr "מתבצע תשאול מול {device} עם {app}"
 
 #, python-brace-format
-msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
+msgid "Growing filesystem {partition} ({filesystem}). This may take a while…"
 msgstr "מערכת הקבצים {partition} ({filesystem}) מתרחבת. זה עלול לקחת זמן מה…"
 
 #, python-brace-format
@@ -783,7 +783,7 @@ msgstr "initramfs מעודכן (אם קיים)"
 msgid "Successfully updated initramfs"
 msgstr "initramfs עודכן בהצלחה"
 
-msgid "Updating EFI NVRAM..."
+msgid "Updating EFI NVRAM…"
 msgstr "ה־NVRAM של ה־EFI מתעדכן…"
 
 msgid "Successfully updated EFI NVRAM"
@@ -856,7 +856,7 @@ msgstr "לחיצה על <b>עיגון</b> תעגן את קובץ דמות הגי
 msgid "Mount"
 msgstr "עיגון"
 
-msgid "Mounting as read-only..."
+msgid "Mounting as read-only…"
 msgstr "מתבצע עיגון לקריאה בלבד…"
 
 msgid "Unmount"

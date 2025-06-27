@@ -113,7 +113,7 @@ class ImageFolderQuery:
         self.image_list_store.clear()
         self.failed_to_read_image_dict.clear()
         self.win.set_sensitive(False)
-        self.please_wait_popup = PleaseWaitModalPopup(self.builder, title=_("Please wait..."), message=_("Scanning folder for backup images...") + "\n\n" + _("Close this popup to cancel scanning the selected folder and subfolders."), on_close_callback=self.cancel_image_folder_query)
+        self.please_wait_popup = PleaseWaitModalPopup(self.builder, title=_("Please wait…"), message=_("Scanning folder for backup images…") + "\n\n" + _("Close this popup to cancel scanning the selected folder and subfolders."), on_close_callback=self.cancel_image_folder_query)
         self.please_wait_popup.show()
         thread = threading.Thread(target=self.scan_image_directory)
         thread.daemon = True

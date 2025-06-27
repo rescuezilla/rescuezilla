@@ -38,7 +38,7 @@ class MountLocalPath:
         self.requested_stop_lock = threading.Lock()
         self.requested_stop = False
 
-        self.please_wait_popup = PleaseWaitModalPopup(builder, title=_("Please wait..."), message=_("Mounting...") + "\n\n" + _("Close this popup to cancel the mount operation."), on_close_callback=self.cancel_mount)
+        self.please_wait_popup = PleaseWaitModalPopup(builder, title=_("Please wait…"), message=_("Mounting…") + "\n\n" + _("Close this popup to cancel the mount operation."), on_close_callback=self.cancel_mount)
         self.please_wait_popup.show()
         thread = threading.Thread(target=self._do_mount_command, args=(source_path, destination_path, ))
         thread.daemon = True

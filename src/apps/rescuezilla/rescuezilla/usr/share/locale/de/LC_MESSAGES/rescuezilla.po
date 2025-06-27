@@ -63,10 +63,10 @@ msgstr "Zurück"
 msgid "Next >"
 msgstr "Weiter ▶"
 
-msgid "Please wait..."
+msgid "Please wait…"
 msgstr "Bitte warten …"
 
-msgid "Identifying disk drives..."
+msgid "Identifying disk drives…"
 msgstr "Suche Laufwerke …"
 
 #, python-brace-format
@@ -336,8 +336,8 @@ msgstr "Ziellaufwerk auswählen"
 msgid "Partition"
 msgstr "Partition"
 
-msgid "Mounting..."
-msgstr "Einhängen ..."
+msgid "Mounting…"
+msgstr "Einhängen …"
 
 msgid "Close this popup to cancel the mount operation."
 msgstr "Schließe dieses Fenster um das Einhängen abzubrechen."
@@ -350,8 +350,8 @@ msgstr ""
 msgid "Must provide either password or SSH identity file."
 msgstr "Passwort oder SSH Identitäts-Datei benötigt."
 
-msgid "Scanning folder for backup images..."
-msgstr "Ordner für Sicherungskopien wird gescannt ..."
+msgid "Scanning folder for backup images…"
+msgstr "Ordner für Sicherungskopien wird gescannt …"
 
 #, python-brace-format
 msgid "({timeout_seconds} second timeout)"
@@ -438,8 +438,8 @@ msgstr ""
 "In der folgenden Tabelle sind alle Sicherungskopien aufgeführt, die sich "
 "bereits in diesem Ordner befinden (sofern hier welche vorhanden sind)."
 
-msgid "Browse..."
-msgstr "Durchsuchen ..."
+msgid "Browse…"
+msgstr "Durchsuchen …"
 
 msgid "Filename"
 msgstr "Dateiname"
@@ -717,8 +717,8 @@ msgstr "Diese Partition nicht wiederherstellen"
 msgid "When you are ready to continue, click <b>Next</b>."
 msgstr "Wenn du bereit bist fortzufahren, klicke <b>Weiter</b>."
 
-msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
-msgstr "Duchsuche und hänge Logical Volume Manager (LVM) aus ..."
+msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes…"
+msgstr "Duchsuche und hänge Logical Volume Manager (LVM) aus …"
 
 #, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
@@ -794,8 +794,8 @@ msgstr "Partitionstabelle aktualisieren"
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
 msgstr "{description} wird auf {destination_partition} ({destination_description}) wiederhergestellt"
 
-msgid "Synchronizing disks..."
-msgstr "Synchronisiere Laufwerke ..."
+msgid "Synchronizing disks…"
+msgstr "Synchronisiere Laufwerke …"
 
 #, python-brace-format
 msgid "Querying hard drive geometry of {device}"
@@ -806,10 +806,10 @@ msgid "Probing {device} with {app}"
 msgstr "Prüfe {device} mit {app}"
 
 #, python-brace-format
-msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
+msgid "Growing filesystem {partition} ({filesystem}). This may take a while…"
 msgstr ""
 "Lege Dateisystem an {partition} ({filesystem}]. Dies kann eine Weile dauern "
-"..."
+"…"
 
 #, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
@@ -850,8 +850,8 @@ msgstr "Aktualisiere initramfs (sofern vorhanden)"
 msgid "Successfully updated initramfs"
 msgstr "Aktualisierung von initramfs war erfolgreich"
 
-msgid "Updating EFI NVRAM..."
-msgstr "Aktualisiere EFI NVRAM ..."
+msgid "Updating EFI NVRAM…"
+msgstr "Aktualisiere EFI NVRAM …"
 
 msgid "Successfully updated EFI NVRAM"
 msgstr "Aktualisierung von EFI NVRAM war erfolgreich"
@@ -931,8 +931,8 @@ msgstr ""
 msgid "Mount"
 msgstr "Einhängen"
 
-msgid "Mounting as read-only..."
-msgstr "Hänge nur-lesend ein ..."
+msgid "Mounting as read-only…"
+msgstr "Hänge nur-lesend ein …"
 
 msgid "Unmount"
 msgstr "Aushängen"

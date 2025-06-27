@@ -58,11 +58,11 @@ msgstr "Atgal"
 msgid "Next >"
 msgstr "Toliau >"
 
-msgid "Please wait..."
-msgstr "Palaukite..."
+msgid "Please wait…"
+msgstr "Palaukite…"
 
-msgid "Identifying disk drives..."
-msgstr "Atpažįstami diskų įrenginiai..."
+msgid "Identifying disk drives…"
+msgstr "Atpažįstami diskų įrenginiai…"
 
 #, python-brace-format
 msgid "Unmounting: {path}"
@@ -322,8 +322,8 @@ msgstr "Pasirinkite skaidinį, kuriame bus išsaugoti atvaizdo failai"
 msgid "Partition"
 msgstr "Skaidinys"
 
-msgid "Mounting..."
-msgstr "Prijungiama..."
+msgid "Mounting…"
+msgstr "Prijungiama…"
 
 msgid "Close this popup to cancel the mount operation."
 msgstr "Uždarykite šį iššokantį langą, kad atšauktumėte prijungimo operaciją."
@@ -336,8 +336,8 @@ msgstr ""
 msgid "Must provide either password or SSH identity file."
 msgstr "Turite pateikti slaptažodį arba SSH tapatybės failą."
 
-msgid "Scanning folder for backup images..."
-msgstr "Nuskaitomas aplankas ir ieškoma atvaizdų atsarginių kopijų..."
+msgid "Scanning folder for backup images…"
+msgstr "Nuskaitomas aplankas ir ieškoma atvaizdų atsarginių kopijų…"
 
 #, python-brace-format
 msgid "({timeout_seconds} second timeout)"
@@ -424,8 +424,8 @@ msgstr ""
 "Toliau pateiktoje lentelėje išvardyti šiame aplanke jau esantys atsarginių "
 "kopijų atvaizdai (jei tokių yra)."
 
-msgid "Browse..."
-msgstr "Naršyti..."
+msgid "Browse…"
+msgstr "Naršyti…"
 
 msgid "Filename"
 msgstr "Failo pavadinimas"
@@ -696,10 +696,10 @@ msgstr "Šis skaidinys neatkuriamas"
 msgid "When you are ready to continue, click <b>Next</b>."
 msgstr "Kai būsite pasirengę tęsti, spustelėkite <b>Toliau</b>."
 
-msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
+msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes…"
 msgstr ""
 "Nuskaitomi ir atjungiami bet kokie loginiai tomų tvarkyklės (LVM) loginiai "
-"tomai..."
+"tomai…"
 
 #, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
@@ -772,8 +772,8 @@ msgid "Restoring {description} to {destination_partition} ({destination_descript
 msgstr ""
 "Atkuriama {description} į {destination_partition} ({destination_description})"
 
-msgid "Synchronizing disks..."
-msgstr "Sinchronizuojami diskai..."
+msgid "Synchronizing disks…"
+msgstr "Sinchronizuojami diskai…"
 
 #, python-brace-format
 msgid "Querying hard drive geometry of {device}"
@@ -784,10 +784,10 @@ msgid "Probing {device} with {app}"
 msgstr "Naršoma {device} naudojant {app}"
 
 #, python-brace-format
-msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
+msgid "Growing filesystem {partition} ({filesystem}). This may take a while…"
 msgstr ""
 "Plečiama failų sistema {partition} ({filesystem}). Tai gali šiek tiek "
-"užtrukti..."
+"užtrukti…"
 
 #, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
@@ -827,8 +827,8 @@ msgstr "Atnaujinama initramfs (jei yra)"
 msgid "Successfully updated initramfs"
 msgstr "Initramfs sėkmingai atnaujinta"
 
-msgid "Updating EFI NVRAM..."
-msgstr "Atnaujinama EFI NVRAM..."
+msgid "Updating EFI NVRAM…"
+msgstr "Atnaujinama EFI NVRAM…"
 
 msgid "Successfully updated EFI NVRAM"
 msgstr "Sėkmingai atnaujinta EFI NVRAM"
@@ -905,8 +905,8 @@ msgstr ""
 msgid "Mount"
 msgstr "Prijungti"
 
-msgid "Mounting as read-only..."
-msgstr "Prijungiama nuskaitymui..."
+msgid "Mounting as read-only…"
+msgstr "Prijungiama nuskaitymui…"
 
 msgid "Unmount"
 msgstr "Atjungti"

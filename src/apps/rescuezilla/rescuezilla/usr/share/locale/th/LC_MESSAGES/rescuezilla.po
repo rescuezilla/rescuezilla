@@ -61,11 +61,11 @@ msgstr "กลับ"
 msgid "Next >"
 msgstr "ถัดไป >"
 
-msgid "Please wait..."
-msgstr "โปรดรอสักครู่..."
+msgid "Please wait…"
+msgstr "โปรดรอสักครู่…"
 
-msgid "Identifying disk drives..."
-msgstr "กำลังยืนยันข้อมูลไดร์เวอร์ฮาร์ดดิส...."
+msgid "Identifying disk drives…"
+msgstr "กำลังยืนยันข้อมูลไดร์เวอร์ฮาร์ดดิส…."
 
 #, python-brace-format
 msgid "Unmounting: {path}"
@@ -341,8 +341,8 @@ msgstr "เลือกพาร์ติชั่นที่ต้องกา
 msgid "Partition"
 msgstr "พาร์ติชั่น"
 
-msgid "Mounting..."
-msgstr "กำลังเชื่อมต่อ..."
+msgid "Mounting…"
+msgstr "กำลังเชื่อมต่อ…"
 
 msgid "Close this popup to cancel the mount operation."
 msgstr "ปิดหน้าต่างนี้เพื่อยกเลิกการดำเนินการเชื่อมต่อ"
@@ -355,8 +355,8 @@ msgstr "โปรดเช็คว่าชื่อผู้ใช้, รห�
 msgid "Must provide either password or SSH identity file."
 msgstr "ต้องระบุไม่รหัสผ่าน หรือไฟล์คีย์ SSH"
 
-msgid "Scanning folder for backup images..."
-msgstr "กำลังค้นหาโฟลเดอร์เพื่อสร้างไฟล์สำรอง..."
+msgid "Scanning folder for backup images…"
+msgstr "กำลังค้นหาโฟลเดอร์เพื่อสร้างไฟล์สำรอง…"
 
 #, python-brace-format
 msgid "({timeout_seconds} second timeout)"
@@ -453,8 +453,8 @@ msgid ""
 "any)."
 msgstr "ตารางที่แสดงรายการด้านล่างนี้จะแสดงไฟล์สำรองข้อมูลที่มีอยู่แล้วในโฟลเดอร์นี้ (ถ้ามี)"
 
-msgid "Browse..."
-msgstr "สำรวจ..."
+msgid "Browse…"
+msgstr "สำรวจ…"
 
 msgid "Filename"
 msgstr "ชื่อไฟล์"
@@ -746,8 +746,8 @@ msgid "When you are ready to continue, click <b>Next</b>."
 msgstr "เมื่อพร้อมดำเนินการแล้ว คลิ๊ก <b>ถัดไป</b>"
 
 msgid ""
-"Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
-msgstr "กำลังสแกน และยกเลิกการเชื่อมระบบจัดการพื้นที่ (LVM) ทุกระบบ..."
+"Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes…"
+msgstr "กำลังสแกน และยกเลิกการเชื่อมระบบจัดการพื้นที่ (LVM) ทุกระบบ…"
 
 #, python-brace-format
 msgid ""
@@ -834,7 +834,7 @@ msgstr ""
 "กำลังคินค่าข้อมูล {description} ไปที่พาร์ติชั่น {destination_partition} "
 "({destination_description})"
 
-msgid "Synchronizing disks..."
+msgid "Synchronizing disks…"
 msgstr "กำลังซิงค์ดิสก์…"
 
 #, python-brace-format
@@ -846,7 +846,7 @@ msgid "Probing {device} with {app}"
 msgstr "กำลังตรวจสอบ {device} ด้วย {app}"
 
 #, python-brace-format
-msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
+msgid "Growing filesystem {partition} ({filesystem}). This may take a while…"
 msgstr ""
 "กำลังจัดวางไฟล์ระบบบนพาร์ติชั่น {partition} ({filesystem}) อาจใช้เวลานานนิดหน่อย…"
 
@@ -890,8 +890,8 @@ msgstr "กำลังอัพเดต Initramfs (ถ้ามี)"
 msgid "Successfully updated initramfs"
 msgstr "อัพเดตตัว Initramfs สำเร็จ"
 
-msgid "Updating EFI NVRAM..."
-msgstr "กำลังอัพเดต EFI NVRAM..."
+msgid "Updating EFI NVRAM…"
+msgstr "กำลังอัพเดต EFI NVRAM…"
 
 msgid "Successfully updated EFI NVRAM"
 msgstr "อัพเดต EFI NVRAM สำเร็จ"
@@ -970,7 +970,7 @@ msgstr "คลิ๊ก <b>เชื่อม</b> เพื่อเชื่อ
 msgid "Mount"
 msgstr "เชื่อม"
 
-msgid "Mounting as read-only..."
+msgid "Mounting as read-only…"
 msgstr "กำลังเชื่อมเพื่ออย่างเดียว…"
 
 msgid "Unmount"

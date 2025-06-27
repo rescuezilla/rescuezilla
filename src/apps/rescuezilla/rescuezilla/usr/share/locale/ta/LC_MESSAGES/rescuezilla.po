@@ -57,11 +57,11 @@ msgstr "பின்"
 msgid "Next >"
 msgstr "அடுத்து>"
 
-msgid "Please wait..."
-msgstr "தயவுசெய்து காத்திருங்கள் ..."
+msgid "Please wait…"
+msgstr "தயவுசெய்து காத்திருங்கள் …"
 
-msgid "Identifying disk drives..."
-msgstr "வட்டு இயக்கிகளை அடையாளம் காணுதல் ..."
+msgid "Identifying disk drives…"
+msgstr "வட்டு இயக்கிகளை அடையாளம் காணுதல் …"
 
 #, python-brace-format
 msgid "Unmounting: {path}"
@@ -322,8 +322,8 @@ msgstr "படக் கோப்புகள் சேமிக்கப்ப�
 msgid "Partition"
 msgstr "பிரிவினை"
 
-msgid "Mounting..."
-msgstr "பெருகிவரும் ..."
+msgid "Mounting…"
+msgstr "பெருகிவரும் …"
 
 msgid "Close this popup to cancel the mount operation."
 msgstr "மவுண்ட் செயல்பாட்டை ரத்து செய்ய இந்த பாப்அப்பை மூடு."
@@ -336,8 +336,8 @@ msgstr ""
 msgid "Must provide either password or SSH identity file."
 msgstr "கடவுச்சொல் அல்லது பாஓடு அடையாளக் கோப்பை வழங்க வேண்டும்."
 
-msgid "Scanning folder for backup images..."
-msgstr "காப்புப்பிரதி படங்களுக்கான கோப்புறையை ச்கேனிங் ..."
+msgid "Scanning folder for backup images…"
+msgstr "காப்புப்பிரதி படங்களுக்கான கோப்புறையை ச்கேனிங் …"
 
 #, python-brace-format
 msgid "({timeout_seconds} second timeout)"
@@ -424,8 +424,8 @@ msgstr ""
 "இந்த கோப்புறையில் ஏற்கனவே இருக்கும் காப்பு படங்களை கீழே உள்ள அட்டவணை பட்டியலிடுகிறது "
 "(ஏதேனும் இருந்தால்)."
 
-msgid "Browse..."
-msgstr "உலாவுக ..."
+msgid "Browse…"
+msgstr "உலாவுக …"
 
 msgid "Filename"
 msgstr "கோப்புப்பெயர்"
@@ -698,10 +698,10 @@ msgid "When you are ready to continue, click <b>Next</b>."
 msgstr ""
 "தொடர நீங்கள் தயாராக இருக்கும்போது, <b> அடுத்து </b> என்பதைக் சொடுக்கு செய்க."
 
-msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
+msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes…"
 msgstr ""
 "எந்தவொரு தருக்க தொகுதி மேலாளரையும் (எல்விஎம்) தருக்க தொகுதிகளையும் ச்கேன் செய்தல் மற்றும் "
-"அன்மென்ட் ..."
+"அன்மென்ட் …"
 
 #, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
@@ -772,8 +772,8 @@ msgstr ""
 "{description} க்கு {destination_partition} ({destination_description}) "
 "மீட்டமைத்தல்"
 
-msgid "Synchronizing disks..."
-msgstr "வட்டுகளை ஒத்திசைத்தல் ..."
+msgid "Synchronizing disks…"
+msgstr "வட்டுகளை ஒத்திசைத்தல் …"
 
 #, python-brace-format
 msgid "Querying hard drive geometry of {device}"
@@ -784,9 +784,9 @@ msgid "Probing {device} with {app}"
 msgstr "{device} உடன் {app} ஆய்வு செய்தல்"
 
 #, python-brace-format
-msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
+msgid "Growing filesystem {partition} ({filesystem}). This may take a while…"
 msgstr ""
-"வளரும் கோப்பு முறைமை {partition} ({filesystem}). இதற்கு சிறிது நேரம் ஆகலாம் ..."
+"வளரும் கோப்பு முறைமை {partition} ({filesystem}). இதற்கு சிறிது நேரம் ஆகலாம் …"
 
 #, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
@@ -826,8 +826,8 @@ msgstr "Initramfs ஐ புதுப்பித்தல் (ஏதேனு�
 msgid "Successfully updated initramfs"
 msgstr "INITRAMFS ஐ வெற்றிகரமாக புதுப்பித்தது"
 
-msgid "Updating EFI NVRAM..."
-msgstr "EFI NVRAM ஐ புதுப்பித்தல் ..."
+msgid "Updating EFI NVRAM…"
+msgstr "EFI NVRAM ஐ புதுப்பித்தல் …"
 
 msgid "Successfully updated EFI NVRAM"
 msgstr "EFI NVRAM ஐ வெற்றிகரமாக புதுப்பித்தது"
@@ -904,8 +904,8 @@ msgstr ""
 msgid "Mount"
 msgstr "மவுண்ட்"
 
-msgid "Mounting as read-only..."
-msgstr "படிக்க மட்டும் பெருகுவது ..."
+msgid "Mounting as read-only…"
+msgstr "படிக்க மட்டும் பெருகுவது …"
 
 msgid "Unmount"
 msgstr "உமிழ்தல்"

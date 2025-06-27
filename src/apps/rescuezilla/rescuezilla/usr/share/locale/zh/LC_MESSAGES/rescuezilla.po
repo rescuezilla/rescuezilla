@@ -54,11 +54,11 @@ msgstr "后退"
 msgid "Next >"
 msgstr "下一步 >"
 
-msgid "Please wait..."
+msgid "Please wait…"
 msgstr "请稍候…"
 
-msgid "Identifying disk drives..."
-msgstr "识别磁盘驱动器..."
+msgid "Identifying disk drives…"
+msgstr "识别磁盘驱动器…"
 
 #, python-brace-format
 msgid "Unmounting: {path}"
@@ -299,8 +299,8 @@ msgstr "选择将镜像文件保存到的分区"
 msgid "Partition"
 msgstr "分区"
 
-msgid "Mounting..."
-msgstr "正在挂载..."
+msgid "Mounting…"
+msgstr "正在挂载…"
 
 msgid "Close this popup to cancel the mount operation."
 msgstr "关闭此弹出窗口以取消挂载操作。"
@@ -311,8 +311,8 @@ msgstr "请确保提供的账号、密码和其他字段正确，然后重试。
 msgid "Must provide either password or SSH identity file."
 msgstr "必须提供密码或SSH身份文件。"
 
-msgid "Scanning folder for backup images..."
-msgstr "扫描文件夹中的备份镜像..."
+msgid "Scanning folder for backup images…"
+msgstr "扫描文件夹中的备份镜像…"
 
 #, python-brace-format
 msgid "({timeout_seconds} second timeout)"
@@ -382,8 +382,8 @@ msgstr "请选择其它文件夹。"
 msgid "The table below lists the backup images that are already in this folder (if any)."
 msgstr "下表列出了此文件夹中已经存在的备份镜像（如果有）。"
 
-msgid "Browse..."
-msgstr "浏览..."
+msgid "Browse…"
+msgstr "浏览…"
 
 msgid "Filename"
 msgstr "文件名"
@@ -620,8 +620,8 @@ msgstr "不还原此分区"
 msgid "When you are ready to continue, click <b>Next</b>."
 msgstr "当你准备继续时，点击<b>下一步</b>。"
 
-msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
-msgstr "扫描和卸载任何逻辑卷管理器（LVM）逻辑卷..."
+msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes…"
+msgstr "扫描和卸载任何逻辑卷管理器（LVM）逻辑卷…"
 
 #, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
@@ -683,8 +683,8 @@ msgstr "更新分区表"
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
 msgstr "{description} 将还原到 {destination_partition} ({destination_description})"
 
-msgid "Synchronizing disks..."
-msgstr "同步磁盘..."
+msgid "Synchronizing disks…"
+msgstr "同步磁盘…"
 
 #, python-brace-format
 msgid "Querying hard drive geometry of {device}"
@@ -695,8 +695,8 @@ msgid "Probing {device} with {app}"
 msgstr "用{app}探测{device}"
 
 #, python-brace-format
-msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
-msgstr "正在产生文件系统{partition}（{filesystem}）。可能还要等一下..."
+msgid "Growing filesystem {partition} ({filesystem}). This may take a while…"
+msgstr "正在产生文件系统{partition}（{filesystem}）。可能还要等一下…"
 
 #, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
@@ -734,8 +734,8 @@ msgstr "更新initramfs（如果有）"
 msgid "Successfully updated initramfs"
 msgstr "成功更新了initramfs"
 
-msgid "Updating EFI NVRAM..."
-msgstr "正在更新EFI NVRAM ..."
+msgid "Updating EFI NVRAM…"
+msgstr "正在更新EFI NVRAM …"
 
 msgid "Successfully updated EFI NVRAM"
 msgstr "成功更新了EFI NVRAM"
@@ -803,8 +803,8 @@ msgstr "点击<b>挂载</b>来挂载备份镜像（作为只读）。"
 msgid "Mount"
 msgstr "挂载"
 
-msgid "Mounting as read-only..."
-msgstr "挂载为只读..."
+msgid "Mounting as read-only…"
+msgstr "挂载为只读…"
 
 msgid "Unmount"
 msgstr "卸载"

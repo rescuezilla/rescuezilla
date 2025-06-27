@@ -62,11 +62,11 @@ msgstr "Tillbaka"
 msgid "Next >"
 msgstr "Nästa >"
 
-msgid "Please wait..."
-msgstr "Vad god vänta..."
+msgid "Please wait…"
+msgstr "Vad god vänta…"
 
-msgid "Identifying disk drives..."
-msgstr "Identifierar diskenheter..."
+msgid "Identifying disk drives…"
+msgstr "Identifierar diskenheter…"
 
 #, python-brace-format
 msgid "Unmounting: {path}"
@@ -326,8 +326,8 @@ msgstr "Välj den partition där avbildsfilerna kommer att sparas på"
 msgid "Partition"
 msgstr "Partition"
 
-msgid "Mounting..."
-msgstr "Monterar..."
+msgid "Mounting…"
+msgstr "Monterar…"
 
 msgid "Close this popup to cancel the mount operation."
 msgstr "Stäng den här popupen för att avbryta monteringen."
@@ -338,8 +338,8 @@ msgstr "Se till att användarnamnet, lösenordet och andra angivna fält är kor
 msgid "Must provide either password or SSH identity file."
 msgstr "Måste ange antingen lösenord eller SSH-identitetsfil."
 
-msgid "Scanning folder for backup images..."
-msgstr "Skannar mapp för säkerhetskopierade avbilder..."
+msgid "Scanning folder for backup images…"
+msgstr "Skannar mapp för säkerhetskopierade avbilder…"
 
 #, python-brace-format
 msgid "({timeout_seconds} second timeout)"
@@ -428,8 +428,8 @@ msgstr ""
 "Tabellen nedan visar de säkerhetskopierade avbilderna som redan finns i den "
 "här mappen (om någon)."
 
-msgid "Browse..."
-msgstr "Bläddra..."
+msgid "Browse…"
+msgstr "Bläddra…"
 
 msgid "Filename"
 msgstr "Filnamn"
@@ -696,8 +696,8 @@ msgstr "Återställer inte denna partition"
 msgid "When you are ready to continue, click <b>Next</b>."
 msgstr "När du är redo att fortsätta klickar du på <b>Nästa</b>."
 
-msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
-msgstr "Skannar och avmonterar alla (LVM) logiska volymer..."
+msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes…"
+msgstr "Skannar och avmonterar alla (LVM) logiska volymer…"
 
 #, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
@@ -772,8 +772,8 @@ msgstr ""
 "Återställer {description} till {destination_partition} "
 "({destination_description})"
 
-msgid "Synchronizing disks..."
-msgstr "Synkroniserar diskar..."
+msgid "Synchronizing disks…"
+msgstr "Synkroniserar diskar…"
 
 #, python-brace-format
 msgid "Querying hard drive geometry of {device}"
@@ -784,9 +784,9 @@ msgid "Probing {device} with {app}"
 msgstr "Undersöker {device} med {app}"
 
 #, python-brace-format
-msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
+msgid "Growing filesystem {partition} ({filesystem}). This may take a while…"
 msgstr ""
-"Expanderar filsystemet {partition} ({filesystem}). Det här kan ta ett tag..."
+"Expanderar filsystemet {partition} ({filesystem}). Det här kan ta ett tag…"
 
 #, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
@@ -827,8 +827,8 @@ msgstr "Uppdaterar initramfs (om det finns)"
 msgid "Successfully updated initramfs"
 msgstr "Initramfs har uppdaterats"
 
-msgid "Updating EFI NVRAM..."
-msgstr "Uppdaterar EFI NVRAM..."
+msgid "Updating EFI NVRAM…"
+msgstr "Uppdaterar EFI NVRAM…"
 
 msgid "Successfully updated EFI NVRAM"
 msgstr "EFI NVRAM har uppdaterats"
@@ -903,8 +903,8 @@ msgstr ""
 msgid "Mount"
 msgstr "Montera"
 
-msgid "Mounting as read-only..."
-msgstr "Monterar som skrivskyddad..."
+msgid "Mounting as read-only…"
+msgstr "Monterar som skrivskyddad…"
 
 msgid "Unmount"
 msgstr "Avmontera"

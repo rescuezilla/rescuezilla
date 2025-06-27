@@ -57,11 +57,11 @@ msgstr "Назад"
 msgid "Next >"
 msgstr "Далі >"
 
-msgid "Please wait..."
-msgstr "Почекайте..."
+msgid "Please wait…"
+msgstr "Почекайте…"
 
-msgid "Identifying disk drives..."
-msgstr "Визначення дискових пристроїв..."
+msgid "Identifying disk drives…"
+msgstr "Визначення дискових пристроїв…"
 
 #, python-brace-format
 msgid "Unmounting: {path}"
@@ -321,8 +321,8 @@ msgstr "Виберіть розділ, в який буде збережено �
 msgid "Partition"
 msgstr "Розділ"
 
-msgid "Mounting..."
-msgstr "Монтування..."
+msgid "Mounting…"
+msgstr "Монтування…"
 
 msgid "Close this popup to cancel the mount operation."
 msgstr "Закрити меню, щоб скасувати операцію монтування."
@@ -335,8 +335,8 @@ msgstr ""
 msgid "Must provide either password or SSH identity file."
 msgstr ""
 
-msgid "Scanning folder for backup images..."
-msgstr "Сканування теки на наявність образів резервних копій..."
+msgid "Scanning folder for backup images…"
+msgstr "Сканування теки на наявність образів резервних копій…"
 
 #, python-brace-format
 msgid "({timeout_seconds} second timeout)"
@@ -402,8 +402,8 @@ msgstr "Будь ласка, виберіть іншу теку."
 msgid "The table below lists the backup images that are already in this folder (if any)."
 msgstr ""
 
-msgid "Browse..."
-msgstr "Огляд..."
+msgid "Browse…"
+msgstr "Огляд…"
 
 msgid "Filename"
 msgstr "Назва файлу"
@@ -633,10 +633,10 @@ msgstr ""
 msgid "When you are ready to continue, click <b>Next</b>."
 msgstr "Якщо Ви готові продовжити натисніть <b>Далі</b>."
 
-msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
+msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes…"
 msgstr ""
 "Сканування і відмонтування будь-яких логічних томів Керівника логічних томів "
-"(LVM)..."
+"(LVM)…"
 
 #, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
@@ -693,8 +693,8 @@ msgstr "Оновлення таблиці розділів"
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
 msgstr ""
 
-msgid "Synchronizing disks..."
-msgstr "Синхронізування дисків..."
+msgid "Synchronizing disks…"
+msgstr "Синхронізування дисків…"
 
 #, python-brace-format
 msgid "Querying hard drive geometry of {device}"
@@ -705,7 +705,7 @@ msgid "Probing {device} with {app}"
 msgstr ""
 
 #, python-brace-format
-msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
+msgid "Growing filesystem {partition} ({filesystem}). This may take a while…"
 msgstr ""
 
 #, python-brace-format
@@ -744,8 +744,8 @@ msgstr ""
 msgid "Successfully updated initramfs"
 msgstr "Успішно оновлено initramfs"
 
-msgid "Updating EFI NVRAM..."
-msgstr "Оновлення EFI NVRAM..."
+msgid "Updating EFI NVRAM…"
+msgstr "Оновлення EFI NVRAM…"
 
 msgid "Successfully updated EFI NVRAM"
 msgstr "Успішно оновлено EFI NVRAM"
@@ -815,8 +815,8 @@ msgstr ""
 msgid "Mount"
 msgstr "Монтувати"
 
-msgid "Mounting as read-only..."
-msgstr "Монтування лише для читання..."
+msgid "Mounting as read-only…"
+msgstr "Монтування лише для читання…"
 
 msgid "Unmount"
 msgstr "Відмонтувати"
