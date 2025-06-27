@@ -128,14 +128,17 @@ update_submodules() {
             # Partclone also needs its Makefile version string updated
             sed --in-place "s/PARTCLONE_PKG_VERSION=.*/PARTCLONE_PKG_VERSION=$new_tag/" Makefile
 
-            # And update the 'CHANGELOG.md' too
-            changelog_message="* Upgraded to latest partclone \`$new_tag\` (released $new_tag_date_readable) from partclone \`$previous_commit_description\` (released $previous_commit_date_readable)"
-            append_to_changelog "$changelog_message"
-
             # Extra info for the commit message with intentional multi-line assignment for git commit hard linebreak
             extra_commit_msg="Additionally bumps Makefile checkinstall package version
 environment variable, and updates the CHANGELOG.md"
             git add Makefile
+
+            # If there are staged changes based on the `git add` above, let's add an entry to the CHANGELOG.md too. 
+            if ! git diff --cached --quiet; then
+                 # And update the 'CHANGELOG.md' too
+                 changelog_message="* Upgraded to latest partclone \`$new_tag\` (released $new_tag_date_readable) from partclone \`$previous_commit_description\` (released $previous_commit_date_readable)"
+                 append_to_changelog "$changelog_message"
+            fi
         fi
 
         a="${SCRIPT_DIR}/${SCRIPT_NAME}"
