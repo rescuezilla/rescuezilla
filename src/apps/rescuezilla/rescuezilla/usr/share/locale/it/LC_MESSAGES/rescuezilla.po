@@ -5,7 +5,7 @@
 # Submitted at: https://github.com/rescuezilla/rescuezilla/issues/154
 #
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
-# Pierfrancesco Passerini <p.passerini@gmail.com>, 2021, 2022, 2023.
+# Pierfrancesco Passerini <p.passerini@gmail.com>, 2021, 2022, 2023, 2025.
 # Anto F <tempthings@outlook.it>, 2022.
 # Ereb0r <pierpaoloraz@gmail.com>, 2022.
 msgid ""
@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2023-01-19 18:50+0000\n"
+"PO-Revision-Date: 2025-06-27 16:39+0000\n"
 "Last-Translator: Pierfrancesco Passerini <p.passerini@gmail.com>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/it/>\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.15.1\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 msgid "Welcome"
 msgstr "Benvenuto"
@@ -270,37 +270,39 @@ msgid "Version"
 msgstr "Versione"
 
 msgid "default (Negotiate highest SMB2+ supported by client and server)"
-msgstr ""
+msgstr "predefinito (negozia SMB2+ o superiore supportato da client e server)"
 
 msgid "1.0 (The classic CIFS/SMBv1 protocol)"
-msgstr ""
+msgstr "1.0 (classico protocollo CIFS/SMBv1)"
 
 msgid "2.0 (Introduced in Vista SP1, Windows Server 2008)"
-msgstr ""
+msgstr "2.0 (introdotto in Vista SP1, Windows Server 2008)"
 
 msgid "2.1 (Introduced in Windows 7, Windows Server 2008R2)"
-msgstr ""
+msgstr "2.1 (introdotto in Windows 7, Windows Server 2008R2)"
 
 msgid "3 (The SMBv3.0 protocol version and above)"
-msgstr ""
+msgstr "3 (versione 3.0 o superiore del protocollo SMB)"
 
 msgid "3.0 (Introduced in Windows 8, Windows Server 2012)"
-msgstr ""
+msgstr "3.0 (introdotto in Windows 8, Windows Server 2012)"
 
 msgid "3.0.2 (Introduced in Windows 8.1, Windows Server 2012R2)"
-msgstr ""
+msgstr "3.0.2 (introdotto in Windows 8.1, Windows Server 2012R2)"
 
 msgid "3.1.1 (Introduced in Windows 10, Windows Server 2016)"
-msgstr ""
+msgstr "3.1.1 (introdotto in Windows 10, Windows Server 2016)"
 
 msgid "Unspecified (Tries NFS v4.2 first, then negotiates with server down until finds a supported version)"
 msgstr ""
+"Non specificato (prova NFS v4.2, poi negozia la versione con il server fino "
+"a trovarne una supportata)"
 
 msgid "NFSv3"
-msgstr ""
+msgstr "NFSv3"
 
 msgid "NFSv4"
-msgstr ""
+msgstr "NFSv4"
 
 msgid "Remote path"
 msgstr "Percorso remoto"
@@ -312,7 +314,7 @@ msgid "Identity File"
 msgstr "Chiave SSH"
 
 msgid "Port"
-msgstr ""
+msgstr "Porta"
 
 msgid "Optional"
 msgstr "Facoltativo"
