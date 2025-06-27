@@ -142,7 +142,7 @@ class RestoreManager:
         self.ui_manager.display_status(msg1=refresh_msg, msg2=_("Unmounting: {path}").format(path=self.restore_destination_drive))
         Utility.umount_warn_on_busy(self.restore_destination_drive)
 
-        self.ui_manager.display_status(msg1=refresh_msg, msg2=_("Synchronizing disks..."))
+        self.ui_manager.display_status(msg1=refresh_msg, msg2=_("Synchronizing disks…"))
         # Sync drives / flush buffers to avoid "Device or resource busy"
         process, flat_command_string, failed_message = Utility.run("Sync drives", ["sync"], use_c_locale=False,
                                                                    logger=self.logger)
@@ -241,7 +241,7 @@ class RestoreManager:
         return True, ""
 
     def _shutdown_lvm(self):
-        self.ui_manager.display_status(msg1=_("Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."), msg2="")
+        self.ui_manager.display_status(msg1=_("Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes…"), msg2="")
         # Stop the Logical Volume Manager (LVM)
         failed_logical_volume_list, failed_volume_group_list = Lvm.shutdown_lvm2(display_error_message=self.ui_manager.display_error_message,
                                                                                  logger=self.logger)
@@ -749,7 +749,7 @@ class RestoreManager:
             # handles LVMs as anything other than a raw dd device so after restoring the configuration, start the LVM
             # for these formats only.
             if isinstance(self.image, ClonezillaImage) or isinstance(self.image, MetadataOnlyImage):
-                self.ui_manager.display_status(msg1=_("Starting Logical Volume Manager (LVM) Logical Volumes..."), msg2="")
+                self.ui_manager.display_status(msg1=_("Starting Logical Volume Manager (LVM) Logical Volumes…"), msg2="")
                 # Start the Logical Volume Manager (LVM). Caller raises Exception on failure
                 Lvm.start_lvm2(self.logger)
 
@@ -1035,7 +1035,7 @@ class RestoreManager:
                         and not self.image.image_format_dict_dict[image_key]['is_lvm_logical_volume']:
                     filesystem = self.image.image_format_dict_dict[image_key]['filesystem']
                     growing_filesystem_message = _(
-                        "Growing filesystem {partition} ({filesystem}). This may take a while...").format(
+                        "Growing filesystem {partition} ({filesystem}). This may take a while…").format(
                         partition=dest_part['dest_key'], filesystem=filesystem)
                     self.logger.write(growing_filesystem_message)
                     self.ui_manager.display_status(msg1=growing_filesystem_message, msg2="")
@@ -1093,7 +1093,7 @@ class RestoreManager:
             # After restoring all partitions we can start LVM for all other formats, so that post-processing
             # steps have a chance of operating on logical volumes.
             if not (isinstance(self.image, ClonezillaImage) or isinstance(self.image, MetadataOnlyImage)):
-                self.ui_manager.display_status(msg1=_("Starting Logical Volume Manager (LVM) Logical Volumes..."), msg2="")
+                self.ui_manager.display_status(msg1=_("Starting Logical Volume Manager (LVM) Logical Volumes…"), msg2="")
                 # Start the Logical Volume Manager (LVM). Caller raises Exception on failure
                 Lvm.start_lvm2(self.logger)
 
@@ -1224,7 +1224,7 @@ class RestoreManager:
                             with self.summary_message_lock:
                                 self.summary_message += message + "\n"
                         else:
-                            self.ui_manager.display_status(msg1=_("Updating EFI NVRAM..."), msg2="")
+                            self.ui_manager.display_status(msg1=_("Updating EFI NVRAM…"), msg2="")
                             # TODO: Port Clonezilla's ocs-update-initrd bash script to Python instead of relying on Clonezilla's script
                             # Unlike Clonezilla, no need to specify a -f/--efi-boot-file-info option
                             process, flat_command_string, failed_message = Utility.run(

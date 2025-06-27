@@ -53,11 +53,11 @@ msgstr "Zpět"
 msgid "Next >"
 msgstr "Další>"
 
-msgid "Please wait..."
-msgstr "Prosím čekejte..."
+msgid "Please wait…"
+msgstr "Prosím čekejte…"
 
-msgid "Identifying disk drives..."
-msgstr "Identifikace disků..."
+msgid "Identifying disk drives…"
+msgstr "Identifikace disků…"
 
 #, python-brace-format
 msgid "Unmounting: {path}"
@@ -316,7 +316,7 @@ msgstr "Vyberte oddíl kde budou obrazy disku uloženy"
 msgid "Partition"
 msgstr "Oddíl"
 
-msgid "Mounting..."
+msgid "Mounting…"
 msgstr "Připojování…"
 
 msgid "Close this popup to cancel the mount operation."
@@ -330,8 +330,8 @@ msgstr ""
 msgid "Must provide either password or SSH identity file."
 msgstr "Musíte zadat heslo nebo SSH identity soubor."
 
-msgid "Scanning folder for backup images..."
-msgstr "Prohledávání složky pro obrazy zálohy..."
+msgid "Scanning folder for backup images…"
+msgstr "Prohledávání složky pro obrazy zálohy…"
 
 #, python-brace-format
 msgid "({timeout_seconds} second timeout)"
@@ -418,8 +418,8 @@ msgstr ""
 "V následující tabulce jsou uvedeny záložní obrazy, které se již v této "
 "složce nacházejí (pokud existují)."
 
-msgid "Browse..."
-msgstr "Procházet..."
+msgid "Browse…"
+msgstr "Procházet…"
 
 msgid "Filename"
 msgstr "Název souboru"
@@ -690,9 +690,9 @@ msgstr "Neobnovení tohoto oddílu"
 msgid "When you are ready to continue, click <b>Next</b>."
 msgstr "Pokud jste připraveni pokračovat, klikněte na <b>Další</b>."
 
-msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
+msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes…"
 msgstr ""
-"Skenování a odpojení všech logických svazků LVM (Logical Volume Manager)..."
+"Skenování a odpojení všech logických svazků LVM (Logical Volume Manager)…"
 
 #, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
@@ -764,8 +764,8 @@ msgid "Restoring {description} to {destination_partition} ({destination_descript
 msgstr ""
 "Obnovení {description} na {destination_partition} {destination_description})"
 
-msgid "Synchronizing disks..."
-msgstr "Synchronizace disků..."
+msgid "Synchronizing disks…"
+msgstr "Synchronizace disků…"
 
 #, python-brace-format
 msgid "Querying hard drive geometry of {device}"
@@ -776,10 +776,10 @@ msgid "Probing {device} with {app}"
 msgstr "Sondování {device} pomocí {app}"
 
 #, python-brace-format
-msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
+msgid "Growing filesystem {partition} ({filesystem}). This may take a while…"
 msgstr ""
 "Nabývání souborového systému {partition} {filesystem}). Toto může chvíli "
-"trvat..."
+"trvat…"
 
 #, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
@@ -819,8 +819,8 @@ msgstr "Aktualizace initramfs (pokud je k dispozici)"
 msgid "Successfully updated initramfs"
 msgstr "Úspěšná aktualizace initramfs"
 
-msgid "Updating EFI NVRAM..."
-msgstr "Aktualizace EFI NVRAM..."
+msgid "Updating EFI NVRAM…"
+msgstr "Aktualizace EFI NVRAM…"
 
 msgid "Successfully updated EFI NVRAM"
 msgstr "Úspěšná aktualizace EFI NVRAM"
@@ -895,7 +895,7 @@ msgstr ""
 msgid "Mount"
 msgstr "Připojit"
 
-msgid "Mounting as read-only..."
+msgid "Mounting as read-only…"
 msgstr "Připojování jen pro čtení…"
 
 msgid "Unmount"

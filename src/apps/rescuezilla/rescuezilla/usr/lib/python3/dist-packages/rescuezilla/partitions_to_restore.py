@@ -211,7 +211,7 @@ class PartitionsToRestore:
             if self.please_wait_popup is not None:
                 self.please_wait_popup.destroy()
                 self.please_wait_popup = None
-            self.please_wait_popup = PleaseWaitModalPopup(self.builder, title=_("Please wait..."), message=_("Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."))
+            self.please_wait_popup = PleaseWaitModalPopup(self.builder, title=_("Please wait…"), message=_("Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes…"))
             self.please_wait_popup.show()
             if 'partitions' in self.dest_drive_dict.keys():
                 partitions = self.dest_drive_dict['partitions']

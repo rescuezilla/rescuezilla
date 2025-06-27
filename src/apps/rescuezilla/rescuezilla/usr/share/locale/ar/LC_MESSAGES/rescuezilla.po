@@ -54,11 +54,11 @@ msgstr "رجوع"
 msgid "Next >"
 msgstr "التالي"
 
-msgid "Please wait..."
-msgstr "أرجو الإنتظار..."
+msgid "Please wait…"
+msgstr "أرجو الإنتظار…"
 
-msgid "Identifying disk drives..."
-msgstr "جاري التعرف على محركات الأقراص ..."
+msgid "Identifying disk drives…"
+msgstr "جاري التعرف على محركات الأقراص …"
 
 #, python-brace-format
 msgid "Unmounting: {path}"
@@ -318,8 +318,8 @@ msgstr "حدد القسم الذي سيتم حفظ ملفات الصور/الن�
 msgid "Partition"
 msgstr "القسم/الجزء"
 
-msgid "Mounting..."
-msgstr "جاري الارتباط..."
+msgid "Mounting…"
+msgstr "جاري الارتباط…"
 
 msgid "Close this popup to cancel the mount operation."
 msgstr "أغلق هذه النافذة المنبثقة لإلغاء عملية الارتباط."
@@ -332,8 +332,8 @@ msgstr ""
 msgid "Must provide either password or SSH identity file."
 msgstr "يجب تقديم كلمة مرور أو ملف هوية SSH."
 
-msgid "Scanning folder for backup images..."
-msgstr "جاري البحث عن الصور/النسخ الاحتياطية داخل المجلد..."
+msgid "Scanning folder for backup images…"
+msgstr "جاري البحث عن الصور/النسخ الاحتياطية داخل المجلد…"
 
 #, python-brace-format
 msgid "({timeout_seconds} second timeout)"
@@ -419,8 +419,8 @@ msgstr ""
 "يسرد الجدول أدناه الصور/النسخ الاحتياطية الموجودة بالفعل في هذا المجلد (إن "
 "وجد)."
 
-msgid "Browse..."
-msgstr "تصفح..."
+msgid "Browse…"
+msgstr "تصفح…"
 
 msgid "Filename"
 msgstr "اسم الملف"
@@ -685,10 +685,10 @@ msgstr "لن يتم استعادة هذا القسم"
 msgid "When you are ready to continue, click <b>Next</b>."
 msgstr "عندما تكون مستعداً للمتابعة، انقر فوق <b>التالي</b>."
 
-msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
+msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes…"
 msgstr ""
 "يتم الفحص وفك الارتباط(unmounting) من أي وحدات تخزين منطقية(Logical Volumes) "
-"لـ Logical Volume Manager (LVM) ..."
+"لـ Logical Volume Manager (LVM) …"
 
 #, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
@@ -761,8 +761,8 @@ msgstr ""
 "جاري استعادة {description} إلى {destination_partition} "
 "({destination_description})"
 
-msgid "Synchronizing disks..."
-msgstr "مزامنة الأقراص..."
+msgid "Synchronizing disks…"
+msgstr "مزامنة الأقراص…"
 
 #, python-brace-format
 msgid "Querying hard drive geometry of {device}"
@@ -773,10 +773,10 @@ msgid "Probing {device} with {app}"
 msgstr "فحص {device} باستخدام {app}"
 
 #, python-brace-format
-msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
+msgid "Growing filesystem {partition} ({filesystem}). This may take a while…"
 msgstr ""
 "جاري تزايد نظام الملفات {partition} ({filesystem}). هذا قد يستغرق بعض "
-"الوقت..."
+"الوقت…"
 
 #, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
@@ -816,8 +816,8 @@ msgstr "تحديث initramfs (إن وجدت)"
 msgid "Successfully updated initramfs"
 msgstr "تم تحديث initramfs بنجاح"
 
-msgid "Updating EFI NVRAM..."
-msgstr "جاري تحديث EFI NVRAM ..."
+msgid "Updating EFI NVRAM…"
+msgstr "جاري تحديث EFI NVRAM …"
 
 msgid "Successfully updated EFI NVRAM"
 msgstr "تم تحديث EFI NVRAM بنجاح"
@@ -892,8 +892,8 @@ msgstr ""
 msgid "Mount"
 msgstr "ارتباط"
 
-msgid "Mounting as read-only..."
-msgstr "ربط للقراءة فقط..."
+msgid "Mounting as read-only…"
+msgstr "ربط للقراءة فقط…"
 
 msgid "Unmount"
 msgstr "فك الارتباط"

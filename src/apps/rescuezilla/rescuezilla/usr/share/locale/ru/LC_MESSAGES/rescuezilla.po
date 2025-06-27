@@ -58,11 +58,11 @@ msgstr "Назад"
 msgid "Next >"
 msgstr "Далее >"
 
-msgid "Please wait..."
-msgstr "Пожалуйста, подождите..."
+msgid "Please wait…"
+msgstr "Пожалуйста, подождите…"
 
-msgid "Identifying disk drives..."
-msgstr "Определяем диски..."
+msgid "Identifying disk drives…"
+msgstr "Определяем диски…"
 
 #, python-brace-format
 msgid "Unmounting: {path}"
@@ -324,8 +324,8 @@ msgstr "Укажите раздел в котором будет хранить�
 msgid "Partition"
 msgstr "Раздел"
 
-msgid "Mounting..."
-msgstr "Монтирование..."
+msgid "Mounting…"
+msgstr "Монтирование…"
 
 msgid "Close this popup to cancel the mount operation."
 msgstr "Закройте это окно для отмены операции монтирования."
@@ -336,8 +336,8 @@ msgstr "Убедитесь что логин и пароль указаны ве
 msgid "Must provide either password or SSH identity file."
 msgstr "Необходимо указать пароль или файл SSH."
 
-msgid "Scanning folder for backup images..."
-msgstr "Поиск резервных образов..."
+msgid "Scanning folder for backup images…"
+msgstr "Поиск резервных образов…"
 
 #, python-brace-format
 msgid "({timeout_seconds} second timeout)"
@@ -424,8 +424,8 @@ msgstr ""
 "В таблице ниже указаны резервные копии, которые уже находятся в этой папке ("
 "если есть)."
 
-msgid "Browse..."
-msgstr "Обзор..."
+msgid "Browse…"
+msgstr "Обзор…"
 
 msgid "Filename"
 msgstr "Название"
@@ -699,9 +699,9 @@ msgstr "Не восстанавливать данный раздел"
 msgid "When you are ready to continue, click <b>Next</b>."
 msgstr "Когда Вы будете готовы продолжить, нажмите <b>Далее</b>."
 
-msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
+msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes…"
 msgstr ""
-"Поиск и размонтирование логических томов Менеджера Логических Томов (LVM)..."
+"Поиск и размонтирование логических томов Менеджера Логических Томов (LVM)…"
 
 #, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
@@ -776,8 +776,8 @@ msgstr ""
 "Восстановление {description} в {destination_partition} "
 "({destination_description})"
 
-msgid "Synchronizing disks..."
-msgstr "Синхронизация дисков..."
+msgid "Synchronizing disks…"
+msgstr "Синхронизация дисков…"
 
 #, python-brace-format
 msgid "Querying hard drive geometry of {device}"
@@ -788,10 +788,10 @@ msgid "Probing {device} with {app}"
 msgstr "Исследование {device} с помощью {app}"
 
 #, python-brace-format
-msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
+msgid "Growing filesystem {partition} ({filesystem}). This may take a while…"
 msgstr ""
 "Расширение файловой системы {partition} ({filesystem}). Это может занять "
-"время..."
+"время…"
 
 #, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
@@ -831,8 +831,8 @@ msgstr "Обновление initramfs (если есть)"
 msgid "Successfully updated initramfs"
 msgstr "initramfs успешно обновлен"
 
-msgid "Updating EFI NVRAM..."
-msgstr "Обновление EFI NVRAM ..."
+msgid "Updating EFI NVRAM…"
+msgstr "Обновление EFI NVRAM …"
 
 msgid "Successfully updated EFI NVRAM"
 msgstr "EFI NVRAM успешно обновлен"
@@ -910,8 +910,8 @@ msgstr ""
 msgid "Mount"
 msgstr "Смонтировать"
 
-msgid "Mounting as read-only..."
-msgstr "Монтирование в режиме \"только для чтения\"..."
+msgid "Mounting as read-only…"
+msgstr "Монтирование в режиме \"только для чтения\"…"
 
 msgid "Unmount"
 msgstr "Размонтировать"

@@ -53,10 +53,10 @@ msgstr "Tilbake"
 msgid "Next >"
 msgstr "Neste >"
 
-msgid "Please wait..."
+msgid "Please wait…"
 msgstr "Vennligst vent …"
 
-msgid "Identifying disk drives..."
+msgid "Identifying disk drives…"
 msgstr "Identifiserer diskenheter …"
 
 #, python-brace-format
@@ -316,7 +316,7 @@ msgstr "Velg partisjonen å lagre avbildningsfilene til"
 msgid "Partition"
 msgstr "Partisjon"
 
-msgid "Mounting..."
+msgid "Mounting…"
 msgstr "Monterer …"
 
 msgid "Close this popup to cancel the mount operation."
@@ -330,7 +330,7 @@ msgstr ""
 msgid "Must provide either password or SSH identity file."
 msgstr "Enten passord eller SSH-identitetsfil må angis."
 
-msgid "Scanning folder for backup images..."
+msgid "Scanning folder for backup images…"
 msgstr "Skanner mappe for sikkerhetskopiavbildninger…"
 
 #, python-brace-format
@@ -421,7 +421,7 @@ msgstr ""
 "Tabellen nedenfor lister opp sikkerhetskopiavbildningene som allerede er i "
 "denne mappen (hvis noen)."
 
-msgid "Browse..."
+msgid "Browse…"
 msgstr "Bla gjennom…"
 
 msgid "Filename"
@@ -693,8 +693,8 @@ msgstr "Gjenoppretter ikke denne partisjonen"
 msgid "When you are ready to continue, click <b>Next</b>."
 msgstr "Klikk <b>Neste</b> når du er klar til å fortsette."
 
-msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
-msgstr "Skanner og avmonterer alle (LVM) logiske volumer..."
+msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes…"
+msgstr "Skanner og avmonterer alle (LVM) logiske volumer…"
 
 #, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
@@ -768,7 +768,7 @@ msgstr ""
 "Gjenoppretter {description} til {destination_partition} "
 "({destination_description})"
 
-msgid "Synchronizing disks..."
+msgid "Synchronizing disks…"
 msgstr "Synkroniserer disker …"
 
 #, fuzzy
@@ -782,7 +782,7 @@ msgstr "Undersøker {device} med {app}"
 
 #, fuzzy
 #, python-brace-format
-msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
+msgid "Growing filesystem {partition} ({filesystem}). This may take a while…"
 msgstr "Utvider filsystemet {partition} ({filesystem}). Dette kan ta en stund …"
 
 #, python-brace-format
@@ -829,7 +829,7 @@ msgid "Successfully updated initramfs"
 msgstr "Oppdaterte initramfs"
 
 #, fuzzy
-msgid "Updating EFI NVRAM..."
+msgid "Updating EFI NVRAM…"
 msgstr "Oppdaterer EFI NVRAM …"
 
 msgid "Successfully updated EFI NVRAM"
@@ -912,7 +912,7 @@ msgstr ""
 msgid "Mount"
 msgstr "Monter"
 
-msgid "Mounting as read-only..."
+msgid "Mounting as read-only…"
 msgstr "Monterer som skrivebeskyttet…"
 
 msgid "Unmount"

@@ -55,10 +55,10 @@ msgstr "戻ります"
 msgid "Next >"
 msgstr "続き ＞"
 
-msgid "Please wait..."
+msgid "Please wait…"
 msgstr "少し掛かります。。。"
 
-msgid "Identifying disk drives..."
+msgid "Identifying disk drives…"
 msgstr "ディスクの認証をしています。。。"
 
 #, python-brace-format
@@ -316,7 +316,7 @@ msgstr "イメージファイルの保存先とするパーティションを選
 msgid "Partition"
 msgstr "パーティション"
 
-msgid "Mounting..."
+msgid "Mounting…"
 msgstr "マウントしています。。。"
 
 msgid "Close this popup to cancel the mount operation."
@@ -329,7 +329,7 @@ msgstr "提示されたユーザーの名前、パスワードとほかが正し
 msgid "Must provide either password or SSH identity file."
 msgstr "パスワードか SSH 認証ファイルの提示が必要です。"
 
-msgid "Scanning folder for backup images..."
+msgid "Scanning folder for backup images…"
 msgstr "バックアップイメージがあるフォルダーをスキャンしています。。。"
 
 #, python-brace-format
@@ -414,7 +414,7 @@ msgid "The table below lists the backup images that are already in this folder (
 msgstr "このテーブルで用意されたフォルダーにバックアップイメージが表示されます "
 "（必要であれば）。"
 
-msgid "Browse..."
+msgid "Browse…"
 msgstr "参照します。。。"
 
 msgid "Filename"
@@ -679,7 +679,7 @@ msgstr "このパーティションはリストアしていません"
 msgid "When you are ready to continue, click <b>Next</b>."
 msgstr "続けてよければ、 <b>続き</b> のクリックをしてください。"
 
-msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
+msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes…"
 msgstr "ロジカルボリュームマネージャーの （LVM） "
 "ロジカルボリュームのスキャンとマウントをしています。。。"
 
@@ -755,7 +755,7 @@ msgstr ""
 "{description} を {destination_partition} にリストアしています "
 "（{destination_description}）"
 
-msgid "Synchronizing disks..."
+msgid "Synchronizing disks…"
 msgstr "ディスクを同期しています。。。"
 
 #, python-brace-format
@@ -767,7 +767,7 @@ msgid "Probing {device} with {app}"
 msgstr "{app} で {device} の認証をしています"
 
 #, python-brace-format
-msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
+msgid "Growing filesystem {partition} ({filesystem}). This may take a while…"
 msgstr "ファイルシステムの増加 {partition} （{filesystem}）。 少し掛かります。。。"
 
 #, python-brace-format
@@ -807,7 +807,7 @@ msgstr "initramfs をアップデートしています （必要であれば）"
 msgid "Successfully updated initramfs"
 msgstr "initramfs をアップデート出来ました"
 
-msgid "Updating EFI NVRAM..."
+msgid "Updating EFI NVRAM…"
 msgstr "EFI NVRAM をアップデートしています。。。"
 
 msgid "Successfully updated EFI NVRAM"
@@ -884,7 +884,7 @@ msgstr "<b>マウント</b> のクリックでバックアップイメージの�
 msgid "Mount"
 msgstr "マウントします"
 
-msgid "Mounting as read-only..."
+msgid "Mounting as read-only…"
 msgstr "読み取り専用のマウントをする。。。"
 
 msgid "Unmount"

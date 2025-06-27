@@ -54,11 +54,11 @@ msgstr "Tilbage"
 msgid "Next >"
 msgstr "Næste>"
 
-msgid "Please wait..."
-msgstr "Vent venligst..."
+msgid "Please wait…"
+msgstr "Vent venligst…"
 
-msgid "Identifying disk drives..."
-msgstr "Søger efter drev..."
+msgid "Identifying disk drives…"
+msgstr "Søger efter drev…"
 
 #, python-brace-format
 msgid "Unmounting: {path}"
@@ -316,8 +316,8 @@ msgstr "Vælg partitionen for, hvor sikkerhedskopien skal gemmes"
 msgid "Partition"
 msgstr "Partition"
 
-msgid "Mounting..."
-msgstr "Monterer..."
+msgid "Mounting…"
+msgstr "Monterer…"
 
 msgid "Close this popup to cancel the mount operation."
 msgstr "Luk vinduet for at afbryde monteringen."
@@ -330,8 +330,8 @@ msgstr ""
 msgid "Must provide either password or SSH identity file."
 msgstr "Adgangskode eller SHH-identitetsfil er nødvendig."
 
-msgid "Scanning folder for backup images..."
-msgstr "Mappen til sikkerhedskopier skannes..."
+msgid "Scanning folder for backup images…"
+msgstr "Mappen til sikkerhedskopier skannes…"
 
 #, python-brace-format
 msgid "({timeout_seconds} second timeout)"
@@ -420,8 +420,8 @@ msgstr ""
 "Nedenstående tabel viser de sikkerhedskopier, der allerede findes i mappen ("
 "såfremt der er nogen)."
 
-msgid "Browse..."
-msgstr "Gennemse..."
+msgid "Browse…"
+msgstr "Gennemse…"
 
 msgid "Filename"
 msgstr "Filnavn"
@@ -692,8 +692,8 @@ msgstr "Gendan ikke denne partition"
 msgid "When you are ready to continue, click <b>Next</b>."
 msgstr "Når du er klar til at fortsætte, skal du klikke på <b>Næste</b>."
 
-msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
-msgstr "Skanner og afmonterer alle Logical Volume Manager (LVM)..."
+msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes…"
+msgstr "Skanner og afmonterer alle Logical Volume Manager (LVM)…"
 
 #, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
@@ -767,8 +767,8 @@ msgstr ""
 "{description} gendannes på {destination_partition} "
 "({destination_description})"
 
-msgid "Synchronizing disks..."
-msgstr "Synkroniserer diske..."
+msgid "Synchronizing disks…"
+msgstr "Synkroniserer diske…"
 
 #, python-brace-format
 msgid "Querying hard drive geometry of {device}"
@@ -779,10 +779,10 @@ msgid "Probing {device} with {app}"
 msgstr "Undersøger {device} med {app}"
 
 #, python-brace-format
-msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
+msgid "Growing filesystem {partition} ({filesystem}). This may take a while…"
 msgstr ""
 "Opretter filsystem {partition} ({filesystem}). Dette kan tage et stykke "
-"tid..."
+"tid…"
 
 #, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
@@ -824,8 +824,8 @@ msgstr "Opdaterer initramfs (hvis til stede)"
 msgid "Successfully updated initramfs"
 msgstr "Opdateringen af initramfs lykkedes"
 
-msgid "Updating EFI NVRAM..."
-msgstr "Opdaterer EFI NVRAM..."
+msgid "Updating EFI NVRAM…"
+msgstr "Opdaterer EFI NVRAM…"
 
 msgid "Successfully updated EFI NVRAM"
 msgstr "Opdateringen af EFI NVRAM lykkedes"
@@ -902,8 +902,8 @@ msgstr ""
 msgid "Mount"
 msgstr "Montér"
 
-msgid "Mounting as read-only..."
-msgstr "Monterer som skrivebeskyttet..."
+msgid "Mounting as read-only…"
+msgstr "Monterer som skrivebeskyttet…"
 
 msgid "Unmount"
 msgstr "Afmonterer"

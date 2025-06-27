@@ -52,11 +52,11 @@ msgstr "Enrere"
 msgid "Next >"
 msgstr "Endavant >"
 
-msgid "Please wait..."
-msgstr "Un moment..."
+msgid "Please wait…"
+msgstr "Un moment…"
 
-msgid "Identifying disk drives..."
-msgstr "S'estan identificant les unitats de disc..."
+msgid "Identifying disk drives…"
+msgstr "S'estan identificant les unitats de disc…"
 
 #, python-brace-format
 msgid "Unmounting: {path}"
@@ -326,8 +326,8 @@ msgstr "Seleccioneu la partició on voleu desar el fitxer d'imatge"
 msgid "Partition"
 msgstr "Partició"
 
-msgid "Mounting..."
-msgstr "S'està muntant..."
+msgid "Mounting…"
+msgstr "S'està muntant…"
 
 msgid "Close this popup to cancel the mount operation."
 msgstr "Tanqueu aquesta finestra emergent per cancel·lar l'operació."
@@ -340,8 +340,8 @@ msgstr ""
 msgid "Must provide either password or SSH identity file."
 msgstr "Heu de facilitar una contrasenya vàlida o fitxer SSH."
 
-msgid "Scanning folder for backup images..."
-msgstr "S'està escanejant la carpeta de còpies de seguretat..."
+msgid "Scanning folder for backup images…"
+msgstr "S'està escanejant la carpeta de còpies de seguretat…"
 
 #, python-brace-format
 msgid "({timeout_seconds} second timeout)"
@@ -431,8 +431,8 @@ msgstr ""
 "A continuació es mostren les còpies de seguretat d'aquesta carpeta (si "
 "existeixen)."
 
-msgid "Browse..."
-msgstr "Navega..."
+msgid "Browse…"
+msgstr "Navega…"
 
 msgid "Filename"
 msgstr "Nom de fitxer"
@@ -712,10 +712,10 @@ msgstr "No es restaurarà aquesta partició"
 msgid "When you are ready to continue, click <b>Next</b>."
 msgstr "Per iniciar l'operació, feu clic a <b>Endavant</b>."
 
-msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
+msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes…"
 msgstr ""
 "S'està escanejant per desmuntar qualsevol volum lògic LVM (<i>Logical Volume "
-"Manager</i>)..."
+"Manager</i>)…"
 
 #, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
@@ -790,8 +790,8 @@ msgstr ""
 "S'està restaurant {description} a {destination_partition} "
 "({destination_description})"
 
-msgid "Synchronizing disks..."
-msgstr "S'estan sincronitzant els discos..."
+msgid "Synchronizing disks…"
+msgstr "S'estan sincronitzant els discos…"
 
 #, python-brace-format
 msgid "Querying hard drive geometry of {device}"
@@ -802,10 +802,10 @@ msgid "Probing {device} with {app}"
 msgstr "Analitzant {device} amb {app}"
 
 #, python-brace-format
-msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
+msgid "Growing filesystem {partition} ({filesystem}). This may take a while…"
 msgstr ""
 "Reconstrucció del sistema de fitxers {partition} ({filesystem}). Això pot "
-"trigar una estona..."
+"trigar una estona…"
 
 #, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
@@ -849,8 +849,8 @@ msgstr "S'està actualitzant initramfs (si n'hi ha)"
 msgid "Successfully updated initramfs"
 msgstr "S'ha actualitzat initramfs correctament"
 
-msgid "Updating EFI NVRAM..."
-msgstr "S'està actualitzant EFI N RAM..."
+msgid "Updating EFI NVRAM…"
+msgstr "S'està actualitzant EFI N RAM…"
 
 msgid "Successfully updated EFI NVRAM"
 msgstr "S'ha actualitzat EFI NVRAM correctament"
@@ -930,8 +930,8 @@ msgstr "Feu clic a <b>Munta</b> per iniciar la imatge (com a només lectura)."
 msgid "Mount"
 msgstr "Munta"
 
-msgid "Mounting as read-only..."
-msgstr "S'està muntant com a només lectura..."
+msgid "Mounting as read-only…"
+msgstr "S'està muntant com a només lectura…"
 
 msgid "Unmount"
 msgstr "Desmunta"

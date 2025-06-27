@@ -57,11 +57,11 @@ msgstr "Takaisin"
 msgid "Next >"
 msgstr "Seuraava >"
 
-msgid "Please wait..."
-msgstr "Odota..."
+msgid "Please wait…"
+msgstr "Odota…"
 
-msgid "Identifying disk drives..."
-msgstr "Levyasemien tunnistaminen..."
+msgid "Identifying disk drives…"
+msgstr "Levyasemien tunnistaminen…"
 
 #, python-brace-format
 msgid "Unmounting: {path}"
@@ -320,8 +320,8 @@ msgstr "Valitse osio, johon kuvatiedostot tallennetaan"
 msgid "Partition"
 msgstr "Osio"
 
-msgid "Mounting..."
-msgstr "Liitetään..."
+msgid "Mounting…"
+msgstr "Liitetään…"
 
 msgid "Close this popup to cancel the mount operation."
 msgstr "Sulje tämä ponnahdusikkuna peruuttaaksesi liittämistoiminnon."
@@ -334,8 +334,8 @@ msgstr ""
 msgid "Must provide either password or SSH identity file."
 msgstr "Anna joko salasana tai SSH-tunnistustiedosto."
 
-msgid "Scanning folder for backup images..."
-msgstr "Haetaan kansiota varmuuskopiokuvia varten..."
+msgid "Scanning folder for backup images…"
+msgstr "Haetaan kansiota varmuuskopiokuvia varten…"
 
 #, python-brace-format
 msgid "({timeout_seconds} second timeout)"
@@ -423,8 +423,8 @@ msgstr ""
 "Alla on luettelo varmuuskopiokuvista, jotka ovat jo tässä kansiossa (jos "
 "sellaisia on)."
 
-msgid "Browse..."
-msgstr "Selaa..."
+msgid "Browse…"
+msgstr "Selaa…"
 
 msgid "Filename"
 msgstr "Tiedostonimi"
@@ -691,10 +691,10 @@ msgstr "Tätä osiota ei palauteta"
 msgid "When you are ready to continue, click <b>Next</b>."
 msgstr "Kun olet valmis jatkamaan, napsauta <b>Seuraava</b>."
 
-msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
+msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes…"
 msgstr ""
 "Skannataan ja irrotetaan mitkä tahansa LVM (Logical Volume Manager) "
-"-logiikkataltiot..."
+"-logiikkataltiot…"
 
 #, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
@@ -767,8 +767,8 @@ msgstr ""
 "Palautetaan {description} kohteeseen {destination_partition} "
 "({destination_description})"
 
-msgid "Synchronizing disks..."
-msgstr "Synkronoidaan levyjä..."
+msgid "Synchronizing disks…"
+msgstr "Synkronoidaan levyjä…"
 
 #, python-brace-format
 msgid "Querying hard drive geometry of {device}"
@@ -779,10 +779,10 @@ msgid "Probing {device} with {app}"
 msgstr "Tutkitaan {device} sovelluksella {app}"
 
 #, python-brace-format
-msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
+msgid "Growing filesystem {partition} ({filesystem}). This may take a while…"
 msgstr ""
 "Kasvava tiedostojärjestelmä {partition} ({filesystem}). Tämä voi kestää "
-"hetken..."
+"hetken…"
 
 #, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
@@ -824,8 +824,8 @@ msgstr "Päivitetään initramfs (jos sellainen on)"
 msgid "Successfully updated initramfs"
 msgstr "Initramfs päivitetty onnistuneesti"
 
-msgid "Updating EFI NVRAM..."
-msgstr "Päivitetään EFI NVRAM..."
+msgid "Updating EFI NVRAM…"
+msgstr "Päivitetään EFI NVRAM…"
 
 msgid "Successfully updated EFI NVRAM"
 msgstr "EFI NVRAM päivitetty onnistuneesti"
@@ -901,8 +901,8 @@ msgstr "Kiinnitä varmuuskopio (vain luku) napsauttamalla <b>Liitä</b>."
 msgid "Mount"
 msgstr "Liitä"
 
-msgid "Mounting as read-only..."
-msgstr "Liitetään vain luku -tilassa..."
+msgid "Mounting as read-only…"
+msgstr "Liitetään vain luku -tilassa…"
 
 msgid "Unmount"
 msgstr "Irrota"

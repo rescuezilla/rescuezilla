@@ -47,11 +47,11 @@ msgstr "返回"
 msgid "Next >"
 msgstr "下一個>"
 
-msgid "Please wait..."
+msgid "Please wait…"
 msgstr "請稍候…"
 
-msgid "Identifying disk drives..."
-msgstr "正在識別磁碟機..."
+msgid "Identifying disk drives…"
+msgstr "正在識別磁碟機…"
 
 #, python-brace-format
 msgid "Unmounting: {path}"
@@ -297,8 +297,8 @@ msgstr "選取映像檔將要儲存的分區"
 msgid "Partition"
 msgstr "分區"
 
-msgid "Mounting..."
-msgstr "掛載..."
+msgid "Mounting…"
+msgstr "掛載…"
 
 msgid "Close this popup to cancel the mount operation."
 msgstr "關閉此彈出視窗以取消安裝操作。"
@@ -309,8 +309,8 @@ msgstr "請確保提供的帳號、密碼和其他欄位正確，然後重試。
 msgid "Must provide either password or SSH identity file."
 msgstr "必須提供密碼或 SSH 身份檔。"
 
-msgid "Scanning folder for backup images..."
-msgstr "掃描資料夾以檢視備份映像..."
+msgid "Scanning folder for backup images…"
+msgstr "掃描資料夾以檢視備份映像…"
 
 #, python-brace-format
 msgid "({timeout_seconds} second timeout)"
@@ -384,8 +384,8 @@ msgstr "請選擇其他資料夾。"
 msgid "The table below lists the backup images that are already in this folder (if any)."
 msgstr "下表列出了該資料夾中已出現的備份映像（如果有）。"
 
-msgid "Browse..."
-msgstr "瀏覽..."
+msgid "Browse…"
+msgstr "瀏覽…"
 
 msgid "Filename"
 msgstr "檔名"
@@ -630,7 +630,7 @@ msgstr "不還原該分區"
 msgid "When you are ready to continue, click <b>Next</b>."
 msgstr "準備好繼續使用時，請單擊 <b>下一個</b>。"
 
-msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
+msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes…"
 msgstr "掃描和卸載任何邏輯卷管理器（LVM）邏輯卷。。。"
 
 #, python-brace-format
@@ -697,8 +697,8 @@ msgstr "重新整理分區表"
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
 msgstr "將 {description} 還原為 {destination_partition} ({destination_description})"
 
-msgid "Synchronizing disks..."
-msgstr "同步磁碟..."
+msgid "Synchronizing disks…"
+msgstr "同步磁碟…"
 
 #, python-brace-format
 msgid "Querying hard drive geometry of {device}"
@@ -709,8 +709,8 @@ msgid "Probing {device} with {app}"
 msgstr "用 {app} 探測 {device}"
 
 #, python-brace-format
-msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
-msgstr "不斷增長的檔案系統{partition}({filesystem})。這可能需要一段時間..."
+msgid "Growing filesystem {partition} ({filesystem}). This may take a while…"
+msgstr "不斷增長的檔案系統{partition}({filesystem})。這可能需要一段時間…"
 
 #, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
@@ -748,8 +748,8 @@ msgstr "更新initramfs（如果有）"
 msgid "Successfully updated initramfs"
 msgstr "已成功更新 initramfs"
 
-msgid "Updating EFI NVRAM..."
-msgstr "正在更新 EFI NVRAM..."
+msgid "Updating EFI NVRAM…"
+msgstr "正在更新 EFI NVRAM…"
 
 msgid "Successfully updated EFI NVRAM"
 msgstr "已成功更新 EFI NVRAM"
@@ -818,8 +818,8 @@ msgstr "單擊 <b>掛載</b> 以安裝備份映像（僅限閱讀）。"
 msgid "Mount"
 msgstr "掛載"
 
-msgid "Mounting as read-only..."
-msgstr "掛載為唯讀..."
+msgid "Mounting as read-only…"
+msgstr "掛載為唯讀…"
 
 msgid "Unmount"
 msgstr "卸載"

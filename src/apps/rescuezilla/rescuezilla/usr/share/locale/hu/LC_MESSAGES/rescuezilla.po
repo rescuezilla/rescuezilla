@@ -52,11 +52,11 @@ msgstr "Vissza"
 msgid "Next >"
 msgstr "Tovább >"
 
-msgid "Please wait..."
-msgstr "Kérlek várj..."
+msgid "Please wait…"
+msgstr "Kérlek várj…"
 
-msgid "Identifying disk drives..."
-msgstr "Lemez-meghajtók azonosítása..."
+msgid "Identifying disk drives…"
+msgstr "Lemez-meghajtók azonosítása…"
 
 #, python-brace-format
 msgid "Unmounting: {path}"
@@ -120,7 +120,7 @@ msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
 msgstr "A \"Klónozó\" varázsló indításához nyomj <b>Tovább</b> gombot"
 
 msgid "Step 2: Select Source Drive"
-msgstr "2. Lépés: Válassz Forrás Lemezt (ahonnan...)"
+msgstr "2. Lépés: Válassz Forrás Lemezt (ahonnan…)"
 
 msgid "Select the <b>source drive</b> to clone."
 msgstr "Válaszd ki a klónozandó <b>Forrás Lemezt</b> !"
@@ -177,7 +177,7 @@ msgid "Unable to shutdown Image Explorer"
 msgstr "Nem lehetett leállítani a \"Lemezkép Böngészőt\""
 
 msgid "Step 1: Select Drive To Backup"
-msgstr "1. Lépés: Elmentendő Lemez kiválasztása (amelyről...)"
+msgstr "1. Lépés: Elmentendő Lemez kiválasztása (amelyről…)"
 
 msgid "Select the <b>source drive</b> that you would like to create a backup image from."
 msgstr ""
@@ -225,7 +225,7 @@ msgid "Partition {partition_number}"
 msgstr "{partition_number}. partíció"
 
 msgid "Step 3: Select Destination Drive"
-msgstr "3. Lépés: Válassz Cél-Lemezt (ahová...)"
+msgstr "3. Lépés: Válassz Cél-Lemezt (ahová…)"
 
 msgid "Click on the box below to select the source drive that you would like to create a backup image from."
 msgstr ""
@@ -245,7 +245,7 @@ msgid "Windows shared folder (SMB/CIFS, Samba)"
 msgstr "Windows megosztott mappa (SMB/CIFS, Samba)"
 
 msgid "Search network"
-msgstr "Hálózati keresés..."
+msgstr "Hálózati keresés…"
 
 msgid "Server"
 msgstr "Szerver"
@@ -322,8 +322,8 @@ msgstr "Válaszd ki a helyet, ahová a lemezkép-fájlokat el akarod menteni"
 msgid "Partition"
 msgstr "Partíció"
 
-msgid "Mounting..."
-msgstr "Csatolom..."
+msgid "Mounting…"
+msgstr "Csatolom…"
 
 msgid "Close this popup to cancel the mount operation."
 msgstr "Zárd be ezt a felugró panelt a felcsatolás megszakításához."
@@ -336,8 +336,8 @@ msgstr ""
 msgid "Must provide either password or SSH identity file."
 msgstr "Szükséges megadni vagy egy jelszót, vagy SSH identitás-fájlt."
 
-msgid "Scanning folder for backup images..."
-msgstr "Korábbi mentés fájlok auto-keresése a mappában..."
+msgid "Scanning folder for backup images…"
+msgstr "Korábbi mentés fájlok auto-keresése a mappában…"
 
 #, python-brace-format
 msgid "({timeout_seconds} second timeout)"
@@ -403,7 +403,7 @@ msgstr ""
 "folyamán a Rescuezilla megpróbálja újrainstallálni azt."
 
 msgid "Step 4: Select Destination Folder"
-msgstr "4. Lépés: Válassz Cél-mappát (ahová...)"
+msgstr "4. Lépés: Válassz Cél-mappát (ahová…)"
 
 msgid "Click <b>Browse</b> to select the folder on the destination drive where your new backup image will be saved.\n"
 "\n"
@@ -427,8 +427,8 @@ msgstr ""
 "Az alábbi táblázat listázza a mappán belül található korábbi mentéseket azaz "
 "lemezképeket (ha vannak)."
 
-msgid "Browse..."
-msgstr "Tallózás..."
+msgid "Browse…"
+msgstr "Tallózás…"
 
 msgid "Filename"
 msgstr "Fájlnév"
@@ -614,7 +614,7 @@ msgid "To start a new session, click <b>Next</b>"
 msgstr "Egy új műveletsor kezdéséhez kattints a <b>Tovább</b> gombra"
 
 msgid "Step 1: Select Image Location"
-msgstr "1. Lépés: Válaszd ki a lemezkép helyét (ahonnan...)"
+msgstr "1. Lépés: Válaszd ki a lemezkép helyét (ahonnan…)"
 
 msgid "Where are the image files stored?"
 msgstr "Hová vannak elmentve a korábbi Lemezkép mentés-fájljai?"
@@ -702,10 +702,10 @@ msgstr "Ez a partíció nem lesz helyreállítva"
 msgid "When you are ready to continue, click <b>Next</b>."
 msgstr "Ha készen állsz a folytatásra, kattints a <b>Tovább</b> gombra."
 
-msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
+msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes…"
 msgstr ""
 "A \"Logikai Lemezkezelő\" (LVM) éppen szkennel és lecsatol minden logikai "
-"meghajtót..."
+"meghajtót…"
 
 #, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
@@ -783,8 +783,8 @@ msgstr ""
 "A {description} helyreállítása ide: {destination_partition} "
 "({destination_description})"
 
-msgid "Synchronizing disks..."
-msgstr "Lemezek szinkronizálása..."
+msgid "Synchronizing disks…"
+msgstr "Lemezek szinkronizálása…"
 
 #, python-brace-format
 msgid "Querying hard drive geometry of {device}"
@@ -795,10 +795,10 @@ msgid "Probing {device} with {app}"
 msgstr "Az eszköz {device} próbája ezzel a programmal: {app}"
 
 #, python-brace-format
-msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
+msgid "Growing filesystem {partition} ({filesystem}). This may take a while…"
 msgstr ""
 "Fájlrendszer megnövelése: {partition} ({filesystem}). Ez eltarthat egy "
-"darabig..."
+"darabig…"
 
 #, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
@@ -842,8 +842,8 @@ msgstr "Frissítem az \"initramfs\" -t (ha van)"
 msgid "Successfully updated initramfs"
 msgstr "Sikeresen frissítettem az \"initramfs\"-t"
 
-msgid "Updating EFI NVRAM..."
-msgstr "Frissítem az EFI NVRAM-ot..."
+msgid "Updating EFI NVRAM…"
+msgstr "Frissítem az EFI NVRAM-ot…"
 
 msgid "Successfully updated EFI NVRAM"
 msgstr "Sikeresen frissítettem az EFI NVRAM-ot"
@@ -903,7 +903,7 @@ msgid "Image Explorer\n"
 "      (beta)"
 msgstr ""
 "Lemezkép Böngésző \n"
-"...(béta)"
+"…(béta)"
 
 msgid "Image Explorer (beta)"
 msgstr "Lemezkép Betekintő (béta)"
@@ -926,8 +926,8 @@ msgstr ""
 msgid "Mount"
 msgstr "Csatold"
 
-msgid "Mounting as read-only..."
-msgstr "Csatolom csak olvashatóként..."
+msgid "Mounting as read-only…"
+msgstr "Csatolom csak olvashatóként…"
 
 msgid "Unmount"
 msgstr "Válaszd le"

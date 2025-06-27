@@ -51,11 +51,11 @@ msgstr "Geri"
 msgid "Next >"
 msgstr "İleri>"
 
-msgid "Please wait..."
-msgstr "Lütfen bekleyin..."
+msgid "Please wait…"
+msgstr "Lütfen bekleyin…"
 
-msgid "Identifying disk drives..."
-msgstr "Diskler tanımlanıyor..."
+msgid "Identifying disk drives…"
+msgstr "Diskler tanımlanıyor…"
 
 #, python-brace-format
 msgid "Unmounting: {path}"
@@ -316,8 +316,8 @@ msgstr "Kalıp dosyalarının kaydedileceği bölümü seçin"
 msgid "Partition"
 msgstr "Bölüm"
 
-msgid "Mounting..."
-msgstr "Bağlanıyor..."
+msgid "Mounting…"
+msgstr "Bağlanıyor…"
 
 msgid "Close this popup to cancel the mount operation."
 msgstr "Bağlama işlemini iptal etmek için bu açılır pencereyi kapatın."
@@ -330,8 +330,8 @@ msgstr ""
 msgid "Must provide either password or SSH identity file."
 msgstr "Parola ya da SSH kimlik dosyasından biri belirtilmelidir."
 
-msgid "Scanning folder for backup images..."
-msgstr "Yedek kalıplar için klasör taranıyor..."
+msgid "Scanning folder for backup images…"
+msgstr "Yedek kalıplar için klasör taranıyor…"
 
 #, python-brace-format
 msgid "({timeout_seconds} second timeout)"
@@ -418,8 +418,8 @@ msgstr ""
 "Aşağıdaki tablo, bu klasörde (varsa) zaten bulunan yedek kalıpları "
 "listelemektedir."
 
-msgid "Browse..."
-msgstr "Göz At..."
+msgid "Browse…"
+msgstr "Göz At…"
 
 msgid "Filename"
 msgstr "Dosya adı"
@@ -689,10 +689,10 @@ msgstr "Bu bölüm geri yüklenmiyor"
 msgid "When you are ready to continue, click <b>Next</b>."
 msgstr "Devam etmeye hazır olduğunuzda <b>İleri</b> düğmesine tıklayın."
 
-msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
+msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes…"
 msgstr ""
 "Mantıksal Birim Yöneticisi (LVM) Mantıksal Birimleri taranıyor ve bağlantısı "
-"kaldırılıyor..."
+"kaldırılıyor…"
 
 #, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
@@ -767,8 +767,8 @@ msgstr ""
 "{description}, {destination_partition} ({destination_description}) konumuna "
 "geri yükleniyor"
 
-msgid "Synchronizing disks..."
-msgstr "Diskler eşzamanlanıyor..."
+msgid "Synchronizing disks…"
+msgstr "Diskler eşzamanlanıyor…"
 
 #, python-brace-format
 msgid "Querying hard drive geometry of {device}"
@@ -779,10 +779,10 @@ msgid "Probing {device} with {app}"
 msgstr "{device}, {app} ile sorgulanıyor"
 
 #, python-brace-format
-msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
+msgid "Growing filesystem {partition} ({filesystem}). This may take a while…"
 msgstr ""
 "{partition} ({filesystem}) dosya sistemi büyütülüyor. Bu biraz zaman "
-"alabilir..."
+"alabilir…"
 
 #, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
@@ -822,8 +822,8 @@ msgstr "initramfs güncelleniyor (varsa)"
 msgid "Successfully updated initramfs"
 msgstr "initramfs başarıyla güncellendi"
 
-msgid "Updating EFI NVRAM..."
-msgstr "EFI NVRAM güncelleniyor..."
+msgid "Updating EFI NVRAM…"
+msgstr "EFI NVRAM güncelleniyor…"
 
 msgid "Successfully updated EFI NVRAM"
 msgstr "EFI NVRAM başarıyla güncellendi"
@@ -903,8 +903,8 @@ msgstr ""
 msgid "Mount"
 msgstr "Bağla"
 
-msgid "Mounting as read-only..."
-msgstr "Salt okunur olarak bağlanıyor..."
+msgid "Mounting as read-only…"
+msgstr "Salt okunur olarak bağlanıyor…"
 
 msgid "Unmount"
 msgstr "Bağlantısını kaldır"

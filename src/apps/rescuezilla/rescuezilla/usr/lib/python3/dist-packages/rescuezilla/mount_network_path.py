@@ -54,7 +54,7 @@ class MountNetworkPath:
         self.requested_stop_lock = threading.Lock()
         self.requested_stop = False
 
-        self.please_wait_popup = PleaseWaitModalPopup(builder, title=_("Please wait..."), message=_("Mounting...") + "\n\n" + _("Close this popup to cancel the mount operation."), on_close_callback=self.cancel_mount)
+        self.please_wait_popup = PleaseWaitModalPopup(builder, title=_("Please wait…"), message=_("Mounting…") + "\n\n" + _("Close this popup to cancel the mount operation."), on_close_callback=self.cancel_mount)
         self.please_wait_popup.show()
         if network_protocol_key == "SMB":
             thread = threading.Thread(target=self._do_smb_mount_command, args=(settings,))

@@ -1287,7 +1287,7 @@
                                                             </child>
                                                             <child>
                                                             <object class="GtkButton" id="backup_network_ssh_idfile_browse">
-                                                            <property name="label" translatable="yes">Browse...</property>
+                                                            <property name="label" translatable="yes">Browse…</property>
                                                             <property name="visible">True</property>
                                                             <property name="can-focus">True</property>
                                                             <property name="receives-default">True</property>
@@ -1633,7 +1633,7 @@ The folder a backup is saved in is usually a description of the computer, e.g. &
                                                 </child>
                                                 <child>
                                                   <object class="GtkButton" id="backup_folder_browse">
-                                                    <property name="label" translatable="yes">Browse...</property>
+                                                    <property name="label" translatable="yes">Browse…</property>
                                                     <property name="visible">True</property>
                                                     <property name="can-focus">True</property>
                                                     <property name="receives-default">True</property>
@@ -3116,7 +3116,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             </child>
                                                             <child>
                                                             <object class="GtkButton" id="restore_network_ssh_idfile_browse">
-                                                            <property name="label" translatable="yes">Browse...</property>
+                                                            <property name="label" translatable="yes">Browse…</property>
                                                             <property name="visible">True</property>
                                                             <property name="can-focus">True</property>
                                                             <property name="receives-default">True</property>
@@ -3468,7 +3468,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                     </child>
                                                     <child>
                                                       <object class="GtkButton" id="restore_image_browse">
-                                                        <property name="label" translatable="yes">Browse...</property>
+                                                        <property name="label" translatable="yes">Browse…</property>
                                                         <property name="visible">True</property>
                                                         <property name="can-focus">True</property>
                                                         <property name="receives-default">True</property>
@@ -5094,7 +5094,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                             </child>
                                                             <child>
                                                             <object class="GtkButton" id="verify_network_ssh_idfile_browse">
-                                                            <property name="label" translatable="yes">Browse...</property>
+                                                            <property name="label" translatable="yes">Browse…</property>
                                                             <property name="visible">True</property>
                                                             <property name="can-focus">True</property>
                                                             <property name="receives-default">True</property>
@@ -5419,7 +5419,7 @@ You may only use letters, numbers, and dashes in your backup name.</property>
                                                     </child>
                                                     <child>
                                                       <object class="GtkButton" id="verify_image_browse">
-                                                        <property name="label" translatable="yes">Browse...</property>
+                                                        <property name="label" translatable="yes">Browse…</property>
                                                         <property name="visible">True</property>
                                                         <property name="can-focus">True</property>
                                                         <property name="receives-default">True</property>
@@ -7762,7 +7762,7 @@ To use the "imaging" wizards, click &lt;b&gt;Back&lt;/b&gt; and select &lt;b&gt;
                                                             </child>
                                                             <child>
                                                             <object class="GtkButton" id="image_explorer_network_ssh_idfile_browse">
-                                                            <property name="label" translatable="yes">Browse...</property>
+                                                            <property name="label" translatable="yes">Browse…</property>
                                                             <property name="visible">True</property>
                                                             <property name="can-focus">True</property>
                                                             <property name="receives-default">True</property>
@@ -8101,7 +8101,7 @@ To use the "imaging" wizards, click &lt;b&gt;Back&lt;/b&gt; and select &lt;b&gt;
                                                     </child>
                                                     <child>
                                                       <object class="GtkButton" id="image_explorer_image_browse">
-                                                        <property name="label" translatable="yes">Browse...</property>
+                                                        <property name="label" translatable="yes">Browse…</property>
                                                         <property name="visible">True</property>
                                                         <property name="can-focus">True</property>
                                                         <property name="receives-default">True</property>

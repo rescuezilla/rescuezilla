@@ -56,11 +56,11 @@ msgstr "Πίσω"
 msgid "Next >"
 msgstr "Επόμενο >"
 
-msgid "Please wait..."
-msgstr "Παρακαλώ περιμένετε..."
+msgid "Please wait…"
+msgstr "Παρακαλώ περιμένετε…"
 
-msgid "Identifying disk drives..."
-msgstr "Αναγνώριση μονάδων δίσκου..."
+msgid "Identifying disk drives…"
+msgstr "Αναγνώριση μονάδων δίσκου…"
 
 #, python-brace-format
 msgid "Unmounting: {path}"
@@ -329,8 +329,8 @@ msgstr "Επιλέξτε το διαμέρισμα στο οποίο θα απο
 msgid "Partition"
 msgstr "Διαμέρισμα"
 
-msgid "Mounting..."
-msgstr "Δημιουγία Φακέλων και Αρχείων..."
+msgid "Mounting…"
+msgstr "Δημιουγία Φακέλων και Αρχείων…"
 
 msgid "Close this popup to cancel the mount operation."
 msgstr ""
@@ -345,8 +345,8 @@ msgstr ""
 msgid "Must provide either password or SSH identity file."
 msgstr "Πρέπει να δώσετε κωδικό πρόσβασης ή αρχείο ταυτότητας SSH."
 
-msgid "Scanning folder for backup images..."
-msgstr "Σάρωση φακέλου για είδωλα αντιγράφων ασφαλείας..."
+msgid "Scanning folder for backup images…"
+msgstr "Σάρωση φακέλου για είδωλα αντιγράφων ασφαλείας…"
 
 #, python-brace-format
 msgid "({timeout_seconds} second timeout)"
@@ -429,8 +429,8 @@ msgstr "Παρακαλώ επιλέξτε διαφορετικό φάκελο."
 msgid "The table below lists the backup images that are already in this folder (if any)."
 msgstr "Ο ακόλουθος πίνακας εμφανίζει τα είδωλα των αντιγράφων ασφαλείας που βρίσκονται ήδη σε αυτόν το φάκελο (εάν υπάρχουν)."
 
-msgid "Browse..."
-msgstr "Αναζήτηση..."
+msgid "Browse…"
+msgstr "Αναζήτηση…"
 
 msgid "Filename"
 msgstr "Όνομα Αρχείου"
@@ -693,8 +693,8 @@ msgid "When you are ready to continue, click <b>Next</b>."
 msgstr ""
 "Όταν είστε έτοιμοι να συνεχίσετε, κάντε κλικ στην επιλογή <b>Επόμενο</b>."
 
-msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes..."
-msgstr "Σάρωση και αποσύνδεση Λογικών Τόμων Διαχείρισης (LVM)..."
+msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes…"
+msgstr "Σάρωση και αποσύνδεση Λογικών Τόμων Διαχείρισης (LVM)…"
 
 #, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
@@ -763,8 +763,8 @@ msgstr "Ανανέωση πίνακα διαμερισμάτων"
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
 msgstr "Επαναφορά {description} στο {destination_partition} ({destination_description})"
 
-msgid "Synchronizing disks..."
-msgstr "Συγχρονισμός δίσκων..."
+msgid "Synchronizing disks…"
+msgstr "Συγχρονισμός δίσκων…"
 
 #, python-brace-format
 msgid "Querying hard drive geometry of {device}"
@@ -775,10 +775,10 @@ msgid "Probing {device} with {app}"
 msgstr "Έλεγχος {device} με {app}"
 
 #, python-brace-format
-msgid "Growing filesystem {partition} ({filesystem}). This may take a while..."
+msgid "Growing filesystem {partition} ({filesystem}). This may take a while…"
 msgstr ""
 "Ανάπτυξη συστήματος αρχείων {partition} ({filesystem}). Αυτό μπορεί να "
-"διαρκέσει λίγο..."
+"διαρκέσει λίγο…"
 
 #, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
@@ -821,8 +821,8 @@ msgstr "Ενημέρωση initramfs (εάν υπάρχουν)"
 msgid "Successfully updated initramfs"
 msgstr "Επιτυχής ενημέρωση initramfs"
 
-msgid "Updating EFI NVRAM..."
-msgstr "Ενημέρωση EFI NVRAM..."
+msgid "Updating EFI NVRAM…"
+msgstr "Ενημέρωση EFI NVRAM…"
 
 msgid "Successfully updated EFI NVRAM"
 msgstr "Επιτυχής ενημέρωση EFI NVRAM"
@@ -892,8 +892,8 @@ msgstr ""
 msgid "Mount"
 msgstr "Λειτουργία προσβασιμότητας αρχείων"
 
-msgid "Mounting as read-only..."
-msgstr "Λειτουργία προσβασιμότητας αρχείων μόνο για ανάγνωση..."
+msgid "Mounting as read-only…"
+msgstr "Λειτουργία προσβασιμότητας αρχείων μόνο για ανάγνωση…"
 
 msgid "Unmount"
 msgstr "Λειτουργία μη προσβασιμότητας αρχείων"

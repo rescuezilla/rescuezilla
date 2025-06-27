@@ -68,7 +68,7 @@ class DriveQuery:
         self.requested_stop_lock = threading.Lock()
         self.requested_stop = False
 
-        self.please_wait_popup = PleaseWaitModalPopup(self.builder, title=_("Please wait..."), message=_("Identifying disk drives..."), on_close_callback=self.cancel_query)
+        self.please_wait_popup = PleaseWaitModalPopup(self.builder, title=_("Please wait…"), message=_("Identifying disk drives…"), on_close_callback=self.cancel_query)
         self.please_wait_popup.show()
         self.error_message_callback = error_message_callback
 
