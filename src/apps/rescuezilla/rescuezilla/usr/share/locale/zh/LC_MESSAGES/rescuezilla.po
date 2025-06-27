@@ -6,13 +6,15 @@
 #
 # 池边树下 <mzky@163.com>, 2021, 2025.
 # Eric <hamburger2048@users.noreply.hosted.weblate.org>, 2023.
+# 大王叫我来巡山 <hamburger2048@users.noreply.hosted.weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2025-06-05 02:01+0000\n"
-"Last-Translator: 池边树下 <mzky@163.com>\n"
+"PO-Revision-Date: 2025-06-26 04:01+0000\n"
+"Last-Translator: 大王叫我来巡山 "
+"<hamburger2048@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
 "projects/rescuezilla/rescuezilla/zh_Hans/>\n"
 "Language: zh\n"
@@ -20,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12-dev\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 msgid "Welcome"
 msgstr "欢迎"
@@ -241,37 +243,37 @@ msgid "Version"
 msgstr "版本"
 
 msgid "default (Negotiate highest SMB2+ supported by client and server)"
-msgstr ""
+msgstr "默认（协商最高 SMB2+客户端服务器支持）"
 
 msgid "1.0 (The classic CIFS/SMBv1 protocol)"
-msgstr ""
+msgstr "1.0 （老旧 CIFS/SMBv1 协议）"
 
 msgid "2.0 (Introduced in Vista SP1, Windows Server 2008)"
-msgstr ""
+msgstr "2.0 （在 Vista SP1、Windows Server 2008 中引入）"
 
 msgid "2.1 (Introduced in Windows 7, Windows Server 2008R2)"
-msgstr ""
+msgstr "2.1（在 Windows 7、Windows Server 2008R2 中引入）"
 
 msgid "3 (The SMBv3.0 protocol version and above)"
-msgstr ""
+msgstr "3 （SMBv3.0 协议版及更高）"
 
 msgid "3.0 (Introduced in Windows 8, Windows Server 2012)"
-msgstr ""
+msgstr "3.0 （在 Windows 8、Windows Server 2012 中引入）"
 
 msgid "3.0.2 (Introduced in Windows 8.1, Windows Server 2012R2)"
-msgstr ""
+msgstr "3.0.2 （在 Windows 8.1、Windows Server 2012R2 中引入）"
 
 msgid "3.1.1 (Introduced in Windows 10, Windows Server 2016)"
-msgstr ""
+msgstr "3.1.1 （在 Windows 10、Windows Server 2016 中引入）"
 
 msgid "Unspecified (Tries NFS v4.2 first, then negotiates with server down until finds a supported version)"
-msgstr ""
+msgstr "未指定（先尝试 NFS v4.2，接着和服务器向下协商版本，直至找到支持的版本）"
 
 msgid "NFSv3"
-msgstr ""
+msgstr "NFSv3"
 
 msgid "NFSv4"
-msgstr ""
+msgstr "NFSv4"
 
 msgid "Remote path"
 msgstr "远程路径"
@@ -283,7 +285,7 @@ msgid "Identity File"
 msgstr "身份文件"
 
 msgid "Port"
-msgstr ""
+msgstr "端口"
 
 msgid "Optional"
 msgstr "可选"
