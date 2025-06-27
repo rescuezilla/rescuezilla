@@ -920,7 +920,7 @@ msgstr "Öppna i filhanteraren"
 msgid "Verify"
 msgstr "Verifiera"
 
-msgid "Select one or more image(s) to verify."
+msgid "Select one or more images to verify."
 msgstr "Välj en eller flera avbilder att verifiera."
 
 msgid "To begin verification, click <b>Next</b>."

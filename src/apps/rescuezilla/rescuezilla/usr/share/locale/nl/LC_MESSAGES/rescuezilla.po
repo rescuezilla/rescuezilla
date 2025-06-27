@@ -928,7 +928,7 @@ msgstr "Openen in bestandsbeheer"
 msgid "Verify"
 msgstr "Verifiëren"
 
-msgid "Select one or more image(s) to verify."
+msgid "Select one or more images to verify."
 msgstr "Selecteer één of meer images om te verifiëren."
 
 msgid "To begin verification, click <b>Next</b>."

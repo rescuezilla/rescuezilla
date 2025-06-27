@@ -900,7 +900,7 @@ msgstr "ファイルマネージャーで開く"
 msgid "Verify"
 msgstr "実証"
 
-msgid "Select one or more image(s) to verify."
+msgid "Select one or more images to verify."
 msgstr "ひとつかそれ以上のイメージ（たち） を選んで実証します。"
 
 msgid "To begin verification, click <b>Next</b>."

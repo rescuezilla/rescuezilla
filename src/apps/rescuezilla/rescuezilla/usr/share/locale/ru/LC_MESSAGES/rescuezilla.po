@@ -927,7 +927,7 @@ msgstr "Открыть в Проводнике"
 msgid "Verify"
 msgstr "Проверить"
 
-msgid "Select one or more image(s) to verify."
+msgid "Select one or more images to verify."
 msgstr "Выберите одно или несколько образов для проверки."
 
 msgid "To begin verification, click <b>Next</b>."

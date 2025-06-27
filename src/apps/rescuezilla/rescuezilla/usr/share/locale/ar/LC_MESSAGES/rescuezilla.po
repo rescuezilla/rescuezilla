@@ -909,7 +909,7 @@ msgstr "فتح في مدير الملفات"
 msgid "Verify"
 msgstr "تحقق"
 
-msgid "Select one or more image(s) to verify."
+msgid "Select one or more images to verify."
 msgstr "حدد صورة/نسخة واحدة أو أكثر للتحقق منها."
 
 msgid "To begin verification, click <b>Next</b>."

@@ -920,7 +920,7 @@ msgstr "Dosya yöneticisinde aç"
 msgid "Verify"
 msgstr "Doğrula"
 
-msgid "Select one or more image(s) to verify."
+msgid "Select one or more images to verify."
 msgstr "Doğrulamak için bir veya daha fazla kalıp seçin."
 
 msgid "To begin verification, click <b>Next</b>."

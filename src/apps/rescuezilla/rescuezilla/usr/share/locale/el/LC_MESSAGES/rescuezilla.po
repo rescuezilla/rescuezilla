@@ -910,7 +910,7 @@ msgstr "Άνοιγμα στη διαχείριση αρχείων"
 msgid "Verify"
 msgstr "Επαλήθευση"
 
-msgid "Select one or more image(s) to verify."
+msgid "Select one or more images to verify."
 msgstr "Επιλέξτε ένα ή περισσότερα είδωλα για επαλήθευση."
 
 msgid "To begin verification, click <b>Next</b>."

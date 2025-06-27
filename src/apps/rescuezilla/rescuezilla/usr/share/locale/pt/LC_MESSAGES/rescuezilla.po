@@ -914,7 +914,7 @@ msgstr "Abrir no gerenciador de arquivos"
 msgid "Verify"
 msgstr "Verificar"
 
-msgid "Select one or more image(s) to verify."
+msgid "Select one or more images to verify."
 msgstr "Selecione uma ou mais imagens para verificar."
 
 msgid "To begin verification, click <b>Next</b>."

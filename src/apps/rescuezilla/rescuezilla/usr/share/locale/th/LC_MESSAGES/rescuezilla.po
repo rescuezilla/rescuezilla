@@ -988,7 +988,7 @@ msgstr "เปิดด้วยเครื่องมือจัดการ
 msgid "Verify"
 msgstr "ทดสอบ"
 
-msgid "Select one or more image(s) to verify."
+msgid "Select one or more images to verify."
 msgstr "เลือกไฟล์สำรองข้อมูลหนึ่ง หรือมากกว่าเพื่อตรวจความถูกต้อง"
 
 msgid "To begin verification, click <b>Next</b>."

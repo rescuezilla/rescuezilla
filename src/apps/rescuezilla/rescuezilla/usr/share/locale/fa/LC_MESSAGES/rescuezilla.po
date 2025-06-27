@@ -793,7 +793,7 @@ msgstr ""
 msgid "Verify"
 msgstr "تصدیق کردن"
 
-msgid "Select one or more image(s) to verify."
+msgid "Select one or more images to verify."
 msgstr ""
 
 msgid "To begin verification, click <b>Next</b>."

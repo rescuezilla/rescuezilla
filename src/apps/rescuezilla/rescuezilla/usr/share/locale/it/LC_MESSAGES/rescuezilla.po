@@ -932,7 +932,7 @@ msgstr "Apri in file manager"
 msgid "Verify"
 msgstr "Verifica"
 
-msgid "Select one or more image(s) to verify."
+msgid "Select one or more images to verify."
 msgstr "Seleziona una o più immagini da verificare."
 
 msgid "To begin verification, click <b>Next</b>."
