@@ -1005,6 +1005,7 @@ class BackupManager:
         is_windows_reserved = False
         if not os.path.exists(mount_point) and not os.path.isdir(mount_point):
             os.mkdir(mount_point, 0o755)
+        Utility.hack_sync_and_sleep()
         process, flat_command_string, failed_message = Utility.run(
             "Mounting NTFS filesystem " + partition_key + " to check whether filesystem is NTFS boot reserved",
             ["mount", "-o", "ro", partition_key, mount_point],
@@ -1016,6 +1017,7 @@ class BackupManager:
             print("Unable to mount NTFS filesystem, assuming *not* Windows boot reserved")
             # Again, not a fatal error so returning true
             return True, failed_message, is_windows_reserved
+        Utility.hack_sync_and_sleep()
 
         boot_dir_path = os.path.join(mount_point, "Boot")
         bootmgr_path = os.path.join(mount_point, "bootmgr")

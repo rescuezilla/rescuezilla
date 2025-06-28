@@ -574,13 +574,33 @@ class Utility:
                 return True, process.stdout
         return False, "Rescuezilla retry timeout exceeded"
 
+    # HACK: avoid /tmp  in use
+    @staticmethod
+    def hack_sync_and_sleep():
+        """
+        Run a filesystem sync *and* suboptimally an arbitrary sleep.
+
+        This hack provides a workaround for a sporadically occurring error, most notably:
+            "umount: /tmp/rescuezilla.ntfs/mount: target is busy"
+        It consistently occurs in the Rescuezilla Integration Test suite (which uses the experimental CLI), but is
+        harder to reproduce in the graphical app.
+        """
+        # FIXME: The sleeps here are an arbitrary workaround for a non-blocking mount/umount operation.
+        # FIXME: it is not guaranteed to provide sufficient wait time, and may provide too long a wait time
+        # FIXME: it will also slow down operations such as eg, shutdown of the application
+        sleep(0.5)
+        os.sync()
+        sleep(0.5)
+
     @staticmethod
     def umount_warn_on_busy(mount_point, is_lazy_umount=False):
         if is_lazy_umount:
             umount_cmd = ['umount', "--lazy", mount_point]
         else:
             umount_cmd = ['umount', mount_point]
+        Utility.hack_sync_and_sleep()
         umount_process, flat_command_string, umount_failed_message = Utility.run("umount", umount_cmd, use_c_locale=False)
+        Utility.hack_sync_and_sleep()
         # Cannot rely on umount return code, as it returns an error if there's nothing mounted and it's not possible
         # to distinguish the situation.
         findmnt_process, flat_command_string, failed_message = Utility.run("findmnt",

@@ -13,6 +13,7 @@
 * Improved touchpad support for tap-to-click and multifinger gestures using libinput driver [#506](https://github.com/rescuezilla/rescuezilla/issues/506) (thanks engstk!)  
 * Upgraded to latest partclone `0.3.37` (released June 2025) from partclone `0.3.33` (released December 2024)
 * Fixed some GTK theme readability and consistency issues eg, around the taskbar by switching from Breeze to Arc-Darker [#506](https://github.com/rescuezilla/rescuezilla/pull/506#issuecomment-3008830771) (thanks engstk!)
+* Added initial workaround to the "umount: /tmp/rescuezilla.ntfs/mount: target is busy" error that can block creating a Rescuezilla backup image or cloning on some machines, especially those that contain more than one NTFS partition ([#561](https://github.com/rescuezilla/rescuezilla/issues/561))
 * Extracted out a separate Portuguese (Brazillian) (pt_BR) translation entry from the existing Portuguese (Portugal) (pt) translation (#410) (thanks hugok79!)
 * Fixed ability to create uncompressed images using experimental CLI by accepting "--compression-format=uncompressed" rather than 'none'
 
