@@ -95,14 +95,16 @@ _backup_with_clonezilla_cli() {
 
     echo "** Delete previous Clonezilla image from within the VM $IMAGE_PATH"
     run_cmd_in_rescuezilla_vm $TARGET_IP "rm -rf $IMAGE_PATH"
-    time run_cmd_in_rescuezilla_vm $TARGET_IP "ocs_live_batch=yes /usr/sbin/ocs-sr -q2 -j2 -z1 -i 4096 -sfsck -senc -p command savedisk $IMAGE_NAME sda"
+    # --batch mode to suppress "which is larger than the MBR partition table entry maximum 2 TiB (~ 2.2 TB). You have to use GUID partition table format (GPT)."
+    time run_cmd_in_rescuezilla_vm $TARGET_IP "ocs_live_batch=yes /usr/sbin/ocs-sr --batch -q2 -j2 -z1 -i 4096 -sfsck -senc -p command savedisk $IMAGE_NAME sda"
 }
 
 _restore_with_clonezilla_cli() {
     TARGET_IP="$1"
     IMAGE_NAME="$2"
     # Command adapted running Clonezilla restoredisk in Beginner mode using default settings
-    CLONEZILLA_COMMAND="ocs-sr -g auto -e1 auto -e2 -r -j2 -scr restoredisk $IMAGE_NAME sda"
+    # --batch mode to suppress "which is larger than the MBR partition table entry maximum 2 TiB (~ 2.2 TB). You have to use GUID partition table format (GPT)."
+    CLONEZILLA_COMMAND="ocs-sr --batch -g auto -e1 auto -e2 -r -j2 -scr restoredisk $IMAGE_NAME sda"
     time run_cmd_in_rescuezilla_vm $TARGET_IP "$CLONEZILLA_COMMAND"
 }
 
