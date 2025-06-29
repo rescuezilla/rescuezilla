@@ -1,0 +1,20 @@
+// Enable Rescuezilla-managed desktop shortcuts to be able to launch
+// as root user on modern versions of polkit authentication manager.
+//
+// Rescuezilla is a single-user system, so this is an adequate approach.
+polkit.addRule(function(action, subject) {
+    if ((action.id == "org.gnome.gparted" ||
+         action.id == "com.rescuezilla.rescuezilla" ||
+         action.id == "com.rescuezilla.baobab" ||
+         action.id == "com.rescuezilla.lshw-gtk" ||
+         action.id == "com.rescuezilla.photorec" ||
+         action.id == "com.rescuezilla.testdesk" ||
+         action.id == "com.rescuezilla.usb-creator-gtk" ||
+         action.id == "com.rescuezilla.xdg-open" ||
+         action.id == "com.rescuezilla.xfce4-terminal"
+        ) &&
+        subject.active == true && subject.local == true &&
+        subject.isInGroup("sudo")) {
+            return polkit.Result.YES;
+    }
+});

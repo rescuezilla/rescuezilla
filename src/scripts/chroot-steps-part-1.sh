@@ -160,6 +160,7 @@ pkgs_specific_to_ubuntu2410_oracular=(
                        # Add support for crypto volumes mount (luks, bitlocker, crypt)
                        "libblockdev-crypto3"
                        # "Legacy "local authority" (.pkla) backend for polkitd" required so polkit works on Mantic
+                       # FIXME: Can probably remove with the recent introduction of new Javascript-based rules file
                        "polkitd-pkla"
                        "ibus-anthy"
                        # Needed for 'hwclock' package used by "rc-local.service", moved from base "util-linux" since Ubuntu 23.10 (Mantic)
@@ -186,6 +187,7 @@ pkgs_specific_to_ubuntu2404_noble=(
                        # Add support for crypto volumes mount (luks, bitlocker, crypt)
                        "libblockdev-crypto3"
                        # "Legacy "local authority" (.pkla) backend for polkitd" required so polkit works on Mantic
+                       # FIXME: Can probably remove with the recent introduction of new Javascript-based rules file
                        "polkitd-pkla"
                        "reiser4progs"
                        "python3-whichcraft"
