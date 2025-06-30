@@ -1,21 +1,22 @@
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
 # 池边树下 <mzky@163.com>, 2021, 2022.
 # Haowei Hsu <hwhsu1231@gmail.com>, 2023, 2024.
+# 3amson3902 <samson3902@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2024-05-07 18:07+0000\n"
-"Last-Translator: Haowei Hsu <hwhsu1231@gmail.com>\n"
-"Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
-"rescuezilla/rescuezilla/zh_Hant/>\n"
+"PO-Revision-Date: 2025-06-30 15:58+0000\n"
+"Last-Translator: 3amson3902 <samson3902@gmail.com>\n"
+"Language-Team: Chinese (Traditional Han script) <https://hosted.weblate.org/"
+"projects/rescuezilla/rescuezilla/zh_Hant/>\n"
 "Language: zh_Hant\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.5.4-rc\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 msgid "Welcome"
 msgstr "歡迎"
@@ -24,7 +25,7 @@ msgid "Select an Option"
 msgstr "選取選項"
 
 msgid "Easily create a backup image of your computer, or completely restore from one.  Click an option to begin:"
-msgstr "輕鬆建立電腦的備份映像，或從電腦中完全還原。點擊選項開始："
+msgstr "輕鬆建立電腦備份映像，或從映像中完整還原。按以下選項開始："
 
 msgid "Backup"
 msgstr "備份"
@@ -240,38 +241,39 @@ msgstr "域"
 msgid "Version"
 msgstr "版本"
 
+#, fuzzy
 msgid "default (Negotiate highest SMB2+ supported by client and server)"
-msgstr ""
+msgstr "預設 (協商客戶端和伺服器支援的最高 SMB2+ 版本)"
 
 msgid "1.0 (The classic CIFS/SMBv1 protocol)"
-msgstr ""
+msgstr "1.0 (經典 CIFS/SMBv1 協定)"
 
 msgid "2.0 (Introduced in Vista SP1, Windows Server 2008)"
-msgstr ""
+msgstr "2.0 (Vista SP1, Windows Server 2008 中引入)"
 
 msgid "2.1 (Introduced in Windows 7, Windows Server 2008R2)"
-msgstr ""
+msgstr "2.1 (Windows 7, Windows Server 2008R2 中引入)"
 
 msgid "3 (The SMBv3.0 protocol version and above)"
-msgstr ""
+msgstr "3 (SMBv3.0 及更高版本協定)"
 
 msgid "3.0 (Introduced in Windows 8, Windows Server 2012)"
-msgstr ""
+msgstr "3.0 (Windows 8, Windows Server 2012 中引入)"
 
 msgid "3.0.2 (Introduced in Windows 8.1, Windows Server 2012R2)"
-msgstr ""
+msgstr "3.0.2 (Windows 8.1, Windows Server 2012R2 中引入)"
 
 msgid "3.1.1 (Introduced in Windows 10, Windows Server 2016)"
-msgstr ""
+msgstr "3.1.1 (Windows 10, Windows Server 2016 中引入)"
 
 msgid "Unspecified (Tries NFS v4.2 first, then negotiates with server down until finds a supported version)"
-msgstr ""
+msgstr "未指定 (先嘗試 NFS v4.2，然後與伺服器協商直到找到支援版本)"
 
 msgid "NFSv3"
-msgstr ""
+msgstr "NFSv3"
 
 msgid "NFSv4"
-msgstr ""
+msgstr "NFSv4"
 
 msgid "Remote path"
 msgstr "遠端路徑"
@@ -283,7 +285,7 @@ msgid "Identity File"
 msgstr "身份檔"
 
 msgid "Port"
-msgstr ""
+msgstr "埠"
 
 msgid "Optional"
 msgstr "選用"
