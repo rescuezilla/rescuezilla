@@ -1,4 +1,4 @@
-# Sopor <sopor@hotmail.com>, 2025.
+# Sopor <sopor@users.noreply.hosted.weblate.org>, 2025.
 # Shasheen Ediriweera <shasheene@gmail.com>, 2025.
 msgid ""
 msgstr ""

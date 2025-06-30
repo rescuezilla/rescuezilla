@@ -9,14 +9,14 @@
 # Allan Nordhøy <epost@anotheragency.no>, 2021.
 # Luna Jernberg <droidbittin@gmail.com>, 2022.
 # Simon N <Observeramera@pm.me>, 2022.
-# Sopor <sopor@hotmail.com>, 2025.
+# Sopor <sopor@users.noreply.hosted.weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
 "PO-Revision-Date: 2025-06-27 16:39+0000\n"
-"Last-Translator: Sopor <sopor@hotmail.com>\n"
+"Last-Translator: Sopor <sopor@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/sv/>\n"
 "Language: sv\n"
