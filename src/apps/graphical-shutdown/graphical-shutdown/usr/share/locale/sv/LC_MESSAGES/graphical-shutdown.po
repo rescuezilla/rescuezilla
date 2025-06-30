@@ -1,8 +1,9 @@
 # Sopor <sopor@hotmail.com>, 2025.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2025.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2025-06-27 16:39+0000\n"
-"Last-Translator: Sopor <sopor@hotmail.com>\n"
+"PO-Revision-Date: 2025-06-30 15:58+0000\n"
+"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: Swedish <https://hosted.weblate.org/projects/rescuezilla/"
 "graphical-shutdown/sv/>\n"
 "Language: sv\n"
