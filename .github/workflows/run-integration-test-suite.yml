@@ -1,0 +1,48 @@
+# Stripped down version of 'build-rescuezilla-iso.yml' to run integration test suite
+#
+# Note: This build an image using IS_INTEGRATION_TEST=true, and generates an SSH key
+
+name: Test
+on: push
+
+jobs:
+  rescuezilla-iso-build:
+    runs-on: runs-on=${{ github.run_id }}/runner=2cpu-linux-x64
+    #runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+        lfs: true
+        fetch-depth: 0
+
+    # /home/runner/.ssh/id_rsa
+    - name: Create SSH key for end-to-end integration test
+      run: ssh-keygen -t rsa -b 4096 -N "" -f ~/.ssh/id_rsa -q
+
+    - name: Deploy integration test SSH key
+      run: rm -rf src/livecd/chroot/home/ubuntu/.ssh/ && mkdir src/livecd/chroot/home/ubuntu/.ssh/ && cat ~/.ssh/id_rsa.pub > src/livecd/chroot/home/ubuntu/.ssh/authorized_keys
+
+    # Extract human-readable version string from the most recent CHANGELOG entry
+    - run: echo "RESCUEZILLA_RELEASE_NAME=\"$(git grep -h -E -o '[a-zA-Z].*)' CHANGELOG | head -1)\"" >> $GITHUB_ENV
+    # Get deb package version using same command from its build scripts
+    - run: echo "DEB_VERSION=$(git describe --tags  --match='[0-9].[0-9]*' --abbrev=0)" >> $GITHUB_ENV
+
+    - name: Build Docker image
+      run: make docker-build
+
+    - name: Launch Docker container
+      run: make docker-stop || true && make docker-run
+
+    - name: Trust the git folder
+      run: make docker-add-safe-directory
+
+    - name: install CI deps (notably VirtualBox)
+      run: sudo apt-get update && sudo apt-get install virtualbox aria2
+
+    - name: Create Oracular integration test image
+      run: make docker-oracular-integration-test
+
+    - name: Run integration test, deliberately outside Docker to avoid VirtualBox in Docker issues
+      run: make integration-test

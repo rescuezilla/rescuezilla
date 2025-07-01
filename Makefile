@@ -201,11 +201,16 @@ integration-test: INIT_LOG=$(INTEGRATION_TEST_LOG_DIR)/init.txt
 # -P N     Number of jobslots on each machine. Run up to N jobs in parallel.  0 means as many as possible. Default is 100% which will run one job per CPU core on each machine.
 # Currently keeping number of threads to 1 until an apparent problem with the interaction of GNU Parallel/TTYs and partclone is resolved.
 integration-test: THREADS=1
+integration-test: HOME=$(shell echo ~)
 integration-test:
-	mkdir --parents $(INTEGRATION_TEST_LOG_DIR)
+	# Configure
+	mkdir --parents /mnt/rescuezilla.shared.folder
+	mkdir --parents $(INTEGRATION_TEST_LOG_DIR) "$(HOME)/VirtualBox VMs"
 	# Reset and reinitialize the entire integration test VirtualBox VM environments
 	set -o pipefail; $(RESCUEZILLA_INTEGRATION_TEST_DIR)/integration_test.py stop 2>&1 | tee $(INIT_LOG)
 	set -o pipefail; $(RESCUEZILLA_INTEGRATION_TEST_DIR)/integration_test.py deinit 2>&1 | tee $(INIT_LOG)
+	rsync -LaP $(RESCUEZILLA_INTEGRATION_TEST_DIR)/zeroed-vdi/ "$(HOME)/VirtualBox VMs/Rescuezilla.Integration.Test.Suite.VDIs/"
+	cd "$(RESCUEZILLA_INTEGRATION_TEST_DIR)/tests/" && ./download.sh | tee $(INIT_LOG)
 	set -o pipefail; $(RESCUEZILLA_INTEGRATION_TEST_DIR)/integration_test.py init 2>&1 | tee $(INIT_LOG)
 	# Execute all integration tests
 	cd "$(RESCUEZILLA_INTEGRATION_TEST_DIR)/tests/" && ./run-all.sh "$(BASE_BUILD_DIRECTORY)" "$(INTEGRATION_TEST_LOG_DIR)"
@@ -228,7 +233,7 @@ fix-permissions: clean
 ### Helper targets to simplify running in Docker
 
 docker-build:
-	docker build --no-cache=true --tag builder.image .
+	docker build --tag builder.image .
 
 docker-run:
 	docker run --rm --detach --privileged --name=builder.container --volume=$(shell pwd):/home/rescuezilla/ builder.image sleep infinity
@@ -277,4 +282,8 @@ docker-focal:
 
 docker-bionic-i386:
 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make bionic-i386
+
+# FIXME: ugly
+docker-oracular-integration-test:
+	docker exec --interactive --workdir=/home/rescuezilla/ builder.container bash -c "IS_INTEGRATION_TEST=true make oracular"
 

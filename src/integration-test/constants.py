@@ -60,7 +60,7 @@ MACHINE_DICT = {"Rescuezilla.Development": {
 
 # Preprepared VDI images that can be copied in, for ease of testing.
 DEPLOY_DICT = {
-    "deploy_repo": "/mnt/vdi/",
+    "deploy_repo": "/mnt/vdidelete/",
     "8gb": "8gb.Debian.Encrypted.vdi",
     "16gb": "16gb.CentOS.MBR.vdi",
     "50gb": "50gb.Windows.GPT.vdi",
