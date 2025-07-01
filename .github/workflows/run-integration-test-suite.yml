@@ -1,0 +1,263 @@
+# Stripped down version of 'build-rescuezilla-iso.yml' to run integration test suite.
+# See README here:  https://github.com/rescuezilla/rescuezilla/tree/master/src/integration-test
+#
+# Note: This build an image using IS_INTEGRATION_TEST=true, and generates and includes an SSH key.
+# The test is run in a self-hosted runner, and not in the fresh GitHub Actions hosted runner that the release build uses.
+
+# Concurrency not used in this workflow, because GitHub Actions has a major limitation around queuing depth.
+# See: https://github.com/orgs/community/discussions/41518
+
+name: End-to-end integration test suite
+# Danger: this workflow uses self-hosted runner, so for security:
+# * Never add a 'pull_request' trigger 
+# * Ensure "Require approval for all outside collaborators" option in GitHub Actions configuration is always turned on.
+# [1] https://stackoverflow.com/questions/76030960/whats-the-proper-way-to-use-github-actions-with-a-public-repo-if-we-absolutely
+on: 
+  push:
+  schedule:
+    # Run at approiximately 10pm Pacific time (6am UTC) every night
+    - cron: '0 6 * * *'
+
+jobs:
+  # Note: Notably Rescuezilla self-hosted environment is not automatically cleaned before runs
+  initial-cleanup:
+    runs-on: self-hosted
+    timeout-minutes: 10
+    steps:
+    - name: Ensure fresh git repo
+      run: |
+        # Delete old build folder (but not debootstrap download caches)
+        sudo make clean-all || true
+        sudo make clean || true
+        # Fixup permissions
+        sudo chown -R $(id -u):$(id -g) build/ pkg.cache src/third-party/util-linux || true
+        # Fixup uninitialize git submodules
+        git submodule deinit --all || true
+
+    - name: Clone Rescuezilla repo with all submodules
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+        lfs: true
+        fetch-depth: 0
+
+    # This step must occur on self-hosted runner. It uses VirtualBox, and GitHub hosted runners don't support nested virtualization.
+    - name: Initialize integration test environment
+      run: |
+        cd src/integration-test
+        ./integration_test.py stop
+        ./integration_test.py deinit
+        ./integration_test.py init
+
+    - name: Build Docker image
+      run: |
+        docker build --no-cache --tag builder.image .
+      # Build if we're not a special branch that skips the time-consuming (re)build
+      if: github.ref != 'refs/heads/integration-test-development'
+
+    - name: Stop prior Docker container
+      run: make docker-stop || true && sleep 1
+
+    - name: Launch Docker container
+      run: make docker-run
+
+    - name: Trust the git folder
+      run: make docker-add-safe-directory
+
+    # The integration test suite ISO contains the host-system's SSH pub key, so it can control the operation of the integration test suite
+    # This is of-course not used in prod image, and the integration test suite is run on completely different testing infrastructure (self-hosted runner vs GitHub hosted runner)
+    - name: Deploy integration test SSH key
+      run: rm -rf src/livecd/chroot/home/ubuntu/.ssh/ && mkdir -p src/livecd/chroot/home/ubuntu/.ssh/ && cat ~/.ssh/id_rsa.pub > src/livecd/chroot/home/ubuntu/.ssh/authorized_keys
+
+    - name: Extract human-readable version string from the most recent CHANGELOG entry
+      run: echo "RESCUEZILLA_RELEASE_NAME=\"$(git grep -h -E -o '[a-zA-Z].*)' CHANGELOG | head -1)\"" >> $GITHUB_ENV
+
+    - name: Get deb package version using same command from its build scripts
+      run: echo "DEB_VERSION=$(git describe --tags  --match='[0-9].[0-9]*' --abbrev=0)" >> $GITHUB_ENV
+
+  build-integration-test-iso:
+    needs: initial-cleanup
+    runs-on: self-hosted
+    continue-on-error: true
+    timeout-minutes: 60
+    strategy:
+      matrix:
+        variant: [
+          {name: "plucky"},
+          {name: "oracular"},
+          {name: "noble"},
+          {name: "jammy"},
+          {name: "focal"},
+          # vboxsf not available on Ubuntu 18.04 32-bit, so don't bother building it for now
+          #{name: "bionic-i386"}
+        ]
+    steps:
+    - name: Create ${{ matrix.variant.name }} integration test image (IS_INTEGRATION_TEST for SSH server + authorized SSH pub key)
+      run: |
+        docker exec --interactive --workdir=/home/rescuezilla/ builder.container bash -c "IS_INTEGRATION_TEST=true make ${{ matrix.variant.name }}"
+        # Upon successful build, copy the ISO to the home directory of the self-hosted runner so it can be used in later integration-test-development branch runs,
+        # and also if the test fails it's faster to debug
+        blocksync-fast --src build/rescuezilla.amd64.${{ matrix.variant.name }}.iso --dst /home/debian/rescuezilla.amd64.${{ matrix.variant.name }}.iso --force
+      # We do this build on all branches that is not a special integration testing development branch
+      if: github.ref != 'refs/heads/integration-test-development'
+
+    # When experimenting with CI (eg, adding tests), it speeds up testing to skip the build
+    - name: Use previously made image in workflow as we're on integration-test-development branch
+      run: mkdir -p build && cp /home/debian/rescuezilla.amd64.${{ matrix.variant.name }}.iso build/
+      if: github.ref == 'refs/heads/integration-test-development'
+
+  run-test:
+    needs: build-integration-test-iso
+    continue-on-error: true
+    runs-on: self-hosted
+    # 2 hours per matrix entry is more than enough
+    strategy:
+      # Currently intending on testing test every combination of ISO variant and VM guest
+      #
+      # Note: GitHub Actions has a 24-hour limit on workflow runs, and with this approach it's easy to hit this.
+      # 
+      # Note: job timeouts configured to approximately 2x the observed time for a successful run on the self-hosted CI,
+      # using a Intel(R) Xeon(R) CPU D-1520 (2015-era 4-core Intel workstation CPU)
+      matrix:
+        iso: [
+          {path: "rescuezilla.amd64.plucky.iso", check_match: "Ubuntu 25.04"},
+          {path: "rescuezilla.amd64.oracular.iso", check_match: "Ubuntu 24.10"},
+          {path: "rescuezilla.amd64.noble.iso", check_match: "Ubuntu 24.04"},
+          {path: "rescuezilla.amd64.jammy.iso", check_match: "Ubuntu 22.04"},
+          {path: "rescuezilla.amd64.focal.iso", check_match: "Ubuntu 20.04"},
+          # vboxsf not available on Ubuntu 18.04 32-bit
+          #{path: "rescuezilla.i386.bionic.iso", check_match: "Ubuntu 18.04"}
+        ]
+        vm_guest:
+          # The CentOS test is great: small and fast
+          - test_prefix: "CentOS.MBR"
+            vm_name: "Rescuezilla.16gb.BIOS"
+            primary_os_check_match: "CentOS Linux 8 (Core)"
+            create_backup_using_rescuezilla_cli_timeout: 15
+            create_backup_using_clonezilla_cli_timeout: 15
+            restore_using_rescuezilla_cli_timeout: 20
+            restore_using_clonezilla_cli_timeout: 20
+          - test_prefix: "Windows.10.EFI"
+            vm_name: "Rescuezilla.50gb.EFI"
+            primary_os_check_match: "Windows 10"
+            create_backup_with_rescuezilla_timeout: 20
+            # Times out while still in progress
+            create_backup_using_clonezilla_cli_timeout: 90
+            restore_using_rescuezilla_cli_timeout: 30
+            restore_using_clonezilla_cli_timeout: 20
+          - test_prefix: "Windows.10.BIOS"
+            vm_name: "Rescuezilla.2tb.Primary.BIOS"
+            primary_os_check_match: "Windows 10"
+            create_backup_with_rescuezilla_timeout: 20
+            # Times out while still in progress
+            create_backup_using_clonezilla_cli_timeout: 90
+            restore_using_rescuezilla_cli_timeout: 30
+            restore_using_clonezilla_cli_timeout: 25
+          - test_prefix: "Ubuntu.Windows.Dualboot.MBR"
+            vm_name: "Rescuezilla.2tb.Secondary.BIOS"
+            primary_os_check_match: "Ubuntu 20.04.2 LTS"
+            create_backup_with_rescuezilla_timeout: 50
+            # Times out while still in progress
+            create_backup_using_clonezilla_cli_timeout: 90
+            restore_using_rescuezilla_cli_timeout: 40
+            restore_using_clonezilla_cli_timeout: 60
+    steps:
+    - name: Initialize test environment for ${{ matrix.vm_guest.test_prefix }} and boot primary OS expecting ${{ matrix.vm_guest.primary_os_check_match }}
+      continue-on-error: true
+      run: |
+        cd src/integration-test
+        . tests/utility-fn.sh
+        set -x
+        TARGET_IP=`./integration_test.py listip --vm ${{ matrix.vm_guest.vm_name }}`
+        echo "TARGET_IP=$TARGET_IP" >> $GITHUB_ENV
+        test_init "${{ matrix.vm_guest.vm_name }}" "${{ matrix.vm_guest.primary_os_check_match }}" "\"${{ matrix.vm_guest.vm_name }}\" with boot check: \"${{ matrix.vm_guest.primary_os_check_match }}\"" "${{ github.workspace }}/build/${{ matrix.iso.path }}" "${{ matrix.iso.check_match }}"
+
+    - name: Boot Rescuezilla integration test ISO image ${{ matrix.vm_guest.vm_name }} and look for ${{ matrix.iso.check_match }}
+      continue-on-error: true
+      run: |
+        cd src/integration-test
+        . tests/utility-fn.sh
+        set -x
+        boot_dvd "${{ matrix.vm_guest.vm_name }}" "${{ github.workspace }}/build/${{ matrix.iso.path }}" "${{ matrix.iso.check_match }}"
+
+    - name: Create Rescuezilla backup for ${{ matrix.vm_guest.test_prefix }}
+      timeout-minutes: ${{ matrix.vm_guest.create_backup_with_rescuezilla_timeout }}
+      continue-on-error: true
+      run: |
+        cd src/integration-test
+        . tests/utility-fn.sh
+        set -x
+        # FIXME: Figure out why $TARGET_IP that's already appended to $GITHUB_ENV isn't working
+        TARGET_IP=`./integration_test.py listip --vm ${{ matrix.vm_guest.vm_name }}`
+        _launch_backup_with_rescuezilla_cli "$TARGET_IP" "Rescuezilla.${{ matrix.vm_guest.test_prefix }}.Image"
+
+    - name: Create Clonezilla backup for ${{ matrix.vm_guest.test_prefix }}
+      timeout-minutes: ${{ matrix.vm_guest.create_backup_using_clonezilla_cli_timeout }}
+      # Don't consider failure associated with Clonezilla tooling as fatal
+      continue-on-error: true
+      # Skip Clonezilla backup for the three Windows tests, because it takes more than 90 minutes (the timeout) and appears to stall on the partclone
+      # Probably because an NTFS issue
+      # TODO: Figure out how to fix this.
+      if: ! ( ${{ matrix.vm_guest.test_prefix == 'Windows.10.BIOS' }} || ${{ matrix.vm_guest.test_prefix == 'Windows.10.EFI' }} && ${{ matrix.vm_guest.test_prefix == 'Windows.10.Dualboot.MBR' }} )
+      run: |
+        cd src/integration-test
+        . tests/utility-fn.sh
+        set -x
+        # FIXME: Figure out why $TARGET_IP that's already appended to $GITHUB_ENV isn't working
+        TARGET_IP=`./integration_test.py listip --vm ${{ matrix.vm_guest.vm_name }}`
+        _launch_backup_with_clonezilla_cli "$TARGET_IP" "Clonezilla.${{ matrix.vm_guest.test_prefix }}.Image"
+
+    - name: Restore Rescuezilla image with Rescuezilla CLI for ${{ matrix.vm_guest.test_prefix }}
+      timeout-minutes: ${{ matrix.vm_guest.restore_using_rescuezilla_cli_timeout }}
+      continue-on-error: true
+      run: |
+        cd src/integration-test
+        . tests/utility-fn.sh
+        set -x
+        # FIXME: Figure out why $TARGET_IP that's already appended to $GITHUB_ENV isn't working
+        TARGET_IP=`./integration_test.py listip --vm ${{ matrix.vm_guest.vm_name }}`
+        restore_with_rescuezilla_cli "${{ matrix.vm_guest.vm_name }}" "${{ github.workspace }}/build/${{ matrix.iso.path }}" "${{ matrix.iso.check_match }}" "$TARGET_IP" "Rescuezilla.${{ matrix.vm_guest.test_prefix }}.Image" "${{ matrix.vm_guest.primary_os_check_match }}" "\"${{ matrix.vm_guest.vm_name }}\" with boot check: \"${{ matrix.vm_guest.primary_os_check_match }}\"" "true"
+
+    - name: Restore Clonezilla image with Rescuezilla CLI for ${{ matrix.vm_guest.test_prefix }}
+      timeout-minutes: ${{ matrix.vm_guest.restore_using_rescuezilla_cli_timeout }}
+      # Don't consider failure associated with Clonezilla tooling as fatal
+      continue-on-error: true
+      # Skip Clonezilla backup for the three Windows tests, because it takes more than 90 minutes (the timeout) and appears to stall on the partclone
+      # Probably because an NTFS issue
+      # TODO: Figure out how to fix this.
+      if: ! ( ${{ matrix.vm_guest.test_prefix == 'Windows.10.BIOS' }} || ${{ matrix.vm_guest.test_prefix == 'Windows.10.EFI' }} && ${{ matrix.vm_guest.test_prefix == 'Windows.10.Dualboot.MBR' }} )
+      run: |
+        cd src/integration-test
+        . tests/utility-fn.sh
+        set -x
+        # FIXME: Figure out why $TARGET_IP that's already appended to $GITHUB_ENV isn't working
+        TARGET_IP=`./integration_test.py listip --vm ${{ matrix.vm_guest.vm_name }}`
+        restore_with_rescuezilla_cli "${{ matrix.vm_guest.vm_name }}" "${{ github.workspace }}/build/${{ matrix.iso.path }}" "${{ matrix.iso.check_match }}" "$TARGET_IP" "Clonezilla.${{ matrix.vm_guest.test_prefix }}.Image" "${{ matrix.vm_guest.primary_os_check_match }}" "\"${{ matrix.vm_guest.vm_name }}\" with boot check: \"${{ matrix.vm_guest.primary_os_check_match }}\"" "false"
+
+    - name: Restore Rescuezilla image with Clonezilla CLI for ${{ matrix.vm_guest.test_prefix }}
+      timeout-minutes: ${{ matrix.vm_guest.restore_using_clonezilla_cli_timeout }}
+      # Don't consider failure associated with Clonezilla tooling as fatal
+      continue-on-error: true
+      run: |
+        cd src/integration-test
+        . tests/utility-fn.sh
+        set -x
+        # FIXME: Figure out why $TARGET_IP that's already appended to $GITHUB_ENV isn't working
+        TARGET_IP=`./integration_test.py listip --vm ${{ matrix.vm_guest.vm_name }}`
+        restore_with_clonezilla_cli "${{ matrix.vm_guest.vm_name }}" "${{ github.workspace }}/build/${{ matrix.iso.path }}" "${{ matrix.iso.check_match }}" "$TARGET_IP" "Rescuezilla.${{ matrix.vm_guest.test_prefix }}.Image" "${{ matrix.vm_guest.primary_os_check_match }}" "\"${{ matrix.vm_guest.vm_name }}\" with boot check: \"${{ matrix.vm_guest.primary_os_check_match }}\"" "true"
+
+    - name: Restore Clonezilla image with Clonezilla CLI for ${{ matrix.vm_guest.test_prefix }}
+      timeout-minutes: ${{ matrix.vm_guest.restore_using_clonezilla_cli_timeout }}
+      # Don't consider failure associated with Clonezilla tooling as fatal
+      continue-on-error: true
+      # Skip Clonezilla backup for the three Windows tests, because it takes more than 90 minutes (the timeout) and appears to stall on the partclone
+      # Probably because an NTFS issue
+      # TODO: Figure out how to fix this.
+      if: ! ( ${{ matrix.vm_guest.test_prefix == 'Windows.10.BIOS' }} || ${{ matrix.vm_guest.test_prefix == 'Windows.10.EFI' }} && ${{ matrix.vm_guest.test_prefix == 'Windows.10.Dualboot.MBR' }} )
+      run: |
+        cd src/integration-test
+        . tests/utility-fn.sh
+        set -x
+        # FIXME: Figure out why $TARGET_IP that's already appended to $GITHUB_ENV isn't working
+        TARGET_IP=`./integration_test.py listip --vm ${{ matrix.vm_guest.vm_name }}`
+        restore_with_clonezilla_cli "${{ matrix.vm_guest.vm_name }}" "${{ github.workspace }}/build/${{ matrix.iso.path }}" "${{ matrix.iso.check_match }}" "$TARGET_IP" "Clonezilla.${{ matrix.vm_guest.test_prefix }}.Image" "${{ matrix.vm_guest.primary_os_check_match }}" "\"${{ matrix.vm_guest.vm_name }}\" with boot check: \"${{ matrix.vm_guest.primary_os_check_match }}\"" "false"
