@@ -4,13 +4,14 @@
 # Carlos Luna <caralu74@protonmail.com>, 2019, 2021.
 # Submitted at: https://github.com/rescuezilla/rescuezilla/issues/28
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022, 2023.
+# tostadora <a2001cuisinarttoaster@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2023-04-10 19:30+0000\n"
-"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
+"PO-Revision-Date: 2025-07-03 03:01+0000\n"
+"Last-Translator: tostadora <a2001cuisinarttoaster@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/es/>\n"
 "Language: es\n"
@@ -18,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17-dev\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 msgid "Welcome"
 msgstr "Bienvenido"
@@ -237,10 +238,10 @@ msgid "Connected directly to my computer"
 msgstr "Conectar directamente a mi computador"
 
 msgid "Shared over a network"
-msgstr "Conectar a travez de la red"
+msgstr "Conectar a través de la red"
 
 msgid "Where would you like to save the image?"
-msgstr "¿Dónde está el disco de destino?"
+msgstr "En dónde quieres guardar la imagen?"
 
 msgid "Windows shared folder (SMB/CIFS, Samba)"
 msgstr "Directorio/carpeta compartida especificada a continuación"
@@ -268,36 +269,40 @@ msgstr "Versión"
 
 msgid "default (Negotiate highest SMB2+ supported by client and server)"
 msgstr ""
+"Predeterminado (Negociar el SMB2+ más alto compatible con el cliente y el "
+"servidor)"
 
 msgid "1.0 (The classic CIFS/SMBv1 protocol)"
-msgstr ""
+msgstr "1.0 (Protocolo CIFS/SMBv1 clásico)"
 
 msgid "2.0 (Introduced in Vista SP1, Windows Server 2008)"
-msgstr ""
+msgstr "2.0 (Introducido en Vista SP1 y Windows Server 2008)"
 
 msgid "2.1 (Introduced in Windows 7, Windows Server 2008R2)"
-msgstr ""
+msgstr "2.1 (Introducido en Windows 7 y Windows Server 2008R2)"
 
 msgid "3 (The SMBv3.0 protocol version and above)"
-msgstr ""
+msgstr "3 (Protocolo versión SMBv3.0 y superior)"
 
 msgid "3.0 (Introduced in Windows 8, Windows Server 2012)"
-msgstr ""
+msgstr "3.0 (Introducido en Windows 8 y Windows Server 2012)"
 
 msgid "3.0.2 (Introduced in Windows 8.1, Windows Server 2012R2)"
-msgstr ""
+msgstr "3.0.2 (Introducido en Windows 8.1 y Windows Server 2012R2)"
 
 msgid "3.1.1 (Introduced in Windows 10, Windows Server 2016)"
-msgstr ""
+msgstr "3.1.1 (Introducido en Windows 10 y Windows Server 2016)"
 
 msgid "Unspecified (Tries NFS v4.2 first, then negotiates with server down until finds a supported version)"
 msgstr ""
+"No Especificado (Se intentará con NFS v4.2, luego se negociará con el "
+"servidor hasta encontrar una versión compatible)"
 
 msgid "NFSv3"
-msgstr ""
+msgstr "NFSv3"
 
 msgid "NFSv4"
-msgstr ""
+msgstr "NFSv4"
 
 msgid "Remote path"
 msgstr "Ruta de acceso a la red"
@@ -309,7 +314,7 @@ msgid "Identity File"
 msgstr "Fichero de identidad"
 
 msgid "Port"
-msgstr ""
+msgstr "Puerto"
 
 msgid "Optional"
 msgstr "Opcional"
