@@ -7,8 +7,8 @@ on: push
 
 jobs:
   rescuezilla-iso-build:
-    #runs-on: runs-on=${{ github.run_id }}/runner=2cpu-linux-x64
-    runs-on: ubuntu-latest
+    runs-on: runs-on=${{ github.run_id }}/runner=2cpu-linux-x64
+    #runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v2
