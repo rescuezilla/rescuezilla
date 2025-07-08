@@ -7,8 +7,8 @@ on: push
 
 jobs:
   rescuezilla-iso-build:
-    runs-on: runs-on=${{ github.run_id }}/runner=2cpu-linux-x64
-    #runs-on: ubuntu-latest
+    #runs-on: runs-on=${{ github.run_id }}/runner=2cpu-linux-x64
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -41,8 +41,8 @@ jobs:
     - name: install CI deps (notably VirtualBox)
       run: sudo apt-get update && sudo apt-get install virtualbox aria2
 
-    - name: Create Oracular integration test image
-      run: make docker-oracular-integration-test
+    #- name: Create Oracular integration test image
+    #  run: make docker-oracular-integration-test
 
     - name: Run integration test, deliberately outside Docker to avoid VirtualBox in Docker issues
       run: make integration-test
