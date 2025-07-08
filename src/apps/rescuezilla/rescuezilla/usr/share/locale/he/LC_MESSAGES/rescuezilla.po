@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2025-06-27 16:39+0000\n"
+"PO-Revision-Date: 2025-07-01 20:01+0000\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/he/>\n"
@@ -258,30 +258,33 @@ msgstr "גרסה"
 
 msgid "default (Negotiate highest SMB2+ supported by client and server)"
 msgstr ""
+"ברירת מחדל (ניהול משא ומתן על ה־SMB2+‎ העדכני ביותר שהלקוח והשרת תומכים בו)"
 
 msgid "1.0 (The classic CIFS/SMBv1 protocol)"
-msgstr ""
+msgstr "1.0 (פרוטוקול CIFS/SMBv1 הקלסי)"
 
 msgid "2.0 (Introduced in Vista SP1, Windows Server 2008)"
-msgstr ""
+msgstr "2.0 (הושק עם Vista SP1,‏ Windows Server 2008)"
 
 msgid "2.1 (Introduced in Windows 7, Windows Server 2008R2)"
-msgstr ""
+msgstr "2.1 (הושק עםWindows 7,‏ Windows Server 2008R2)"
 
 msgid "3 (The SMBv3.0 protocol version and above)"
-msgstr ""
+msgstr "3 (גרסת פרוטוקול SMBv3.0 ומעלה)"
 
 msgid "3.0 (Introduced in Windows 8, Windows Server 2012)"
-msgstr ""
+msgstr "3.0 (הושק עם Windows 8,‏ Windows Server 2012)"
 
 msgid "3.0.2 (Introduced in Windows 8.1, Windows Server 2012R2)"
-msgstr ""
+msgstr "3.0.2 (הושק עם Windows 8.1,‏ Windows Server 2012R2)"
 
 msgid "3.1.1 (Introduced in Windows 10, Windows Server 2016)"
-msgstr ""
+msgstr "3.1.1 (הושק עם Windows 10,‏ Windows Server 2016)"
 
 msgid "Unspecified (Tries NFS v4.2 first, then negotiates with server down until finds a supported version)"
 msgstr ""
+"לא הוגדר (מנסה את NFS v4.2 תחילה, לאחר מכן מנהל משא למתן עם השרת עד למציאת "
+"גרסה נתמכת)"
 
 msgid "NFSv3"
 msgstr "NFSv3"
