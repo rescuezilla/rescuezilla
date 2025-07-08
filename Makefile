@@ -204,7 +204,7 @@ integration-test: THREADS=1
 integration-test: HOME=$(shell echo ~)
 integration-test:
 	# Configure
-	mkdir --parents /mnt/rescuezilla.shared.folder
+	mkdir --parents /home/runner/rescuezilla.shared.folder
 	mkdir --parents $(INTEGRATION_TEST_LOG_DIR) "$(HOME)/VirtualBox VMs"
 	# Reset and reinitialize the entire integration test VirtualBox VM environments
 	set -o pipefail; $(RESCUEZILLA_INTEGRATION_TEST_DIR)/integration_test.py stop 2>&1 | tee $(INIT_LOG)

@@ -11,7 +11,7 @@ then
 fi >&2
 
 # Shared folder path within the VM
-VM_SHARED_FOLDER=/mnt/rescuezilla.shared.folder
+VM_SHARED_FOLDER=/home/runner/rescuezilla.shared.folder
 
 # Mount the VirtualBox Shared Folder so that guest VM can read/write
 # to a path that's accessible by the host operating system

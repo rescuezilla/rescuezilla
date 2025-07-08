@@ -72,7 +72,7 @@ check_primary_os_boots() {
 _backup_with_rescuezilla_cli() {
     TARGET_IP="$1"
     IMAGE_NAME="$2"
-    IMAGE_PATH="/mnt/rescuezilla.shared.folder/$IMAGE_NAME"
+    IMAGE_PATH="/home/runner/rescuezilla.shared.folder/$IMAGE_NAME"
 
     echo "** Delete previous Rescuezilla image from within the VM $IMAGE_PATH"
     run_cmd_in_rescuezilla_vm $TARGET_IP "rm -rf $IMAGE_PATH"
@@ -83,7 +83,7 @@ _backup_with_rescuezilla_cli() {
 _restore_with_rescuezilla_cli() {
     TARGET_IP="$1"
     IMAGE_NAME="$2"
-    IMAGE_PATH="/mnt/rescuezilla.shared.folder/$IMAGE_NAME"
+    IMAGE_PATH="/home/runner/rescuezilla.shared.folder/$IMAGE_NAME"
 
     time run_cmd_in_rescuezilla_vm $TARGET_IP "rescuezillapy restore --source $IMAGE_PATH --destination /dev/sda"
 }
@@ -91,7 +91,7 @@ _restore_with_rescuezilla_cli() {
 _backup_with_clonezilla_cli() {
     TARGET_IP="$1"
     IMAGE_NAME="$2"
-    IMAGE_PATH="/mnt/rescuezilla.shared.folder/$IMAGE_NAME"
+    IMAGE_PATH="/home/runner/rescuezilla.shared.folder/$IMAGE_NAME"
 
     echo "** Delete previous Clonezilla image from within the VM $IMAGE_PATH"
     run_cmd_in_rescuezilla_vm $TARGET_IP "rm -rf $IMAGE_PATH"

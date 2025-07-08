@@ -20,7 +20,7 @@
 import os
 from pathlib import Path
 
-HOST_SHARED_FOLDER = "/mnt/rescuezilla.shared.folder"
+HOST_SHARED_FOLDER = "/home/runner/rescuezilla.shared.folder"
 CHECK_SOCKET=9999
 VIRTUAL_BOX_FOLDER = os.path.join(Path.home(), "VirtualBox VMs/Rescuezilla.Integration.Test.Suite.VDIs")
 
@@ -60,7 +60,7 @@ MACHINE_DICT = {"Rescuezilla.Development": {
 
 # Preprepared VDI images that can be copied in, for ease of testing.
 DEPLOY_DICT = {
-    "deploy_repo": "/mnt/vdidelete/",
+    "deploy_repo": "/home/runner/vdidelete/",
     "8gb": "8gb.Debian.Encrypted.vdi",
     "16gb": "16gb.CentOS.MBR.vdi",
     "50gb": "50gb.Windows.GPT.vdi",
