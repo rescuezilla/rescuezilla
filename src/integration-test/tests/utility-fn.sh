@@ -40,6 +40,10 @@ boot_dvd() {
      echo "** [1] https://www.virtualbox.org/ticket/19364"
      ./integration_test.py detachhd --vm $VM
      ./integration_test.py start --vm $VM
+     if [ $? -ne 0 ]; then
+        echo "** Failed to start VM: $VM"
+        exit 1
+     fi
 
      echo "** HACK: Reattach HD after booting from DVD after a short sleep, as a workaround for the VirtualBox EFI boot order bug described above"
      sleep 10
