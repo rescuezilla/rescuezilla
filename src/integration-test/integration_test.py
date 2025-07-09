@@ -72,7 +72,8 @@ def initialize_vms(hd_key_list, machine_key_list):
                                 "--server-ip", "192.168.60.1", "--netmask", "255.255.255.0", "--lower-ip",
                                 "192.168.60.2", "--upper-ip", "192.168.60.200", "--enable"]
     process = run_command(add_dhcp_server_cmd_list, encoding='utf-8')
-    if process.returncode != 0:
+    # Ignore returncode 2, because 'already exists' upon adding DHCP server is ok
+    if process.returncode != 0 and process.returncode != 2:
         return False
 
     for hd_prefix in hd_key_list:
