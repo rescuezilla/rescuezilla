@@ -447,14 +447,16 @@ def insertdvd_vm(vm_name, path_to_dvd):
     print("Inserting DVD " + abs_path_to_dvd + " into " + vm_name)
     insert_dvd_cmd_list = ["VBoxManage", "storageattach", vm_name, "--storagectl", "IDE Controller", "--port",
                               "1", "--device", "0", "--type", "dvddrive", "--medium", abs_path_to_dvd]
-    run_command(insert_dvd_cmd_list, encoding='utf-8')
+    process = run_command(insert_dvd_cmd_list, encoding='utf-8')
+    return process.returncode == 0
 
 
 def removedvd_vm(vm_name):
     print("Removing DVD from " + vm_name)
     insert_dvd_cmd_list = ["VBoxManage", "storageattach", vm_name, "--storagectl", "IDE Controller", "--port",
                               "1", "--device", "0", "--type", "dvddrive", "--medium", "emptydrive"]
-    run_command(insert_dvd_cmd_list, encoding='utf-8')
+    process = run_command(insert_dvd_cmd_list, encoding='utf-8')
+    return process.returncode == 0
 
 
 def _exit(is_success):
