@@ -235,7 +235,9 @@ docker-run:
 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container ./src/scripts/git-add-safe-directory.sh
 
 docker-stop:
-	docker stop builder.container
+	docker stop builder.container || true
+	# Stop the containing with an alternative name. It's not immediately clear where leading forward slash is occurring.
+	docker stop /builder.container || true
 
 docker-add-safe-directory:
 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container ./src/scripts/git-add-safe-directory.sh
