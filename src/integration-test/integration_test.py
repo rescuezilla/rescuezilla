@@ -43,6 +43,32 @@ def run_command(command, **kwargs):
     return process
 
 
+def perform_vdi_sync(src, dst):
+    """
+    Attempt to sync VDI files using blocksync-fast first, fall back to rsync if it fails.
+    Because if the files are almost the same, it will be much faster.
+
+    But if blocksync-fast is not available
+
+
+    Returns True if successful, False otherwise.
+    """
+    print(f"Attempting to sync {src} to {dst}")
+    
+    # Try blocksync-fast if it's available.
+    process = run_command(["which", "blocksync-fast"])
+    if process.returncode == 0:
+        process = run_command(["blocksync-fast", "--src", src, "--dst", dst, "--force"])
+        if process.returncode == 0:
+            return True
+    else:
+        process = run_command(["rsync", "-aP", src, dst])
+        if process.returncode == 0:
+            return True
+    print("Failed to sync " + src + " to " + dst)
+    return False
+
+
 # Create VMs
 def initialize_vms(hd_key_list, machine_key_list):
     if not os.path.isdir(HOST_SHARED_FOLDER):
@@ -152,8 +178,7 @@ def deploy_hd(hd_prefix_list) -> bool:
             else:
                 # Copy in hard drive
                 print("Copying " + deploy_hd + " to " + original_hd + ". This may take some time...")
-                process = run_command(["rsync", "-aP", deploy_hd, original_hd])
-                if process.returncode != 0:
+                if not perform_vdi_sync(deploy_hd, original_hd):
                     return False
 
             # Update VirtualBox UUID of newly copied in hard drive
@@ -191,7 +216,7 @@ def commit_hd(hd_prefix_list, do_overwrite):
             else:
                 print("Copying " + original_hd + " to " + deploy_hd + ". This may take a while...")
                 if do_overwrite:
-                    run_command(["rsync", "-aP", original_hd, deploy_hd])
+                    perform_vdi_sync(original_hd, deploy_hd)
                 else:
                     print("  Skipping because --force not provided.")
 
