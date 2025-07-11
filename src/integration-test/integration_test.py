@@ -396,16 +396,20 @@ def check_vm(vm_name, contains):
             try:
                 print("\nConnecting to: " + vm_name + " on " + MACHINE_DICT[vm_name]['ip'])
                 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                s.settimeout(5)
                 s.connect((MACHINE_DICT[vm_name]['ip'], CHECK_SOCKET))
                 print("Connected: ", s)
 
                 # Read from socket until EOF
                 data = bytearray()
-                while True:
+                # Read a max of 100 times, just to bound things
+                num_recv_ticks = 100
+                while num_recv_ticks > 0:
                     message = s.recv(100)
                     if not message:
                         break
                     data.extend(message)
+                    num_recv_ticks = num_recv_ticks - 1
                 s.close()
                 string = data.decode('utf8').strip()
 
