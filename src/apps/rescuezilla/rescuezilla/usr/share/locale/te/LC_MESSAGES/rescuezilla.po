@@ -2,26 +2,28 @@
 # yesinmsg <yesinmsg@gmail.com>, 2021.
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
 # ttt113326 <tonio_k@mail.ru>, 2021.
+# Divakar <divakar.galaxys9@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2021-12-26 16:52+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-07-10 12:01+0000\n"
+"Last-Translator: Divakar <divakar.galaxys9@gmail.com>\n"
+"Language-Team: Telugu <https://hosted.weblate.org/projects/rescuezilla/"
+"rescuezilla/te/>\n"
 "Language: te\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.10.1\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 msgid "Welcome"
-msgstr ""
+msgstr "స్వాగతం"
 
 msgid "Select an Option"
-msgstr ""
+msgstr "ఒక ఎంపికను ఎంచుకోండి"
 
 msgid "Easily create a backup image of your computer, or completely restore from one.  Click an option to begin:"
 msgstr ""
@@ -447,7 +449,7 @@ msgid "Shutdown"
 msgstr ""
 
 msgid "Reboot"
-msgstr ""
+msgstr "రీబూట్ చేయండి"
 
 msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
 msgstr ""

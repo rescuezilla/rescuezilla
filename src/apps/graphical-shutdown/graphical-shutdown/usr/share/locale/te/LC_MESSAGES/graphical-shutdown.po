@@ -1,27 +1,29 @@
 # Artem <KovalevArtem.ru@gmail.com>, 2021.
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021.
+# Divakar <divakar.galaxys9@gmail.com>, 2025.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2021-06-08 11:15+0000\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2025-07-10 12:01+0000\n"
+"Last-Translator: Divakar <divakar.galaxys9@gmail.com>\n"
+"Language-Team: Telugu <https://hosted.weblate.org/projects/rescuezilla/"
+"graphical-shutdown/te/>\n"
 "Language: te\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.7-dev\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 msgid "End Session"
-msgstr ""
+msgstr "సెషన్ ముగింపు"
 
 msgid "Cancel"
-msgstr ""
+msgstr "రద్దు చేయి"
 
 msgid "Shutdown"
 msgstr ""
 
 msgid "Reboot"
-msgstr ""
+msgstr "రీబూట్ చేయండి"
 
 msgid "Choose action."
 msgstr ""
