@@ -286,6 +286,11 @@ def create_vm(vm_name, hd_to_attach) -> bool:
     # Set memory and network
     memory_network_cmd_list = ["VBoxManage", "modifyvm", vm_name,
                                "--ioapic", "on",
+                               # Configure with 3 virtual CPUs, as the self-hosted CI system has four physical CPUs
+                               # Increasing from 1 CPU appears to offer a substantial speedup to the compression operation
+                               # but note only some operations within Rescuezilla are multi-threaded (largely decompression)
+                               # TODO: Revisit this, especially when balanced with GitHub Actions job-level parallelism
+                               "--cpus", "3",
                                "--memory", "2048", "--vram", "128",
                                "--nic1", "nat",
                                "--description", "VM created by Rescuezilla's Integration Test Suite script."]
