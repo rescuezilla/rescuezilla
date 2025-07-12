@@ -15,12 +15,22 @@ VM_SHARED_FOLDER=/mnt/rescuezilla.shared.folder
 
 # Mount the VirtualBox Shared Folder so that guest VM can read/write
 # to a path that's accessible by the host operating system
-sudo mkdir -p "$VM_SHARED_FOLDER"
-sudo mount -t vboxsf rescuezilla.shared.folder "$VM_SHARED_FOLDER"
+if [ ! -d "$VM_SHARED_FOLDER" ]; then
+    echo "Directory $VM_SHARED_FOLDER does not exist, creating..."
+    sudo mkdir -p "$VM_SHARED_FOLDER"
+fi
+
+# Check if mountpoint is already mounted
+mountpoint -q "$VM_SHARED_FOLDER"
 RC=$?
 if [ $RC -ne 0 ]; then
-    echo "Failed to mount"
-    exit 1
+    echo "Mountpoint $VM_SHARED_FOLDER is not mounted, mounting..."
+    sudo mount -t vboxsf rescuezilla.shared.folder "$VM_SHARED_FOLDER"
+    RC=$?
+    if [ $RC -ne 0 ]; then
+        echo "Failed to mount $VM_SHARED_FOLDER"
+        exit 1
+    fi
 fi
 
 sudo unlink /home/partimag
