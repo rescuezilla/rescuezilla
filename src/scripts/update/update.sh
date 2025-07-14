@@ -37,6 +37,9 @@ BASEDIR="$(git rev-parse --show-toplevel)"
 
 UPDATED_BRANCH_NAME="update.sh-script-temporary-branch"
 
+# Source utility functions
+source "${SCRIPT_DIR}/utilities.sh"
+
 # Get the most recently created tag.
 # his will typically be the latest release, but it's not guaranteed.
 most_recent_tag() {
@@ -158,10 +161,8 @@ EOF
     done
 }
 
-git branch -D $UPDATED_BRANCH_NAME
-git submodule update --init --recursive
-git fetch origin
-git checkout origin/master -b $UPDATED_BRANCH_NAME
+# Create the git branch for the update
+do_git_branch "$UPDATED_BRANCH_NAME"
 
 
 # Execute both updates
