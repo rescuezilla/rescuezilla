@@ -7,13 +7,14 @@
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
 # ystk <ystk_k_fr@proton.me>, 2025.
 # ｙｏｓｉ＿ｋ＿ <yosi_k_fr@proton.me>, 2025.
+# akichi <kibokura056@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2025-07-03 03:01+0000\n"
-"Last-Translator: ｙｏｓｉ＿ｋ＿ <yosi_k_fr@proton.me>\n"
+"PO-Revision-Date: 2025-07-14 06:01+0000\n"
+"Last-Translator: akichi <kibokura056@gmail.com>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/ja/>\n"
 "Language: ja\n"
@@ -24,47 +25,47 @@ msgstr ""
 "X-Generator: Weblate 5.13-dev\n"
 
 msgid "Welcome"
-msgstr "歓迎します"
+msgstr "ようこそ"
 
 msgid "Select an Option"
-msgstr "オプションから内容を選んでください"
+msgstr "選択してください"
 
 msgid "Easily create a backup image of your computer, or completely restore from one.  Click an option to begin:"
-msgstr "コンピューターのバックアップイメージが簡単に作成、また作成したものから完全な"
-"リストアが出来ます。  オプションのクリックで始まります："
+msgstr "PCのバックアップイメージを簡単に作成したり、作成済みのイメージから完全に復元"
+"できます。オプションを選択して始めます。"
 
 msgid "Backup"
-msgstr "バックアップします"
+msgstr "バックアップ"
 
 msgid "Restore"
-msgstr "リストアします"
+msgstr "復元"
 
 msgid "Verify Image"
-msgstr "イメージ実証をします"
+msgstr "イメージの検証"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
-msgstr "救援が必要ですか？ Rescuezilla のＦＡＱは見てから、 Rescuezilla "
-"のフォーラムに来てください。"
+msgstr "ヘルプが必要ですか？RescuezillaのFAQを試してください。解決しなければ、"
+"Rescuezilla のフォーラムを訪問してください。"
 
 msgid "Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed."
-msgstr "Rescuezilla が作り続けられますようクラウドファンディングの Patreon "
-"でひと月につき／＄１の貢献をお考えください。"
+msgstr "毎月1$のPatreonによるクラウドファンディングで、Rescuezillaの開発を支援してく"
+"ださい。"
 
 msgid "Back"
-msgstr "戻ります"
+msgstr "戻る"
 
 msgid "Next >"
-msgstr "続き ＞"
+msgstr "次へ >"
 
 msgid "Please wait…"
-msgstr "少し掛かります…"
+msgstr "お待ちください…"
 
 msgid "Identifying disk drives…"
-msgstr "ディスクの認証をしています…"
+msgstr "ディスクを識別しています…"
 
 #, python-brace-format
 msgid "Unmounting: {path}"
-msgstr "マウント解除をしています： {path}"
+msgstr "マウント解除中： {path}"
 
 #, python-brace-format
 msgid "Unable to unmount {path}"
@@ -72,14 +73,14 @@ msgstr "マウント解除が出来ません {path}"
 
 #, python-brace-format
 msgid "Running: {app}"
-msgstr "実行しています： {app}"
+msgstr "実行中： {app}"
 
 #, python-brace-format
 msgid "Running {app} on {device}"
-msgstr "{device} の {app} で実行しています"
+msgstr "{app} を {device} で実行中"
 
 msgid "Failed to run command: "
-msgstr "コマンドの実行が出来ませんでした： "
+msgstr "コマンドの実行に失敗しました： "
 
 msgid "Error querying drives: "
 msgstr "ドライブの請求でエラーがありました： "
@@ -504,10 +505,10 @@ msgid "Do nothing"
 msgstr "何もしない"
 
 msgid "Shutdown"
-msgstr "パソコンをシャットダウンします"
+msgstr "シャットダウン"
 
 msgid "Reboot"
-msgstr "パソコンを再起動します"
+msgstr "再起動"
 
 msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
 msgstr "救援： 不定なファイルシステムと不良なセクターの看過"
