@@ -16,7 +16,7 @@
 # *    local git submodule containing the tool used for the fundamental filesystem imaging
 #
 # Usage:
-# * ./update.sh
+# * ./update-deps.sh
 #
 # Note: the script does a checkout to a new branch. If the script fails, simply:
 # 1. git checkout master
@@ -28,6 +28,12 @@
 #
 # Once you are happy with the changes, validate them (eg, using the imperfect integration test suite)
 # and then apply the changes on master branch eg, a `git reset --hard update.sh-script-temporary-branch`
+
+if [ $# -ne 0 ]; then
+    echo "Usage: ./update-deps.sh"
+    echo "This script takes no arguments"
+    exit 1
+fi
 
 set -x
 
