@@ -65,11 +65,11 @@ if [ "$CODENAME" = "INVALID" ] || [ "$ARCH" = "INVALID" ]; then
   exit 1
 fi
 
-# For some older/end-of-life Ubuntu releases, we need to specify the paths to the GPG keys manually.
+# For end-of-life Ubuntu releases, we need to specify the paths to the GPG keys manually.
 #
 # Specifically:
 # * Ubuntu 18.04 (Bionic) uses Ubuntu Archive Automatic Signing Key (2012)
-# * Ubuntu 20.04 (Focal) uses Ubuntu Archive Automatic Signing Key (2018) 
+# * Ubuntu 20.04 (Focal), 24.10 (Oracular) uses Ubuntu Archive Automatic Signing Key (2018) 
 #
 # The public keys to verify the GPG signatures of the Ubuntu DEB packages appear rotated every 6 or so years,
 # The build host machine (eg, Docker container)'s "ubuntu-keyring" package provides these GPG public keys, and the
@@ -80,7 +80,7 @@ fi
 # Useful commands :
 # * List all ubuntu GPG keys paths within the keyring package: dpkg -L ubuntu-keyring 
 # * List the keys within the keyring: gpg --show-keys /usr/share/keyrings/ubuntu-archive-keyring.gpg
-if [ "$CODENAME" == "bionic" ] || [ "$CODENAME" == "focal" ]; then
+if [ "$CODENAME" == "bionic" ] || [ "$CODENAME" == "focal" ] || [ "$CODENAME" == "oracular" ]; then
     KEYRING_OPTS="--keyring=/usr/share/keyrings/ubuntu-archive-keyring.gpg"
 fi
 
