@@ -78,10 +78,12 @@ _launch_backup_with_rescuezilla_cli() {
     IMAGE_PATH="/mnt/rescuezilla.shared.folder/$IMAGE_NAME"
 
     echo "* Creating backup image using Rescuezilla CLI"
-    echo "** Delete previous Rescuezilla image from within the VM $IMAGE_PATH"
-    run_cmd_in_rescuezilla_vm "$TARGET_IP" "rm -rf $IMAGE_PATH"
-    # Deliberately use low compression to speed up operations (while still testing primary processing pipeline)
-    time run_cmd_in_rescuezilla_vm $TARGET_IP "rescuezillapy backup --compression-format=gzip --compression-level=0 --source /dev/sda --destination $IMAGE_PATH"
+    run_cmd_in_rescuezilla_vm "$TARGET_IP" " \
+    echo \"** Delete previous Rescuezilla image from within the VM $IMAGE_PATH\" && \
+    cd /mnt/rescuezilla.shared.folder && sudo rm -rf $IMAGE_NAME && \
+    echo \"Deliberately use low compression to speed up operations (while still testing primary processing pipeline)\" && \
+    time sudo rescuezillapy backup --compression-format=gzip --compression-level=0 --source /dev/sda --destination $IMAGE_PATH \
+    "
 }
 
 _launch_restore_with_rescuezilla_cli() {
@@ -98,10 +100,12 @@ _launch_backup_with_clonezilla_cli() {
     IMAGE_PATH="/mnt/rescuezilla.shared.folder/$IMAGE_NAME"
 
     echo "* Creating backup image using Clonezilla CLI"
-    echo "** Delete previous Clonezilla image from within the VM $IMAGE_PATH"
-    run_cmd_in_rescuezilla_vm $TARGET_IP "rm -rf $IMAGE_PATH"
-    # --batch mode to suppress "which is larger than the MBR partition table entry maximum 2 TiB (~ 2.2 TB). You have to use GUID partition table format (GPT)."
-    time run_cmd_in_rescuezilla_vm $TARGET_IP "ocs_live_batch=yes /usr/sbin/ocs-sr --nogui --batch -q2 -j2 -z1 -i 4096 -sfsck -senc -p command savedisk $IMAGE_NAME sda"
+    run_cmd_in_rescuezilla_vm $TARGET_IP "\
+    echo \"** Delete previous Clonezilla image from within the VM $IMAGE_PATH\" && \
+    cd /mnt/rescuezilla.shared.folder && sudo rm -rf $IMAGE_NAME && \
+    echo \"--batch mode to suppress warning about partition size larger than 2 TiB requiring GPT format\" && \
+    ocs_live_batch=yes && time sudo /usr/sbin/ocs-sr --nogui --batch -q2 -j2 -z1p -i 4096 -sfsck -senc -p command savedisk $IMAGE_NAME sda
+    "
 }
 
 _launch_restore_with_clonezilla_cli() {
