@@ -1,4 +1,4 @@
-#  Rescuezilla v2.6.1 (unreleased)
+# Rescuezilla v2.6.1 (unreleased)
 
 * Adds release based on Ubuntu 25.04 (Plucky) for best support of new hardware
 * Fixed regression where swap partitions stayed unintendedly mounted causing restore and clone operations to destination disks containing Linux swap partitions to fail ([#515](https://github.com/rescuezilla/rescuezilla/issues/515#issuecomment-2994462320))
@@ -17,7 +17,7 @@
 * Extracted out a separate Portuguese (Brazillian) (pt_BR) translation entry from the existing Portuguese (Portugal) (pt) translation ([#410](https://github.com/rescuezilla/rescuezilla/issues/410)) (thanks hugok79!)
 * Fixed ability to create uncompressed images using experimental CLI by accepting "--compression-format=uncompressed" rather than 'none'
 
-#  Rescuezilla v2.6 (2025-03-23)
+# Rescuezilla v2.6 (2025-03-23)
 
 * Updated the UEFI Secure Boot shim package to v1.58 after a Windows 11 update revoked older shims by incrementing the minimum "SBAT generation"([#525](https://github.com/rescuezilla/rescuezilla/issues/525))
     * This fixes any "SBAT self-check failed" errors to ensure Rescuezilla continues boot on UEFI Secure Boot enabled systems which require the latest "SBAT generation"

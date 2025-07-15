@@ -22,6 +22,14 @@ jobs:
       # Get deb package version using same command from its build scripts
       - run: echo "DEB_VERSION=$(git describe --tags  --match='[0-9].[0-9]*' --abbrev=0)" >> $GITHUB_ENV
 
+      - name: Generate release notes (and set default release in notes)
+        if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+        run: |
+          cd src/scripts/update
+          chmod +x generate-release-notes.sh
+          ./generate-release-notes.sh ${{github.ref_name}} "oracular" > /tmp/release-notes.md
+          echo "RELEASE_DATE=$(date '+%Y-%m-%d')" >> $GITHUB_ENV
+
       - name: Build Docker image
         run: make docker-build
 
@@ -85,6 +93,8 @@ jobs:
         uses: softprops/action-gh-release@v1
         if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
         with:
+          name: v${{github.ref_name}} (${{env.RELEASE_DATE}})
+          body_path: /tmp/release-notes.md
           files: |
             completed-artifacts/*SUM
             completed-artifacts/rescuezilla_${{env.DEB_VERSION}}-1_all.deb
