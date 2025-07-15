@@ -103,6 +103,9 @@ _launch_backup_with_clonezilla_cli() {
     run_cmd_in_rescuezilla_vm $TARGET_IP "\
     echo \"** Delete previous Clonezilla image from within the VM $IMAGE_PATH\" && \
     cd /mnt/rescuezilla.shared.folder && sudo rm -rf $IMAGE_NAME && \
+    echo \"Modify Clonezilla config file in-place to enable pigz usage WITHOUT compression rather, to match Rescuezilla config. Note: standard gzip does not offer compression level zero\" && \
+    echo \"Also deliberately not using no-compression pathway so testing realistic executable and data pipeline pathway\" && \
+    sudo sed --in-place 's|^extra_pigz_opt=\"--fast |extra_pigz_opt=\"-0 |g' /etc/drbl/drbl-ocs.conf && \
     echo \"--batch mode to suppress warning about partition size larger than 2 TiB requiring GPT format\" && \
     ocs_live_batch=yes && time sudo /usr/sbin/ocs-sr --nogui --batch -q2 -j2 -z1p -i 4096 -sfsck -senc -p command savedisk $IMAGE_NAME sda
     "
