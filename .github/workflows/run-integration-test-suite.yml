@@ -84,10 +84,13 @@ jobs:
       matrix:
         variant: [
           {name: "plucky"},
-          {name: "oracular"},
-          {name: "noble"},
-          {name: "jammy"},
-          {name: "focal"},
+
+          # TODO: Re-enable when test is faster and no longer hits 12-hour GitHub Actions workflow max limit
+          #{name: "oracular"},
+          #{name: "noble"},
+          #{name: "jammy"},
+          #{name: "focal"},
+
           # vboxsf not available on Ubuntu 18.04 32-bit, so don't bother building it for now
           #{name: "bionic-i386"}
         ]
@@ -121,10 +124,13 @@ jobs:
       matrix:
         iso: [
           {path: "rescuezilla.amd64.plucky.iso", check_match: "Ubuntu 25.04"},
-          {path: "rescuezilla.amd64.oracular.iso", check_match: "Ubuntu 24.10"},
-          {path: "rescuezilla.amd64.noble.iso", check_match: "Ubuntu 24.04"},
-          {path: "rescuezilla.amd64.jammy.iso", check_match: "Ubuntu 22.04"},
-          {path: "rescuezilla.amd64.focal.iso", check_match: "Ubuntu 20.04"},
+
+          # TODO: Re-enable when test is faster and no longer hits 12-hour GitHub Actions workflow max limit
+          #{path: "rescuezilla.amd64.oracular.iso", check_match: "Ubuntu 24.10"},
+          #{path: "rescuezilla.amd64.noble.iso", check_match: "Ubuntu 24.04"},
+          #{path: "rescuezilla.amd64.jammy.iso", check_match: "Ubuntu 22.04"},
+          #{path: "rescuezilla.amd64.focal.iso", check_match: "Ubuntu 20.04"},
+
           # vboxsf not available on Ubuntu 18.04 32-bit
           #{path: "rescuezilla.i386.bionic.iso", check_match: "Ubuntu 18.04"}
         ]
