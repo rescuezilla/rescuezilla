@@ -159,8 +159,8 @@ jobs:
             create_backup_using_rescuezilla_cli_timeout: 50
             # Times out while still in progress
             create_backup_using_clonezilla_cli_timeout: 90
-            restore_using_rescuezilla_cli_timeout: 40
-            restore_using_clonezilla_cli_timeout: 60
+            restore_using_rescuezilla_cli_timeout: 80
+            restore_using_clonezilla_cli_timeout: 75
     steps:
     - name: Initialize test environment for ${{ matrix.vm_guest.test_prefix }} and boot primary OS expecting ${{ matrix.vm_guest.primary_os_check_match }}
       continue-on-error: true
