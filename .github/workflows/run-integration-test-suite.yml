@@ -140,7 +140,7 @@ jobs:
           - test_prefix: "Windows.10.EFI"
             vm_name: "Rescuezilla.50gb.EFI"
             primary_os_check_match: "Windows 10"
-            create_backup_with_rescuezilla_timeout: 20
+            create_backup_using_rescuezilla_cli_timeout: 20
             # Times out while still in progress
             create_backup_using_clonezilla_cli_timeout: 90
             restore_using_rescuezilla_cli_timeout: 30
@@ -148,7 +148,7 @@ jobs:
           - test_prefix: "Windows.10.BIOS"
             vm_name: "Rescuezilla.2tb.Primary.BIOS"
             primary_os_check_match: "Windows 10"
-            create_backup_with_rescuezilla_timeout: 20
+            create_backup_using_rescuezilla_cli_timeout: 20
             # Times out while still in progress
             create_backup_using_clonezilla_cli_timeout: 90
             restore_using_rescuezilla_cli_timeout: 30
@@ -156,7 +156,7 @@ jobs:
           - test_prefix: "Ubuntu.Windows.Dualboot.MBR"
             vm_name: "Rescuezilla.2tb.Secondary.BIOS"
             primary_os_check_match: "Ubuntu 20.04.2 LTS"
-            create_backup_with_rescuezilla_timeout: 50
+            create_backup_using_rescuezilla_cli_timeout: 50
             # Times out while still in progress
             create_backup_using_clonezilla_cli_timeout: 90
             restore_using_rescuezilla_cli_timeout: 40
@@ -181,7 +181,7 @@ jobs:
         boot_dvd "${{ matrix.vm_guest.vm_name }}" "${{ github.workspace }}/build/${{ matrix.iso.path }}" "${{ matrix.iso.check_match }}"
 
     - name: Create Rescuezilla backup for ${{ matrix.vm_guest.test_prefix }}
-      timeout-minutes: ${{ matrix.vm_guest.create_backup_with_rescuezilla_timeout }}
+      timeout-minutes: ${{ matrix.vm_guest.create_backup_using_rescuezilla_cli_timeout }}
       continue-on-error: true
       run: |
         cd src/integration-test
