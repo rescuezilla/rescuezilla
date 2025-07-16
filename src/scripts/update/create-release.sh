@@ -72,7 +72,7 @@ EOF
 
 
 # Add a string to the end of the current (unreleased) release's CHANGELOG.md
-    # This requires CHANGELOG.md to have an entry for the unreleased/upcoming version.
+# This requires CHANGELOG.md to have an entry for the unreleased/upcoming version.
 update_changelog_md() {
     VERSION="$1"
     LINE_TO_SET="# Rescuezilla v$VERSION ($(date '+%Y-%m-%d'))"
@@ -100,6 +100,7 @@ most recent git tag output from the `git describe` command above.
 This means for every commit to successfully build without a single commit
 failing, it is this very commit that must be tagged as $version.
 
+This commit was created by ${SCRIPT_NAME}
 EOF
     git commit -F /tmp/commitmsg
     git tag "$version"
@@ -120,3 +121,6 @@ create_tagged_git_commit "$VERSION"
 
 echo "Completed  Please review the changes on branch $UPDATED_BRANCH_NAME and validate that the updates are correct, and push when ready."
 echo "If something went wrong, checkout your original branch and run 'git submodule update --init --recursive' and rerun the script."
+echo ""
+echo "If you have a fork configured, you can push this tag to it to sanity-check the on-tag GitHub Actions workflows using:"
+echo " git push private -d $VERSION && git push private $VERSION"
