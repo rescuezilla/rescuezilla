@@ -1,4 +1,4 @@
-# Rescuezilla v2.6.1 (unreleased)
+# Rescuezilla v2.6.1 (2025-07-16)
 
 * Adds release based on Ubuntu 25.04 (Plucky) for best support of new hardware
 * Fixed regression where swap partitions stayed unintendedly mounted causing restore and clone operations to destination disks containing Linux swap partitions to fail ([#515](https://github.com/rescuezilla/rescuezilla/issues/515#issuecomment-2994462320))

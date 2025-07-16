@@ -1,3 +1,9 @@
+rescuezilla (2.6.1-1) unstable; urgency=low
+
+  * New version. For full changes: See https://raw.githubusercontent.com/rescuezilla/rescuezilla/master/CHANGELOG.md
+
+ -- Shasheen Ediriweera <1414379+shasheene@users.noreply.github.com>  Wed, 16 Jul 2025 13:55:03 -0700
+
 rescuezilla (2.6-1) unstable; urgency=low
 
   * New version. For full changes: See https://raw.githubusercontent.com/rescuezilla/rescuezilla/master/CHANGELOG.md
