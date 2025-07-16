@@ -9,6 +9,8 @@ jobs:
     # functionality.
     # Launches Docker container to act as 'host system'. See BUILD.ISO.IMAGE.md for more information.
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -99,6 +101,8 @@ jobs:
             completed-artifacts/*SUM
             completed-artifacts/rescuezilla_${{env.DEB_VERSION}}-1_all.deb
             completed-artifacts/rescuezilla-${{github.ref_name}}-*.iso
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Upload GitHub Action workflow *artifacts*. Note "artifacts" are a different concept to GitHub release rssets. The former is available on each GitHub Actions
       # workflow run. The latter is associated with only a pushed tag.
