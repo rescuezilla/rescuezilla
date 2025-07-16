@@ -6,12 +6,13 @@
 # Create a new git branch for updates
 do_git_branch() {
     local branch_name="$1"
+    local remote_branch_name="$2"
     
-    git checkout origin/master
+    git checkout $remote_branch_name
     git branch -D "$branch_name"
     git submodule update --init --recursive
     git fetch origin
-    git checkout origin/master -b "$branch_name"
+    git checkout $remote_branch_name -b "$branch_name"
 }
 
 # Check if a git tag exists, print warning and delete if it does

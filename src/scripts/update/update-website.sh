@@ -65,7 +65,7 @@ EOF
 }
 
 # Create the git branch for the release
-cd $RESCUEZILLA_WEBSITE_DIR && do_git_branch "$UPDATED_BRANCH_NAME"
+cd $RESCUEZILLA_WEBSITE_DIR && do_git_branch "$UPDATED_BRANCH_NAME" origin/master
 
 update_website_html "$VERSION" "$DEFAULT_VARIANT_NAME" "$DATE_RELEASED"
 

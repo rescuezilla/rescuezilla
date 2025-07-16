@@ -11,7 +11,7 @@
 # * Deletes any old git tag, and creates a new tagged commit for the release
 # 
 # Usage:
-# * ./create-release.sh <version>
+# * ./create-release.sh <version> <remote branch name>
 #
 # Note: the script does a checkout to a new branch. If the script fails, simply:
 # 1. git checkout master
@@ -27,9 +27,9 @@
 # infrastructure, including uploading a new release your GitHub fork.
 
 
-if [ $# -lt 1 ]; then
-    echo "Usage: ./create-release.sh <version>"
-    echo "Example: ./create-release.sh 2.6"
+if [ $# -lt 2 ]; then
+    echo "Usage: ./create-release.sh <version> <remote branch name>"
+    echo "Example: ./create-release.sh 2.6 origin/master"
     exit 1
 fi
 
@@ -107,7 +107,7 @@ EOF
 }
 
 # Create the git branch for the release
-do_git_branch "$UPDATED_BRANCH_NAME"
+do_git_branch "$UPDATED_BRANCH_NAME" "$REMOTE_BRANCH_NAME"
 
 prepend_to_debian_changelog "$VERSION" "$HUMAN_READABLE_DATE" "rescuezilla" "${BASEDIR}/src/apps/rescuezilla/debian/changelog"
 prepend_to_debian_changelog "$VERSION" "$HUMAN_READABLE_DATE" "graphical-shutdown" "${BASEDIR}/src/apps/graphical-shutdown/debian/changelog"

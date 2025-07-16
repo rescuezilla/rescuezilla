@@ -168,8 +168,7 @@ EOF
 }
 
 # Create the git branch for the update
-do_git_branch "$UPDATED_BRANCH_NAME"
-
+do_git_branch "$UPDATED_BRANCH_NAME" origin/master
 
 # Execute both updates
 update_weblate_translations
