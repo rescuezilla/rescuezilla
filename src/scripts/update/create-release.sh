@@ -54,11 +54,11 @@ prepend_to_debian_changelog() {
     
     # Create the changelog entry
     cat <<EOF > /tmp/deb_changelog_entry
-$app_name ($version) unstable; urgency=low
+$app_name (${version}-1) unstable; urgency=low
 
   * New version. For full changes: See https://raw.githubusercontent.com/rescuezilla/rescuezilla/master/CHANGELOG.md
 
- -- $(git config user.name) <$(git config user.email)> $human_readable_date
+ -- $(git config user.name) <$(git config user.email)>  $human_readable_date
 
 EOF
     
