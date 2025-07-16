@@ -46,7 +46,6 @@ Rescuezilla creates backups that are fully compatible with the industry-standard
 * Clonezilla [*](https://github.com/rescuezilla/rescuezilla/issues/372)
 * Rescuezilla
 * Every virtual machine image format supported by the \`qemu-nbd\` utility. Eg,
-
   * VirtualBox's VDI
   * VMWare's VMDK
   * Qemu's QCOW2
