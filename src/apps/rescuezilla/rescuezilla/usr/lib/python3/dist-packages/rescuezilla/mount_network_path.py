@@ -193,7 +193,7 @@ class MountNetworkPath:
             else:
                 GLib.idle_add(self.please_wait_popup.destroy)
                 GLib.idle_add(self.callback, True, "", destination_path)
-        except Exception as e:
+        except Exception:
             tb = traceback.format_exc()
             print(tb)
             GLib.idle_add(self.please_wait_popup.destroy)
@@ -295,7 +295,7 @@ class MountNetworkPath:
             else:
                 GLib.idle_add(self.please_wait_popup.destroy)
                 GLib.idle_add(self.callback, True, "", destination_path)
-        except Exception as e:
+        except Exception:
             tb = traceback.format_exc()
             print(tb)
             GLib.idle_add(self.please_wait_popup.destroy)
@@ -372,7 +372,7 @@ class MountNetworkPath:
             else:
                 GLib.idle_add(self.please_wait_popup.destroy)
                 GLib.idle_add(self.callback, True, "", destination_path)
-        except Exception as e:
+        except Exception:
             tb = traceback.format_exc()
             print(tb)
             GLib.idle_add(self.please_wait_popup.destroy)

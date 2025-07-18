@@ -22,7 +22,6 @@ from os.path import isdir, isfile
 from typing import Callable, Optional
 
 from logger import Logger
-from ui_manager import UiManager
 from utility import Utility
 
 # To maximize Rescuezilla's support for Clonezilla image format, this file is currently largely a Python port of

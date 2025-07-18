@@ -713,7 +713,7 @@ class Handler:
                                 self.restore_destination_drive_desc,
                                 drive_dict,
                             )
-                        except Exception as e:
+                        except Exception:
                             tb = traceback.format_exc()
                             traceback.print_exc()
                             error = ErrorMessageModalPopup(
@@ -962,7 +962,7 @@ class Handler:
                                 self.clone_destination_drive_desc,
                                 drive_dict,
                             )
-                        except Exception as e:
+                        except Exception:
                             tb = traceback.format_exc()
                             traceback.print_exc()
                             error = ErrorMessageModalPopup(
@@ -1091,7 +1091,7 @@ class Handler:
                                 self.image_explorer_manager.populate_partition_selection_table(
                                     image
                                 )
-                            except Exception as e:
+                            except Exception:
                                 tb = traceback.format_exc()
                                 traceback.print_exc()
                                 error = ErrorMessageModalPopup(
@@ -1110,7 +1110,7 @@ class Handler:
                 + " on page "
                 + str(self.current_page)
             )
-        except Exception as e:
+        except Exception:
             tb = traceback.format_exc()
             traceback.print_exc()
             error = ErrorMessageModalPopup(self.builder, tb)
@@ -1273,7 +1273,7 @@ class Handler:
                 + " on page "
                 + str(self.current_page)
             )
-        except Exception as e:
+        except Exception:
             tb = traceback.format_exc()
             traceback.print_exc()
             error = ErrorMessageModalPopup(self.builder, tb)
@@ -1399,7 +1399,7 @@ class Handler:
             # Launch subprocess to unmount target directory. Subprocess is detached so it doesn't block Rescuezilla's
             # shutdown.
             subprocess.Popen(["umount", MOUNT_DIR])
-        except Exception as e:
+        except Exception:
             tb = traceback.format_exc()
             traceback.print_exc()
         Gtk.main_quit()
@@ -1967,7 +1967,7 @@ class Handler:
 
     def selected_image_folder(self, text, is_allow_selecting_folder_outside_mount):
         print("Received path " + text)
-        if not is_allow_selecting_folder_outside_mount and not MOUNT_DIR in text:
+        if not is_allow_selecting_folder_outside_mount and MOUNT_DIR not in text:
             error = ErrorMessageModalPopup(
                 self.builder,
                 _("You must select a folder inside {location}").format(

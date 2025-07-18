@@ -124,7 +124,7 @@ class CloneManager:
     def do_clone_wrapper(self):
         try:
             self.do_clone()
-        except Exception as exception:
+        except Exception:
             tb = traceback.format_exc()
             traceback.print_exc()
             return self.ui_manager.completed_operation(

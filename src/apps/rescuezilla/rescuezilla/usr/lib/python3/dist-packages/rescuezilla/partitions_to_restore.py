@@ -310,7 +310,7 @@ class PartitionsToRestore:
                 True,
                 error_message,
             )
-        except Exception as e:
+        except Exception:
             tb = traceback.format_exc()
             traceback.print_exc()
             message = "Unable to process Logical Volume Manager (LVMs): " + tb

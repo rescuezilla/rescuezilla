@@ -3,7 +3,7 @@ from typing import List, Optional, Callable, Any, Tuple
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, Gdk, GLib, GObject
+from gi.repository import GLib, GObject
 from ui_manager import UiManager
 from utility import Utility, ErrorMessageModalPopup
 

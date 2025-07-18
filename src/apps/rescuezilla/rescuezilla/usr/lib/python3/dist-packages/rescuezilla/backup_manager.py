@@ -25,7 +25,6 @@ import subprocess
 import threading
 import traceback
 from datetime import datetime
-from pathlib import Path
 from time import sleep
 import re
 from typing import Any, Dict, Tuple
@@ -134,7 +133,7 @@ class BackupManager:
     def do_backup_wrapper(self):
         try:
             self.do_backup()
-        except Exception as exception:
+        except Exception:
             tb = traceback.format_exc()
             traceback.print_exc()
             self.ui_manager.completed_operation(

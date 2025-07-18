@@ -19,8 +19,6 @@ import os
 from os.path import dirname
 
 import utility
-from parser.fogproject_image import FogProjectImage
-from parser.foxclone_image import FoxcloneImage
 from parser.metadata_only_image import MetadataOnlyImage
 from utility import Utility
 from wizard_state import QEMU_NBD_NBD_DEVICE

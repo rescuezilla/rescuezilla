@@ -31,7 +31,6 @@ from time import sleep
 import gi
 
 import utility
-from ui_manager import UiManager
 from parser.apart_gtk_image import ApartGtkImage
 from parser.fogproject_image import FogProjectImage
 from parser.foxclone_image import FoxcloneImage
@@ -475,7 +474,7 @@ class ImageExplorerManager:
                 GLib.idle_add(callback, False, failed_message)
                 GLib.idle_add(please_wait_popup.destroy)
                 return
-        except Exception as e:
+        except Exception:
             tb = traceback.format_exc()
             print(tb)
             GLib.idle_add(callback, False, "Error unmounting folder: " + tb)
@@ -960,7 +959,7 @@ class ImageExplorerManager:
             )
             GLib.idle_add(callback, True, duration_message)
             GLib.idle_add(please_wait_popup.destroy)
-        except Exception as e:
+        except Exception:
             tb = traceback.format_exc()
             print(tb)
             GLib.idle_add(callback, False, "Error mounting folder: " + tb)

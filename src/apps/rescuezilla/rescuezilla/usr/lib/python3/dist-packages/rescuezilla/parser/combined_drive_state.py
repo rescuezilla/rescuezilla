@@ -138,7 +138,7 @@ class CombinedDriveState:
                         )
                         if drive_longdevname in parted_dict_dict.keys():
                             current_parted_dict = parted_dict_dict[drive_longdevname]
-                    except Exception as e:
+                    except Exception:
                         current_parted_dict = {}
 
                     if (

@@ -20,10 +20,8 @@ import math
 import os
 import re
 import shutil
-from parser.parted import Parted
 from parser.sfdisk import Sfdisk
 from utility import Utility, _
-from logger import Logger
 
 
 # Port of Clonezilla's handling of drive addressing.

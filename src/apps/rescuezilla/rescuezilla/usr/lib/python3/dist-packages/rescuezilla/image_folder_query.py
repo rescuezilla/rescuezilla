@@ -175,7 +175,7 @@ class ImageFolderQuery:
                         image.get_enduser_friendly_partition_description(),
                     ]
                 )
-            except Exception as e:
+            except Exception:
                 tb = traceback.format_exc()
                 traceback_messages += image.enduser_filename + ":\n" + tb + "\n\n"
 
@@ -425,7 +425,7 @@ class ImageFolderQuery:
                         )
                 for key in temp_image_dict.keys():
                     self.image_dict[key] = temp_image_dict[key]
-        except Exception as e:
+        except Exception:
             print("Failed to read: " + absolute_path)
             tb = traceback.format_exc()
             self.failed_to_read_image_dict[enduser_filename] = tb
@@ -456,7 +456,7 @@ class ImageFolderQuery:
                     subdir_list = []
                     try:
                         subdir_list = os.listdir(abs_base_scan_path)
-                    except Exception as e:
+                    except Exception:
                         # Typically Permission denied error
                         exception_tracebacks[abs_base_scan_path] = (
                             traceback.format_exc()
@@ -471,11 +471,11 @@ class ImageFolderQuery:
                             print("Scanning subdir file " + absolute_path)
                             try:
                                 self.scan_file(absolute_path, enduser_filename)
-                            except Exception as e:
+                            except Exception:
                                 exception_tracebacks[absolute_path] = (
                                     traceback.format_exc()
                                 )
-        except Exception as e:
+        except Exception:
             exception_tracebacks[self.query_path] = traceback.format_exc()
         if len(exception_tracebacks) > 0:
             formatted_exceptions = ImageFolderQuery.prettify_tracebacks(

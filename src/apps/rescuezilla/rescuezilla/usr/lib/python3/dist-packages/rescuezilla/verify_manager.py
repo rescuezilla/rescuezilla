@@ -97,7 +97,7 @@ class VerifyManager:
     def do_verify_wrapper(self):
         try:
             self.do_verify()
-        except Exception as exception:
+        except Exception:
             tb = traceback.format_exc()
             traceback.print_exc()
             return self.ui_manager.completed_operation(

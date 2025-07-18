@@ -18,12 +18,9 @@
 # ----------------------------------------------------------------------
 import collections
 import json
-import os
 import pprint
-import subprocess
 import sys
 import threading
-import time
 import traceback
 from datetime import datetime
 from typing import Optional, Callable
@@ -149,7 +146,7 @@ class DriveQuery:
                     ]
                 )
                 index = index + 1
-            except Exception as e:
+            except Exception:
                 traceback.print_exc(file=sys.stdout)
                 print("Could not process " + drive_key)
                 continue
@@ -187,7 +184,7 @@ class DriveQuery:
                 self.save_partition_list_store.append(
                     [drive_key, True, flattened_partition_description]
                 )
-        except Exception as exception:
+        except Exception:
             tb = traceback.format_exc()
             traceback.print_exc()
             ErrorMessageModalPopup.display_nonfatal_warning_message(self.builder, tb)
@@ -248,7 +245,7 @@ class DriveQuery:
                         ]
                     )
                     index = index + 1
-            except Exception as exception:
+            except Exception:
                 tb = traceback.format_exc()
                 traceback.print_exc()
                 ErrorMessageModalPopup.display_nonfatal_warning_message(
@@ -266,7 +263,7 @@ class DriveQuery:
             drive_query = DriveQueryInternal(ui_manager=ui_manager)
             self.drive_state = drive_query._do_drive_query()
             GLib.idle_add(self.populate_drive_selection_table)
-        except Exception as exception:
+        except Exception:
             tb = traceback.format_exc()
             traceback.print_exc()
             GLib.idle_add(

@@ -20,7 +20,6 @@ import pprint
 import unittest
 
 from parser.blkid import Blkid
-from parser.combined_drive_state import CombinedDriveState
 from parser.os_prober import OsProber
 from parser.parted import Parted
 from parser.sfdisk import Sfdisk
