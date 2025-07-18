@@ -22,18 +22,16 @@ import tempfile
 import threading
 import traceback
 from datetime import datetime
-
-import gi
-
+from utility import Utility, _
 from ui_manager import UiManager
 from parser.metadata_only_image import MetadataOnlyImage
 from parser.qemu_image import QemuImage
 from wizard_state import QEMU_NBD_NBD_DEVICE
 
-gi.require_version("Gtk", "3.0")
-from gi.repository import GLib
+import gi
 
-from utility import Utility, _
+gi.require_version("Gtk", "3.0")
+from gi.repository import GLib  # noqa: E402
 
 
 # Signals should automatically propagate to processes called with subprocess.run().

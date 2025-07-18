@@ -24,8 +24,6 @@ import threading
 import traceback
 from datetime import datetime
 
-import gi
-
 from backup_manager import BackupManager
 from gtk_ui_manager import GtkUiManager
 from clone_manager import CloneManager
@@ -37,9 +35,6 @@ from parser.metadata_only_image import MetadataOnlyImage
 from parser.qemu_image import QemuImage
 from restore_manager import RestoreManager
 from verify_manager import VerifyManager
-
-gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk, GObject
 
 from partitions_to_restore import PartitionsToRestore
 from drive_query import DriveQuery
@@ -60,6 +55,11 @@ from wizard_state import (
     NETWORK_UI_WIDGET_MODES,
     RESCUEZILLA_MOUNT_TMP_DIR,
 )
+
+import gi
+
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk, GObject  # noqa: E402
 
 
 class Handler:

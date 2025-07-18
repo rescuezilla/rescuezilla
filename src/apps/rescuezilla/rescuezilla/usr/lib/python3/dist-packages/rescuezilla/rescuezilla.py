@@ -23,9 +23,7 @@
 import gettext
 import os
 import sys
-
 import argparse
-import gi
 
 from backup_manager import BackupManager
 from cli.args import parse_arguments
@@ -39,13 +37,12 @@ from image_explorer_manager import ImageExplorerManager
 from restore_manager import RestoreManager
 from utility import Utility, ErrorMessageModalPopup
 from verify_manager import VerifyManager
+from handler import Handler
+
+import gi
 
 gi.require_version("Gtk", "3.0")
-
-from gi.repository import Gtk, GLib
-
-
-from handler import Handler
+from gi.repository import GLib, Gtk  # noqa: E402
 
 
 def is_root():

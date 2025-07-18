@@ -28,8 +28,6 @@ from datetime import datetime
 from queue import Empty, Queue
 from time import sleep
 
-import gi
-
 import utility
 from parser.apart_gtk_image import ApartGtkImage
 from parser.fogproject_image import FogProjectImage
@@ -45,14 +43,14 @@ from wizard_state import (
     QEMU_NBD_NBD_DEVICE,
 )
 
-gi.require_version("Gtk", "3.0")
-
 from parser.clonezilla_image import ClonezillaImage
 from parser.redobackup_legacy_image import RedoBackupLegacyImage
 from utility import ErrorMessageModalPopup, Utility, _, PleaseWaitModalPopup
 
+import gi
+
 gi.require_version("Gtk", "3.0")
-from gi.repository import GLib
+from gi.repository import GLib  # noqa: E402
 
 
 # Mount a Clonezilla image using partclone-nbd and nbdkit (and in future, partclone-utils).

@@ -21,8 +21,6 @@ import threading
 import traceback
 from typing import List
 
-import gi
-
 import utility
 from parser.apart_gtk_image import ApartGtkImage
 from parser.fogproject_image import FogProjectImage
@@ -31,15 +29,16 @@ from parser.fsarchiver_image import FsArchiverImage
 from parser.metadata_only_image import MetadataOnlyImage
 from parser.redorescue_image import RedoRescueImage
 from wizard_state import Mode
-
-gi.require_version("Gtk", "3.0")
-from gi.repository import GObject, GLib
-
 from parser.clonezilla_image import ClonezillaImage
 from parser.combined_drive_state import CombinedDriveState
 from parser.lvm import Lvm
 from parser.redobackup_legacy_image import RedoBackupLegacyImage
 from utility import Utility, ErrorMessageModalPopup, _, PleaseWaitModalPopup
+
+import gi
+
+gi.require_version("Gtk", "3.0")
+from gi.repository import GLib  # noqa: E402
 
 
 # FIXME: The LVM handling in this class could be vastly improved.

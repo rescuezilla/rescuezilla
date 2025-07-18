@@ -1,11 +1,12 @@
 from typing import List, Optional, Callable, Any, Tuple
+from ui_manager import UiManager
+from utility import Utility, ErrorMessageModalPopup
 
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import GLib, GObject
-from ui_manager import UiManager
-from utility import Utility, ErrorMessageModalPopup
+from gi.repository import GLib, GObject  # noqa: E402
+
 
 """
 Graphical version of (command-line interface) UIManager class.

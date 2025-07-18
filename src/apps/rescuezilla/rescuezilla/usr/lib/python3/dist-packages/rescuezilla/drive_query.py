@@ -25,8 +25,6 @@ import traceback
 from datetime import datetime
 from typing import Optional, Callable
 
-import gi
-
 from image_explorer_manager import ImageExplorerManager
 from parser.blkid import Blkid
 from parser.combined_drive_state import CombinedDriveState
@@ -36,8 +34,10 @@ from parser.sfdisk import Sfdisk
 from utility import PleaseWaitModalPopup, Utility, _, ErrorMessageModalPopup
 from wizard_state import IMAGE_EXPLORER_DIR, RESCUEZILLA_MOUNT_TMP_DIR
 
+import gi
+
 gi.require_version("Gtk", "3.0")
-from gi.repository import GLib
+from gi.repository import GLib  # noqa: E402
 
 
 class DriveQuery:

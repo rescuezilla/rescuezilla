@@ -19,12 +19,12 @@ import os
 import threading
 import traceback
 
+from utility import PleaseWaitModalPopup, Utility, _
+
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import GLib
-
-from utility import PleaseWaitModalPopup, Utility, _
+from gi.repository import GLib  # noqa: E402
 
 
 class MountLocalPath:

@@ -29,8 +29,6 @@ import traceback
 from datetime import datetime
 from time import sleep
 
-import gi
-
 from ui_manager import UiManager
 from image_explorer_manager import ImageExplorerManager
 from parser.chs_utilities import ChsUtilities
@@ -40,15 +38,11 @@ from parser.metadata_only_image import MetadataOnlyImage
 from parser.parted import Parted
 from parser.sfdisk import Sfdisk
 from wizard_state import IMAGE_EXPLORER_DIR, RESCUEZILLA_MOUNT_TMP_DIR
-
-gi.require_version("Gtk", "3.0")
-
 from logger import Logger
 from parser.lvm import Lvm
 from parser.partclone import Partclone
 from parser.proc_partitions import ProcPartitions
 from utility import Utility, _
-
 
 # Signals should automatically propagate to processes called with subprocess.run().
 

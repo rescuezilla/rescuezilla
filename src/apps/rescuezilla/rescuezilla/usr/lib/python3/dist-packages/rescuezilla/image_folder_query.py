@@ -22,22 +22,21 @@ import traceback
 from os.path import join, isfile, isdir
 from typing import Dict
 
-import gi
-
 from parser.apart_gtk_image import ApartGtkImage
 from parser.fogproject_image import FogProjectImage
 from parser.foxclone_image import FoxcloneImage
 from parser.fsarchiver_image import FsArchiverImage
 from parser.redorescue_image import RedoRescueImage
 from parser.qemu_image import QemuImage
-
-gi.require_version("Gtk", "3.0")
-from gi.repository import GdkPixbuf, GLib
-
 from parser.clonezilla_image import ClonezillaImage
 from parser.redobackup_legacy_image import RedoBackupLegacyImage
 from utility import PleaseWaitModalPopup, ErrorMessageModalPopup, _
 from wizard_state import MOUNT_DIR
+
+import gi
+
+gi.require_version("Gtk", "3.0")
+from gi.repository import GLib, GdkPixbuf  # noqa: E402
 
 
 class ImageFolderQuery:

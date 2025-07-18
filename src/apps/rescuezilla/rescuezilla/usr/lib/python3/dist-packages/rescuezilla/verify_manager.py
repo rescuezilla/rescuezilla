@@ -26,9 +26,7 @@ from datetime import datetime
 from ui_manager import UiManager
 from parser.metadata_only_image import MetadataOnlyImage
 from parser.sfdisk import Sfdisk
-
 from logger import Logger
-
 from parser.partclone import Partclone
 from parser.fsarchiver_image import FsArchiverImage
 from utility import Utility, _

@@ -31,12 +31,12 @@ from queue import Queue
 from threading import Thread
 from time import sleep
 
-import gi
-
 from wizard_state import RESCUEZILLA_MOUNT_TMP_DIR
 
+import gi
+
 gi.require_version("Gtk", "3.0")
-from gi.repository import GLib, Gtk
+from gi.repository import GLib, Gtk  # noqa: E402
 
 """
 Utility functions to eg, display busy dialog boxes or error messages
