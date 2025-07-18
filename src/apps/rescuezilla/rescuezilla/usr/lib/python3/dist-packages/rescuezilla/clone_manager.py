@@ -111,7 +111,7 @@ class CloneManager:
                     print("Sending SIGTERM to " + str(process))
                     # Send SIGTERM
                     process.terminate()
-                except:
+                except Exception:
                     print("Error killing process. (Maybe already dead?)")
         with self.clone_in_progress_lock:
             self.clone_in_progress = False

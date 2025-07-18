@@ -106,7 +106,7 @@ class ClonezillaImage:
                 # decrypted.
                 Utility.read_file_into_string(ecryptfs_info_filepath)
                 is_needs_decryption = True
-            except:
+            except Exception:
                 is_needs_decryption = False
 
         short_device_node_disk_list = []

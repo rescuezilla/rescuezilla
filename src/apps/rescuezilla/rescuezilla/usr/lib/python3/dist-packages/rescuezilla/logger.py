@@ -46,7 +46,7 @@ class Logger:
                 self.stdout.write(message)
             try:
                 self.file.write(message)
-            except:
+            except Exception:
                 print("Could not write log message to file: " + message)
 
     def close(self):

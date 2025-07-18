@@ -118,7 +118,7 @@ class RestoreManager:
                     print("Sending SIGTERM to " + str(process))
                     # Send SIGTERM
                     process.terminate()
-                except:
+                except Exception:
                     print("Error killing process. (Maybe already dead?)")
         with self.restore_in_progress_lock:
             self.restore_in_progress = False
@@ -1671,7 +1671,7 @@ class RestoreManager:
                         ntfs_partition_start_sector = self.image.parted_dict[
                             "partitions"
                         ][partition_number]["start"]
-                    except:
+                    except Exception:
                         print("Couldn't get start sector from parted dict")
                         tb = traceback.format_exc()
                         traceback.print_exc()

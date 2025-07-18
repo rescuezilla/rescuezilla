@@ -119,7 +119,7 @@ class BackupManager:
                     self.logger.write("Sending SIGTERM to " + str(process))
                     # Send SIGTERM
                     process.terminate()
-                except:
+                except Exception:
                     self.logger.write("Error killing process. (Maybe already dead?)")
         with self.backup_in_progress_lock:
             self.backup_in_progress = False
@@ -189,7 +189,7 @@ class BackupManager:
         try:
             print("mkdir " + self.dest_dir)
             os.mkdir(self.dest_dir)
-        except:
+        except Exception:
             tb = traceback.format_exc()
             traceback.print_exc()
             error_message = failed_to_write + "\n\n" + tb
@@ -213,7 +213,7 @@ class BackupManager:
                     + "\nThe log during saving:\n----------------------------------------------------------\n\n"
                 )
                 filehandle.write(output)
-            except:
+            except Exception:
                 tb = traceback.format_exc()
                 traceback.print_exc()
                 error_message = failed_to_write + "\n\n" + tb
@@ -862,7 +862,7 @@ class BackupManager:
                             + " byte limit. Copying minimal post-MBR gap.\n"
                         )
                         filehandle.write(output)
-                    except:
+                    except Exception:
                         tb = traceback.format_exc()
                         traceback.print_exc()
                         error_message = (
@@ -1338,7 +1338,7 @@ class BackupManager:
                         try:
                             output = "PARTITION_TYPE=Win_boot_reserved\n"
                             filehandle.write(output)
-                        except:
+                        except Exception:
                             tb = traceback.format_exc()
                             traceback.print_exc()
                             error_message = (

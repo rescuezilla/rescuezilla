@@ -88,7 +88,7 @@ class VerifyManager:
                     print("Sending SIGTERM to " + str(process))
                     # Send SIGTERM
                     process.terminate()
-                except:
+                except Exception:
                     print("Error killing process. (Maybe already dead?)")
         with self.verify_in_progress_lock:
             self.verify_in_progress = False
