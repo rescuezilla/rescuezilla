@@ -1,6 +1,9 @@
 .DEFAULT_GOAL := plucky
 .PHONY: all focal lunar jammy oracular plucky noble bionic-i386 deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-latest partclone-utils partclone-nbd install test integration-test clean-build-dir clean clean-all
 
+# Include Python tooling makefile
+include src/scripts/mk/python.mk
+
 # FIXME: Properly specify the build artifacts to allow the GNU make to actually be smart about what gets built and when.
 # FIXME: This lack of specifying dependency graph means requires eg, `make focal` and `make lunar` has to be done as separate invocations
 #        and things get recompiled when they don't need to be etc.
