@@ -23,7 +23,6 @@ from parser.partclone import Partclone
 
 
 class PartcloneTest(unittest.TestCase):
-
     def test_partclone_restore_parsing_short(self):
         partclone_restore_example_contents = """Partclone v0.3.13 http://partclone.org
 Starting to restore image (-) to device (/dev/sdh5)
@@ -143,14 +142,28 @@ checksum size:   4
 blocks/checksum: 1
 reseed checksum: no
 """
-        partclone_info_dict = Partclone.parse_partclone_info_output(partclone_info_output)
+        partclone_info_dict = Partclone.parse_partclone_info_output(
+            partclone_info_output
+        )
         expected_partclone_info_dict = {
-            'filesystem': "NTFS",
-            'size': {'enduser_readable': "113.2 MB", 'blocks': 27647, 'bytes': 113242112},
-            'used_space': {'enduser_readable': "2.6 MB", 'blocks': 625, 'bytes': 2560000},
-            'free_space': {'enduser_readable': "110.7 MB", 'blocks': 27022, 'bytes': 110682112},
-            'block_size': 4096,
-            'image_format': "0001",
+            "filesystem": "NTFS",
+            "size": {
+                "enduser_readable": "113.2 MB",
+                "blocks": 27647,
+                "bytes": 113242112,
+            },
+            "used_space": {
+                "enduser_readable": "2.6 MB",
+                "blocks": 625,
+                "bytes": 2560000,
+            },
+            "free_space": {
+                "enduser_readable": "110.7 MB",
+                "blocks": 27022,
+                "bytes": 110682112,
+            },
+            "block_size": 4096,
+            "image_format": "0001",
             "created": "n/a",
             "with_partclone": "n/a",
             "bitmap_mode": "BYTE",
@@ -168,5 +181,7 @@ reseed checksum: no
 Showing info of image (-)
 This is not partclone image.
 Partclone fail, please check /var/log/partclone.log !"""
-        partclone_info_dict = Partclone.parse_partclone_info_output(partclone_info_output_dd_image)
+        partclone_info_dict = Partclone.parse_partclone_info_output(
+            partclone_info_output_dd_image
+        )
         self.assertDictEqual({}, partclone_info_dict)

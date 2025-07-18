@@ -18,6 +18,7 @@ import os
 import sys
 import threading
 
+
 class Logger:
     # Logger to help debugging.
     #

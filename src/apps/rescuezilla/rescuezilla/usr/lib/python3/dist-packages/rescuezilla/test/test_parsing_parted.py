@@ -43,30 +43,30 @@ Number  Start       End          Size         File system     Name  Flags
 
         parted_dict = Parted.parse_parted_output(input_parted_gpt_string)
         print("Output dict was: " + str(parted_dict))
-        self.assertEqual(parted_dict['model'], "ATA VBOX HARDDISK (scsi)")
-        self.assertEqual(parted_dict['long_dev_node'], "/dev/sdc")
-        self.assertEqual(parted_dict['capacity'], 2147483648)
-        self.assertEqual(parted_dict['logical_sector_size'], 512)
-        self.assertEqual(parted_dict['physical_sector_size'], 512)
-        self.assertEqual(parted_dict['partition_table'], "gpt")
-        self.assertEqual(parted_dict['flags'], "")
+        self.assertEqual(parted_dict["model"], "ATA VBOX HARDDISK (scsi)")
+        self.assertEqual(parted_dict["long_dev_node"], "/dev/sdc")
+        self.assertEqual(parted_dict["capacity"], 2147483648)
+        self.assertEqual(parted_dict["logical_sector_size"], 512)
+        self.assertEqual(parted_dict["physical_sector_size"], 512)
+        self.assertEqual(parted_dict["partition_table"], "gpt")
+        self.assertEqual(parted_dict["flags"], "")
 
-        self.assertEqual(len(parted_dict['partitions']), 8)
+        self.assertEqual(len(parted_dict["partitions"]), 8)
 
-        partition1 = parted_dict['partitions'][1]
-        self.assertEqual(partition1['start'], 1048576)
-        self.assertEqual(partition1['end'], 65011711)
-        self.assertEqual(partition1['size'], 63963136)
-        self.assertEqual(partition1['filesystem'], "ext4")
-        self.assertEqual(partition1['name'], "")
-        self.assertEqual(partition1['flags'], "")
+        partition1 = parted_dict["partitions"][1]
+        self.assertEqual(partition1["start"], 1048576)
+        self.assertEqual(partition1["end"], 65011711)
+        self.assertEqual(partition1["size"], 63963136)
+        self.assertEqual(partition1["filesystem"], "ext4")
+        self.assertEqual(partition1["name"], "")
+        self.assertEqual(partition1["flags"], "")
 
-        partition7 = parted_dict['partitions'][6]
-        self.assertEqual(partition7['filesystem'], "hfs+")
+        partition7 = parted_dict["partitions"][6]
+        self.assertEqual(partition7["filesystem"], "hfs+")
 
-        partition7 = parted_dict['partitions'][7]
-        self.assertEqual(partition7['filesystem'], "linux-swap(v1)")
-        self.assertEqual(partition7['flags'], "swap")
+        partition7 = parted_dict["partitions"][7]
+        self.assertEqual(partition7["filesystem"], "linux-swap(v1)")
+        self.assertEqual(partition7["flags"], "swap")
 
     def test_parted_mbr_parsing(self):
         # Output of: parted -s /dev/sdc unit B print
@@ -89,28 +89,28 @@ Number  Start       End          Size         Type      File system     Flags
 """
         parted_dict = Parted.parse_parted_output(input_parted_mbr_string)
         print("Output dict was: " + str(parted_dict))
-        self.assertEqual(parted_dict['model'], "ATA VBOX HARDDISK (scsi)")
-        self.assertEqual(parted_dict['long_dev_node'], "/dev/sdc")
-        self.assertEqual(parted_dict['capacity'], 2147483648)
-        self.assertEqual(parted_dict['logical_sector_size'], 512)
-        self.assertEqual(parted_dict['logical_sector_size'], 512)
-        self.assertEqual(parted_dict['physical_sector_size'], 512)
-        self.assertEqual(parted_dict['partition_table'], "msdos")
-        self.assertEqual(parted_dict['flags'], "")
+        self.assertEqual(parted_dict["model"], "ATA VBOX HARDDISK (scsi)")
+        self.assertEqual(parted_dict["long_dev_node"], "/dev/sdc")
+        self.assertEqual(parted_dict["capacity"], 2147483648)
+        self.assertEqual(parted_dict["logical_sector_size"], 512)
+        self.assertEqual(parted_dict["logical_sector_size"], 512)
+        self.assertEqual(parted_dict["physical_sector_size"], 512)
+        self.assertEqual(parted_dict["partition_table"], "msdos")
+        self.assertEqual(parted_dict["flags"], "")
 
-        self.assertEqual(len(parted_dict['partitions']), 9)
+        self.assertEqual(len(parted_dict["partitions"]), 9)
 
-        self.assertEqual(parted_dict['partitions'][3]['type'], "primary")
-        self.assertEqual(parted_dict['partitions'][4]['type'], "extended")
-        self.assertEqual(parted_dict['partitions'][5]['type'], "logical")
+        self.assertEqual(parted_dict["partitions"][3]["type"], "primary")
+        self.assertEqual(parted_dict["partitions"][4]["type"], "extended")
+        self.assertEqual(parted_dict["partitions"][5]["type"], "logical")
 
-        partition9 = parted_dict['partitions'][9]
-        self.assertEqual(partition9['start'], 724566016)
-        self.assertEqual(partition9['end'], 2147483647)
-        self.assertEqual(partition9['size'], 1422917632)
-        self.assertEqual(partition9['type'], "logical")
-        self.assertEqual(partition9['filesystem'], "ntfs")
-        self.assertEqual(partition9['flags'], "")
+        partition9 = parted_dict["partitions"][9]
+        self.assertEqual(partition9["start"], 724566016)
+        self.assertEqual(partition9["end"], 2147483647)
+        self.assertEqual(partition9["size"], 1422917632)
+        self.assertEqual(partition9["type"], "logical")
+        self.assertEqual(partition9["filesystem"], "ntfs")
+        self.assertEqual(partition9["flags"], "")
 
     def test_parted_no_partitions_in_sectors_parsing(self):
         input_parted_string = """Model: Mock up test
@@ -137,10 +137,20 @@ Number  Start       End          Size         File system     Name  Flags
 """
 
         parted_dict = Parted.parse_parted_output(input_parted_gpt_string)
-        self.assertEqual(Parted.get_partitions_containing_flag(parted_dict, "bios_grub"), [2])
-        self.assertEqual(Parted.get_partitions_containing_flag(parted_dict, "boot"), [3])
-        self.assertEqual(Parted.get_partitions_containing_flag(parted_dict, "test"), [2,3])
-        parted_dict['partitions'][2]['flags'] = "asdf"
-        self.assertFalse(Parted.get_partitions_containing_flag(parted_dict, "bios_grub"), [])
-        parted_dict['partitions'][2]['flags'] = "msftdata,bios_grub"
-        self.assertTrue(Parted.get_partitions_containing_flag(parted_dict, "bios_grub"), [3])
+        self.assertEqual(
+            Parted.get_partitions_containing_flag(parted_dict, "bios_grub"), [2]
+        )
+        self.assertEqual(
+            Parted.get_partitions_containing_flag(parted_dict, "boot"), [3]
+        )
+        self.assertEqual(
+            Parted.get_partitions_containing_flag(parted_dict, "test"), [2, 3]
+        )
+        parted_dict["partitions"][2]["flags"] = "asdf"
+        self.assertFalse(
+            Parted.get_partitions_containing_flag(parted_dict, "bios_grub"), []
+        )
+        parted_dict["partitions"][2]["flags"] = "msftdata,bios_grub"
+        self.assertTrue(
+            Parted.get_partitions_containing_flag(parted_dict, "bios_grub"), [3]
+        )

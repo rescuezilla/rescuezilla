@@ -32,10 +32,14 @@ class OsProber:
             try:
                 efi_split = re.split("@", os_line[0])
                 longdevname = efi_split[0]
-                os_dict[longdevname] = {'os_description': os_line[1], 'os_label': os_line[2], 'os_type': os_line[3]}
+                os_dict[longdevname] = {
+                    "os_description": os_line[1],
+                    "os_label": os_line[2],
+                    "os_type": os_line[3],
+                }
                 try:
                     efi_bootloader_path = efi_split[1]
-                    os_dict[longdevname]['efi_bootloader_path'] = efi_bootloader_path
+                    os_dict[longdevname]["efi_bootloader_path"] = efi_bootloader_path
                 except IndexError:
                     continue
                     # To be expected

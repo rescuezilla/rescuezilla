@@ -27,6 +27,7 @@ MOUNTABLE_NBD_DEVICE = "/dev/nbd2"
 # qemu-nbd device should be able to safely use the same nbd device as the joined/compressed/mountable above.
 QEMU_NBD_NBD_DEVICE = "/dev/nbd4"
 
+
 class Mode(Enum):
     BACKUP = 1
     RESTORE = 2
@@ -34,7 +35,9 @@ class Mode(Enum):
     CLONE = 4
     IMAGE_EXPLORER = 5
 
+
 NETWORK_UI_WIDGET_MODES = [Mode.BACKUP, Mode.RESTORE, Mode.IMAGE_EXPLORER, Mode.VERIFY]
+
 
 class Page(Enum):
     WELCOME = 1
@@ -68,4 +71,3 @@ class Page(Enum):
     IMAGE_EXPLORER_SOURCE_LOCATION_SELECTION = 29
     IMAGE_EXPLORER_SOURCE_IMAGE_SELECTION = 30
     IMAGE_EXPLORER_PARTITION_MOUNT = 31
-

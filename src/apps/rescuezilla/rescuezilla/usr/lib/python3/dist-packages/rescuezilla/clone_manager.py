@@ -38,12 +38,10 @@ from utility import Utility, _
 
 # Signals should automatically propagate to processes called with subprocess.run().
 
+
 # The CloneManager leverages the BackupManager and RestoreManager as much as possible.
 class CloneManager:
-    def __init__(self,
-                 ui_manager: UiManager,
-                 backup_manager,
-                 restore_manager):
+    def __init__(self, ui_manager: UiManager, backup_manager, restore_manager):
         self.ui_manager = ui_manager
         self.clone_in_progress_lock = threading.Lock()
         self.clone_in_progress = False
@@ -57,15 +55,17 @@ class CloneManager:
         with self.clone_in_progress_lock:
             return self.clone_in_progress
 
-    def start_clone(self,
-                    image,
-                    clone_destination_drive,
-                    clone_mapping_dict,
-                    drive_state,
-                    is_overwriting_partition_table,
-                    is_rescue,
-                    completed_callback,
-                    on_separate_thread=True):
+    def start_clone(
+        self,
+        image,
+        clone_destination_drive,
+        clone_mapping_dict,
+        drive_state,
+        is_overwriting_partition_table,
+        is_rescue,
+        completed_callback,
+        on_separate_thread=True,
+    ):
         self.clone_timestart = datetime.now()
         self.image = image
         self.clone_destination_drive = clone_destination_drive
@@ -78,7 +78,9 @@ class CloneManager:
         # TODO: This is a crutch that ideally will be removed. It's very bad from an abstraction perspective, and
         # TODO: clear abstractions is important for ensuring correctness of the backup/restore operation
         self.system_drive_state = drive_state
-        self.temp_dir = os.path.join(tempfile.gettempdir(), "rescuezilla.clone.temp.data")
+        self.temp_dir = os.path.join(
+            tempfile.gettempdir(), "rescuezilla.clone.temp.data"
+        )
         print("Selected temp dir " + self.temp_dir)
         if os.path.exists(self.temp_dir):
             shutil.rmtree(self.temp_dir)
@@ -125,9 +127,11 @@ class CloneManager:
         except Exception as exception:
             tb = traceback.format_exc()
             traceback.print_exc()
-            return self.ui_manager.completed_operation(callable_fn=self.completed_clone,
-                                                       succeeded=False,
-                                                       message=_("Error restoring image: ") + tb)
+            return self.ui_manager.completed_operation(
+                callable_fn=self.completed_clone,
+                succeeded=False,
+                message=_("Error restoring image: ") + tb,
+            )
 
     def do_clone(self):
         self.requested_stop = False
@@ -142,69 +146,86 @@ class CloneManager:
         env = Utility.get_env_C_locale()
 
         if isinstance(self.image, QemuImage):
-            is_associated, failed_message = self.image.associate_nbd(QEMU_NBD_NBD_DEVICE)
+            is_associated, failed_message = self.image.associate_nbd(
+                QEMU_NBD_NBD_DEVICE
+            )
             if not is_associated:
-                return self.ui_manager.completed_operation(callable_fn=self.completed_clone,
-                                                           succeeded=False,
-                                                           message="Failed to associate QemuImage: " + failed_message)
-        if not (isinstance(self.image, QemuImage) or isinstance(self.image, MetadataOnlyImage)):
+                return self.ui_manager.completed_operation(
+                    callable_fn=self.completed_clone,
+                    succeeded=False,
+                    message="Failed to associate QemuImage: " + failed_message,
+                )
+        if not (
+            isinstance(self.image, QemuImage)
+            or isinstance(self.image, MetadataOnlyImage)
+        ):
             # This shouldn't ever happen
-            return self.ui_manager.completed_operation(callable_fn=self.completed_clone,
-                                                       succeeded=False,
-                                                       message="Unsupported image")
+            return self.ui_manager.completed_operation(
+                callable_fn=self.completed_clone,
+                succeeded=False,
+                message="Unsupported image",
+            )
         # self, selected_drive_key, partitions_to_backup, drive_state, dest_dir, backup_notes,
         #                      compression_dict, completed_backup_callback, on_separate_thread=True
         #
         # clone_destination_drive, clone_mapping_dict, is_overwriting_partition_table,
         #                       completed_callback
 
-        partitions_to_backup = self.image.get_partitions_to_backup(self.clone_mapping_dict.keys())
-        is_success, message = self.backup_manager.start_backup(selected_drive_key=self.image.long_device_node,
-                                                               partitions_to_backup=partitions_to_backup,
-                                                               drive_state=self.system_drive_state,
-                                                               dest_dir=self.temp_dir,
-                                                               backup_notes="",
-                                                               compression_dict={"format": "uncompressed", "level": None},
-                                                               is_rescue=self.is_rescue,
-                                                               completed_backup_callback=CloneManager._ignore_suboperation_callback,
-                                                               metadata_only_image_to_annotate = self.image,
-                                                               on_separate_thread=False)
+        partitions_to_backup = self.image.get_partitions_to_backup(
+            self.clone_mapping_dict.keys()
+        )
+        is_success, message = self.backup_manager.start_backup(
+            selected_drive_key=self.image.long_device_node,
+            partitions_to_backup=partitions_to_backup,
+            drive_state=self.system_drive_state,
+            dest_dir=self.temp_dir,
+            backup_notes="",
+            compression_dict={"format": "uncompressed", "level": None},
+            is_rescue=self.is_rescue,
+            completed_backup_callback=CloneManager._ignore_suboperation_callback,
+            metadata_only_image_to_annotate=self.image,
+            on_separate_thread=False,
+        )
 
         if not is_success:
             # During a clone operation, the user will only care about Backup Manager if it failed.
             with self.summary_message_lock and self.backup_manager.summary_message_lock:
                 self.summary_message += self.backup_manager.summary_message + "\n"
             self.ui_manager.display_error_message(summary_message=message)
-            return self.ui_manager.completed_operation(callable_fn=self.completed_clone,
-                                                       succeeded=False,
-                                                       message=message)
+            return self.ui_manager.completed_operation(
+                callable_fn=self.completed_clone, succeeded=False, message=message
+            )
 
         self.image.scan_dummy_images_and_annotate(self.temp_dir)
 
         # image, restore_destination_drive, restore_mapping_dict, is_overwriting_partition_table,
         #                       completed_callback, on_separate_thread=True
-        is_success, message = self.restore_manager.start_restore(image=self.image,
-                                           restore_destination_drive=self.clone_destination_drive,
-                                           restore_mapping_dict=self.clone_mapping_dict,
-                                           is_overwriting_partition_table=self.is_overwriting_partition_table,
-                                           is_rescue=self.is_rescue,
-                                           completed_callback = CloneManager._ignore_suboperation_callback,
-                                           on_separate_thread = False)
+        is_success, message = self.restore_manager.start_restore(
+            image=self.image,
+            restore_destination_drive=self.clone_destination_drive,
+            restore_mapping_dict=self.clone_mapping_dict,
+            is_overwriting_partition_table=self.is_overwriting_partition_table,
+            is_rescue=self.is_rescue,
+            completed_callback=CloneManager._ignore_suboperation_callback,
+            on_separate_thread=False,
+        )
         with self.summary_message_lock and self.restore_manager.summary_message_lock:
             self.summary_message += self.restore_manager.summary_message + "\n"
         if not is_success:
             self.ui_manager.display_error_message(summary_message=message)
-            return self.ui_manager.completed_operation(callable_fn=self.completed_clone,
-                                                       succeeded=False,
-                                                       message=message)
-        return self.ui_manager.completed_operation(callable_fn=self.completed_clone,
-                                                   succeeded=False,
-                                                   message="")
+            return self.ui_manager.completed_operation(
+                callable_fn=self.completed_clone, succeeded=False, message=message
+            )
+        return self.ui_manager.completed_operation(
+            callable_fn=self.completed_clone, succeeded=False, message=""
+        )
 
     # Expected to run on GTK event thread
     def completed_clone(self, succeeded, message):
         clone_timeend = datetime.now()
-        duration_minutes = Utility.get_human_readable_minutes_seconds((clone_timeend - self.clone_timestart).total_seconds())
+        duration_minutes = Utility.get_human_readable_minutes_seconds(
+            (clone_timeend - self.clone_timestart).total_seconds()
+        )
 
         if isinstance(self.image, QemuImage):
             is_success, failed_message = self.image.deassociate_nbd(QEMU_NBD_NBD_DEVICE)
@@ -232,15 +253,27 @@ class CloneManager:
             self.ui_manager.display_error_message(summary_message=message)
             print("Failure")
         with self.summary_message_lock:
-            self.summary_message += "\n" + _("Operation took {num_minutes} minutes.").format(num_minutes=duration_minutes) + "\n"
+            self.summary_message += (
+                "\n"
+                + _("Operation took {num_minutes} minutes.").format(
+                    num_minutes=duration_minutes
+                )
+                + "\n"
+            )
             post_task_action: str = self.ui_manager.get_post_task_action()
             if post_task_action != "DO_NOTHING":
                 if succeeded:
-                    has_scheduled, msg = Utility.schedule_shutdown_reboot(post_task_action)
+                    has_scheduled, msg = Utility.schedule_shutdown_reboot(
+                        post_task_action
+                    )
                     self.summary_message += "\n" + msg
                 else:
-                    self.summary_message += "\n" + _("Shutdown/Reboot cancelled due to errors.")
-        is_unmounted, umount_message = Utility.umount_warn_on_busy("/mnt/backup", is_lazy_umount=True)
+                    self.summary_message += "\n" + _(
+                        "Shutdown/Reboot cancelled due to errors."
+                    )
+        is_unmounted, umount_message = Utility.umount_warn_on_busy(
+            "/mnt/backup", is_lazy_umount=True
+        )
         if not is_unmounted:
             print(umount_message)
             with self.summary_message_lock:
@@ -260,11 +293,16 @@ class CloneManager:
             heading = _("Restore Summary")
         else:
             heading = _("Clone Summary")
-        text_to_display = text_to_display.format(heading=_(heading), message=self.ui_manager.escape_text(input=self.summary_message))
+        text_to_display = text_to_display.format(
+            heading=_(heading),
+            message=self.ui_manager.escape_text(input=self.summary_message),
+        )
         self.ui_manager.display_summary_text(text_to_display=text_to_display)
 
     # CloneManager handles the threading so calls to the BackupManager/RestoreManager are done synchronously, so the
     # callback is not required here.
     @staticmethod
     def _ignore_suboperation_callback(is_success):
-        print("CloneManager ignoring scheduled callback (using return code for directly called function)")
+        print(
+            "CloneManager ignoring scheduled callback (using return code for directly called function)"
+        )

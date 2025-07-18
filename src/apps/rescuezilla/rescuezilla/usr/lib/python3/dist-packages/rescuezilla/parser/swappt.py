@@ -28,7 +28,10 @@ class Swappt:
         if m.match("swappt-([a-zA-Z0-9-+_]+).info"):
             short_device_node = m.group(1)
         else:
-            raise Exception("Unable to extract short device node from " + swap_partition_info_abs_path)
+            raise Exception(
+                "Unable to extract short device node from "
+                + swap_partition_info_abs_path
+            )
         return short_device_node
 
     @staticmethod

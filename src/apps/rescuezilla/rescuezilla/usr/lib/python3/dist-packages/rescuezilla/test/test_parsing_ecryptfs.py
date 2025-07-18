@@ -32,10 +32,28 @@ disks_size_all_of_img="_3221MB" """
         pp = pprint.PrettyPrinter(indent=4)
         pp.pprint(ecryptfs_info_dict)
         expected_ecryptfs_info_dict = {
-            'disk': ["sdf"],
-            'parts': ["sdf1", "sdf2", "sdf5", "sdf6", "sdf7", "sdf8", "sdf9", "sdf10", "sdf12", "sdf13", "sdf14", "sdf15", "sdf16", "sdf17", "sdf18", "sdf19", "sdf20"],
+            "disk": ["sdf"],
+            "parts": [
+                "sdf1",
+                "sdf2",
+                "sdf5",
+                "sdf6",
+                "sdf7",
+                "sdf8",
+                "sdf9",
+                "sdf10",
+                "sdf12",
+                "sdf13",
+                "sdf14",
+                "sdf15",
+                "sdf16",
+                "sdf17",
+                "sdf18",
+                "sdf19",
+                "sdf20",
+            ],
             "time": "2020-0910-1046",
-            "size": "_3221MB"
+            "size": "_3221MB",
         }
 
         self.assertDictEqual(expected_ecryptfs_info_dict, ecryptfs_info_dict)

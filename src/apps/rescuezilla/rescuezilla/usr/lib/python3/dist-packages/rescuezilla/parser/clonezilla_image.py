@@ -113,9 +113,10 @@ class ClonezillaImage:
         short_device_node_partition_list = []
         if is_needs_decryption:
             ecryptfs_info_dict = Ecryptfs.parse_ecryptfs_info(
-                Utility.read_file_into_string(ecryptfs_info_filepath))
-            short_device_node_disk_list = ecryptfs_info_dict['disk']
-            short_device_node_partition_list = ecryptfs_info_dict['parts']
+                Utility.read_file_into_string(ecryptfs_info_filepath)
+            )
+            short_device_node_disk_list = ecryptfs_info_dict["disk"]
+            short_device_node_partition_list = ecryptfs_info_dict["parts"]
         else:
             # The 'disk' file can contain *multiple* space-separated short device nodes (eg 'sda sdb'), but most
             # users will only backup one drive at a time using Clonezilla.
@@ -123,7 +124,9 @@ class ClonezillaImage:
             # Clonezilla images created using 'saveparts' function (rather than 'savedisk') does NOT have this file.
             disk_filepath = os.path.join(dir, "disk")
             if isfile(disk_filepath):
-                short_device_node_disk_list = Utility.read_space_delimited_file_into_list(disk_filepath)
+                short_device_node_disk_list = (
+                    Utility.read_space_delimited_file_into_list(disk_filepath)
+                )
             else:
                 print("Unable to locate " + disk_filepath)
                 # Clonezilla images created using 'saveparts' (rather than 'savedisks') don't have this file.
@@ -133,17 +136,22 @@ class ClonezillaImage:
                 parted_absolute_path_list = glob.glob(os.path.join(dir, "*-pt.parted"))
                 for parted_absolute_path in parted_absolute_path_list:
                     short_device_node_disk_list.append(
-                        re.sub('-pt.parted', '', os.path.basename(parted_absolute_path)))
+                        re.sub("-pt.parted", "", os.path.basename(parted_absolute_path))
+                    )
 
             # The 'parts' file contains space separated short partition device nodes (eg 'sda1 sda2 sda7') corresponding
             # to the partitions that were selected by the user during the original backup.
             parts_filepath = os.path.join(dir, "parts")
             if isfile(parts_filepath):
-                short_device_node_partition_list = Utility.read_space_delimited_file_into_list(parts_filepath)
+                short_device_node_partition_list = (
+                    Utility.read_space_delimited_file_into_list(parts_filepath)
+                )
             else:
                 # Every Clonezilla image encountered so far has a 'parts' file, so the backup is considered invalid
                 # if none is present.
-                raise FileNotFoundError("Unable to locate " + parts_filepath + " or file is encrypted")
+                raise FileNotFoundError(
+                    "Unable to locate " + parts_filepath + " or file is encrypted"
+                )
 
         if len(short_device_node_disk_list) == 0:
             # If the device list is still empty it must be due to using 'saveparts' on a drive without a
@@ -156,15 +164,32 @@ class ClonezillaImage:
         enduser_drive_number = 1
         for short_disk_device_node in short_device_node_disk_list:
             key = absolute_clonezilla_img_path + ":" + short_disk_device_node
-            clonezilla_image_dict[key] = ClonezillaImage(absolute_clonezilla_img_path, enduser_filename, dir,
-                                                         ecryptfs_info_dict, is_needs_decryption,
-                                                         short_disk_device_node, short_device_node_partition_list,
-                                                         is_display_multidisk, enduser_drive_number)
+            clonezilla_image_dict[key] = ClonezillaImage(
+                absolute_clonezilla_img_path,
+                enduser_filename,
+                dir,
+                ecryptfs_info_dict,
+                is_needs_decryption,
+                short_disk_device_node,
+                short_device_node_partition_list,
+                is_display_multidisk,
+                enduser_drive_number,
+            )
             enduser_drive_number += 1
         return clonezilla_image_dict
 
-    def __init__(self, absolute_clonezilla_img_path, enduser_filename, dir, ecryptfs_info_dict, is_needs_decryption,
-                 short_disk_device_node, short_device_node_partition_list, is_display_multidisk, enduser_drive_number):
+    def __init__(
+        self,
+        absolute_clonezilla_img_path,
+        enduser_filename,
+        dir,
+        ecryptfs_info_dict,
+        is_needs_decryption,
+        short_disk_device_node,
+        short_device_node_partition_list,
+        is_display_multidisk,
+        enduser_drive_number,
+    ):
         self.absolute_path = absolute_clonezilla_img_path
         self.ecryptfs_info_dict = ecryptfs_info_dict
         self.is_needs_decryption = is_needs_decryption
@@ -179,13 +204,19 @@ class ClonezillaImage:
             self.user_notes = Utility.read_file_into_string(notes_filepath)
 
         if is_display_multidisk:
-            multidisk_desc = _("Drive {drive_number}".format(drive_number=str(self.enduser_drive_number)))
+            multidisk_desc = _(
+                "Drive {drive_number}".format(
+                    drive_number=str(self.enduser_drive_number)
+                )
+            )
             self.enduser_filename = enduser_filename + " (" + multidisk_desc + ")"
         else:
             self.enduser_filename = enduser_filename
 
         statbuf = os.stat(self.absolute_path)
-        self.last_modified_timestamp = format_datetime(datetime.fromtimestamp(statbuf.st_mtime))
+        self.last_modified_timestamp = format_datetime(
+            datetime.fromtimestamp(statbuf.st_mtime)
+        )
         print("Last modified timestamp " + self.last_modified_timestamp)
 
         self.image_format = "CLONEZILLA_FORMAT"
@@ -204,7 +235,8 @@ class ClonezillaImage:
             dev_fs_list_filepath = os.path.join(dir, "dev-fs.list")
             if isfile(dev_fs_list_filepath):
                 self.dev_fs_dict = ClonezillaImage.parse_dev_fs_list_output(
-                    Utility.read_file_into_string(dev_fs_list_filepath))
+                    Utility.read_file_into_string(dev_fs_list_filepath)
+                )
             else:
                 # Not raising exception because older Clonezilla images don't have this file.
                 print("Unable to locate " + dev_fs_list_filepath)
@@ -218,7 +250,10 @@ class ClonezillaImage:
             blkid_list_filepath = os.path.join(dir, "blkid.list")
             if isfile(blkid_list_filepath):
                 self.blkid_dict = Blkid.parse_blkid_output(
-                    Utility.read_file_into_string(os.path.join(dir, blkid_list_filepath)))
+                    Utility.read_file_into_string(
+                        os.path.join(dir, blkid_list_filepath)
+                    )
+                )
             else:
                 # Not raising exception because older Clonezilla images don't have this file.
                 print("Unable to locate " + blkid_list_filepath)
@@ -229,15 +264,19 @@ class ClonezillaImage:
             lvm_vg_dev_list_filepath = os.path.join(dir, "lvm_vg_dev.list")
             if isfile(lvm_vg_dev_list_filepath) and not self.is_needs_decryption:
                 self.lvm_vg_dev_dict = Lvm.parse_volume_group_device_list_string(
-                    Utility.read_file_into_string(lvm_vg_dev_list_filepath))
+                    Utility.read_file_into_string(lvm_vg_dev_list_filepath)
+                )
             else:
                 print("No LVM volume group to device file detected in image")
 
             # The 'lvm_logv.list' file contains the association between device nodes and the filesystems (eg '/dev/sda2 ext4')
             lvm_logv_list_filepath = os.path.join(dir, "lvm_logv.list")
             if isfile(lvm_logv_list_filepath) and not self.is_needs_decryption:
-                self.lvm_logical_volume_dict = Lvm.parse_logical_volume_device_list_string(
-                    Utility.read_file_into_string(lvm_logv_list_filepath))
+                self.lvm_logical_volume_dict = (
+                    Lvm.parse_logical_volume_device_list_string(
+                        Utility.read_file_into_string(lvm_logv_list_filepath)
+                    )
+                )
             else:
                 print("No LVM logical volume file detected in image")
 
@@ -252,31 +291,53 @@ class ClonezillaImage:
         parted_filepath = os.path.join(dir, short_disk_device_node + "-pt.parted")
         if isfile(parted_filepath) and not self.is_needs_decryption:
             self.parted_dict = Parted.parse_parted_output(
-                Utility.read_file_into_string(parted_filepath))
-            if 'capacity' in self.parted_dict and 'logical_sector_size' in \
-                    self.parted_dict:
-                self.size_bytes = self.parted_dict['capacity'] * \
-                                  self.parted_dict['logical_sector_size']
+                Utility.read_file_into_string(parted_filepath)
+            )
+            if (
+                "capacity" in self.parted_dict
+                and "logical_sector_size" in self.parted_dict
+            ):
+                self.size_bytes = (
+                    self.parted_dict["capacity"]
+                    * self.parted_dict["logical_sector_size"]
+                )
             else:
-                raise Exception("Unable to calculate disk capacity using " + parted_filepath + ": " + str(
-                    self.parted_dict))
+                raise Exception(
+                    "Unable to calculate disk capacity using "
+                    + parted_filepath
+                    + ": "
+                    + str(self.parted_dict)
+                )
         else:
             # Do not raise exception because parted partition table is not present when using 'saveparts'
             print("Unable to locate " + parted_filepath + " or file is encrypted")
 
-        if self.ecryptfs_info_dict is not None and 'size' in self.ecryptfs_info_dict.keys():
-            self.enduser_readable_size = self.ecryptfs_info_dict['size'].strip("_")
+        if (
+            self.ecryptfs_info_dict is not None
+            and "size" in self.ecryptfs_info_dict.keys()
+        ):
+            self.enduser_readable_size = self.ecryptfs_info_dict["size"].strip("_")
 
-        self.normalized_sfdisk_dict = {'absolute_path': None, 'sfdisk_dict': {'partitions': {}}, 'file_length': 0}
+        self.normalized_sfdisk_dict = {
+            "absolute_path": None,
+            "sfdisk_dict": {"partitions": {}},
+            "file_length": 0,
+        }
         if not is_needs_decryption:
             sfdisk_absolute_path = os.path.join(dir, short_disk_device_node + "-pt.sf")
-            self.normalized_sfdisk_dict = Sfdisk.generate_normalized_sfdisk_dict(sfdisk_absolute_path, self)
+            self.normalized_sfdisk_dict = Sfdisk.generate_normalized_sfdisk_dict(
+                sfdisk_absolute_path, self
+            )
 
         self.sfdisk_chs_dict = None
         if not is_needs_decryption:
-            sfdisk_chs_absolute_path = os.path.join(dir, short_disk_device_node + "-chs.sf")
+            sfdisk_chs_absolute_path = os.path.join(
+                dir, short_disk_device_node + "-chs.sf"
+            )
             if isfile(sfdisk_chs_absolute_path):
-                self.sfdisk_chs_dict = ClonezillaImage.parse_chs_sf_output(sfdisk_chs_absolute_path)
+                self.sfdisk_chs_dict = ClonezillaImage.parse_chs_sf_output(
+                    sfdisk_chs_absolute_path
+                )
 
         # There is a maximum of 1 MBR per drive (there can be many drives). Master Boot Record (MBR) is never
         # listed in 'parts' list.
@@ -287,15 +348,23 @@ class ClonezillaImage:
 
         # There is a maximum of 1 post-MBR gap per drive (there can be many drives). The post MBR gap is never
         # listed in 'parts' list. Note the asterisk wildcard in the glob, to get the notes.txt file (see below)
-        post_mbr_gap_glob_list = glob.glob(os.path.join(dir, short_disk_device_node) + "-hidden-data-after-mbr*")
+        post_mbr_gap_glob_list = glob.glob(
+            os.path.join(dir, short_disk_device_node) + "-hidden-data-after-mbr*"
+        )
         for absolute_post_mbr_gap_filepath in post_mbr_gap_glob_list:
-            if absolute_post_mbr_gap_filepath.endswith(".notes.txt") and not isfile(os.path.join(dir, short_disk_device_node) + "-hidden-data-after-mbr"):
+            if absolute_post_mbr_gap_filepath.endswith(".notes.txt") and not isfile(
+                os.path.join(dir, short_disk_device_node) + "-hidden-data-after-mbr"
+            ):
                 # When the post-MBR gap is not created by Clonezilla due to >1024 MB gap between MBR and first partition
                 # there is a "notes.txt" file created which explains this. To maximize compatibility, in this
                 # situation Rescuezilla v2.1+ creates a 1MB post-MBR  gap backup *and* a notes.txt file.
-                self.warning_dict[short_disk_device_node + "mbr"] = "Backup is missing the \"post-MBR gap\" backup, most likely due to Clonezilla detecting a >1024MB gap between the MBR partition table and the first partition. Any GRUB bootloaders present will not restore correctly. In order to boot after restoring this backup, Clonezilla happens to workaround this situation by automatically re-installing GRUB, but current version of Rescuezilla does not implement this (but will in a future version). Clonezilla is available from within the Rescuezilla live environment by running `clonezilla` in a Terminal. See the following link for more information: https://github.com/rescuezilla/rescuezilla/issues/146"
+                self.warning_dict[short_disk_device_node + "mbr"] = (
+                    'Backup is missing the "post-MBR gap" backup, most likely due to Clonezilla detecting a >1024MB gap between the MBR partition table and the first partition. Any GRUB bootloaders present will not restore correctly. In order to boot after restoring this backup, Clonezilla happens to workaround this situation by automatically re-installing GRUB, but current version of Rescuezilla does not implement this (but will in a future version). Clonezilla is available from within the Rescuezilla live environment by running `clonezilla` in a Terminal. See the following link for more information: https://github.com/rescuezilla/rescuezilla/issues/146'
+                )
             else:
-                self.post_mbr_gap_dict = {'absolute_path': absolute_post_mbr_gap_filepath}
+                self.post_mbr_gap_dict = {
+                    "absolute_path": absolute_post_mbr_gap_filepath
+                }
 
         # There is a maximum of 1 EBR per drive (there can be many drives). Extended Boot Record (EBR) is never
         # listed in 'parts' list. The asterisk is needed here because unlike the MBR case, the ebr file is eg,
@@ -303,8 +372,10 @@ class ClonezillaImage:
         ebr_glob_list = glob.glob(os.path.join(dir, short_disk_device_node) + "*-ebr")
         for absolute_ebr_filepath in ebr_glob_list:
             short_ebr_device_node = basename(absolute_ebr_filepath).split("-ebr")[0]
-            self.ebr_dict = {'short_device_node': short_ebr_device_node,
-                                                          'absolute_path': absolute_ebr_filepath}
+            self.ebr_dict = {
+                "short_device_node": short_ebr_device_node,
+                "absolute_path": absolute_ebr_filepath,
+            }
 
         # There is a maximum of 1 EFI NVRAM backup per computer
         self.efi_nvram_dat_absolute_path = None
@@ -319,7 +390,9 @@ class ClonezillaImage:
         self.proc_mdstat_dict = {}
         proc_mdstat_filepath = os.path.join(dir, "mdstat.txt")
         if isfile(proc_mdstat_filepath):
-            self.proc_mdstat_dict = ProcMdstat.parse_proc_mdstat_string(Utility.read_file_into_string(proc_mdstat_filepath))
+            self.proc_mdstat_dict = ProcMdstat.parse_proc_mdstat_string(
+                Utility.read_file_into_string(proc_mdstat_filepath)
+            )
             for raid_key in self.proc_mdstat_dict.keys():
                 expected_raid_file = raid_key + ".txt"
                 if isfile(expected_raid_file):
@@ -339,15 +412,18 @@ class ClonezillaImage:
             has_found_atleast_one_associated_image = False
             # For standard MBR and GPT partitions, the partition key listed in the 'parts' file has a directly
             # associated backup image, so check for this.
-            image_format_dict = ClonezillaImage.scan_backup_image(dir, short_partition_device_node,
-                                                                  self.is_needs_decryption)
+            image_format_dict = ClonezillaImage.scan_backup_image(
+                dir, short_partition_device_node, self.is_needs_decryption
+            )
             # If no match found check the LVM (Logical Volume Manager)
             if len(image_format_dict) == 0:
                 # Loop over all the volume groups (if any)
                 for vg_name in self.lvm_vg_dev_dict.keys():
                     # TODO: Evaluate if there are Linux multipath device nodes that hold LVM Physical Volumes.
                     # TODO: May need to adjust for multipath device node by replacing "/" with "-" for this node.
-                    pv_short_device_node = re.sub('/dev/', '', self.lvm_vg_dev_dict[vg_name]['device_node'])
+                    pv_short_device_node = re.sub(
+                        "/dev/", "", self.lvm_vg_dev_dict[vg_name]["device_node"]
+                    )
                     # Check if there is an associated LVM Physical Volume (PV) present
                     if short_partition_device_node == pv_short_device_node:
                         # Yes, the partition being analysed is associated with an LVM physical volume that contains
@@ -359,55 +435,87 @@ class ClonezillaImage:
                             if lv_path.startswith(candidate_lv_path_prefix):
                                 # Found a logical volume. Note: There may be more than one LV associated with an VG
                                 # Set the scan prefix for the backup image to eg "cl-root"
-                                logical_volume_scan_key = re.sub('/', '-', re.sub('/dev/', '', lv_path))
-                                image_format_dict = ClonezillaImage.scan_backup_image(dir, logical_volume_scan_key,
-                                                                                      self.is_needs_decryption)
+                                logical_volume_scan_key = re.sub(
+                                    "/", "-", re.sub("/dev/", "", lv_path)
+                                )
+                                image_format_dict = ClonezillaImage.scan_backup_image(
+                                    dir,
+                                    logical_volume_scan_key,
+                                    self.is_needs_decryption,
+                                )
                                 if len(image_format_dict) != 0:
-                                    image_format_dict['is_lvm_logical_volume'] = True
-                                    image_format_dict['volume_group_name'] = vg_name
-                                    image_format_dict['physical_volume_long_device_node'] = \
-                                    self.lvm_vg_dev_dict[vg_name]['device_node']
-                                    image_format_dict['logical_volume_long_device_node'] = lv_path
-                                    self.image_format_dict_dict[logical_volume_scan_key] = image_format_dict
+                                    image_format_dict["is_lvm_logical_volume"] = True
+                                    image_format_dict["volume_group_name"] = vg_name
+                                    image_format_dict[
+                                        "physical_volume_long_device_node"
+                                    ] = self.lvm_vg_dev_dict[vg_name]["device_node"]
+                                    image_format_dict[
+                                        "logical_volume_long_device_node"
+                                    ] = lv_path
+                                    self.image_format_dict_dict[
+                                        logical_volume_scan_key
+                                    ] = image_format_dict
                                     has_found_atleast_one_associated_image = True
             else:
                 has_found_atleast_one_associated_image = True
-                self.image_format_dict_dict[short_partition_device_node] = image_format_dict
-                if not self.has_partition_table() and image_format_dict['type'] == 'partclone':
+                self.image_format_dict_dict[short_partition_device_node] = (
+                    image_format_dict
+                )
+                if (
+                    not self.has_partition_table()
+                    and image_format_dict["type"] == "partclone"
+                ):
                     # Both Clonezilla's savedisk and saveparts will generally contain the partition table, except in
                     # the case of saveparts made of the filesystem-directly-on-disk case. For this case (which could
                     # be a dd image), scan using partclone.info. Scanning is slow, but due to lack of partition
                     # table, it will only ever be a single filesystem.
-                    self.partclone_info_dict_dict[self.short_disk_device_node] = Partclone.get_partclone_info_dict(
-                        abs_partclone_image_list=self.image_format_dict_dict[short_partition_device_node]['absolute_filename_glob_list'],
-                        image_key=short_partition_device_node,
-                        compression=self.image_format_dict_dict[short_partition_device_node]['compression'])
+                    self.partclone_info_dict_dict[self.short_disk_device_node] = (
+                        Partclone.get_partclone_info_dict(
+                            abs_partclone_image_list=self.image_format_dict_dict[
+                                short_partition_device_node
+                            ]["absolute_filename_glob_list"],
+                            image_key=short_partition_device_node,
+                            compression=self.image_format_dict_dict[
+                                short_partition_device_node
+                            ]["compression"],
+                        )
+                    )
 
             if not has_found_atleast_one_associated_image:
-                self.image_format_dict_dict[short_partition_device_node] = {'type': "missing",
-                                                                            'prefix': short_partition_device_node,
-                                                                            'is_lvm_logical_volume': False}
+                self.image_format_dict_dict[short_partition_device_node] = {
+                    "type": "missing",
+                    "prefix": short_partition_device_node,
+                    "is_lvm_logical_volume": False,
+                }
                 # TODO: Improve conversion between /dev/ nodes to short dev node.
                 long_partition_key = "/dev/" + short_partition_device_node
                 if long_partition_key in self.dev_fs_dict.keys():
                     # Annotate have filesystem information from dev-fs.list file. This case is expected when during a
                     # backup Clonezilla or Rescuezilla failed to successfully image the filesystem, but may have
                     # succeeded for other filesystems.
-                    fs = self.dev_fs_dict[long_partition_key]['filesystem']
-                    self.image_format_dict_dict[short_partition_device_node]['filesystem'] = fs
+                    fs = self.dev_fs_dict[long_partition_key]["filesystem"]
+                    self.image_format_dict_dict[short_partition_device_node][
+                        "filesystem"
+                    ] = fs
                     # TODO: Consider removing warning_dict as image_format_dict is sufficient.
                     self.warning_dict[short_partition_device_node] = fs
                 elif self.is_needs_decryption:
-                    self.warning_dict[short_partition_device_node] = _("Needs decryption")
+                    self.warning_dict[short_partition_device_node] = _(
+                        "Needs decryption"
+                    )
                 else:
-                    self.warning_dict[short_partition_device_node] = _("Unknown filesystem")
+                    self.warning_dict[short_partition_device_node] = _(
+                        "Unknown filesystem"
+                    )
 
         # Unfortunately swap partitions are not listed in the 'parts' file. There does not appear to be any alternative
         # but scanning for the swap partitions and add them to the existing partitions, taking care to avoid duplicates
         # by rescanning what has already been scanned due to listing as an LVM logical volume.
         swap_partition_info_glob_list = glob.glob(os.path.join(dir, "swappt-*.info"))
         for swap_partition_info_glob in swap_partition_info_glob_list:
-            key = Swappt.get_short_device_from_swappt_info_filename(swap_partition_info_glob)
+            key = Swappt.get_short_device_from_swappt_info_filename(
+                swap_partition_info_glob
+            )
             already_scanned = False
             for image_format_dict_key in self.image_format_dict_dict.keys():
                 if key == self.image_format_dict_dict[image_format_dict_key]["prefix"]:
@@ -415,10 +523,11 @@ class ClonezillaImage:
                     break
             if not already_scanned and not self.is_needs_decryption:
                 self.image_format_dict_dict[key] = Swappt.parse_swappt_info(
-                    Utility.read_file_into_string(swap_partition_info_glob))
-                self.image_format_dict_dict[key]['type'] = "swap"
-                self.image_format_dict_dict[key]['prefix'] = key
-                self.image_format_dict_dict[key]['is_lvm_logical_volume'] = False
+                    Utility.read_file_into_string(swap_partition_info_glob)
+                )
+                self.image_format_dict_dict[key]["type"] = "swap"
+                self.image_format_dict_dict[key]["prefix"] = key
+                self.image_format_dict_dict[key]["is_lvm_logical_volume"] = False
 
         total_size_estimate = 0
         # Now we have all the images, compute the partition size estimates, and save it to avoid recomputing.
@@ -430,8 +539,12 @@ class ClonezillaImage:
             for short_disk_key in self.short_device_node_disk_list:
                 if image_format_dict_key.startswith(short_disk_key):
                     associated_short_disk_key = short_disk_key
-            estimated_size_bytes = self._compute_partition_size_byte_estimate(associated_short_disk_key, image_format_dict_key)
-            self.image_format_dict_dict[image_format_dict_key]['estimated_size_bytes'] = estimated_size_bytes
+            estimated_size_bytes = self._compute_partition_size_byte_estimate(
+                associated_short_disk_key, image_format_dict_key
+            )
+            self.image_format_dict_dict[image_format_dict_key][
+                "estimated_size_bytes"
+            ] = estimated_size_bytes
             total_size_estimate += estimated_size_bytes
 
         if self.size_bytes == 0:
@@ -440,7 +553,9 @@ class ClonezillaImage:
             self.size_bytes = total_size_estimate
 
         # Convert size in bytes to KB/MB/GB/TB as relevant
-        self.enduser_readable_size = Utility.human_readable_filesize(int(self.size_bytes))
+        self.enduser_readable_size = Utility.human_readable_filesize(
+            int(self.size_bytes)
+        )
 
         pp = pprint.PrettyPrinter(indent=4)
         pp.pprint(self.image_format_dict_dict)
@@ -452,7 +567,7 @@ class ClonezillaImage:
             # Collect the files ending in eg, ".aa", ".ab" etc
             # It's vital that this is in alphabetical order.
             # FIXME: Potentially this could collect files ending in ".log"
-            if re.search(r'[.][a-zA-Z]+$', f):
+            if re.search(r"[.][a-zA-Z]+$", f):
                 glob_list.append(f)
         # It's not guaranteed the wildcard returns in alphabetical order, so we sort it (alphabetically, not lexically).
         glob_list.sort()
@@ -462,59 +577,92 @@ class ClonezillaImage:
     def scan_backup_image(dir, prefix, is_needs_decryption):
         image_format_dict = {}
         dd_image_abs_path_glob_list = ClonezillaImage._get_glob_list_of_split_images(
-            os.path.join(dir, prefix + "[.]dd-img[.][a-zA-Z][a-zA-Z]"))
-        ntfsclone_image_abs_path_glob_list = ClonezillaImage._get_glob_list_of_split_images(
-            os.path.join(dir, prefix + "[.]ntfs-img[.][a-zA-Z][a-zA-Z]"))
-        partclone_image_abs_path_glob_list = ClonezillaImage._get_glob_list_of_split_images(
-            os.path.join(dir, prefix + "[.]*-ptcl-img[.][a-zA-Z]*[.][a-zA-Z][a-zA-Z]"))
-        partimage_image_abs_path_glob_list = ClonezillaImage._get_glob_list_of_split_images(
-            os.path.join(dir, prefix + "[.][a-zA-Z][a-zA-Z]"))
-        swap_partition_info_glob_list = glob.glob(os.path.join(dir, "swappt-" + prefix + ".info"))
+            os.path.join(dir, prefix + "[.]dd-img[.][a-zA-Z][a-zA-Z]")
+        )
+        ntfsclone_image_abs_path_glob_list = (
+            ClonezillaImage._get_glob_list_of_split_images(
+                os.path.join(dir, prefix + "[.]ntfs-img[.][a-zA-Z][a-zA-Z]")
+            )
+        )
+        partclone_image_abs_path_glob_list = (
+            ClonezillaImage._get_glob_list_of_split_images(
+                os.path.join(
+                    dir, prefix + "[.]*-ptcl-img[.][a-zA-Z]*[.][a-zA-Z][a-zA-Z]"
+                )
+            )
+        )
+        partimage_image_abs_path_glob_list = (
+            ClonezillaImage._get_glob_list_of_split_images(
+                os.path.join(dir, prefix + "[.][a-zA-Z][a-zA-Z]")
+            )
+        )
+        swap_partition_info_glob_list = glob.glob(
+            os.path.join(dir, "swappt-" + prefix + ".info")
+        )
 
         if len(dd_image_abs_path_glob_list) > 0:
-            image_format_dict = {'type': "dd",
-                                 'absolute_filename_glob_list': dd_image_abs_path_glob_list,
-                                 'compression': Utility.detect_compression(dd_image_abs_path_glob_list),
-                                 'binary': "partclone.dd",
-                                 "prefix": prefix,
-                                 'is_lvm_logical_volume': False}
+            image_format_dict = {
+                "type": "dd",
+                "absolute_filename_glob_list": dd_image_abs_path_glob_list,
+                "compression": Utility.detect_compression(dd_image_abs_path_glob_list),
+                "binary": "partclone.dd",
+                "prefix": prefix,
+                "is_lvm_logical_volume": False,
+            }
 
         elif len(ntfsclone_image_abs_path_glob_list) > 0:
-            image_format_dict = {'type': "ntfsclone",
-                                 'absolute_filename_glob_list': ntfsclone_image_abs_path_glob_list,
-                                 'compression': Utility.detect_compression(ntfsclone_image_abs_path_glob_list),
-                                 'binary': "ntfsclone",
-                                 "prefix": prefix,
-                                 'is_lvm_logical_volume': False}
+            image_format_dict = {
+                "type": "ntfsclone",
+                "absolute_filename_glob_list": ntfsclone_image_abs_path_glob_list,
+                "compression": Utility.detect_compression(
+                    ntfsclone_image_abs_path_glob_list
+                ),
+                "binary": "ntfsclone",
+                "prefix": prefix,
+                "is_lvm_logical_volume": False,
+            }
         elif len(partclone_image_abs_path_glob_list) > 0:
-            m = utility.REMatcher(os.path.basename(partclone_image_abs_path_glob_list[0]))
+            m = utility.REMatcher(
+                os.path.basename(partclone_image_abs_path_glob_list[0])
+            )
             # sdf1.btrfs-ptcl-img.gz.aa
-            if m.match(r"" + prefix + "[.]([a-zA-Z0-9+]+)-ptcl-img[.][a-zA-Z0-9]+[.]aa"):
+            if m.match(
+                r"" + prefix + "[.]([a-zA-Z0-9+]+)-ptcl-img[.][a-zA-Z0-9]+[.]aa"
+            ):
                 # Clonezilla's image has to be detected. The filename only contains the compression for partclone images, but not
                 # for the other formats.
                 filesystem = m.group(1)
-                image_format_dict = {'type': "partclone",
-                                     'absolute_filename_glob_list': partclone_image_abs_path_glob_list,
-                                     'compression': Utility.detect_compression(partclone_image_abs_path_glob_list),
-                                     'filesystem': filesystem,
-                                     'binary': "partclone." + filesystem,
-                                     "prefix": prefix,
-                                     'is_lvm_logical_volume': False}
+                image_format_dict = {
+                    "type": "partclone",
+                    "absolute_filename_glob_list": partclone_image_abs_path_glob_list,
+                    "compression": Utility.detect_compression(
+                        partclone_image_abs_path_glob_list
+                    ),
+                    "filesystem": filesystem,
+                    "binary": "partclone." + filesystem,
+                    "prefix": prefix,
+                    "is_lvm_logical_volume": False,
+                }
         # PartImage images have a much wider wildcard that will match the above formats, so it's important we test it last
         elif len(partimage_image_abs_path_glob_list) > 0:
-            image_format_dict = {'type': "partimage",
-                                 'absolute_filename_glob_list': partimage_image_abs_path_glob_list,
-                                 'compression': Utility.detect_compression(partimage_image_abs_path_glob_list),
-                                 'binary': 'partimage',
-                                 "prefix": prefix,
-                                 'is_lvm_logical_volume': False}
+            image_format_dict = {
+                "type": "partimage",
+                "absolute_filename_glob_list": partimage_image_abs_path_glob_list,
+                "compression": Utility.detect_compression(
+                    partimage_image_abs_path_glob_list
+                ),
+                "binary": "partimage",
+                "prefix": prefix,
+                "is_lvm_logical_volume": False,
+            }
         elif len(swap_partition_info_glob_list) > 0:
             if not is_needs_decryption:
                 image_format_dict = Swappt.parse_swappt_info(
-                    Utility.read_file_into_string(swap_partition_info_glob_list[0]))
-                image_format_dict['type'] = "swap"
-                image_format_dict['prefix'] = prefix
-                image_format_dict['is_lvm_logical_volume'] = False
+                    Utility.read_file_into_string(swap_partition_info_glob_list[0])
+                )
+                image_format_dict["type"] = "swap"
+                image_format_dict["prefix"] = prefix
+                image_format_dict["is_lvm_logical_volume"] = False
         else:
             print("Unable to find associated image for " + prefix)
         return image_format_dict
@@ -524,14 +672,14 @@ class ClonezillaImage:
         dev_fs_dict = {}
         for line in dev_fs_list_string.splitlines():
             # Ignore comment lines (lines starting with hash symbol)
-            if not re.match(r'^#', line):
+            if not re.match(r"^#", line):
                 split_line = line.split(" ")
                 if len(split_line) > 0:
                     long_dev_node = split_line[0]
                     if len(split_line) > 1:
                         dev_fs_dict[long_dev_node] = {"filesystem": split_line[1]}
                     if len(split_line) > 2:
-                        dev_fs_dict[long_dev_node]['size'] = split_line[2]
+                        dev_fs_dict[long_dev_node]["size"] = split_line[2]
         return dev_fs_dict
 
     @staticmethod
@@ -543,45 +691,77 @@ class ClonezillaImage:
                 key = split[0].strip()
                 value = split[1].strip()
                 if key == "cylinders":
-                    chs_sf_dict['cylinders'] = int(value)
+                    chs_sf_dict["cylinders"] = int(value)
                 elif key == "heads":
-                    chs_sf_dict['heads'] = int(value)
+                    chs_sf_dict["heads"] = int(value)
                 elif key == "sectors":
-                    chs_sf_dict['sectors'] = int(value)
+                    chs_sf_dict["sectors"] = int(value)
                 else:
                     print("Unknown key" + key)
             except IndexError:
-                print("Unable to parse: " + str(split) + " in " + str(line) + ". Skipping")
+                print(
+                    "Unable to parse: " + str(split) + " in " + str(line) + ". Skipping"
+                )
         return chs_sf_dict
 
     def get_enduser_friendly_partition_description(self):
         flat_string = ""
-        if self.ecryptfs_info_dict is not None and 'size' in self.ecryptfs_info_dict.keys():
+        if (
+            self.ecryptfs_info_dict is not None
+            and "size" in self.ecryptfs_info_dict.keys()
+        ):
             flat_string += "ECRYPTFS: "
         if self.is_display_multidisk:
-            flat_string += _("Drive {drive_number}".format(drive_number=str(self.enduser_drive_number))) + ": "
+            flat_string += (
+                _(
+                    "Drive {drive_number}".format(
+                        drive_number=str(self.enduser_drive_number)
+                    )
+                )
+                + ": "
+            )
         for image_format_dict_key in self.image_format_dict_dict.keys():
             if self.does_image_key_belong_to_device(image_format_dict_key):
-                if self.image_format_dict_dict[image_format_dict_key]['is_lvm_logical_volume']:
-                    flat_string += "(" + image_format_dict_key + ": " + self.flatten_partition_string(
-                        image_format_dict_key) + ") "
+                if self.image_format_dict_dict[image_format_dict_key][
+                    "is_lvm_logical_volume"
+                ]:
+                    flat_string += (
+                        "("
+                        + image_format_dict_key
+                        + ": "
+                        + self.flatten_partition_string(image_format_dict_key)
+                        + ") "
+                    )
                 else:
-                    base_device_node, partition_number = Utility.split_device_string(image_format_dict_key)
-                    flat_string += "(" + str(partition_number) + ": " + self.flatten_partition_string(
-                        image_format_dict_key) + ") "
+                    base_device_node, partition_number = Utility.split_device_string(
+                        image_format_dict_key
+                    )
+                    flat_string += (
+                        "("
+                        + str(partition_number)
+                        + ": "
+                        + self.flatten_partition_string(image_format_dict_key)
+                        + ") "
+                    )
         return flat_string
 
     def flatten_partition_string(self, partition_short_device_node):
         flat_string = self._get_human_readable_filesystem(partition_short_device_node)
-        partition_byte_estimate = self.image_format_dict_dict[partition_short_device_node]['estimated_size_bytes']
-        flat_string += " " + str(Utility.human_readable_filesize(partition_byte_estimate))
+        partition_byte_estimate = self.image_format_dict_dict[
+            partition_short_device_node
+        ]["estimated_size_bytes"]
+        flat_string += " " + str(
+            Utility.human_readable_filesize(partition_byte_estimate)
+        )
         return flat_string
 
     # Multidisk helper
     def does_image_key_belong_to_device(self, image_format_dict_key):
-        if self.image_format_dict_dict[image_format_dict_key]['is_lvm_logical_volume'] and \
-                self.image_format_dict_dict[image_format_dict_key]['physical_volume_long_device_node'].startswith(
-                        "/dev/" + self.short_disk_device_node):
+        if self.image_format_dict_dict[image_format_dict_key][
+            "is_lvm_logical_volume"
+        ] and self.image_format_dict_dict[image_format_dict_key][
+            "physical_volume_long_device_node"
+        ].startswith("/dev/" + self.short_disk_device_node):
             return True
         elif image_format_dict_key.startswith(self.short_disk_device_node):
             return True
@@ -602,7 +782,9 @@ class ClonezillaImage:
     def is_volume_group_in_pv(self, volume_group_key):
         # Extract the device node associated with the physical volume of the image
         # This original device must be mapped to the destination drive.
-        image_pv_long_device_node = self.lvm_vg_dev_dict[volume_group_key]['device_node']
+        image_pv_long_device_node = self.lvm_vg_dev_dict[volume_group_key][
+            "device_node"
+        ]
         # TODO: Might need to make this logic better
         image_long_disk_device_node = "/dev/" + self.short_disk_device_node
         if not image_pv_long_device_node.startswith(image_long_disk_device_node):
@@ -611,52 +793,98 @@ class ClonezillaImage:
             return True
 
     def _get_human_readable_filesystem(self, partition_short_device_node):
-        if 'filesystem' in self.image_format_dict_dict[partition_short_device_node].keys():
-            human_readable_filesystem = self.image_format_dict_dict[partition_short_device_node]['filesystem']
-        elif 'type' in self.image_format_dict_dict[partition_short_device_node].keys():
-            human_readable_filesystem = self.image_format_dict_dict[partition_short_device_node]['type']
+        if (
+            "filesystem"
+            in self.image_format_dict_dict[partition_short_device_node].keys()
+        ):
+            human_readable_filesystem = self.image_format_dict_dict[
+                partition_short_device_node
+            ]["filesystem"]
+        elif "type" in self.image_format_dict_dict[partition_short_device_node].keys():
+            human_readable_filesystem = self.image_format_dict_dict[
+                partition_short_device_node
+            ]["type"]
         else:
             # TODO: Improve conversion between /dev/ nodes to short dev node.
             long_partition_key = "/dev/" + re.sub("-", "/", partition_short_device_node)
             if long_partition_key in self.dev_fs_dict.keys():
                 # TODO: Consider raising exception?
-                human_readable_filesystem = "NOT FOUND: " + self.dev_fs_dict[long_partition_key]['filesystem']
+                human_readable_filesystem = (
+                    "NOT FOUND: " + self.dev_fs_dict[long_partition_key]["filesystem"]
+                )
             else:
                 human_readable_filesystem = "NOT FOUND: " + long_partition_key
         return human_readable_filesystem
 
     # Estimates size of each filesystem image, ideally based on the partition table, but otherwise by querying the total
     # number of bytes used by the image files. Does NOT use partclone.info, which too slow to run on every image.
-    def _compute_partition_size_byte_estimate(self, short_disk_key, partition_short_device_node):
+    def _compute_partition_size_byte_estimate(
+        self, short_disk_key, partition_short_device_node
+    ):
         estimated_size = 0
 
         if not self.has_partition_table():
-            if short_disk_key in self.partclone_info_dict_dict.keys() and 'size' in self.partclone_info_dict_dict[
-                short_disk_key].keys():
-                estimated_size = self.partclone_info_dict_dict[short_disk_key]['size']['bytes']
+            if (
+                short_disk_key in self.partclone_info_dict_dict.keys()
+                and "size" in self.partclone_info_dict_dict[short_disk_key].keys()
+            ):
+                estimated_size = self.partclone_info_dict_dict[short_disk_key]["size"][
+                    "bytes"
+                ]
 
-        is_swap = 'type' in self.image_format_dict_dict[partition_short_device_node].keys() and \
-                  self.image_format_dict_dict[partition_short_device_node]['type'] == 'swap'
+        is_swap = (
+            "type" in self.image_format_dict_dict[partition_short_device_node].keys()
+            and self.image_format_dict_dict[partition_short_device_node]["type"]
+            == "swap"
+        )
         if not is_swap:
-            is_lvm_logical_volume = 'is_lvm_logical_volume' in self.image_format_dict_dict[partition_short_device_node].keys() and \
-                    self.image_format_dict_dict[partition_short_device_node]['is_lvm_logical_volume']
+            is_lvm_logical_volume = (
+                "is_lvm_logical_volume"
+                in self.image_format_dict_dict[partition_short_device_node].keys()
+                and self.image_format_dict_dict[partition_short_device_node][
+                    "is_lvm_logical_volume"
+                ]
+            )
             if not is_lvm_logical_volume:
                 # Prefer estimated size from parted partition table backup, but this requires splitting the device node
-                image_base_device_node, image_partition_number = Utility.split_device_string(partition_short_device_node)
-                if 'partitions' in self.parted_dict.keys() and image_partition_number in \
-                    self.parted_dict['partitions'].keys():
-                    estimated_size = self.parted_dict['partitions'][image_partition_number]['size'] * \
-                                     self.parted_dict['logical_sector_size']
+                image_base_device_node, image_partition_number = (
+                    Utility.split_device_string(partition_short_device_node)
+                )
+                if (
+                    "partitions" in self.parted_dict.keys()
+                    and image_partition_number in self.parted_dict["partitions"].keys()
+                ):
+                    estimated_size = (
+                        self.parted_dict["partitions"][image_partition_number]["size"]
+                        * self.parted_dict["logical_sector_size"]
+                    )
 
         if estimated_size == 0:
             # If the information wasn't in the parted backup, try the sfdisk partition table backup
-            if '/dev/' + short_disk_key in self.normalized_sfdisk_dict['sfdisk_dict']['partitions'].keys():
-                estimated_size = self.normalized_sfdisk_dict['sfdisk_dict']['partitions']['/dev/' + short_disk_key] * 512
+            if (
+                "/dev/" + short_disk_key
+                in self.normalized_sfdisk_dict["sfdisk_dict"]["partitions"].keys()
+            ):
+                estimated_size = (
+                    self.normalized_sfdisk_dict["sfdisk_dict"]["partitions"][
+                        "/dev/" + short_disk_key
+                    ]
+                    * 512
+                )
             # Worst cast, count up the file size on disk (which is much faster compared to querying partclone.info).
             # This is expected for Clonezilla Logical Volume Manager (LVM) Logical Volume (LVs) images, which do not
             # have size estimates metadata.
-            elif 'absolute_filename_glob_list' in self.image_format_dict_dict[partition_short_device_node].keys():
-                glob_list = self.image_format_dict_dict[partition_short_device_node]['absolute_filename_glob_list']
-                compression = self.image_format_dict_dict[partition_short_device_node]['compression']
-                estimated_size = Utility.count_total_size_of_files_on_disk(glob_list, compression)
+            elif (
+                "absolute_filename_glob_list"
+                in self.image_format_dict_dict[partition_short_device_node].keys()
+            ):
+                glob_list = self.image_format_dict_dict[partition_short_device_node][
+                    "absolute_filename_glob_list"
+                ]
+                compression = self.image_format_dict_dict[partition_short_device_node][
+                    "compression"
+                ]
+                estimated_size = Utility.count_total_size_of_files_on_disk(
+                    glob_list, compression
+                )
         return estimated_size

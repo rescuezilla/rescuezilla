@@ -81,59 +81,63 @@ Original filesystem size: 	2.80 GB (3006263296 bytes)
 Space used in filesystem: 	14.86 MB (15581184 bytes)
 
 """
-        fsarchiver_archinfo_dict = FsArchiverImage.parse_fsarchiver_archinfo_output(input_fsarchiver_archinfo_string)
+        fsarchiver_archinfo_dict = FsArchiverImage.parse_fsarchiver_archinfo_output(
+            input_fsarchiver_archinfo_string
+        )
         expected_fsarchiver_archinfo_dict = {
-            'archive_type': 'filesystems',
-            'fs_count': 5,
-            'archive_id': '6041cf71',
-            'archive_file_format': 'FsArCh_002',
-            'created_with': '0.8.5',
-            'date': '2021-03-13_05-23-37',
-            'archive_label': '<none>',
-            'minimum_fsarchiver_version': '0.6.4.0',
-            'compression_level': '8 (zstd level 8)',
-            'encryption_algorithm': 'none',
-            'filesystems': {
-                '0': {
-                    'filesystem_format': 'ext4',
-                    'filesystem_label': '',
-                    'filesystem_uuid': 'dbba5b33-43d6-49f8-bd2d-5c14c326f7ac',
-                    'original_long_device_node': '/dev/sdb1',
-                    'size_bytes': 650952704,
-                    'used_bytes': 679936,
+            "archive_type": "filesystems",
+            "fs_count": 5,
+            "archive_id": "6041cf71",
+            "archive_file_format": "FsArCh_002",
+            "created_with": "0.8.5",
+            "date": "2021-03-13_05-23-37",
+            "archive_label": "<none>",
+            "minimum_fsarchiver_version": "0.6.4.0",
+            "compression_level": "8 (zstd level 8)",
+            "encryption_algorithm": "none",
+            "filesystems": {
+                "0": {
+                    "filesystem_format": "ext4",
+                    "filesystem_label": "",
+                    "filesystem_uuid": "dbba5b33-43d6-49f8-bd2d-5c14c326f7ac",
+                    "original_long_device_node": "/dev/sdb1",
+                    "size_bytes": 650952704,
+                    "used_bytes": 679936,
                 },
-                '1': {
-                    'filesystem_format': 'ext4',
-                    'filesystem_label': '',
-                    'filesystem_uuid': 'f1fea003-1cf7-4a9e-9d9c-0d7cc23d1e3d',
-                    'original_long_device_node': '/dev/sdc1',
-                    'size_bytes': 1038016512,
-                    'used_bytes': 1314816,
+                "1": {
+                    "filesystem_format": "ext4",
+                    "filesystem_label": "",
+                    "filesystem_uuid": "f1fea003-1cf7-4a9e-9d9c-0d7cc23d1e3d",
+                    "original_long_device_node": "/dev/sdc1",
+                    "size_bytes": 1038016512,
+                    "used_bytes": 1314816,
                 },
-                '2': {
-                    'filesystem_format': 'btrfs',
-                    'filesystem_label': '',
-                    'filesystem_uuid': '9264f052-6695-445c-aa40-87f1dc6045bf',
-                    'original_long_device_node': '/dev/sdg1',
-                    'size_bytes': 268435456,
-                    'used_bytes': 3670016,
+                "2": {
+                    "filesystem_format": "btrfs",
+                    "filesystem_label": "",
+                    "filesystem_uuid": "9264f052-6695-445c-aa40-87f1dc6045bf",
+                    "original_long_device_node": "/dev/sdg1",
+                    "size_bytes": 268435456,
+                    "used_bytes": 3670016,
                 },
-                '3': {
-                    'filesystem_format': 'vfat',
-                    'filesystem_label': 'NO NAME',
-                    'filesystem_uuid': '<none>',
-                    'original_long_device_node': '/dev/sdg2',
-                    'size_bytes': 480337920,
-                    'used_bytes': 4096,
+                "3": {
+                    "filesystem_format": "vfat",
+                    "filesystem_label": "NO NAME",
+                    "filesystem_uuid": "<none>",
+                    "original_long_device_node": "/dev/sdg2",
+                    "size_bytes": 480337920,
+                    "used_bytes": 4096,
                 },
-                '4': {
-                    'filesystem_format': 'ntfs',
-                    'filesystem_label': '<unknown>',
-                    'filesystem_uuid': '27C70B8D355A8E6D',
-                    'original_long_device_node': '/dev/sdg3',
-                    'size_bytes': 3006263296,
-                    'used_bytes': 15581184,
-                }
-            }
+                "4": {
+                    "filesystem_format": "ntfs",
+                    "filesystem_label": "<unknown>",
+                    "filesystem_uuid": "27C70B8D355A8E6D",
+                    "original_long_device_node": "/dev/sdg3",
+                    "size_bytes": 3006263296,
+                    "used_bytes": 15581184,
+                },
+            },
         }
-        self.assertDictEqual(expected_fsarchiver_archinfo_dict, fsarchiver_archinfo_dict)
+        self.assertDictEqual(
+            expected_fsarchiver_archinfo_dict, fsarchiver_archinfo_dict
+        )

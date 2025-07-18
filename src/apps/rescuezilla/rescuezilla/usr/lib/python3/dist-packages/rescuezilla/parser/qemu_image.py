@@ -36,14 +36,13 @@ class QemuImage(MetadataOnlyImage):
         "Hyper-V": [".vhdx", ".vhd"],
         "QEMU": [".qcow2", ".qcow", ".qed"],
         "Apple DMG": [".dmg"],
-        "Parallels": [".hds", ".hdd", ".fdd"]
+        "Parallels": [".hds", ".hdd", ".fdd"],
     }
 
     @staticmethod
     def is_supported_extension(filename):
         # https://fileinfo.com/filetypes/disk_image
         # https://qemu-project.gitlab.io/qemu/system/images.html
-
 
         # Ignore [/mnt/backup]/sbin/partclone.dd
         if filename.lower().endswith("partclone.dd"):
@@ -69,16 +68,22 @@ class QemuImage(MetadataOnlyImage):
         if suffix_key != ".img":
             return False
         else:
-            fog_project_glob = glob.glob(os.path.join(candidate_qemu_folder, "*.partitions"))
+            fog_project_glob = glob.glob(
+                os.path.join(candidate_qemu_folder, "*.partitions")
+            )
             foxclone_glob = glob.glob(os.path.join(candidate_qemu_folder, "*.backup"))
             redo_glob = glob.glob(os.path.join(candidate_qemu_folder, "*.redo"))
-            if len(fog_project_glob) != 0 or len(foxclone_glob) != 0 or len(redo_glob) != 0:
+            if (
+                len(fog_project_glob) != 0
+                or len(foxclone_glob) != 0
+                or len(redo_glob) != 0
+            ):
                 return True
         return False
 
     @staticmethod
     def does_file_extension_refer_to_raw_image(absolute_path):
-        raw_list = QemuImage.SUPPORTED_EXTENSIONS['RAW']
+        raw_list = QemuImage.SUPPORTED_EXTENSIONS["RAW"]
         for key in raw_list:
             if absolute_path.endswith(key):
                 return True
@@ -104,7 +109,9 @@ class QemuImage(MetadataOnlyImage):
         self.warning_dict = {}
 
         qemu_img_cmd_list = ["qemu-img", "info", absolute_qemu_img_path]
-        process, flat_command_string, fail_description = Utility.run("qemu-img info", qemu_img_cmd_list, use_c_locale=True)
+        process, flat_command_string, fail_description = Utility.run(
+            "qemu-img info", qemu_img_cmd_list, use_c_locale=True
+        )
         if process.returncode != 0:
             self.warning_dict[flat_command_string] = process.stderr
             return
@@ -113,7 +120,9 @@ class QemuImage(MetadataOnlyImage):
 
         is_associated, failed_message = self.associate_nbd(QEMU_NBD_NBD_DEVICE)
         if not is_associated:
-            self.warning_dict[flat_command_string] = "Could not associate: " + failed_message
+            self.warning_dict[flat_command_string] = (
+                "Could not associate: " + failed_message
+            )
             return
 
         super().__init__(QEMU_NBD_NBD_DEVICE, absolute_qemu_img_path, enduser_filename)
@@ -131,46 +140,65 @@ class QemuImage(MetadataOnlyImage):
         if not is_success:
             return False, error_message
         self.long_device_node = nbd_device
-        is_raw_img = QemuImage.does_file_extension_refer_to_raw_image(self.absolute_path)
+        is_raw_img = QemuImage.does_file_extension_refer_to_raw_image(
+            self.absolute_path
+        )
         if not is_raw_img:
             # Does NOT associate images read-only to provide the ability to ntfsfix partitions as the standard
             # Clonezilla behavior is to eg, run ntfsfix during a restore to fix common NTFS issues including
             # detecting hibernated NTFS partitions.
-            qemu_nbd_cmd_list = ["qemu-nbd", "--connect=" + nbd_device, self.absolute_path]
+            qemu_nbd_cmd_list = [
+                "qemu-nbd",
+                "--connect=" + nbd_device,
+                self.absolute_path,
+            ]
         else:
             # Specifies raw format so qemu-nbd doesn't provide a non-zero error code. Read-only for safety.
-            qemu_nbd_cmd_list = ["qemu-nbd", "--read-only", "--format=raw", "--connect=" + nbd_device, self.absolute_path]
-        is_success, message = Utility.retry_run(short_description="qemu-nbd associate with " + nbd_device,
-                          cmd_list=qemu_nbd_cmd_list,
-                          expected_error_msg="Unexpected end-of-file",
-                          retry_interval_seconds=1,
-                          timeout_seconds=self.timeout_seconds)
+            qemu_nbd_cmd_list = [
+                "qemu-nbd",
+                "--read-only",
+                "--format=raw",
+                "--connect=" + nbd_device,
+                self.absolute_path,
+            ]
+        is_success, message = Utility.retry_run(
+            short_description="qemu-nbd associate with " + nbd_device,
+            cmd_list=qemu_nbd_cmd_list,
+            expected_error_msg="Unexpected end-of-file",
+            retry_interval_seconds=1,
+            timeout_seconds=self.timeout_seconds,
+        )
 
         if is_success:
             # Keep probing using blkid until NBD device is ready.
             blkid_cmd_list = ["blkid", nbd_device]
-            is_success, message = Utility.retry_run(short_description="Run blkid until NBD device ready " + nbd_device,
-                              cmd_list=blkid_cmd_list,
-                              expected_error_msg="",
-                              retry_interval_seconds=1,
-                              timeout_seconds=self.timeout_seconds)
+            is_success, message = Utility.retry_run(
+                short_description="Run blkid until NBD device ready " + nbd_device,
+                cmd_list=blkid_cmd_list,
+                expected_error_msg="",
+                retry_interval_seconds=1,
+                timeout_seconds=self.timeout_seconds,
+            )
         return is_success, message
 
     @staticmethod
     def deassociate_nbd(nbd_device):
         # In practice the partprobe refresh partition table seems to hang unless an nbd-client disconnection is also
         # done
-        process, flat_command_string, failed_description = Utility.run("Disconnect nbd association",
-                                                                   ["nbd-client", "-disconnect",
-                                                                    nbd_device],
-                                                                   use_c_locale=True)
+        process, flat_command_string, failed_description = Utility.run(
+            "Disconnect nbd association",
+            ["nbd-client", "-disconnect", nbd_device],
+            use_c_locale=True,
+        )
         if process.returncode != 0:
             return False, failed_description
 
         qemu_nbd_disconnect_cmd_list = ["qemu-nbd", "--disconnect", nbd_device]
-        process, flat_command_string, fail_description = Utility.run("qemu-nbd request disconnect " + nbd_device,
-                                                                     qemu_nbd_disconnect_cmd_list,
-                                                                     use_c_locale=True)
+        process, flat_command_string, fail_description = Utility.run(
+            "qemu-nbd request disconnect " + nbd_device,
+            qemu_nbd_disconnect_cmd_list,
+            use_c_locale=True,
+        )
         if process.returncode != 0:
             return False, fail_description
 

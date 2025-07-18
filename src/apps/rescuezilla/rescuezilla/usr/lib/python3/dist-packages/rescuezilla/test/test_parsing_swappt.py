@@ -25,12 +25,16 @@ from parser.swappt import Swappt
 class SwapptInfoTest(unittest.TestCase):
     def test_extracting_short_device_node_from_swappt_info_filename(self):
         input_swappt_info_filename = "/path/to/swappt-sda12.info"
-        swappt_short_device_node = Swappt.get_short_device_from_swappt_info_filename(input_swappt_info_filename)
+        swappt_short_device_node = Swappt.get_short_device_from_swappt_info_filename(
+            input_swappt_info_filename
+        )
         expected_short_device_node = "sda12"
         self.assertEqual(expected_short_device_node, swappt_short_device_node)
 
         input_swappt_info_filename = "/path/to/swappt-testvg-testlv.info"
-        swappt_short_device_node = Swappt.get_short_device_from_swappt_info_filename(input_swappt_info_filename)
+        swappt_short_device_node = Swappt.get_short_device_from_swappt_info_filename(
+            input_swappt_info_filename
+        )
         expected_short_device_node = "testvg-testlv"
         self.assertEqual(expected_short_device_node, swappt_short_device_node)
 
@@ -40,7 +44,7 @@ LABEL="TEST_LABEL" """
         swappt_info_dict = Swappt.parse_swappt_info(input_swappt_info_string)
 
         expected_swappt_info_dict = {
-            'uuid': "TEST-UUID-VALUE123",
-            "label": "TEST_LABEL"
+            "uuid": "TEST-UUID-VALUE123",
+            "label": "TEST_LABEL",
         }
         self.assertDictEqual(expected_swappt_info_dict, swappt_info_dict)

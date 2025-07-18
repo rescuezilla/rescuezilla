@@ -26,15 +26,15 @@ class Lsblk:
         unnested_lsblk_dict = collections.OrderedDict([])
         lsblk_json_dict = json.loads(lsblk_json_output)
         print("output is " + str(lsblk_json_dict))
-        block_device_dict_list_to_process = lsblk_json_dict['blockdevices']
+        block_device_dict_list_to_process = lsblk_json_dict["blockdevices"]
         while len(block_device_dict_list_to_process) > 0:
             block_device_dict = block_device_dict_list_to_process.pop()
             print("Processing " + str(block_device_dict))
-            if 'children' in block_device_dict.keys():
-                block_device_dict_list_to_process += block_device_dict['children']
-                del block_device_dict['children']
-            if 'name' in block_device_dict.keys():
-                name = block_device_dict.pop('name', None)
+            if "children" in block_device_dict.keys():
+                block_device_dict_list_to_process += block_device_dict["children"]
+                del block_device_dict["children"]
+            if "name" in block_device_dict.keys():
+                name = block_device_dict.pop("name", None)
                 unnested_lsblk_dict[name] = block_device_dict
             else:
                 print("Unknown")
@@ -46,25 +46,37 @@ class Lsblk:
         unnested_lsblk_dict = collections.OrderedDict([])
         lines = lsblk_output.split(sep="\n")
         column_title = lines.pop(0)
-        #print("Column title is" + column_title)
+        # print("Column title is" + column_title)
         kname_index = column_title.index("KNAME")
         name_index = column_title.index(" NAME") + 1
         # The size column is right justified, so the start index needs to be carefully calculated (see unit test)
         index_of_space_after_e_in_name = name_index + 4
         index_of_space_before_s_in_size = column_title.index("SIZE") - 1
-        size_index = math.ceil((index_of_space_after_e_in_name + index_of_space_before_s_in_size) / 2)
+        size_index = math.ceil(
+            (index_of_space_after_e_in_name + index_of_space_before_s_in_size) / 2
+        )
         type_index = column_title.index("TYPE")
         fstype_index = column_title.index("FSTYPE")
         mountpoint_index = column_title.index("MOUNTPOINT")
         model_index = column_title.index("MODEL")
         for line in lines:
-            name = line[name_index:size_index].strip().lstrip('├─').lstrip('└─')
+            name = line[name_index:size_index].strip().lstrip("├─").lstrip("└─")
             unnested_lsblk_dict[name] = {}
             # Maybe able to have deeper nested structures.
-            unnested_lsblk_dict[name]['kname'] = line[kname_index:name_index - 1].strip()
-            unnested_lsblk_dict[name]['size'] = line[size_index:type_index - 1].strip()
-            unnested_lsblk_dict[name]['type'] = line[type_index:fstype_index - 1].strip()
-            unnested_lsblk_dict[name]['fstype'] = line[fstype_index:mountpoint_index - 1].strip()
-            unnested_lsblk_dict[name]['mountpoint'] = line[mountpoint_index:model_index - 1].strip()
-            unnested_lsblk_dict[name]['model'] = line[model_index:len(line)].strip()
+            unnested_lsblk_dict[name]["kname"] = line[
+                kname_index : name_index - 1
+            ].strip()
+            unnested_lsblk_dict[name]["size"] = line[
+                size_index : type_index - 1
+            ].strip()
+            unnested_lsblk_dict[name]["type"] = line[
+                type_index : fstype_index - 1
+            ].strip()
+            unnested_lsblk_dict[name]["fstype"] = line[
+                fstype_index : mountpoint_index - 1
+            ].strip()
+            unnested_lsblk_dict[name]["mountpoint"] = line[
+                mountpoint_index : model_index - 1
+            ].strip()
+            unnested_lsblk_dict[name]["model"] = line[model_index : len(line)].strip()
         return unnested_lsblk_dict

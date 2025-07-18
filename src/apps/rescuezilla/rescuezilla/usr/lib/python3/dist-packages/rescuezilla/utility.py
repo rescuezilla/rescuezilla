@@ -70,11 +70,15 @@ class PleaseWaitModalPopup:
         self.secondary_label.set_padding(xpad=0, ypad=10)
         self.secondary_label.show()
         self.secondary_label.set_visible(False)
-        self._dialog.vbox.pack_start(self.secondary_label, expand=True, fill=True, padding=0)
+        self._dialog.vbox.pack_start(
+            self.secondary_label, expand=True, fill=True, padding=0
+        )
 
         self._progress_bar = Gtk.ProgressBar()
         self._progress_bar.show()
-        self._dialog.vbox.pack_start(self._progress_bar, expand=True, fill=True, padding=0)
+        self._dialog.vbox.pack_start(
+            self._progress_bar, expand=True, fill=True, padding=0
+        )
 
         self.timeout_tag = GLib.timeout_add(50, self.pulse)
 
@@ -108,9 +112,12 @@ class PleaseWaitModalPopup:
 
 class ErrorMessageModalPopup(Gtk.MessageDialog):
     def __init__(self, builder, error_content, error_heading=""):
-        Gtk.MessageDialog.__init__(self, type=Gtk.MessageType.ERROR,
-                                         buttons=Gtk.ButtonsType.OK,
-                                         message_format=error_heading)
+        Gtk.MessageDialog.__init__(
+            self,
+            type=Gtk.MessageType.ERROR,
+            buttons=Gtk.ButtonsType.OK,
+            message_format=error_heading,
+        )
         print("Displaying error box: " + error_heading + "\n\n" + error_content)
         self.set_resizable(True)
         self.set_default_size(width=650, height=400)
@@ -151,8 +158,12 @@ class ErrorMessageModalPopup(Gtk.MessageDialog):
 class AreYouSureModalPopup:
     def __init__(self, builder, message, callback):
         self._main_window = builder.get_object("main_window")
-        self._dialog = Gtk.MessageDialog(parent=self._main_window, type=Gtk.MessageType.ERROR,
-                                         buttons=Gtk.ButtonsType.YES_NO, message_format=message)
+        self._dialog = Gtk.MessageDialog(
+            parent=self._main_window,
+            type=Gtk.MessageType.ERROR,
+            buttons=Gtk.ButtonsType.YES_NO,
+            message_format=message,
+        )
         self._callback = callback
         self._dialog.connect("response", self._response)
         self._main_window.set_sensitive(False)
@@ -172,22 +183,36 @@ class AreYouSureModalPopup:
 
 
 class BrowseSelectionPopup:
-    def __init__(self, builder, callback, default_directory, is_allow_selecting_folder_outside_mount,
-                 select_file=False):
+    def __init__(
+        self,
+        builder,
+        callback,
+        default_directory,
+        is_allow_selecting_folder_outside_mount,
+        select_file=False,
+    ):
         if select_file:
             action = Gtk.FileChooserAction.OPEN
         else:
             action = Gtk.FileChooserAction.SELECT_FOLDER
         self._main_window = builder.get_object("main_window")
-        #FIXME: Make this a validator
-        self.is_allow_selecting_folder_outside_mount = is_allow_selecting_folder_outside_mount
+        # FIXME: Make this a validator
+        self.is_allow_selecting_folder_outside_mount = (
+            is_allow_selecting_folder_outside_mount
+        )
         # Label to update with the selected folder
-        self._dialog = Gtk.FileChooserDialog(parent=self._main_window, action=action,
-                                             buttons=(Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        self._dialog = Gtk.FileChooserDialog(
+            parent=self._main_window,
+            action=action,
+            buttons=(Gtk.STOCK_OK, Gtk.ResponseType.OK),
+        )
         if self._dialog.set_current_folder(default_directory):
             print("Changed folder selection popup directory to " + default_directory)
         else:
-            print("Failed to change folder selection popup directory to " + default_directory)
+            print(
+                "Failed to change folder selection popup directory to "
+                + default_directory
+            )
 
         self.callback = callback
         self._dialog.connect("response", self._response)
@@ -198,10 +223,17 @@ class BrowseSelectionPopup:
     """ Selecting a folder """
 
     def _response(self, dialog, response_id):
-        print("Received response " + str(response_id) + " and file activated callback with folder " + str(
-            self._dialog.get_filename()))
+        print(
+            "Received response "
+            + str(response_id)
+            + " and file activated callback with folder "
+            + str(self._dialog.get_filename())
+        )
         if response_id == Gtk.ResponseType.OK:
-            self.callback(self._dialog.get_filename(), self.is_allow_selecting_folder_outside_mount)
+            self.callback(
+                self._dialog.get_filename(),
+                self.is_allow_selecting_folder_outside_mount,
+            )
         self._main_window.set_sensitive(True)
         self._dialog.destroy()
 
@@ -224,6 +256,7 @@ class Utility:
     # Helper function copied from [1] that allows for running strptime() against a custom locale (usually, 'C')
     # [1] https://stackoverflow.com/a/24070673/4745097
     LOCALE_LOCK = threading.Lock()
+
     @contextmanager
     def setlocale(name):
         with Utility.LOCALE_LOCK:
@@ -247,7 +280,14 @@ class Utility:
     @staticmethod
     def open_app_as_target_user(target_user, process_list):
         current_user = pwd.getpwuid(os.getuid()).pw_name
-        print("Current user is '" + current_user + "'. As user '" + target_user + "' launching: " + str(process_list))
+        print(
+            "Current user is '"
+            + current_user
+            + "'. As user '"
+            + target_user
+            + "' launching: "
+            + str(process_list)
+        )
         # Launch detached subprocess as target user
         sudo_process_list = ["sudo", "-u", target_user] + process_list
         if Utility.is_user_valid(target_user):
@@ -258,7 +298,11 @@ class Utility:
         else:
             # TODO: Find a way to arbitrarily launch graphical applications as the local non-root user from Rescuezilla's root process.
             error_message = "Cannot run: " + str(sudo_process_list)
-            error_message += "\n\nThe user named \"" + target_user + "\" does not exist. Are you using Rescuezilla outside the official live environment?"
+            error_message += (
+                '\n\nThe user named "'
+                + target_user
+                + '" does not exist. Are you using Rescuezilla outside the official live environment?'
+            )
             error_message += "\n\nPlease navigate to the specified location manually."
             return False, error_message
 
@@ -275,7 +319,7 @@ class Utility:
 
     @staticmethod
     def read_file_into_string(file_path):
-        with open(file_path, 'r') as file:
+        with open(file_path, "r") as file:
             data = file.read()
         return data
 
@@ -323,22 +367,24 @@ class Utility:
     # The unit test provides clear examples.
     @staticmethod
     def split_device_string(device_node):
-        short_device_node = re.sub('/dev/', '', device_node)
+        short_device_node = re.sub("/dev/", "", device_node)
         # Following comment copied from Clonezilla "is_partition" function:
         # SD card: /dev/mmcblk0p1, /dev/mmcblk0p2, /dev/mmcblk0p3...
         # NBD device: /dev/nbd0p1, /dev/nbd0p2...
         # NVME device: /dev/nvme0n1p1, /dev/nvme0n1p2, /dev/nvme1n1p1, /dev/nvme1n1p2
         # FakeRAID: with nodmraid boot parameter, /dev/md126p1, /dev/md126p2...
-        if short_device_node.startswith("nvme") \
-                or short_device_node.startswith("mmcblk") \
-                or short_device_node.startswith("md") \
-                or short_device_node.startswith("nbd"):
+        if (
+            short_device_node.startswith("nvme")
+            or short_device_node.startswith("mmcblk")
+            or short_device_node.startswith("md")
+            or short_device_node.startswith("nbd")
+        ):
             return Utility._split_short_device_on_p(short_device_node)
         # Following comment copied from Clonezilla "is_partition" function:
         # Loop device: /dev/loop0, /dev/loop0p1, /dev/loop0p2
         elif short_device_node.startswith("loop"):
             # The string 'loop' contains a 'p' character, so temporarily remove it before splitting.
-            short_device_node = re.sub('loop', '', short_device_node)
+            short_device_node = re.sub("loop", "", short_device_node)
             base, partition_number = Utility._split_short_device_on_p(short_device_node)
             base = "loop" + base
             return base, partition_number
@@ -394,7 +440,7 @@ class Utility:
                 #
                 # For now, replace forward slash with dash as that's how Clonezilla LVM
                 # /dev/volumegroup/logicalvolume paths get converted to volumegroup-logicalvolume.
-                short_device_node = re.sub('/', '-', short_device_node)
+                short_device_node = re.sub("/", "-", short_device_node)
             else:
                 raise ValueError("Unable to split:" + device_node)
 
@@ -412,13 +458,15 @@ class Utility:
         # Undo the Clonezilla multipath device node / LVM flattening.
         # TODO: Evaluate whether this is acceptable for all Clonezilla input images: are there device nodes or LVM paths
         # TODO: which contain dashes that shouldn't be substituted?
-        short_base_device_node = re.sub('/dev/', '', base_device_node)
-        base_device_node = re.sub('-', '/', base_device_node)
-        if short_base_device_node.startswith("nvme") \
-                or short_base_device_node.startswith("mmcblk") \
-                or short_base_device_node.startswith("md") \
-                or short_base_device_node.startswith("nbd") \
-                or short_base_device_node.startswith("loop"):
+        short_base_device_node = re.sub("/dev/", "", base_device_node)
+        base_device_node = re.sub("-", "/", base_device_node)
+        if (
+            short_base_device_node.startswith("nvme")
+            or short_base_device_node.startswith("mmcblk")
+            or short_base_device_node.startswith("md")
+            or short_base_device_node.startswith("nbd")
+            or short_base_device_node.startswith("loop")
+        ):
             if partition_number != 0:
                 joined = base_device_node + "p" + str(partition_number)
             else:
@@ -433,7 +481,9 @@ class Utility:
     @staticmethod
     def is_base_device_node(device_node):
         try:
-            base_device_node, partition_number = Utility.split_device_string(device_node)
+            base_device_node, partition_number = Utility.split_device_string(
+                device_node
+            )
         except Exception:
             print("Could not split " + device_node)
             return False
@@ -448,8 +498,8 @@ class Utility:
     def get_env_C_locale():
         # Copy locale (containing PATH etc), and update the locale
         env = os.environ.copy()
-        env['locale'] = "C"
-        env['LANG'] = "C"
+        env["locale"] = "C"
+        env["LANG"] = "C"
         return env
 
     # Get the memory bus width (that is, 32 or 64 bit computing). End-users are expected to read the term "64bit",
@@ -458,7 +508,9 @@ class Utility:
     # name" 'i686'/'x86_64' (from `arch` or `uname -m`).
     @staticmethod
     def get_memory_bus_width():
-        process, flat_cmd_string, failed_message = Utility.run("Get memory bus width", ["getconf", "LONG_BIT"], use_c_locale=True)
+        process, flat_cmd_string, failed_message = Utility.run(
+            "Get memory bus width", ["getconf", "LONG_BIT"], use_c_locale=True
+        )
         if process.returncode == 0:
             memory_bus_width = process.stdout.strip() + "bit"
             return memory_bus_width
@@ -477,7 +529,6 @@ class Utility:
                 flat_command_string += "| "
         return flat_command_string
 
-
     @staticmethod
     def print_cli_friendly(message, cmd_list_list):
         print(message + ". Running: ", end="")
@@ -494,26 +545,49 @@ class Utility:
         return "{:.1f}".format(duration_minutes + frac)
 
     @staticmethod
-    def run(short_description, cmd_list, use_c_locale, output_filepath=None, logger=None):
+    def run(
+        short_description, cmd_list, use_c_locale, output_filepath=None, logger=None
+    ):
         if use_c_locale:
             env = Utility.get_env_C_locale()
         else:
             env = os.environ.copy()
         flat_command_string = Utility.print_cli_friendly(short_description, [cmd_list])
-        process = subprocess.run(cmd_list, encoding='utf-8', capture_output=True, env=env)
-        logging_output = short_description + ": " + flat_command_string + " returned " + str(process.returncode) + ": " + process.stdout + " " + process.stderr + "\n"
+        process = subprocess.run(
+            cmd_list, encoding="utf-8", capture_output=True, env=env
+        )
+        logging_output = (
+            short_description
+            + ": "
+            + flat_command_string
+            + " returned "
+            + str(process.returncode)
+            + ": "
+            + process.stdout
+            + " "
+            + process.stderr
+            + "\n"
+        )
         if logger is None:
             print(logging_output)
         else:
             logger.write(logging_output)
 
         if output_filepath is not None:
-            with open(output_filepath, 'a+') as filehandle:
+            with open(output_filepath, "a+") as filehandle:
                 # TODO confirm encoding
-                filehandle.write('%s' % process.stdout)
+                filehandle.write("%s" % process.stdout)
                 filehandle.flush()
 
-        fail_description = _("Failed to run command: ") + flat_command_string + "\n\n" + process.stdout + "\n" + process.stderr + "\n\n"
+        fail_description = (
+            _("Failed to run command: ")
+            + flat_command_string
+            + "\n\n"
+            + process.stdout
+            + "\n"
+            + process.stderr
+            + "\n\n"
+        )
         return process, flat_command_string, fail_description
 
     # Similar to run above, but checks whether the is_shutdown() function has triggered.
@@ -526,8 +600,13 @@ class Utility:
         else:
             env = os.environ.copy()
         flat_command_string = Utility.print_cli_friendly(short_description, [cmd_list])
-        process = subprocess.Popen(cmd_list, encoding='utf-8', stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-                                   env=env)
+        process = subprocess.Popen(
+            cmd_list,
+            encoding="utf-8",
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            env=env,
+        )
         while True:
             # This loop only ends if the Popen process has completed.
             if process.poll() is not None:
@@ -545,25 +624,51 @@ class Utility:
 
         # This communicate should return immediately. Not stderr_data is None because of the redirection above.
         stdout_data, stderr_data = process.communicate()
-        logging_output = short_description + ": " + flat_command_string + " returned " + str(
-            process.returncode) + ": " + stdout_data + "\n"
+        logging_output = (
+            short_description
+            + ": "
+            + flat_command_string
+            + " returned "
+            + str(process.returncode)
+            + ": "
+            + stdout_data
+            + "\n"
+        )
         print(logging_output)
 
-        fail_description = _("Failed to run command: ") + flat_command_string + "\n\n" + stdout_data + "\n\n"
+        fail_description = (
+            _("Failed to run command: ")
+            + flat_command_string
+            + "\n\n"
+            + stdout_data
+            + "\n\n"
+        )
         return process, flat_command_string, fail_description
 
     # Certain NBD commands appear to be unreliable. Due to NBD is handled in the kernel, apparently.
     @staticmethod
-    def retry_run(short_description, cmd_list, expected_error_msg, retry_interval_seconds, timeout_seconds, is_shutdown_fn=None):
+    def retry_run(
+        short_description,
+        cmd_list,
+        expected_error_msg,
+        retry_interval_seconds,
+        timeout_seconds,
+        is_shutdown_fn=None,
+    ):
         if is_shutdown_fn is None:
             # If no is shutdown function specified, make a function that simply always return False
-            is_shutdown_fn = lambda : False
+            is_shutdown_fn = lambda: False
 
         num_tries = 0
         max_tries = timeout_seconds / retry_interval_seconds
         while num_tries < max_tries:
             num_tries += 1
-            process, flat_command_string, fail_description = Utility.interruptable_run(short_description, cmd_list, use_c_locale=True, is_shutdown_fn=is_shutdown_fn)
+            process, flat_command_string, fail_description = Utility.interruptable_run(
+                short_description,
+                cmd_list,
+                use_c_locale=True,
+                is_shutdown_fn=is_shutdown_fn,
+            )
             if process.returncode != 0:
                 if expected_error_msg in fail_description:
                     time.sleep(retry_interval_seconds)
@@ -595,17 +700,21 @@ class Utility:
     @staticmethod
     def umount_warn_on_busy(mount_point, is_lazy_umount=False):
         if is_lazy_umount:
-            umount_cmd = ['umount', "--lazy", mount_point]
+            umount_cmd = ["umount", "--lazy", mount_point]
         else:
-            umount_cmd = ['umount', mount_point]
+            umount_cmd = ["umount", mount_point]
         Utility.hack_sync_and_sleep()
-        umount_process, flat_command_string, umount_failed_message = Utility.run("umount", umount_cmd, use_c_locale=False)
+        umount_process, flat_command_string, umount_failed_message = Utility.run(
+            "umount", umount_cmd, use_c_locale=False
+        )
         Utility.hack_sync_and_sleep()
         # Cannot rely on umount return code, as it returns an error if there's nothing mounted and it's not possible
         # to distinguish the situation.
-        findmnt_process, flat_command_string, failed_message = Utility.run("findmnt",
-                                                           ["findmnt", "--raw", "--noheadings", "--output", "SOURCE",
-                                                            mount_point], use_c_locale=False)
+        findmnt_process, flat_command_string, failed_message = Utility.run(
+            "findmnt",
+            ["findmnt", "--raw", "--noheadings", "--output", "SOURCE", mount_point],
+            use_c_locale=False,
+        )
         if findmnt_process.stdout != "" or findmnt_process.stderr != "":
             return False, umount_failed_message
         else:
@@ -614,22 +723,30 @@ class Utility:
     # Calculate total percentage progress ratio. Ideally use the number of bytes in each partition, but
     # use the number of partitions if this information is not available.
     @staticmethod
-    def calculate_progress_ratio(current_partition_completed_percentage,
-                                 current_partition_bytes,
-                                 cumulative_bytes,
-                                 total_bytes,
-                                 image_number,
-                                 num_partitions):
+    def calculate_progress_ratio(
+        current_partition_completed_percentage,
+        current_partition_bytes,
+        cumulative_bytes,
+        total_bytes,
+        image_number,
+        num_partitions,
+    ):
         if total_bytes != 0:
-            return (current_partition_bytes * current_partition_completed_percentage + cumulative_bytes) / total_bytes
+            return (
+                current_partition_bytes * current_partition_completed_percentage
+                + cumulative_bytes
+            ) / total_bytes
         else:
             # Fallback to counting partitions if total bytes happen to be zero.
-            return current_partition_completed_percentage / num_partitions + (image_number - 1) / num_partitions
+            return (
+                current_partition_completed_percentage / num_partitions
+                + (image_number - 1) / num_partitions
+            )
 
     # Useful for non-blocking IO (see below)
     @staticmethod
     def enqueue_stream(stream, queue):
-        for line in iter(stream.readline, b''):
+        for line in iter(stream.readline, b""):
             queue.put(line)
         stream.close()
 
@@ -667,30 +784,41 @@ class Utility:
     # Adapted from: https://stackoverflow.com/a/14996816/4745097
     @staticmethod
     def human_readable_filesize(num_bytes):
-        suffixes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
+        suffixes = ["B", "KB", "MB", "GB", "TB", "PB"]
         i = 0
         while num_bytes >= 1024 and i < len(suffixes) - 1:
-            num_bytes /= 1024.
+            num_bytes /= 1024.0
             i += 1
-        f = ('%.1f' % num_bytes).rstrip('0').rstrip('.')
-        return '%s%s' % (f, suffixes[i])
+        f = ("%.1f" % num_bytes).rstrip("0").rstrip(".")
+        return "%s%s" % (f, suffixes[i])
 
     @staticmethod
     def detect_compression(abs_path_glob_list):
         env = Utility.get_env_C_locale()
         cat_cmd_list = ["cat"] + abs_path_glob_list
         file_cmd_list = ["file", "--dereference", "--special-files", "-"]
-        flat_command_string = Utility.print_cli_friendly("File compression detection ", [cat_cmd_list, file_cmd_list])
-        cat_image_process = subprocess.Popen(cat_cmd_list, stdout=subprocess.PIPE,
-                                             env=env,
-                                             encoding='utf-8')
-        file_utility_process = subprocess.Popen(file_cmd_list, stdin=cat_image_process.stdout,
-                                                stdout=subprocess.PIPE, env=env,
-                                                encoding='utf-8')
+        flat_command_string = Utility.print_cli_friendly(
+            "File compression detection ", [cat_cmd_list, file_cmd_list]
+        )
+        cat_image_process = subprocess.Popen(
+            cat_cmd_list, stdout=subprocess.PIPE, env=env, encoding="utf-8"
+        )
+        file_utility_process = subprocess.Popen(
+            file_cmd_list,
+            stdin=cat_image_process.stdout,
+            stdout=subprocess.PIPE,
+            env=env,
+            encoding="utf-8",
+        )
         cat_image_process.stdout.close()  # Allow p1 to receive a SIGPIPE if p2 exits.
         stdout, stderr = file_utility_process.communicate()
         if file_utility_process.returncode != 0:
-            raise Exception("File utility process had error " + flat_command_string + "\n\n" + str(stderr))
+            raise Exception(
+                "File utility process had error "
+                + flat_command_string
+                + "\n\n"
+                + str(stderr)
+            )
         return Utility.extract_image_compression_from_file_utility(str(stdout))
 
     # Clonezilla's image has to be detected. The filename only contains the compression for partclone images, but not
@@ -699,9 +827,13 @@ class Utility:
     def extract_image_compression_from_file_utility(output_of_file_utility_string):
         initial_split = output_of_file_utility_string.split(" ", maxsplit=1)
         if len(initial_split) == 0:
-            raise Exception("Unable to detect file compression: " + output_of_file_utility_string)
+            raise Exception(
+                "Unable to detect file compression: " + output_of_file_utility_string
+            )
         elif len(initial_split) == 1:
-            raise Exception("Unable to detect file compression: " + output_of_file_utility_string)
+            raise Exception(
+                "Unable to detect file compression: " + output_of_file_utility_string
+            )
         elif len(initial_split) == 2:
             file_output = initial_split[1]
             if file_output.startswith("gzip"):
@@ -738,10 +870,16 @@ class Utility:
                 # A dd image could produce a file output such as "/dev/stdin: DOS/MBR boot sector; GRand Unified
                 # Bootloader, stage1 version 0x79, boot drive 0xbb, stage2 address 0x8e70, 1st sector stage2 0xb8db31c3,
                 # stage2 segment 0x201" in which case assuming uncompressed is reasonable.
-                print("Unable to detect file compression: " + output_of_file_utility_string + " assuming uncompressed")
+                print(
+                    "Unable to detect file compression: "
+                    + output_of_file_utility_string
+                    + " assuming uncompressed"
+                )
                 return "uncompressed"
         else:
-            raise Exception("Unable to query file compression: " + output_of_file_utility_string)
+            raise Exception(
+                "Unable to query file compression: " + output_of_file_utility_string
+            )
 
     @staticmethod
     def get_decompression_command_list(compression_type):
@@ -804,10 +942,10 @@ class Utility:
     @staticmethod
     def schedule_shutdown_reboot(post_task_action):
         if post_task_action == "SHUTDOWN":
-            cmd_list = ['shutdown']
+            cmd_list = ["shutdown"]
             msg = "Shutdown PC"
         elif post_task_action == "REBOOT":
-            cmd_list = ['shutdown', '--reboot']
+            cmd_list = ["shutdown", "--reboot"]
             msg = "Reboot PC"
         else:
             # Do nothing
@@ -815,7 +953,9 @@ class Utility:
 
         # Run process and don't use the C locale but because the output is displayed to the enduser so translation is
         # useful.
-        process, flat_command_string, failed_message = Utility.run(msg, cmd_list, use_c_locale=False)
+        process, flat_command_string, failed_message = Utility.run(
+            msg, cmd_list, use_c_locale=False
+        )
         if process.returncode == 0:
             # Shutdown command outputs over
             return True, process.stderr
@@ -832,8 +972,11 @@ class Utility:
         # "ntfsfix is a utility that fixes some common NTFS problems. ntfsfix is NOT a Linux version of chkdsk.
         # It only repairs some fundamental NTFS inconsistencies, resets the NTFS journal file and schedules an
         # NTFS consistency check for the first boot into Windows."
-        process, flat_command_string, failed_message = Utility.run("Run ntfsfix and don't schedule an NTFS consistency check",
-                                                   ["ntfsfix", "--clear-dirty", long_device_node], use_c_locale=False)
+        process, flat_command_string, failed_message = Utility.run(
+            "Run ntfsfix and don't schedule an NTFS consistency check",
+            ["ntfsfix", "--clear-dirty", long_device_node],
+            use_c_locale=False,
+        )
         if process.returncode != 0:
             return False, failed_message
         return True, ""
@@ -844,8 +987,17 @@ class Utility:
     def query_partition_size_bytes(long_device_node):
         process, flat_command_string, failed_message = Utility.run(
             "Query " + long_device_node,
-            ["lsblk", "--bytes", "--noheadings", "--nodeps", "--output", "size", long_device_node],
-            use_c_locale=False)
+            [
+                "lsblk",
+                "--bytes",
+                "--noheadings",
+                "--nodeps",
+                "--output",
+                "size",
+                long_device_node,
+            ],
+            use_c_locale=False,
+        )
         if process.returncode != 0:
             return False, failed_message
         return True, process.stdout
@@ -856,14 +1008,16 @@ class Utility:
     # [1] https://github.com/rescuezilla/rescuezilla/issues/18#issuecomment-823057082
     @staticmethod
     def grow_filesystems(filesystem, long_device_node, logger):
-        if not os.path.exists(RESCUEZILLA_MOUNT_TMP_DIR) and not os.path.isdir(RESCUEZILLA_MOUNT_TMP_DIR):
+        if not os.path.exists(RESCUEZILLA_MOUNT_TMP_DIR) and not os.path.isdir(
+            RESCUEZILLA_MOUNT_TMP_DIR
+        ):
             os.mkdir(RESCUEZILLA_MOUNT_TMP_DIR, 0o755)
 
         is_unmounted, message = Utility.umount_warn_on_busy(RESCUEZILLA_MOUNT_TMP_DIR)
         if not is_unmounted:
             return False, message
 
-        size_in_bytes=""
+        size_in_bytes = ""
         # Growing FAT filesystems require querying partition size which other filesystems don't.
         if filesystem == "vfat" or filesystem == "fat16" or filesystem == "fat32":
             is_success, output = Utility.query_partition_size_bytes(long_device_node)
@@ -873,54 +1027,164 @@ class Utility:
                 size_in_bytes = output
 
         grow_filesystem_dict = {
-            'reiserfs': {'match': ["reiserfs"], 'fsck_command': [], 'mount_command': [], 'resize_command': ["resize_reiserfs", "-f", long_device_node]},
-            'fat':  {'match': ["vfat", "fat16", "fat32"], 'fsck_command': [], 'mount_command': [], 'resize_command': ["fatresize", "--progress", "--verbose", "--size " + size_in_bytes, long_device_node]},
-            'ext':  {'match': ["ext2", "ext3", "ext4"], 'fsck_command': ["e2fsck", "-f", "-y", long_device_node], 'mount_command': [], 'resize_command': ["resize2fs", "-p", long_device_node]},
+            "reiserfs": {
+                "match": ["reiserfs"],
+                "fsck_command": [],
+                "mount_command": [],
+                "resize_command": ["resize_reiserfs", "-f", long_device_node],
+            },
+            "fat": {
+                "match": ["vfat", "fat16", "fat32"],
+                "fsck_command": [],
+                "mount_command": [],
+                "resize_command": [
+                    "fatresize",
+                    "--progress",
+                    "--verbose",
+                    "--size " + size_in_bytes,
+                    long_device_node,
+                ],
+            },
+            "ext": {
+                "match": ["ext2", "ext3", "ext4"],
+                "fsck_command": ["e2fsck", "-f", "-y", long_device_node],
+                "mount_command": [],
+                "resize_command": ["resize2fs", "-p", long_device_node],
+            },
             # Not using "ntfsfix"
-            'ntfs': {'match': ["ntfs"], 'fsck_command': [], 'mount_command': [], 'resize_command': ["ntfsresize", long_device_node]},
-            'xfs':  {'match': ["xfs"], 'fsck_command': [], 'mount_command': ["mount", "-t", "xfs", long_device_node, RESCUEZILLA_MOUNT_TMP_DIR], 'resize_command': ["xfs_growfs", long_device_node]},
-            'jfs':  {'match': ["jfs"], 'fsck_command': [], 'mount_command': ["mount", "-o", "remount,resize", long_device_node, RESCUEZILLA_MOUNT_TMP_DIR], 'resize_command': []},
-            'btrfs':  {'match': ["btrfs"], 'fsck_command': [], 'mount_command': ["mount", "-t", "btrfs", long_device_node, RESCUEZILLA_MOUNT_TMP_DIR], 'resize_command': ["btrfs", "filesystem", "resize", "max", RESCUEZILLA_MOUNT_TMP_DIR]},
-            'nilfs2': {'match': ["nilfs2"], 'fsck_command': [], 'mount_command': ["mount", "-t", "nilfs2", long_device_node, RESCUEZILLA_MOUNT_TMP_DIR], 'resize_command': ["nilfs-resize", "--yes", long_device_node]},
+            "ntfs": {
+                "match": ["ntfs"],
+                "fsck_command": [],
+                "mount_command": [],
+                "resize_command": ["ntfsresize", long_device_node],
+            },
+            "xfs": {
+                "match": ["xfs"],
+                "fsck_command": [],
+                "mount_command": [
+                    "mount",
+                    "-t",
+                    "xfs",
+                    long_device_node,
+                    RESCUEZILLA_MOUNT_TMP_DIR,
+                ],
+                "resize_command": ["xfs_growfs", long_device_node],
+            },
+            "jfs": {
+                "match": ["jfs"],
+                "fsck_command": [],
+                "mount_command": [
+                    "mount",
+                    "-o",
+                    "remount,resize",
+                    long_device_node,
+                    RESCUEZILLA_MOUNT_TMP_DIR,
+                ],
+                "resize_command": [],
+            },
+            "btrfs": {
+                "match": ["btrfs"],
+                "fsck_command": [],
+                "mount_command": [
+                    "mount",
+                    "-t",
+                    "btrfs",
+                    long_device_node,
+                    RESCUEZILLA_MOUNT_TMP_DIR,
+                ],
+                "resize_command": [
+                    "btrfs",
+                    "filesystem",
+                    "resize",
+                    "max",
+                    RESCUEZILLA_MOUNT_TMP_DIR,
+                ],
+            },
+            "nilfs2": {
+                "match": ["nilfs2"],
+                "fsck_command": [],
+                "mount_command": [
+                    "mount",
+                    "-t",
+                    "nilfs2",
+                    long_device_node,
+                    RESCUEZILLA_MOUNT_TMP_DIR,
+                ],
+                "resize_command": ["nilfs-resize", "--yes", long_device_node],
+            },
         }
 
         has_found_key = False
         for key in grow_filesystem_dict.keys():
-            if filesystem.lower() in grow_filesystem_dict[key]['match']:
+            if filesystem.lower() in grow_filesystem_dict[key]["match"]:
                 has_found_key = True
                 # Found supported filesystem to resize!
-                fsck_cmd_list = grow_filesystem_dict[key]['fsck_command']
+                fsck_cmd_list = grow_filesystem_dict[key]["fsck_command"]
                 if len(fsck_cmd_list) > 0 and shutil.which(fsck_cmd_list[0]) is None:
                     return False, fsck_cmd_list[0] + " not found"
-                mount_cmd_list = grow_filesystem_dict[key]['mount_command']
+                mount_cmd_list = grow_filesystem_dict[key]["mount_command"]
                 if len(mount_cmd_list) > 0 and shutil.which(mount_cmd_list[0]) is None:
                     return False, mount_cmd_list[0] + " not found"
-                resize_cmd_list = grow_filesystem_dict[key]['resize_command']
-                if len(resize_cmd_list) > 0 and shutil.which(resize_cmd_list[0]) is None:
+                resize_cmd_list = grow_filesystem_dict[key]["resize_command"]
+                if (
+                    len(resize_cmd_list) > 0
+                    and shutil.which(resize_cmd_list[0]) is None
+                ):
                     return False, resize_cmd_list[0] + " not found"
 
                 combined_identifier = long_device_node + " (" + filesystem + ")"
                 if len(fsck_cmd_list) > 0:
-                    process, flat_command_string, failed_message = Utility.run("Running filesystem check " + combined_identifier,
-                                                                               fsck_cmd_list, use_c_locale=False, logger=logger)
+                    process, flat_command_string, failed_message = Utility.run(
+                        "Running filesystem check " + combined_identifier,
+                        fsck_cmd_list,
+                        use_c_locale=False,
+                        logger=logger,
+                    )
                     if process.returncode != 0:
                         return False, failed_message
                 if len(mount_cmd_list) > 0:
-                    process, flat_command_string, failed_message = Utility.run("Mounting " + combined_identifier, mount_cmd_list, use_c_locale=False, logger=logger)
+                    process, flat_command_string, failed_message = Utility.run(
+                        "Mounting " + combined_identifier,
+                        mount_cmd_list,
+                        use_c_locale=False,
+                        logger=logger,
+                    )
                     if process.returncode != 0:
                         return False, failed_message
                 if len(resize_cmd_list) > 0:
-                    resize_process, resize_flat_command_string, resize_failed_message = Utility.run("Growing filesystem " + combined_identifier, resize_cmd_list, use_c_locale=False, logger=logger)
+                    (
+                        resize_process,
+                        resize_flat_command_string,
+                        resize_failed_message,
+                    ) = Utility.run(
+                        "Growing filesystem " + combined_identifier,
+                        resize_cmd_list,
+                        use_c_locale=False,
+                        logger=logger,
+                    )
                     # Always umount, even on resize failure
                     if len(mount_cmd_list) > 0:
-                        umount_process, umount_flat_command_string, umount_failed_message = Utility.run("Umounting " + combined_identifier, ["umount", long_device_node], use_c_locale=False, logger=logger)
+                        (
+                            umount_process,
+                            umount_flat_command_string,
+                            umount_failed_message,
+                        ) = Utility.run(
+                            "Umounting " + combined_identifier,
+                            ["umount", long_device_node],
+                            use_c_locale=False,
+                            logger=logger,
+                        )
                     if resize_process.returncode != 0:
                         # Return the resize failed message
                         return False, resize_failed_message
                 # Unmount even if the resize_command is empty (eg, the JFS case)
                 if len(mount_cmd_list) > 0:
                     process, flat_command_string, failed_message = Utility.run(
-                    "Umount " + long_device_node, ["umount", long_device_node], use_c_locale=False, logger=logger)
+                        "Umount " + long_device_node,
+                        ["umount", long_device_node],
+                        use_c_locale=False,
+                        logger=logger,
+                    )
                     if process.returncode != 0:
                         return False, failed_message
 
@@ -933,7 +1197,7 @@ class Utility:
         tree_iter = combobox.get_active_iter()
         if tree_iter is not None:
             model = combobox.get_model()
-            combobox_key, = model[tree_iter][:1]
+            (combobox_key,) = model[tree_iter][:1]
             return combobox_key
         else:
             raise ValueError("Could not get combobox key")
@@ -941,7 +1205,9 @@ class Utility:
     # TODO: Find better place for this
     @staticmethod
     def get_cannot_distinguish_msg():
-        return _("Note: This image format cannot distinguish between failed partclone backup and a user who chose not to backup a partition.")
+        return _(
+            "Note: This image format cannot distinguish between failed partclone backup and a user who chose not to backup a partition."
+        )
 
     # Options for partclone to ignore filesystem inconsistencies, bad sectors and other drive read errors
     # [1] https://github.com/rescuezilla/rescuezilla/issues/237

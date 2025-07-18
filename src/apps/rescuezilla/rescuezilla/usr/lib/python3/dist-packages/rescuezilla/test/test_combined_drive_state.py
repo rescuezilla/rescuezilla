@@ -248,7 +248,9 @@ Number  Start        End          Size         File system  Name  Flags
  2      114294784B   181403647B   67108864B    fat32              msftdata
  3      181403648B   2458910719B  2277507072B  ntfs               msftdata
  4      2458910720B  2683305983B  224395264B   ext4"""
-        parted_dict_dict['/dev/sde'] = Parted.parse_parted_output(input_parted_gpt_string)
+        parted_dict_dict["/dev/sde"] = Parted.parse_parted_output(
+            input_parted_gpt_string
+        )
 
         input_sfdisk_gpt_string = """label: gpt
 label-id: 5FA01E95-F3E8-4B92-845B-843609E4EF0D
@@ -261,7 +263,9 @@ last-lba: 5242846
 /dev/sde2 : start=      223232, size=      131072, type=EBD0A0A2-B9E5-4433-87C0-68B6B72699C7, uuid=BE9F4179-560C-4BC9-8366-AE214F69A16E
 /dev/sde3 : start=      354304, size=     4448256, type=EBD0A0A2-B9E5-4433-87C0-68B6B72699C7, uuid=363BDD4E-D6A1-42E6-A4DA-616CD3E46952
 /dev/sde4 : start=     4802560, size=      438272, type=0FC63DAF-8483-4772-8E79-3D69D8477DE4, uuid=CED0279D-0096-4EBE-8425-4C6C9D46A4D2"""
-        sfdict_dict_dict['/dev/sde'] = Sfdisk.parse_sfdisk_dump_output(input_sfdisk_gpt_string)
+        sfdict_dict_dict["/dev/sde"] = Sfdisk.parse_sfdisk_dump_output(
+            input_sfdisk_gpt_string
+        )
 
         input_parted_mbr_string = """Model: ATA VBOX HARDDISK (scsi)
 Disk /dev/sdd: 2147483648B
@@ -283,7 +287,9 @@ Number  Start        End          Size         Type      File system  Flags
 12      312475648B   331350015B   18874368B    logical   ext4
  1      2100297728B  2103443455B  3145728B     primary   ext2
  2      2103443456B  2147483647B  44040192B    primary   ext4"""
-        parted_dict_dict['/dev/sdd'] = Parted.parse_parted_output(input_parted_mbr_string)
+        parted_dict_dict["/dev/sdd"] = Parted.parse_parted_output(
+            input_parted_mbr_string
+        )
 
         input_parted_sdm_string = """Model: ATA VBOX HARDDISK (scsi)
 Disk /dev/sdm: 1073741824B
@@ -295,7 +301,9 @@ Number  Start     End          Size         Type     File system  Flags
  1      1048576B  1073741823B  1072693248B  primary               raid
 
 """
-        parted_dict_dict['/dev/sdm'] = Parted.parse_parted_output(input_parted_sdm_string)
+        parted_dict_dict["/dev/sdm"] = Parted.parse_parted_output(
+            input_parted_sdm_string
+        )
 
         input_parted_sdn_string = """
 Model: ATA VBOX HARDDISK (scsi)
@@ -308,7 +316,9 @@ Number  Start     End          Size         Type     File system  Flags
  1      1048576B  1073741823B  1072693248B  primary               raid
 
 """
-        parted_dict_dict['/dev/sdn'] = Parted.parse_parted_output(input_parted_sdn_string)
+        parted_dict_dict["/dev/sdn"] = Parted.parse_parted_output(
+            input_parted_sdn_string
+        )
 
         input_parted_fs_directly_on_disk_string = """
 Model: ATA VBOX HARDDISK (scsi)
@@ -321,7 +331,9 @@ Number  Start  End          Size         File system  Flags
  1      0B     1610612735B  1610612736B  ext4
 
 """
-        parted_dict_dict['/dev/sdo'] = Parted.parse_parted_output(input_parted_fs_directly_on_disk_string)
+        parted_dict_dict["/dev/sdo"] = Parted.parse_parted_output(
+            input_parted_fs_directly_on_disk_string
+        )
 
         input_sfdisk_sdm_string = """label: dos
 label-id: 0xe02572d4
@@ -330,7 +342,9 @@ unit: sectors
 sector-size: 512
 
 /dev/sdm1 : start=        2048, size=     2095104, type=fd"""
-        sfdict_dict_dict['/dev/sdm'] = Sfdisk.parse_sfdisk_dump_output(input_sfdisk_sdm_string)
+        sfdict_dict_dict["/dev/sdm"] = Sfdisk.parse_sfdisk_dump_output(
+            input_sfdisk_sdm_string
+        )
 
         input_sfdisk_sdn_string = """label: dos
 label-id: 0x1e066523
@@ -339,7 +353,9 @@ unit: sectors
 sector-size: 512
 
 /dev/sdn1 : start=        2048, size=     2095104, type=fd"""
-        sfdict_dict_dict['/dev/sdn'] = Sfdisk.parse_sfdisk_dump_output(input_sfdisk_sdn_string)
+        sfdict_dict_dict["/dev/sdn"] = Sfdisk.parse_sfdisk_dump_output(
+            input_sfdisk_sdn_string
+        )
 
         input_sfdisk_mbr_string = """label: dos
 label-id: 0x1dbd2bfc
@@ -359,11 +375,13 @@ unit: sectors
 /dev/sdd12 : start=      610304, size=       36864, type=83
 /dev/sdd13 : start=       94208, size=       57344, type=83
 /dev/sdd14 : start=        4096, size=       88064, type=83 """
-        sfdict_dict_dict['/dev/sdd'] = Sfdisk.parse_sfdisk_dump_output(input_sfdisk_mbr_string)
+        sfdict_dict_dict["/dev/sdd"] = Sfdisk.parse_sfdisk_dump_output(
+            input_sfdisk_mbr_string
+        )
         pp = pprint.PrettyPrinter(indent=4)
-        #combined_drive_state_dict = CombinedDriveState.construct_combined_drive_state_dict(lsblk_json_dict, blkid_dict, osprober_dict, parted_dict_dict, sfdict_dict_dict)
-        #pp.pprint(combined_drive_state_dict)
-        #CombinedDriveState.get_first_partition(combined_drive_state_dict['/dev/sdd']['partitions'])
+        # combined_drive_state_dict = CombinedDriveState.construct_combined_drive_state_dict(lsblk_json_dict, blkid_dict, osprober_dict, parted_dict_dict, sfdict_dict_dict)
+        # pp.pprint(combined_drive_state_dict)
+        # CombinedDriveState.get_first_partition(combined_drive_state_dict['/dev/sdd']['partitions'])
 
-        #expected_combined_drive_state_dict = {}
-        #self.assertDictEqual(expected_combined_drive_state_dict, combined_drive_state_dict)
+        # expected_combined_drive_state_dict = {}
+        # self.assertDictEqual(expected_combined_drive_state_dict, combined_drive_state_dict)

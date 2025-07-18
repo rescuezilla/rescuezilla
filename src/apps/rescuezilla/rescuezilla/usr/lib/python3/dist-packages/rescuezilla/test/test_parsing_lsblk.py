@@ -59,8 +59,8 @@ class LsblkTest(unittest.TestCase):
     }
     """
         lsblk_dict = Lsblk.parse_lsblk_json_output(input_lsblk_json_string)
-        #pp = pprint.PrettyPrinter(indent=4)
-        #pp.pprint(lsblk_dict)
+        # pp = pprint.PrettyPrinter(indent=4)
+        # pp.pprint(lsblk_dict)
 
     def test_lsblk_parsing(self):
         # Output of: lsblk -o KNAME,NAME,SIZE,TYPE,FSTYPE,MOUNTPOINT,MODEL
@@ -85,23 +85,207 @@ sde2  ├─sde2   244M part ext2
 sde3  └─sde3   7.3G part crypto_LUKS
 sr0   sr0    764.4M rom  iso9660     /cdrom     VBOX_CD-ROM"""
         lsblk_dict = Lsblk.parse_lsblk_output(input_lsblk_string)
-        expected_lsblk_dict = collections.OrderedDict([('loop0', {'kname': 'loop0', 'size': '663M', 'type': 'loop', 'fstype': 'squashfs', 'mountpoint': '/rofs', 'model': ''}),
-                                                       ('sda', {'kname': 'sda', 'size': '32G', 'type': 'disk', 'fstype': '', 'mountpoint': '', 'model': 'VBOX_HARDDISK'}),
-                                                       ('sdb', {'kname': 'sdb', 'size': '1G', 'type': 'disk', 'fstype': '', 'mountpoint': '', 'model': 'VBOX_HARDDISK'}),
-                                                       ('sdc', {'kname': 'sdc', 'size': '2G', 'type': 'disk', 'fstype': '', 'mountpoint': '', 'model': 'VBOX_HARDDISK'}),
-                                                       ('sdc1', {'kname': 'sdc1', 'size': '61M', 'type': 'part', 'fstype': 'ext4', 'mountpoint': '', 'model': ''}),
-                                                       ('sdc2', {'kname': 'sdc2', 'size': '115M', 'type': 'part', 'fstype': 'vfat', 'mountpoint': '', 'model': ''}),
-                                                       ('sdc3', {'kname': 'sdc3', 'size': '116M', 'type': 'part', 'fstype': 'ntfs', 'mountpoint': '', 'model': ''}),
-                                                       ('sdc4', {'kname': 'sdc4', 'size': '32M', 'type': 'part', 'fstype': 'xfs', 'mountpoint': '', 'model': ''}),
-                                                       ('sdc5', {'kname': 'sdc5', 'size': '190M', 'type': 'part', 'fstype': 'reiser4', 'mountpoint': '', 'model': ''}),
-                                                       ('sdc6', {'kname': 'sdc6', 'size': '46M', 'type': 'part', 'fstype': 'hfsplus', 'mountpoint': '', 'model': ''}),
-                                                       ('sdc7', {'kname': 'sdc7', 'size': '33M', 'type': 'part', 'fstype': 'swap', 'mountpoint': '', 'model': ''}),
-                                                       ('sdc8', {'kname': 'sdc8', 'size': '1.4G', 'type': 'part', 'fstype': 'ntfs', 'mountpoint': '', 'model': ''}),
-                                                       ('sdd', {'kname': 'sdd', 'size': '3G', 'type': 'disk', 'fstype': '', 'mountpoint': '', 'model': 'VBOX_HARDDISK'}),
-                                                       ('sde', {'kname': 'sde', 'size': '8G', 'type': 'disk', 'fstype': '', 'mountpoint': '', 'model': 'VBOX_HARDDISK'}),
-                                                       ('sde1', {'kname': 'sde1', 'size': '512M', 'type': 'part', 'fstype': 'vfat', 'mountpoint': '', 'model': ''}),
-                                                       ('sde2', {'kname': 'sde2', 'size': '244M', 'type': 'part', 'fstype': 'ext2', 'mountpoint': '', 'model': ''}),
-                                                       ('sde3', {'kname': 'sde3', 'size': '7.3G', 'type': 'part', 'fstype': 'crypto_LUKS', 'mountpoint': '', 'model': ''}),
-                                                       ('sr0', {'kname': 'sr0', 'size': '764.4M', 'type': 'rom', 'fstype': 'iso9660', 'mountpoint': '/cdrom', 'model': 'VBOX_CD-ROM'})])
+        expected_lsblk_dict = collections.OrderedDict(
+            [
+                (
+                    "loop0",
+                    {
+                        "kname": "loop0",
+                        "size": "663M",
+                        "type": "loop",
+                        "fstype": "squashfs",
+                        "mountpoint": "/rofs",
+                        "model": "",
+                    },
+                ),
+                (
+                    "sda",
+                    {
+                        "kname": "sda",
+                        "size": "32G",
+                        "type": "disk",
+                        "fstype": "",
+                        "mountpoint": "",
+                        "model": "VBOX_HARDDISK",
+                    },
+                ),
+                (
+                    "sdb",
+                    {
+                        "kname": "sdb",
+                        "size": "1G",
+                        "type": "disk",
+                        "fstype": "",
+                        "mountpoint": "",
+                        "model": "VBOX_HARDDISK",
+                    },
+                ),
+                (
+                    "sdc",
+                    {
+                        "kname": "sdc",
+                        "size": "2G",
+                        "type": "disk",
+                        "fstype": "",
+                        "mountpoint": "",
+                        "model": "VBOX_HARDDISK",
+                    },
+                ),
+                (
+                    "sdc1",
+                    {
+                        "kname": "sdc1",
+                        "size": "61M",
+                        "type": "part",
+                        "fstype": "ext4",
+                        "mountpoint": "",
+                        "model": "",
+                    },
+                ),
+                (
+                    "sdc2",
+                    {
+                        "kname": "sdc2",
+                        "size": "115M",
+                        "type": "part",
+                        "fstype": "vfat",
+                        "mountpoint": "",
+                        "model": "",
+                    },
+                ),
+                (
+                    "sdc3",
+                    {
+                        "kname": "sdc3",
+                        "size": "116M",
+                        "type": "part",
+                        "fstype": "ntfs",
+                        "mountpoint": "",
+                        "model": "",
+                    },
+                ),
+                (
+                    "sdc4",
+                    {
+                        "kname": "sdc4",
+                        "size": "32M",
+                        "type": "part",
+                        "fstype": "xfs",
+                        "mountpoint": "",
+                        "model": "",
+                    },
+                ),
+                (
+                    "sdc5",
+                    {
+                        "kname": "sdc5",
+                        "size": "190M",
+                        "type": "part",
+                        "fstype": "reiser4",
+                        "mountpoint": "",
+                        "model": "",
+                    },
+                ),
+                (
+                    "sdc6",
+                    {
+                        "kname": "sdc6",
+                        "size": "46M",
+                        "type": "part",
+                        "fstype": "hfsplus",
+                        "mountpoint": "",
+                        "model": "",
+                    },
+                ),
+                (
+                    "sdc7",
+                    {
+                        "kname": "sdc7",
+                        "size": "33M",
+                        "type": "part",
+                        "fstype": "swap",
+                        "mountpoint": "",
+                        "model": "",
+                    },
+                ),
+                (
+                    "sdc8",
+                    {
+                        "kname": "sdc8",
+                        "size": "1.4G",
+                        "type": "part",
+                        "fstype": "ntfs",
+                        "mountpoint": "",
+                        "model": "",
+                    },
+                ),
+                (
+                    "sdd",
+                    {
+                        "kname": "sdd",
+                        "size": "3G",
+                        "type": "disk",
+                        "fstype": "",
+                        "mountpoint": "",
+                        "model": "VBOX_HARDDISK",
+                    },
+                ),
+                (
+                    "sde",
+                    {
+                        "kname": "sde",
+                        "size": "8G",
+                        "type": "disk",
+                        "fstype": "",
+                        "mountpoint": "",
+                        "model": "VBOX_HARDDISK",
+                    },
+                ),
+                (
+                    "sde1",
+                    {
+                        "kname": "sde1",
+                        "size": "512M",
+                        "type": "part",
+                        "fstype": "vfat",
+                        "mountpoint": "",
+                        "model": "",
+                    },
+                ),
+                (
+                    "sde2",
+                    {
+                        "kname": "sde2",
+                        "size": "244M",
+                        "type": "part",
+                        "fstype": "ext2",
+                        "mountpoint": "",
+                        "model": "",
+                    },
+                ),
+                (
+                    "sde3",
+                    {
+                        "kname": "sde3",
+                        "size": "7.3G",
+                        "type": "part",
+                        "fstype": "crypto_LUKS",
+                        "mountpoint": "",
+                        "model": "",
+                    },
+                ),
+                (
+                    "sr0",
+                    {
+                        "kname": "sr0",
+                        "size": "764.4M",
+                        "type": "rom",
+                        "fstype": "iso9660",
+                        "mountpoint": "/cdrom",
+                        "model": "VBOX_CD-ROM",
+                    },
+                ),
+            ]
+        )
 
         self.assertDictEqual(expected_lsblk_dict, lsblk_dict)

@@ -41,41 +41,40 @@ End
 """
         foxclone_dict = FoxcloneImage.parse_dot_backup(input_foxclone_string)
         expected_foxclone_dict = {
-            'timestamp': "07 Mar 2021, 09:49",
-            'is_compressed': True,
-            'is_split': False,
-            'model': 'ATA VBOX HARDDISK',
-            'serial': 'VB42efc350-3a91f739',
-            'original_mount_point': 'sdi',
-            'partitions': {
-                'sdi1': {
-                    'fs': 'ntfs',
-                    'type': 'primary',
-                    'num_blocks': 26972,
+            "timestamp": "07 Mar 2021, 09:49",
+            "is_compressed": True,
+            "is_split": False,
+            "model": "ATA VBOX HARDDISK",
+            "serial": "VB42efc350-3a91f739",
+            "original_mount_point": "sdi",
+            "partitions": {
+                "sdi1": {
+                    "fs": "ntfs",
+                    "type": "primary",
+                    "num_blocks": 26972,
                 },
-                'sdi2': {
-                    'fs': '<unknown>',
-                    'type': 'primary',
-                    'num_blocks': 30800000,
+                "sdi2": {
+                    "fs": "<unknown>",
+                    "type": "primary",
+                    "num_blocks": 30800000,
                 },
-                'sdi4': {
-                    'type': 'extended',
-                    'num_blocks': 0,
+                "sdi4": {
+                    "type": "extended",
+                    "num_blocks": 0,
                 },
-                'sdi5': {
-                    'fs': 'ext4',
-                    'type': 'logical',
-                    'num_blocks': 4778704,
+                "sdi5": {
+                    "fs": "ext4",
+                    "type": "logical",
+                    "num_blocks": 4778704,
                 },
-                'sdi3': {
-                    'fs': 'ntfs',
-                    'type': 'primary',
-                    'num_blocks': 421176,
+                "sdi3": {
+                    "fs": "ntfs",
+                    "type": "primary",
+                    "num_blocks": 421176,
                 },
-
-            }
+            },
         }
-        #print("actual:" + str(foxclone_dict))
+        # print("actual:" + str(foxclone_dict))
         self.assertDictEqual(expected_foxclone_dict, foxclone_dict)
 
     def test_foxclone_swap_parsing(self):
@@ -93,21 +92,19 @@ End
         # TODO: Test Foxclone swap partitions as logical partitions
         foxclone_dict = FoxcloneImage.parse_dot_backup(synthentic_input)
         expected_foxclone_dict = {
-            'timestamp': "07 Mar 2021, 09:49",
-            'is_compressed': True,
-            'is_split': False,
-            'model': 'ATA VBOX HARDDISK',
-            'serial': 'VB42efc350-3a91f739',
-            'original_mount_point': 'sdi',
-            'partitions': {
-                'sdi1': {
-                    'fs': 'swap',
-                    'type': 'deadbeef-0000-1234-5678-deadbeef0000',
-                    'num_blocks': 26972,
+            "timestamp": "07 Mar 2021, 09:49",
+            "is_compressed": True,
+            "is_split": False,
+            "model": "ATA VBOX HARDDISK",
+            "serial": "VB42efc350-3a91f739",
+            "original_mount_point": "sdi",
+            "partitions": {
+                "sdi1": {
+                    "fs": "swap",
+                    "type": "deadbeef-0000-1234-5678-deadbeef0000",
+                    "num_blocks": 26972,
                 },
-            }
+            },
         }
         print("actual:" + str(foxclone_dict))
         self.assertDictEqual(expected_foxclone_dict, foxclone_dict)
-
-

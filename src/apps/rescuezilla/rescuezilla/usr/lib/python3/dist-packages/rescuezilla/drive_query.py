@@ -44,7 +44,13 @@ from gi.repository import GLib
 
 
 class DriveQuery:
-    def __init__(self, builder, drive_list_store, save_partition_list_store, mount_partition_list_store):
+    def __init__(
+        self,
+        builder,
+        drive_list_store,
+        save_partition_list_store,
+        mount_partition_list_store,
+    ):
         self.builder = builder
         self.drive_list_store = drive_list_store
         self.save_partition_list_store = save_partition_list_store
@@ -68,7 +74,12 @@ class DriveQuery:
         self.requested_stop_lock = threading.Lock()
         self.requested_stop = False
 
-        self.please_wait_popup = PleaseWaitModalPopup(self.builder, title=_("Please wait…"), message=_("Identifying disk drives…"), on_close_callback=self.cancel_query)
+        self.please_wait_popup = PleaseWaitModalPopup(
+            self.builder,
+            title=_("Please wait…"),
+            message=_("Identifying disk drives…"),
+            on_close_callback=self.cancel_query,
+        )
         self.please_wait_popup.show()
         self.error_message_callback = error_message_callback
 
@@ -79,7 +90,9 @@ class DriveQuery:
     def set_show_hidden_information(self, is_displaying_advanced_information):
         # User-interface sensitivity acting as further crude protection prevent inconsistent state. TODO: Improve this design.
         with self._is_displaying_advanced_information_lock:
-            self._is_displaying_advanced_information = is_displaying_advanced_information
+            self._is_displaying_advanced_information = (
+                is_displaying_advanced_information
+            )
 
     def populate_drive_selection_table(self):
         self.drive_list_store.clear()
@@ -97,8 +110,14 @@ class DriveQuery:
                         # drives identified by a simple digit (eg, drive #3), because they may not understand what a short
                         # device node like "nvme0n1" means.
                         human_friendly_drive_name = "#" + str(index + 1)
-                        if (drive['type'] != 'disk' and not drive['type'].startswith("raid"))\
-                                or drive['has_raid_member_filesystem'] or 'nbd' in drive_key :
+                        if (
+                            (
+                                drive["type"] != "disk"
+                                and not drive["type"].startswith("raid")
+                            )
+                            or drive["has_raid_member_filesystem"]
+                            or "nbd" in drive_key
+                        ):
                             # Hiding LVMs, loop devices, empty drives etc from initial drive selection list. This
                             # should greatly reduce the risk a user accidentally picks a logical volume (of their
                             # say, encrypted Debian system) when they were actually intending on picking the entire
@@ -107,11 +126,28 @@ class DriveQuery:
                             # Don't display non-block device if we are hiding them (like /dev/loop)
                             continue
 
-                flattened_partition_list = CombinedDriveState.flatten_partition_list(drive)
-                print("For key " + drive_key + ", flattened partition list is " + flattened_partition_list)
-                enduser_readable_capacity = Utility.human_readable_filesize(int(drive['capacity']))
-                self.drive_list_store.append([drive_key, human_friendly_drive_name, enduser_readable_capacity,
-                                              drive['model'], drive['serial'], flattened_partition_list])
+                flattened_partition_list = CombinedDriveState.flatten_partition_list(
+                    drive
+                )
+                print(
+                    "For key "
+                    + drive_key
+                    + ", flattened partition list is "
+                    + flattened_partition_list
+                )
+                enduser_readable_capacity = Utility.human_readable_filesize(
+                    int(drive["capacity"])
+                )
+                self.drive_list_store.append(
+                    [
+                        drive_key,
+                        human_friendly_drive_name,
+                        enduser_readable_capacity,
+                        drive["model"],
+                        drive["serial"],
+                        flattened_partition_list,
+                    ]
+                )
                 index = index + 1
             except Exception as e:
                 traceback.print_exc(file=sys.stdout)
@@ -124,22 +160,33 @@ class DriveQuery:
             self.please_wait_popup = None
 
     def populate_partition_selection_table(self, drive_key):
-        print('Received drive key ' + drive_key)
-        print('drive state is ' + str(self.drive_state))
+        print("Received drive key " + drive_key)
+        print("drive state is " + str(self.drive_state))
         self.save_partition_list_store.clear()
 
         try:
-            if 'partitions' in self.drive_state[drive_key].keys():
-                for partition_key in self.drive_state[drive_key]['partitions'].keys():
-                    flattened_partition_description = CombinedDriveState.flatten_partition_description(self.drive_state, drive_key, partition_key)
+            if "partitions" in self.drive_state[drive_key].keys():
+                for partition_key in self.drive_state[drive_key]["partitions"].keys():
+                    flattened_partition_description = (
+                        CombinedDriveState.flatten_partition_description(
+                            self.drive_state, drive_key, partition_key
+                        )
+                    )
                     # Add row that's ticked
-                    self.save_partition_list_store.append([partition_key, True, flattened_partition_description])
+                    self.save_partition_list_store.append(
+                        [partition_key, True, flattened_partition_description]
+                    )
             else:
                 # Add the drive itself
-                flattened_partition_description = CombinedDriveState.flatten_partition_description(self.drive_state,
-                                                                                                   drive_key, drive_key)
+                flattened_partition_description = (
+                    CombinedDriveState.flatten_partition_description(
+                        self.drive_state, drive_key, drive_key
+                    )
+                )
                 # Add row that's ticked
-                self.save_partition_list_store.append([drive_key, True, flattened_partition_description])
+                self.save_partition_list_store.append(
+                    [drive_key, True, flattened_partition_description]
+                )
         except Exception as exception:
             tb = traceback.format_exc()
             traceback.print_exc()
@@ -147,62 +194,95 @@ class DriveQuery:
         return
 
     def populate_mount_partition_table(self, ignore_drive_key=None):
-        print('drive state is ' + str(self.drive_state))
+        print("drive state is " + str(self.drive_state))
         self.mount_partition_list_store.clear()
         index = 0
         for drive_key in self.drive_state.keys():
             try:
-                if drive_key == ignore_drive_key or 'nbd' in drive_key:
+                if drive_key == ignore_drive_key or "nbd" in drive_key:
                     continue
-                if 'partitions' not in self.drive_state[drive_key].keys():
+                if "partitions" not in self.drive_state[drive_key].keys():
                     continue
-                for partition_key in self.drive_state[drive_key]['partitions'].keys():
+                for partition_key in self.drive_state[drive_key]["partitions"].keys():
                     with self._is_displaying_advanced_information_lock:
                         if self._is_displaying_advanced_information:
                             # Display an advanced-user partition name eg, "nvme0n1p1".
                             human_friendly_partition_name = partition_key
                         else:
-                            if self.drive_state[drive_key]['type'] == 'loop' or self.drive_state[drive_key]['has_raid_member_filesystem']:
+                            if (
+                                self.drive_state[drive_key]["type"] == "loop"
+                                or self.drive_state[drive_key][
+                                    "has_raid_member_filesystem"
+                                ]
+                            ):
                                 # Don't display certain non-block device if user has chosen to hide them.
                                 # TODO: Evaluate other partition types to be hidden.
                                 continue
                             # Display an advanced-user partition name eg, "#4".
                             human_friendly_partition_name = "#" + str(index + 1)
-                        flattened_partition_description = CombinedDriveState.flatten_partition_description(self.drive_state, drive_key, partition_key)
-                    if 'size' in self.drive_state[drive_key]['partitions'][partition_key].keys():
-                        size_in_bytes = self.drive_state[drive_key]['partitions'][partition_key]['size']
-                        enduser_readable_size = Utility.human_readable_filesize(int(size_in_bytes))
+                        flattened_partition_description = (
+                            CombinedDriveState.flatten_partition_description(
+                                self.drive_state, drive_key, partition_key
+                            )
+                        )
+                    if (
+                        "size"
+                        in self.drive_state[drive_key]["partitions"][
+                            partition_key
+                        ].keys()
+                    ):
+                        size_in_bytes = self.drive_state[drive_key]["partitions"][
+                            partition_key
+                        ]["size"]
+                        enduser_readable_size = Utility.human_readable_filesize(
+                            int(size_in_bytes)
+                        )
                     else:
                         enduser_readable_size = "unknown_size"
-                    self.mount_partition_list_store.append([partition_key, human_friendly_partition_name, enduser_readable_size, flattened_partition_description])
+                    self.mount_partition_list_store.append(
+                        [
+                            partition_key,
+                            human_friendly_partition_name,
+                            enduser_readable_size,
+                            flattened_partition_description,
+                        ]
+                    )
                     index = index + 1
             except Exception as exception:
                 tb = traceback.format_exc()
                 traceback.print_exc()
-                ErrorMessageModalPopup.display_nonfatal_warning_message(self.builder, tb)
+                ErrorMessageModalPopup.display_nonfatal_warning_message(
+                    self.builder, tb
+                )
         return
 
     def _do_drive_query_wrapper(self):
         try:
-            ui_manager = GtkDriveQuery(please_wait_popup=self.please_wait_popup,
-                                       error_message_callback=self.error_message_callback,
-                                       is_stop_requested_callable=self.is_stop_requested)
+            ui_manager = GtkDriveQuery(
+                please_wait_popup=self.please_wait_popup,
+                error_message_callback=self.error_message_callback,
+                is_stop_requested_callable=self.is_stop_requested,
+            )
             drive_query = DriveQueryInternal(ui_manager=ui_manager)
             self.drive_state = drive_query._do_drive_query()
             GLib.idle_add(self.populate_drive_selection_table)
         except Exception as exception:
             tb = traceback.format_exc()
             traceback.print_exc()
-            GLib.idle_add(self.error_message_callback, False, _("Error querying drives: ") + tb)
+            GLib.idle_add(
+                self.error_message_callback, False, _("Error querying drives: ") + tb
+            )
             return
 
 
 # Quick abstraction of GTK calls. Not the nicest design, but gets the job done.
 class GtkDriveQuery:
-    def __init__(self,
-                 please_wait_popup: PleaseWaitModalPopup,
-                 error_message_callback,
-                 is_stop_requested_callable: Callable[[], bool]):
+    def __init__(
+        self,
+        please_wait_popup: PleaseWaitModalPopup,
+        error_message_callback,
+        is_stop_requested_callable: Callable[[], bool],
+    ):
         self.please_wait_popup = please_wait_popup
         self.error_message_callback = error_message_callback
         self.is_stop_requested_callable = is_stop_requested_callable
@@ -218,7 +298,9 @@ class GtkDriveQuery:
 
     def error_message_handler(self, first_line: str, second_line: Optional[str]):
         if second_line:
-            GLib.idle_add(self.error_message_callback, False, first_line + "\n\n" + second_line)
+            GLib.idle_add(
+                self.error_message_callback, False, first_line + "\n\n" + second_line
+            )
         else:
             GLib.idle_add(self.error_message_callback, False, first_line)
 
@@ -231,6 +313,7 @@ class CliDriveQuery(GtkDriveQuery):
     def is_stop_requested(self) -> bool:
         # Always return false, as not expected to run in thread
         return False
+
     def popup_set_text(self, text: str):
         print(text)
 
@@ -242,6 +325,7 @@ class CliDriveQuery(GtkDriveQuery):
         if second_line:
             print(second_line)
 
+
 class DriveQueryInternal:
     def __init__(self, ui_manager: GtkDriveQuery):
         self.ui_manager = ui_manager
@@ -251,10 +335,17 @@ class DriveQueryInternal:
 
         drive_query_start_time = datetime.now()
 
-        self.ui_manager.popup_set_text(_("Unmounting: {path}").format(path=IMAGE_EXPLORER_DIR))
-        returncode, failed_message = ImageExplorerManager._do_unmount(IMAGE_EXPLORER_DIR)
+        self.ui_manager.popup_set_text(
+            _("Unmounting: {path}").format(path=IMAGE_EXPLORER_DIR)
+        )
+        returncode, failed_message = ImageExplorerManager._do_unmount(
+            IMAGE_EXPLORER_DIR
+        )
         if not returncode:
-            self.ui_manager.error_message_handler(first_line=_("Unable to shutdown Image Explorer"), second_line=failed_message)
+            self.ui_manager.error_message_handler(
+                first_line=_("Unable to shutdown Image Explorer"),
+                second_line=failed_message,
+            )
             self.ui_manager.popup_destroy()
             return
 
@@ -262,18 +353,36 @@ class DriveQueryInternal:
             self.ui_manager.error_message_handler(_("Operation cancelled by user."))
             return
 
-        self.ui_manager.popup_set_text(text=_("Unmounting: {path}").format(path=RESCUEZILLA_MOUNT_TMP_DIR))
-        returncode, failed_message = ImageExplorerManager._do_unmount(RESCUEZILLA_MOUNT_TMP_DIR)
+        self.ui_manager.popup_set_text(
+            text=_("Unmounting: {path}").format(path=RESCUEZILLA_MOUNT_TMP_DIR)
+        )
+        returncode, failed_message = ImageExplorerManager._do_unmount(
+            RESCUEZILLA_MOUNT_TMP_DIR
+        )
         if not returncode:
-            self.ui_manager.error_message_handler(first_line=_("Unable to unmount {path}").format(path=RESCUEZILLA_MOUNT_TMP_DIR), second_line=failed_message)
+            self.ui_manager.error_message_handler(
+                first_line=_("Unable to unmount {path}").format(
+                    path=RESCUEZILLA_MOUNT_TMP_DIR
+                ),
+                second_line=failed_message,
+            )
             self.ui_manager.popup_destroy()
             return
 
         if self.ui_manager.is_stop_requested():
-            self.ui_manager.error_message_handler(first_line=_("Operation cancelled by user."))
+            self.ui_manager.error_message_handler(
+                first_line=_("Operation cancelled by user.")
+            )
             return
 
-        lsblk_cmd_list = ["lsblk", "-o", "KNAME,NAME,SIZE,TYPE,FSTYPE,MOUNTPOINT,MODEL,SERIAL", "--paths", "--bytes", "--json"]
+        lsblk_cmd_list = [
+            "lsblk",
+            "-o",
+            "KNAME,NAME,SIZE,TYPE,FSTYPE,MOUNTPOINT,MODEL,SERIAL",
+            "--paths",
+            "--bytes",
+            "--json",
+        ]
         # Append "--merge" if possible, to improve handling of RAID devices
         if self._check_lsblk_supports_merge_argument():
             lsblk_cmd_list += ["--merge"]
@@ -296,61 +405,104 @@ class DriveQueryInternal:
         # Not checking return codes here because Clonezilla does not, and some of these commands are expected to
         # fail. The Utility.run() command prints the output to stdout.
         self.ui_manager.popup_set_text(text=_("Running: {app}").format(app="lsblk"))
-        process, flat_command_string, fail_description = Utility.run("lsblk", lsblk_cmd_list, use_c_locale=True)
+        process, flat_command_string, fail_description = Utility.run(
+            "lsblk", lsblk_cmd_list, use_c_locale=True
+        )
         lsblk_json_dict = json.loads(process.stdout)
 
         if self.ui_manager.is_stop_requested():
-            self.ui_manager.error_message_handler(first_line=_("Operation cancelled by user."))
+            self.ui_manager.error_message_handler(
+                first_line=_("Operation cancelled by user.")
+            )
             return
 
         self.ui_manager.popup_set_text(text=_("Running: {app}").format(app="blkid"))
-        process, flat_command_string, fail_description = Utility.run("blkid", blkid_cmd_list, use_c_locale=True)
+        process, flat_command_string, fail_description = Utility.run(
+            "blkid", blkid_cmd_list, use_c_locale=True
+        )
         blkid_dict = Blkid.parse_blkid_output(process.stdout)
 
         if self.ui_manager.is_stop_requested():
-            self.ui_manager.error_message_handler(first_line=_("Operation cancelled by user."))
+            self.ui_manager.error_message_handler(
+                first_line=_("Operation cancelled by user.")
+            )
             return
 
         self.ui_manager.popup_set_text(text=_("Running: {app}").format(app="os-prober"))
         # Use os-prober to get OS information (running WITH original locale information
-        process, flat_command_string, fail_description = Utility.run("osprober", os_prober_cmd_list, use_c_locale=True)
+        process, flat_command_string, fail_description = Utility.run(
+            "osprober", os_prober_cmd_list, use_c_locale=True
+        )
         os_prober_dict = OsProber.parse_os_prober_output(process.stdout)
 
         if self.ui_manager.is_stop_requested():
-            self.ui_manager.error_message_handler(first_line=_("Operation cancelled by user."))
+            self.ui_manager.error_message_handler(
+                first_line=_("Operation cancelled by user.")
+            )
             return
 
-
-        for lsblk_dict in lsblk_json_dict['blockdevices']:
-            partition_longdevname = lsblk_dict['name']
+        for lsblk_dict in lsblk_json_dict["blockdevices"]:
+            partition_longdevname = lsblk_dict["name"]
             print("Going to run parted and sfdisk on " + partition_longdevname)
             try:
-                self.ui_manager.popup_set_text(text=_("Running {app} on {device}").format(app="parted", device=partition_longdevname))
-                process, flat_command_string, fail_description = Utility.run("parted", self._get_parted_cmd_list(partition_longdevname), use_c_locale=True)
+                self.ui_manager.popup_set_text(
+                    text=_("Running {app} on {device}").format(
+                        app="parted", device=partition_longdevname
+                    )
+                )
+                process, flat_command_string, fail_description = Utility.run(
+                    "parted",
+                    self._get_parted_cmd_list(partition_longdevname),
+                    use_c_locale=True,
+                )
                 if "unrecognized disk label" not in process.stderr:
-                    parted_dict_dict[partition_longdevname] = Parted.parse_parted_output(process.stdout)
+                    parted_dict_dict[partition_longdevname] = (
+                        Parted.parse_parted_output(process.stdout)
+                    )
                 else:
                     print("Parted says " + process.stderr)
 
                 if self.ui_manager.is_stop_requested():
-                    self.ui_manager.error_message_handler(first_line=_("Operation cancelled by user."))
+                    self.ui_manager.error_message_handler(
+                        first_line=_("Operation cancelled by user.")
+                    )
                     return
-                self.ui_manager.popup_set_text(text=_("Running {app} on {device}").format(app="sfdisk", device=partition_longdevname))
-                process, flat_command_string, fail_description = Utility.run("sfdisk", self._get_sfdisk_cmd_list(partition_longdevname), use_c_locale=True)
-                sfdisk_dict_dict[partition_longdevname] = Sfdisk.parse_sfdisk_dump_output(process.stdout)
+                self.ui_manager.popup_set_text(
+                    text=_("Running {app} on {device}").format(
+                        app="sfdisk", device=partition_longdevname
+                    )
+                )
+                process, flat_command_string, fail_description = Utility.run(
+                    "sfdisk",
+                    self._get_sfdisk_cmd_list(partition_longdevname),
+                    use_c_locale=True,
+                )
+                sfdisk_dict_dict[partition_longdevname] = (
+                    Sfdisk.parse_sfdisk_dump_output(process.stdout)
+                )
                 if self.ui_manager.is_stop_requested():
-                    self.ui_manager.error_message_handler(first_line=_("Operation cancelled by user."))
+                    self.ui_manager.error_message_handler(
+                        first_line=_("Operation cancelled by user.")
+                    )
                     return
 
             except Exception:
                 print("Could run run parted on " + partition_longdevname)
 
-        drive_state = CombinedDriveState.construct_combined_drive_state_dict(lsblk_json_dict, blkid_dict, os_prober_dict, parted_dict_dict, sfdisk_dict_dict)
+        drive_state = CombinedDriveState.construct_combined_drive_state_dict(
+            lsblk_json_dict,
+            blkid_dict,
+            os_prober_dict,
+            parted_dict_dict,
+            sfdisk_dict_dict,
+        )
         pp = pprint.PrettyPrinter(indent=4)
         pp.pprint(drive_state)
 
         drive_query_end_time = datetime.now()
-        print("Drive query took: " + str((drive_query_end_time - drive_query_start_time)))
+        print(
+            "Drive query took: " + str((drive_query_end_time - drive_query_start_time))
+        )
         return drive_state
 
     """
@@ -362,9 +514,12 @@ class DriveQueryInternal:
     Earlier versions of util-linux (such as v2.33 released 2018-11-06) does not, and Ubuntu 18.04 Bionic (used for
     Rescuezilla 32-bit) uses util-linux v2.31.1 so does not have this option, so we need to detect it.
     """
+
     def _check_lsblk_supports_merge_argument(self) -> bool:
         # Check whether "--merge" string is present in lsblk --help output
-        process, flat_command_string, fail_description = Utility.run("lsblk capability check", ["lsblk", "--help"], use_c_locale=True)
+        process, flat_command_string, fail_description = Utility.run(
+            "lsblk capability check", ["lsblk", "--help"], use_c_locale=True
+        )
         return "--merge" in process.stdout
 
     def _get_parted_cmd_list(self, partition_longdevname):

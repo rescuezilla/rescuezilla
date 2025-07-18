@@ -17,6 +17,7 @@
 # ----------------------------------------------------------------------
 import utility
 
+
 # Port of Clonezilla's "dump_software_raid_info_if_exists" function
 class ProcMdstat:
     # Clonezilla's "dump_software_raid_info_if_exists" searches /proc/mdstat for active RAID volumes and
@@ -30,7 +31,7 @@ class ProcMdstat:
             m = utility.REMatcher(line)
             if m.match(r"Personalities : ([.*])"):
                 # TODO: Process further. If required
-                proc_mdstat_dict['personalities'] = m.group(1)
+                proc_mdstat_dict["personalities"] = m.group(1)
                 continue
             elif m.match(r"([a-zA-Z0-9]+) : active.*"):
                 md_device = m.group(1)

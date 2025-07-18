@@ -27,6 +27,7 @@ split between the base (CLI) UI class and the child GUI UI class has taken care 
 with **args).
 """
 
+
 class UiManager:
     def __init__(self):
         self.logger: Optional[Logger] = None
@@ -34,15 +35,13 @@ class UiManager:
     def set_logger(self, logger: Logger):
         self.logger = logger
 
-    def update_progress_bar(self,
-                            fraction: float):
+    def update_progress_bar(self, fraction: float):
         if self.logger is not None:
             self.logger.write("Updating progress bar to " + str(fraction))
         else:
             print(f"{fraction} ")
 
-    def update_progress_status(self,
-                               message: str):
+    def update_progress_status(self, message: str):
         if self.logger is not None:
             self.logger.write(message)
         else:
@@ -52,16 +51,13 @@ class UiManager:
     def get_post_task_action(self) -> str:
         return "DO_NOTHING"
 
-    def update_main_statusbar(self,
-                              message: str):
+    def update_main_statusbar(self, message: str):
         if self.logger is not None:
             self.logger.write(message)
         else:
             print(message)
 
-    def display_status(self,
-                       msg1: str,
-                       msg2: str):
+    def display_status(self, msg1: str, msg2: str):
         if msg2 != "":
             message = msg1 + ": " + msg2
         else:
@@ -69,8 +65,7 @@ class UiManager:
         if self.logger is not None:
             self.logger.write(message)
 
-    def remove_all_main_statusbar(self,
-                                  context_id: str):
+    def remove_all_main_statusbar(self, context_id: str):
         return
 
     def display_error_message(self, summary_message: str, heading: str = ""):
@@ -79,10 +74,9 @@ class UiManager:
         else:
             print(summary_message)
 
-    def completed_operation(self,
-                             callable_fn: Callable,
-                             succeeded: bool,
-                             message: str) -> Tuple[bool, str]:
+    def completed_operation(
+        self, callable_fn: Callable, succeeded: bool, message: str
+    ) -> Tuple[bool, str]:
         callable_fn(succeeded=succeeded, message=message)
         return succeeded, message
 

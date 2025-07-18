@@ -17,6 +17,7 @@
 # ----------------------------------------------------------------------
 import unittest
 
+
 class ProcPartitionsTest(unittest.TestCase):
     def test_are_partitions_listed_in_proc_partitions(self):
         input_proc_partitions_string = """major minor  #blocks  name
@@ -28,8 +29,29 @@ class ProcPartitionsTest(unittest.TestCase):
  254        0        987 dm-0
 """
         from parser.proc_partitions import ProcPartitions
-        self.assertTrue(ProcPartitions.are_partitions_listed_in_proc_partitions(input_proc_partitions_string, "nvme1n1"))
-        self.assertFalse(ProcPartitions.are_partitions_listed_in_proc_partitions(input_proc_partitions_string, "nvme2n1"))
-        self.assertFalse(ProcPartitions.are_partitions_listed_in_proc_partitions(input_proc_partitions_string, "sda"))
-        self.assertFalse(ProcPartitions.are_partitions_listed_in_proc_partitions(input_proc_partitions_string, "sda3"))
-        self.assertFalse(ProcPartitions.are_partitions_listed_in_proc_partitions(input_proc_partitions_string, "sda1"))
+
+        self.assertTrue(
+            ProcPartitions.are_partitions_listed_in_proc_partitions(
+                input_proc_partitions_string, "nvme1n1"
+            )
+        )
+        self.assertFalse(
+            ProcPartitions.are_partitions_listed_in_proc_partitions(
+                input_proc_partitions_string, "nvme2n1"
+            )
+        )
+        self.assertFalse(
+            ProcPartitions.are_partitions_listed_in_proc_partitions(
+                input_proc_partitions_string, "sda"
+            )
+        )
+        self.assertFalse(
+            ProcPartitions.are_partitions_listed_in_proc_partitions(
+                input_proc_partitions_string, "sda3"
+            )
+        )
+        self.assertFalse(
+            ProcPartitions.are_partitions_listed_in_proc_partitions(
+                input_proc_partitions_string, "sda1"
+            )
+        )

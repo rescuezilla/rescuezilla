@@ -48,8 +48,8 @@ class Lvm:
             if len(component_list) == 3:
                 key = component_list[0]
                 volume_group_device_dict[key] = {}
-                volume_group_device_dict[key]['device_node'] = component_list[1]
-                volume_group_device_dict[key]['uuid'] = component_list[2]
+                volume_group_device_dict[key]["device_node"] = component_list[1]
+                volume_group_device_dict[key]["uuid"] = component_list[2]
             else:
                 raise Exception("Unable to process: " + lvm_vg_dev_list_string)
 
@@ -64,25 +64,56 @@ class Lvm:
             split = line.split("  ", maxsplit=1)
             if len(split) > 1:
                 key = split[0]
-                logical_volume_device_dict[key] = {'metadata': split[1]}
+                logical_volume_device_dict[key] = {"metadata": split[1]}
         return logical_volume_device_dict
 
     @staticmethod
     def start_lvm2(logger):
-        modinfo_process, modinfo_flat_command_string, modinfo_failed_message = Utility.run("Querying device-mapper kernel module (dm_mod).",
-                                                           ["modinfo", "dm_mod"], use_c_locale=False, logger=logger)
+        modinfo_process, modinfo_flat_command_string, modinfo_failed_message = (
+            Utility.run(
+                "Querying device-mapper kernel module (dm_mod).",
+                ["modinfo", "dm_mod"],
+                use_c_locale=False,
+                logger=logger,
+            )
+        )
         if modinfo_process.returncode != 0:
-            modprobe_process, modprobe_flat_command_string, modprobe_failed_message = Utility.run("Loading device-mapper kernel module (dm_mod).",
-                                                                ["modprobe", "dm_mod"], use_c_locale=False, logger=logger)
+            modprobe_process, modprobe_flat_command_string, modprobe_failed_message = (
+                Utility.run(
+                    "Loading device-mapper kernel module (dm_mod).",
+                    ["modprobe", "dm_mod"],
+                    use_c_locale=False,
+                    logger=logger,
+                )
+            )
             if modprobe_process.returncode != 0:
                 raise Exception(modprobe_failed_message)
 
         proc_misc_string = Utility.read_file_into_string("/proc/misc")
         if isdir("/proc/lvm") or "device-mapper" in proc_misc_string:
-            vgscan_process, vgscan_flat_command_string, vgscan_failed_message = Utility.run("Search all volume groups (VGs)", ["vgscan"], use_c_locale=True, logger=logger)
-            if vgscan_process.returncode == 0 or isfile("/etc/lvmtab") or isdir("/proc/lvm"):
-                vgchange_process, vgchange_flat_command_string, vgchange_failed_message = Utility.run("Activate all logical volumes (LVs)",
-                                                                    ["vgchange", "--activate", "y"], use_c_locale=False, logger=logger)
+            vgscan_process, vgscan_flat_command_string, vgscan_failed_message = (
+                Utility.run(
+                    "Search all volume groups (VGs)",
+                    ["vgscan"],
+                    use_c_locale=True,
+                    logger=logger,
+                )
+            )
+            if (
+                vgscan_process.returncode == 0
+                or isfile("/etc/lvmtab")
+                or isdir("/proc/lvm")
+            ):
+                (
+                    vgchange_process,
+                    vgchange_flat_command_string,
+                    vgchange_failed_message,
+                ) = Utility.run(
+                    "Activate all logical volumes (LVs)",
+                    ["vgchange", "--activate", "y"],
+                    use_c_locale=False,
+                    logger=logger,
+                )
                 if vgscan_process.returncode != 0:
                     raise Exception(vgchange_failed_message)
         return True
@@ -90,23 +121,34 @@ class Lvm:
     @staticmethod
     def get_lvm_state_dict(logger):
         pvs_cmd_list = ["pvs", "-o", "pv_all,lv_all,vg_all", "--reportformat", "json"]
-        pvs_process, flat_command_string, failed_message = Utility.run("LVM query", pvs_cmd_list, use_c_locale=True, logger=logger)
+        pvs_process, flat_command_string, failed_message = Utility.run(
+            "LVM query", pvs_cmd_list, use_c_locale=True, logger=logger
+        )
         return json.loads(pvs_process.stdout)
 
     @staticmethod
     def get_physical_volume_state_dict(logger):
         pvs_cmd_list = ["pvs", "-o", "pv_all", "--reportformat", "json"]
-        pvs_process, flat_command_string, failed_message = Utility.run("Physical Volume (PV) query", pvs_cmd_list, use_c_locale=True, logger=logger)
+        pvs_process, flat_command_string, failed_message = Utility.run(
+            "Physical Volume (PV) query", pvs_cmd_list, use_c_locale=True, logger=logger
+        )
         return json.loads(pvs_process.stdout)
 
     @staticmethod
     def get_volume_group_state_dict(logger):
         # Get volume group state with the physical volume information
         vgs_cmd_list = ["vgs", "-o", "vg_all,pv_all", "--reportformat", "json"]
-        vgs_process, flat_command_string, failed_message = Utility.run("Volume Group (VG) query", vgs_cmd_list, use_c_locale=True, logger=logger)
+        vgs_process, flat_command_string, failed_message = Utility.run(
+            "Volume Group (VG) query", vgs_cmd_list, use_c_locale=True, logger=logger
+        )
         print(
-            "Volume group query. return code: " + str(
-                vgs_process.returncode) + " stdout: " + vgs_process.stdout + ". stderr=" + vgs_process.stderr)
+            "Volume group query. return code: "
+            + str(vgs_process.returncode)
+            + " stdout: "
+            + vgs_process.stdout
+            + ". stderr="
+            + vgs_process.stderr
+        )
         if vgs_process.returncode != 0:
             print("Non zero error code")
         return json.loads(vgs_process.stdout)
@@ -115,12 +157,15 @@ class Lvm:
     def get_logical_volume_state_dict(logger):
         # Get logical volume state with the volume group information
         lvs_cmd_list = ["lvs", "-o", "lv_all,vg_all", "--reportformat", "json"]
-        lvs_process, flat_command_string, failed_message = Utility.run("Logical Volume (LV) query", lvs_cmd_list, use_c_locale=True, logger=logger)
+        lvs_process, flat_command_string, failed_message = Utility.run(
+            "Logical Volume (LV) query", lvs_cmd_list, use_c_locale=True, logger=logger
+        )
         return json.loads(lvs_process.stdout)
 
     @staticmethod
-    def shutdown_lvm2(display_error_message: Callable[[str], None],
-                      logger: Optional[Logger]):
+    def shutdown_lvm2(
+        display_error_message: Callable[[str], None], logger: Optional[Logger]
+    ):
         print("Shutting down the Logical Volume Manager (LVM)")
         # Using list here because its doesn't appear to be guaranteed that the keys are unique
         failed_lv_shutdown_list = []
@@ -128,64 +173,103 @@ class Lvm:
         # Shutdown logical volumes
         lvs_dict = Lvm.get_logical_volume_state_dict(logger)
         print("Deactivating Logical Volumes (LVs)")
-        if 'report' in lvs_dict.keys():
-            for report in lvs_dict['report']:
-                if 'lv' in report.keys():
-                    for logical_volume_dict in report['lv']:
+        if "report" in lvs_dict.keys():
+            for report in lvs_dict["report"]:
+                if "lv" in report.keys():
+                    for logical_volume_dict in report["lv"]:
                         to_shutdown_lv = ""
-                        if 'lv_path' in logical_volume_dict.keys():
-                            to_shutdown_lv = logical_volume_dict['lv_path']
-                        elif 'lv_name' in logical_volume_dict.keys():
-                            to_shutdown_lv = logical_volume_dict['lv_name']
+                        if "lv_path" in logical_volume_dict.keys():
+                            to_shutdown_lv = logical_volume_dict["lv_path"]
+                        elif "lv_name" in logical_volume_dict.keys():
+                            to_shutdown_lv = logical_volume_dict["lv_name"]
                         else:
-                            display_error_message("Could not find LV path or name. Unexpected " + str(logical_volume_dict))
+                            display_error_message(
+                                "Could not find LV path or name. Unexpected "
+                                + str(logical_volume_dict)
+                            )
                             print("No lv path or name found. Unexpected.")
                             continue
 
-                        is_unmounted, message = Utility.umount_warn_on_busy(to_shutdown_lv)
+                        is_unmounted, message = Utility.umount_warn_on_busy(
+                            to_shutdown_lv
+                        )
                         if not is_unmounted:
                             failed_lv_shutdown_list.append([to_shutdown_lv, message])
                         else:
-                            lvchange_cmd_list = ["lvchange", "--activate", "n", "--ignorelockingfailure", "--partial",
-                                                 to_shutdown_lv]
-                            lvchange_process, flat_command_string, failed_message = Utility.run(
-                                "Shutting down logical volume: " + to_shutdown_lv, lvchange_cmd_list, use_c_locale=True, logger=logger)
+                            lvchange_cmd_list = [
+                                "lvchange",
+                                "--activate",
+                                "n",
+                                "--ignorelockingfailure",
+                                "--partial",
+                                to_shutdown_lv,
+                            ]
+                            lvchange_process, flat_command_string, failed_message = (
+                                Utility.run(
+                                    "Shutting down logical volume: " + to_shutdown_lv,
+                                    lvchange_cmd_list,
+                                    use_c_locale=True,
+                                    logger=logger,
+                                )
+                            )
                             if lvchange_process.returncode != 0:
-                                failed_lv_shutdown_list.append([to_shutdown_lv, failed_message])
+                                failed_lv_shutdown_list.append(
+                                    [to_shutdown_lv, failed_message]
+                                )
 
         # Shutdown volume groups
         vgs_dict = Lvm.get_volume_group_state_dict(logger)
         print("Deactivating Volume Groups (VGs)")
-        if 'report' in vgs_dict.keys():
-            for report in vgs_dict['report']:
-                if 'vg' in report.keys():
-                    for volume_group_dict in report['vg']:
+        if "report" in vgs_dict.keys():
+            for report in vgs_dict["report"]:
+                if "vg" in report.keys():
+                    for volume_group_dict in report["vg"]:
                         to_shutdown_vg = ""
-                        if 'vg_path' in volume_group_dict.keys():
-                            to_shutdown_vg = volume_group_dict['vg_path']
-                        elif 'vg_name' in volume_group_dict.keys():
-                            to_shutdown_vg = volume_group_dict['vg_name']
+                        if "vg_path" in volume_group_dict.keys():
+                            to_shutdown_vg = volume_group_dict["vg_path"]
+                        elif "vg_name" in volume_group_dict.keys():
+                            to_shutdown_vg = volume_group_dict["vg_name"]
                         else:
-                            display_error_message("Could not find VG path or name. Unexpected " + str(volume_group_dict))
+                            display_error_message(
+                                "Could not find VG path or name. Unexpected "
+                                + str(volume_group_dict)
+                            )
                             print("No vg path or name found. Unexpected.")
                             continue
-                        lv_count = int(volume_group_dict['lv_count'])
+                        lv_count = int(volume_group_dict["lv_count"])
                         if lv_count != 0:
-                            vgchange_cmd_list = ["vgchange", "--activate", "n", "--ignorelockingfailure", "--partial",
-                                                 to_shutdown_vg]
-                            vgchange_process, flat_command_string, failed_message = Utility.run(
-                                "Shutting down volume group: " + to_shutdown_vg, vgchange_cmd_list, use_c_locale=True, logger=logger)
+                            vgchange_cmd_list = [
+                                "vgchange",
+                                "--activate",
+                                "n",
+                                "--ignorelockingfailure",
+                                "--partial",
+                                to_shutdown_vg,
+                            ]
+                            vgchange_process, flat_command_string, failed_message = (
+                                Utility.run(
+                                    "Shutting down volume group: " + to_shutdown_vg,
+                                    vgchange_cmd_list,
+                                    use_c_locale=True,
+                                    logger=logger,
+                                )
+                            )
                             if vgchange_process.returncode != 0:
-                                failed_vg_shutdown_list.append([to_shutdown_vg, failed_message])
+                                failed_vg_shutdown_list.append(
+                                    [to_shutdown_vg, failed_message]
+                                )
 
         # Checking if volume groups shutdown correctly
         vgs_dict = Lvm.get_volume_group_state_dict(logger)
         print("Checking if all Volume Groups (VGs) were de-activated")
-        if 'report' in vgs_dict.keys():
-            for report in vgs_dict['report']:
-                if 'vg' in report.keys():
-                    for volume_group_dict in report['vg']:
-                        if 'active' in volume_group_dict.keys() and volume_group_dict['active'] == "active":
+        if "report" in vgs_dict.keys():
+            for report in vgs_dict["report"]:
+                if "vg" in report.keys():
+                    for volume_group_dict in report["vg"]:
+                        if (
+                            "active" in volume_group_dict.keys()
+                            and volume_group_dict["active"] == "active"
+                        ):
                             print("Unable to shutdown: " + str(volume_group_dict))
 
         print("Finished Shutting down the Logical Volume Manager")
