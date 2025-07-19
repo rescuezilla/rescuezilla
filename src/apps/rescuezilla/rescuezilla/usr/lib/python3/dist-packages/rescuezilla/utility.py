@@ -657,7 +657,8 @@ class Utility:
     ):
         if is_shutdown_fn is None:
             # If no is shutdown function specified, make a function that simply always return False
-            is_shutdown_fn = lambda: False
+            def is_shutdown_fn():
+                return False
 
         num_tries = 0
         max_tries = timeout_seconds / retry_interval_seconds
