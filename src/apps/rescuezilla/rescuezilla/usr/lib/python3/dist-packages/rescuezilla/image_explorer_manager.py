@@ -853,7 +853,7 @@ class ImageExplorerManager:
                 self.partclone_nbd_process_queue.put(partclone_nbd_process)
                 # Sentinel value for successful partclone-nbd mount. partclone-nbd is launched with C locale env, so this
                 # string will match even for non-English locales.
-                partclone_nbd_ready_msg = "[ INF ] Waiting for requests ..."
+                partclone_nbd_ready_msg_pattern = r".*Waiting for requests.*"
 
                 # Poll the partclone-nbd stdout until the ready message has been received.
                 # This relies on partclone-nbd exiting immediately if an error is generated, if not, an infinite loop will
@@ -882,7 +882,7 @@ class ImageExplorerManager:
                         partclone_nbd_output_list += [line]
                         line = line.strip()
                         m = utility.REMatcher(line)
-                        if m.match(r".*Waiting for requests.*"):
+                        if m.match(partclone_nbd_ready_msg_pattern):
                             print("Detected partclone-nbd mount is ready!")
                             mounted_successfully = True
                             break
