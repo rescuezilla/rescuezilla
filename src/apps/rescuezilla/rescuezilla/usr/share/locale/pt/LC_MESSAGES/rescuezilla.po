@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2025-06-29 17:01+0000\n"
+"PO-Revision-Date: 2025-07-19 23:03+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/pt/>\n"
@@ -166,8 +166,8 @@ msgstr "Passo 6: Clonar o disco"
 
 msgid "Cloning the drive you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
-"Clonar o disco selecionado. Isso pode demorar uma hora ou mais dependendo da "
-"velocidade do seu computador e da quantidade de dados."
+"A clonar a unidade selecionada. Isso pode demorar uma hora ou mais "
+"dependendo da velocidade do seu computador e da quantidade de dados."
 
 msgid "Summary of Clone"
 msgstr "Resumo da clonagem"
@@ -190,13 +190,13 @@ msgstr ""
 "cópia de segurança."
 
 msgid "Drive"
-msgstr "Drive"
+msgstr "Unidade"
 
 msgid "Capacity"
 msgstr "Capacidade"
 
 msgid "Drive Model"
-msgstr "Modelo do Drive"
+msgstr "Modelo do Unidade"
 
 msgid "Serial Number"
 msgstr "Número de série"
@@ -205,10 +205,10 @@ msgid "Partitions"
 msgstr "Partições"
 
 msgid "Show hidden devices (for advanced users)"
-msgstr "Mostrar dispositivos ocultos (para usuários avançados)"
+msgstr "Mostrar dispositivos ocultos (para utilizadores avançados)"
 
 msgid "Step 2: Select Partitions to Save"
-msgstr "Passo 2: Selecione Partições para Salvar"
+msgstr "Passo 2: Selecionar partições para guardar"
 
 msgid "Select which partitions to create a backup of. <b>Leave all partitions selected if you are unsure.</b>"
 msgstr ""
@@ -216,7 +216,7 @@ msgstr ""
 "partições selecionadas se não tiver a certeza.</b>"
 
 msgid "Save"
-msgstr "Salvar"
+msgstr "Guardar"
 
 msgid "Description"
 msgstr "Descrição"
@@ -230,7 +230,7 @@ msgid "Partition {partition_number}"
 msgstr "Partição {partition_number}"
 
 msgid "Step 3: Select Destination Drive"
-msgstr "Passo 3: Selecione o Drive de Destino"
+msgstr "Passo 3: Selecione o unidade de destino"
 
 msgid "Click on the box below to select the source drive that you would like to create a backup image from."
 msgstr ""
@@ -507,7 +507,7 @@ msgid "Step 7: Confirm Backup Configuration"
 msgstr "Etapa 7: Confirmar a configuração de backup"
 
 msgid "Source drive"
-msgstr "Drive de origem"
+msgstr "Unidade de origem"
 
 msgid "Backing up the following partition(s)"
 msgstr "A efetuar a cópia de segurança da(s) seguinte(s) partição(ões)"
@@ -570,7 +570,7 @@ msgid "An operation is in progress. Do you wish to cancel?"
 msgstr "Uma operação está em andamento. Deseja cancelar?"
 
 msgid "Operation cancelled by user."
-msgstr "Backup cancelado pelo usuário."
+msgstr "Operação cancelada pelo utilizador."
 
 msgid "Rescue option is enabled."
 msgstr "A opção de resgate está habilitada."
@@ -605,7 +605,7 @@ msgid "Backup operation failed:"
 msgstr "Operação de backup falhou:"
 
 msgid "User requested operation to stop."
-msgstr "Operação solicitada pelo usuário para parar."
+msgstr "O utilizador solicitou a paragem da operação."
 
 #, python-brace-format
 msgid "Operation took {num_minutes} minutes."
@@ -635,7 +635,7 @@ msgid "Select the image file to restore."
 msgstr "Selecione o ficheiro de imagem para restaurar."
 
 msgid "Step 3: Select Drive To Restore"
-msgstr "Passo 3: Selecione o Drive para Restaurar"
+msgstr "Passo 3: Selecione a unidade para restaurar"
 
 msgid "Select the destination drive to restore with the selected image."
 msgstr "Selecione a unidade de destino para restaurar com a imagem selecionada."
