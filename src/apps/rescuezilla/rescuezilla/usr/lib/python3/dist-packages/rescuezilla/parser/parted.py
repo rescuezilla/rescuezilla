@@ -83,7 +83,7 @@ class Parted:
                     # Number  Start       End          Size         File system     Name  Flags
                     #  1      1048576B    65011711B    63963136B    ext4
                     column_title = re.search(
-                        "Number\s+Start\s+End\s+Size\s+File system\s+Name\s+Flags",
+                        r"Number\s+Start\s+End\s+Size\s+File system\s+Name\s+Flags",
                         parted_output,
                     ).group(0)
                     partition_line = partition_line.ljust(len(column_title), " ")
@@ -136,7 +136,7 @@ class Parted:
                 #  1      1048576B    91226111B    90177536B    primary   ext4
                 elif parted_dict["partition_table"] == "msdos":
                     column_title = re.search(
-                        "Number\s+Start\s+End\s+Size\s+Type\s+File system\s+Flags",
+                        r"Number\s+Start\s+End\s+Size\s+Type\s+File system\s+Flags",
                         parted_output,
                     ).group(0)
                     partition_line = partition_line.ljust(len(column_title), " ")

@@ -177,7 +177,7 @@ class FsArchiverImage:
         fsarchiver_archinfo_dict = {"filesystems": {}}
         # Handle metadata:
         initial_split = re.split(
-            "=*\sfilesystem information\s=*", fsarchiver_archinfo_output
+            r"=*\sfilesystem information\s=*", fsarchiver_archinfo_output
         )
         for line in initial_split[0].splitlines():
             try:

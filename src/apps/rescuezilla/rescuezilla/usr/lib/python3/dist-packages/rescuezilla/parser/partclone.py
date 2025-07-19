@@ -82,7 +82,7 @@ class Partclone:
                 continue
             else:
                 m = utility.REMatcher(line)
-                if m.match("File system:\s+([a-zA-Z0-9+]+)"):
+                if m.match(r"File system:\s+([a-zA-Z0-9+]+)"):
                     partclone_info_dict["filesystem"] = m.group(1)
                 elif m.match(r"Device size:\s+([a-zA-Z0-9+\s\.]+) = ([0-9]+) Blocks"):
                     partclone_info_dict["size"] = {
@@ -99,7 +99,7 @@ class Partclone:
                         "enduser_readable": m.group(1),
                         "blocks": int(m.group(2).strip()),
                     }
-                elif m.match("Block size:\s+([0-9+]+)"):
+                elif m.match(r"Block size:\s+([0-9+]+)"):
                     partclone_info_dict["block_size"] = int(m.group(1))
                 elif m.match(r"image format:\s+([0-9a-zA-Z/]+)"):
                     partclone_info_dict["image_format"] = m.group(1)
