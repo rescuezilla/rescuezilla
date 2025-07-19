@@ -1667,7 +1667,7 @@ class RestoreManager:
                         ][partition_number]["start"]
                     except Exception:
                         print("Couldn't get start sector from parted dict")
-                        tb = traceback.format_exc()
+                        traceback.format_exc()
                         traceback.print_exc()
                     # Adjust the NTFS filesystem CHS (cylinder-head-sector) information.
                     # Note: Clonezilla's run_ntfsreloc_part function from sbin/ocs-functions file only adjusts
@@ -2140,7 +2140,6 @@ class RestoreManager:
                     "Target partition " + dest_part["dest_key"] + " exists." + "\n"
                 )
             else:
-                is_target_block_devices_exist = False
                 partition_table_message += (
                     "Error target partition: "
                     + dest_part["dest_key"]

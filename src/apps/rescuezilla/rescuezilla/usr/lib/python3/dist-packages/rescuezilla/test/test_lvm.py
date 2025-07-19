@@ -53,8 +53,8 @@ class LvmTest(unittest.TestCase):
         self.assertDictEqual(expected, volume_group_dict)
 
     def test_save_logv(self):
-        # sudo pvs -o pv_all,lv_all,vg_all --reportformat json
-        pvs_all_json_output = """  {
+        # For analysis, here is the output of: sudo pvs -o pv_all,lv_all,vg_all --reportformat json
+        _pvs_all_json_output = """  {
       "report": [
           {
               "pv": [
@@ -64,6 +64,7 @@ class LvmTest(unittest.TestCase):
       ]
   }
 """
+        # sudo pvs -o pv_all --reportformat json
         pvs_json_output = """  {
       "report": [
           {
@@ -73,7 +74,7 @@ class LvmTest(unittest.TestCase):
           }
       ]
   }"""
-        physical_volume_state_dict = json.loads(pvs_json_output)
+        _physical_volume_state_dict = json.loads(pvs_json_output)
 
         # sudo lvs -o lv_all --reportformat json
         lvs_json_output = """  {
@@ -86,7 +87,7 @@ class LvmTest(unittest.TestCase):
       ]
   }
 """
-        logical_volume_state_dict = json.loads(lvs_json_output)
+        _logical_volume_state_dict = json.loads(lvs_json_output)
 
         # sudo vgs -o vg_all --reportformat json
         vgs_json_output = """  {
@@ -99,4 +100,4 @@ class LvmTest(unittest.TestCase):
       ]
   }
 """
-        volume_group_state_dict = json.loads(vgs_json_output)
+        _volume_group_state_dict = json.loads(vgs_json_output)

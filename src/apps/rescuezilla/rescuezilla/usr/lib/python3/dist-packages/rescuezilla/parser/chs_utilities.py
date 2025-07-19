@@ -64,7 +64,6 @@ class ChsUtilities:
         is_edd_geometry,
         logger,
     ):
-        cylinders = str(destination_disk_geometry_dict["cylinders"])
         ntfsfixboot_geometry_options = []
         if destination_disk_geometry_dict is not None:
             ntfsfixboot_geometry_options = [

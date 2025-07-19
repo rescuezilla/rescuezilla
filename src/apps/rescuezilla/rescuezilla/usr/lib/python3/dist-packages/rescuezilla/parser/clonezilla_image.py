@@ -769,7 +769,6 @@ class ClonezillaImage:
             return False
 
     def has_partition_table(self):
-        short_selected_image_drive_node = self.short_device_node_disk_list[0]
         # Using MBR over sfdisk, as sometimes Clonezilla sfdisk file is empty but a valid MBR file still present.
         if not self._mbr_absolute_path:
             return False

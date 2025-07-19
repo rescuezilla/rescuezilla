@@ -141,8 +141,6 @@ class CloneManager:
             with self.summary_message_lock:
                 self.summary_message += _("Rescue option is enabled.") + "\n"
 
-        env = Utility.get_env_C_locale()
-
         if isinstance(self.image, QemuImage):
             is_associated, failed_message = self.image.associate_nbd(
                 QEMU_NBD_NBD_DEVICE

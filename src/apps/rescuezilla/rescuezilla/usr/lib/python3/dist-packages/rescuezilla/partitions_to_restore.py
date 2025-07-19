@@ -38,7 +38,7 @@ from utility import Utility, ErrorMessageModalPopup, _, PleaseWaitModalPopup
 import gi
 
 gi.require_version("Gtk", "3.0")
-from gi.repository import GLib  # noqa: E402
+from gi.repository import GLib, GObject  # noqa: E402
 
 
 # FIXME: The LVM handling in this class could be vastly improved.
@@ -237,9 +237,7 @@ class PartitionsToRestore:
                                 # TODO: Re-evaluate how exactly Clonezilla uses /NOT_FOUND and whether introducing it here
                                 # TODO: could improve Rescuezilla/Clonezilla interoperability.
                                 continue
-                            if "pv_uuid" in vg_dict.keys():
-                                pv_uuid = vg_dict["pv_uuid"]
-                            else:
+                            if "pv_uuid" not in vg_dict.keys():
                                 error_message += (
                                     "Could not find physical volume UUID pv_uuid in "
                                     + str(vg_dict)
@@ -369,7 +367,7 @@ class PartitionsToRestore:
             self.please_wait_popup = None
 
         if not is_lvm_shutdown_success or len(lvm_error_message) != 0:
-            error = ErrorMessageModalPopup(self.builder, lvm_error_message)
+            ErrorMessageModalPopup(self.builder, lvm_error_message)
             # Ensure that the overwrite partition table button stays checked.
             is_overwriting_partition_table = True
             for (
@@ -422,7 +420,7 @@ class PartitionsToRestore:
             print(
                 "Blocking enabling the toggle when the destination partition is not set"
             )
-            error = ErrorMessageModalPopup(
+            ErrorMessageModalPopup(
                 self.builder,
                 _(
                     "No destination partition selected. Use the destination partition drop-down menu to select the destination"

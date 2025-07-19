@@ -30,8 +30,6 @@ from gi.repository import GLib  # noqa: E402
 
 class MountNetworkPath:
     def __init__(self, builder, callback, mode, network_widget_dict, destination_path):
-        # Lowercase mode (eg "backup", "restore", "verify")
-        mode_prefix = mode.name.lower()
         settings = {
             "server": network_widget_dict["network_server"][mode].get_text().strip(),
             "username": network_widget_dict["network_username"][mode]

@@ -22,8 +22,6 @@ import pprint
 import re
 import tempfile
 from datetime import datetime
-from email.utils import format_datetime
-
 from babel.dates import format_datetime
 
 from parser.blkid import Blkid
@@ -170,7 +168,6 @@ class MetadataOnlyImage:
         pp.pprint(self.drive_state)
 
         self.image_format_dict_dict = collections.OrderedDict([])
-        total_size_estimate = 0
         drive_state_partitions_dict = self.drive_state[self.long_device_node][
             "partitions"
         ]

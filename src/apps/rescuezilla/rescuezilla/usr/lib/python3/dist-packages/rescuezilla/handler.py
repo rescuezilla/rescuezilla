@@ -453,7 +453,7 @@ class Handler:
 
     def _display_error_message_callback(self, is_success, message):
         if not is_success:
-            error = ErrorMessageModalPopup(self.builder, message)
+            ErrorMessageModalPopup(self.builder, message)
             self.display_welcome_page()
 
     # Convenience function to get the model and iterators using a TreeSelection.
@@ -486,7 +486,7 @@ class Handler:
                         "backup_drive_selection_treeselection"
                     )
                     if len(iters) == 0:
-                        error = ErrorMessageModalPopup(
+                        ErrorMessageModalPopup(
                             self.builder,
                             "No source drive selected. Please select source "
                             "drive to backup",
@@ -497,14 +497,14 @@ class Handler:
                         if self.drive_query.drive_state[key][
                             "has_raid_member_filesystem"
                         ]:
-                            error = ErrorMessageModalPopup(
+                            ErrorMessageModalPopup(
                                 self.builder, self.source_contains_raid_member_msg
                             )
                             return
                         elif (
                             "partitions" not in self.drive_query.drive_state[key].keys()
                         ):
-                            error = ErrorMessageModalPopup(
+                            ErrorMessageModalPopup(
                                 self.builder,
                                 "Backup of drives without a partition table *and* no filesystem is not yet supported by current version of Rescuezilla.\n\nSupport for this will be added in a future version.",
                             )
@@ -541,9 +541,7 @@ class Handler:
                             self.partitions_to_backup[row[0]]["description"] = row[2]
                             has_atleast_one = True
                     if not has_atleast_one:
-                        error = ErrorMessageModalPopup(
-                            self.builder, "Nothing selected!"
-                        )
+                        ErrorMessageModalPopup(self.builder, "Nothing selected!")
                     else:
                         self.drive_query.populate_mount_partition_table(
                             ignore_drive_key=self.selected_drive_key
@@ -569,7 +567,7 @@ class Handler:
                     dest_dir = os.path.join(selected_directory, folder_name)
                     if os.path.exists(dest_dir):
                         # TODO: Find best wording, then add to translation files
-                        error = ErrorMessageModalPopup(
+                        ErrorMessageModalPopup(
                             self.builder,
                             "There already exists a folder with the same name: {folder}\n\nPlease select a different name for the backup image.".format(
                                 folder=folder_name
@@ -628,9 +626,7 @@ class Handler:
                         "restore_image_selection_treeselection"
                     )
                     if len(iters) == 0:
-                        error = ErrorMessageModalPopup(
-                            self.builder, "No image selected"
-                        )
+                        ErrorMessageModalPopup(self.builder, "No image selected")
                     else:
                         self.selected_image_absolute_path = list_store.get(iters[0], 0)[
                             0
@@ -640,13 +636,13 @@ class Handler:
                             self.selected_image_absolute_path
                         ]
                         if image.is_needs_decryption:
-                            error = ErrorMessageModalPopup(
+                            ErrorMessageModalPopup(
                                 self.builder,
                                 "Ecryptfs encrypted images are not supported by current version of Rescuezilla.\n\nSupport for ecryptfs will be improved in a future version.\n\nHowever, as a temporary workaround, it is possible to carefully use the mount command line utility to decrypt the image, and then point Rescuezilla to this ecryptfs mount point and then use Rescuezilla to restore the image as normal.",
                             )
                         else:
                             if isinstance(image, FogProjectImage):
-                                error = ErrorMessageModalPopup(
+                                ErrorMessageModalPopup(
                                     self.builder,
                                     "WARNING: Support for restoring images from FOG Project is still EXPERIMENTAL and NOT RECOMMENDED.\n\nWindows MBR and GPT disks will restore and boot fine.\n\nLinux environments using GRUB will restore fine BUT after booting GRUB they won't boot further. It looks like FOG might be modifying unique UUID identifiers etc.\n\nCompatibility with FOG Project images will be improved in a future version.",
                                 )
@@ -658,7 +654,7 @@ class Handler:
                         "restore_step3_drive_selection_treeselection"
                     )
                     if len(iters) == 0:
-                        error = ErrorMessageModalPopup(
+                        ErrorMessageModalPopup(
                             self.builder, "Please select destination drive to mount"
                         )
                     else:
@@ -666,7 +662,7 @@ class Handler:
                         if self.drive_query.drive_state[key][
                             "has_raid_member_filesystem"
                         ]:
-                            error = ErrorMessageModalPopup(
+                            ErrorMessageModalPopup(
                                 self.builder,
                                 "Warning: Destination drive has a RAID member filesystem. Please make sure you understanding implications of this before continuing.",
                             )
@@ -678,7 +674,7 @@ class Handler:
                             )
                         ):
                             # TODO: Handle this situation more effectively than "startswith" on the device nodes.
-                            error = ErrorMessageModalPopup(
+                            ErrorMessageModalPopup(
                                 self.builder,
                                 "Destination device cannot be the same as source image device.",
                             )
@@ -716,7 +712,7 @@ class Handler:
                         except Exception:
                             tb = traceback.format_exc()
                             traceback.print_exc()
-                            error = ErrorMessageModalPopup(
+                            ErrorMessageModalPopup(
                                 self.builder,
                                 "Unable to initialize partition restore list:\n\n" + tb,
                             )
@@ -745,7 +741,7 @@ class Handler:
                             )
                             has_atleast_one = True
                     if not has_atleast_one:
-                        error = ErrorMessageModalPopup(
+                        ErrorMessageModalPopup(
                             self.builder, "Please select partitions to restore!"
                         )
                     else:
@@ -769,7 +765,7 @@ class Handler:
                                 source_size=last_image_partition_final_byte,
                                 destination_size=destination_capacity_bytes,
                             )
-                            error = ErrorMessageModalPopup(
+                            ErrorMessageModalPopup(
                                 self.builder,
                                 details + "\n\n" + self.larger_to_smaller_info_msg,
                             )
@@ -808,9 +804,7 @@ class Handler:
                         "verify_image_selection_treeselection"
                     )
                     if len(iters) == 0:
-                        error = ErrorMessageModalPopup(
-                            self.builder, "No image selected"
-                        )
+                        ErrorMessageModalPopup(self.builder, "No image selected")
                     else:
                         image_list = []
                         is_needs_decryption = False
@@ -826,7 +820,7 @@ class Handler:
                                 is_needs_decryption & image.is_needs_decryption
                             )
                         if is_needs_decryption:
-                            error = ErrorMessageModalPopup(
+                            ErrorMessageModalPopup(
                                 self.builder,
                                 "Ecryptfs encrypted images are not supported by current version of Rescuezilla.\n\nSupport for ecryptfs will be improved in a future version.\n\nHowever, as a temporary workaround, it is possible to carefully use the mount command line utility to decrypt the image, and then point Rescuezilla to this ecryptfs mount point and then use Rescuezilla to restore the image as normal.",
                             )
@@ -858,7 +852,7 @@ class Handler:
                         "clone_source_drive_selection_treeselection"
                     )
                     if len(iters) == 0:
-                        error = ErrorMessageModalPopup(
+                        ErrorMessageModalPopup(
                             self.builder,
                             _(
                                 "No source drive selected. Please select source drive to clone"
@@ -870,7 +864,7 @@ class Handler:
                         if self.drive_query.drive_state[key][
                             "has_raid_member_filesystem"
                         ]:
-                            error = ErrorMessageModalPopup(
+                            ErrorMessageModalPopup(
                                 self.builder,
                                 "Backup of RAID member drives is not allowed. Choose another drive such as /dev/md0 or /dev/md127.",
                             )
@@ -878,7 +872,7 @@ class Handler:
                         elif (
                             "partitions" not in self.drive_query.drive_state[key].keys()
                         ):
-                            error = ErrorMessageModalPopup(
+                            ErrorMessageModalPopup(
                                 self.builder,
                                 "Clone of drives without a partition table *and* no filesystem is not yet supported by current version of Rescuezilla.\n\nSupport for this will be added in a future version.",
                             )
@@ -905,7 +899,7 @@ class Handler:
                             error_msg = ""
                             for value in self.source_drive_metadata_only_image.warning_dict.values():
                                 error_msg += value + "\n"
-                            error = ErrorMessageModalPopup(
+                            ErrorMessageModalPopup(
                                 self.builder,
                                 _("Unable to process {source}:").format(
                                     source=self.clone_source_drive_key
@@ -921,7 +915,7 @@ class Handler:
                         "clone_step3_destination_drive_selection_treeselection"
                     )
                     if len(iters) == 0:
-                        error = ErrorMessageModalPopup(
+                        ErrorMessageModalPopup(
                             self.builder,
                             _(
                                 "No destination drive selected. Please select destination drive to overwrite"
@@ -930,7 +924,7 @@ class Handler:
                     else:
                         self.clone_destination_drive = list_store.get(iters[0], 0)[0]
                         if self.clone_source_drive_key == self.clone_destination_drive:
-                            error = ErrorMessageModalPopup(
+                            ErrorMessageModalPopup(
                                 self.builder,
                                 "Destination device cannot be the same as source device.",
                             )
@@ -965,7 +959,7 @@ class Handler:
                         except Exception:
                             tb = traceback.format_exc()
                             traceback.print_exc()
-                            error = ErrorMessageModalPopup(
+                            ErrorMessageModalPopup(
                                 self.builder,
                                 "Unable to initialize partition list:\n\n" + tb,
                             )
@@ -995,7 +989,7 @@ class Handler:
                             )
                             has_atleast_one = True
                     if not has_atleast_one:
-                        error = ErrorMessageModalPopup(
+                        ErrorMessageModalPopup(
                             self.builder, "Please select partitions to clone!"
                         )
                     else:
@@ -1019,7 +1013,7 @@ class Handler:
                                 source_size=last_image_partition_final_byte,
                                 destination_size=destination_capacity_bytes,
                             )
-                            error = ErrorMessageModalPopup(
+                            ErrorMessageModalPopup(
                                 self.builder,
                                 details + "\n\n" + self.larger_to_smaller_info_msg,
                             )
@@ -1058,9 +1052,7 @@ class Handler:
                         "image_explorer_image_selection_treeselection"
                     )
                     if len(iters) == 0:
-                        error = ErrorMessageModalPopup(
-                            self.builder, "No image selected"
-                        )
+                        ErrorMessageModalPopup(self.builder, "No image selected")
                     else:
                         self.selected_image_absolute_path = list_store.get(iters[0], 0)[
                             0
@@ -1070,12 +1062,12 @@ class Handler:
                             self.selected_image_absolute_path
                         ]
                         if image.image_format == "FSARCHIVER_FORMAT":
-                            error = ErrorMessageModalPopup(
+                            ErrorMessageModalPopup(
                                 self.builder,
                                 "FSArchiver images cannot be mounted with Image Explorer with the current version of Rescuezilla. But FSArchiver images CAN be restored with the current version of Rescuezilla.\n\nSupport for exploring FSArchiver images may be added in a future version.",
                             )
                         elif image.is_needs_decryption:
-                            error = ErrorMessageModalPopup(
+                            ErrorMessageModalPopup(
                                 self.builder,
                                 "Ecryptfs encrypted images are not supported by current version of Rescuezilla.\n\nSupport for ecryptfs will be improved in a future version.\n\nHowever, as a temporary workaround, it is possible to carefully use the mount command line utility to decrypt the image, and then point Rescuezilla to this ecryptfs mount point and then use Rescuezilla to access the image as normal.",
                             )
@@ -1094,7 +1086,7 @@ class Handler:
                             except Exception:
                                 tb = traceback.format_exc()
                                 traceback.print_exc()
-                                error = ErrorMessageModalPopup(
+                                ErrorMessageModalPopup(
                                     self.builder, "Unable to process image " + tb
                                 )
                 elif self.current_page == Page.IMAGE_EXPLORER_PARTITION_MOUNT:
@@ -1113,7 +1105,7 @@ class Handler:
         except Exception:
             tb = traceback.format_exc()
             traceback.print_exc()
-            error = ErrorMessageModalPopup(self.builder, tb)
+            ErrorMessageModalPopup(self.builder, tb)
 
     def prev_tab(self, button):
         try:
@@ -1276,11 +1268,11 @@ class Handler:
         except Exception:
             tb = traceback.format_exc()
             traceback.print_exc()
-            error = ErrorMessageModalPopup(self.builder, tb)
+            ErrorMessageModalPopup(self.builder, tb)
 
     def _post_mount_callback(self, is_success, error_message, mounted_path=None):
         if not is_success or mounted_path is None:
-            error = ErrorMessageModalPopup(self.builder, error_message)
+            ErrorMessageModalPopup(self.builder, error_message)
         else:
             if self.mode == Mode.BACKUP:
                 self.current_page = Page.BACKUP_DESTINATION_FOLDER
@@ -1400,7 +1392,7 @@ class Handler:
             # shutdown.
             subprocess.Popen(["umount", MOUNT_DIR])
         except Exception:
-            tb = traceback.format_exc()
+            traceback.format_exc()
             traceback.print_exc()
         Gtk.main_quit()
 
@@ -1843,9 +1835,7 @@ class Handler:
                 self.mount_partition_selection_treeselection_id_dict[self.mode]
             )
             if len(iters) == 0:
-                error = ErrorMessageModalPopup(
-                    self.builder, "Please select drive to mount"
-                )
+                ErrorMessageModalPopup(self.builder, "Please select drive to mount")
             else:
                 # Get first column (which is hidden/invisible) containing the drive shortdevname (eg, 'sda')
                 selected_partition_key = list_store.get(iters[0], 0)[0]
@@ -1947,7 +1937,7 @@ class Handler:
             )
 
     def select_image_folder(self, button):
-        folder_selection_popup = BrowseSelectionPopup(
+        BrowseSelectionPopup(
             self.builder,
             callback=self.selected_image_folder,
             default_directory=MOUNT_DIR,
@@ -1956,7 +1946,7 @@ class Handler:
         return
 
     def select_image_explorer_image_folder(self, button):
-        folder_selection_popup = BrowseSelectionPopup(
+        BrowseSelectionPopup(
             self.builder,
             callback=self.selected_image_folder,
             default_directory="/",
@@ -1967,7 +1957,7 @@ class Handler:
     def selected_image_folder(self, text, is_allow_selecting_folder_outside_mount):
         print("Received path " + text)
         if not is_allow_selecting_folder_outside_mount and MOUNT_DIR not in text:
-            error = ErrorMessageModalPopup(
+            ErrorMessageModalPopup(
                 self.builder,
                 _("You must select a folder inside {location}").format(
                     location=MOUNT_DIR
@@ -1982,7 +1972,7 @@ class Handler:
         number = GObject.markup_escape_text(
             self.selected_drive_enduser_friendly_drive_number
         )
-        device = GObject.markup_escape_text(self.selected_drive_key)
+        _device = GObject.markup_escape_text(self.selected_drive_key)
         size = GObject.markup_escape_text(self.selected_drive_capacity)
         if self.selected_drive_model is None:
             model = ""
@@ -2153,7 +2143,7 @@ class Handler:
 
     def find_network_share(self, button):
         # FIXME: Overhaul network share handling.
-        error = ErrorMessageModalPopup(
+        ErrorMessageModalPopup(
             self.builder,
             "Search network function is disabled and will be re-introduced in the next version.\n\nPlease enter the network details manually.",
         )
@@ -2163,7 +2153,7 @@ class Handler:
 
     def open_file_manager(self, button):
         if shutil.which("xdg-open") is None:
-            error = ErrorMessageModalPopup(
+            ErrorMessageModalPopup(
                 self.builder,
                 "Cannot launch file manager using xdg-open."
                 "Please manually navigate to the following path using a file manager: "
@@ -2178,7 +2168,7 @@ class Handler:
                 target_user, ["xdg-open", IMAGE_EXPLORER_DIR]
             )
             if not is_success:
-                error = ErrorMessageModalPopup(self.builder, failed_message)
+                ErrorMessageModalPopup(self.builder, failed_message)
 
     # Callback for double click (row-activate).
     def row_activated_partition_selected(self, treeview, path, view_column):
@@ -2223,7 +2213,7 @@ class Handler:
         if compression is None:
             error_message += "Could not extract image compression.\n"
         if error_message != "":
-            error = ErrorMessageModalPopup(self.builder, error_message)
+            ErrorMessageModalPopup(self.builder, error_message)
             return
 
         # Don't show reminder when unmounting or if the image is uncompressed.

@@ -328,8 +328,6 @@ class DriveQueryInternal:
         self.ui_manager = ui_manager
 
     def _do_drive_query(self):
-        env_C_locale = Utility.get_env_C_locale()
-
         drive_query_start_time = datetime.now()
 
         self.ui_manager.popup_set_text(

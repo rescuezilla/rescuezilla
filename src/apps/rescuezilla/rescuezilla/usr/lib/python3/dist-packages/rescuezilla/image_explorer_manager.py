@@ -248,7 +248,7 @@ class ImageExplorerManager:
 
     def _post_backup_image_unmount_callback(self, is_success, error_message=""):
         if not is_success:
-            error = ErrorMessageModalPopup(self.builder, error_message)
+            ErrorMessageModalPopup(self.builder, error_message)
             self.duration_label.set_label("")
             self.duration_label.set_visible(False)
             self.set_support_information_linkbutton_visible(True)
@@ -262,7 +262,7 @@ class ImageExplorerManager:
 
     def _post_backup_image_mount_callback(self, is_success, message=""):
         if not is_success:
-            error = ErrorMessageModalPopup(self.builder, message)
+            ErrorMessageModalPopup(self.builder, message)
             self.duration_label.set_label("")
             self.duration_label.set_visible(False)
             self.set_support_information_linkbutton_visible(True)

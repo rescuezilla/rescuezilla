@@ -58,7 +58,7 @@ class LsblkTest(unittest.TestCase):
        ]
     }
     """
-        lsblk_dict = Lsblk.parse_lsblk_json_output(input_lsblk_json_string)
+        _lsblk_dict = Lsblk.parse_lsblk_json_output(input_lsblk_json_string)
         # pp = pprint.PrettyPrinter(indent=4)
         # pp.pprint(lsblk_dict)
 

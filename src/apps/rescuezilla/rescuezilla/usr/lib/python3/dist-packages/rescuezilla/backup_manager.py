@@ -1532,7 +1532,7 @@ class BackupManager:
                         self.ui_manager.update_progress_status(
                             message=filesystem_backup_message + "\n\n" + output
                         )
-            rc = self.proc["partclone_backup_" + partition_key].poll()
+            _rc = self.proc["partclone_backup_" + partition_key].poll()
 
             self.proc[
                 "partclone_backup_" + partition_key
@@ -1559,8 +1559,8 @@ class BackupManager:
                 with self.summary_message_lock:
                     self.summary_message += partition_summary
                 self.at_least_one_non_fatal_error = True
-                proc_stdout = self.proc["partclone_backup_" + partition_key].stdout
-                proc_stderr = self.proc["partclone_backup_" + partition_key].stderr
+                _proc_stdout = self.proc["partclone_backup_" + partition_key].stdout
+                _proc_stderr = self.proc["partclone_backup_" + partition_key].stderr
                 extra_info = (
                     "\nThe command used internally was:\n\n"
                     + flat_command_string

@@ -68,7 +68,7 @@ last-lba: 16223214
             },
         }
         print("actual:" + str(sfdisk_dict))
-        # self.assertDictEqual(expected_sfdisk_dict, sfdisk_dict)
+        self.assertDictEqual(expected_sfdisk_dict, sfdisk_dict)
 
     def test_sfdisk_parsing_many_fields(self):
         input_sfdisk_string = """label: gpt
