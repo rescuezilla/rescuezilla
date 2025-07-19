@@ -324,9 +324,6 @@ msgstr "Ordner auswählen"
 msgid "Port"
 msgstr ""
 
-msgid "Optional"
-msgstr "optional"
-
 msgid "Select network-shared storage location:"
 msgstr "Speicherort mit Netzwerkfreigabe auswählen:"
 

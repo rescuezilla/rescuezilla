@@ -304,9 +304,6 @@ msgstr "קובץ זהות"
 msgid "Port"
 msgstr "פתחה"
 
-msgid "Optional"
-msgstr "רשות"
-
 msgid "Select network-shared storage location:"
 msgstr "נא לבחור מיקום אחסון משותף ברשת:"
 

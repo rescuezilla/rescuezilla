@@ -304,9 +304,6 @@ msgstr "Kimlik dosyası"
 msgid "Port"
 msgstr ""
 
-msgid "Optional"
-msgstr "İsteğe bağlı"
-
 msgid "Select network-shared storage location:"
 msgstr "Ağda paylaşılan depolama konumunu seçin:"
 

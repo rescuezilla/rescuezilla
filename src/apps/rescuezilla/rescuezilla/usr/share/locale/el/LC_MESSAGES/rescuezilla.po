@@ -317,9 +317,6 @@ msgstr "Αναγνώριση Αρχείου"
 msgid "Port"
 msgstr ""
 
-msgid "Optional"
-msgstr "Προαιρετικό"
-
 msgid "Select network-shared storage location:"
 msgstr "Επιλέξτε την δικτυακή κοινόχρηστη τοποθεσία αποθήκευσης:"
 

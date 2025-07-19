@@ -314,9 +314,6 @@ msgstr "Fitxer d'identitat"
 msgid "Port"
 msgstr ""
 
-msgid "Optional"
-msgstr "Opcional"
-
 msgid "Select network-shared storage location:"
 msgstr "Seleccioneu la ruta d'emmagatzematge compartit a la xarxa:"
 

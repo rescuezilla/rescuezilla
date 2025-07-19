@@ -306,9 +306,6 @@ msgstr "Súbor identity"
 msgid "Port"
 msgstr ""
 
-msgid "Optional"
-msgstr "Voliteľné"
-
 msgid "Select network-shared storage location:"
 msgstr "Vyberte umiestnenie zdieľaného sieťového úložiska:"
 

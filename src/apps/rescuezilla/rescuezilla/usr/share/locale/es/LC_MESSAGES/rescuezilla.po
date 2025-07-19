@@ -316,9 +316,6 @@ msgstr "Fichero de identidad"
 msgid "Port"
 msgstr "Puerto"
 
-msgid "Optional"
-msgstr "Opcional"
-
 msgid "Select network-shared storage location:"
 msgstr "Seleccionar ubicación de almacenamiento compartido de red:"
 

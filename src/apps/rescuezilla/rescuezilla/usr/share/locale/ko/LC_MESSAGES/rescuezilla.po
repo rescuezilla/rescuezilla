@@ -283,9 +283,6 @@ msgstr "키 파일"
 msgid "Port"
 msgstr ""
 
-msgid "Optional"
-msgstr "선택 사항"
-
 msgid "Select network-shared storage location:"
 msgstr "네트워크 공유 저장소 위치 선택:"
 

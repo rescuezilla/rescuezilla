@@ -287,9 +287,6 @@ msgstr "身份文件"
 msgid "Port"
 msgstr "端口"
 
-msgid "Optional"
-msgstr "可选"
-
 msgid "Select network-shared storage location:"
 msgstr "选择网络共享存储位置："
 

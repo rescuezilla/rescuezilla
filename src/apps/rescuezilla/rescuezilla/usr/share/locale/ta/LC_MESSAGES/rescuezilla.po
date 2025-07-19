@@ -310,9 +310,6 @@ msgstr "அடையாள கோப்பு"
 msgid "Port"
 msgstr ""
 
-msgid "Optional"
-msgstr "விரும்பினால்"
-
 msgid "Select network-shared storage location:"
 msgstr "பிணையம் பகிரப்பட்ட சேமிப்பக இடத்தைத் தேர்ந்தெடுக்கவும்:"
 

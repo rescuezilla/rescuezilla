@@ -316,9 +316,6 @@ msgstr "Plik tożsamości"
 msgid "Port"
 msgstr "Port"
 
-msgid "Optional"
-msgstr "Opcjonalnie"
-
 msgid "Select network-shared storage location:"
 msgstr "Wybierz lokalizację pamięci masowej współdzielonej przez sieć:"
 

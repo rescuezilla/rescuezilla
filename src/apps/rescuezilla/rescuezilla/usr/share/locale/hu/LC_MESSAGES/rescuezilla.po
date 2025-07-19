@@ -310,9 +310,6 @@ msgstr "Identitás Fájl"
 msgid "Port"
 msgstr ""
 
-msgid "Optional"
-msgstr "Opcionális"
-
 msgid "Select network-shared storage location:"
 msgstr "Válassz tárolóhelyet a hálózati megosztáson:"
 

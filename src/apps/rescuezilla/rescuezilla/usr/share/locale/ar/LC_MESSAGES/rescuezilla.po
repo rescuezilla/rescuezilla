@@ -306,9 +306,6 @@ msgstr "ملف الهوية"
 msgid "Port"
 msgstr ""
 
-msgid "Optional"
-msgstr "اختياري"
-
 msgid "Select network-shared storage location:"
 msgstr "حدد موقع التخزين المشترك على الشبكة:"
 

@@ -290,9 +290,6 @@ msgstr "Berkas Identitas"
 msgid "Port"
 msgstr ""
 
-msgid "Optional"
-msgstr "Opsional"
-
 msgid "Select network-shared storage location:"
 msgstr "Pilih lokasi penyimpanan jaringan-bersama:"
 

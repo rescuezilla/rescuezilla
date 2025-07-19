@@ -304,9 +304,6 @@ msgstr "Identitetsfil"
 msgid "Port"
 msgstr ""
 
-msgid "Optional"
-msgstr "Valgfri"
-
 msgid "Select network-shared storage location:"
 msgstr "Vælg det netværksdelte lagers placering:"
 

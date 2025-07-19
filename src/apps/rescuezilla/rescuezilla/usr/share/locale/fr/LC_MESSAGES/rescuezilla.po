@@ -313,9 +313,6 @@ msgstr "Fichier d'identité"
 msgid "Port"
 msgstr ""
 
-msgid "Optional"
-msgstr "Facultatif"
-
 msgid "Select network-shared storage location:"
 msgstr "Sélectionner l'emplacement de stockage partagé sur le réseau :"
 

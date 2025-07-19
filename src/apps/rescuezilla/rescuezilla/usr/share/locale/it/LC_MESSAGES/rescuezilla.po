@@ -316,9 +316,6 @@ msgstr "Chiave SSH"
 msgid "Port"
 msgstr "Porta"
 
-msgid "Optional"
-msgstr "Facoltativo"
-
 msgid "Select network-shared storage location:"
 msgstr "Seleziona tipologia e percorso:"
 

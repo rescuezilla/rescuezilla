@@ -310,9 +310,6 @@ msgstr "Tapatybės failas"
 msgid "Port"
 msgstr ""
 
-msgid "Optional"
-msgstr "Neprivaloma"
-
 msgid "Select network-shared storage location:"
 msgstr "Pasirinkite tinkle bendrinamos saugyklos vietą:"
 

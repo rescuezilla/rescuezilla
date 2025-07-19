@@ -312,9 +312,6 @@ msgstr "Указанный файл"
 msgid "Port"
 msgstr ""
 
-msgid "Optional"
-msgstr "Опционально"
-
 msgid "Select network-shared storage location:"
 msgstr "Укажите путь сетевого хранилища:"
 

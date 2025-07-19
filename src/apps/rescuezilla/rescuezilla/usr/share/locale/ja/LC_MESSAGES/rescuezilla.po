@@ -308,9 +308,6 @@ msgstr "認証ファイル"
 msgid "Port"
 msgstr "ポートセキュリティー"
 
-msgid "Optional"
-msgstr "オプション選択"
-
 msgid "Select network-shared storage location:"
 msgstr "ネットワーク共有フォルダーの場所から選択します："
 

@@ -280,9 +280,6 @@ msgstr ""
 msgid "Port"
 msgstr ""
 
-msgid "Optional"
-msgstr ""
-
 msgid "Select network-shared storage location:"
 msgstr ""
 

@@ -312,9 +312,6 @@ msgstr "Identiteettitiedosto"
 msgid "Port"
 msgstr "Portti"
 
-msgid "Optional"
-msgstr "Valinnainen"
-
 msgid "Select network-shared storage location:"
 msgstr "Valitse verkon tallennuspaikka:"
 

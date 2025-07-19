@@ -308,9 +308,6 @@ msgstr "Identificatiebestand"
 msgid "Port"
 msgstr ""
 
-msgid "Optional"
-msgstr "Optioneel"
-
 msgid "Select network-shared storage location:"
 msgstr "Selecteer netwerk-gedeeld opslag locatie:"
 

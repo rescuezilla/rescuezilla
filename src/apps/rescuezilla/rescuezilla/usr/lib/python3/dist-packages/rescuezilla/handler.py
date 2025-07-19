@@ -1519,7 +1519,6 @@ class Handler:
         # Shows and hides certain fields depending on the protocol.
         # Shows different label text depending on the protocol (eg, "Remote path" for SSH and "Exported path" for NFS).
         # Also whether a field is displayed depends on the network protocol.
-        optional = " (" + _("Optional") + "):"
         network_protocol_key = Utility.get_combobox_key(combobox)
         if network_protocol_key == "SMB":
             for mode in NETWORK_UI_WIDGET_MODES:

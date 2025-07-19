@@ -300,9 +300,6 @@ msgstr "Tập tin nhận dạng"
 msgid "Port"
 msgstr ""
 
-msgid "Optional"
-msgstr "Tùy chọn khác"
-
 msgid "Select network-shared storage location:"
 msgstr "Chọn đường dẫn ổ lưu trữ chia sẻ mạng:"
 

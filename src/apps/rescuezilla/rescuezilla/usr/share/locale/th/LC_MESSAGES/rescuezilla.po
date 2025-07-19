@@ -329,9 +329,6 @@ msgstr "ไฟล์ระบุอัตลักษณ์"
 msgid "Port"
 msgstr ""
 
-msgid "Optional"
-msgstr "ตัวเลือก"
-
 msgid "Select network-shared storage location:"
 msgstr "เลือกที่จัดเก็บไฟล์บนเน็ตเวิร์คที่แชร์:"
 
