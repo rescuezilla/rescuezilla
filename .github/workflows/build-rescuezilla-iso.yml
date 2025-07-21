@@ -41,6 +41,12 @@ jobs:
       - name: Trust the git folder
         run: make docker-add-safe-directory
 
+      - name: Run linting within the Docker container
+        run: make docker-check
+
+      - name: Run unit tests within the Docker container
+        run: make docker-test
+
       - name: Create completed artifacts folder
         run: mkdir completed-artifacts/
 
@@ -48,9 +54,6 @@ jobs:
       - name: Make DEB package
         run: make docker-deb
       - run: sudo mv build/rescuezilla_${{env.DEB_VERSION}}-1_all.deb completed-artifacts/rescuezilla_${{env.DEB_VERSION}}-1_all.deb
-
-      - name: Run unit tests within the Docker container
-        run: make docker-test
 
       - run: make docker-status
       - name: Make Ubuntu 25.04 (Plucky) ISO

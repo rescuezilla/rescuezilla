@@ -248,6 +248,15 @@ docker-add-safe-directory:
 docker-test:
 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make test
 
+docker-check:
+	docker exec --interactive --workdir=/home/rescuezilla/ builder.container bash -c ". /root/.local/bin/env && make check"
+
+docker-lint:
+	docker exec --interactive --workdir=/home/rescuezilla/ builder.container bash -c ". /root/.local/bin/env && make lint"
+
+docker-fmt:
+	docker exec --interactive --workdir=/home/rescuezilla/ builder.container bash -c ". /root/.local/bin/env && make fmt"
+
 docker-status:
 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make status
 

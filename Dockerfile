@@ -48,8 +48,14 @@ RUN apt-get install --yes \
                           xsltproc libssl-dev \
                           # Select runtime dependencies required for running the unit tests
                           python3-gi libgtk-3-dev python3-whichcraft python3-babel \
+                          # Needed to install Astral's Python tooling
+                          curl \
                           # Install optional dependencies for quality-of-life when debugging
                           tmux vim
+
+# Install Astral's Python tooling, as on Ubuntu Noble it's not available in the default package repositories.
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+RUN . $HOME/.local/bin/env && uv tool install ruff@latest
 
 # Restore interactivity of package installation within Docker
 RUN echo 'debconf debconf/frontend select Dialog' | debconf-set-selections
