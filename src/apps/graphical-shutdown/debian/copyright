@@ -3,11 +3,7 @@ Upstream-Name: graphical-shutdown
 Source: https://rescuezilla.com/
 
 Files: *
-Copyright: 2019- Shasheen Ediriweera
-License: GPL-3.0+
-
-Files: debian/*
-Copyright: 2020 Shasheen Ediriweera <rescuezilla@gmail.com>
+Copyright: 2019-2025 Shasheen Ediriweera <rescuezilla@gmail.com>
 License: GPL-3.0+
 
 License: GPL-3.0+
