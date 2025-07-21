@@ -221,9 +221,9 @@ backup_restore_test() {
     _launch_backup_with_rescuezilla_cli "$TARGET_IP" "$RESCUEZILLA_IMAGE_NAME"
     _launch_backup_with_clonezilla_cli "$TARGET_IP" "$CLONEZILLA_IMAGE_NAME"
 
-    _launch_restore_with_rescuezilla_cli "$VM_NAME" "$ISO_PATH" "$ISO_CHECK_MATCH" "$TARGET_IP" "$RESCUEZILLA_IMAGE_NAME" "$PRIMARY_OS_CHECK_MATCH" "$VM_INFO" "true"
-    _launch_restore_with_rescuezilla_cli "$VM_NAME" "$ISO_PATH" "$ISO_CHECK_MATCH" "$TARGET_IP" "$CLONEZILLA_IMAGE_NAME" "$PRIMARY_OS_CHECK_MATCH" "$VM_INFO" "true"
+    restore_with_rescuezilla_cli "$VM_NAME" "$ISO_PATH" "$ISO_CHECK_MATCH" "$TARGET_IP" "$RESCUEZILLA_IMAGE_NAME" "$PRIMARY_OS_CHECK_MATCH" "$VM_INFO" "true"
+    restore_with_rescuezilla_cli "$VM_NAME" "$ISO_PATH" "$ISO_CHECK_MATCH" "$TARGET_IP" "$CLONEZILLA_IMAGE_NAME" "$PRIMARY_OS_CHECK_MATCH" "$VM_INFO" "true"
 
-    _launch_restore_with_clonezilla_cli "$VM_NAME" "$ISO_PATH" "$ISO_CHECK_MATCH" "$TARGET_IP" "$RESCUEZILLA_IMAGE_NAME" "$PRIMARY_OS_CHECK_MATCH" "$VM_INFO" "true"
-    _launch_restore_with_clonezilla_cli "$VM_NAME" "$ISO_PATH" "$ISO_CHECK_MATCH" "$TARGET_IP" "$CLONEZILLA_IMAGE_NAME" "$PRIMARY_OS_CHECK_MATCH" "$VM_INFO" "false"
+    restore_with_clonezilla_cli "$VM_NAME" "$ISO_PATH" "$ISO_CHECK_MATCH" "$TARGET_IP" "$RESCUEZILLA_IMAGE_NAME" "$PRIMARY_OS_CHECK_MATCH" "$VM_INFO" "true"
+    restore_with_clonezilla_cli "$VM_NAME" "$ISO_PATH" "$ISO_CHECK_MATCH" "$TARGET_IP" "$CLONEZILLA_IMAGE_NAME" "$PRIMARY_OS_CHECK_MATCH" "$VM_INFO" "false"
 }
