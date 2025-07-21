@@ -212,9 +212,10 @@ class CloneManager:
             return self.ui_manager.completed_operation(
                 callable_fn=self.completed_clone, succeeded=False, message=message
             )
-        return self.ui_manager.completed_operation(
-            callable_fn=self.completed_clone, succeeded=False, message=""
-        )
+        else:
+            return self.ui_manager.completed_operation(
+                callable_fn=self.completed_clone, succeeded=True, message=""
+            )
 
     # Expected to run on GTK event thread
     def completed_clone(self, succeeded, message):
