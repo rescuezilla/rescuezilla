@@ -5,6 +5,7 @@
 polkit.addRule(function(action, subject) {
     if ((action.id == "org.gnome.gparted" ||
          action.id == "com.rescuezilla.rescuezilla" ||
+         action.id == "com.rescuezilla.graphical-shutdown.sh" ||
          action.id == "com.rescuezilla.baobab" ||
          action.id == "com.rescuezilla.lshw-gtk" ||
          action.id == "com.rescuezilla.photorec" ||
