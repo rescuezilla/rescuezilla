@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2025-07-24 15:03+0000\n"
+"PO-Revision-Date: 2025-07-31 14:02+0000\n"
 "Last-Translator: \"myroslav.m201461e65a7244654b72\" "
 "<myroslav.m2014@gmail.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/rescuezilla/"
@@ -754,15 +754,17 @@ msgstr "Синхронізування дисків…"
 
 #, python-brace-format
 msgid "Querying hard drive geometry of {device}"
-msgstr ""
+msgstr "Отримання геометрії жорсткого диску {device}"
 
 #, python-brace-format
 msgid "Probing {device} with {app}"
-msgstr ""
+msgstr "Зондування {device} з {app}"
 
 #, python-brace-format
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while…"
 msgstr ""
+"Збільшення файлової системи {partition} ({filesystem}). Це може зайняти "
+"деякий час…"
 
 #, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
@@ -771,31 +773,34 @@ msgstr "Не вдалося змінити розмір розділу {partitio
 #, python-brace-format
 msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
 msgstr ""
+"Успішно змінено геометрії файлової NTFS {ntfs_device}, з значеннями з "
+"{geometry_source}"
 
 #, python-brace-format
 msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
 msgstr ""
+"Не вдалося змінити геометрії файлової системи NTFS пристрою {ntfs_device}"
 
 msgid "Removing udev MAC address records (if any)"
-msgstr ""
+msgstr "Вилучення записів адрес udev MAC (якщо якісь є)"
 
 msgid "Re-installing syslinux (if any)"
-msgstr ""
+msgstr "Перевстановлення syslinux (якщо є)"
 
 msgid "Successfully re-installed syslinux bootloader"
 msgstr "Успішно перевстановлено завантажувач syslinux"
 
 msgid "Re-installing GRUB bootloader (if any)"
-msgstr ""
+msgstr "Перевстановлення завантажувача GRUB (якщо є)"
 
 msgid "Successfully re-installed GRUB bootloader"
 msgstr "Успішно перевстановлено завантажувач GRUB"
 
 msgid "Did not update GRUB bootloader (if any)"
-msgstr ""
+msgstr "Не оновлено завантажувач GRUB (якщо є)"
 
 msgid "Updating initramfs (if any)"
-msgstr ""
+msgstr "Оновлення initramfs (якщо є)"
 
 msgid "Successfully updated initramfs"
 msgstr "Успішно оновлено initramfs"
@@ -811,16 +816,21 @@ msgstr "Помилка відновлення образу: "
 
 msgid "Could not restore sfdisk partition table as file has zero length: "
 msgstr ""
+"Не можливо відновити таблицю розділ sfdisk, тому що файл має довжину нуль: "
 
 msgid "Successfully restored partition table."
 msgstr "Успішно відновлено таблицю розділів."
 
 msgid "Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."
 msgstr ""
+"Не вдалося оновити таблицю розділів пристроїв. Це може статися якщо інший "
+"процес використовує таблицю розділів."
 
 #, python-brace-format
 msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
 msgstr ""
+"Не можливо відновити розділ {destination_partition}, тому що, на ньому не "
+"має збереженого образу, асоційованим з: {description}."
 
 msgid "This may occur if Clonezilla was originally unable to backup this partition."
 msgstr "Таке може статися, якщо Clonezilla спочатку не створила розділ."
@@ -834,13 +844,13 @@ msgid "Successfully restored image partition {image} to {destination_partition}"
 msgstr "Успішно відновлено розділ образу {image} у {destination_partition}"
 
 msgid "Summary of Restore"
-msgstr ""
+msgstr "Результати відновлення"
 
 msgid "Restore Summary"
-msgstr ""
+msgstr "Результати Відновлення"
 
 msgid "Confirm the restore summary."
-msgstr ""
+msgstr "Підтвердитити результати відновлення."
 
 msgid "Backup restored successfully."
 msgstr "Резервну копію вдало відновлено."
@@ -908,10 +918,10 @@ msgid "Summary of Verification"
 msgstr "Підсумки перевірки"
 
 msgid "Confirm the verification summary."
-msgstr ""
+msgstr "Підтвердіть підсумок перевірки."
 
 msgid "Verification Summary"
-msgstr ""
+msgstr "Підсумок перевірки"
 
 msgid "To verify another image, click <b>Back</b>."
 msgstr "Щоб перевірити інший образ натисніть <b>Назад</b>."
