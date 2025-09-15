@@ -1,11 +1,13 @@
 # Oğuz Ersen <oguzersen@protonmail.com>, 2021.
+# Abdullah Bagyapan <229599340+abdullahbagyapan@users.noreply.github.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2021-11-23 15:21+0000\n"
-"Last-Translator: Oğuz Ersen <oguzersen@protonmail.com>\n"
+"PO-Revision-Date: 2025-09-16 09:01+0000\n"
+"Last-Translator: Abdullah Bagyapan "
+"<229599340+abdullahbagyapan@users.noreply.github.com>\n"
 "Language-Team: Turkish <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/tr/>\n"
 "Language: tr\n"
@@ -13,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.10-dev\n"
+"X-Generator: Weblate 5.14-dev\n"
 
 msgid "Welcome"
 msgstr "Hoş Geldiniz"
@@ -261,36 +263,40 @@ msgstr "Sürüm"
 
 msgid "default (Negotiate highest SMB2+ supported by client and server)"
 msgstr ""
+"varsayılan (İstemci ve sunucu tarafından desteklenen en yüksek SMB2+ "
+"sürümüyle anlaşır)"
 
 msgid "1.0 (The classic CIFS/SMBv1 protocol)"
-msgstr ""
+msgstr "1.0 (Klasik CIFS/SMBv1 protokolü)"
 
 msgid "2.0 (Introduced in Vista SP1, Windows Server 2008)"
-msgstr ""
+msgstr "2.0 (Vista SP1 ve Windows Server 2008 ile tanıtıldı)"
 
 msgid "2.1 (Introduced in Windows 7, Windows Server 2008R2)"
-msgstr ""
+msgstr "2.1 (Windows 7 ve Windows Server 2008R2 ile tanıltıldı.)"
 
 msgid "3 (The SMBv3.0 protocol version and above)"
-msgstr ""
+msgstr "3 (SMBv3.0 ve sonraki protokol sürümleri)"
 
 msgid "3.0 (Introduced in Windows 8, Windows Server 2012)"
-msgstr ""
+msgstr "3.0 (Windows 8 ve Windows Server 2012 ile tanıtıldı)"
 
 msgid "3.0.2 (Introduced in Windows 8.1, Windows Server 2012R2)"
-msgstr ""
+msgstr "3.0.2 (Windows 8.1 ve Windows Server 2012R2 ile tanıtıldı)"
 
 msgid "3.1.1 (Introduced in Windows 10, Windows Server 2016)"
-msgstr ""
+msgstr "3.1.1 (Windows 10 ve Windows Server 2016 ile tanıtıldı)"
 
 msgid "Unspecified (Tries NFS v4.2 first, then negotiates with server down until finds a supported version)"
 msgstr ""
+"Belirtilmemiş (Önce NFS v4.2'yi dener, daha sonra sunucu tarafında "
+"desteklenlenen sürüm bulana kadar devam eder)"
 
 msgid "NFSv3"
-msgstr ""
+msgstr "NFSv3"
 
 msgid "NFSv4"
-msgstr ""
+msgstr "NFSv4"
 
 msgid "Remote path"
 msgstr "Uzak yol"
@@ -302,7 +308,7 @@ msgid "Identity File"
 msgstr "Kimlik dosyası"
 
 msgid "Port"
-msgstr ""
+msgstr "Port"
 
 msgid "Select network-shared storage location:"
 msgstr "Ağda paylaşılan depolama konumunu seçin:"
