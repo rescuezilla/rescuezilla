@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2025-06-16 05:04+0000\n"
+"PO-Revision-Date: 2025-08-04 09:05+0000\n"
 "Last-Translator: தமிழ்நேரம் <anishprabu.t@gmail.com>\n"
 "Language-Team: Tamil <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/ta/>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12-dev\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 msgid "Welcome"
 msgstr "வரவேற்கிறோம்"
@@ -267,36 +267,41 @@ msgstr "பதிப்பு"
 
 msgid "default (Negotiate highest SMB2+ supported by client and server)"
 msgstr ""
+"இயல்புநிலை (கிளையன்ட் மற்றும் சேவையகத்தால் ஆதரிக்கப்படும் மிக உயர்ந்த SMB2+ பேச்சுவார்த்தை)"
 
 msgid "1.0 (The classic CIFS/SMBv1 protocol)"
-msgstr ""
+msgstr "1.0 (கிளாசிக் CIFS/SMBV1 நெறிமுறை)"
 
 msgid "2.0 (Introduced in Vista SP1, Windows Server 2008)"
-msgstr ""
+msgstr "2.0 (விச்டா எச்பி 1, சாளரங்கள் சர்வர் 2008 இல் அறிமுகப்படுத்தப்பட்டது)"
 
 msgid "2.1 (Introduced in Windows 7, Windows Server 2008R2)"
 msgstr ""
+"2.1 (விண்டோச் 7, சாளரங்கள் சர்வர் 2008 ஆர் 2 இல் அறிமுகப்படுத்தப்பட்டது)"
 
 msgid "3 (The SMBv3.0 protocol version and above)"
-msgstr ""
+msgstr "3 (SMBV3.0 நெறிமுறை பதிப்பு மற்றும் மேலே)"
 
 msgid "3.0 (Introduced in Windows 8, Windows Server 2012)"
-msgstr ""
+msgstr "3.0 (விண்டோச் 8, சாளரங்கள் சர்வர் 2012 இல் அறிமுகப்படுத்தப்பட்டது)"
 
 msgid "3.0.2 (Introduced in Windows 8.1, Windows Server 2012R2)"
 msgstr ""
+"3.0.2 (விண்டோச் 8.1, சாளரங்கள் சர்வர் 2012 ஆர் 2 இல் அறிமுகப்படுத்தப்பட்டது)"
 
 msgid "3.1.1 (Introduced in Windows 10, Windows Server 2016)"
-msgstr ""
+msgstr "3.1.1 (விண்டோச் 10, சாளரங்கள் சர்வர் 2016 இல் அறிமுகப்படுத்தப்பட்டது)"
 
 msgid "Unspecified (Tries NFS v4.2 first, then negotiates with server down until finds a supported version)"
 msgstr ""
+"குறிப்பிடப்படாத (முதலில் NFS V4.2 ஐ முயற்சிக்கிறது, பின்னர் ஆதரிக்கப்பட்ட பதிப்பைக் "
+"கண்டுபிடிக்கும் வரை சேவையகத்துடன் பேச்சுவார்த்தை நடத்துகிறது)"
 
 msgid "NFSv3"
-msgstr ""
+msgstr "NFSV3"
 
 msgid "NFSv4"
-msgstr ""
+msgstr "NFSV4"
 
 msgid "Remote path"
 msgstr "தொலைநிலை பாதை"
@@ -308,7 +313,7 @@ msgid "Identity File"
 msgstr "அடையாள கோப்பு"
 
 msgid "Port"
-msgstr ""
+msgstr "துறைமுகம்"
 
 msgid "Select network-shared storage location:"
 msgstr "பிணையம் பகிரப்பட்ட சேமிப்பக இடத்தைத் தேர்ந்தெடுக்கவும்:"

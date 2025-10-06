@@ -2,13 +2,14 @@
 # 池边树下 <mzky@163.com>, 2021, 2022.
 # Haowei Hsu <hwhsu1231@gmail.com>, 2023, 2024.
 # 3amson3902 <samson3902@gmail.com>, 2025.
+# ceshizhuanyong895 <ceshizhuanyong895@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2025-06-30 15:58+0000\n"
-"Last-Translator: 3amson3902 <samson3902@gmail.com>\n"
+"PO-Revision-Date: 2025-08-29 02:01+0000\n"
+"Last-Translator: ceshizhuanyong895 <ceshizhuanyong895@gmail.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://hosted.weblate.org/"
 "projects/rescuezilla/rescuezilla/zh_Hant/>\n"
 "Language: zh_Hant\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.13-dev\n"
+"X-Generator: Weblate 5.13.1-dev\n"
 
 msgid "Welcome"
 msgstr "歡迎"
@@ -241,7 +242,6 @@ msgstr "域"
 msgid "Version"
 msgstr "版本"
 
-#, fuzzy
 msgid "default (Negotiate highest SMB2+ supported by client and server)"
 msgstr "預設 (協商客戶端和伺服器支援的最高 SMB2+ 版本)"
 
@@ -627,7 +627,7 @@ msgid "When you are ready to continue, click <b>Next</b>."
 msgstr "準備好繼續使用時，請單擊 <b>下一個</b>。"
 
 msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes…"
-msgstr "掃描和卸載任何邏輯卷管理器（LVM）邏輯卷。。。"
+msgstr "掃描並卸載任何邏輯磁碟區管理器（LVM）邏輯磁碟區…"
 
 #, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."

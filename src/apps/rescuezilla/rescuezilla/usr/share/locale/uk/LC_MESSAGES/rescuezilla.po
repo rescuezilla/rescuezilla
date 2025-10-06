@@ -4,22 +4,24 @@
 # prolinux ukraine <prolinux@ukr.net>, 2021.
 # Andrij Mizyk <andmzk@proton.me>, 2022.
 # moudrick <moudrick@gmail.com>, 2023.
+# "myroslav.m201461e65a7244654b72" <myroslav.m2014@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2023-02-22 13:39+0000\n"
-"Last-Translator: moudrick <moudrick@gmail.com>\n"
+"PO-Revision-Date: 2025-07-31 14:02+0000\n"
+"Last-Translator: \"myroslav.m201461e65a7244654b72\" "
+"<myroslav.m2014@gmail.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/uk/>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 4.16-dev\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Weblate 5.13-dev\n"
 
 msgid "Welcome"
 msgstr "Ласкаво просимо"
@@ -230,6 +232,8 @@ msgstr "Крок 3: Виберіть цільовий привід"
 
 msgid "Click on the box below to select the source drive that you would like to create a backup image from."
 msgstr ""
+"Натисніть на поле нижче, щоб вибрати вхідний диск, з якого ви хотіли б "
+"створити бекап."
 
 msgid "Connected directly to my computer"
 msgstr "Підʼєднано безпосередньо до мого компʼютера"
@@ -266,36 +270,39 @@ msgstr "Версія"
 
 msgid "default (Negotiate highest SMB2+ supported by client and server)"
 msgstr ""
+"типове (Використовувати найвищий SMB2+ підтримувального клієнтом та сервером)"
 
 msgid "1.0 (The classic CIFS/SMBv1 protocol)"
-msgstr ""
+msgstr "1.0 (Класичний протокол CIFS/SMBv1)"
 
 msgid "2.0 (Introduced in Vista SP1, Windows Server 2008)"
-msgstr ""
+msgstr "2.0 (Введений в Windows Vista SP1, Windows Server 2008)"
 
 msgid "2.1 (Introduced in Windows 7, Windows Server 2008R2)"
-msgstr ""
+msgstr "2.1 (Введений в Windows 7, Windows Server 2008 R2)"
 
 msgid "3 (The SMBv3.0 protocol version and above)"
-msgstr ""
+msgstr "3 (Версія протоколу SMBv3.0 та вище)"
 
 msgid "3.0 (Introduced in Windows 8, Windows Server 2012)"
-msgstr ""
+msgstr "3.0 (Введений в Windows 8, Windows Server 2012)"
 
 msgid "3.0.2 (Introduced in Windows 8.1, Windows Server 2012R2)"
-msgstr ""
+msgstr "3.0.2 (Введений в Windows 8.1, Windows Server 2012 R2)"
 
 msgid "3.1.1 (Introduced in Windows 10, Windows Server 2016)"
-msgstr ""
+msgstr "3.1.1 (Введений в Windows 10, Windows Server 2016)"
 
 msgid "Unspecified (Tries NFS v4.2 first, then negotiates with server down until finds a supported version)"
 msgstr ""
+"Не вказаний (Спробує спочатку NFS v4.2, потім переговорює з сервером поки не "
+"знайде підтримувальну версію)"
 
 msgid "NFSv3"
-msgstr ""
+msgstr "NFS версія 3"
 
 msgid "NFSv4"
-msgstr ""
+msgstr "NFS версія 4"
 
 msgid "Remote path"
 msgstr "Віддалений шлях"
@@ -304,10 +311,10 @@ msgid "Exported path"
 msgstr "Шлях експортування"
 
 msgid "Identity File"
-msgstr ""
+msgstr "Файл ідентичності"
 
 msgid "Port"
-msgstr ""
+msgstr "Порт"
 
 msgid "Select network-shared storage location:"
 msgstr "Виберіть розташування спільного мережевого сховища:"
@@ -330,7 +337,7 @@ msgstr ""
 "спробуйте ще раз."
 
 msgid "Must provide either password or SSH identity file."
-msgstr ""
+msgstr "Повинен надати пароль або файл ідентичності SSH."
 
 msgid "Scanning folder for backup images…"
 msgstr "Сканування теки на наявність образів резервних копій…"
@@ -357,19 +364,24 @@ msgid "Unable to fully process the following image:"
 msgstr "Неможливо повністю обробити наступний образ:"
 
 msgid "Cannot find partition's associated partclone image"
-msgstr ""
+msgstr "Не знайдено образу пов'язаного диска partclone"
 
 msgid "This can happen when loading images which Clonezilla was unable to completely backup."
 msgstr ""
+"Це може статися коли завантажується образ, який Clonezilla не зміг повністю "
+"зробити бекап."
 
 msgid "Note: This image format cannot distinguish between failed partclone backup and a user who chose not to backup a partition."
 msgstr ""
+"Примітка: Цей формат образу не можна відрізнити між бекапом partclone, та "
+"користувачем, який вибрав не робити бекап розділу."
 
 msgid "Any other filesystems within the image should be restorable as normal."
 msgstr ""
+"Будь які інші файлові системи в образі повинні відновлюватись як зазвичай."
 
 msgid "Needs decryption"
-msgstr ""
+msgstr "Потребує розшифровування"
 
 msgid "Unknown filesystem"
 msgstr "Невідома файлова система"
@@ -377,9 +389,16 @@ msgstr "Невідома файлова система"
 #, python-brace-format
 msgid "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance."
 msgstr ""
+"Інформація розширеного розділу бекапу порожня. Якщо бекап містить розширений "
+"розділ, це не відновиться коректно. Всі данні досі повністю відновлювана, "
+"але потрібне ручне втручання для повного відновлення данних на розширеному "
+"розділі. Будь ласка, зверніться до {url} для інформації та допомоги."
 
 msgid "The backup's bootloader data is shorter than expected. If the backup contained certain bootloaders like GRUB, during a restore operation Rescuezilla will try and re-install the bootloader."
 msgstr ""
+"Дані завантажувача коротші, ніж очікувалось. Якщо бекап містив деякі "
+"завантажувачі, такі як GRUB, під час операції відновлення Rescuezilla "
+"спробує перевстановити завантажувач."
 
 msgid "Step 4: Select Destination Folder"
 msgstr "Крок 4: Виберіть цільову теку"
@@ -388,16 +407,22 @@ msgid "Click <b>Browse</b> to select the folder on the destination drive where y
 "\n"
 "The folder a backup is saved in is usually a description of the computer, e.g. <b>office1</b> or <b>zack-laptop</b>."
 msgstr ""
+"Натисніть <b>Огляд</b> для вибору теки на диску призначення, там де Ваш "
+"новий образ бекапу буде зберігатися\n"
+"\n"
+"Тека бекапу зазвичай збережена в описі комп'ютера, наприклад <b>офіс1</b> "
+"або <b>zack-laptop</b>."
 
 #, python-brace-format
 msgid "You must select a folder inside {location}"
-msgstr ""
+msgstr "Ви повинні вибрати теку в {location}"
 
 msgid "Please select a different folder."
 msgstr "Будь ласка, виберіть іншу теку."
 
 msgid "The table below lists the backup images that are already in this folder (if any)."
 msgstr ""
+"В таблиці нижче перераховані образи бекапу, які вже є в цій теці (якщо є)."
 
 msgid "Browse…"
 msgstr "Огляд…"
@@ -412,7 +437,7 @@ msgid "Last modified"
 msgstr "Востаннє змінено"
 
 msgid "When you are happy with the destination folder, click <b>Next</b>."
-msgstr ""
+msgstr "Коли ви задоволені з текою призначення, натискайте <b>Далі</b>."
 
 msgid "Step 5: Name Your Backup"
 msgstr "Крок 5: Назвіть Вашу резервну копію"
@@ -421,6 +446,11 @@ msgid "Provide a unique name for this backup image, such as the date.  Today's d
 "\n"
 "You may only use letters, numbers, and dashes in your backup name."
 msgstr ""
+"Вкажіть унікальне ім'я для цього образу бекапу, наприклад як дату.  "
+"Сьогоднішню дату введено автоматично для Вас нижче.\n"
+"\n"
+"Ви повинні використовувати тільки літери, цифри та тире в Вашому імені "
+"бекапу."
 
 msgid "Optional: Provide a short description."
 msgstr "Необовʼязково: Надайте короткий опис."
@@ -430,6 +460,8 @@ msgstr "Крок 6: Пристосувати налаштування стисн
 
 msgid "Customize image compression settings. <b>Don't make any changes if you are unsure.</b>"
 msgstr ""
+"Налаштуйте параметри стиснення образу. <b>Не робіть ніяких змін якщо ви не "
+"впевнені.</b>"
 
 msgid "Compression format: "
 msgstr "Формат стиснення: "
@@ -444,7 +476,7 @@ msgid "zstandard"
 msgstr "zstandard"
 
 msgid "Uncompressed (Suitable for use with Image Explorer)"
-msgstr ""
+msgstr "Не стиснутий (Придатний для використання з Переглядачем Зображень)"
 
 msgid "Compression level: "
 msgstr "Рівень стиснення: "
@@ -475,7 +507,7 @@ msgid "Confirm the following backup configuration."
 msgstr "Підтвердьте наступне налаштування резервної копії."
 
 msgid "On successful completion of the task, perform the following action: "
-msgstr ""
+msgstr "На успішному закінченні цієї дії, виконати наступну дію: "
 
 msgid "Do nothing"
 msgstr "Нічого не робити"
@@ -487,10 +519,12 @@ msgid "Reboot"
 msgstr "Перезавантажити"
 
 msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
-msgstr ""
+msgstr "Порятунок: Ігнорувати несумісності файлових систем та поганих блоків"
 
 msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
 msgstr ""
+"<b>Ввімкнення \"Порятунку\" можуть замовчувати про важливі помилки. "
+"Використовуйте з обережністю.</b>"
 
 msgid "To start the backup, click <b>Next</b>."
 msgstr "Щоб розпочати резервне копіювання натисніть <b>Далі</b>."
@@ -500,6 +534,8 @@ msgstr "Крок 8: Створення образу резервної копі�
 
 msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
+"Робимо бекап Вашої системи до розташування, яке Ви вказали.  Це може зайняти "
+"годину або більше, в залежності швидкості Вашого комп'ютера та обсягу данних."
 
 #, python-brace-format
 msgid "Saving: {file}"
@@ -508,6 +544,7 @@ msgstr "Зберігання: {file}"
 #, python-brace-format
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
 msgstr ""
+"Бекап {partition_name} містить файлову систему {filesystem} до {destination}"
 
 msgid "Summary of Backup"
 msgstr "Підсумки резервного копіювання"
@@ -516,7 +553,7 @@ msgid "Confirm the backup summary."
 msgstr "Перевірте підсумки резервного копіювання."
 
 msgid "Backup Summary"
-msgstr ""
+msgstr "Зведення бекапу"
 
 msgid "An operation is in progress. Do you wish to cancel?"
 msgstr "Операція виконується. Бажаєте скасувати?"
@@ -532,10 +569,12 @@ msgstr "Помилка створення резервної копії: "
 
 msgid "Failed to write destination file. Please confirm it is valid to create the provided file path, and try again."
 msgstr ""
+"Не вдалося записати файл призначення. Будь ласка, впевніться що це правильно "
+"створити вказаний шлях, та спробуйте знову."
 
 #, python-brace-format
 msgid "Successful backup of swap partition {partition_name}"
-msgstr ""
+msgstr "Успішний бекап розділу swap {partition_name}"
 
 #, python-brace-format
 msgid "<b>Failed to backup partition</b> {partition_name}"
@@ -559,7 +598,7 @@ msgstr "Користувач запитав операцію на заверше
 
 #, python-brace-format
 msgid "Operation took {num_minutes} minutes."
-msgstr ""
+msgstr "Операція зайняла {num_minutes} хвилин."
 
 msgid "To start a new session, click <b>Next</b>"
 msgstr "Щоб розпочати новий сеанс натисніть <b>Далі</b>"
@@ -593,6 +632,9 @@ msgstr "Крок 4: Виберіть розділи для відновленн�
 
 msgid "Select which partitions from the backup image to restore, and whether to overwrite the partition table. <b>Leave everything selected to completely restore the destination drive.</b>"
 msgstr ""
+"Виберіть, які розділи з образу бекапу відновити, та чи перезаписати таблицю "
+"розділів. <b>Залиште все вибраним, щоб повність відновити диск "
+"призначення.</b>"
 
 msgid "Selected image"
 msgstr "Вибрані образи"
@@ -608,6 +650,17 @@ msgstr "Ви перезапишете таблицю розділів."
 
 msgid "The \"destination partition\" column has been updated using the information stored within the backup image.\n\n<b>If partitions have been resized, new partitions added, or additional operating systems installed <i>since the backup image was created</i>, then the destination drive's partition table will not match the backup image, and overwriting the destination drive's partition table will render these resized and additional partitions permanently inaccessible.</b> If you have not modified the partition table in such a way since creating this backup then overwriting the partition table is completely safe and will have no negative effects."
 msgstr ""
+"Колонка \"розділ призначення\" була оновлена з інформацією збереженій на "
+"образі резервної копії.\n"
+"\n"
+"<b>Якщо розмір розділів був змінений, нові були додані, або додаткові "
+"операційні системи були встановленні <i>з того моменту, як образ резервної "
+"копії був створений</i>, то таблиця розділів диску призначення не буде "
+"збігатися з образом резервної копії, тож перезаписання таблиці розділів "
+"диска призначення зроблять ці зменшені/збільшені та додаткові розділи "
+"недоступними.</b> Якщо ви не чіпали таблицю розділів таким методом з моменту "
+"створення цієї резервної копії, то перезаписання таблиці розділів повністю "
+"безпечне, та не буде мати ніяких негативних ефектів."
 
 msgid "You will <b>not</b> be overwriting the partition table."
 msgstr "Ви <b>не</b> будете перезаписувати таблицю розділів."
@@ -617,12 +670,21 @@ msgstr "Джерело не містить таблиці розділів."
 
 msgid "The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table."
 msgstr ""
+"Колонка \"розділ призначення\" була оновлена з інформацією таблиці розділів "
+"диску призначення.\n"
+"\n"
+"<b>Колонка розділу призначення може бути змінена як випадне меню. "
+"Неправильний мапінг розділів призначення може призвести до проблем "
+"завантаження операційних систем.</b> Якщо ви не впевнені з мапінгом, якщо "
+"вам більше підходить, виберіть варіант перезапису таблиці розділу."
 
 msgid "No destination partition selected. Use the destination partition drop-down menu to select the destination"
 msgstr ""
+"Не вибрано розділу призначення. Використовуйте випадний список розділ "
+"призначення для вибору призначення"
 
 msgid "Not restoring this partition"
-msgstr ""
+msgstr "Розділ не відновлюється"
 
 msgid "When you are ready to continue, click <b>Next</b>."
 msgstr "Якщо Ви готові продовжити натисніть <b>Далі</b>."
@@ -692,15 +754,17 @@ msgstr "Синхронізування дисків…"
 
 #, python-brace-format
 msgid "Querying hard drive geometry of {device}"
-msgstr ""
+msgstr "Отримання геометрії жорсткого диску {device}"
 
 #, python-brace-format
 msgid "Probing {device} with {app}"
-msgstr ""
+msgstr "Зондування {device} з {app}"
 
 #, python-brace-format
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while…"
 msgstr ""
+"Збільшення файлової системи {partition} ({filesystem}). Це може зайняти "
+"деякий час…"
 
 #, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
@@ -709,31 +773,34 @@ msgstr "Не вдалося змінити розмір розділу {partitio
 #, python-brace-format
 msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
 msgstr ""
+"Успішно змінено геометрії файлової NTFS {ntfs_device}, з значеннями з "
+"{geometry_source}"
 
 #, python-brace-format
 msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
 msgstr ""
+"Не вдалося змінити геометрії файлової системи NTFS пристрою {ntfs_device}"
 
 msgid "Removing udev MAC address records (if any)"
-msgstr ""
+msgstr "Вилучення записів адрес udev MAC (якщо якісь є)"
 
 msgid "Re-installing syslinux (if any)"
-msgstr ""
+msgstr "Перевстановлення syslinux (якщо є)"
 
 msgid "Successfully re-installed syslinux bootloader"
 msgstr "Успішно перевстановлено завантажувач syslinux"
 
 msgid "Re-installing GRUB bootloader (if any)"
-msgstr ""
+msgstr "Перевстановлення завантажувача GRUB (якщо є)"
 
 msgid "Successfully re-installed GRUB bootloader"
 msgstr "Успішно перевстановлено завантажувач GRUB"
 
 msgid "Did not update GRUB bootloader (if any)"
-msgstr ""
+msgstr "Не оновлено завантажувач GRUB (якщо є)"
 
 msgid "Updating initramfs (if any)"
-msgstr ""
+msgstr "Оновлення initramfs (якщо є)"
 
 msgid "Successfully updated initramfs"
 msgstr "Успішно оновлено initramfs"
@@ -749,16 +816,21 @@ msgstr "Помилка відновлення образу: "
 
 msgid "Could not restore sfdisk partition table as file has zero length: "
 msgstr ""
+"Не можливо відновити таблицю розділ sfdisk, тому що файл має довжину нуль: "
 
 msgid "Successfully restored partition table."
 msgstr "Успішно відновлено таблицю розділів."
 
 msgid "Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."
 msgstr ""
+"Не вдалося оновити таблицю розділів пристроїв. Це може статися якщо інший "
+"процес використовує таблицю розділів."
 
 #, python-brace-format
 msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
 msgstr ""
+"Не можливо відновити розділ {destination_partition}, тому що, на ньому не "
+"має збереженого образу, асоційованим з: {description}."
 
 msgid "This may occur if Clonezilla was originally unable to backup this partition."
 msgstr "Таке може статися, якщо Clonezilla спочатку не створила розділ."
@@ -772,13 +844,13 @@ msgid "Successfully restored image partition {image} to {destination_partition}"
 msgstr "Успішно відновлено розділ образу {image} у {destination_partition}"
 
 msgid "Summary of Restore"
-msgstr ""
+msgstr "Результати відновлення"
 
 msgid "Restore Summary"
-msgstr ""
+msgstr "Результати Відновлення"
 
 msgid "Confirm the restore summary."
-msgstr ""
+msgstr "Підтвердитити результати відновлення."
 
 msgid "Backup restored successfully."
 msgstr "Резервну копію вдало відновлено."
@@ -846,10 +918,10 @@ msgid "Summary of Verification"
 msgstr "Підсумки перевірки"
 
 msgid "Confirm the verification summary."
-msgstr ""
+msgstr "Підтвердіть підсумок перевірки."
 
 msgid "Verification Summary"
-msgstr ""
+msgstr "Підсумок перевірки"
 
 msgid "To verify another image, click <b>Back</b>."
 msgstr "Щоб перевірити інший образ натисніть <b>Назад</b>."

@@ -11,13 +11,14 @@
 # Ettore Atalan <atalanttore@googlemail.com>, 2022, 2024.
 # Markus Merkle <mae.mm1172@gmail.com>, 2023.
 # hutt <iuoifjlffdla@trashmail.de>, 2023.
+# Mark Nelson <nosoc@users.noreply.hosted.weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2024-09-30 19:16+0000\n"
-"Last-Translator: Ettore Atalan <atalanttore@googlemail.com>\n"
+"PO-Revision-Date: 2025-08-25 13:02+0000\n"
+"Last-Translator: Mark Nelson <nosoc@users.noreply.hosted.weblate.org>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/de/>\n"
 "Language: de\n"
@@ -25,7 +26,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.8-dev\n"
+"X-Generator: Weblate 5.13\n"
 
 msgid "Welcome"
 msgstr "Willkommen"
@@ -281,36 +282,40 @@ msgstr "Version"
 
 msgid "default (Negotiate highest SMB2+ supported by client and server)"
 msgstr ""
+"Standard (Automatisches Aushandeln der höchsten von Client und Server "
+"unterstützten SMB2+ Version)"
 
 msgid "1.0 (The classic CIFS/SMBv1 protocol)"
-msgstr ""
+msgstr "1.0 (Das klassische CIFS/SMBv1-Protokoll)"
 
 msgid "2.0 (Introduced in Vista SP1, Windows Server 2008)"
-msgstr ""
+msgstr "2.0 (Eingeführt in Vista SP1, Windows Server 2008)"
 
 msgid "2.1 (Introduced in Windows 7, Windows Server 2008R2)"
-msgstr ""
+msgstr "2.1 (Eingeführt in Windows 7, Windows Server 2008R2)"
 
 msgid "3 (The SMBv3.0 protocol version and above)"
-msgstr ""
+msgstr "3 (Die SMBv3.0-Protokollversion und höher)"
 
 msgid "3.0 (Introduced in Windows 8, Windows Server 2012)"
-msgstr ""
+msgstr "3.0 (Eingeführt in Windows 8, Windows Server 2012)"
 
 msgid "3.0.2 (Introduced in Windows 8.1, Windows Server 2012R2)"
-msgstr ""
+msgstr "3.0.2 (Eingeführt in Windows 8.1, Windows Server 2012R2)"
 
 msgid "3.1.1 (Introduced in Windows 10, Windows Server 2016)"
-msgstr ""
+msgstr "3.1.1 (Eingeführt in Windows 10, Windows Server 2016)"
 
 msgid "Unspecified (Tries NFS v4.2 first, then negotiates with server down until finds a supported version)"
 msgstr ""
+"Unspezifiziert (Versucht zuerst NFS v4.2, verhandelt dann mit dem Server "
+"abwärts, bis eine unterstützte Version gefunden wird)"
 
 msgid "NFSv3"
-msgstr ""
+msgstr "NFSv3"
 
 msgid "NFSv4"
-msgstr ""
+msgstr "NFSv4"
 
 msgid "Remote path"
 msgstr "Entfernter Pfad"
@@ -322,7 +327,7 @@ msgid "Identity File"
 msgstr "Ordner auswählen"
 
 msgid "Port"
-msgstr ""
+msgstr "Port"
 
 msgid "Select network-shared storage location:"
 msgstr "Speicherort mit Netzwerkfreigabe auswählen:"
@@ -889,7 +894,7 @@ msgid "Summary of Restore"
 msgstr "Zusammenfassung zur Wiederherstellung"
 
 msgid "Restore Summary"
-msgstr "Zusammenfassung zur Wiederherstellung"
+msgstr "Zusammenfassung wiederherstellen"
 
 msgid "Confirm the restore summary."
 msgstr "Bestätige die Zusammenfassung für die Wiederherstellung."
@@ -949,10 +954,11 @@ msgid "To begin verification, click <b>Next</b>."
 msgstr "Um mit der Überprüfung zu beginnen, klicken Sie auf <b>Weiter</b>."
 
 msgid "Verifying Image"
-msgstr "Festplattenabbild überprüfen"
+msgstr "Dateisystemabbild wird überprüft"
 
 msgid "Verifying the selected image(s)."
-msgstr "Überprüfung des ausgewählten Festplattenabbilds"
+msgstr ""
+"Überprüfung des/der ausgewählte(n) Dateisystemabbilds/Dateisystemabbilder."
 
 #, python-brace-format
 msgid "Verifying {image_name}"
