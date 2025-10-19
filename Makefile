@@ -122,6 +122,8 @@ partclone-latest:
 	mkdir --parents $(PARTCLONE_LATEST_BUILD_DIR) $(AMD64_BUILD_DIR)/chroot/
 	# TODO: Remove need to copy the source folder to destination
 	rsync -rP "$(SRC_DIR)/" "$(PARTCLONE_LATEST_BUILD_DIR)/"
+	# Since it's a cloned folder of a git repository, it's also needs git safe.directory
+	git config --global --add safe.directory "$(PARTCLONE_LATEST_BUILD_DIR)"
 	cd $(PARTCLONE_LATEST_BUILD_DIR) && autoreconf -i
 	cd $(PARTCLONE_LATEST_BUILD_DIR) && ./configure --enable-ncursesw --enable-static --enable-extfs --enable-reiser4 --enable-ntfs --enable-fat --enable-exfat --enable-hfsp --enable-apfs --enable-btrfs --enable-minix --enable-f2fs --enable-nilfs2
 	cd $(PARTCLONE_LATEST_BUILD_DIR) && make
