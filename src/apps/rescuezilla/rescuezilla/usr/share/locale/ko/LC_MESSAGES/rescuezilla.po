@@ -1,11 +1,11 @@
-# Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022, 2025.
 # Jiwoon Kim <budaestew@gmail.com>, 2021, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2022-08-13 21:33+0000\n"
+"PO-Revision-Date: 2025-11-28 05:00+0000\n"
 "Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/ko/>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 msgid "Welcome"
 msgstr "환영합니다"
@@ -239,37 +239,38 @@ msgid "Version"
 msgstr "버전"
 
 msgid "default (Negotiate highest SMB2+ supported by client and server)"
-msgstr ""
+msgstr "기본값 (클라이언트와 서버가 지원하는 가장 높은 SMB2+ 로 협상)"
 
 msgid "1.0 (The classic CIFS/SMBv1 protocol)"
-msgstr ""
+msgstr "1.0 (CIFS/SMBv1 클래식 프로토콜)"
 
 msgid "2.0 (Introduced in Vista SP1, Windows Server 2008)"
-msgstr ""
+msgstr "2.0 (Windows Vista SP1, Server 2008 부터 도입)"
 
 msgid "2.1 (Introduced in Windows 7, Windows Server 2008R2)"
-msgstr ""
+msgstr "2.1 (Windows Vista SP1, Server 2008R2 부터 도입됨)"
 
 msgid "3 (The SMBv3.0 protocol version and above)"
-msgstr ""
+msgstr "3 (SMBv3.0 프로토콜 버전 이상)"
 
 msgid "3.0 (Introduced in Windows 8, Windows Server 2012)"
-msgstr ""
+msgstr "3.0 (Windows 8, Server 2012 부터 도입됨)"
 
 msgid "3.0.2 (Introduced in Windows 8.1, Windows Server 2012R2)"
-msgstr ""
+msgstr "3.0.2 (Windows 8.1, Server 2012R2 부터 도입됨)"
 
 msgid "3.1.1 (Introduced in Windows 10, Windows Server 2016)"
-msgstr ""
+msgstr "3.1.1 (Windows 10, Server 2016 부터 도입됨)"
 
 msgid "Unspecified (Tries NFS v4.2 first, then negotiates with server down until finds a supported version)"
-msgstr ""
+msgstr "미지정 (먼저 NFS v4.2 부터 시도, 이후 지원되는 버전을 찾을 때까지 서버와 협상"
+" 진행)"
 
 msgid "NFSv3"
-msgstr ""
+msgstr "NFSv3"
 
 msgid "NFSv4"
-msgstr ""
+msgstr "NFSv4"
 
 msgid "Remote path"
 msgstr "원격 경로"
@@ -281,7 +282,7 @@ msgid "Identity File"
 msgstr "키 파일"
 
 msgid "Port"
-msgstr ""
+msgstr "포트"
 
 msgid "Select network-shared storage location:"
 msgstr "네트워크 공유 저장소 위치 선택:"

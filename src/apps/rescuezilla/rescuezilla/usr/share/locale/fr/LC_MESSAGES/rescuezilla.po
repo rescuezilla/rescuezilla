@@ -6,13 +6,14 @@
 # and: https://sourceforge.net/p/redobackup/discussion/general/thread/f318c13e/
 #
 # Nathan <bonnemainsnathan@gmail.com>, 2022.
-# Shasheen Ediriweera <shasheene@gmail.com>, 2022.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2022, 2025.
+# Emeric L <emeric@mailoo.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:31+1030\n"
-"PO-Revision-Date: 2022-08-13 21:33+0000\n"
+"PO-Revision-Date: 2025-11-28 05:00+0000\n"
 "Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/fr/>\n"
@@ -21,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 msgid "Welcome"
 msgstr "Bienvenue"
@@ -269,10 +270,10 @@ msgid "Version"
 msgstr "Version"
 
 msgid "default (Negotiate highest SMB2+ supported by client and server)"
-msgstr ""
+msgstr "lecteur"
 
 msgid "1.0 (The classic CIFS/SMBv1 protocol)"
-msgstr ""
+msgstr "1.0 (Protocole CIFS/SMBv1 classique)"
 
 msgid "2.0 (Introduced in Vista SP1, Windows Server 2008)"
 msgstr ""
@@ -281,7 +282,7 @@ msgid "2.1 (Introduced in Windows 7, Windows Server 2008R2)"
 msgstr ""
 
 msgid "3 (The SMBv3.0 protocol version and above)"
-msgstr ""
+msgstr "3 (Protocole SMBv3.0 ou plus récent)"
 
 msgid "3.0 (Introduced in Windows 8, Windows Server 2012)"
 msgstr ""
@@ -294,12 +295,14 @@ msgstr ""
 
 msgid "Unspecified (Tries NFS v4.2 first, then negotiates with server down until finds a supported version)"
 msgstr ""
+"Non précisé (Essaie d'abord NFS v4.2, puis essaie les autres versions en "
+"négociant avec le serveur jusqu'à obtenir une version compatible)"
 
 msgid "NFSv3"
-msgstr ""
+msgstr "NFSv3"
 
 msgid "NFSv4"
-msgstr ""
+msgstr "NFSv4"
 
 msgid "Remote path"
 msgstr "Chemin distant"
@@ -311,7 +314,7 @@ msgid "Identity File"
 msgstr "Fichier d'identité"
 
 msgid "Port"
-msgstr ""
+msgstr "Port"
 
 msgid "Select network-shared storage location:"
 msgstr "Sélectionner l'emplacement de stockage partagé sur le réseau :"

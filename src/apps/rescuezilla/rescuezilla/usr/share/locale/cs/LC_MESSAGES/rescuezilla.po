@@ -1,21 +1,22 @@
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
 # Stepan Kriz <shtepankriz@gmail.com>, 2023.
 # Matěj Valášek <valmatej@seznam.cz>, 2023.
+# Pavel Borecki <pavel.borecki@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2023-12-02 09:04+0000\n"
-"Last-Translator: Matěj Valášek <valmatej@seznam.cz>\n"
+"PO-Revision-Date: 2025-11-05 23:51+0000\n"
+"Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Weblate 5.3-dev\n"
+"Plural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 msgid "Welcome"
 msgstr "Vitejte"
@@ -263,13 +264,13 @@ msgid "default (Negotiate highest SMB2+ supported by client and server)"
 msgstr ""
 
 msgid "1.0 (The classic CIFS/SMBv1 protocol)"
-msgstr ""
+msgstr "1.0 (klasický protokol CIFS/SMBv1)"
 
 msgid "2.0 (Introduced in Vista SP1, Windows Server 2008)"
-msgstr ""
+msgstr "2.0 (uvedený ve Vista SP1, Windows Server 2008)"
 
 msgid "2.1 (Introduced in Windows 7, Windows Server 2008R2)"
-msgstr ""
+msgstr "2.1 (uvedeno ve Windows 7, Windows Server 2008R2)"
 
 msgid "3 (The SMBv3.0 protocol version and above)"
 msgstr ""

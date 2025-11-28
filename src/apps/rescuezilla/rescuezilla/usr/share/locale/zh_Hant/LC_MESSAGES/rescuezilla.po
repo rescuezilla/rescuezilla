@@ -3,13 +3,14 @@
 # Haowei Hsu <hwhsu1231@gmail.com>, 2023, 2024.
 # 3amson3902 <samson3902@gmail.com>, 2025.
 # ceshizhuanyong895 <ceshizhuanyong895@gmail.com>, 2025.
+# Herman Ho <hmcherman@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2025-08-29 02:01+0000\n"
-"Last-Translator: ceshizhuanyong895 <ceshizhuanyong895@gmail.com>\n"
+"PO-Revision-Date: 2025-10-17 02:07+0000\n"
+"Last-Translator: Herman Ho <hmcherman@gmail.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://hosted.weblate.org/"
 "projects/rescuezilla/rescuezilla/zh_Hant/>\n"
 "Language: zh_Hant\n"
@@ -17,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.13.1-dev\n"
+"X-Generator: Weblate 5.14-dev\n"
 
 msgid "Welcome"
 msgstr "歡迎"
@@ -81,10 +82,10 @@ msgid "Clone"
 msgstr "拓製"
 
 msgid "Step 1: Understanding Cloning"
-msgstr "第 1 步：瞭解拓製"
+msgstr "第 1 步：瞭解複製"
 
 msgid "Please understand how \"cloning\" differs from \"imaging\"."
-msgstr "請瞭解「拓製」與「映像」有何不同。"
+msgstr "請瞭解「複製」與「映像」有何不同。"
 
 msgid "This mode is for \"disk cloning\". Cloning means copying one drive and directly overwriting another drive. This is a direct one-step operation with no temporary storage required.\n"
 "\n"
@@ -93,19 +94,19 @@ msgid "This mode is for \"disk cloning\". Cloning means copying one drive and di
 ""
 "To use the \"imaging\" wizards, click <b>Back</b> and select <b>Backup</b> or <b>Restore</b>."
 msgstr ""
-"此模式用於「磁碟拓製」。拓製意味著複製一個磁碟機並直接覆蓋另一個磁碟機。這是"
+"此模式用於「磁碟複製」。複製意味著複製一個磁碟機並直接覆蓋另一個磁碟機。這是"
 "一個直接的一步操作，無需臨時儲存。\n"
 "\n"
-"拓製與「磁碟映像」不同。映像意味著將一切從一個磁碟機複製到儲存在外部磁碟機上"
+"複製與「磁碟映像」不同。映像意味著將一切從一個磁碟機複製到儲存在外部磁碟機上"
 "資料夾內的非常大的檔案中。多個映像可以儲存在同一外磁碟機上。這些映像可以還原"
 "成原始磁碟，或還原到其他磁碟。換句話說，要「映像」，備份操作將磁碟機複製到 "
 "<i> 檔案 </i>，這些檔案至少需要暫時儲存在磁碟機上才能還原。\n"
 "\n"
-"要使用「映像」巫師，請單擊 <b> Back </b>並選取 <b> 備份 </b> 或 <b> 還原 "
-"</b>。"
+"要使用「映像」巫師，請單擊 <b> Back </b>並選取 <b> 備份 </b> 或 <b> 還原 </b>"
+"。"
 
 msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
-msgstr "要開始「拓製」巫師，請單擊 <b>下一個</b>"
+msgstr "要開始「複製」巫師，請單擊 <b>下一個</b>"
 
 msgid "Step 2: Select Source Drive"
 msgstr "第 2 步：選取來源磁碟機"
