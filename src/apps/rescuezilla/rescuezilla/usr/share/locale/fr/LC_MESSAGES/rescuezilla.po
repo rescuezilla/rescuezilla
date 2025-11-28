@@ -6,15 +6,15 @@
 # and: https://sourceforge.net/p/redobackup/discussion/general/thread/f318c13e/
 #
 # Nathan <bonnemainsnathan@gmail.com>, 2022.
-# Shasheen Ediriweera <shasheene@gmail.com>, 2022.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2022, 2025.
 # Emeric L <emeric@mailoo.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:31+1030\n"
-"PO-Revision-Date: 2025-10-10 14:07+0000\n"
-"Last-Translator: Emeric L <emeric@mailoo.org>\n"
+"PO-Revision-Date: 2025-11-28 05:00+0000\n"
+"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
 "Language-Team: French <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/fr/>\n"
 "Language: fr\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.14-dev\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 msgid "Welcome"
 msgstr "Bienvenue"
@@ -270,7 +270,7 @@ msgid "Version"
 msgstr "Version"
 
 msgid "default (Negotiate highest SMB2+ supported by client and server)"
-msgstr ""
+msgstr "lecteur"
 
 msgid "1.0 (The classic CIFS/SMBv1 protocol)"
 msgstr "1.0 (Protocole CIFS/SMBv1 classique)"
