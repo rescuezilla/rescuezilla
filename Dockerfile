@@ -45,7 +45,7 @@ RUN apt-get install --yes \
                           libncursesw5-dev libreadline-dev libreadline8 \
                           libreiser4-dev libtinfo-dev libxslt1.1 nilfs-tools ntfs-3g ntfs-3g-dev \
                           quilt sgml-base uuid-dev vmfs-tools xfslibs-dev xfsprogs xml-core \
-                          xsltproc libssl-dev \
+                          xsltproc libssl-dev libxxhash-dev \
                           # Select runtime dependencies required for running the unit tests
                           python3-gi libgtk-3-dev python3-whichcraft python3-babel \
                           # Needed to install Astral's Python tooling
