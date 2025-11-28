@@ -2,6 +2,7 @@
 
 * Fixed blank error message window displayed after cloning (even on success), which causes the cancellation of the post-operation shutdown/restart request ([#588](https://github.com/rescuezilla/rescuezilla/issues/588#issuecomment-3098152217))
 * Fixed graphical-shutdown menu not opening on the "Plucky" variant due to missing item in custom rules file for polkit authentication manager ([#590](https://github.com/rescuezilla/rescuezilla/issues/590))
+* Upgraded to latest partclone `0.3.40` (released November 2025) from partclone `0.3.37` (released June 2025)
 
 # Rescuezilla v2.6.1 (2025-07-16)
 

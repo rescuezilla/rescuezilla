@@ -117,7 +117,7 @@ partclone.restore.v0.2.43.amd64:
 partclone-latest: SRC_DIR=$(shell pwd)/src/third-party/partclone-latest
 partclone-latest: AMD64_BUILD_DIR=$(BASE_BUILD_DIRECTORY)/$(CODENAME).$(ARCH)
 partclone-latest: PARTCLONE_LATEST_BUILD_DIR=$(AMD64_BUILD_DIR)/partclone-latest
-partclone-latest: PARTCLONE_PKG_VERSION=0.3.37
+partclone-latest: PARTCLONE_PKG_VERSION=0.3.40
 partclone-latest:
 	# DANGER: Deletes build folder recursively. This can end very badly if a variable is not defined correctly.
 	# TODO: FIX THIS
