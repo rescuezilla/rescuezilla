@@ -233,6 +233,7 @@ lang_codes=(
              "fa"
              "fi"
              "ta"
+             "gl"
              "fr"
              "ko"
              "id"
