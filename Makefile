@@ -1,5 +1,27 @@
 .DEFAULT_GOAL := plucky
-.PHONY: all focal lunar jammy oracular plucky noble bionic-i386 deb sfdisk.v2.20.1.amd64 partclone.restore.v0.2.43.amd64 partclone-latest partclone-utils partclone-nbd install test integration-test clean-build-dir clean clean-all
+.PHONY: all \
+	focal \
+	jammy \
+	oracular \
+	plucky \
+	questing \
+	resolute \
+	noble \
+	noble-arm64 \
+	bionic-i386 \
+	deb \
+	sfdisk.v2.20.1.amd64 \
+	partclone.restore.v0.2.43.amd64 \
+	partclone-latest \
+	partclone-utils \
+	partclone-nbd \
+	install \
+	test integration-test \
+	clean-build-dir \
+	clean \
+	clean-all \
+	docker-bash \
+	docker-shell
 
 # Include Python tooling makefile
 include src/scripts/mk/python.mk
@@ -12,9 +34,7 @@ include src/scripts/mk/python.mk
 # FIXME: Somewhat related -- Improve build environment's ability to compile software (https://github.com/rescuezilla/rescuezilla/issues/150)
 
 BASE_BUILD_DIRECTORY ?= $(shell pwd)/build
-
-# Set threads variable to N-1 cpu cores.
-THREADS = `cat /proc/cpuinfo | grep process | tail -1 | cut -d":" -f2 | cut -d" " -f2`
+ARCH ?= amd64
 
 # Set shell to bash, so can use 'pipefail' to cause Make to exit when certain commands below (that pipe into tee) fails
 SHELL=/bin/bash
@@ -24,36 +44,50 @@ all: focal
 buildscripts = src/scripts/build.sh src/scripts/chroot-steps-part-1.sh src/scripts/chroot-steps-part-2.sh
 
 # ISO image based on Ubuntu 20.04 Focal LTS (Long Term Support) 64bit
-focal: ARCH=amd64
 focal: CODENAME=focal
 export ARCH CODENAME
 focal: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-nbd $(buildscripts)
 	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/scripts/build.sh
 
-jammy: ARCH=amd64
 jammy: CODENAME=jammy
 export ARCH CODENAME
 jammy: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-nbd $(buildscripts)
 	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/scripts/build.sh	
 
-oracular: ARCH=amd64
 oracular: CODENAME=oracular
 export ARCH CODENAME
 oracular: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-nbd $(buildscripts)
 	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/scripts/build.sh	
 
-plucky: ARCH=amd64
 plucky: CODENAME=plucky
 export ARCH CODENAME
 plucky: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-nbd $(buildscripts)
 	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/scripts/build.sh	
 
+questing: ARCH=amd64
+questing: CODENAME=questing
+export ARCH CODENAME
+questing: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-nbd $(buildscripts)
+	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/scripts/build.sh
+
+resolute: ARCH=amd64
+resolute: CODENAME=resolute
+export ARCH CODENAME
+resolute: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-nbd $(buildscripts)
+	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/scripts/build.sh
+
 # Note: Ubuntu 24.04 (Long Term Support) won't be released until around April 2024, as per the version string
 # Kept here as the unreleased version can be built and used as a kind of pre-alpha release
-noble: ARCH=amd64
 noble: CODENAME=noble
 export ARCH CODENAME
 noble: deb sfdisk.v2.20.1.amd64 partclone-latest partclone-nbd $(buildscripts)
+	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/scripts/build.sh	
+
+# Test
+noble-arm64: CODENAME=noble
+noble-arm64: ARCH=arm64
+export ARCH CODENAME
+noble-arm64: deb partclone-latest partclone-nbd $(buildscripts)
 	BASE_BUILD_DIRECTORY=$(BASE_BUILD_DIRECTORY) /usr/bin/time ./src/scripts/build.sh	
 
 # ISO image based on Ubuntu 18.04 Bionic LTS (Long Term Support) 32bit (the last 32bit/i386 Ubuntu LTS release)
@@ -84,7 +118,7 @@ sfdisk.v2.20.1.amd64:
 	mkdir --parents $(UTIL_LINUX_BUILD_DIR) $(AMD64_BUILD_DIR)/chroot/usr/sbin/
 	cd $(UTIL_LINUX_BUILD_DIR) && $(SRC_DIR)/autogen.sh
 	cd $(UTIL_LINUX_BUILD_DIR) && $(SRC_DIR)/configure --without-ncurses
-	cd $(UTIL_LINUX_BUILD_DIR) && make CC='ccache cc' -j $(THREADS)
+	cd $(UTIL_LINUX_BUILD_DIR) && make
 	mv $(UTIL_LINUX_BUILD_DIR)/fdisk/sfdisk $(AMD64_BUILD_DIR)/chroot/usr/sbin/sfdisk.v2.20.1.64bit
 
 partclone.restore.v0.2.43.amd64: SRC_DIR=$(shell pwd)/src/third-party/partclone.v0.2.43
@@ -109,7 +143,7 @@ partclone.restore.v0.2.43.amd64:
 	# [1] https://free.nchc.org.tw/drbl-core/pool/drbl/dev/
 	# [2] For complete details, see: https://github.com/rescuezilla/rescuezilla/issues/77
 	cd $(PARTCLONE_BUILD_DIR) && $(SRC_DIR)/configure --enable-static --enable-extfs --enable-reiser4 --enable-hfsp --enable-fat --enable-ntfs --enable-btrfs
-	cd $(PARTCLONE_BUILD_DIR) && make CC='ccache cc' -j $(THREADS)
+	cd $(PARTCLONE_BUILD_DIR) && make
 	mv $(PARTCLONE_BUILD_DIR)/src/partclone.restore $(AMD64_BUILD_DIR)/chroot/usr/sbin/partclone.restore.v0.2.43.64bit
 	# FIXME: Building out-of-tree modifies two files in the source directory during the TravisCI docker build (but works fine on a local build)
 	cd $(SRC_DIR) && git checkout -- config.h.in configure
@@ -117,7 +151,7 @@ partclone.restore.v0.2.43.amd64:
 partclone-latest: SRC_DIR=$(shell pwd)/src/third-party/partclone-latest
 partclone-latest: AMD64_BUILD_DIR=$(BASE_BUILD_DIRECTORY)/$(CODENAME).$(ARCH)
 partclone-latest: PARTCLONE_LATEST_BUILD_DIR=$(AMD64_BUILD_DIR)/partclone-latest
-partclone-latest: PARTCLONE_PKG_VERSION=0.3.40
+partclone-latest: PARTCLONE_PKG_VERSION=0.3.47
 partclone-latest:
 	# DANGER: Deletes build folder recursively. This can end very badly if a variable is not defined correctly.
 	# TODO: FIX THIS
@@ -125,12 +159,14 @@ partclone-latest:
 	mkdir --parents $(PARTCLONE_LATEST_BUILD_DIR) $(AMD64_BUILD_DIR)/chroot/
 	# TODO: Remove need to copy the source folder to destination
 	rsync -rP "$(SRC_DIR)/" "$(PARTCLONE_LATEST_BUILD_DIR)/"
+	# Since it's a cloned folder of a git repository, it's also needs git safe.directory
+	git config --global --add safe.directory "$(PARTCLONE_LATEST_BUILD_DIR)"
 	cd $(PARTCLONE_LATEST_BUILD_DIR) && autoreconf -i
 	cd $(PARTCLONE_LATEST_BUILD_DIR) && ./configure --enable-ncursesw --enable-static --enable-extfs --enable-reiser4 --enable-ntfs --enable-fat --enable-exfat --enable-hfsp --enable-apfs --enable-btrfs --enable-minix --enable-f2fs --enable-nilfs2
-	cd $(PARTCLONE_LATEST_BUILD_DIR) && make CC='ccache cc' -j $(THREADS)
+	cd $(PARTCLONE_LATEST_BUILD_DIR) && make
 	# Create deb package from a standard Makefile's `make install` using the checkinstall tool (for cleaner uninstall)
-	cd $(PARTCLONE_LATEST_BUILD_DIR) && checkinstall --install=no --pkgname partclone --pkgversion $(PARTCLONE_PKG_VERSION) --pkgrelease 1 --maintainer 'rescuezilla@gmail.com' -D --default  make CC='ccache cc' -j $(THREADS) install
-	mv $(PARTCLONE_LATEST_BUILD_DIR)/partclone_$(PARTCLONE_PKG_VERSION)-1_amd64.deb $(AMD64_BUILD_DIR)/chroot/
+	cd $(PARTCLONE_LATEST_BUILD_DIR) && checkinstall --install=no --pkgname partclone --pkgversion $(PARTCLONE_PKG_VERSION) --pkgrelease 1 --maintainer 'rescuezilla@gmail.com' -D --default  make install
+	mv $(PARTCLONE_LATEST_BUILD_DIR)/partclone_$(PARTCLONE_PKG_VERSION)-1_$(ARCH).deb $(AMD64_BUILD_DIR)/chroot/
 
 # Builds partclone-utils, which contains some very useful utilities for working with partclone images.
 partclone-utils: SRC_DIR=$(shell pwd)/src/third-party/partclone-utils
@@ -143,8 +179,8 @@ partclone-utils:
 	cd $(PARTCLONE_UTILS_BUILD_DIR) && autoreconf -i
 	cd $(PARTCLONE_UTILS_BUILD_DIR) && ./configure
 	# Create deb package from a standard Makefile's `make install` using the checkinstall tool (for cleaner uninstall)
-	cd $(PARTCLONE_UTILS_BUILD_DIR) && checkinstall --install=no --pkgname partclone-utils --pkgversion 0.4.2 --pkgrelease 1 --maintainer 'rescuezilla@gmail.com' -D --default  make CC='ccache cc' -j $(THREADS) install
-	mv $(PARTCLONE_UTILS_BUILD_DIR)/partclone-utils_0.4.2-1_amd64.deb $(AMD64_BUILD_DIR)/chroot/
+	cd $(PARTCLONE_UTILS_BUILD_DIR) && checkinstall --install=no --pkgname partclone-utils --pkgversion 0.4.2 --pkgrelease 1 --maintainer 'rescuezilla@gmail.com' -D --default  make install
+	mv $(PARTCLONE_UTILS_BUILD_DIR)/partclone-utils_0.4.2-1_$(ARCH).deb $(AMD64_BUILD_DIR)/chroot/
 
 # Builds partclone-nbd, a competitor project to partclone-utils that's also able to mount partclone images.
 partclone-nbd: SRC_DIR=$(shell pwd)/src/third-party/partclone-nbd
@@ -157,7 +193,7 @@ partclone-nbd:
 	# Compile and package DEB. Override the user-managed /opt target installation directory with /usr/local since
 	# build scripts constitutes the system administrator of the operating system being constructed so /opt is less appropriate
 	cd $(PARTCLONE_NBD_BUILD_DIR) && cpack -D CPACK_PACKAGING_INSTALL_PREFIX="/usr/local" -G DEB
-	mv $(PARTCLONE_NBD_BUILD_DIR)/_packages/partclone-nbd_0.0.4_amd64.deb $(AMD64_BUILD_DIR)/chroot/
+	mv $(PARTCLONE_NBD_BUILD_DIR)/_packages/partclone-nbd_0.0.4_$(ARCH).deb $(AMD64_BUILD_DIR)/chroot/
 
 clean-build-dir:
 	$(info * Unmounting chroot bind mounts)
@@ -185,7 +221,7 @@ install: AMD64_BUILD_DIR=$(BASE_BUILD_DIRECTORY)/$(CODENAME).$(ARCH)
 install: PARTCLONE_NBD_BUILD_DIR=$(AMD64_BUILD_DIR)/partclone-nbd
 install: DEB_BUILD_DIR=$(BASE_BUILD_DIRECTORY)/deb
 install: partclone-nbd deb
-	DEBIAN_FRONTEND=noninteractive gdebi --non-interactive $(AMD64_BUILD_DIR)/chroot/partclone-nbd_0.0.3-1_amd64.deb
+	DEBIAN_FRONTEND=noninteractive gdebi --non-interactive $(AMD64_BUILD_DIR)/chroot/partclone-nbd_0.0.3-1_$(ARCH).deb
 	DEBIAN_FRONTEND=noninteractive gdebi --non-interactive $(DEB_BUILD_DIR)/../rescuezilla_*.deb
 
 test: RESCUEZILLA_TEST_DIR=$(shell pwd)/src/apps/rescuezilla/rescuezilla/usr/lib/python3/dist-packages/rescuezilla
@@ -264,6 +300,8 @@ docker-status:
 docker-bash:
 	docker exec --interactive --tty --workdir=/home/rescuezilla/ builder.container /bin/bash
 
+docker-shell: docker-bash
+
 docker-deb:
 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make deb
 
@@ -279,6 +317,12 @@ docker-oracular:
 
 docker-plucky:
 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make plucky
+
+docker-questing:
+	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make questing
+
+docker-resolute:
+	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make resolute
 
 docker-noble:
 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make noble

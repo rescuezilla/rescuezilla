@@ -1,13 +1,13 @@
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
 # Stepan Kriz <shtepankriz@gmail.com>, 2023.
 # Matěj Valášek <valmatej@seznam.cz>, 2023.
-# Pavel Borecki <pavel.borecki@gmail.com>, 2025.
+# Pavel Borecki <pavel.borecki@gmail.com>, 2025, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2025-11-05 23:51+0000\n"
+"PO-Revision-Date: 2026-03-28 08:09+0000\n"
 "Last-Translator: Pavel Borecki <pavel.borecki@gmail.com>\n"
 "Language-Team: Czech <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/cs/>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\n"
-"X-Generator: Weblate 5.15-dev\n"
+"X-Generator: Weblate 5.17-dev\n"
 
 msgid "Welcome"
 msgstr "Vitejte"
@@ -647,11 +647,11 @@ msgstr "Tím přepíšete tabulku oddílů."
 
 msgid "The \"destination partition\" column has been updated using the information stored within the backup image.\n\n<b>If partitions have been resized, new partitions added, or additional operating systems installed <i>since the backup image was created</i>, then the destination drive's partition table will not match the backup image, and overwriting the destination drive's partition table will render these resized and additional partitions permanently inaccessible.</b> If you have not modified the partition table in such a way since creating this backup then overwriting the partition table is completely safe and will have no negative effects."
 msgstr ""
-"Sloupec \"cílový oddíl\" byl aktualizován pomocí informací uložených v "
-"bitové kopii zálohy.\n"
+"Sloupec „cílový oddíl“ byl aktualizován pomocí informací uložených v bitové "
+"kopii zálohy.\n"
 "\n"
 "<b>Pokud byla změněna velikost oddílů, přidány nové oddíly nebo "
-"nainstalovány další operační systémy<i>od vytvoření záložního obrazu</i>, "
+"nainstalovány další operační systémy <i>od vytvoření záložního obrazu</i>, "
 "pak tabulka oddílů cílové jednotky nebude odpovídat záložnímu obrazu a "
 "přepsání tabulky oddílů cílové jednotky způsobí, že tyto změněné a další "
 "oddíly budou trvale nepřístupné.</b> Pokud jste od vytvoření této zálohy "

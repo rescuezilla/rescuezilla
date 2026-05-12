@@ -2,13 +2,13 @@
 # radosdesign <radek82@gmail.com>, 2022.
 # alejandro ar <alejandroar@wearehackerone.com>, 2022.
 # Milan Šalka <salka.milan@googlemail.com>, 2023.
-# Pa Di <padi@tutanota.com>, 2024.
+# Pa Di <padi@tutanota.com>, 2024, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2024-10-10 16:15+0000\n"
+"PO-Revision-Date: 2025-12-01 13:00+0000\n"
 "Last-Translator: Pa Di <padi@tutanota.com>\n"
 "Language-Team: Slovak <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/sk/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\n"
-"X-Generator: Weblate 5.8-dev\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 msgid "Welcome"
 msgstr "Vitajte"
@@ -263,36 +263,40 @@ msgstr "Verzia"
 
 msgid "default (Negotiate highest SMB2+ supported by client and server)"
 msgstr ""
+"predvolené nastavenie "
+"(Dohodnúť najvyššiu verziu SMB2+ podporovanú klientom a serverom)"
 
 msgid "1.0 (The classic CIFS/SMBv1 protocol)"
-msgstr ""
+msgstr "1.0 (klasický protokol CIFS/SMBv1)"
 
 msgid "2.0 (Introduced in Vista SP1, Windows Server 2008)"
-msgstr ""
+msgstr "2.0 (zavedené vo Vista SP1, Windows Server 2008)"
 
 msgid "2.1 (Introduced in Windows 7, Windows Server 2008R2)"
-msgstr ""
+msgstr "2.1 (Zavedené v systémoch Windows 7, Windows Server 2008R2)"
 
 msgid "3 (The SMBv3.0 protocol version and above)"
-msgstr ""
+msgstr "3 (verzia protokolu SMBv3.0 a vyššia)"
 
 msgid "3.0 (Introduced in Windows 8, Windows Server 2012)"
-msgstr ""
+msgstr "3.0 (Zavedené v systémoch Windows 8, Windows Server 2012)"
 
 msgid "3.0.2 (Introduced in Windows 8.1, Windows Server 2012R2)"
-msgstr ""
+msgstr "3.0.2 (Zavedené v systémoch Windows 8.1, Windows Server 2012R2)"
 
 msgid "3.1.1 (Introduced in Windows 10, Windows Server 2016)"
-msgstr ""
+msgstr "3.1.1 (Zavedené v systéme Windows 10, Windows Server 2016)"
 
 msgid "Unspecified (Tries NFS v4.2 first, then negotiates with server down until finds a supported version)"
 msgstr ""
+"Nešpecifikované (najskôr vyskúša NFS v4.2, potom sa dohodne so serverom, až "
+"kým nenájde podporovanú verziu)"
 
 msgid "NFSv3"
-msgstr ""
+msgstr "NFSv3"
 
 msgid "NFSv4"
-msgstr ""
+msgstr "NFSv4"
 
 msgid "Remote path"
 msgstr "Vzdialená cesta"
@@ -304,7 +308,7 @@ msgid "Identity File"
 msgstr "Súbor identity"
 
 msgid "Port"
-msgstr ""
+msgstr "Port"
 
 msgid "Select network-shared storage location:"
 msgstr "Vyberte umiestnenie zdieľaného sieťového úložiska:"

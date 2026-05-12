@@ -4,13 +4,14 @@
 # 3amson3902 <samson3902@gmail.com>, 2025.
 # ceshizhuanyong895 <ceshizhuanyong895@gmail.com>, 2025.
 # Herman Ho <hmcherman@gmail.com>, 2025.
+# ｙｏｓｉ＿ｋ＿ <yosi_k_fr@proton.me>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2025-10-17 02:07+0000\n"
-"Last-Translator: Herman Ho <hmcherman@gmail.com>\n"
+"PO-Revision-Date: 2026-03-24 22:07+0000\n"
+"Last-Translator: ｙｏｓｉ＿ｋ＿ <yosi_k_fr@proton.me>\n"
 "Language-Team: Chinese (Traditional Han script) <https://hosted.weblate.org/"
 "projects/rescuezilla/rescuezilla/zh_Hant/>\n"
 "Language: zh_Hant\n"
@@ -18,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.14-dev\n"
+"X-Generator: Weblate 5.17-dev\n"
 
 msgid "Welcome"
 msgstr "歡迎"
@@ -39,10 +40,14 @@ msgid "Verify Image"
 msgstr "驗證映像"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
-msgstr "需要幫助嗎？首先檢查 Rescuezilla 經常提出的問題，然後前往 Resuezilla 論壇。"
+msgstr ""
+"需要幫助嗎？首先檢查救援龍（Rescuezilla）經常提出的問題，然後前往 "
+"Rescuezilla 論壇。"
 
 msgid "Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed."
-msgstr "考慮在眾籌網站 Patreon 上每月捐款 1 美元， 以便 Rescuezilla 可以繼續開發。"
+msgstr ""
+"考慮在眾籌網站 Patreon 上每月捐款 1 美元， 以便救援龍（Rescuezilla）可以繼續"
+"開發。"
 
 msgid "Back"
 msgstr "返回"
@@ -100,10 +105,9 @@ msgstr ""
 "複製與「磁碟映像」不同。映像意味著將一切從一個磁碟機複製到儲存在外部磁碟機上"
 "資料夾內的非常大的檔案中。多個映像可以儲存在同一外磁碟機上。這些映像可以還原"
 "成原始磁碟，或還原到其他磁碟。換句話說，要「映像」，備份操作將磁碟機複製到 "
-"<i> 檔案 </i>，這些檔案至少需要暫時儲存在磁碟機上才能還原。\n"
+"<i>檔案</i> ，這些檔案至少需要暫時儲存在磁碟機上才能還原。\n"
 "\n"
-"要使用「映像」巫師，請單擊 <b> Back </b>並選取 <b> 備份 </b> 或 <b> 還原 </b>"
-"。"
+"要使用「映像」巫師，請單擊 <b>返回</b> 並選取 <b>備份</b> 或 <b>還原</b>。"
 
 msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
 msgstr "要開始「複製」巫師，請單擊 <b>下一個</b>"
@@ -112,10 +116,10 @@ msgid "Step 2: Select Source Drive"
 msgstr "第 2 步：選取來源磁碟機"
 
 msgid "Select the <b>source drive</b> to clone."
-msgstr "選取 <b> 來源磁碟機 </b> 進行拓製。"
+msgstr "選取 <b>來源磁碟機</b> 進行拓製。"
 
 msgid "Select the <b>destination drive</b> to overwrite."
-msgstr "選取 <b> 目的地磁碟機 </b> 以覆寫。"
+msgstr "選取 <b>目的地磁碟機</b> 以覆寫。"
 
 msgid "Step 4: Select Partitions to Clone"
 msgstr "第 4 步：選取要拓製的分區"
@@ -134,7 +138,7 @@ msgid "Cloning the following partitions"
 msgstr "拓製以下分區"
 
 msgid "To start cloning, click <b>Next</b>."
-msgstr "要開始拓製，請單擊 <b>下一個 </b>。"
+msgstr "要開始拓製，請單擊 <b>下一個</b>。"
 
 #, python-brace-format
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
@@ -229,7 +233,7 @@ msgid "Server"
 msgstr "伺服器"
 
 msgid "Share location (UNC path)"
-msgstr "分享位置 （UNC 路徑）"
+msgstr "分享位置（UNC 路徑）"
 
 msgid "Username"
 msgstr "使用者名稱"
@@ -271,10 +275,10 @@ msgid "Unspecified (Tries NFS v4.2 first, then negotiates with server down until
 msgstr "未指定 (先嘗試 NFS v4.2，然後與伺服器協商直到找到支援版本)"
 
 msgid "NFSv3"
-msgstr "NFSv3"
+msgstr "NFSv３"
 
 msgid "NFSv4"
-msgstr "NFSv4"
+msgstr "NFSv４"
 
 msgid "Remote path"
 msgstr "遠端路徑"
@@ -359,8 +363,8 @@ msgstr ""
 
 msgid "The backup's bootloader data is shorter than expected. If the backup contained certain bootloaders like GRUB, during a restore operation Rescuezilla will try and re-install the bootloader."
 msgstr ""
-"備份的開機載入器資料比預期的要短。如果備份包含某些開機載入器（如 "
-"GRUB），則在還原操作期間，Rescuezilla 將嘗試重新安裝開機載入器。"
+"備份的開機載入器資料比預期的要短。如果備份包含某些開機載入器（如 GRUB），則在"
+"還原操作期間，救援龍（Rescuezilla）將嘗試重新安裝開機載入器。"
 
 msgid "Step 4: Select Destination Folder"
 msgstr "第 4 步：選取目的地資料夾"
@@ -371,8 +375,8 @@ msgid "Click <b>Browse</b> to select the folder on the destination drive where y
 msgstr ""
 "點擊 <b>瀏覽</b> 以選取將儲存新備份映像的目的地磁碟機上的資料夾。\n"
 "\n"
-"儲存在備份的資料夾通常是計算機的描述，例如 <b> office1 </b> 或 <b> zack-"
-"laptop </b>。"
+"儲存在備份的資料夾通常是計算機的描述，例如 <b>office1</b> 或 <b>zack-laptop</"
+"b>。"
 
 #, python-brace-format
 msgid "You must select a folder inside {location}"
@@ -551,7 +555,7 @@ msgid "Operation took {num_minutes} minutes."
 msgstr "操作花了{num_minutes}分鐘。"
 
 msgid "To start a new session, click <b>Next</b>"
-msgstr "要開始新的作業階段，請點擊\\ <b>下一個</b>"
+msgstr "要開始新的作業階段，請點擊 <b>下一個</b>"
 
 msgid "Step 1: Select Image Location"
 msgstr "第 1 步：選取映像位置"
@@ -566,7 +570,7 @@ msgid "Step 2: Select Backup Image"
 msgstr "第 2 步：選取備份映像"
 
 msgid "Click <b>Browse</b> to select the folder containing image files."
-msgstr "點擊\\ <b>瀏覽</b>\\ 以選取包含映像檔的資料夾。"
+msgstr "點擊 <b>瀏覽</b> 以選取包含映像檔的資料夾。"
 
 msgid "Select the image file to restore."
 msgstr "選取要還原的映像檔。"
@@ -601,12 +605,12 @@ msgstr ""
 "“目標分區”列已使用備份映射中存儲的資訊進行了更新。\n"
 "\n"
 "<b>如果在創建備份映射後已調整分區大小、添加了新分區或安裝了其他作業系統， <i>"
-"則目的地磁碟機的分區表將與備份映射不匹配</i>，覆蓋目的地磁碟機的分區表將使這"
-"些已調整大小的分區和其他分區永久不可訪問。</b>如果在創建此備份後未以這種管道"
+"則目的地磁碟機的分區表將與備份映射不匹配</i> ，覆蓋目的地磁碟機的分區表將使這"
+"些已調整大小的分區和其他分區永久不可訪問。</b> 如果在創建此備份後未以這種管道"
 "修改分區表，則覆蓋分區表是完全安全的，不會產生任何負面影響。"
 
 msgid "You will <b>not</b> be overwriting the partition table."
-msgstr "您將<b>不</b>覆蓋分區表。"
+msgstr "您將 <b>不</b> 覆蓋分區表。"
 
 msgid "The source does not contain a partition table."
 msgstr "來源不包含分區表。"
@@ -643,8 +647,8 @@ msgid "Rescuezilla cannot yet automatically shrink partitions to restore from la
 "\n"
 "{url}"
 msgstr ""
-"Rescuzilla 還不能自動收縮分區，從大磁碟還原到較小的磁碟。當前的最終分區必須始"
-"終完全位於目的地磁碟中。\n"
+"救援龍（Rescuezilla）還不能自動收縮分區，從大磁碟還原到較小的磁碟。當前的最終"
+"分區必須始終完全位於目的地磁碟中。\n"
 "\n"
 "當前還原到小於原始磁碟的唯一方法是首先使用 GParted 分區編輯器在製作新的備份映"
 "像之前縮小原始磁碟的最終分區。請參閱以下指引以了解更多資訊：\n"
@@ -675,10 +679,10 @@ msgid "WILL BE OVERWRITING PARTITION TABLE"
 msgstr "將覆蓋分區表"
 
 msgid "Will <b>NOT</b> be overwriting partition table"
-msgstr "將\\ <b>不會</b>\\ 覆蓋分區表"
+msgstr "將 <b>不會</b> 覆蓋分區表"
 
 msgid "To start the restore, click <b>Next</b>."
-msgstr "要開始還原，請單擊 <b>下一個 </b>。"
+msgstr "要開始還原，請單擊 <b>下一個</b>。"
 
 msgid "Restoring From Backup"
 msgstr "從備份還原"
@@ -769,7 +773,7 @@ msgstr "無法還原分區 {destination_partition} "
 "，因為沒有與之相關的儲存映像：{description}。"
 
 msgid "This may occur if Clonezilla was originally unable to backup this partition."
-msgstr "如果 Clonezilla 無法備份此分區，則可能發生這種情況。"
+msgstr "如果再生龍（Clonezilla）無法備份此分區，則可能發生這種情況。"
 
 #, python-brace-format
 msgid "Error restoring partition {image_key} to {destination_partition}."
@@ -822,7 +826,7 @@ msgid "Unmount"
 msgstr "卸載"
 
 msgid "Once the partition has been mounted, click <b>Open in file manager</b> to access your files."
-msgstr "安裝分割區後，點擊\\ <b>在檔案管理器中開啟</b>\\ 以存取您的檔案。"
+msgstr "安裝分割區後，點擊 <b>在檔案管理器中開啟</b> 以存取您的檔案。"
 
 msgid "Open in file manager"
 msgstr "在檔案管理員中打開"
@@ -834,7 +838,7 @@ msgid "Select one or more images to verify."
 msgstr "選取要驗證的一個或多個映像。"
 
 msgid "To begin verification, click <b>Next</b>."
-msgstr "要開始驗證，請單擊 <b> 下一步 </b>。"
+msgstr "要開始驗證，請單擊 <b>下一個</b>。"
 
 msgid "Verifying Image"
 msgstr "驗證映像"
@@ -856,7 +860,7 @@ msgid "Verification Summary"
 msgstr "驗證摘要"
 
 msgid "To verify another image, click <b>Back</b>."
-msgstr "要驗證其它映像，請單擊 <b> 返回 </b>。"
+msgstr "要驗證其它映像，請單擊 <b>返回</b>。"
 
 msgid "✔"
 msgstr "✔"

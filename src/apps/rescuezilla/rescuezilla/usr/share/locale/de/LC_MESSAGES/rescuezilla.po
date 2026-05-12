@@ -12,13 +12,14 @@
 # Markus Merkle <mae.mm1172@gmail.com>, 2023.
 # hutt <iuoifjlffdla@trashmail.de>, 2023.
 # Mark Nelson <nosoc@users.noreply.hosted.weblate.org>, 2025.
+# PhillyMay <mein.alias@outlook.com>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2025-08-25 13:02+0000\n"
-"Last-Translator: Mark Nelson <nosoc@users.noreply.hosted.weblate.org>\n"
+"PO-Revision-Date: 2026-03-31 14:09+0000\n"
+"Last-Translator: PhillyMay <mein.alias@outlook.com>\n"
 "Language-Team: German <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/de/>\n"
 "Language: de\n"
@@ -26,7 +27,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.13\n"
+"X-Generator: Weblate 5.17-dev\n"
 
 msgid "Welcome"
 msgstr "Willkommen"
@@ -50,13 +51,13 @@ msgstr "Festplattenabbild überprüfen"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
 msgstr ""
-"Benötigst du Hilfe? Lese zunächst die FAQ. Darüber hinaus erhältst du "
+"Benötigst du Hilfe? Lies zunächst die FAQ. Darüber hinaus erhältst du "
 "Unterstützung im Rescuezilla Forum."
 
 msgid "Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed."
 msgstr ""
-"Unterstütze die Weiterentwicklung von Rescuezilla mit einem Beitrag von 1 "
-"USD pro Monat über die Patreon Webseite."
+"Unterstütze die Weiterentwicklung von Rescuezilla mit einem Beitrag von 1$ "
+"pro Monat über die Patreon Webseite."
 
 msgid "Back"
 msgstr "Zurück"
@@ -422,11 +423,11 @@ msgid "Click <b>Browse</b> to select the folder on the destination drive where y
 "\n"
 "The folder a backup is saved in is usually a description of the computer, e.g. <b>office1</b> or <b>zack-laptop</b>."
 msgstr ""
-"Klicke <b>Durchsuchen</b>, um einen Ordner auszuwählen, in dem deine "
-"Sicherungskopie auf dem Ziellaufwerk gespeichert werden soll.\n"
+"Klicke <b>Durchsuchen</b> um einen Ordner auf dem Ziellaufwerk auszuwählen, "
+"in dem deine Sicherung gespeichert werden soll.\n"
 "\n"
-"Wähle eine sprechende Bezeichnung für den Ordner - beispielsweise <b>Mein-"
-"PC</b> oder <b>Pauls-Laptop</b>."
+"Wähle eine aussagekräftige Bezeichnung für den Ordner, z. B. <b>Mein-PC</b> "
+"oder <b>Pauls-Laptop</b>."
 
 #, python-brace-format
 msgid "You must select a folder inside {location}"

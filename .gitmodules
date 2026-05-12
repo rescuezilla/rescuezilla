@@ -12,4 +12,4 @@
 	url = https://github.com/rescuezilla/debootstrap
 [submodule "src/third-party/partclone-latest"]
 	path = src/third-party/partclone-latest
-	url = https://github.com/Thomas-Tsai/partclone
+	url = https://github.com/rescuezilla/partclone

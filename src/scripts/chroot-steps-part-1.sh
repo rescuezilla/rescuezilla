@@ -81,7 +81,11 @@ pkgs_specific_to_ubuntu1804_bionic_32bit=("linux-generic-hwe-18.04"
                         "libblockdev-crypto2"
                         "ibus-anthy"
                         "reiser4progs"
+                        "reiserfsprogs"
                         "python3-whichcraft"
+                        "volumeicon-alsa"
+                        # Firmware package for NVidia cards from ~2009 (newer cards have firmware in the kernel)
+                        "nouveau-firmware"
 )
 
 # Packages specific to Rescuezilla 64-bit build (currently based Ubuntu 20.04 Focal)
@@ -111,7 +115,11 @@ pkgs_specific_to_ubuntu2004_focal=("linux-generic-hwe-18.04"
                        "libblockdev-crypto2"
                        "ibus-anthy"
                        "reiser4progs"
+                       "reiserfsprogs"
                        "python3-whichcraft"
+                       "volumeicon-alsa"
+                       # Firmware package for NVidia cards from ~2009 (newer cards have firmware in the kernel)
+                       "nouveau-firmware"
 )
 
 pkgs_specific_to_ubuntu2204_jammy=(
@@ -137,7 +145,11 @@ pkgs_specific_to_ubuntu2204_jammy=(
                        "libblockdev-crypto2"
                        "ibus-anthy"
                        "reiser4progs"
+                       "reiserfsprogs"
                        "python3-whichcraft"
+                       "volumeicon-alsa"
+                       # Firmware package for NVidia cards from ~2009 (newer cards have firmware in the kernel)
+                       "nouveau-firmware"
 )
 
 pkgs_specific_to_ubuntu2410_oracular=(
@@ -165,6 +177,10 @@ pkgs_specific_to_ubuntu2410_oracular=(
                        "ibus-anthy"
                        # Needed for 'hwclock' package used by "rc-local.service", moved from base "util-linux" since Ubuntu 23.10 (Mantic)
                        "util-linux-extra"
+                       "reiserfsprogs"
+                       "volumeicon-alsa"
+                       # Firmware package for NVidia cards from ~2009 (newer cards have firmware in the kernel)
+                       "nouveau-firmware"
 )
 
 pkgs_specific_to_ubuntu2504_plucky=(
@@ -191,8 +207,128 @@ pkgs_specific_to_ubuntu2504_plucky=(
                        "ibus-anthy"
                        # Needed for 'hwclock' package used by "rc-local.service", moved from base "util-linux" since Ubuntu 23.10 (Mantic)
                        "util-linux-extra"
+                       "reiserfsprogs"
+                       "volumeicon-alsa"
+                       # Firmware package for NVidia cards from ~2009 (newer cards have firmware in the kernel)
+                       "nouveau-firmware"
 )
 
+pkgs_specific_to_ubuntu2510_questing=(
+                       "linux-generic"
+                       "xserver-xorg"
+                       "xserver-xorg-video-all"
+                       "xserver-xorg-video-intel"
+                       "xserver-xorg-video-qxl"
+                       "xserver-xorg-video-mga"
+                       "xserver-xorg-input-libinput"
+                        # Packages which may assist users needing to do a GRUB repair (64-bit EFI)
+                       "shim-signed"
+                       "grub-efi-amd64-signed"
+                       "grub-efi-amd64-bin"
+                       "grub-efi-ia32-bin"
+                       # Dependency for Rescuezilla Image Explorer
+                       "nbdkit"
+                       # Replaces exfat-utils
+                       "exfatprogs"
+                       # Add support for crypto volumes mount (luks, bitlocker, crypt)
+                       "libblockdev-crypto3"
+                       # "Legacy "local authority" (.pkla) backend for polkitd" required so polkit works on Mantic
+                       #"polkitd-pkla"
+                       "ibus-anthy"
+                       # Needed for 'hwclock' package used by "rc-local.service", moved from base "util-linux" since Ubuntu 23.10 (Mantic)
+                       "util-linux-extra"
+                       "volumeicon-alsa"
+                       # Firmware package for NVidia cards from ~2009 (newer cards have firmware in the kernel)
+                       "nouveau-firmware"
+                       # Intel Intelligent Storage Acceleration Library
+                       "libisal2"
+)
+
+# Since Ubuntu 26.04 ("Resolute") released in April 2026, the 'linux-firmware' package has been split into granular packages [1]
+# Let's include everything that sounds like it would be useful in a Rescuezilla environment for maximum support for graphics,
+# wifi, ethernet, audio etc across a wide variety of hardware platforms.
+# 
+# [1] https://hintnal.com/ubuntu-26-04-lts-firmware-split-what-developers-need-to-know/
+pkgs_granular_linux_firmware_all_arch_resolute=(
+                       # Metapackage pulling in all firmware subpackages
+                       "linux-firmware"
+                       # AMD/ATI graphics firmware
+                       "linux-firmware-amd-graphics"
+                       # AMD NPU accelerator firmware (including as it's name is generic enough)
+                       "linux-firmware-amd-misc"
+                       # Broadcom and Cypress Wi-Fi and Bluetooth firmware
+                       "linux-firmware-broadcom-wireless"
+                       # Intel graphics, IPU, and VSC processor firmware
+                       "linux-firmware-intel-graphics"
+                       # Miscellaneous Intel device firmware
+                       "linux-firmware-intel-misc"
+                       # Intel Wi-Fi and Bluetooth firmware
+                       "linux-firmware-intel-wireless"
+                       # Marvell and NXP Wi-Fi adapter firmware
+                       "linux-firmware-marvell-wireless"
+                       # Mediatek Wi-Fi, Bluetooth, Ethernet, and SoC firmware
+                       "linux-firmware-mediatek"
+                       # Firmware for miscellaneous devices and adapters
+                       "linux-firmware-misc"
+                       # Nvidia graphics firmware
+                       "linux-firmware-nvidia-graphics"
+                       # QLogic SCSI, FC, IB, and Ethernet adapter firmware
+                       "linux-firmware-qlogic"
+                       # Qualcomm graphics and video processor firmware
+                       "linux-firmware-qualcomm-graphics"
+                       # Miscellaneous Qualcomm device firmware
+                       "linux-firmware-qualcomm-misc"
+                       # Qualcomm and Atheros Wi-Fi and Bluetooth firmware
+                       "linux-firmware-qualcomm-wireless"
+                       # Realtek Wi-Fi, Bluetooth, Ethernet, and audio firmware
+                       "linux-firmware-realtek"
+
+                       # Deliberately not selecting some firmware that seems unlikely to be used in Rescuezilla environments (unless a user requests it)
+                       # * Marvell Prestera ASIC device firmware: "linux-firmware-marvell-prestera"
+                       # * Mellanox Spectrum switch firmware: "linux-firmware-mellanox-spectrum"
+                       # * Netronome Ethernet adapter firmware: "linux-firmware-netronome"
+                       # * Xilinx AP1302 ISP firmware [multiverse]: "linux-firmware-xilinx-ap1302"
+                       # * Xilinx VCU firmware [multiverse]: "linux-firmware-xilinx-vcu"
+)
+
+# There are a set of ARM64-only firmware packages that we will want to install when we have an ARM64 build ready
+_pkgs_granular_linux_firmware_arm64_resolute=(
+                       # Mediatek Genio board firmware [multiverse]
+                       "linux-firmware-mediatek-genio"
+                       # NVIDIA Tegra device firmware [multiverse]
+                       "linux-firmware-nvidia-tegra"
+                       # Raspberry Pi 2/3/4 GPU firmware and bootloaders [restricted]
+                       "linux-firmware-raspi"
+                       # Qualcomm Snapdragon / DragonBoard410c Wi-Fi firmware [multiverse]
+                       "linux-firmware-snapdragon"
+)
+
+pkgs_specific_to_ubuntu2604_resolute=(
+                       "linux-generic"
+                       "xserver-xorg"
+                       "xserver-xorg-video-all"
+                       "xserver-xorg-video-intel"
+                       "xserver-xorg-video-qxl"
+                       "xserver-xorg-video-mga"
+                       "xserver-xorg-input-libinput"
+                        # Packages which may assist users needing to do a GRUB repair (64-bit EFI)
+                       "shim-signed"
+                       "grub-efi-amd64-signed"
+                       "grub-efi-amd64-bin"
+                       "grub-efi-ia32-bin"
+                       # Dependency for Rescuezilla Image Explorer
+                       "nbdkit"
+                       # Replaces exfat-utils
+                       "exfatprogs"
+                       # Add support for crypto volumes mount (luks, bitlocker, crypt)
+                       "libblockdev-crypto3"
+                       "ibus-anthy"
+                       # Needed for 'hwclock' package used by "rc-local.service", moved from base "util-linux" since Ubuntu 23.10 (Mantic)
+                       "util-linux-extra"
+                       "${pkgs_granular_linux_firmware_all_arch_resolute[@]}"
+                       # Intel Intelligent Storage Acceleration Library
+                       "libisal2"
+)
 
 pkgs_specific_to_ubuntu2404_noble=(
                        "linux-generic"
@@ -217,14 +353,47 @@ pkgs_specific_to_ubuntu2404_noble=(
                        # FIXME: Can probably remove with the recent introduction of new Javascript-based rules file
                        "polkitd-pkla"
                        "reiser4progs"
+                       "reiserfsprogs"
                        "python3-whichcraft"
                        # Needed for 'hwclock' package used by "rc-local.service", moved from base "util-linux" since Ubuntu 23.10 (Mantic)
                        "util-linux-extra"
+                       "volumeicon-alsa"
+                       # Firmware package for NVidia cards from ~2009 (newer cards have firmware in the kernel)
+                       "nouveau-firmware"
+)
+
+pkgs_specific_to_ubuntu2404_noble_arm64=(
+                       "linux-generic"
+                       "xserver-xorg"
+                       "xserver-xorg-video-all"
+                       "xserver-xorg-video-qxl"
+                       "xserver-xorg-video-mga"
+                       "xserver-xorg-input-libinput"
+                        # Packages which may assist users needing to do a GRUB repair (64-bit EFI)
+                       "shim-signed"
+                       # Dependency for Rescuezilla Image Explorer
+                       "nbdkit"
+                       # Replaces exfat-utils
+                       "exfatprogs"
+                       # Add support for crypto volumes mount (luks, bitlocker, crypt)
+                       "libblockdev-crypto3"
+                       # "Legacy "local authority" (.pkla) backend for polkitd" required so polkit works on Mantic
+                       # FIXME: Can probably remove with the recent introduction of new Javascript-based rules file
+                       "polkitd-pkla"
+                       "reiser4progs"
+                       "reiserfsprogs"
+                       "python3-whichcraft"
+                       # Needed for 'hwclock' package used by "rc-local.service", moved from base "util-linux" since Ubuntu 23.10 (Mantic)
+                       "util-linux-extra"
+                       "volumeicon-alsa"
+                       # Firmware package for NVidia cards from ~2009 (newer cards have firmware in the kernel)
+                       "nouveau-firmware"
 )
 
 # Languages on the system
 lang_codes=(
              "ar"
+             "bn"
              "ca"
              "cs"
              "da"
@@ -233,6 +402,7 @@ lang_codes=(
              "fa"
              "fi"
              "ta"
+             "gl"
              "fr"
              "ko"
              "id"
@@ -255,6 +425,7 @@ lang_codes=(
 
 lang_codes_g=(
              "es"
+             "hi"
              "nb"
              "pt"
              "sv"
@@ -264,9 +435,11 @@ lang_codes_g=(
 
 lang_codes_f=(
              "es-es"
+             "hi-in"
              "nb-no"
              "pt-br"
              "sv-se"
+             "ur"
              "zh-cn"
              "zh-tw"
 )
@@ -298,8 +471,8 @@ common_pkgs=("discover"
              "casper"
              "openbox"
              "lightdm"
-             # Firmware package for NVidia cards from ~2009 (newer cards have firmware in the kernel)
-             "nouveau-firmware"
+             # lightdm complains on arm64 when this is missing
+	     "accountsservice"
              "x11-xserver-utils"
              "xterm"
              "network-manager-gnome"
@@ -337,7 +510,6 @@ common_pkgs=("discover"
              "lxpanel"
              "fonts-ubuntu"
              "alsamixergui"
-             "volumeicon-alsa"
              "pm-utils"
              "notify-osd"
              "notify-osd-icons"
@@ -365,7 +537,6 @@ common_pkgs=("discover"
              # CLI tool to install *.deb files while resolving dependencies
              "gdebi-core"
              "cryptsetup"
-             "reiserfsprogs"
              "dosfstools"
              "mtools"
              "ntfs-3g"
@@ -385,7 +556,6 @@ common_pkgs=("discover"
              "xfsdump"
              "xfsprogs"
              "udftools"
-             "grub-pc-bin"
              "grub2-common"
              "${language_pack_gnome_base_pkg[@]}"
              "qemu-utils"
@@ -395,6 +565,7 @@ common_pkgs=("discover"
              "flashrom"
              "hashdeep"
              "zstd"
+             "libxxhash0"
              "picom"
 )
 
@@ -403,7 +574,14 @@ if  [ "$IS_INTEGRATION_TEST" == "true" ]; then
     common_pkgs=("${common_pkgs[@]}" "openssh-server")
 fi
 
-if    [ "$CODENAME" == "bionic" ]; then
+# grub-pc-bin is x86-only (BIOS boot support), not applicable on ARM64
+if  [ "$ARCH" == "amd64" ] || [ "$ARCH" == "i386" ]; then
+    common_pkgs=("${common_pkgs[@]}" "grub-pc-bin")
+fi
+
+if    [ "$CODENAME" == "noble" ] && [ "$ARCH" == "arm64" ]; then
+  apt_pkg_list=("${pkgs_specific_to_ubuntu2404_noble_arm64[@]}" "${common_pkgs[@]}")
+elif  [ "$CODENAME" == "bionic" ]; then
   apt_pkg_list=("${pkgs_specific_to_ubuntu1804_bionic_32bit[@]}" "${common_pkgs[@]}")
 elif  [ "$CODENAME" == "focal" ]; then
   apt_pkg_list=("${pkgs_specific_to_ubuntu2004_focal[@]}" "${common_pkgs[@]}")
@@ -413,6 +591,10 @@ elif  [ "$CODENAME" == "oracular" ]; then
   apt_pkg_list=("${pkgs_specific_to_ubuntu2410_oracular[@]}" "${common_pkgs[@]}")
 elif  [ "$CODENAME" == "plucky" ]; then
   apt_pkg_list=("${pkgs_specific_to_ubuntu2504_plucky[@]}" "${common_pkgs[@]}")
+elif  [ "$CODENAME" == "questing" ]; then
+  apt_pkg_list=("${pkgs_specific_to_ubuntu2510_questing[@]}" "${common_pkgs[@]}")
+elif  [ "$CODENAME" == "resolute" ]; then
+  apt_pkg_list=("${pkgs_specific_to_ubuntu2604_resolute[@]}" "${common_pkgs[@]}")
 elif  [ "$CODENAME" == "noble" ]; then
   apt_pkg_list=("${pkgs_specific_to_ubuntu2404_noble[@]}" "${common_pkgs[@]}")
 else

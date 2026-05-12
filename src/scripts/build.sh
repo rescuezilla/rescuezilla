@@ -26,6 +26,9 @@ CODENAME="${CODENAME:-INVALID}"
 # [1] https://help.ubuntu.com/lts/installation-guide/armhf/ch02s01.html
 ARCH="${ARCH:-INVALID}"
 
+# Apt sources URL
+URL="INVALID"
+
 # One-higher than directory containing this build script
 BASEDIR="$(git rev-parse --show-toplevel)"
 
@@ -60,10 +63,8 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-if [ "$CODENAME" = "INVALID" ] || [ "$ARCH" = "INVALID" ]; then
-  echo "The variable CODENAME=${CODENAME} or ARCH=${ARCH} was not set correctly. Are you using the Makefile? Please consult build instructions."
-  exit 1
-fi
+source "$BASEDIR/src/scripts/lib.sh"
+identify_sources_url_old_release_or_port
 
 # For end-of-life Ubuntu releases, we need to specify the paths to the GPG keys manually.
 #
@@ -97,8 +98,28 @@ if [ ! -d "$PKG_CACHE_DIRECTORY/$DEBOOTSTRAP_CACHE_DIRECTORY" ] ; then
     #
     # [1] http://old-releases.ubuntu.com/ubuntu
     TARGET_FOLDER=`readlink -f $PKG_CACHE_DIRECTORY/$DEBOOTSTRAP_CACHE_DIRECTORY`
+    # For Ubuntu 25.04 (Questing) and 25.10 (Resolute), exclude Rust coreutils and include GNU coreutils
+    # to work around package dependency issues (TODO: add issue reference)
+    if [ "$CODENAME" == "questing" ] || [ "$CODENAME" == "resolute" ]; then
+        EXCLUDE_PACKAGES_OPTS="--exclude=coreutils-from-uutils,rust-coreutils"
+        INCLUDE_PACKAGES_OPTS="--include=coreutils-from-gnu,gnu-coreutils"
+        NO_RESOLVE_DEPS_OPT="--no-resolve-deps"
+    else
+        EXCLUDE_PACKAGES_OPTS=""
+        INCLUDE_PACKAGES_OPTS=""
+        NO_RESOLVE_DEPS_OPT=""
+    fi
     pushd ${DEBOOTSTRAP_SCRIPT_DIRECTORY}
-    DEBOOTSTRAP_DIR=${DEBOOTSTRAP_SCRIPT_DIRECTORY} ./debootstrap ${KEYRING_OPTS} --arch=$ARCH --foreign $CODENAME $TARGET_FOLDER http://archive.ubuntu.com/ubuntu/
+    DEBOOTSTRAP_DIR=${DEBOOTSTRAP_SCRIPT_DIRECTORY} ./debootstrap \
+        ${KEYRING_OPTS} \
+        --arch=$ARCH \
+        ${EXCLUDE_PACKAGES_OPTS} \
+        ${INCLUDE_PACKAGES_OPTS} \
+        ${NO_RESOLVE_DEPS_OPT} \
+        --foreign \
+        $CODENAME \
+        $TARGET_FOLDER \
+        "$URL"
     RET=$?
     popd
     if [[ $RET -ne 0 ]]; then
@@ -201,6 +222,7 @@ APT_CONFIG_FILES=(
 # Substitute Ubuntu code name into relevant apt configuration files
 for apt_config_file in "${APT_CONFIG_FILES[@]}"; do
   sed --in-place s/CODENAME_SUBSTITUTE/$CODENAME/g $apt_config_file
+  sed --in-place "s|URL_SUBSTITUTE|$URL|g" $apt_config_file
 done
 
 cp "$BASEDIR/src/scripts/chroot-steps-part-1.sh" "$BASEDIR/src/scripts/chroot-steps-part-2.sh" chroot
@@ -309,27 +331,32 @@ umount -lf chroot/dev/
 rm chroot/root/.bash_history
 rm chroot/chroot-steps-part-1.sh chroot/chroot-steps-part-2.sh
 
-mkdir -p image/casper image/memtest
-cp chroot/boot/vmlinuz-*-generic image/casper/vmlinuz
+mkdir -p image/casper
+# The vmlinuz is a symlink to the exact kernel version, so no need to use the versioned glob.
+cp chroot/boot/vmlinuz image/casper/vmlinuz
 if [[ $? -ne 0 ]]; then
     echo "Error: Failed to copy vmlinuz image."
     exit 1
 fi
-# Ensures compressed Linux kernel image is readable during the MD5 checksum at boot
 chmod 644 image/casper/vmlinuz
 
-cp chroot/boot/initrd.img-*-generic image/casper/initrd.lz
+# The initrd.img is a symlink to the exact initrd version, so no need to use the versioned glob.
+cp chroot/boot/initrd.img image/casper/initrd.lz
 if [[ $? -ne 0 ]]; then
     echo "Error: Failed to copy initrd image."
     exit 1
 fi
 
+mkdir -p image/memtest
 # The memtest binaries are copied in from the host system (ie, the Docker build container)
 # TODO(#540): Support 64-bit and EFI memtest packages
-cp /boot/memtest86+ia32.bin image/memtest/
-if [[ $? -ne 0 ]]; then
-    echo "Error: Failed to copy memtest86+ binary from host system."
-    exit 1
+if [ "$ARCH" == "amd64" ] || [ "$ARCH" == "i386" ]; then
+    mkdir -p image/memtest
+    cp /boot/memtest86+ia32.bin image/memtest/
+    if [[ $? -ne 0 ]]; then
+        echo "Error: Failed to copy memtest86+ binary from host system."
+        exit 1
+    fi
 fi
 
 # Create manifest
@@ -376,7 +403,7 @@ rm -rf image/casper/filesystem.squashfs "$RESCUEZILLA_ISO_FILENAME"
 
 echo "Compressing squashfs using zstandard (rather than default gzip)."
 if  [ "$IS_INTEGRATION_TEST" == "true" ]; then
-    echo "Using lowest possible compression level of 1 to speed up compression for debug builds." 
+    echo "Using lowest possible compression level of 1 to speed up compression for debug builds."
     COMPRESSION_LEVEL=1
 else
     echo "Using max compression level of 19. The compression time is greatly increased, but the decompression time "
@@ -393,16 +420,25 @@ mkdir --parents "$BUILD_DIRECTORY/image/EFI/BOOT/"
 # Add the Microsoft-signed EFI Secure Boot shim for AMD64 to the EFI System Partition (ESP). Also renames the shim to be the default bootloader
 # so is automatically launched when the UEFI firmware launches this device. Given the target Linux kernel is Canonical-signed, for Secure Boot
 # to work the shim needs to be from Ubuntu's `shim-signed` package (which trusts Canonical keys), see below.
-cp /usr/lib/shim/shimx64.efi.signed "$BUILD_DIRECTORY/image/EFI/BOOT/BOOTx64.EFI"
-# Add the Canonical-signed GRUB EFI loader executable for AMD64 to the ESP. This is a small EFI executable which is launched by the shim. It reads
-# the nearby grub.cfg and uses it to access the squashfs-compressed filesystem to read another grub.cfg access other GRUB modules etc.
-#
-# Given the target Linux kernel is Canonical-signed, for Secure Boot to work the shim needs to be from Ubuntu's `grub-efi-amd64-signed package`
-# (which trusts Canonical keys), it will not verify with Debian's `grub-efi-amd64-signed` package (as it trusts Debian's keys, so cannot verify
-# a Canonical-signed kernel)
-cp /usr/lib/grub/x86_64-efi-signed/grubx64.efi.signed "$BUILD_DIRECTORY/image/EFI/BOOT/grubx64.efi"
-# Deploy the GRUB AMD64 support files, including loadable modules
-cp -r /usr/lib/grub/x86_64-efi "$BUILD_DIRECTORY/image/boot/grub/"
+if [ "$ARCH" == "amd64" ] || [ "$ARCH" == "i386" ]; then
+    cp /usr/lib/shim/shimx64.efi.signed "$BUILD_DIRECTORY/image/EFI/BOOT/BOOTx64.EFI"
+    # Add the Canonical-signed GRUB EFI loader executable for AMD64 to the ESP. This is a small EFI executable which is launched by the shim. It reads
+    # the nearby grub.cfg and uses it to access the squashfs-compressed filesystem to read another grub.cfg access other GRUB modules etc.
+    #
+    # Given the target Linux kernel is Canonical-signed, for Secure Boot to work the shim needs to be from Ubuntu's `grub-efi-amd64-signed package`
+    # (which trusts Canonical keys), it will not verify with Debian's `grub-efi-amd64-signed` package (as it trusts Debian's keys, so cannot verify
+    # a Canonical-signed kernel)
+    cp /usr/lib/grub/x86_64-efi-signed/grubx64.efi.signed "$BUILD_DIRECTORY/image/EFI/BOOT/grubx64.efi"
+    # Deploy the GRUB AMD64 support files, including loadable modules
+    cp -r /usr/lib/grub/x86_64-efi "$BUILD_DIRECTORY/image/boot/grub/"
+elif [[ "$ARCH" == "arm64" ]]; then
+    cp /usr/lib/shim/shimaa64.efi.signed "$BUILD_DIRECTORY/image/EFI/BOOT/BOOTAA64.EFI"
+    cp /usr/lib/grub/arm64-efi-signed/grubaa64.efi.signed "$BUILD_DIRECTORY/image/EFI/BOOT/grubaa64.efi"
+    cp -r /usr/lib/grub/arm64-efi "$BUILD_DIRECTORY/image/boot/grub/"
+else
+    echo "Unsupported ARCH for EFI bootloader packaging: $ARCH"
+    exit 1
+fi
 
 mkdir "$BUILD_DIRECTORY/image/boot/grub/fonts"
 # Deploy unicode font
@@ -411,11 +447,13 @@ cp /usr/share/grub/unicode.pf2 "$BUILD_DIRECTORY/image/boot/grub/fonts"
 # Copy the GRUB EFI loader executable for i386 (there is no signed GRUB EFI versions available for i386). Multiple EFI bootloaders for different
 # CPU architectures can safely co-exist (given the different filenames), with the EFI firmware launching the correctly named executable.
 # Also, Bay Trail Intel Atom CPUs apparently have 64-bit CPUs with 32-bit UEFI, so having both i386 and amd64 executable on an amd64 ISO seems good.
-cp /usr/lib/grub/i386-efi/monolithic/grubia32.efi "$BUILD_DIRECTORY/image/EFI/BOOT/BOOTIA32.EFI"
-# Deploy i386 GRUB EFI support files, including loadable modules
-cp -r /usr/lib/grub/i386-efi "$BUILD_DIRECTORY/image/boot/grub/"
-# Deploy i386 GRUB non-EFI support files to support El Torito optical disk boot on both i386 and amd64 systems using either ISO architecture variant
-cp -r /usr/lib/grub/i386-pc "$BUILD_DIRECTORY/image/boot/grub/"
+if [[ "$ARCH" == "amd64" ]]; then
+    cp /usr/lib/grub/i386-efi/monolithic/grubia32.efi "$BUILD_DIRECTORY/image/EFI/BOOT/BOOTIA32.EFI"
+    # Deploy i386 GRUB EFI support files, including loadable modules
+    cp -r /usr/lib/grub/i386-efi "$BUILD_DIRECTORY/image/boot/grub/"
+    # Deploy i386 GRUB non-EFI support files to support El Torito optical disk boot on both i386 and amd64 systems using either ISO architecture variant
+    cp -r /usr/lib/grub/i386-pc "$BUILD_DIRECTORY/image/boot/grub/"
+fi
 
 # Create an EFI System Partition (ESP), by first creating a small blank file then formatting a file as a FAT16 filesystem.
 #
@@ -458,10 +496,12 @@ fi
 
 # Generate the i386 CD-ROM/USB drive El Torito boot image (used for both AMD64/i386 CD-ROM boot) and save it in the ISO image filesystem
 # TODO: Reduce number of GRUB modules to the absolute bare minimum.
-grub-mkimage --format i386-pc-eltorito --output "$BUILD_DIRECTORY/image/boot/grub/grub.eltorito.bootstrap.img" --compression auto --prefix /boot/grub boot linux search normal configfile part_gpt fat iso9660 biosdisk test keystatus gfxmenu regexp probe efiemu all_video gfxterm font echo read ls cat png jpeg halt reboot part_msdos biosdisk
-if [[ $? -ne 0 ]]; then
-    echo "Error: Failed to create the GRUB bootstrap image required for El Torito CD-ROM boot."
-    exit 1
+if [ "$ARCH" == "amd64" ] || [ "$ARCH" == "i386" ]; then
+    grub-mkimage --format i386-pc-eltorito --output "$BUILD_DIRECTORY/image/boot/grub/grub.eltorito.bootstrap.img" --compression auto --prefix /boot/grub boot linux search normal configfile part_gpt fat iso9660 biosdisk test keystatus gfxmenu regexp probe efiemu all_video gfxterm font echo read ls cat png jpeg halt reboot part_msdos biosdisk
+    if [[ $? -ne 0 ]]; then
+        echo "Error: Failed to create the GRUB bootstrap image required for El Torito CD-ROM boot."
+        exit 1
+    fi
 fi
 
 # Pack the 'image' subdirectory to become a bootable ISO 9660 image using xorrisofs (which is "xorriso" but using the mkisofs/genisoimage
@@ -503,50 +543,59 @@ xorrisofs_args=(
                -joliet
                # "Allow up to 31 characters in ISO file names"
                -full-iso9660-filenames
-               # Installs GRUB2 into the Master Boot Record (MBR) present within the ISO9660 "System Area", in order to support for disk boot
-               # via legacy BIOS (eg, bootable USB sticks), while maintaining CD-ROM boot
-               --grub2-mbr /usr/lib/grub/i386-pc/boot_hybrid.img
-               # Specifies a boot image (using path relative to the ISO filesystem root) in the current entry of the El Torito catalog, and mark it
-               # as bootable on legacy BIOS. This executable is 32-bit, but can load 64-bit systems.
-               -eltorito-boot boot/grub/grub.eltorito.bootstrap.img
-               # "Overwrite bytes 2548 to 2555 in the current boot image by the address" of the above boot image
-               --grub2-boot-info
-               # Don't emulate floppy disk when loading this El Torito boot image (to avoid requiring image exactly "1.2, 1.44or 2.88 Mb" in size)
-               -no-emul-boot
-               # Publishes El Torito boot catalog as datafile on the ISO. This file "is not significant for the booting PC-BIOS or EFI,
-               # but it may later be read by other programs in order to learn about the available boot images"
-               -eltorito-catalog boot/boot.cat
-               # "Specifies the number of "virtual" (512-byte) sectors to load in no-emulation mode. The default is to load the entire boot file."
-               -boot-load-size 4
-               # Patches the legacy BIOS boot image (specified above with -b above) with a 56-byte "boot information table". This is supposedly
-               # important for MBR legacy boot, and is used in examples across the internet. It populates the "Block address of the Primary Volume
-               # Descriptor, block address of the boot image file, size of the boot image file"
-               -boot-info-table
-               # Specifies a boot image file (using path relative to the ISO filesystem root) to be mentioned in the current entry of the El Torito
-               # boot catalog and mark suitable as EFI.  
-               # Remember, "EFI systems normally boot from optical discs by reading a FAT image file and treating that file as an EFI System Partition"
-               #
-               # Please note, internally to xorrisofs this command first runs -eltorito-alt-boot (which finalizes the previously specified El Torito boot
-               # catalog entry), then starts a second El Torito boot parameters set (up to 63 possible per ISO9660 filesystem), then specifies the
-               # boot image file and marks it as suitable for EFI, then uses --no-emul-boot to stop floppy disk emulation (see above), then finalizes this
-               # newly defined El Torito boot catalog entry.
-               --efi-boot "boot/esp.img"
-               # Exposes the EFI System Partition (ESP) image (specified above) in the GPT (GUID Partition Table) the ESP. In other words, exposes
-               # the FAT partition that a computer's EFI firmware reads when booting from a USB stick (as opposed to the optical media case which boots
-               # using EFI by reading the ESP from an image file)
-               -efi-boot-part --efi-boot-image
                # Use contents of the specified directory as the ISO filesystem root
                "$BUILD_DIRECTORY/image/"
              )
-# Create ISO image (part 1/4), with --boot-info-table argument modifying the El Torito boot image used for legacy BIOS booting (see comment above)
-xorrisofs "${xorrisofs_args[@]}"
+if [ "$ARCH" == "amd64" ] || [ "$ARCH" == "i386" ]; then
+    xorrisofs_args+=(
+                     # Installs GRUB2 into the Master Boot Record (MBR) present within the ISO9660 "System Area", in order to support for disk boot
+                     # via legacy BIOS (eg, bootable USB sticks), while maintaining CD-ROM boot
+                     --grub2-mbr /usr/lib/grub/i386-pc/boot_hybrid.img
+                     # Specifies a boot image (using path relative to the ISO filesystem root) in the current entry of the El Torito catalog, and mark it
+                     # as bootable on legacy BIOS. This executable is 32-bit, but can load 64-bit systems.
+                     -eltorito-boot boot/grub/grub.eltorito.bootstrap.img
+                     # "Overwrite bytes 2548 to 2555 in the current boot image by the address" of the above boot image
+                     --grub2-boot-info
+                     # Don't emulate floppy disk when loading this El Torito boot image (to avoid requiring image exactly "1.2, 1.44or 2.88 Mb" in size)
+                     -no-emul-boot
+                     # Publishes El Torito boot catalog as datafile on the ISO. This file "is not significant for the booting PC-BIOS or EFI,
+                     # but it may later be read by other programs in order to learn about the available boot images"
+                     -eltorito-catalog boot/boot.cat
+                     # "Specifies the number of "virtual" (512-byte) sectors to load in no-emulation mode. The default is to load the entire boot file."
+                     -boot-load-size 4
+                     # Patches the legacy BIOS boot image (specified above with -b above) with a 56-byte "boot information table". This is supposedly
+                     # important for MBR legacy boot, and is used in examples across the internet. It populates the "Block address of the Primary Volume
+                     # Descriptor, block address of the boot image file, size of the boot image file"
+                     -boot-info-table
+                     # Specifies a boot image file (using path relative to the ISO filesystem root) to be mentioned in the current entry of the El Torito
+                     # boot catalog and mark suitable as EFI.
+                     --efi-boot "boot/esp.img"
+                     # Exposes the EFI System Partition (ESP) image (specified above) in the GPT (GUID Partition Table) the ESP. In other words, exposes
+                     # the FAT partition that a computer's EFI firmware reads when booting from a USB stick (as opposed to the optical media case which boots
+                     # using EFI by reading the ESP from an image file)
+                     -efi-boot-part --efi-boot-image
+                    )
 
-# Extract from the ISO image the El Torito boot image used for legacy BIOS booting, as it has been modified by --boot-info-table (part 2/4)
-TEMP_MOUNT_DIR=$(mktemp --directory --suffix $RESCUEZILLA_ISO_FILENAME.temp.mount.dir)
-mount "$BUILD_DIRECTORY/$RESCUEZILLA_ISO_FILENAME" "$TEMP_MOUNT_DIR"
-cp "$TEMP_MOUNT_DIR/boot/grub/grub.eltorito.bootstrap.img" "$BUILD_DIRECTORY/image/boot/grub/grub.eltorito.bootstrap.img"
-umount $TEMP_MOUNT_DIR
-rmdir $TEMP_MOUNT_DIR
+    # Create ISO image (part 1/4), with --boot-info-table argument modifying the El Torito boot image used for legacy BIOS booting (see comment above)
+    xorrisofs "${xorrisofs_args[@]}"
+
+    # Extract from the ISO image the El Torito boot image used for legacy BIOS booting, as it has been modified by --boot-info-table (part 2/4)
+    TEMP_MOUNT_DIR=$(mktemp --directory --suffix $RESCUEZILLA_ISO_FILENAME.temp.mount.dir)
+    mount "$BUILD_DIRECTORY/$RESCUEZILLA_ISO_FILENAME" "$TEMP_MOUNT_DIR"
+    cp "$TEMP_MOUNT_DIR/boot/grub/grub.eltorito.bootstrap.img" "$BUILD_DIRECTORY/image/boot/grub/grub.eltorito.bootstrap.img"
+    umount $TEMP_MOUNT_DIR
+    rmdir $TEMP_MOUNT_DIR
+
+elif [[ "$ARCH" == "arm64" ]]; then
+    xorrisofs_args+=(
+                     # UEFI boot support from the EFI System Partition image.
+                     --efi-boot "boot/esp.img"
+                     -efi-boot-part --efi-boot-image
+                    )
+else
+    echo "Unsupported ARCH for xorrisofs build: $ARCH"
+    exit 1
+fi
 
 # Generate an md5sum of all files, including the MBR boot image now modified by --boot-info-table. (part 3/4)
 find . -type f -print0 | xargs -0 md5sum | grep -v "./md5sum.txt" > md5sum.txt
@@ -557,5 +606,3 @@ xorrisofs "${xorrisofs_args[@]}"
 cd "$BUILD_DIRECTORY"
 mv "$BUILD_DIRECTORY/$RESCUEZILLA_ISO_FILENAME" ../
 
-# TODO: Evaluate the "Errata" sections of the Redo Backup and Recovery
-# TODO: Sourceforge Wiki, and determine if the build scripts need modification.

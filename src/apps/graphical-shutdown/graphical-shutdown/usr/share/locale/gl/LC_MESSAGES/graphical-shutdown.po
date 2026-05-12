@@ -1,0 +1,31 @@
+# Artem <KovalevArtem.ru@gmail.com>, 2021.
+# Shasheen Ediriweera <shasheene@gmail.com>, 2021.
+# Languages add-on <noreply-addon-languages@weblate.org>, 2025.
+# Picholeiro <manuelmicro@gmail.com>, 2025.
+# Yago Raña Gayoso <yago.rana.gayoso@gmail.com>, 2026.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2026-03-22 11:09+0000\n"
+"Last-Translator: Yago Raña Gayoso <yago.rana.gayoso@gmail.com>\n"
+"Language-Team: Galician <https://hosted.weblate.org/projects/rescuezilla/"
+"graphical-shutdown/gl/>\n"
+"Language: gl\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.17-dev\n"
+
+msgid "End Session"
+msgstr "Finalizar sesion"
+
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgid "Shutdown"
+msgstr "Pechar"
+
+msgid "Reboot"
+msgstr "Reinicia"
+
+msgid "Choose action."
+msgstr "Cambiar acción."

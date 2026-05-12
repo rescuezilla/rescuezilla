@@ -4,13 +4,13 @@
 # ttt113326 <tonio_k@mail.ru>, 2021.
 # МАН69К <weblate@mah69k.net>, 2022.
 # Languages add-on <noreply-addon-languages@weblate.org>, 2024.
-# Matti Kupiainen <matti.kupiainen60@gmail.com>, 2024, 2025.
+# Matti Kupiainen <matti.kupiainen60@gmail.com>, 2024, 2025, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2025-07-21 07:50+0000\n"
+"PO-Revision-Date: 2026-03-17 07:09+0000\n"
 "Last-Translator: Matti Kupiainen <matti.kupiainen60@gmail.com>\n"
 "Language-Team: Finnish <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/fi/>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.13-dev\n"
+"X-Generator: Weblate 5.17-dev\n"
 
 msgid "Welcome"
 msgstr "Tervetuloa"
@@ -406,11 +406,11 @@ msgid "Click <b>Browse</b> to select the folder on the destination drive where y
 "\n"
 "The folder a backup is saved in is usually a description of the computer, e.g. <b>office1</b> or <b>zack-laptop</b>."
 msgstr ""
-"Napsauta <b>Selaa</b> valitaksesi kohdeaseman kansion, johon uusi "
-"varmuuskopiotiedosto tallennetaan.\n"
+"Napsauta <b>Selaa</b> ja valitse kohdeasemalta kansio, johon uusi "
+"varmuuskopio tallennetaan.\n"
 "\n"
-"Kansio, johon varmuuskopio tallennetaan, on yleensä kuvaus tietokoneesta, "
-"esim. <b>toimistokone</b> tai <b>kannettava</b>."
+"Kansion nimetään yleensä varmuuskopioitavan tietokoneen mukaan, esim. <b>"
+"Toimistokone</b> tai <b>Kannettava</b>."
 
 #, python-brace-format
 msgid "You must select a folder inside {location}"

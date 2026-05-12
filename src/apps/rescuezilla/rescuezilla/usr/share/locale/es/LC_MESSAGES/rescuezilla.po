@@ -5,13 +5,14 @@
 # Submitted at: https://github.com/rescuezilla/rescuezilla/issues/28
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022, 2023.
 # tostadora <a2001cuisinarttoaster@gmail.com>, 2025.
+# Picholeiro <manuelmicro@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2025-07-03 03:01+0000\n"
-"Last-Translator: tostadora <a2001cuisinarttoaster@gmail.com>\n"
+"PO-Revision-Date: 2025-12-02 19:18+0000\n"
+"Last-Translator: Picholeiro <manuelmicro@gmail.com>\n"
 "Language-Team: Spanish <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/es/>\n"
 "Language: es\n"
@@ -19,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.13-dev\n"
+"X-Generator: Weblate 5.15-dev\n"
 
 msgid "Welcome"
 msgstr "Bienvenido"
@@ -305,7 +306,7 @@ msgid "NFSv4"
 msgstr "NFSv4"
 
 msgid "Remote path"
-msgstr "Ruta de acceso a la red"
+msgstr "Directorio remoto"
 
 msgid "Exported path"
 msgstr "Ruta de exportación"

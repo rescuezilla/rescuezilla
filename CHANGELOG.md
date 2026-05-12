@@ -1,8 +1,22 @@
-# Rescuezilla v2.7 (unreleased)
+# Rescuezilla v2.6.2 (unreleased)
 
+* Adds release based on Ubuntu 26.04 LTS (Resolute) for best support of new hardware (circa April 2026 hardware)
+  * the prior release Recuezilla v2.6.1 (2025-07-16) left the default release using Ubuntu 24.10 (Oracular) which only provided hardware support to circa October 2024, despite it introducing an release based on Ubuntu 25.04 (Plucky)
+* Adds release based on the recently end-of-life Ubuntu 25.10 (Questing) as a backfill
 * Fixed blank error message window displayed after cloning (even on success), which causes the cancellation of the post-operation shutdown/restart request ([#588](https://github.com/rescuezilla/rescuezilla/issues/588#issuecomment-3098152217))
 * Fixed graphical-shutdown menu not opening on the "Plucky" variant due to missing item in custom rules file for polkit authentication manager ([#590](https://github.com/rescuezilla/rescuezilla/issues/590))
-* Upgraded to latest partclone `0.3.40` (released November 2025) from partclone `0.3.37` (released June 2025)
+* Upgraded to latest partclone `0.3.47` (released March 2026) from partclone `0.3.37` (released June 2025)
+* Temporarily disables the 32-bit (Intel i386) build based on Ubuntu 18.04 (Bionic)
+* Temporarily disables older 64-bit (AMD64) build based on Ubuntu 22.04 (Jammy) and Ubuntu 24.04 (Noble)
+* New translation submitted using Weblate:
+    * Galician/Galego (gl-ES) (in-progress)
+* Integrated language selection for unbegun (empty) translations already listed in Weblate to encourage translation commencement:
+    * Bengali/বাংলা (bn-BD)
+    * Hindi/हिन्दी (hi-IN)
+    * Swahili/Kiswahili (sw-KE)
+    * Urdu/اردو (ur-PK)
+
+Notably NOT included in this release: an [ARM64 build (#642)](https://github.com/rescuezilla/rescuezilla/pull/642), or planned major overhaul to Image Explorer using [indexed-gzip](https://gitlab.com/nbdkit/nbdkit/-/merge_requests/105) and improved UI. That's coming next release.
 
 # Rescuezilla v2.6.1 (2025-07-16)
 

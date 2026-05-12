@@ -5,7 +5,7 @@
 # Submitted at: https://github.com/rescuezilla/rescuezilla/issues/154
 #
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
-# Pierfrancesco Passerini <p.passerini@gmail.com>, 2021, 2022, 2023, 2025.
+# Pierfrancesco Passerini <p.passerini@gmail.com>, 2021, 2022, 2023, 2025, 2026.
 # Anto F <tempthings@outlook.it>, 2022.
 # Ereb0r <pierpaoloraz@gmail.com>, 2022.
 msgid ""
@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-10-25 20:36+1030\n"
-"PO-Revision-Date: 2025-10-26 18:02+0000\n"
+"PO-Revision-Date: 2026-04-26 21:09+0000\n"
 "Last-Translator: Pierfrancesco Passerini <p.passerini@gmail.com>\n"
 "Language-Team: Italian <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/it/>\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.14.1-dev\n"
+"X-Generator: Weblate 5.17.1-dev\n"
 
 msgid "Welcome"
 msgstr "Benvenuto"
@@ -684,8 +684,8 @@ msgstr ""
 "\n"
 "<b>La colonna della partizione di destinazione può essere modificata come "
 "menù a discesa. Una mappatura errata delle partizioni di destinazione "
-"potrebbe causare il mancato avvio dei sistemi operativi</b>. Se non sei "
-"sicuro della mappatura, valuta se è opportuno invece sovrascrivere la "
+"potrebbe causare il mancato avvio dei sistemi operativi.</b> Se non sei "
+"sicuro della mappatura, valuta invece se è opportuno sovrascrivere la "
 "tabella delle partizioni."
 
 msgid "No destination partition selected. Use the destination partition drop-down menu to select the destination"

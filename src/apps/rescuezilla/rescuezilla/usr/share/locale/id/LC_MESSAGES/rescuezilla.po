@@ -5,13 +5,14 @@
 # Reza Almanda <rezaalmanda27@gmail.com>, 2021.
 # pZan <padrisauzan@protonmail.com>, 2022.
 # zmni <zmni@outlook.com>, 2023.
+# Dirga Afissabilla <xuyn7rgx@hsn69mz7.anonaddy.com>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2023-11-09 17:34+0000\n"
-"Last-Translator: zmni <zmni@outlook.com>\n"
+"PO-Revision-Date: 2026-03-28 08:09+0000\n"
+"Last-Translator: Dirga Afissabilla <xuyn7rgx@hsn69mz7.anonaddy.com>\n"
 "Language-Team: Indonesian <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/id/>\n"
 "Language: id\n"
@@ -19,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.2-dev\n"
+"X-Generator: Weblate 5.17-dev\n"
 
 msgid "Welcome"
 msgstr "Selamat Datang"
@@ -101,6 +102,21 @@ msgid "This mode is for \"disk cloning\". Cloning means copying one drive and di
 ""
 "To use the \"imaging\" wizards, click <b>Back</b> and select <b>Backup</b> or <b>Restore</b>."
 msgstr ""
+"Mode ini digunakan untuk \"kloning disk\". Kloning berarti menyalin satu "
+"drive dan menimpanya langsung ke drive lain. Ini adalah operasi langsung "
+"satu langkah tanpa memerlukan penyimpanan sementara.\n"
+"\n"
+"Kloning berbeda dengan \"pencitraan disk\". Pencitraan berarti menyalin "
+"semua data dari satu drive ke dalam file-file yang sangat besar yang "
+"disimpan di dalam folder pada drive eksternal. Banyak pencitraan dapat "
+"disimpan di drive eksternal yang sama. Pencitraan ini dapat dikembalikan ke "
+"disk asli, atau ke disk tambahan lainnya. Dengan kata lain, untuk "
+"\"pencitraan\", operasi pencadangan menyalin drive Anda ke <i>file</i> yang "
+"perlu disimpan di drive setidaknya untuk sementara sebelum dapat "
+"dikembalikan.\n"
+"\n"
+"Untuk menggunakan wizard \"pencitraan\", klik <b>Kembali</b> dan pilih <b>"
+"Cadangkan</b> atau <b>Pulihkan</b>."
 
 msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
 msgstr "Untuk memulai wizard \"kloning\", klik <b>Berikutnya</b>"
@@ -119,6 +135,9 @@ msgstr "Langkah 4: Pilih Partisi untuk Dikloning"
 
 msgid "Select which partitions from the source drive to clone, and whether to overwrite the partition table. <b>Leave everything selected to completely clone the source drive to the destination drive.</b>"
 msgstr ""
+"Pilih partisi mana dari drive sumber yang akan dikloning, dan apakah akan "
+"menimpa tabel partisi. <b>Biarkan semuanya terpilih untuk mengkloning "
+"seluruh drive sumber ke drive tujuan.</b>"
 
 msgid "Step 5: Confirm Cloning Configuration"
 msgstr "Langkah 5: Konfirmasi Konfigurasi Kloning"
@@ -247,36 +266,39 @@ msgstr "Versi"
 
 msgid "default (Negotiate highest SMB2+ supported by client and server)"
 msgstr ""
+"default (Negosiasikan SMB2+ tertinggi yang didukung oleh klien dan server)"
 
 msgid "1.0 (The classic CIFS/SMBv1 protocol)"
-msgstr ""
+msgstr "1.0 (Protokol CIFS/SMBv1 klasik)"
 
 msgid "2.0 (Introduced in Vista SP1, Windows Server 2008)"
-msgstr ""
+msgstr "2.0 (Diperkenalkan pada Vista SP1, Windows Server 2008)"
 
 msgid "2.1 (Introduced in Windows 7, Windows Server 2008R2)"
-msgstr ""
+msgstr "2.1 (Diperkenalkan pada Windows 7, Windows Server 2008 R2)"
 
 msgid "3 (The SMBv3.0 protocol version and above)"
-msgstr ""
+msgstr "3 (Protokol SMBv3.0 dan versi di atasnya)"
 
 msgid "3.0 (Introduced in Windows 8, Windows Server 2012)"
-msgstr ""
+msgstr "3.0 (Diperkenalkan pada Windows 8, Windows Server 2012)"
 
 msgid "3.0.2 (Introduced in Windows 8.1, Windows Server 2012R2)"
-msgstr ""
+msgstr "3.0.2 (Diperkenalkan pada Windows 8.1, Windows Server 2012 R2)"
 
 msgid "3.1.1 (Introduced in Windows 10, Windows Server 2016)"
-msgstr ""
+msgstr "3.1.1 (Diperkenalkan pada Windows 10, Windows Server 2016)"
 
 msgid "Unspecified (Tries NFS v4.2 first, then negotiates with server down until finds a supported version)"
 msgstr ""
+"Tidak Ditentukan (Mencoba NFS v4.2 terlebih dahulu, kemudian melakukan "
+"negosiasi dengan server ke bawah hingga menemukan versi yang didukung)"
 
 msgid "NFSv3"
-msgstr ""
+msgstr "NFSv3"
 
 msgid "NFSv4"
-msgstr ""
+msgstr "NFSv4"
 
 msgid "Remote path"
 msgstr "Path jarak jauh"
@@ -288,7 +310,7 @@ msgid "Identity File"
 msgstr "Berkas Identitas"
 
 msgid "Port"
-msgstr ""
+msgstr "Port"
 
 msgid "Select network-shared storage location:"
 msgstr "Pilih lokasi penyimpanan jaringan-bersama:"
@@ -300,7 +322,7 @@ msgid "Partition"
 msgstr "Partisi"
 
 msgid "Mounting…"
-msgstr ""
+msgstr "Memasang…"
 
 msgid "Close this popup to cancel the mount operation."
 msgstr "Tutup popup ini untuk membatalkan operasi pemasangan."
@@ -318,7 +340,7 @@ msgstr "Memindai folder untuk image cadangan…"
 
 #, python-brace-format
 msgid "({timeout_seconds} second timeout)"
-msgstr ""
+msgstr "(batas waktu {timeout_seconds} detik)"
 
 msgid "Close this popup to cancel scanning the selected folder and subfolders."
 msgstr ""
@@ -349,40 +371,60 @@ msgstr ""
 
 msgid "Note: This image format cannot distinguish between failed partclone backup and a user who chose not to backup a partition."
 msgstr ""
+"Catatan: Format pencitraan ini tidak dapat membedakan antara cadangan "
+"partclone yang gagal dan pengguna yang memilih untuk tidak mencadangkan "
+"suatu partisi."
 
 msgid "Any other filesystems within the image should be restorable as normal."
 msgstr ""
+"Sistem file lain di dalam pencitraan seharusnya dapat dipulihkan seperti "
+"biasa."
 
 msgid "Needs decryption"
-msgstr ""
+msgstr "Memerlukan dekripsi"
 
 msgid "Unknown filesystem"
-msgstr ""
+msgstr "Sistem file tidak dikenal"
 
 #, python-brace-format
 msgid "The backup's extended partition information is empty. If the backup contains an extended partition this will not restore correctly. All data is still fully recoverable but manual intervention is required to fully restore data within the extended partition. Please consult {url} for information and assistance."
 msgstr ""
+"Informasi partisi extended dari cadangan ini kosong. Jika cadangan berisi "
+"partisi extended, ini tidak akan dipulihkan dengan benar. Semua data masih "
+"dapat dipulihkan sepenuhnya tetapi diperlukan intervensi manual untuk "
+"memulihkan data di dalam partisi extended secara utuh. Silakan kunjungi "
+"{url} untuk informasi dan bantuan."
 
 msgid "The backup's bootloader data is shorter than expected. If the backup contained certain bootloaders like GRUB, during a restore operation Rescuezilla will try and re-install the bootloader."
 msgstr ""
+"Data bootloader dari cadangan ini lebih pendek dari yang diharapkan. Jika "
+"cadangan berisi bootloader tertentu seperti GRUB, selama operasi pemulihan "
+"Rescuezilla akan mencoba memasang ulang bootloader."
 
 msgid "Step 4: Select Destination Folder"
-msgstr ""
+msgstr "Langkah 4: Pilih Folder Tujuan"
 
 msgid "Click <b>Browse</b> to select the folder on the destination drive where your new backup image will be saved.\n"
 "\n"
 "The folder a backup is saved in is usually a description of the computer, e.g. <b>office1</b> or <b>zack-laptop</b>."
 msgstr ""
+"Klik <b>Jelajahi</b> untuk memilih folder di drive tujuan tempat pencitraan "
+"cadangan baru Anda akan disimpan.\n"
+"\n"
+"Folder tempat cadangan disimpan biasanya berupa deskripsi dari komputer, "
+"misalnya <b>office1</b> atau <b>zack-laptop</b>."
 
 #, python-brace-format
 msgid "You must select a folder inside {location}"
-msgstr ""
+msgstr "Anda harus memilih folder di dalam {location}"
 
 msgid "Please select a different folder."
 msgstr "Pilih folder lain."
 
 msgid "The table below lists the backup images that are already in this folder (if any)."
 msgstr ""
+"Tabel di bawah ini menampilkan pencitraan cadangan yang sudah ada di folder "
+"ini (jika ada)."
 
 msgid "Browse…"
 msgstr "Jelajahi…"
@@ -397,24 +439,31 @@ msgid "Last modified"
 msgstr "Terakhir dimodifikasi"
 
 msgid "When you are happy with the destination folder, click <b>Next</b>."
-msgstr ""
+msgstr "Jika Anda sudah siap dengan folder tujuan, klik <b>Berikutnya</b>."
 
 msgid "Step 5: Name Your Backup"
-msgstr ""
+msgstr "Langkah 5: Beri Nama Cadangan Anda"
 
 msgid "Provide a unique name for this backup image, such as the date.  Today's date is automatically entered for you below.\n"
 "\n"
 "You may only use letters, numbers, and dashes in your backup name."
 msgstr ""
+"Berikan nama unik untuk pencitraan cadangan ini, misalnya tanggal. Tanggal "
+"hari ini akan diisi secara otomatis di bawah.\n"
+"\n"
+"Anda hanya dapat menggunakan huruf, angka, dan tanda pisah pada nama "
+"cadangan."
 
 msgid "Optional: Provide a short description."
-msgstr ""
+msgstr "Opsional: Berikan deskripsi singkat."
 
 msgid "Step 6: Customize Compression Settings"
-msgstr ""
+msgstr "Langkah 6: Sesuaikan Pengaturan Kompresi"
 
 msgid "Customize image compression settings. <b>Don't make any changes if you are unsure.</b>"
 msgstr ""
+"Sesuaikan pengaturan kompresi pencitraan. <b>Jangan ubah apa pun jika Anda "
+"tidak yakin.</b>"
 
 msgid "Compression format: "
 msgstr "Format kompresi: "
@@ -429,7 +478,7 @@ msgid "zstandard"
 msgstr "zstandard"
 
 msgid "Uncompressed (Suitable for use with Image Explorer)"
-msgstr ""
+msgstr "Tidak Terkompresi (Cocok digunakan dengan Image Explorer)"
 
 msgid "Compression level: "
 msgstr "Level kompresi: "
@@ -441,29 +490,31 @@ msgid "Best"
 msgstr "Terbaik"
 
 msgid "When you are happy with the compression settings, click <b>Next</b>."
-msgstr ""
+msgstr "Jika pengaturan kompresi sudah sesuai, klik <b>Berikutnya</b>."
 
 msgid "Step 7: Confirm Backup Configuration"
-msgstr ""
+msgstr "Langkah 7: Konfirmasi Konfigurasi Cadangan"
 
 msgid "Source drive"
-msgstr ""
+msgstr "Drive sumber"
 
 msgid "Backing up the following partition(s)"
-msgstr ""
+msgstr "Mencadangkan partisi berikut"
 
 #, python-brace-format
 msgid "The backup image will be written into folder {dest_dir} on {description}"
 msgstr ""
+"Pencitraan cadangan akan ditulis ke dalam folder {dest_dir} pada "
+"{description}"
 
 msgid "Confirm the following backup configuration."
-msgstr ""
+msgstr "Konfirmasikan konfigurasi cadangan berikut."
 
 msgid "On successful completion of the task, perform the following action: "
-msgstr ""
+msgstr "Setelah tugas berhasil diselesaikan, lakukan tindakan berikut: "
 
 msgid "Do nothing"
-msgstr ""
+msgstr "Tidak melakukan apa pun"
 
 msgid "Shutdown"
 msgstr "Matikan"
@@ -472,19 +523,24 @@ msgid "Reboot"
 msgstr "Mulai Ulang"
 
 msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
-msgstr ""
+msgstr "Rescue: Abaikan inkonsistensi sistem file dan sektor buruk"
 
 msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
 msgstr ""
+"<b>Mengaktifkan \"Rescue\" dapat menghilangkan pesan error penting. Gunakan "
+"dengan hati-hati.</b>"
 
 msgid "To start the backup, click <b>Next</b>."
-msgstr ""
+msgstr "Untuk memulai pencadangan, klik <b>Berikutnya</b>."
 
 msgid "Step 8: Creating Backup Image"
-msgstr ""
+msgstr "Langkah 8: Membuat Pencitraan Cadangan"
 
 msgid "Backing up your system to the location you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
+"Mencadangkan sistem Anda ke lokasi yang telah dipilih. Proses ini mungkin "
+"memerlukan waktu satu jam atau lebih tergantung pada kecepatan komputer Anda "
+"dan jumlah data."
 
 #, python-brace-format
 msgid "Saving: {file}"
@@ -493,131 +549,162 @@ msgstr "Menyimpan: {file}"
 #, python-brace-format
 msgid "Backup {partition_name} containing filesystem {filesystem} to {destination}"
 msgstr ""
+"Cadangkan {partition_name} yang berisi sistem file {filesystem} ke "
+"{destination}"
 
 msgid "Summary of Backup"
-msgstr ""
+msgstr "Ringkasan Pencadangan"
 
 msgid "Confirm the backup summary."
-msgstr ""
+msgstr "Konfirmasi ringkasan pencadangan."
 
 msgid "Backup Summary"
-msgstr ""
+msgstr "Ringkasan Pencadangan"
 
 msgid "An operation is in progress. Do you wish to cancel?"
-msgstr ""
+msgstr "Ada operasi yang sedang berlangsung. Apakah Anda ingin membatalkannya?"
 
 msgid "Operation cancelled by user."
-msgstr ""
+msgstr "Operasi dibatalkan oleh pengguna."
 
 msgid "Rescue option is enabled."
-msgstr ""
+msgstr "Opsi Rescue diaktifkan."
 
 msgid "Error creating backup: "
-msgstr ""
+msgstr "Kesalahan saat membuat cadangan: "
 
 msgid "Failed to write destination file. Please confirm it is valid to create the provided file path, and try again."
 msgstr ""
+"Gagal menulis file tujuan. Pastikan jalur file yang diberikan valid untuk "
+"dibuat, dan coba lagi."
 
 #, python-brace-format
 msgid "Successful backup of swap partition {partition_name}"
-msgstr ""
+msgstr "Berhasil mencadangkan partisi swap {partition_name}"
 
 #, python-brace-format
 msgid "<b>Failed to backup partition</b> {partition_name}"
-msgstr ""
+msgstr "<b>Gagal mencadangkan partisi</b> {partition_name}"
 
 #, python-brace-format
 msgid "Successful backup of partition {partition_name}"
-msgstr ""
+msgstr "Berhasil mencadangkan partisi {partition_name}"
 
 msgid "Backup saved successfully."
-msgstr ""
+msgstr "Cadangan berhasil disimpan."
 
 msgid "Backup succeeded with some errors:"
-msgstr ""
+msgstr "Pencadangan berhasil dengan beberapa kesalahan:"
 
 msgid "Backup operation failed:"
-msgstr ""
+msgstr "Operasi pencadangan gagal:"
 
 msgid "User requested operation to stop."
-msgstr ""
+msgstr "Pengguna meminta operasi untuk dihentikan."
 
 #, python-brace-format
 msgid "Operation took {num_minutes} minutes."
-msgstr ""
+msgstr "Operasi memakan waktu {num_minutes} menit."
 
 msgid "To start a new session, click <b>Next</b>"
-msgstr ""
+msgstr "Untuk memulai sesi baru, klik <b>Berikutnya</b>"
 
 msgid "Step 1: Select Image Location"
-msgstr ""
+msgstr "Langkah 1: Pilih Lokasi Pencitraan"
 
 msgid "Where are the image files stored?"
-msgstr ""
+msgstr "Di mana file pencitraan disimpan?"
 
 msgid "Select the partition which contains the image files:"
-msgstr ""
+msgstr "Pilih partisi yang berisi file pencitraan:"
 
 msgid "Step 2: Select Backup Image"
-msgstr ""
+msgstr "Langkah 2: Pilih Pencitraan Cadangan"
 
 msgid "Click <b>Browse</b> to select the folder containing image files."
-msgstr ""
+msgstr "Klik <b>Jelajahi</b> untuk memilih folder yang berisi file pencitraan."
 
 msgid "Select the image file to restore."
-msgstr ""
+msgstr "Pilih file pencitraan yang akan dipulihkan."
 
 msgid "Step 3: Select Drive To Restore"
-msgstr ""
+msgstr "Langkah 3: Pilih Drive yang Akan Dipulihkan"
 
 msgid "Select the destination drive to restore with the selected image."
-msgstr ""
+msgstr "Pilih drive tujuan untuk memulihkan dengan pencitraan yang dipilih."
 
 msgid "Step 4: Select Partitions to Restore"
-msgstr ""
+msgstr "Langkah 4: Pilih Partisi yang Akan Dipulihkan"
 
 msgid "Select which partitions from the backup image to restore, and whether to overwrite the partition table. <b>Leave everything selected to completely restore the destination drive.</b>"
 msgstr ""
+"Pilih partisi mana dari pencitraan cadangan yang akan dipulihkan, dan apakah "
+"akan menimpa tabel partisi. <b>Biarkan semuanya terpilih untuk memulihkan "
+"seluruh drive tujuan.</b>"
 
 msgid "Selected image"
-msgstr ""
+msgstr "Pencitraan yang dipilih"
 
 msgid "Destination partition"
-msgstr ""
+msgstr "Partisi tujuan"
 
 msgid "Overwrite partition table"
-msgstr ""
+msgstr "Timpa tabel partisi"
 
 msgid "You will be overwriting the partition table."
-msgstr ""
+msgstr "Anda akan menimpa tabel partisi."
 
 msgid "The \"destination partition\" column has been updated using the information stored within the backup image.\n\n<b>If partitions have been resized, new partitions added, or additional operating systems installed <i>since the backup image was created</i>, then the destination drive's partition table will not match the backup image, and overwriting the destination drive's partition table will render these resized and additional partitions permanently inaccessible.</b> If you have not modified the partition table in such a way since creating this backup then overwriting the partition table is completely safe and will have no negative effects."
 msgstr ""
+"Kolom \"partisi tujuan\" telah diperbarui menggunakan informasi yang "
+"tersimpan di dalam pencitraan cadangan.\n"
+"\n"
+"<b>Jika partisi telah diubah ukurannya, partisi baru ditambahkan, atau "
+"sistem operasi tambahan diinstal <i>sejak pencitraan cadangan dibuat</i>, "
+"maka tabel partisi drive tujuan tidak akan cocok dengan pencitraan cadangan, "
+"dan menimpa tabel partisi drive tujuan akan membuat partisi yang telah "
+"diubah ukurannya dan partisi tambahan tersebut tidak dapat diakses secara "
+"permanen.</b> Jika Anda tidak mengubah tabel partisi dengan cara seperti itu "
+"sejak membuat cadangan ini, maka menimpa tabel partisi sepenuhnya aman dan "
+"tidak akan menimbulkan efek negatif."
 
 msgid "You will <b>not</b> be overwriting the partition table."
-msgstr ""
+msgstr "Anda <b>tidak</b> akan menimpa tabel partisi."
 
 msgid "The source does not contain a partition table."
-msgstr ""
+msgstr "Sumber tidak berisi tabel partisi."
 
 msgid "The \"destination partition\" column has been updated with destination drive's existing partition table information.\n\n<b>The destination partition column can be modified as a dropdown menu. Incorrectly mapping the destination partitions may cause operating systems to no longer boot.</b> If you are unsure of the mapping, consider if it's more suitable to instead overwrite the partition table."
 msgstr ""
+"Kolom \"partisi tujuan\" telah diperbarui dengan informasi tabel partisi "
+"yang ada pada drive tujuan.\n"
+"\n"
+"<b>Kolom partisi tujuan dapat diubah melalui menu dropdown. Pemetaan partisi "
+"tujuan yang salah dapat menyebabkan sistem operasi tidak dapat boot lagi.</"
+"b> Jika Anda tidak yakin dengan pemetaannya, pertimbangkan apakah lebih baik "
+"menimpa tabel partisi."
 
 msgid "No destination partition selected. Use the destination partition drop-down menu to select the destination"
 msgstr ""
+"Tidak ada partisi tujuan yang dipilih. Gunakan menu drop-down partisi tujuan "
+"untuk memilih tujuan"
 
 msgid "Not restoring this partition"
-msgstr ""
+msgstr "Tidak memulihkan partisi ini"
 
 msgid "When you are ready to continue, click <b>Next</b>."
-msgstr ""
+msgstr "Jika Anda sudah siap untuk melanjutkan, klik <b>Berikutnya</b>."
 
 msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes…"
 msgstr ""
+"Memindai dan melepas semua Logical Volume Manager (LVM) Logical Volumes…"
 
 #, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
 msgstr ""
+"Tabel partisi sumber pada partisi terakhir ({source}: {source_size} byte) "
+"harus merujuk ke wilayah yang sepenuhnya berada di dalam disk tujuan ("
+"{destination_size} byte)."
 
 #, python-brace-format
 msgid "Rescuezilla cannot yet automatically shrink partitions to restore from large disks to smaller disks. The final partition currently must always completely reside within the destination disk.\n"
@@ -626,95 +713,116 @@ msgid "Rescuezilla cannot yet automatically shrink partitions to restore from la
 "\n"
 "{url}"
 msgstr ""
+"Rescuezilla saat ini belum dapat secara otomatis mengecilkan partisi untuk "
+"memulihkan dari disk besar ke disk yang lebih kecil. Partisi terakhir saat "
+"ini harus selalu berada sepenuhnya di dalam disk tujuan.\n"
+"\n"
+"Saat ini satu-satunya cara untuk memulihkan ke disk yang lebih kecil dari "
+"disk asli adalah dengan menggunakan GParted Partition Editor terlebih dahulu "
+"untuk mengecilkan partisi terakhir dari disk asli sebelum membuat pencitraan "
+"cadangan baru. Silakan baca petunjuk berikut untuk informasi lebih lanjut:\n"
+"\n"
+"{url}"
 
 msgid "Step 5: Confirm Restore Configuration"
-msgstr ""
+msgstr "Langkah 5: Konfirmasi Konfigurasi Pemulihan"
 
 msgid "Confirm the following restore configuration."
-msgstr ""
+msgstr "Konfirmasi konfigurasi pemulihan berikut."
 
 #, python-brace-format
 msgid "Are you sure you want to restore the backup to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
+"Apakah Anda yakin ingin memulihkan cadangan ke {destination_drive}? Tindakan "
+"ini akan menimpa data di drive ini secara permanen!"
 
 msgid "Source image"
-msgstr ""
+msgstr "Pencitraan sumber"
 
 msgid "Destination drive"
-msgstr ""
+msgstr "Drive tujuan"
 
 msgid "Restoring the following partitions"
-msgstr ""
+msgstr "Memulihkan partisi berikut"
 
 msgid "WILL BE OVERWRITING PARTITION TABLE"
-msgstr ""
+msgstr "AKAN MENIMPA TABEL PARTISI"
 
 msgid "Will <b>NOT</b> be overwriting partition table"
-msgstr ""
+msgstr "Tidak <b>AKAN</b> menimpa tabel partisi"
 
 msgid "To start the restore, click <b>Next</b>."
-msgstr ""
+msgstr "Untuk memulai pemulihan, klik <b>Berikutnya</b>."
 
 msgid "Restoring From Backup"
-msgstr ""
+msgstr "Memulihkan Dari Cadangan"
 
 msgid "Restoring your system from the image you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
+"Memulihkan sistem Anda dari pencitraan yang dipilih. Proses ini mungkin "
+"memerlukan waktu satu jam atau lebih tergantung pada kecepatan komputer Anda "
+"dan jumlah data."
 
 msgid "Refreshing partition table"
-msgstr ""
+msgstr "Menyegarkan tabel partisi"
 
 #, python-brace-format
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
 msgstr ""
+"Memulihkan {description} ke {destination_partition} ("
+"{destination_description})"
 
 msgid "Synchronizing disks…"
-msgstr ""
+msgstr "Menyinkronkan disk…"
 
 #, python-brace-format
 msgid "Querying hard drive geometry of {device}"
-msgstr ""
+msgstr "Mengambil informasi geometri hard drive dari {device}"
 
 #, python-brace-format
 msgid "Probing {device} with {app}"
-msgstr ""
+msgstr "Memindai {device} dengan {app}"
 
 #, python-brace-format
 msgid "Growing filesystem {partition} ({filesystem}). This may take a while…"
 msgstr ""
+"Memperbesar sistem file {partition} ({filesystem}). Proses ini mungkin "
+"memerlukan waktu cukup lama…"
 
 #, python-brace-format
 msgid "Resizing partition {partition} ({filesystem}) failed: {msg}"
-msgstr ""
+msgstr "Mengubah ukuran partisi {partition} ({filesystem}) gagal: {msg}"
 
 #, python-brace-format
 msgid "Successfully adjusted NTFS filesystem geometry of {ntfs_device} using values from {geometry_source}"
 msgstr ""
+"Berhasil menyesuaikan geometri sistem file NTFS dari {ntfs_device} "
+"menggunakan nilai dari {geometry_source}"
 
 #, python-brace-format
 msgid "Failed to adjust NTFS filesystem geometry of {ntfs_device}"
-msgstr ""
+msgstr "Gagal menyesuaikan geometri sistem file NTFS dari {ntfs_device}"
 
 msgid "Removing udev MAC address records (if any)"
-msgstr ""
+msgstr "Menghapus catatan alamat MAC udev (jika ada)"
 
 msgid "Re-installing syslinux (if any)"
-msgstr ""
+msgstr "Memasang ulang syslinux (jika ada)"
 
 msgid "Successfully re-installed syslinux bootloader"
-msgstr ""
+msgstr "Berhasil memasang ulang bootloader syslinux"
 
 msgid "Re-installing GRUB bootloader (if any)"
-msgstr ""
+msgstr "Memasang ulang bootloader GRUB (jika ada)"
 
 msgid "Successfully re-installed GRUB bootloader"
-msgstr ""
+msgstr "Berhasil memasang ulang bootloader GRUB"
 
 msgid "Did not update GRUB bootloader (if any)"
-msgstr ""
+msgstr "Tidak memperbarui bootloader GRUB (jika ada)"
 
 msgid "Updating initramfs (if any)"
-msgstr ""
+msgstr "Memperbarui initramfs (jika ada)"
 
 msgid "Successfully updated initramfs"
 msgstr "Berhasil memperbarui initramfs"
@@ -737,21 +845,29 @@ msgstr "Tabel partisi berhasil dipulihkan."
 
 msgid "Failed to refresh the devices' partition table. This can happen if another process is accessing the partition table."
 msgstr ""
+"Gagal menyegarkan tabel partisi perangkat. Hal ini dapat terjadi jika ada "
+"proses lain yang mengakses tabel partisi."
 
 #, python-brace-format
 msgid "Unable to restore partition {destination_partition} because there is no saved image associated with: {description}."
 msgstr ""
+"Tidak dapat memulihkan partisi {destination_partition} karena tidak ada "
+"pencitraan tersimpan yang terkait dengan: {description}."
 
 msgid "This may occur if Clonezilla was originally unable to backup this partition."
 msgstr ""
+"Ini mungkin terjadi jika Clonezilla awalnya tidak dapat mencadangkan partisi "
+"ini."
 
 #, python-brace-format
 msgid "Error restoring partition {image_key} to {destination_partition}."
 msgstr ""
+"Kesalahan saat memulihkan partisi {image_key} ke {destination_partition}."
 
 #, python-brace-format
 msgid "Successfully restored image partition {image} to {destination_partition}"
 msgstr ""
+"Berhasil memulihkan partisi pencitraan {image} ke {destination_partition}"
 
 msgid "Summary of Restore"
 msgstr "Ringkasan Pemulihan"
@@ -804,35 +920,35 @@ msgid "Open in file manager"
 msgstr "Buka di manajer file"
 
 msgid "Verify"
-msgstr ""
+msgstr "Verifikasi"
 
 msgid "Select one or more images to verify."
-msgstr ""
+msgstr "Pilih satu atau lebih pencitraan untuk diverifikasi."
 
 msgid "To begin verification, click <b>Next</b>."
-msgstr ""
+msgstr "Untuk memulai verifikasi, klik <b>Berikutnya</b>."
 
 msgid "Verifying Image"
-msgstr ""
+msgstr "Memverifikasi Pencitraan"
 
 msgid "Verifying the selected image(s)."
-msgstr ""
+msgstr "Memverifikasi pencitraan yang dipilih."
 
 #, python-brace-format
 msgid "Verifying {image_name}"
-msgstr ""
+msgstr "Memverifikasi {image_name}"
 
 msgid "Summary of Verification"
-msgstr ""
+msgstr "Ringkasan Verifikasi"
 
 msgid "Confirm the verification summary."
-msgstr ""
+msgstr "Konfirmasi ringkasan verifikasi."
 
 msgid "Verification Summary"
-msgstr ""
+msgstr "Ringkasan Verifikasi"
 
 msgid "To verify another image, click <b>Back</b>."
-msgstr ""
+msgstr "Untuk memverifikasi pencitraan lain, klik <b>Kembali</b>."
 
 msgid "✔"
 msgstr "✔"
@@ -841,20 +957,20 @@ msgid "❌"
 msgstr "❌"
 
 msgid "MBR backup appears correct."
-msgstr ""
+msgstr "Cadangan MBR tampak benar."
 
 msgid "No partition table found."
-msgstr ""
+msgstr "Tidak ditemukan tabel partisi."
 
 msgid "Sfdisk partition table file is empty or missing."
-msgstr ""
+msgstr "File tabel partisi sfdisk kosong atau tidak ditemukan."
 
 msgid "Sfdisk partition table file is present."
-msgstr ""
+msgstr "File tabel partisi sfdisk ditemukan."
 
 msgid "Unable to verify."
-msgstr ""
+msgstr "Tidak dapat memverifikasi."
 
 #, python-brace-format
 msgid "{partition}: filesystem image successfully verified."
-msgstr ""
+msgstr "{partition}: pencitraan sistem file berhasil diverifikasi."

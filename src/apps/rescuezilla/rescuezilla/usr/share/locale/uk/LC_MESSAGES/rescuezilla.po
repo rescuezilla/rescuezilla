@@ -5,14 +5,14 @@
 # Andrij Mizyk <andmzk@proton.me>, 2022.
 # moudrick <moudrick@gmail.com>, 2023.
 # "myroslav.m201461e65a7244654b72" <myroslav.m2014@gmail.com>, 2025.
+# OL <pokemonchyk@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2025-07-31 14:02+0000\n"
-"Last-Translator: \"myroslav.m201461e65a7244654b72\" "
-"<myroslav.m2014@gmail.com>\n"
+"PO-Revision-Date: 2025-12-31 17:01+0000\n"
+"Last-Translator: OL <pokemonchyk@gmail.com>\n"
 "Language-Team: Ukrainian <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/uk/>\n"
 "Language: uk\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Weblate 5.13-dev\n"
+"X-Generator: Weblate 5.15.1\n"
 
 msgid "Welcome"
 msgstr "Ласкаво просимо"
@@ -697,6 +697,9 @@ msgstr ""
 #, python-brace-format
 msgid "The source partition table's final partition ({source}: {source_size} bytes) must refer to a region completely within the destination disk ({destination_size} bytes)."
 msgstr ""
+"У вихідній таблиці розділів останній розділ ({source}: {source_size} байтів) "
+"має посилатися на область, повністю розташовану в межах цільового диска ("
+"{destination_size} bytes)."
 
 #, python-brace-format
 msgid "Rescuezilla cannot yet automatically shrink partitions to restore from large disks to smaller disks. The final partition currently must always completely reside within the destination disk.\n"
@@ -705,6 +708,16 @@ msgid "Rescuezilla cannot yet automatically shrink partitions to restore from la
 "\n"
 "{url}"
 msgstr ""
+"Rescuezilla не може автоматично відновити образ великих дисків на диски "
+"меншого розміру. Відновлюваний розділ має повністю вміщатися на цільовому "
+"диску.\n"
+"\n"
+"Наразі єдиним способом відновити образ на диски меншого розміру є початкове "
+"стискання розділу вихідного диску з допомогою редактора розділів GParted "
+"Partition Editor перед створенням нового образу резервної копії. Будь ласка "
+"прочитайте наступні інструкції для отримання більш детальної інформації:\n"
+"\n"
+"{url}"
 
 msgid "Step 5: Confirm Restore Configuration"
 msgstr "Крок 5: Підтвердьте налаштування відновлення"
@@ -741,6 +754,9 @@ msgstr "Відновлення з резервної копії"
 
 msgid "Restoring your system from the image you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
 msgstr ""
+"Запущено процес відновлення вашої системи. Це може тривати годину або більше "
+"часу в залежності від швидкості вашого комп'ютера і розміру вибраного вами "
+"образа дисків."
 
 msgid "Refreshing partition table"
 msgstr "Оновлення таблиці розділів"
@@ -748,6 +764,8 @@ msgstr "Оновлення таблиці розділів"
 #, python-brace-format
 msgid "Restoring {description} to {destination_partition} ({destination_description})"
 msgstr ""
+"Відновлення {description} в {destination_partition} ("
+"{destination_description})"
 
 msgid "Synchronizing disks…"
 msgstr "Синхронізування дисків…"
