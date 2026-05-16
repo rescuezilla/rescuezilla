@@ -48,7 +48,7 @@ jobs:
         ./integration_test.py stop
         ./integration_test.py deinit
         # TODO: Make sure deinit works reliably and not leaving leftovers eg [1]
-        find "~/VirtualBox VMs/Rescuezilla.Integration.Suite/"
+        find "~/VirtualBox VMs/Rescuezilla.Integration.Suite/" || true
         # [1] VBoxManage: error: Could not rename the directory '/home/debian/VirtualBox VMs/Rescuezilla.2tb.Secondary.BIOS' to '/home/debian/VirtualBox VMs/Rescuezilla.Integration.Suite/Rescuezilla.2tb.Secondary.BIOS' to save the settings file (VERR_ALREADY_EXISTS)
         # HACK: Clear any leftover folders
         rm -rf "~/VirtualBox VMs/Rescuezilla.Integration.Suite/"
@@ -88,7 +88,7 @@ jobs:
     strategy:
       matrix:
         variant: [
-          {name: "plucky"},
+          {name: "resolute"},
 
           # TODO: Re-enable when test is faster and no longer hits 12-hour GitHub Actions workflow max limit
           #{name: "oracular"},
@@ -132,7 +132,7 @@ jobs:
       # using a Intel(R) Xeon(R) CPU D-1520 (2015-era 4-core Intel workstation CPU)
       matrix:
         iso: [
-          {path: "rescuezilla.amd64.plucky.iso", check_match: "Ubuntu 25.04"},
+          {path: "rescuezilla.amd64.resolute.iso", check_match: "Ubuntu 26.04"},
 
           # TODO: Re-enable when test is faster and no longer hits 12-hour GitHub Actions workflow max limit
           #{path: "rescuezilla.amd64.oracular.iso", check_match: "Ubuntu 24.10"},
