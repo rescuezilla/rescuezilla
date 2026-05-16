@@ -47,6 +47,11 @@ jobs:
         cd src/integration-test
         ./integration_test.py stop
         ./integration_test.py deinit
+        # TODO: Make sure deinit works reliably and not leaving leftovers eg [1]
+        find "~/VirtualBox VMs/Rescuezilla.Integration.Suite/"
+        # [1] VBoxManage: error: Could not rename the directory '/home/debian/VirtualBox VMs/Rescuezilla.2tb.Secondary.BIOS' to '/home/debian/VirtualBox VMs/Rescuezilla.Integration.Suite/Rescuezilla.2tb.Secondary.BIOS' to save the settings file (VERR_ALREADY_EXISTS)
+        # HACK: Clear any leftover folders
+        rm -rf "~/VirtualBox VMs/Rescuezilla.Integration.Suite/"
         ./integration_test.py init
 
     - name: Build Docker image
