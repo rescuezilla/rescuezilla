@@ -102,7 +102,11 @@ jobs:
     steps:
     - name: Create ${{ matrix.variant.name }} integration test image (IS_INTEGRATION_TEST for SSH server + authorized SSH pub key)
       run: |
+        rm -f /home/debian/rescuezilla.amd64.${{ matrix.variant.name }}.iso
         docker exec --interactive --workdir=/home/rescuezilla/ builder.container bash -c "IS_INTEGRATION_TEST=true make ${{ matrix.variant.name }}"
+        if [ ! -f build/rescuezilla.amd64.${{ matrix.variant.name }}.iso ]; then
+          echo "ISO not found: build/rescuezilla.amd64.${{ matrix.variant.name }}.iso" && exit 1
+        fi
         # Upon successful build, copy the ISO to the home directory of the self-hosted runner so it can be used in later integration-test-development branch runs,
         # and also if the test fails it's faster to debug
         blocksync-fast --src build/rescuezilla.amd64.${{ matrix.variant.name }}.iso --dst /home/debian/rescuezilla.amd64.${{ matrix.variant.name }}.iso --force
