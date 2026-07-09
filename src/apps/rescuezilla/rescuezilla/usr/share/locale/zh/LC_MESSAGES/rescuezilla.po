@@ -428,7 +428,7 @@ msgid "default"
 msgstr "默认"
 
 msgid "zstandard"
-msgstr "标准"
+msgstr "Zstandard压缩"
 
 msgid "Uncompressed (Suitable for use with Image Explorer)"
 msgstr "未压缩（适用于镜像资源管理器）"
