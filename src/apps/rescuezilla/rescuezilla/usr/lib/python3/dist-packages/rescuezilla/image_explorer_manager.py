@@ -783,17 +783,17 @@ class ImageExplorerManager:
                     env=env,
                     encoding="utf-8",
                 )
-
-                if self._check_stop_and_cleanup(
-                    please_wait_popup, callback, destination_path
-                ):
-                    return
                 print(
                     "Adding decompress process with pid "
                     + str(nbdkit_decompress_process.pid)
                     + " to queue"
                 )
                 self.nbdkit_decompress_process_queue.put(nbdkit_decompress_process)
+
+                if self._check_stop_and_cleanup(
+                    please_wait_popup, callback, destination_path
+                ):
+                    return
 
                 nbdclient_connect_cmd_list = [
                     "nbd-client",
