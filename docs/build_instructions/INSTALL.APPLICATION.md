@@ -16,7 +16,7 @@ sudo dnf install git git-lfs make gettext rsync python3 python3-gobject \
   python3-cairo gtk3 polkit procps-ng util-linux xdg-utils
 ```
 
-## openSUSE Tumbleweed
+## openSUSE
 
 ```bash
 sudo zypper install git git-lfs make gettext-tools rsync python3 \
@@ -24,7 +24,7 @@ sudo zypper install git git-lfs make gettext-tools rsync python3 \
   procps util-linux xdg-utils
 ```
 
-Zypper resolves these generic capabilities to Tumbleweed's current default versioned Python RPMs.
+Zypper resolves these generic capabilities to the distribution's current default versioned Python RPMs.
 
 ## Arch / CachyOS
 
