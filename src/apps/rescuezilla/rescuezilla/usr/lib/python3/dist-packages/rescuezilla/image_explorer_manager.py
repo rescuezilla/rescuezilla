@@ -275,45 +275,35 @@ class ImageExplorerManager:
             self.set_patreon_call_to_action_visible(True)
 
     @staticmethod
-    # This `man pgrep` patterns needs to be kept in sync with the process being used.
-    def pop_and_kill(process_name, process_queue, pgrep_pattern):
-        if process_queue is not None:
-            while not process_queue.empty():
+    def pop_and_kill(process_name, process_queue):
+        if process_queue is None:
+            return True, ""
+        while not process_queue.empty():
+            try:
+                process = process_queue.get_nowait()
+                print(
+                    "Kill "
+                    + process_name
+                    + " with pid "
+                    + str(process.pid)
+                    + " with SIGTERM"
+                )
+                process.send_signal(signal.SIGTERM)
                 try:
-                    process = process_queue.get_nowait()
+                    # Wait for cleanup
+                    process.wait(10)
+                except subprocess.TimeoutExpired:
                     print(
-                        "Kill "
+                        "Timeout expired, kill "
                         + process_name
                         + " with pid "
                         + str(process.pid)
-                        + " with SIGTERM"
+                        + " with SIGKILL"
                     )
-                    process.send_signal(signal.SIGTERM)
-                    try:
-                        # Wait for cleanup
-                        process.wait(10)
-                    except subprocess.TimeoutExpired:
-                        print(
-                            "Timeout expired, kill "
-                            + process_name
-                            + " with pid "
-                            + str(process.pid)
-                            + " with SIGKILL"
-                        )
-                        # Send kill signal
-                        process.send_signal(signal.SIGKILL)
-                except queue.Empty:
-                    break
-        else:
-            # Kill all processes matching the pattern. Sending SIGKILL will leave temporary files without cleaning up,
-            # which for the nbdkit decompression may include very large files.
-            process, flat_command_string, failed_message = Utility.run(
-                "Kill all " + process_name + " processes with SIGKILL",
-                ["pkill", "--signal", "SIGKILL", "--full", pgrep_pattern],
-                use_c_locale=True,
-            )
-            if process.returncode != 0 and process.returncode != 1:
-                return False, failed_message
+                    # Send kill signal
+                    process.send_signal(signal.SIGKILL)
+            except queue.Empty:
+                break
         return True, ""
 
     @staticmethod
@@ -322,8 +312,24 @@ class ImageExplorerManager:
         join_process_queue=None,
         decompress_process_queue=None,
         partclone_nbd_process_queue=None,
-        is_deassociate_qemu_nbd_device=True,
+        is_deassociate_qemu_nbd_device=False,
     ):
+        is_unmounted, message = Utility.umount_warn_on_busy(destination_path)
+        if not is_unmounted:
+            return False, message
+
+        owned_queues = (
+            join_process_queue,
+            decompress_process_queue,
+            partclone_nbd_process_queue,
+        )
+        has_owned_process = any(
+            process_queue is not None and not process_queue.empty()
+            for process_queue in owned_queues
+        )
+        if not has_owned_process and not is_deassociate_qemu_nbd_device:
+            return True, ""
+
         # Ensure nbd-kernel module loaded (required for nbd-client -disconnect)
         process, flat_command_string, failed_message = Utility.run(
             "Loading NBD kernel module", ["modprobe", "nbd"], use_c_locale=True
@@ -331,49 +337,45 @@ class ImageExplorerManager:
         if process.returncode != 0:
             return False, failed_message
 
-        # Unmount and cleanup in case a previous invocation of Rescuezilla didn't cleanup.
-        is_unmounted, message = Utility.umount_warn_on_busy(destination_path)
-        if not is_unmounted:
-            return False, message
-
         if is_deassociate_qemu_nbd_device:
             is_success, message = QemuImage.deassociate_nbd(QEMU_NBD_NBD_DEVICE)
             if not is_success:
                 return False, message
 
-        is_success, message = ImageExplorerManager.pop_and_kill(
-            "partclone-nbd", partclone_nbd_process_queue, "partclone-nbd"
-        )
-        if not is_success:
-            return False, message
+        if has_owned_process:
+            is_success, message = ImageExplorerManager.pop_and_kill(
+                "partclone-nbd", partclone_nbd_process_queue
+            )
+            if not is_success:
+                return False, message
 
-        process, flat_command_string, failed_message = Utility.run(
-            "Disconnect nbd decompress association",
-            ["nbd-client", "-disconnect", DECOMPRESSED_NBD_DEVICE],
-            use_c_locale=True,
-        )
-        if process.returncode != 0:
-            return False, failed_message
+            process, flat_command_string, failed_message = Utility.run(
+                "Disconnect nbd decompress association",
+                ["nbd-client", "-disconnect", DECOMPRESSED_NBD_DEVICE],
+                use_c_locale=True,
+            )
+            if process.returncode != 0:
+                return False, failed_message
 
-        is_success, message = ImageExplorerManager.pop_and_kill(
-            "nbdkit decompress", decompress_process_queue, "nbdkit.*split"
-        )
-        if not is_success:
-            return False, message
+            is_success, message = ImageExplorerManager.pop_and_kill(
+                "nbdkit decompress", decompress_process_queue
+            )
+            if not is_success:
+                return False, message
 
-        process, flat_command_string, failed_message = Utility.run(
-            "Disconnect nbd association",
-            ["nbd-client", "-disconnect", JOINED_FILES_NBD_DEVICE],
-            use_c_locale=True,
-        )
-        if process.returncode != 0:
-            return False, failed_message
+            process, flat_command_string, failed_message = Utility.run(
+                "Disconnect nbd association",
+                ["nbd-client", "-disconnect", JOINED_FILES_NBD_DEVICE],
+                use_c_locale=True,
+            )
+            if process.returncode != 0:
+                return False, failed_message
 
-        is_success, message = ImageExplorerManager.pop_and_kill(
-            "nbdkit join", join_process_queue, "nbdkit.*(gzip|file)"
-        )
-        if not is_success:
-            return False, message
+            is_success, message = ImageExplorerManager.pop_and_kill(
+                "nbdkit join", join_process_queue
+            )
+            if not is_success:
+                return False, message
 
         print("Successfully requested any partclone-nbd images to unmount.")
         return True, ""
@@ -466,6 +468,9 @@ class ImageExplorerManager:
                 self.nbdkit_join_process_queue,
                 self.nbdkit_decompress_process_queue,
                 self.partclone_nbd_process_queue,
+                is_deassociate_qemu_nbd_device=isinstance(
+                    getattr(self, "selected_image", None), QemuImage
+                ),
             )
             if not returncode:
                 print(failed_message)
@@ -490,6 +495,9 @@ class ImageExplorerManager:
                 self.nbdkit_join_process_queue,
                 self.nbdkit_decompress_process_queue,
                 self.partclone_nbd_process_queue,
+                is_deassociate_qemu_nbd_device=isinstance(
+                    getattr(self, "selected_image", None), QemuImage
+                ),
             )
             if not returncode:
                 print(failed_message)
@@ -688,6 +696,9 @@ class ImageExplorerManager:
                         self.nbdkit_join_process_queue,
                         self.nbdkit_decompress_process_queue,
                         self.partclone_nbd_process_queue,
+                        is_deassociate_qemu_nbd_device=isinstance(
+                            getattr(self, "selected_image", None), QemuImage
+                        ),
                     )
                     if not is_unmount_success:
                         failed_message += "\n\n" + unmount_failed_message
@@ -727,6 +738,9 @@ class ImageExplorerManager:
                         self.nbdkit_join_process_queue,
                         self.nbdkit_decompress_process_queue,
                         self.partclone_nbd_process_queue,
+                        is_deassociate_qemu_nbd_device=isinstance(
+                            getattr(self, "selected_image", None), QemuImage
+                        ),
                     )
                     if not is_unmount_success:
                         failed_message += "\n\n" + unmount_failed_message
@@ -806,6 +820,9 @@ class ImageExplorerManager:
                         self.nbdkit_join_process_queue,
                         self.nbdkit_decompress_process_queue,
                         self.partclone_nbd_process_queue,
+                        is_deassociate_qemu_nbd_device=isinstance(
+                            getattr(self, "selected_image", None), QemuImage
+                        ),
                     )
                     if not is_unmount_success:
                         failed_message += "\n\n" + unmount_failed_message
@@ -907,6 +924,9 @@ class ImageExplorerManager:
                         self.nbdkit_join_process_queue,
                         self.nbdkit_decompress_process_queue,
                         self.partclone_nbd_process_queue,
+                        is_deassociate_qemu_nbd_device=isinstance(
+                            getattr(self, "selected_image", None), QemuImage
+                        ),
                     )
                     if not is_unmount_success:
                         failed_message += "\n\n" + unmount_failed_message
@@ -936,6 +956,9 @@ class ImageExplorerManager:
                     self.nbdkit_join_process_queue,
                     self.nbdkit_decompress_process_queue,
                     self.partclone_nbd_process_queue,
+                    is_deassociate_qemu_nbd_device=isinstance(
+                        getattr(self, "selected_image", None), QemuImage
+                    ),
                 )
                 if not is_unmount_success:
                     failed_message += "\n\n" + unmount_failed_message
@@ -968,6 +991,9 @@ class ImageExplorerManager:
                 self.nbdkit_join_process_queue,
                 self.nbdkit_decompress_process_queue,
                 self.partclone_nbd_process_queue,
+                is_deassociate_qemu_nbd_device=isinstance(
+                    getattr(self, "selected_image", None), QemuImage
+                ),
             )
             if not is_unmount_success:
                 print("Unmount failed " + unmount_failed_message)
