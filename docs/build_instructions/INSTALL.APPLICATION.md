@@ -19,12 +19,12 @@ sudo dnf install git git-lfs make gettext rsync python3 python3-gobject \
 ## openSUSE Tumbleweed
 
 ```bash
-sudo zypper install git git-lfs make gettext-tools rsync python313 \
-  python313-gobject-Gdk python313-pycairo typelib-1_0-Gtk-3_0 polkit \
+sudo zypper install git git-lfs make gettext-tools rsync python3 \
+  python3-gobject-Gdk python3-pycairo typelib-1_0-Gtk-3_0 polkit \
   procps util-linux xdg-utils
 ```
 
-Tumbleweed's rolling Python flavor number can change; substitute the active `python3XX` packages from your repository.
+Zypper resolves these generic capabilities to Tumbleweed's current default versioned Python RPMs.
 
 ## Arch / CachyOS
 
