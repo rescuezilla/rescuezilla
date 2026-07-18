@@ -61,7 +61,7 @@ display_yad() {
 #
 #  Define base command for executing Rescuezilla
 #
-BASE_CMD="/usr/bin/python3 /usr/lib/rescuezilla/rescuezilla.py $*"
+BASE_CMD="/usr/bin/rescuezillapy $*"
 
 #
 # Cannot launch Rescuezilla if GParted is already running.

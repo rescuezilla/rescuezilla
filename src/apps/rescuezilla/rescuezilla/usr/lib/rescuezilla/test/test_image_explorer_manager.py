@@ -1,16 +1,37 @@
 import signal
 import subprocess
+import threading
 import unittest
 from queue import Queue
 from unittest.mock import Mock, call, patch
 
+from handler import Handler
 from image_explorer_manager import ImageExplorerManager
 from parser.clonezilla_image import ClonezillaImage
 from parser.qemu_image import QemuImage
 from utility import Utility
+from wizard_state import (
+    DECOMPRESSED_NBD_DEVICE,
+    IMAGE_EXPLORER_DIR,
+    JOINED_FILES_NBD_DEVICE,
+    QEMU_NBD_NBD_DEVICE,
+    RESCUEZILLA_MOUNT_TMP_DIR,
+)
 
 
 class ImageExplorerCleanupTest(unittest.TestCase):
+    @staticmethod
+    def make_manager():
+        manager = ImageExplorerManager.__new__(ImageExplorerManager)
+        manager.partclone_nbd_process_queue = Queue()
+        manager.nbdkit_join_process_queue = Queue()
+        manager.nbdkit_decompress_process_queue = Queue()
+        manager.joined_nbd_device_owned = threading.Event()
+        manager.decompressed_nbd_device_owned = threading.Event()
+        manager.qemu_nbd_device_owned = threading.Event()
+        manager.cleanup_lock = threading.Lock()
+        return manager
+
     @patch.object(Utility, "run")
     def test_none_queue_never_runs_global_pkill(self, run):
         self.assertEqual((True, ""), ImageExplorerManager.pop_and_kill("nbdkit", None))
@@ -36,6 +57,164 @@ class ImageExplorerCleanupTest(unittest.TestCase):
         process.send_signal.assert_called_once_with(signal.SIGTERM)
         process.wait.assert_called_once_with(10)
 
+    @patch.object(QemuImage, "deassociate_nbd")
+    @patch.object(Utility, "run")
+    @patch.object(Utility, "umount_warn_on_busy", return_value=(True, ""))
+    def test_selected_qemu_without_owned_device_only_unmounts_destination(
+        self, umount, run, deassociate_nbd
+    ):
+        manager = self.make_manager()
+        manager.selected_image = QemuImage.__new__(QemuImage)
+        self.assertTrue(hasattr(manager, "cleanup_owned_resources"))
+
+        self.assertEqual(
+            (True, ""), manager.cleanup_owned_resources(IMAGE_EXPLORER_DIR)
+        )
+
+        umount.assert_called_once_with(IMAGE_EXPLORER_DIR)
+        run.assert_not_called()
+        deassociate_nbd.assert_not_called()
+
+    @patch.object(QemuImage, "deassociate_nbd")
+    @patch.object(Utility, "run")
+    @patch.object(Utility, "umount_warn_on_busy", return_value=(True, ""))
+    def test_owned_server_without_device_attachment_is_killed_without_disconnect(
+        self, _umount, run, deassociate_nbd
+    ):
+        manager = self.make_manager()
+        process = Mock(pid=1234)
+        manager.nbdkit_join_process_queue.put(process)
+        self.assertTrue(hasattr(manager, "cleanup_owned_resources"))
+
+        self.assertEqual(
+            (True, ""), manager.cleanup_owned_resources(IMAGE_EXPLORER_DIR)
+        )
+
+        process.send_signal.assert_called_once_with(signal.SIGTERM)
+        run.assert_not_called()
+        deassociate_nbd.assert_not_called()
+
+    @patch.object(Utility, "run")
+    @patch.object(Utility, "umount_warn_on_busy", return_value=(True, ""))
+    def test_concurrent_cleanup_disconnects_owned_device_once(self, _umount, run):
+        manager = self.make_manager()
+        manager.joined_nbd_device_owned.set()
+        notices = Queue()
+        release_first = threading.Event()
+        disconnects = []
+        errors = []
+
+        class NotifyingLock:
+            def __init__(self):
+                self.lock = threading.Lock()
+
+            def __enter__(self):
+                notices.put(("lock", threading.current_thread().name))
+                self.lock.acquire()
+
+            def __exit__(self, *_args):
+                self.lock.release()
+
+        manager.cleanup_lock = NotifyingLock()
+
+        def mocked_run(_description, command, **_kwargs):
+            if command == ["modprobe", "nbd"]:
+                thread_name = threading.current_thread().name
+                notices.put(("modprobe", thread_name))
+                if thread_name == "first":
+                    release_first.wait(2)
+            elif command[0] == "nbd-client":
+                disconnects.append(command)
+            return Mock(returncode=0), "", ""
+
+        def cleanup():
+            try:
+                manager.cleanup_owned_resources(IMAGE_EXPLORER_DIR)
+            except Exception as exception:
+                errors.append(exception)
+
+        run.side_effect = mocked_run
+        first = threading.Thread(target=cleanup, name="first")
+        second = threading.Thread(target=cleanup, name="second")
+        first.start()
+        while notices.get(timeout=2) != ("modprobe", "first"):
+            pass
+        second.start()
+        second_notice = notices.get(timeout=2)
+        release_first.set()
+        first.join(2)
+        second.join(2)
+
+        self.assertEqual(("lock", "second"), second_notice)
+        self.assertFalse(first.is_alive() or second.is_alive())
+        self.assertEqual([], errors)
+        self.assertEqual(
+            [["nbd-client", "-disconnect", JOINED_FILES_NBD_DEVICE]],
+            disconnects,
+        )
+
+    @patch.object(QemuImage, "deassociate_nbd", return_value=(True, ""))
+    @patch.object(Utility, "run")
+    @patch.object(Utility, "umount_warn_on_busy", return_value=(True, ""))
+    def test_only_owned_devices_are_disconnected_and_success_clears_ownership(
+        self, _umount, run, deassociate_nbd
+    ):
+        self.assertTrue(hasattr(ImageExplorerManager, "cleanup_owned_resources"))
+        for ownership_name, expected_disconnect in (
+            (
+                "joined_nbd_device_owned",
+                ["nbd-client", "-disconnect", JOINED_FILES_NBD_DEVICE],
+            ),
+            (
+                "decompressed_nbd_device_owned",
+                ["nbd-client", "-disconnect", DECOMPRESSED_NBD_DEVICE],
+            ),
+            ("qemu_nbd_device_owned", QEMU_NBD_NBD_DEVICE),
+        ):
+            with self.subTest(ownership_name=ownership_name):
+                manager = self.make_manager()
+                ownership = getattr(manager, ownership_name)
+                ownership.set()
+                run.reset_mock()
+                deassociate_nbd.reset_mock()
+                run.return_value = (Mock(returncode=0), "", "")
+
+                self.assertEqual(
+                    (True, ""), manager.cleanup_owned_resources(IMAGE_EXPLORER_DIR)
+                )
+
+                self.assertFalse(ownership.is_set())
+                if ownership_name == "qemu_nbd_device_owned":
+                    deassociate_nbd.assert_called_once_with(expected_disconnect)
+                    self.assertEqual(["modprobe", "nbd"], run.call_args_list[0].args[1])
+                    self.assertEqual(1, run.call_count)
+                else:
+                    deassociate_nbd.assert_not_called()
+                    self.assertEqual(
+                        [
+                            ["modprobe", "nbd"],
+                            expected_disconnect,
+                        ],
+                        [item.args[1] for item in run.call_args_list],
+                    )
+
+    @patch("handler.Gtk.main_quit")
+    @patch("handler.subprocess.Popen")
+    @patch.object(ImageExplorerManager, "_do_unmount", return_value=(True, ""))
+    def test_handler_exit_uses_manager_owned_cleanup(self, unmount, _popen, _main_quit):
+        handler = Handler.__new__(Handler)
+        handler.image_explorer_manager = Mock()
+        handler.image_explorer_manager.cleanup_owned_resources.return_value = (True, "")
+
+        handler.exit_app()
+
+        handler.image_explorer_manager.cleanup_owned_resources.assert_called_once_with(
+            IMAGE_EXPLORER_DIR
+        )
+        unmount.assert_called_once_with(
+            RESCUEZILLA_MOUNT_TMP_DIR, is_deassociate_qemu_nbd_device=False
+        )
+
     @patch("image_explorer_manager.GLib.idle_add")
     @patch.object(Utility, "print_cli_friendly", return_value="")
     @patch.object(Utility, "retry_run", return_value=(True, ""))
@@ -48,7 +227,7 @@ class ImageExplorerCleanupTest(unittest.TestCase):
     )
     @patch("image_explorer_manager.os.path.exists", return_value=True)
     @patch("image_explorer_manager.subprocess.Popen")
-    def test_decompressor_is_owned_before_cancellation_cleanup(
+    def test_device_ownership_is_set_only_after_successful_association(
         self,
         popen,
         _exists,
@@ -59,10 +238,7 @@ class ImageExplorerCleanupTest(unittest.TestCase):
         _print_cli_friendly,
         _idle_add,
     ):
-        manager = ImageExplorerManager.__new__(ImageExplorerManager)
-        manager.partclone_nbd_process_queue = Queue()
-        manager.nbdkit_join_process_queue = Queue()
-        manager.nbdkit_decompress_process_queue = Queue()
+        manager = self.make_manager()
 
         image = ClonezillaImage.__new__(ClonezillaImage)
         image.image_format_dict_dict = {
@@ -79,28 +255,42 @@ class ImageExplorerCleanupTest(unittest.TestCase):
         popen.side_effect = [join_process, decompress_process]
         interruptable_run.return_value = (Mock(returncode=0), "", "")
 
-        cleanup_queue_sizes = []
+        ownership_at_cancellation_checks = []
         cleanup_count = 0
 
-        def stop_after_decompressor_starts(*_args):
+        def stop_after_decompressor_association(*_args):
             nonlocal cleanup_count
             cleanup_count += 1
-            if cleanup_count == 4:
-                cleanup_queue_sizes.append(
-                    manager.nbdkit_decompress_process_queue.qsize()
+            if cleanup_count in (2, 3, 4, 5):
+                ownership_at_cancellation_checks.append(
+                    (
+                        cleanup_count,
+                        manager.joined_nbd_device_owned.is_set(),
+                        manager.decompressed_nbd_device_owned.is_set(),
+                        manager.nbdkit_decompress_process_queue.qsize(),
+                    )
                 )
+            if cleanup_count == 5:
                 return True
             return False
 
         manager._check_stop_and_cleanup = Mock(
-            side_effect=stop_after_decompressor_starts
+            side_effect=stop_after_decompressor_association
         )
 
         manager._do_mount_command(
             Mock(), Mock(), image, "sda1", "/mnt/rescuezilla.image.explorer"
         )
 
-        self.assertEqual([1], cleanup_queue_sizes)
+        self.assertEqual(
+            [
+                (2, False, False, 0),
+                (3, True, False, 0),
+                (4, True, False, 1),
+                (5, True, True, 1),
+            ],
+            ownership_at_cancellation_checks,
+        )
         self.assertIs(
             decompress_process,
             manager.nbdkit_decompress_process_queue.get_nowait(),
@@ -261,7 +451,16 @@ class ImageExplorerCapabilityTest(unittest.TestCase):
     @patch.object(
         ImageExplorerManager,
         "_missing_commands",
-        return_value=["qemu-img", "qemu-nbd"],
+        return_value=[
+            "blkid",
+            "findmnt",
+            "modprobe",
+            "mount",
+            "nbd-client",
+            "qemu-img",
+            "qemu-nbd",
+            "umount",
+        ],
     )
     @patch("image_explorer_manager.GLib.idle_add")
     def test_qemu_preflight_precedes_device_disconnect(
@@ -285,14 +484,24 @@ class ImageExplorerCapabilityTest(unittest.TestCase):
         )
 
         missing_commands.assert_called_once_with(
-            ["blkid", "nbd-client", "qemu-img", "qemu-nbd"]
+            [
+                "blkid",
+                "findmnt",
+                "modprobe",
+                "mount",
+                "nbd-client",
+                "qemu-img",
+                "qemu-nbd",
+                "umount",
+            ]
         )
         self.assertEqual(
             [
                 call(
                     callback,
                     False,
-                    "Image Explorer requires: qemu-img, qemu-nbd",
+                    "Image Explorer requires: blkid, findmnt, modprobe, mount, "
+                    "nbd-client, qemu-img, qemu-nbd, umount",
                 ),
                 call(popup.destroy),
             ],
@@ -303,6 +512,97 @@ class ImageExplorerCapabilityTest(unittest.TestCase):
         interruptable_run.assert_not_called()
         image.associate_nbd.assert_not_called()
         popen.assert_not_called()
+
+    @patch("image_explorer_manager.subprocess.Popen")
+    @patch.object(Utility, "interruptable_run")
+    @patch.object(ImageExplorerManager, "_do_unmount", return_value=(True, ""))
+    @patch("image_explorer_manager.os.path.exists", return_value=True)
+    @patch.object(ImageExplorerManager, "_missing_commands", return_value=[])
+    @patch("image_explorer_manager.GLib.idle_add")
+    def test_qemu_association_failure_callbacks_once_without_mounting(
+        self,
+        idle_add,
+        _missing_commands,
+        _exists,
+        _unmount,
+        interruptable_run,
+        popen,
+    ):
+        manager = ImageExplorerCleanupTest.make_manager()
+        manager._check_stop_and_cleanup = Mock(return_value=False)
+        image = QemuImage.__new__(QemuImage)
+        image.associate_nbd = Mock(return_value=(False, "qemu attach failed"))
+        manager.selected_image = image
+        interruptable_run.return_value = (Mock(returncode=0), "", "")
+        popup = Mock()
+        callback = Mock()
+
+        manager._do_mount_command(
+            popup, callback, image, "/dev/sda1", IMAGE_EXPLORER_DIR
+        )
+
+        self.assertFalse(manager.qemu_nbd_device_owned.is_set())
+        self.assertEqual(
+            1,
+            idle_add.call_args_list.count(call(callback, False, "qemu attach failed")),
+        )
+        self.assertEqual(1, idle_add.call_args_list.count(call(popup.destroy)))
+        self.assertNotIn(
+            call(callback, True, unittest.mock.ANY), idle_add.call_args_list
+        )
+        self.assertEqual(1, interruptable_run.call_count)
+        popen.assert_not_called()
+
+
+class QemuImageAssociationTest(unittest.TestCase):
+    @staticmethod
+    def make_image():
+        image = QemuImage.__new__(QemuImage)
+        image.absolute_path = "/backup/disk.qcow2"
+        image.timeout_seconds = 5
+        return image
+
+    @patch.object(QemuImage, "deassociate_nbd", return_value=(True, ""))
+    @patch.object(Utility, "retry_run", return_value=(False, "device busy"))
+    def test_connect_failure_does_not_disconnect_unknown_device(
+        self, _retry_run, deassociate_nbd
+    ):
+        self.assertEqual(
+            (False, "device busy"),
+            self.make_image().associate_nbd(QEMU_NBD_NBD_DEVICE),
+        )
+
+        deassociate_nbd.assert_not_called()
+
+    @patch.object(QemuImage, "deassociate_nbd", return_value=(True, ""))
+    @patch.object(Utility, "retry_run")
+    def test_readiness_failure_disconnects_only_new_association(
+        self, retry_run, deassociate_nbd
+    ):
+        operations = []
+        retry_results = iter(((True, ""), (False, "device not ready")))
+
+        def retry(**kwargs):
+            operations.append(kwargs["short_description"])
+            return next(retry_results)
+
+        retry_run.side_effect = retry
+        deassociate_nbd.side_effect = lambda device: (
+            operations.append("disconnect " + device) or (True, "")
+        )
+
+        self.assertEqual(
+            (False, "device not ready"),
+            self.make_image().associate_nbd(QEMU_NBD_NBD_DEVICE),
+        )
+        self.assertEqual(
+            [
+                "qemu-nbd associate with " + QEMU_NBD_NBD_DEVICE,
+                "Run blkid until NBD device ready " + QEMU_NBD_NBD_DEVICE,
+                "disconnect " + QEMU_NBD_NBD_DEVICE,
+            ],
+            operations,
+        )
 
 
 if __name__ == "__main__":

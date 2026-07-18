@@ -59,4 +59,4 @@ RPM and PKGBUILD maintainers should wrap the same `make install` target with the
 
 The package commands above are enough to launch the core UI. Backup, restore, and clone operations additionally need the tools for the operation and image format being used, such as Partclone, Clonezilla, FSArchiver, QEMU image tools, compressors, network clients, and filesystem utilities.
 
-Image Explorer needs an `nbd-client`; `nbdkit` with split, file, truncate, and the required compression support; `partclone-nbd` for Partclone images; `qemu-nbd` for virtual-machine images; and filesystem drivers for the filesystems being mounted. These are capability requirements, not universal package names: availability and package splits vary by distribution.
+Image Explorer needs an `nbd-client`; `nbdkit` with split, file, truncate, and the required compression support; `partclone-nbd` for Partclone images; `qemu-nbd` and `qemu-img` for virtual-machine images; and filesystem drivers for the filesystems being mounted. These are capability requirements, not universal package names: availability and package splits vary by distribution.

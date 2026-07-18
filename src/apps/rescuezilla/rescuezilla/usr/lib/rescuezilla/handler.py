@@ -1376,15 +1376,8 @@ class Handler:
     def exit_app(self):
         print("Exiting Rescuezilla.")
         try:
-            returncode, failed_message = ImageExplorerManager._do_unmount(
-                IMAGE_EXPLORER_DIR,
-                self.image_explorer_manager.nbdkit_join_process_queue,
-                self.image_explorer_manager.nbdkit_decompress_process_queue,
-                self.image_explorer_manager.partclone_nbd_process_queue,
-                is_deassociate_qemu_nbd_device=isinstance(
-                    getattr(self.image_explorer_manager, "selected_image", None),
-                    QemuImage,
-                ),
+            returncode, failed_message = (
+                self.image_explorer_manager.cleanup_owned_resources(IMAGE_EXPLORER_DIR)
             )
             if not returncode:
                 print(failed_message)
