@@ -275,6 +275,62 @@ class ImageExplorerManager:
             self.set_patreon_call_to_action_visible(True)
 
     @staticmethod
+    def _missing_commands(names):
+        return sorted(name for name in names if shutil.which(name) is None)
+
+    @staticmethod
+    def _nbdkit_supports(arguments):
+        process = subprocess.run(
+            ["nbdkit", *arguments, "--dump-plugin"],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            check=False,
+        )
+        return process.returncode == 0
+
+    @staticmethod
+    def _nbdkit_compression_args(compression):
+        candidates = {
+            "uncompressed": [["file"]],
+            "xz": [["--filter=xz", "file"]],
+            "gzip": [["--filter=gzip", "file"], ["gzip"]],
+        }.get(compression, [])
+        for candidate in candidates:
+            if ImageExplorerManager._nbdkit_supports(
+                ["--filter=truncate", *candidate]
+            ):
+                return candidate
+        return None
+
+    @staticmethod
+    def _partclone_capability_error(compression):
+        missing = ImageExplorerManager._missing_commands(
+            [
+                "findmnt",
+                "modprobe",
+                "mount",
+                "umount",
+                "nbd-client",
+                "nbdkit",
+                "partclone-nbd",
+            ]
+        )
+        if missing:
+            return None, "Image Explorer requires: " + ", ".join(missing)
+        if not ImageExplorerManager._nbdkit_supports(
+            ["--filter=truncate", "split"]
+        ):
+            return None, "nbdkit is missing the split plugin or truncate filter."
+        arguments = ImageExplorerManager._nbdkit_compression_args(compression)
+        if arguments is None:
+            return None, (
+                "nbdkit cannot read "
+                + compression
+                + " images with its installed plugins/filters."
+            )
+        return arguments, ""
+
+    @staticmethod
     def pop_and_kill(process_name, process_queue):
         if process_queue is None:
             return True, ""
@@ -524,56 +580,18 @@ class ImageExplorerManager:
         env = Utility.get_env_C_locale()
         backup_timestart = datetime.now()
         try:
-            if not os.path.exists(destination_path) and not os.path.isdir(
-                destination_path
-            ):
-                os.mkdir(destination_path, 0o755)
-
-            if shutil.which("nbdkit") is None:
-                GLib.idle_add(callback, False, "nbdkit not found")
-                GLib.idle_add(please_wait_popup.destroy)
-                return
-
-            if self._check_stop_and_cleanup(
-                please_wait_popup, callback, destination_path
-            ):
-                return
-
-            GLib.idle_add(
-                please_wait_popup.set_secondary_label_text,
-                "Loading Network Block Device driver (step 1/5)",
-            )
-            # Ensure nbd-kernel module loaded
-            process, flat_command_string, failed_message = Utility.interruptable_run(
-                "Loading NBD kernel module",
-                ["modprobe", "nbd"],
-                use_c_locale=True,
-                is_shutdown_fn=self.is_stop_requested,
-            )
-            if process.returncode != 0:
-                print(failed_message)
-                GLib.idle_add(callback, False, failed_message)
-                GLib.idle_add(please_wait_popup.destroy)
-                return
-
-            # Unmount any previous
-            is_unmount_success, failed_message = self._do_unmount(destination_path)
-            if not is_unmount_success:
-                print(failed_message)
-                GLib.idle_add(callback, False, failed_message)
-                GLib.idle_add(please_wait_popup.destroy)
-                return
-
             mount_device = MOUNTABLE_NBD_DEVICE
             compression = ""
             image_file_list = []
+            nbd_compression_filter_and_plugin = None
+            capability_error = ""
             if (
-                isinstance(self.selected_image, ClonezillaImage)
-                or isinstance(self.selected_image, RedoBackupLegacyImage)
-                or isinstance(self.selected_image, FogProjectImage)
-                or isinstance(self.selected_image, RedoRescueImage)
-                or isinstance(self.selected_image, FoxcloneImage)
-                or isinstance(self.selected_image, ApartGtkImage)
+                isinstance(image, ClonezillaImage)
+                or isinstance(image, RedoBackupLegacyImage)
+                or isinstance(image, FogProjectImage)
+                or isinstance(image, RedoRescueImage)
+                or isinstance(image, FoxcloneImage)
+                or isinstance(image, ApartGtkImage)
             ):
                 # Clonezilla images support gzip bzip2 lzo lzma xz lzip lrzip lz4 zstd and uncompressed.
                 if (
@@ -617,7 +635,61 @@ class ImageExplorerManager:
                     )
                     GLib.idle_add(please_wait_popup.destroy)
                     return
+                (
+                    nbd_compression_filter_and_plugin,
+                    capability_error,
+                ) = self._partclone_capability_error(compression)
             elif isinstance(image, QemuImage):
+                missing = self._missing_commands(
+                    ["blkid", "nbd-client", "qemu-img", "qemu-nbd"]
+                )
+                capability_error = (
+                    "Image Explorer requires: " + ", ".join(missing)
+                    if missing
+                    else ""
+                )
+
+            if capability_error:
+                GLib.idle_add(callback, False, capability_error)
+                GLib.idle_add(please_wait_popup.destroy)
+                return
+
+            if not os.path.exists(destination_path) and not os.path.isdir(
+                destination_path
+            ):
+                os.mkdir(destination_path, 0o755)
+
+            if self._check_stop_and_cleanup(
+                please_wait_popup, callback, destination_path
+            ):
+                return
+
+            GLib.idle_add(
+                please_wait_popup.set_secondary_label_text,
+                "Loading Network Block Device driver (step 1/5)",
+            )
+            # Ensure nbd-kernel module loaded
+            process, flat_command_string, failed_message = Utility.interruptable_run(
+                "Loading NBD kernel module",
+                ["modprobe", "nbd"],
+                use_c_locale=True,
+                is_shutdown_fn=self.is_stop_requested,
+            )
+            if process.returncode != 0:
+                print(failed_message)
+                GLib.idle_add(callback, False, failed_message)
+                GLib.idle_add(please_wait_popup.destroy)
+                return
+
+            # Unmount any previous
+            is_unmount_success, failed_message = self._do_unmount(destination_path)
+            if not is_unmount_success:
+                print(failed_message)
+                GLib.idle_add(callback, False, failed_message)
+                GLib.idle_add(please_wait_popup.destroy)
+                return
+
+            if isinstance(image, QemuImage):
                 image.associate_nbd(QEMU_NBD_NBD_DEVICE)
                 base_device_node, partition_number = Utility.split_device_string(
                     partition_key
@@ -631,8 +703,8 @@ class ImageExplorerManager:
                 # concatenation is actually occurring.
                 #
                 # nbdkit's "--filter=" arguments can be used to decompress requested blocks on-the-fly in a single nbdkit
-                # invocation. However for flexibility with the older nbdkit version in Ubuntu 20.04 (see below),
-                # and the limited number of compression filters even in recent nbdkit versions, Rescuezilla does this in
+                # invocation. However for flexibility with older nbdkit versions and the limited number of compression
+                # filters even in recent nbdkit versions, Rescuezilla does this in
                 # two steps: joining the files is a different step to decompressing the files. This approach provides
                 # greater flexibility for alternative decompression utilities such as perhaps `archivemount` or AVFS.
 
@@ -709,47 +781,6 @@ class ImageExplorerManager:
                 if self._check_stop_and_cleanup(
                     please_wait_popup, callback, destination_path
                 ):
-                    return
-
-                nbd_compression_filter_and_plugin = []
-                if "xz" == compression:
-                    # In the xz case, use the file plugin and the xz filter
-                    nbd_compression_filter_and_plugin = ["--filter=xz", "file"]
-                elif "gzip" == compression:
-                    # In the gzip case, use the gzip plugin. This is because Ubuntu 20.04 (Focal) still use nbdkit v1.16
-                    # which had not yet removed the gzip plugin and replaced it with a gzip filter [1] [2]
-                    # [1] https://bugs.launchpad.net/ubuntu/+source/nbdkit/+bug/1904554
-                    # [2] https://packages.ubuntu.com/focal/nbdkit
-                    nbd_compression_filter_and_plugin = ["gzip"]
-                elif "uncompressed" == compression:
-                    # In the uncompressed case, use the file plugin without any compression filters (passthrough). This
-                    # unnecessary extra layer for uncompressed data is inefficient in theory (and possibly in practice) but
-                    # this approach makes the code simpler and the uncompressed case is still way faster than compressed.
-                    nbd_compression_filter_and_plugin = ["file"]
-                else:
-                    # Clonezilla still has more compression formats: bzip2 lzo lzma lzip lrzip lz4 zstd
-                    # TODO: This codepath shouldn't ever be hit currently due to being dealt with earlier.
-                    # TODO: Use the FUSE-based tools archivemount and/or AVFS to provide at least some basic/slow fallback
-                    # TODO: support for these compression formats widely used by Expert Mode Clonezilla users.
-                    # During testing there was a 'permission denied' error using archivemount with nbd block devices,
-                    # even after settings the correct configuration in /etc/fuse.conf and using `-o allow_root`.
-                    is_unmount_success, unmount_failed_message = self._do_unmount(
-                        destination_path,
-                        self.nbdkit_join_process_queue,
-                        self.nbdkit_decompress_process_queue,
-                        self.partclone_nbd_process_queue,
-                        is_deassociate_qemu_nbd_device=isinstance(
-                            getattr(self, "selected_image", None), QemuImage
-                        ),
-                    )
-                    if not is_unmount_success:
-                        failed_message += "\n\n" + unmount_failed_message
-                    failed_message = (
-                        "Image Explorer (beta) doesn't yet support image compression: "
-                        + compression
-                    )
-                    GLib.idle_add(callback, False, failed_message)
-                    GLib.idle_add(please_wait_popup.destroy)
                     return
 
                 # Launches nbdkit using eg, the 'file' plugin (`man nbdkit-file-plugin`) with a specific decompression
