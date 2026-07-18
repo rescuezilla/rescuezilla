@@ -61,7 +61,7 @@ display_yad() {
 #
 #  Define base command for executing Rescuezilla
 #
-BASE_CMD="/usr/sbin/rescuezillapy $*"
+BASE_CMD="/usr/bin/python3 /usr/lib/rescuezilla/rescuezilla.py $*"
 
 #
 # Cannot launch Rescuezilla if GParted is already running.
@@ -117,7 +117,7 @@ if test "x`id -u`" != "x0"; then
     #
     # Run rescuezilla as root.
     #
-    pkexec --disable-internal-agent '/usr/sbin/rescuezilla' "$@"
+    pkexec --disable-internal-agent '/usr/bin/rescuezilla' "$@"
     status=$?
 
     #
