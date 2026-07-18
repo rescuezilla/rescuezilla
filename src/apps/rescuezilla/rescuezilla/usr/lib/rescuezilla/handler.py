@@ -1376,6 +1376,7 @@ class Handler:
     def exit_app(self):
         print("Exiting Rescuezilla.")
         try:
+            self.image_explorer_manager.cancel_image_explorer()
             returncode, failed_message = (
                 self.image_explorer_manager.cleanup_owned_resources(IMAGE_EXPLORER_DIR)
             )

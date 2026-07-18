@@ -471,6 +471,23 @@ class ImageExplorerManager:
                 qemu_nbd_device_owned=self.qemu_nbd_device_owned,
             )
 
+    def _associate_owned_nbd(self, ownership, associate):
+        with self.cleanup_lock:
+            if self.is_stop_requested():
+                return None, ""
+            is_success, message = associate()
+            if is_success:
+                ownership.set()
+            return is_success, message
+
+    def _start_owned_process(self, process_queue, command, **kwargs):
+        with self.cleanup_lock:
+            if self.is_stop_requested():
+                return None
+            process = subprocess.Popen(command, **kwargs)
+            process_queue.put(process)
+            return process
+
     def get_partition_compression(self, selected_partition_key):
         if (
             "compression"
@@ -716,12 +733,23 @@ class ImageExplorerManager:
                 return
 
             if isinstance(image, QemuImage):
-                is_success, failed_message = image.associate_nbd(QEMU_NBD_NBD_DEVICE)
+                is_success, failed_message = self._associate_owned_nbd(
+                    self.qemu_nbd_device_owned,
+                    lambda: image.associate_nbd(QEMU_NBD_NBD_DEVICE),
+                )
+                if is_success is None:
+                    self._check_stop_and_cleanup(
+                        please_wait_popup, callback, destination_path
+                    )
+                    return
                 if not is_success:
                     GLib.idle_add(callback, False, failed_message)
                     GLib.idle_add(please_wait_popup.destroy)
                     return
-                self.qemu_nbd_device_owned.set()
+                if self._check_stop_and_cleanup(
+                    please_wait_popup, callback, destination_path
+                ):
+                    return
                 base_device_node, partition_number = Utility.split_device_string(
                     partition_key
                 )
@@ -757,18 +785,23 @@ class ImageExplorerManager:
                     "Joining all the split image files (this may take a while) (step 2/5",
                 )
                 # Launch the server (long-lived process so PID/exit code/stdout/stderr management is especially important)
-                nbdkit_join_process = subprocess.Popen(
+                nbdkit_join_process = self._start_owned_process(
+                    self.nbdkit_join_process_queue,
                     nbdkit_join_cmd_list,
                     stdout=subprocess.PIPE,
                     env=env,
                     encoding="utf-8",
                 )
+                if nbdkit_join_process is None:
+                    self._check_stop_and_cleanup(
+                        please_wait_popup, callback, destination_path
+                    )
+                    return
                 print(
                     "Adding join process with pid "
                     + str(nbdkit_join_process.pid)
                     + " to queue"
                 )
-                self.nbdkit_join_process_queue.put(nbdkit_join_process)
 
                 if self._check_stop_and_cleanup(
                     please_wait_popup, callback, destination_path
@@ -783,15 +816,23 @@ class ImageExplorerManager:
                     "localhost",
                     JOINED_FILES_NBD_DEVICE,
                 ]
-                is_success, message = Utility.retry_run(
-                    short_description="Associating the nbdkit server process being used for dynamic CONCATENATION with the nbd device node: "
-                    + JOINED_FILES_NBD_DEVICE,
-                    cmd_list=nbdclient_connect_cmd_list,
-                    expected_error_msg="Error: Socket failed: Connection refused",
-                    retry_interval_seconds=1,
-                    timeout_seconds=5,
-                    is_shutdown_fn=self.is_stop_requested,
+                is_success, message = self._associate_owned_nbd(
+                    self.joined_nbd_device_owned,
+                    lambda: Utility.retry_run(
+                        short_description="Associating the nbdkit server process being used for dynamic CONCATENATION with the nbd device node: "
+                        + JOINED_FILES_NBD_DEVICE,
+                        cmd_list=nbdclient_connect_cmd_list,
+                        expected_error_msg="Error: Socket failed: Connection refused",
+                        retry_interval_seconds=1,
+                        timeout_seconds=5,
+                        is_shutdown_fn=self.is_stop_requested,
+                    ),
                 )
+                if is_success is None:
+                    self._check_stop_and_cleanup(
+                        please_wait_popup, callback, destination_path
+                    )
+                    return
                 if not is_success:
                     failed_message = message
                     is_unmount_success, unmount_failed_message = (
@@ -802,8 +843,6 @@ class ImageExplorerManager:
                     GLib.idle_add(callback, False, failed_message)
                     GLib.idle_add(please_wait_popup.destroy)
                     return
-
-                self.joined_nbd_device_owned.set()
 
                 if self._check_stop_and_cleanup(
                     please_wait_popup, callback, destination_path
@@ -835,18 +874,23 @@ class ImageExplorerManager:
                     please_wait_popup.set_secondary_label_text,
                     "Decompressing the combined partclone image file (this may take while) (step 3/5)",
                 )
-                nbdkit_decompress_process = subprocess.Popen(
+                nbdkit_decompress_process = self._start_owned_process(
+                    self.nbdkit_decompress_process_queue,
                     nbdkit_decompress_cmd_list,
                     stdout=subprocess.PIPE,
                     env=env,
                     encoding="utf-8",
                 )
+                if nbdkit_decompress_process is None:
+                    self._check_stop_and_cleanup(
+                        please_wait_popup, callback, destination_path
+                    )
+                    return
                 print(
                     "Adding decompress process with pid "
                     + str(nbdkit_decompress_process.pid)
                     + " to queue"
                 )
-                self.nbdkit_decompress_process_queue.put(nbdkit_decompress_process)
 
                 if self._check_stop_and_cleanup(
                     please_wait_popup, callback, destination_path
@@ -861,15 +905,24 @@ class ImageExplorerManager:
                     port,
                     DECOMPRESSED_NBD_DEVICE,
                 ]
-                is_success, message = Utility.retry_run(
-                    short_description="Associating the nbdkit server process being used for dynamic DECOMPRESSION with the nbd device node. For gzip data this may take a while (as it effectively decompresses entire archive): "
-                    + DECOMPRESSED_NBD_DEVICE,
-                    cmd_list=nbdclient_connect_cmd_list,
-                    expected_error_msg="Error: Socket failed: Connection refused",
-                    retry_interval_seconds=1,
-                    timeout_seconds=5,
-                    is_shutdown_fn=self.is_stop_requested,
+                is_success, message = self._associate_owned_nbd(
+                    self.decompressed_nbd_device_owned,
+                    lambda: Utility.retry_run(
+                        short_description="Associating the nbdkit server process being used for dynamic DECOMPRESSION with the nbd device node. For gzip data this may take a while (as it effectively decompresses entire archive): "
+                        + DECOMPRESSED_NBD_DEVICE,
+                        cmd_list=nbdclient_connect_cmd_list,
+                        expected_error_msg="Error: Socket failed: Connection refused",
+                        retry_interval_seconds=1,
+                        timeout_seconds=5,
+                        is_shutdown_fn=self.is_stop_requested,
+                    ),
                 )
+
+                if is_success is None:
+                    self._check_stop_and_cleanup(
+                        please_wait_popup, callback, destination_path
+                    )
+                    return
 
                 if not is_success:
                     failed_message = message
@@ -881,8 +934,6 @@ class ImageExplorerManager:
                     GLib.idle_add(callback, False, failed_message)
                     GLib.idle_add(please_wait_popup.destroy)
                     return
-
-                self.decompressed_nbd_device_owned.set()
 
                 if self._check_stop_and_cleanup(
                     please_wait_popup, callback, destination_path
@@ -907,19 +958,24 @@ class ImageExplorerManager:
                     please_wait_popup.set_secondary_label_text,
                     "Processing image with partclone-nbd (this may take a while) (step 4/5)",
                 )
-                partclone_nbd_process = subprocess.Popen(
+                partclone_nbd_process = self._start_owned_process(
+                    self.partclone_nbd_process_queue,
                     partclone_nbd_mount_cmd_list,
                     stdout=subprocess.PIPE,
                     stderr=subprocess.PIPE,
                     env=env,
                 )
+                if partclone_nbd_process is None:
+                    self._check_stop_and_cleanup(
+                        please_wait_popup, callback, destination_path
+                    )
+                    return
 
                 print(
                     "Adding partclone-nbd process with pid "
                     + str(partclone_nbd_process.pid)
                     + " to queue"
                 )
-                self.partclone_nbd_process_queue.put(partclone_nbd_process)
                 # Sentinel value for successful partclone-nbd mount. partclone-nbd is launched with C locale env, so this
                 # string will match even for non-English locales.
                 partclone_nbd_ready_msg_pattern = r".*Waiting for requests.*"
@@ -992,12 +1048,22 @@ class ImageExplorerManager:
                 please_wait_popup.set_secondary_label_text,
                 "Mounting image (this may take a while) (step 5/5)",
             )
-            process, flat_command_string, failed_message = Utility.interruptable_run(
-                "Mount ",
-                mount_cmd_list,
-                use_c_locale=False,
-                is_shutdown_fn=self.is_stop_requested,
-            )
+            process = None
+            with self.cleanup_lock:
+                if not self.is_stop_requested():
+                    process, flat_command_string, failed_message = (
+                        Utility.interruptable_run(
+                            "Mount ",
+                            mount_cmd_list,
+                            use_c_locale=False,
+                            is_shutdown_fn=self.is_stop_requested,
+                        )
+                    )
+            if process is None:
+                self._check_stop_and_cleanup(
+                    please_wait_popup, callback, destination_path
+                )
+                return
             if process.returncode != 0:
                 is_unmount_success, unmount_failed_message = (
                     self.cleanup_owned_resources(destination_path)

@@ -19,6 +19,19 @@ from wizard_state import (
 )
 
 
+class NotifyingLock:
+    def __init__(self, notices):
+        self.lock = threading.Lock()
+        self.notices = notices
+
+    def __enter__(self):
+        self.notices.put(("lock", threading.current_thread().name))
+        self.lock.acquire()
+
+    def __exit__(self, *_args):
+        self.lock.release()
+
+
 class ImageExplorerCleanupTest(unittest.TestCase):
     @staticmethod
     def make_manager():
@@ -30,6 +43,8 @@ class ImageExplorerCleanupTest(unittest.TestCase):
         manager.decompressed_nbd_device_owned = threading.Event()
         manager.qemu_nbd_device_owned = threading.Event()
         manager.cleanup_lock = threading.Lock()
+        manager.requested_stop_lock = threading.Lock()
+        manager.requested_stop = False
         return manager
 
     @patch.object(Utility, "run")
@@ -104,18 +119,7 @@ class ImageExplorerCleanupTest(unittest.TestCase):
         disconnects = []
         errors = []
 
-        class NotifyingLock:
-            def __init__(self):
-                self.lock = threading.Lock()
-
-            def __enter__(self):
-                notices.put(("lock", threading.current_thread().name))
-                self.lock.acquire()
-
-            def __exit__(self, *_args):
-                self.lock.release()
-
-        manager.cleanup_lock = NotifyingLock()
+        manager.cleanup_lock = NotifyingLock(notices)
 
         def mocked_run(_description, command, **_kwargs):
             if command == ["modprobe", "nbd"]:
@@ -136,14 +140,17 @@ class ImageExplorerCleanupTest(unittest.TestCase):
         run.side_effect = mocked_run
         first = threading.Thread(target=cleanup, name="first")
         second = threading.Thread(target=cleanup, name="second")
-        first.start()
-        while notices.get(timeout=2) != ("modprobe", "first"):
-            pass
-        second.start()
-        second_notice = notices.get(timeout=2)
-        release_first.set()
-        first.join(2)
-        second.join(2)
+        try:
+            first.start()
+            while notices.get(timeout=2) != ("modprobe", "first"):
+                pass
+            second.start()
+            second_notice = notices.get(timeout=2)
+        finally:
+            release_first.set()
+            first.join(2)
+            if second.ident is not None:
+                second.join(2)
 
         self.assertEqual(("lock", "second"), second_notice)
         self.assertFalse(first.is_alive() or second.is_alive())
@@ -152,6 +159,236 @@ class ImageExplorerCleanupTest(unittest.TestCase):
             [["nbd-client", "-disconnect", JOINED_FILES_NBD_DEVICE]],
             disconnects,
         )
+
+    @patch("image_explorer_manager.GLib.idle_add")
+    @patch.object(ImageExplorerManager, "_missing_commands", return_value=[])
+    @patch("image_explorer_manager.os.path.exists", return_value=True)
+    @patch.object(Utility, "interruptable_run")
+    @patch.object(Utility, "umount_warn_on_busy", return_value=(True, ""))
+    @patch.object(Utility, "run")
+    @patch.object(QemuImage, "deassociate_nbd", return_value=(True, ""))
+    def test_cleanup_waits_for_association_ownership_publication(
+        self,
+        deassociate_nbd,
+        run,
+        _umount,
+        interruptable_run,
+        _exists,
+        _missing_commands,
+        _idle_add,
+    ):
+        manager = self.make_manager()
+        notices = Queue()
+        manager.cleanup_lock = NotifyingLock(notices)
+        image = QemuImage.__new__(QemuImage)
+        manager.selected_image = image
+        association_started = threading.Event()
+        finish_association = threading.Event()
+        cleanup_done = threading.Event()
+        errors = []
+
+        def associate(_device):
+            association_started.set()
+            finish_association.wait(2)
+            return True, ""
+
+        def mount_worker():
+            try:
+                manager._do_mount_command(
+                    Mock(), Mock(), image, "/dev/sda1", IMAGE_EXPLORER_DIR
+                )
+            except Exception as exception:
+                errors.append(exception)
+
+        def cleanup_worker():
+            try:
+                manager.cleanup_owned_resources(IMAGE_EXPLORER_DIR)
+            except Exception as exception:
+                errors.append(exception)
+            finally:
+                cleanup_done.set()
+
+        image.associate_nbd = Mock(side_effect=associate)
+        interruptable_run.return_value = (Mock(returncode=0), "", "")
+        run.return_value = (Mock(returncode=0), "", "")
+        mount_thread = threading.Thread(target=mount_worker, name="mount")
+        cleanup_thread = threading.Thread(target=cleanup_worker, name="cleanup")
+        try:
+            mount_thread.start()
+            self.assertTrue(association_started.wait(2))
+            manager.cancel_image_explorer()
+            cleanup_thread.start()
+            while notices.get(timeout=2) != ("lock", "cleanup"):
+                pass
+            cleanup_was_blocked = not cleanup_done.is_set()
+        finally:
+            finish_association.set()
+            mount_thread.join(2)
+            if cleanup_thread.ident is not None:
+                cleanup_thread.join(2)
+
+        self.assertTrue(cleanup_was_blocked)
+        self.assertFalse(mount_thread.is_alive() or cleanup_thread.is_alive())
+        self.assertEqual([], errors)
+        deassociate_nbd.assert_called_once_with(QEMU_NBD_NBD_DEVICE)
+        self.assertFalse(manager.qemu_nbd_device_owned.is_set())
+        self.assertEqual(1, interruptable_run.call_count)
+
+    @patch("image_explorer_manager.subprocess.Popen")
+    @patch("image_explorer_manager.GLib.idle_add")
+    @patch.object(ImageExplorerManager, "_missing_commands", return_value=[])
+    @patch("image_explorer_manager.os.path.exists", return_value=True)
+    @patch.object(Utility, "interruptable_run")
+    @patch.object(Utility, "umount_warn_on_busy")
+    @patch.object(Utility, "run")
+    @patch.object(QemuImage, "deassociate_nbd", return_value=(True, ""))
+    def test_cancellation_before_resource_lock_prevents_qemu_attach_and_mount(
+        self,
+        _deassociate_nbd,
+        run,
+        umount,
+        interruptable_run,
+        _exists,
+        _missing_commands,
+        _idle_add,
+        popen,
+    ):
+        manager = self.make_manager()
+        image = QemuImage.__new__(QemuImage)
+        image.associate_nbd = Mock(return_value=(True, ""))
+        manager.selected_image = image
+        pre_unmount_started = threading.Event()
+        finish_pre_unmount = threading.Event()
+        errors = []
+        umount_count = 0
+
+        def unmount(_path):
+            nonlocal umount_count
+            umount_count += 1
+            if umount_count == 1:
+                pre_unmount_started.set()
+                finish_pre_unmount.wait(2)
+            return True, ""
+
+        def mount_worker():
+            try:
+                manager._do_mount_command(
+                    Mock(), Mock(), image, "/dev/sda1", IMAGE_EXPLORER_DIR
+                )
+            except Exception as exception:
+                errors.append(exception)
+
+        umount.side_effect = unmount
+        interruptable_run.return_value = (Mock(returncode=0), "", "")
+        run.return_value = (Mock(returncode=0), "", "")
+        manager.cleanup_lock.acquire()
+        mount_thread = threading.Thread(target=mount_worker)
+        try:
+            mount_thread.start()
+            self.assertTrue(pre_unmount_started.wait(2))
+            manager.cancel_image_explorer()
+        finally:
+            finish_pre_unmount.set()
+            if manager.cleanup_lock.locked():
+                manager.cleanup_lock.release()
+            mount_thread.join(2)
+
+        self.assertFalse(mount_thread.is_alive())
+        self.assertEqual([], errors)
+        image.associate_nbd.assert_not_called()
+        self.assertEqual(1, interruptable_run.call_count)
+        self.assertFalse(manager.qemu_nbd_device_owned.is_set())
+        self.assertIsNone(
+            manager._start_owned_process(Queue(), ["nbdkit", "--no-fork"])
+        )
+        popen.assert_not_called()
+
+    @patch("image_explorer_manager.GLib.idle_add")
+    @patch.object(Utility, "print_cli_friendly", return_value="")
+    @patch.object(Utility, "retry_run")
+    @patch.object(Utility, "interruptable_run")
+    @patch.object(Utility, "umount_warn_on_busy", return_value=(True, ""))
+    @patch.object(
+        ImageExplorerManager,
+        "_partclone_capability_error",
+        return_value=(["file"], ""),
+    )
+    @patch("image_explorer_manager.os.path.exists", return_value=True)
+    @patch("image_explorer_manager.subprocess.Popen")
+    def test_cleanup_waits_for_process_queue_publication(
+        self,
+        popen,
+        _exists,
+        _capability_error,
+        _umount,
+        interruptable_run,
+        retry_run,
+        _print_cli_friendly,
+        _idle_add,
+    ):
+        manager = self.make_manager()
+        notices = Queue()
+        manager.cleanup_lock = NotifyingLock(notices)
+        image = ClonezillaImage.__new__(ClonezillaImage)
+        image.image_format_dict_dict = {
+            "sda1": {
+                "absolute_filename_glob_list": ["/backup/sda1.img"],
+                "compression": "uncompressed",
+                "type": "partclone",
+            }
+        }
+        manager.selected_image = image
+        process = Mock(pid=1234)
+        popen_started = threading.Event()
+        finish_popen = threading.Event()
+        cleanup_done = threading.Event()
+        errors = []
+
+        def start_process(*_args, **_kwargs):
+            popen_started.set()
+            finish_popen.wait(2)
+            return process
+
+        def mount_worker():
+            try:
+                manager._do_mount_command(
+                    Mock(), Mock(), image, "sda1", IMAGE_EXPLORER_DIR
+                )
+            except Exception as exception:
+                errors.append(exception)
+
+        def cleanup_worker():
+            try:
+                manager.cleanup_owned_resources(IMAGE_EXPLORER_DIR)
+            except Exception as exception:
+                errors.append(exception)
+            finally:
+                cleanup_done.set()
+
+        popen.side_effect = start_process
+        interruptable_run.return_value = (Mock(returncode=0), "", "")
+        mount_thread = threading.Thread(target=mount_worker, name="mount")
+        cleanup_thread = threading.Thread(target=cleanup_worker, name="cleanup")
+        try:
+            mount_thread.start()
+            self.assertTrue(popen_started.wait(2))
+            manager.cancel_image_explorer()
+            cleanup_thread.start()
+            while notices.get(timeout=2) != ("lock", "cleanup"):
+                pass
+            cleanup_was_blocked = not cleanup_done.is_set()
+        finally:
+            finish_popen.set()
+            mount_thread.join(2)
+            if cleanup_thread.ident is not None:
+                cleanup_thread.join(2)
+
+        self.assertTrue(cleanup_was_blocked)
+        self.assertFalse(mount_thread.is_alive() or cleanup_thread.is_alive())
+        self.assertEqual([], errors)
+        process.send_signal.assert_called_once_with(signal.SIGTERM)
+        self.assertTrue(manager.nbdkit_join_process_queue.empty())
+        retry_run.assert_not_called()
 
     @patch.object(QemuImage, "deassociate_nbd", return_value=(True, ""))
     @patch.object(Utility, "run")
@@ -204,10 +441,17 @@ class ImageExplorerCleanupTest(unittest.TestCase):
     def test_handler_exit_uses_manager_owned_cleanup(self, unmount, _popen, _main_quit):
         handler = Handler.__new__(Handler)
         handler.image_explorer_manager = Mock()
-        handler.image_explorer_manager.cleanup_owned_resources.return_value = (True, "")
+        calls = []
+        handler.image_explorer_manager.cancel_image_explorer.side_effect = lambda: (
+            calls.append("cancel")
+        )
+        handler.image_explorer_manager.cleanup_owned_resources.side_effect = (
+            lambda _path: calls.append("cleanup") or (True, "")
+        )
 
         handler.exit_app()
 
+        self.assertEqual(["cancel", "cleanup"], calls)
         handler.image_explorer_manager.cleanup_owned_resources.assert_called_once_with(
             IMAGE_EXPLORER_DIR
         )
