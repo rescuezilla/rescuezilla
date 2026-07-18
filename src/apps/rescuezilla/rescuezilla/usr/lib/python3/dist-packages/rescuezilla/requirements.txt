@@ -1,8 +1,0 @@
-Babel==2.9.1
-pkg-resources==0.0.0
-pycairo==1.20.0
-PyGObject==3.38.0
-pytz==2020.1
-ruamel.yaml==0.16.12
-ruamel.yaml.clib==0.2.2
-vext==0.7.4

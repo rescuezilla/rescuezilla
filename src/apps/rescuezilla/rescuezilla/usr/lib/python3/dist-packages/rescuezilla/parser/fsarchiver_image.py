@@ -20,10 +20,8 @@ import re
 from datetime import datetime
 from pathlib import Path
 
-from babel.dates import format_datetime
-
 import utility
-from utility import Utility
+from utility import Utility, format_datetime
 
 
 # The handling of FSArchiver images is not derived from the FSArchiver source code, but has been implemented purely

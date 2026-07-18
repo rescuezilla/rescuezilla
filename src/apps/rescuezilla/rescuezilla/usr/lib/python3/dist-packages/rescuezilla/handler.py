@@ -1929,7 +1929,7 @@ class Handler:
 
     def open_url_as_non_root(self, button):
         uri = button.get_uri()
-        target_user = "ubuntu"
+        target_user = Utility.get_original_user()
         is_success, failed_message = Utility.open_url_as_user(target_user, uri)
         if not is_success:
             ErrorMessageModalPopup.display_nonfatal_warning_message(
@@ -2160,7 +2160,7 @@ class Handler:
                 + IMAGE_EXPLORER_DIR,
             )
         else:
-            target_user = "ubuntu"
+            target_user = Utility.get_original_user()
             if not Utility.is_user_valid(target_user):
                 print(target_user + " does not exist, using root")
                 target_user = "root"
