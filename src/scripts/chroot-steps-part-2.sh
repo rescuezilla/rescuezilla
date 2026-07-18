@@ -14,6 +14,8 @@ if [[ $? -ne 0 ]]; then
   echo "Error: Failed to install Rescuezilla deb packages."
   exit 1
 fi
+install -o root -g root -m 0755 /live-rescuezilla /usr/bin/rescuezilla
+rm /live-rescuezilla
 rm /rescuezilla.*deb
 # HACK(Ref:#367): Backup Ubuntu repository's "partclone.xfs"
 echo "Making backup of Ubuntu repository partclone.xfs binary before installing newer partclone. See #367"

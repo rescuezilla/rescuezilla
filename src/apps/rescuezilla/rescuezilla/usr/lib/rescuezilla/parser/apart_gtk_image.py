@@ -20,10 +20,8 @@ import os
 from datetime import datetime
 from pathlib import Path
 
-from babel.dates import format_datetime
-
 import utility
-from utility import Utility
+from utility import Utility, format_datetime
 
 
 # Apart GTK is a simple Partclone frontend [1]. It operates on partitions, but does not backup partition tables etc.

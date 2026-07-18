@@ -105,6 +105,10 @@ class ImageExplorerManager:
         self.partclone_nbd_process_queue = Queue()
         self.nbdkit_join_process_queue = Queue()
         self.nbdkit_decompress_process_queue = Queue()
+        self.joined_nbd_device_owned = threading.Event()
+        self.decompressed_nbd_device_owned = threading.Event()
+        self.qemu_nbd_device_owned = threading.Event()
+        self.cleanup_lock = threading.Lock()
 
     def is_image_explorer_in_progress(self):
         return self.image_explorer_in_progress
@@ -275,45 +279,87 @@ class ImageExplorerManager:
             self.set_patreon_call_to_action_visible(True)
 
     @staticmethod
-    # This `man pgrep` patterns needs to be kept in sync with the process being used.
-    def pop_and_kill(process_name, process_queue, pgrep_pattern):
-        if process_queue is not None:
-            while not process_queue.empty():
+    def _missing_commands(names):
+        return sorted(name for name in names if shutil.which(name) is None)
+
+    @staticmethod
+    def _nbdkit_supports(arguments):
+        process = subprocess.run(
+            ["nbdkit", *arguments, "--dump-plugin"],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            check=False,
+        )
+        return process.returncode == 0
+
+    @staticmethod
+    def _nbdkit_compression_args(compression):
+        candidates = {
+            "uncompressed": [["file"]],
+            "xz": [["--filter=xz", "file"]],
+            "gzip": [["--filter=gzip", "file"], ["gzip"]],
+        }.get(compression, [])
+        for candidate in candidates:
+            if ImageExplorerManager._nbdkit_supports(["--filter=truncate", *candidate]):
+                return candidate
+        return None
+
+    @staticmethod
+    def _partclone_capability_error(compression):
+        missing = ImageExplorerManager._missing_commands(
+            [
+                "findmnt",
+                "modprobe",
+                "mount",
+                "umount",
+                "nbd-client",
+                "nbdkit",
+                "partclone-nbd",
+            ]
+        )
+        if missing:
+            return None, "Image Explorer requires: " + ", ".join(missing)
+        if not ImageExplorerManager._nbdkit_supports(["--filter=truncate", "split"]):
+            return None, "nbdkit is missing the split plugin or truncate filter."
+        arguments = ImageExplorerManager._nbdkit_compression_args(compression)
+        if arguments is None:
+            return None, (
+                "nbdkit cannot read "
+                + compression
+                + " images with its installed plugins/filters."
+            )
+        return arguments, ""
+
+    @staticmethod
+    def pop_and_kill(process_name, process_queue):
+        if process_queue is None:
+            return True, ""
+        while not process_queue.empty():
+            try:
+                process = process_queue.get_nowait()
+                print(
+                    "Kill "
+                    + process_name
+                    + " with pid "
+                    + str(process.pid)
+                    + " with SIGTERM"
+                )
+                process.send_signal(signal.SIGTERM)
                 try:
-                    process = process_queue.get_nowait()
+                    # Wait for cleanup
+                    process.wait(10)
+                except subprocess.TimeoutExpired:
                     print(
-                        "Kill "
+                        "Timeout expired, kill "
                         + process_name
                         + " with pid "
                         + str(process.pid)
-                        + " with SIGTERM"
+                        + " with SIGKILL"
                     )
-                    process.send_signal(signal.SIGTERM)
-                    try:
-                        # Wait for cleanup
-                        process.wait(10)
-                    except subprocess.TimeoutExpired:
-                        print(
-                            "Timeout expired, kill "
-                            + process_name
-                            + " with pid "
-                            + str(process.pid)
-                            + " with SIGKILL"
-                        )
-                        # Send kill signal
-                        process.send_signal(signal.SIGKILL)
-                except queue.Empty:
-                    break
-        else:
-            # Kill all processes matching the pattern. Sending SIGKILL will leave temporary files without cleaning up,
-            # which for the nbdkit decompression may include very large files.
-            process, flat_command_string, failed_message = Utility.run(
-                "Kill all " + process_name + " processes with SIGKILL",
-                ["pkill", "--signal", "SIGKILL", "--full", pgrep_pattern],
-                use_c_locale=True,
-            )
-            if process.returncode != 0 and process.returncode != 1:
-                return False, failed_message
+                    # Send kill signal
+                    process.send_signal(signal.SIGKILL)
+            except queue.Empty:
+                break
         return True, ""
 
     @staticmethod
@@ -322,61 +368,125 @@ class ImageExplorerManager:
         join_process_queue=None,
         decompress_process_queue=None,
         partclone_nbd_process_queue=None,
-        is_deassociate_qemu_nbd_device=True,
+        is_deassociate_qemu_nbd_device=False,
+        joined_nbd_device_owned=None,
+        decompressed_nbd_device_owned=None,
+        qemu_nbd_device_owned=None,
     ):
-        # Ensure nbd-kernel module loaded (required for nbd-client -disconnect)
-        process, flat_command_string, failed_message = Utility.run(
-            "Loading NBD kernel module", ["modprobe", "nbd"], use_c_locale=True
-        )
-        if process.returncode != 0:
-            return False, failed_message
-
-        # Unmount and cleanup in case a previous invocation of Rescuezilla didn't cleanup.
         is_unmounted, message = Utility.umount_warn_on_busy(destination_path)
         if not is_unmounted:
             return False, message
 
-        if is_deassociate_qemu_nbd_device:
+        owned_queues = (
+            join_process_queue,
+            decompress_process_queue,
+            partclone_nbd_process_queue,
+        )
+        has_owned_process = any(
+            process_queue is not None and not process_queue.empty()
+            for process_queue in owned_queues
+        )
+        owns_joined_device = (
+            joined_nbd_device_owned is not None and joined_nbd_device_owned.is_set()
+        )
+        owns_decompressed_device = (
+            decompressed_nbd_device_owned is not None
+            and decompressed_nbd_device_owned.is_set()
+        )
+        owns_qemu_device = (
+            qemu_nbd_device_owned is not None and qemu_nbd_device_owned.is_set()
+        )
+        if not (
+            has_owned_process
+            or owns_joined_device
+            or owns_decompressed_device
+            or owns_qemu_device
+        ):
+            return True, ""
+
+        if owns_joined_device or owns_decompressed_device or owns_qemu_device:
+            # Ensure nbd-kernel module loaded (required for nbd-client -disconnect)
+            process, flat_command_string, failed_message = Utility.run(
+                "Loading NBD kernel module", ["modprobe", "nbd"], use_c_locale=True
+            )
+            if process.returncode != 0:
+                return False, failed_message
+
+        if owns_qemu_device:
             is_success, message = QemuImage.deassociate_nbd(QEMU_NBD_NBD_DEVICE)
             if not is_success:
                 return False, message
+            qemu_nbd_device_owned.clear()
 
         is_success, message = ImageExplorerManager.pop_and_kill(
-            "partclone-nbd", partclone_nbd_process_queue, "partclone-nbd"
+            "partclone-nbd", partclone_nbd_process_queue
         )
         if not is_success:
             return False, message
 
-        process, flat_command_string, failed_message = Utility.run(
-            "Disconnect nbd decompress association",
-            ["nbd-client", "-disconnect", DECOMPRESSED_NBD_DEVICE],
-            use_c_locale=True,
-        )
-        if process.returncode != 0:
-            return False, failed_message
+        if owns_decompressed_device:
+            process, flat_command_string, failed_message = Utility.run(
+                "Disconnect nbd decompress association",
+                ["nbd-client", "-disconnect", DECOMPRESSED_NBD_DEVICE],
+                use_c_locale=True,
+            )
+            if process.returncode != 0:
+                return False, failed_message
+            decompressed_nbd_device_owned.clear()
 
         is_success, message = ImageExplorerManager.pop_and_kill(
-            "nbdkit decompress", decompress_process_queue, "nbdkit.*split"
+            "nbdkit decompress", decompress_process_queue
         )
         if not is_success:
             return False, message
 
-        process, flat_command_string, failed_message = Utility.run(
-            "Disconnect nbd association",
-            ["nbd-client", "-disconnect", JOINED_FILES_NBD_DEVICE],
-            use_c_locale=True,
-        )
-        if process.returncode != 0:
-            return False, failed_message
+        if owns_joined_device:
+            process, flat_command_string, failed_message = Utility.run(
+                "Disconnect nbd association",
+                ["nbd-client", "-disconnect", JOINED_FILES_NBD_DEVICE],
+                use_c_locale=True,
+            )
+            if process.returncode != 0:
+                return False, failed_message
+            joined_nbd_device_owned.clear()
 
         is_success, message = ImageExplorerManager.pop_and_kill(
-            "nbdkit join", join_process_queue, "nbdkit.*(gzip|file)"
+            "nbdkit join", join_process_queue
         )
         if not is_success:
             return False, message
 
         print("Successfully requested any partclone-nbd images to unmount.")
         return True, ""
+
+    def cleanup_owned_resources(self, destination_path):
+        with self.cleanup_lock:
+            return self._do_unmount(
+                destination_path,
+                self.nbdkit_join_process_queue,
+                self.nbdkit_decompress_process_queue,
+                self.partclone_nbd_process_queue,
+                joined_nbd_device_owned=self.joined_nbd_device_owned,
+                decompressed_nbd_device_owned=self.decompressed_nbd_device_owned,
+                qemu_nbd_device_owned=self.qemu_nbd_device_owned,
+            )
+
+    def _associate_owned_nbd(self, ownership, associate):
+        with self.cleanup_lock:
+            if self.is_stop_requested():
+                return None, ""
+            is_success, message = associate()
+            if is_success:
+                ownership.set()
+            return is_success, message
+
+    def _start_owned_process(self, process_queue, command, **kwargs):
+        with self.cleanup_lock:
+            if self.is_stop_requested():
+                return None
+            process = subprocess.Popen(command, **kwargs)
+            process_queue.put(process)
+            return process
 
     def get_partition_compression(self, selected_partition_key):
         if (
@@ -461,12 +571,7 @@ class ImageExplorerManager:
 
     def _do_unmount_wrapper(self, please_wait_popup, callback, destination_path):
         try:
-            returncode, failed_message = ImageExplorerManager._do_unmount(
-                destination_path,
-                self.nbdkit_join_process_queue,
-                self.nbdkit_decompress_process_queue,
-                self.partclone_nbd_process_queue,
-            )
+            returncode, failed_message = self.cleanup_owned_resources(destination_path)
             if not returncode:
                 print(failed_message)
                 GLib.idle_add(callback, False, failed_message)
@@ -485,12 +590,7 @@ class ImageExplorerManager:
     # FIXME: This logic should be able to be simplified.
     def _check_stop_and_cleanup(self, please_wait_popup, callback, destination_path):
         if self.is_stop_requested():
-            returncode, failed_message = ImageExplorerManager._do_unmount(
-                destination_path,
-                self.nbdkit_join_process_queue,
-                self.nbdkit_decompress_process_queue,
-                self.partclone_nbd_process_queue,
-            )
+            returncode, failed_message = self.cleanup_owned_resources(destination_path)
             if not returncode:
                 print(failed_message)
                 GLib.idle_add(
@@ -516,56 +616,18 @@ class ImageExplorerManager:
         env = Utility.get_env_C_locale()
         backup_timestart = datetime.now()
         try:
-            if not os.path.exists(destination_path) and not os.path.isdir(
-                destination_path
-            ):
-                os.mkdir(destination_path, 0o755)
-
-            if shutil.which("nbdkit") is None:
-                GLib.idle_add(callback, False, "nbdkit not found")
-                GLib.idle_add(please_wait_popup.destroy)
-                return
-
-            if self._check_stop_and_cleanup(
-                please_wait_popup, callback, destination_path
-            ):
-                return
-
-            GLib.idle_add(
-                please_wait_popup.set_secondary_label_text,
-                "Loading Network Block Device driver (step 1/5)",
-            )
-            # Ensure nbd-kernel module loaded
-            process, flat_command_string, failed_message = Utility.interruptable_run(
-                "Loading NBD kernel module",
-                ["modprobe", "nbd"],
-                use_c_locale=True,
-                is_shutdown_fn=self.is_stop_requested,
-            )
-            if process.returncode != 0:
-                print(failed_message)
-                GLib.idle_add(callback, False, failed_message)
-                GLib.idle_add(please_wait_popup.destroy)
-                return
-
-            # Unmount any previous
-            is_unmount_success, failed_message = self._do_unmount(destination_path)
-            if not is_unmount_success:
-                print(failed_message)
-                GLib.idle_add(callback, False, failed_message)
-                GLib.idle_add(please_wait_popup.destroy)
-                return
-
             mount_device = MOUNTABLE_NBD_DEVICE
             compression = ""
             image_file_list = []
+            nbd_compression_filter_and_plugin = None
+            capability_error = ""
             if (
-                isinstance(self.selected_image, ClonezillaImage)
-                or isinstance(self.selected_image, RedoBackupLegacyImage)
-                or isinstance(self.selected_image, FogProjectImage)
-                or isinstance(self.selected_image, RedoRescueImage)
-                or isinstance(self.selected_image, FoxcloneImage)
-                or isinstance(self.selected_image, ApartGtkImage)
+                isinstance(image, ClonezillaImage)
+                or isinstance(image, RedoBackupLegacyImage)
+                or isinstance(image, FogProjectImage)
+                or isinstance(image, RedoRescueImage)
+                or isinstance(image, FoxcloneImage)
+                or isinstance(image, ApartGtkImage)
             ):
                 # Clonezilla images support gzip bzip2 lzo lzma xz lzip lrzip lz4 zstd and uncompressed.
                 if (
@@ -609,8 +671,85 @@ class ImageExplorerManager:
                     )
                     GLib.idle_add(please_wait_popup.destroy)
                     return
+                (
+                    nbd_compression_filter_and_plugin,
+                    capability_error,
+                ) = self._partclone_capability_error(compression)
             elif isinstance(image, QemuImage):
-                image.associate_nbd(QEMU_NBD_NBD_DEVICE)
+                missing = self._missing_commands(
+                    [
+                        "blkid",
+                        "findmnt",
+                        "modprobe",
+                        "mount",
+                        "nbd-client",
+                        "qemu-img",
+                        "qemu-nbd",
+                        "umount",
+                    ]
+                )
+                capability_error = (
+                    "Image Explorer requires: " + ", ".join(missing) if missing else ""
+                )
+
+            if capability_error:
+                GLib.idle_add(callback, False, capability_error)
+                GLib.idle_add(please_wait_popup.destroy)
+                return
+
+            if not os.path.exists(destination_path) and not os.path.isdir(
+                destination_path
+            ):
+                os.mkdir(destination_path, 0o755)
+
+            if self._check_stop_and_cleanup(
+                please_wait_popup, callback, destination_path
+            ):
+                return
+
+            GLib.idle_add(
+                please_wait_popup.set_secondary_label_text,
+                "Loading Network Block Device driver (step 1/5)",
+            )
+            # Ensure nbd-kernel module loaded
+            process, flat_command_string, failed_message = Utility.interruptable_run(
+                "Loading NBD kernel module",
+                ["modprobe", "nbd"],
+                use_c_locale=True,
+                is_shutdown_fn=self.is_stop_requested,
+            )
+            if process.returncode != 0:
+                print(failed_message)
+                GLib.idle_add(callback, False, failed_message)
+                GLib.idle_add(please_wait_popup.destroy)
+                return
+
+            # Unmount any previous
+            is_unmount_success, failed_message = self._do_unmount(destination_path)
+            if not is_unmount_success:
+                print(failed_message)
+                GLib.idle_add(callback, False, failed_message)
+                GLib.idle_add(please_wait_popup.destroy)
+                return
+
+            if isinstance(image, QemuImage):
+                is_success, failed_message = self._associate_owned_nbd(
+                    self.qemu_nbd_device_owned,
+                    lambda: image.associate_nbd(QEMU_NBD_NBD_DEVICE),
+                )
+                if is_success is None:
+                    self._check_stop_and_cleanup(
+                        please_wait_popup, callback, destination_path
+                    )
+                    return
+                if not is_success:
+                    GLib.idle_add(callback, False, failed_message)
+                    GLib.idle_add(please_wait_popup.destroy)
+                    return
+                if self._check_stop_and_cleanup(
+                    please_wait_popup, callback, destination_path
+                ):
+                    return
                 base_device_node, partition_number = Utility.split_device_string(
                     partition_key
                 )
@@ -623,8 +762,8 @@ class ImageExplorerManager:
                 # concatenation is actually occurring.
                 #
                 # nbdkit's "--filter=" arguments can be used to decompress requested blocks on-the-fly in a single nbdkit
-                # invocation. However for flexibility with the older nbdkit version in Ubuntu 20.04 (see below),
-                # and the limited number of compression filters even in recent nbdkit versions, Rescuezilla does this in
+                # invocation. However for flexibility with older nbdkit versions and the limited number of compression
+                # filters even in recent nbdkit versions, Rescuezilla does this in
                 # two steps: joining the files is a different step to decompressing the files. This approach provides
                 # greater flexibility for alternative decompression utilities such as perhaps `archivemount` or AVFS.
 
@@ -646,18 +785,23 @@ class ImageExplorerManager:
                     "Joining all the split image files (this may take a while) (step 2/5",
                 )
                 # Launch the server (long-lived process so PID/exit code/stdout/stderr management is especially important)
-                nbdkit_join_process = subprocess.Popen(
+                nbdkit_join_process = self._start_owned_process(
+                    self.nbdkit_join_process_queue,
                     nbdkit_join_cmd_list,
                     stdout=subprocess.PIPE,
                     env=env,
                     encoding="utf-8",
                 )
+                if nbdkit_join_process is None:
+                    self._check_stop_and_cleanup(
+                        please_wait_popup, callback, destination_path
+                    )
+                    return
                 print(
                     "Adding join process with pid "
                     + str(nbdkit_join_process.pid)
                     + " to queue"
                 )
-                self.nbdkit_join_process_queue.put(nbdkit_join_process)
 
                 if self._check_stop_and_cleanup(
                     please_wait_popup, callback, destination_path
@@ -672,22 +816,27 @@ class ImageExplorerManager:
                     "localhost",
                     JOINED_FILES_NBD_DEVICE,
                 ]
-                is_success, message = Utility.retry_run(
-                    short_description="Associating the nbdkit server process being used for dynamic CONCATENATION with the nbd device node: "
-                    + JOINED_FILES_NBD_DEVICE,
-                    cmd_list=nbdclient_connect_cmd_list,
-                    expected_error_msg="Error: Socket failed: Connection refused",
-                    retry_interval_seconds=1,
-                    timeout_seconds=5,
-                    is_shutdown_fn=self.is_stop_requested,
+                is_success, message = self._associate_owned_nbd(
+                    self.joined_nbd_device_owned,
+                    lambda: Utility.retry_run(
+                        short_description="Associating the nbdkit server process being used for dynamic CONCATENATION with the nbd device node: "
+                        + JOINED_FILES_NBD_DEVICE,
+                        cmd_list=nbdclient_connect_cmd_list,
+                        expected_error_msg="Error: Socket failed: Connection refused",
+                        retry_interval_seconds=1,
+                        timeout_seconds=5,
+                        is_shutdown_fn=self.is_stop_requested,
+                    ),
                 )
+                if is_success is None:
+                    self._check_stop_and_cleanup(
+                        please_wait_popup, callback, destination_path
+                    )
+                    return
                 if not is_success:
                     failed_message = message
-                    is_unmount_success, unmount_failed_message = self._do_unmount(
-                        destination_path,
-                        self.nbdkit_join_process_queue,
-                        self.nbdkit_decompress_process_queue,
-                        self.partclone_nbd_process_queue,
+                    is_unmount_success, unmount_failed_message = (
+                        self.cleanup_owned_resources(destination_path)
                     )
                     if not is_unmount_success:
                         failed_message += "\n\n" + unmount_failed_message
@@ -698,44 +847,6 @@ class ImageExplorerManager:
                 if self._check_stop_and_cleanup(
                     please_wait_popup, callback, destination_path
                 ):
-                    return
-
-                nbd_compression_filter_and_plugin = []
-                if "xz" == compression:
-                    # In the xz case, use the file plugin and the xz filter
-                    nbd_compression_filter_and_plugin = ["--filter=xz", "file"]
-                elif "gzip" == compression:
-                    # In the gzip case, use the gzip plugin. This is because Ubuntu 20.04 (Focal) still use nbdkit v1.16
-                    # which had not yet removed the gzip plugin and replaced it with a gzip filter [1] [2]
-                    # [1] https://bugs.launchpad.net/ubuntu/+source/nbdkit/+bug/1904554
-                    # [2] https://packages.ubuntu.com/focal/nbdkit
-                    nbd_compression_filter_and_plugin = ["gzip"]
-                elif "uncompressed" == compression:
-                    # In the uncompressed case, use the file plugin without any compression filters (passthrough). This
-                    # unnecessary extra layer for uncompressed data is inefficient in theory (and possibly in practice) but
-                    # this approach makes the code simpler and the uncompressed case is still way faster than compressed.
-                    nbd_compression_filter_and_plugin = ["file"]
-                else:
-                    # Clonezilla still has more compression formats: bzip2 lzo lzma lzip lrzip lz4 zstd
-                    # TODO: This codepath shouldn't ever be hit currently due to being dealt with earlier.
-                    # TODO: Use the FUSE-based tools archivemount and/or AVFS to provide at least some basic/slow fallback
-                    # TODO: support for these compression formats widely used by Expert Mode Clonezilla users.
-                    # During testing there was a 'permission denied' error using archivemount with nbd block devices,
-                    # even after settings the correct configuration in /etc/fuse.conf and using `-o allow_root`.
-                    is_unmount_success, unmount_failed_message = self._do_unmount(
-                        destination_path,
-                        self.nbdkit_join_process_queue,
-                        self.nbdkit_decompress_process_queue,
-                        self.partclone_nbd_process_queue,
-                    )
-                    if not is_unmount_success:
-                        failed_message += "\n\n" + unmount_failed_message
-                    failed_message = (
-                        "Image Explorer (beta) doesn't yet support image compression: "
-                        + compression
-                    )
-                    GLib.idle_add(callback, False, failed_message)
-                    GLib.idle_add(please_wait_popup.destroy)
                     return
 
                 # Launches nbdkit using eg, the 'file' plugin (`man nbdkit-file-plugin`) with a specific decompression
@@ -763,23 +874,28 @@ class ImageExplorerManager:
                     please_wait_popup.set_secondary_label_text,
                     "Decompressing the combined partclone image file (this may take while) (step 3/5)",
                 )
-                nbdkit_decompress_process = subprocess.Popen(
+                nbdkit_decompress_process = self._start_owned_process(
+                    self.nbdkit_decompress_process_queue,
                     nbdkit_decompress_cmd_list,
                     stdout=subprocess.PIPE,
                     env=env,
                     encoding="utf-8",
                 )
-
-                if self._check_stop_and_cleanup(
-                    please_wait_popup, callback, destination_path
-                ):
+                if nbdkit_decompress_process is None:
+                    self._check_stop_and_cleanup(
+                        please_wait_popup, callback, destination_path
+                    )
                     return
                 print(
                     "Adding decompress process with pid "
                     + str(nbdkit_decompress_process.pid)
                     + " to queue"
                 )
-                self.nbdkit_decompress_process_queue.put(nbdkit_decompress_process)
+
+                if self._check_stop_and_cleanup(
+                    please_wait_popup, callback, destination_path
+                ):
+                    return
 
                 nbdclient_connect_cmd_list = [
                     "nbd-client",
@@ -789,23 +905,29 @@ class ImageExplorerManager:
                     port,
                     DECOMPRESSED_NBD_DEVICE,
                 ]
-                is_success, message = Utility.retry_run(
-                    short_description="Associating the nbdkit server process being used for dynamic DECOMPRESSION with the nbd device node. For gzip data this may take a while (as it effectively decompresses entire archive): "
-                    + DECOMPRESSED_NBD_DEVICE,
-                    cmd_list=nbdclient_connect_cmd_list,
-                    expected_error_msg="Error: Socket failed: Connection refused",
-                    retry_interval_seconds=1,
-                    timeout_seconds=5,
-                    is_shutdown_fn=self.is_stop_requested,
+                is_success, message = self._associate_owned_nbd(
+                    self.decompressed_nbd_device_owned,
+                    lambda: Utility.retry_run(
+                        short_description="Associating the nbdkit server process being used for dynamic DECOMPRESSION with the nbd device node. For gzip data this may take a while (as it effectively decompresses entire archive): "
+                        + DECOMPRESSED_NBD_DEVICE,
+                        cmd_list=nbdclient_connect_cmd_list,
+                        expected_error_msg="Error: Socket failed: Connection refused",
+                        retry_interval_seconds=1,
+                        timeout_seconds=5,
+                        is_shutdown_fn=self.is_stop_requested,
+                    ),
                 )
+
+                if is_success is None:
+                    self._check_stop_and_cleanup(
+                        please_wait_popup, callback, destination_path
+                    )
+                    return
 
                 if not is_success:
                     failed_message = message
-                    is_unmount_success, unmount_failed_message = self._do_unmount(
-                        destination_path,
-                        self.nbdkit_join_process_queue,
-                        self.nbdkit_decompress_process_queue,
-                        self.partclone_nbd_process_queue,
+                    is_unmount_success, unmount_failed_message = (
+                        self.cleanup_owned_resources(destination_path)
                     )
                     if not is_unmount_success:
                         failed_message += "\n\n" + unmount_failed_message
@@ -836,19 +958,24 @@ class ImageExplorerManager:
                     please_wait_popup.set_secondary_label_text,
                     "Processing image with partclone-nbd (this may take a while) (step 4/5)",
                 )
-                partclone_nbd_process = subprocess.Popen(
+                partclone_nbd_process = self._start_owned_process(
+                    self.partclone_nbd_process_queue,
                     partclone_nbd_mount_cmd_list,
                     stdout=subprocess.PIPE,
                     stderr=subprocess.PIPE,
                     env=env,
                 )
+                if partclone_nbd_process is None:
+                    self._check_stop_and_cleanup(
+                        please_wait_popup, callback, destination_path
+                    )
+                    return
 
                 print(
                     "Adding partclone-nbd process with pid "
                     + str(partclone_nbd_process.pid)
                     + " to queue"
                 )
-                self.partclone_nbd_process_queue.put(partclone_nbd_process)
                 # Sentinel value for successful partclone-nbd mount. partclone-nbd is launched with C locale env, so this
                 # string will match even for non-English locales.
                 partclone_nbd_ready_msg_pattern = r".*Waiting for requests.*"
@@ -902,11 +1029,8 @@ class ImageExplorerManager:
                             please_wait_popup, callback, destination_path
                         )
                         failed_message += "\n" + _("User requested operation to stop.")
-                    is_unmount_success, unmount_failed_message = self._do_unmount(
-                        destination_path,
-                        self.nbdkit_join_process_queue,
-                        self.nbdkit_decompress_process_queue,
-                        self.partclone_nbd_process_queue,
+                    is_unmount_success, unmount_failed_message = (
+                        self.cleanup_owned_resources(destination_path)
                     )
                     if not is_unmount_success:
                         failed_message += "\n\n" + unmount_failed_message
@@ -924,18 +1048,25 @@ class ImageExplorerManager:
                 please_wait_popup.set_secondary_label_text,
                 "Mounting image (this may take a while) (step 5/5)",
             )
-            process, flat_command_string, failed_message = Utility.interruptable_run(
-                "Mount ",
-                mount_cmd_list,
-                use_c_locale=False,
-                is_shutdown_fn=self.is_stop_requested,
-            )
+            process = None
+            with self.cleanup_lock:
+                if not self.is_stop_requested():
+                    process, flat_command_string, failed_message = (
+                        Utility.interruptable_run(
+                            "Mount ",
+                            mount_cmd_list,
+                            use_c_locale=False,
+                            is_shutdown_fn=self.is_stop_requested,
+                        )
+                    )
+            if process is None:
+                self._check_stop_and_cleanup(
+                    please_wait_popup, callback, destination_path
+                )
+                return
             if process.returncode != 0:
-                is_unmount_success, unmount_failed_message = self._do_unmount(
-                    destination_path,
-                    self.nbdkit_join_process_queue,
-                    self.nbdkit_decompress_process_queue,
-                    self.partclone_nbd_process_queue,
+                is_unmount_success, unmount_failed_message = (
+                    self.cleanup_owned_resources(destination_path)
                 )
                 if not is_unmount_success:
                     failed_message += "\n\n" + unmount_failed_message
@@ -963,11 +1094,8 @@ class ImageExplorerManager:
             GLib.idle_add(callback, False, "Error mounting folder: " + tb)
             GLib.idle_add(please_wait_popup.destroy)
             # Cleanup just in case
-            is_unmount_success, unmount_failed_message = self._do_unmount(
-                destination_path,
-                self.nbdkit_join_process_queue,
-                self.nbdkit_decompress_process_queue,
-                self.partclone_nbd_process_queue,
+            is_unmount_success, unmount_failed_message = self.cleanup_owned_resources(
+                destination_path
             )
             if not is_unmount_success:
                 print("Unmount failed " + unmount_failed_message)

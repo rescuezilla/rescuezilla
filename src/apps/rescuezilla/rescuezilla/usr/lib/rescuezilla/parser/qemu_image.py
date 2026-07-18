@@ -134,9 +134,6 @@ class QemuImage(MetadataOnlyImage):
         self.has_initialized = True
 
     def associate_nbd(self, nbd_device):
-        is_success, error_message = self.deassociate_nbd(nbd_device)
-        if not is_success:
-            return False, error_message
         self.long_device_node = nbd_device
         is_raw_img = QemuImage.does_file_extension_refer_to_raw_image(
             self.absolute_path
@@ -177,6 +174,10 @@ class QemuImage(MetadataOnlyImage):
                 retry_interval_seconds=1,
                 timeout_seconds=self.timeout_seconds,
             )
+            if not is_success:
+                is_cleanup_success, cleanup_message = self.deassociate_nbd(nbd_device)
+                if not is_cleanup_success:
+                    message += "\n\n" + cleanup_message
         return is_success, message
 
     @staticmethod

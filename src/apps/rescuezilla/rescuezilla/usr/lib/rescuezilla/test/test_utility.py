@@ -16,12 +16,37 @@
 #   You should have received a copy of the GNU General Public License
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
+import os
 import unittest
+from datetime import datetime
+from unittest.mock import patch
 
-from utility import Utility
+from utility import Utility, format_datetime
 
 
 class UtilityTest(unittest.TestCase):
+    def test_format_datetime_accepts_datetime_and_timestamp(self):
+        value = datetime(2026, 7, 18, 10, 9, 0)
+        with Utility.setlocale("C"):
+            expected = value.strftime("%c")
+            self.assertEqual(expected, format_datetime(value))
+            self.assertEqual(expected, format_datetime(value.timestamp()))
+
+    @patch("utility.pwd.getpwuid")
+    def test_original_user_comes_from_pkexec_uid(self, getpwuid):
+        getpwuid.return_value.pw_name = "balcsida"
+        with patch.dict(os.environ, {"PKEXEC_UID": "1000"}, clear=False):
+            self.assertEqual("balcsida", Utility.get_original_user())
+        getpwuid.assert_called_once_with(1000)
+
+    @patch("utility.pwd.getpwuid")
+    @patch("utility.os.getuid", return_value=0)
+    def test_original_user_falls_back_to_current_uid(self, getuid, getpwuid):
+        getpwuid.return_value.pw_name = "root"
+        with patch.dict(os.environ, {}, clear=True):
+            self.assertEqual("root", Utility.get_original_user())
+        getpwuid.assert_called_once_with(0)
+
     def split(self, split_string, expected_base_device_node, expected_partition_number):
         base_device_node, partition_number = Utility.split_device_string(split_string)
         self.assertEqual(expected_base_device_node, base_device_node)

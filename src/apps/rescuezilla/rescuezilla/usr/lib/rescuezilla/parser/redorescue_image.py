@@ -24,10 +24,8 @@ import tempfile
 from datetime import datetime
 from pathlib import Path
 
-from babel.dates import format_datetime
-
 from parser.sfdisk import Sfdisk
-from utility import Utility, _
+from utility import Utility, _, format_datetime
 
 
 # The handling of Redo Rescue images is not derived from the Redo Rescue source code, but has been implemented purely
