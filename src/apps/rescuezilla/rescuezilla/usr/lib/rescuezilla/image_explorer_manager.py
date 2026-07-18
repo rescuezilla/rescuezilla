@@ -296,9 +296,7 @@ class ImageExplorerManager:
             "gzip": [["--filter=gzip", "file"], ["gzip"]],
         }.get(compression, [])
         for candidate in candidates:
-            if ImageExplorerManager._nbdkit_supports(
-                ["--filter=truncate", *candidate]
-            ):
+            if ImageExplorerManager._nbdkit_supports(["--filter=truncate", *candidate]):
                 return candidate
         return None
 
@@ -317,9 +315,7 @@ class ImageExplorerManager:
         )
         if missing:
             return None, "Image Explorer requires: " + ", ".join(missing)
-        if not ImageExplorerManager._nbdkit_supports(
-            ["--filter=truncate", "split"]
-        ):
+        if not ImageExplorerManager._nbdkit_supports(["--filter=truncate", "split"]):
             return None, "nbdkit is missing the split plugin or truncate filter."
         arguments = ImageExplorerManager._nbdkit_compression_args(compression)
         if arguments is None:
@@ -644,9 +640,7 @@ class ImageExplorerManager:
                     ["blkid", "nbd-client", "qemu-img", "qemu-nbd"]
                 )
                 capability_error = (
-                    "Image Explorer requires: " + ", ".join(missing)
-                    if missing
-                    else ""
+                    "Image Explorer requires: " + ", ".join(missing) if missing else ""
                 )
 
             if capability_error:

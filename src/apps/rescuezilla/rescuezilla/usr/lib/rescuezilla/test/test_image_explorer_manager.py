@@ -116,11 +116,14 @@ class ImageExplorerCleanupTest(unittest.TestCase):
 class ImageExplorerCapabilityTest(unittest.TestCase):
     @patch.object(ImageExplorerManager, "_nbdkit_supports")
     def test_gzip_prefers_modern_filter(self, supports):
-        supports.side_effect = lambda args: args == [
-            "--filter=truncate",
-            "--filter=gzip",
-            "file",
-        ]
+        supports.side_effect = lambda args: (
+            args
+            == [
+                "--filter=truncate",
+                "--filter=gzip",
+                "file",
+            ]
+        )
         self.assertEqual(
             ["--filter=gzip", "file"],
             ImageExplorerManager._nbdkit_compression_args("gzip"),
@@ -150,16 +153,12 @@ class ImageExplorerCapabilityTest(unittest.TestCase):
 
     @patch("image_explorer_manager.shutil.which")
     def test_missing_commands_are_sorted(self, which):
-        which.side_effect = (
-            lambda name: None
-            if name in {"nbdkit", "nbd-client"}
-            else "/usr/bin/" + name
+        which.side_effect = lambda name: (
+            None if name in {"nbdkit", "nbd-client"} else "/usr/bin/" + name
         )
         self.assertEqual(
             ["nbd-client", "nbdkit"],
-            ImageExplorerManager._missing_commands(
-                ["nbdkit", "mount", "nbd-client"]
-            ),
+            ImageExplorerManager._missing_commands(["nbdkit", "mount", "nbd-client"]),
         )
 
     @patch("image_explorer_manager.subprocess.run")
