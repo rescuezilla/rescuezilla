@@ -6,13 +6,15 @@
 # Ali <alisojasi14@gmail.com>, 2025.
 # Barbod Emadoddin <barbod9292@gmail.com>, 2025.
 # Radin Mirzanejad <radin.mirzanejad.91@gmail.com>, 2025.
+# Mostafa Yeylaghi Ashrafi <vergilangleos@users.noreply.hosted.weblate.org>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2025-12-23 11:00+0000\n"
-"Last-Translator: Radin Mirzanejad <radin.mirzanejad.91@gmail.com>\n"
+"PO-Revision-Date: 2026-10-21 19:51+0000\n"
+"Last-Translator: Mostafa Yeylaghi Ashrafi "
+"<vergilangleos@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Persian <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/fa/>\n"
 "Language: fa\n"
@@ -20,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.15.1\n"
+"X-Generator: Weblate 2026.11.dev0\n"
 
 msgid "Welcome"
 msgstr "خوش آمدید"
@@ -47,11 +49,10 @@ msgstr ""
 "کمک میخواهید؟ با بررسی سوالات متداول Rescuezilla شروع کنید، سپس به انجمن "
 "Rescuezilla بروید."
 
-#, fuzzy
 msgid "Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed."
 msgstr ""
-"در نظر بگیرید که ماهانه 1 دلار در وب سایت سرمایه گذاری جمعی Patreon مشارکت "
-"کنید تا Rescuezilla بتواند به توسعه خود ادامه دهد."
+"در نظر بگیرید که میتوانید با ماهانه 1 دلار در وب سایت سرمایه گذاری جمعی "
+"Patreon مشارکت کنید تا Rescuezilla بتواند به توسعه خود ادامه دهد."
 
 msgid "Back"
 msgstr "قبلی"
@@ -124,13 +125,13 @@ msgid "Step 2: Select Source Drive"
 msgstr ""
 
 msgid "Select the <b>source drive</b> to clone."
-msgstr ""
+msgstr "درایو مبدا را جهت کپی برداری مشخص کنید"
 
 msgid "Select the <b>destination drive</b> to overwrite."
-msgstr ""
+msgstr "درایو مقصد را برای بازنشانی اطلاعات مشخص کنید"
 
 msgid "Step 4: Select Partitions to Clone"
-msgstr ""
+msgstr "مرحله۴: انتخاب پارتیشن جهت ایجاد نسخه کپی"
 
 msgid "Select which partitions from the source drive to clone, and whether to overwrite the partition table. <b>Leave everything selected to completely clone the source drive to the destination drive.</b>"
 msgstr ""
