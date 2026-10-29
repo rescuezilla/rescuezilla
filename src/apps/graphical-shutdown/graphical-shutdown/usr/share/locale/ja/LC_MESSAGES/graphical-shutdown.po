@@ -2,10 +2,11 @@
 # ystk <ystk_k_fr@proton.me>, 2025.
 # akichi <kibokura056@gmail.com>, 2025.
 # Minocchi <minocchi@users.noreply.hosted.weblate.org>, 2026.
+# ystk <ystk_k_fr@users.noreply.hosted.weblate.org>, 2026.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2026-10-20 14:51+0000\n"
-"Last-Translator: Minocchi <minocchi@users.noreply.hosted.weblate.org>\n"
+"PO-Revision-Date: 2026-10-29 21:55+0000\n"
+"Last-Translator: ystk <ystk_k_fr@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Japanese <https://hosted.weblate.org/projects/rescuezilla/"
 "graphical-shutdown/ja/>\n"
 "Language: ja\n"
@@ -27,4 +28,4 @@ msgid "Reboot"
 msgstr "再起動"
 
 msgid "Choose action."
-msgstr "アクションを選択。"
+msgstr "アクション選択。"
