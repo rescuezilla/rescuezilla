@@ -1,12 +1,13 @@
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022, 2025.
 # Jiwoon Kim <budaestew@gmail.com>, 2021, 2022.
+# Hyeonmin Oh <hyunmin860@gmail.com>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2025-11-28 05:00+0000\n"
-"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
+"PO-Revision-Date: 2026-10-09 14:51+0000\n"
+"Last-Translator: Hyeonmin Oh <hyunmin860@gmail.com>\n"
 "Language-Team: Korean <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/ko/>\n"
 "Language: ko\n"
@@ -14,16 +15,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.15-dev\n"
+"X-Generator: Weblate 2026.10.1.dev0\n"
 
 msgid "Welcome"
 msgstr "환영합니다"
 
 msgid "Select an Option"
-msgstr "작업 선택"
+msgstr "옵션 선택"
 
 msgid "Easily create a backup image of your computer, or completely restore from one.  Click an option to begin:"
-msgstr "손쉽게 컴퓨터의 백업 이미지를 만들거나 완전히 복원할 수 있습니다. 시작할 작업을 선택하세요:"
+msgstr ""
+"컴퓨터의 백업 이미지를 손쉽게 만들거나 백업 이미지로 컴퓨터 전체를 복원할 수 "
+"있습니다. 시작하려면 옵션을 클릭하세요:"
 
 msgid "Backup"
 msgstr "백업"
@@ -35,10 +38,14 @@ msgid "Verify Image"
 msgstr "이미지 검증"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
-msgstr "도움이 필요한가요? 먼저 Rescuezilla의 자주 묻는 질문을 찾아보고 포럼에 문의하세요."
+msgstr ""
+"도움이 필요하신가요? 먼저 Rescuezilla의 자주 묻는 질문을 확인한 후, "
+"Rescuezilla 포럼을 방문하세요."
 
 msgid "Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed."
-msgstr "Rescuezilla가 유용하다면 계속 개발될 수 있도록 Patreon에서 월 $1씩 기부할 수 있습니다."
+msgstr ""
+"Rescuezilla 개발이 계속될 수 있도록 크라우드펀딩 사이트 Patreon에서 매월 "
+"1달러 후원을 고려해 주세요."
 
 msgid "Back"
 msgstr "뒤로"
@@ -47,18 +54,18 @@ msgid "Next >"
 msgstr "다음 >"
 
 msgid "Please wait…"
-msgstr "잠시만 기다리세요…"
+msgstr "잠시 기다려 주세요…"
 
 msgid "Identifying disk drives…"
-msgstr "디스크 드라이브 식별 중…"
+msgstr "디스크 드라이브를 확인하는 중…"
 
 #, python-brace-format
 msgid "Unmounting: {path}"
-msgstr "마운트 해제: {path}"
+msgstr "마운트 해제 중: {path}"
 
 #, python-brace-format
 msgid "Unable to unmount {path}"
-msgstr "마운트 해제할 수 없음: {path}"
+msgstr "{path}의 마운트를 해제할 수 없습니다"
 
 #, python-brace-format
 msgid "Running: {app}"
@@ -72,16 +79,16 @@ msgid "Failed to run command: "
 msgstr "명령 실행 실패: "
 
 msgid "Error querying drives: "
-msgstr "장치 조회 오류: "
+msgstr "드라이브 정보 조회 오류: "
 
 msgid "Clone"
 msgstr "복제"
 
 msgid "Step 1: Understanding Cloning"
-msgstr "1 단계: 복제 이해하기"
+msgstr "1단계: 디스크 복제 이해하기"
 
 msgid "Please understand how \"cloning\" differs from \"imaging\"."
-msgstr "\"복제\"와 \"이미징\"이 어떻게 다른지 이해해야 합니다."
+msgstr "\"디스크 복제\"와 \"디스크 이미지 생성\"의 차이를 확인하세요."
 
 msgid "This mode is for \"disk cloning\". Cloning means copying one drive and directly overwriting another drive. This is a direct one-step operation with no temporary storage required.\n"
 "\n"
@@ -90,18 +97,22 @@ msgid "This mode is for \"disk cloning\". Cloning means copying one drive and di
 ""
 "To use the \"imaging\" wizards, click <b>Back</b> and select <b>Backup</b> or <b>Restore</b>."
 msgstr ""
-"현재 모드는 \"디스크 복제\"입니다. 복제는 한 드라이브를 복사하여 다른 드라이브로 바로 덮어 씌우는 것을 의미하고 다른 임시 저장소가 "
-"필요하지 않은 단 하나의 작업입니다.\n"
+"이 모드는 \"디스크 복제\"에 사용합니다. 디스크 복제는 한 드라이브의 내용을 "
+"다른 드라이브에 직접 덮어쓰는 작업입니다. 임시 저장 공간 없이 한 번의 "
+"작업으로 완료할 수 있습니다.\n"
 "\n"
-"복제는 \"디스크 이미징\"과 다릅니다. 이미징은 한 드라이브를 통째로 복사하여 외부 드라이브의 폴더 내부에 거대한 파일로 만들어 "
-"저장하는 것을 의미합니다. 같은 외부 드라이브 내에 여러 개의 이미지 파일을 저장할 수 있고, 이미지 파일들은 다시 원래 디스크나 다른 "
-"디스크로 복원될 수 있습니다. 다시 말해, \"이미징\"의 백업 작업에서는 복원을 위해 나의 드라이브를 복사한 <i>파일</i>을 최소 "
-"임시라도 저장 할 수 있는 드라이브가 필요합니다.\n"
+"디스크 복제는 \"디스크 이미지 생성\"과 다릅니다. 디스크 이미지 생성은 한 "
+"드라이브의 전체 내용을 대용량 파일로 만들어 외장 드라이브의 폴더에 저장하는 "
+"작업입니다. 같은 외장 드라이브에 여러 디스크 이미지를 저장할 수 있으며, "
+"저장한 이미지를 원래 디스크나 다른 디스크에 복원할 수 있습니다. 즉, 디스크 "
+"이미지 방식으로 백업하면 드라이브의 내용을 <i>파일</i>로 저장하므로, "
+"복원하기 전까지는 이 파일을 저장할 드라이브가 필요합니다.\n"
 "\n"
-"\"이미징\" 마법사를 사용하려면 <b>뒤로</b>를 클릭하고 <b>백업</b>이나 <b>복원</b>을 선택하세요."
+"디스크 이미지 방식으로 백업하거나 복원하려면 <b>뒤로</b>를 클릭한 다음 <b>"
+"백업</b> 또는 <b>복원</b>을 선택하세요."
 
 msgid "To begin the \"cloning\" wizard, click <b>Next</b>"
-msgstr "\"복제\" 마법사를 시작하려면 <b>다음</b>을 클릭하세요"
+msgstr "디스크 복제 마법사를 시작하려면 <b>다음</b>을 클릭하세요"
 
 msgid "Step 2: Select Source Drive"
 msgstr "2 단계: 원본 드라이브 선택"
@@ -110,24 +121,25 @@ msgid "Select the <b>source drive</b> to clone."
 msgstr "복제할 <b>원본 드라이브</b>를 선택하세요."
 
 msgid "Select the <b>destination drive</b> to overwrite."
-msgstr "덮어 씌어질 <b>대상 드라이브</b>를 선택하세요."
+msgstr "덮어쓸 <b>대상 드라이브</b>를 선택하세요."
 
 msgid "Step 4: Select Partitions to Clone"
 msgstr "4 단계: 복제할 파티션 선택"
 
 msgid "Select which partitions from the source drive to clone, and whether to overwrite the partition table. <b>Leave everything selected to completely clone the source drive to the destination drive.</b>"
 msgstr ""
-"복제할 원본 드라이브의 파티션을 선택하고 파티션 테이블을 덮어쓸지 선택하세요. <b>원본 드라이브를 대상 드라이브로 완전히 복제하려면 "
-"모든 항목을 선택된 상태로 두세요.</b>"
+"원본 드라이브에서 복제할 파티션을 선택하고, 파티션 테이블을 덮어쓸지 "
+"선택하세요. <b>원본 드라이브 전체를 대상 드라이브에 복제하려면 모든 항목을 "
+"선택한 상태로 두세요.</b>"
 
 msgid "Step 5: Confirm Cloning Configuration"
-msgstr "5 단계: 복제 구성 확인"
+msgstr "5단계: 복제 설정 확인"
 
 msgid "Confirm the following cloning configuration."
-msgstr "다음 복제 구성을 확인하세요."
+msgstr "다음 복제 설정을 확인하세요."
 
 msgid "Cloning the following partitions"
-msgstr "다음 파티션을 복제"
+msgstr "다음 파티션 복제 중"
 
 msgid "To start cloning, click <b>Next</b>."
 msgstr "복제를 시작하려면 <b>다음</b>을 클릭하세요."
@@ -135,13 +147,16 @@ msgstr "복제를 시작하려면 <b>다음</b>을 클릭하세요."
 #, python-brace-format
 msgid "Are you sure you want to clone the drive to {destination_drive}? Doing so will permanently overwrite data on this drive!"
 msgstr ""
-"정말 드라이브를 {destination_drive} 에 복제하시겠습니까? 계속하면 현재 드라이브의 데이터를 영구적으로 덮어씁니다!"
+"{destination_drive}에 드라이브를 복제하시겠습니까? 복제하면 대상 드라이브의 "
+"데이터를 영구적으로 덮어씁니다!"
 
 msgid "Step 6: Cloning Disk"
-msgstr "6 단계: 디스크 복제"
+msgstr "6단계: 디스크 복제 중"
 
 msgid "Cloning the drive you selected.  This may take an hour or more depending on the speed of your computer and the amount of data."
-msgstr "선택한 드라이브를 복제합니다.  컴퓨터의 속도와 데이터의 양에 따라 1시간 이상이 소요될 수 있습니다."
+msgstr ""
+"선택한 드라이브를 복제하고 있습니다. 컴퓨터 성능과 데이터 양에 따라 1시간 "
+"이상 걸릴 수 있습니다."
 
 msgid "Summary of Clone"
 msgstr "복제 요약"
@@ -153,13 +168,13 @@ msgid "Confirm the clone summary."
 msgstr "복제 요약을 확인하세요."
 
 msgid "Unable to shutdown Image Explorer"
-msgstr "이미지 탐색기를 종료할 수 없음"
+msgstr "이미지 탐색기를 종료할 수 없습니다."
 
 msgid "Step 1: Select Drive To Backup"
 msgstr "1 단계: 백업할 드라이브 선택"
 
 msgid "Select the <b>source drive</b> that you would like to create a backup image from."
-msgstr "백업 이미지를 만들려는 <b>원본 드라이브</b>를 선택하세요."
+msgstr "백업 이미지를 만들 <b>원본 드라이브</b>를 선택하세요."
 
 msgid "Drive"
 msgstr "드라이브"
@@ -248,7 +263,7 @@ msgid "2.0 (Introduced in Vista SP1, Windows Server 2008)"
 msgstr "2.0 (Windows Vista SP1, Server 2008 부터 도입)"
 
 msgid "2.1 (Introduced in Windows 7, Windows Server 2008R2)"
-msgstr "2.1 (Windows Vista SP1, Server 2008R2 부터 도입됨)"
+msgstr "2.1 (Windows 7 및 Windows Server 2008 R2에서 도입)"
 
 msgid "3 (The SMBv3.0 protocol version and above)"
 msgstr "3 (SMBv3.0 프로토콜 버전 이상)"
@@ -365,9 +380,11 @@ msgid "Click <b>Browse</b> to select the folder on the destination drive where y
 "\n"
 "The folder a backup is saved in is usually a description of the computer, e.g. <b>office1</b> or <b>zack-laptop</b>."
 msgstr ""
-"<b>찾아보기</b>를 클릭하여 새로운 백업 이미지가 저장될 대상 드라이브의 폴더를 선택하세요.\n"
+"<b>찾아보기</b>를 클릭하여 대상 드라이브에서 새 백업 이미지를 저장할 폴더를 "
+"선택하세요.\n"
 "\n"
-"백업이 저장될 폴더의 이름은 보통 <b>office1</b> 또는 <b>zack-laptop</b>과 같은 컴퓨터의 이름입니다."
+"백업을 저장할 폴더의 이름은 보통 <b>office1</b> 또는 <b>zack-laptop</b>처럼 "
+"컴퓨터를 알아볼 수 있도록 지정합니다."
 
 #, python-brace-format
 msgid "You must select a folder inside {location}"
@@ -392,7 +409,7 @@ msgid "Last modified"
 msgstr "수정한 날짜"
 
 msgid "When you are happy with the destination folder, click <b>Next</b>."
-msgstr "대상 폴더가 마음에 들면 <b>다음</b>을 클릭하세요."
+msgstr "저장할 폴더를 확인한 후 <b>다음</b>을 클릭하세요."
 
 msgid "Step 5: Name Your Backup"
 msgstr "5 단계: 백업 이름 지정"
@@ -439,7 +456,7 @@ msgid "Best"
 msgstr "최고"
 
 msgid "When you are happy with the compression settings, click <b>Next</b>."
-msgstr "압축 설정이 마음에 들면 <b>다음</b>을 클릭하세요."
+msgstr "압축 설정을 확인한 후 <b>다음</b>을 클릭하세요."
 
 msgid "Step 7: Confirm Backup Configuration"
 msgstr "7 단계 백업 구성 확인"
@@ -473,7 +490,9 @@ msgid "Rescue: Ignore filesystem inconsistencies and bad sectors"
 msgstr "복구: 파일 시스템 불일치 및 배드 섹터 무시하기"
 
 msgid "<b>Enabling \"Rescue\" may suppress important errors. Use with caution.</b>"
-msgstr "<b>\"복구\"를 활성화하면 중요한 오류가 숨겨질 수 있습니다. 주의해서 사용해야 합니다.</b>"
+msgstr ""
+"<b>\"구조\" 옵션을 활성화하면 중요한 오류 메시지가 표시되지 않을 수 "
+"있습니다. 주의해서 사용하세요.</b>"
 
 msgid "To start the backup, click <b>Next</b>."
 msgstr "백업을 시작하려면 <b>다음</b>을 클릭하세요."
@@ -560,7 +579,7 @@ msgid "Step 2: Select Backup Image"
 msgstr "2 단계: 백업 이미지 선택"
 
 msgid "Click <b>Browse</b> to select the folder containing image files."
-msgstr "<b>찾아보기</b>를 클릭하여 이미지 파일이 포함된 폴더를 선택하세요."
+msgstr "<b>찾아보기</b>를 클릭하여 이미지 파일이 있는 폴더를 선택하세요."
 
 msgid "Select the image file to restore."
 msgstr "복원할 이미지 파일을 선택하세요."
@@ -593,12 +612,15 @@ msgstr "파티션 테이블을 덮어쓰게 됩니다."
 
 msgid "The \"destination partition\" column has been updated using the information stored within the backup image.\n\n<b>If partitions have been resized, new partitions added, or additional operating systems installed <i>since the backup image was created</i>, then the destination drive's partition table will not match the backup image, and overwriting the destination drive's partition table will render these resized and additional partitions permanently inaccessible.</b> If you have not modified the partition table in such a way since creating this backup then overwriting the partition table is completely safe and will have no negative effects."
 msgstr ""
-"백업 이미지에 저장된 정보를 사용하여 \"대상 파티션\" 열이 업데이트 되었습니다.\n"
+"백업 이미지에 저장된 정보를 바탕으로 \"대상 파티션\" 열을 업데이트했습니다.\n"
 "\n"
-"<b><i>백업 이미지가 생성된 이후</i> 파티션 크기가 조정되었거나 새로운 파티션 추가 또는 추가 운영체제가 설치된 경우 대상 "
-"드라이브의 파티션 테이블은 백업 이미지와 일치하지 않으므로 대상 드라이브의 파티션 테이블을 덮어쓰면 크기가 조정되고 추가 파티션에 "
-"영구적으로 접근할 수 없게 됩니다.</b> 현재 백업 이미지를 만든 이후 파티션 테이블이 변경되지 않았다면 파티션 테이블을 덮어써도 "
-"별다른 문제 없이 완전히 안전합니다."
+"<b><i>백업 이미지를 만든 이후</i> 파티션 크기를 변경하거나 새 파티션을 "
+"추가하거나 운영 체제를 추가로 설치했다면, 대상 드라이브의 파티션 테이블이 "
+"백업 이미지의 파티션 테이블과 일치하지 않습니다. 이 상태에서 대상 드라이브의 "
+"파티션 테이블을 덮어쓰면 크기를 변경하거나 새로 추가한 파티션에 영구적으로 "
+"접근할 수 없게 됩니다.</b> 이 백업 이미지를 만든 이후 파티션 테이블을 위와 "
+"같이 변경하지 않았다면, 파티션 테이블을 덮어써도 안전하며 부정적인 영향은 "
+"없습니다."
 
 msgid "You will <b>not</b> be overwriting the partition table."
 msgstr "파티션 테이블을 덮어쓰지 <b>않습니다</b>."
@@ -620,7 +642,7 @@ msgid "Not restoring this partition"
 msgstr "이 파티션을 복원하지 않음"
 
 msgid "When you are ready to continue, click <b>Next</b>."
-msgstr "계속할 준비가 되면 <b>다음</b>을 클릭하세요."
+msgstr "계속 진행할 준비가 되면 <b>다음</b>을 클릭하세요."
 
 msgid "Scanning and unmounting any Logical Volume Manager (LVM) Logical Volumes…"
 msgstr "논리 볼륨 관리자(LVM)를 탐색하고 마운트 해제 중…"
@@ -804,7 +826,7 @@ msgid "Select the partition to access files from."
 msgstr "파일에 접근할 파티션을 선택하세요."
 
 msgid "Click <b>Mount</b> to mount the backup image (as read-only)."
-msgstr "<b>마운트</b>를 클릭하여 백업 이미지를 마운트하세요 (읽기 전용으로)."
+msgstr "<b>마운트</b>를 클릭하여 백업 이미지를 읽기 전용으로 마운트하세요."
 
 msgid "Mount"
 msgstr "마운트"
@@ -816,7 +838,7 @@ msgid "Unmount"
 msgstr "마운트 해제"
 
 msgid "Once the partition has been mounted, click <b>Open in file manager</b> to access your files."
-msgstr "한 번 파티션이 마운트되면 <b>파일 관리자 열기</b>를 클릭하여 파일에 접근할 수 있습니다."
+msgstr "파티션이 마운트되면 <b>파일 관리자에서 열기</b>를 클릭하여 파일에 접근하세요."
 
 msgid "Open in file manager"
 msgstr "파일 관리자 열기"
