@@ -2,13 +2,13 @@
 # radosdesign <radek82@gmail.com>, 2022.
 # alejandro ar <alejandroar@wearehackerone.com>, 2022.
 # Milan Šalka <salka.milan@googlemail.com>, 2023.
-# Pa Di <padi@tutanota.com>, 2024, 2025.
+# Pa Di <padi@tutanota.com>, 2024, 2025, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2025-12-01 13:00+0000\n"
+"PO-Revision-Date: 2026-08-05 01:01+0000\n"
 "Last-Translator: Pa Di <padi@tutanota.com>\n"
 "Language-Team: Slovak <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/sk/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=((n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2);\n"
-"X-Generator: Weblate 5.15-dev\n"
+"X-Generator: Weblate 2026.8.1.dev0\n"
 
 msgid "Welcome"
 msgstr "Vitajte"
@@ -162,7 +162,7 @@ msgstr ""
 "závislosti od rýchlosti vášho počítača a množstva údajov."
 
 msgid "Summary of Clone"
-msgstr "Zhrnutie klonovania"
+msgstr "Súhrn informácií o klonovaní"
 
 msgid "Clone Summary"
 msgstr "Zhrnutie klonovania"
