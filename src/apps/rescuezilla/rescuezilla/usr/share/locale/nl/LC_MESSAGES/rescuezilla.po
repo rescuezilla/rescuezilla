@@ -4,13 +4,15 @@
 # ttt113326 <tonio_k@mail.ru>, 2021.
 # МАН69К <weblate@mah69k.net>, 2022.
 # Gideon van Melle <translations@gvmelle.com>, 2022.
+# Shasheen Ediriweera <shasheene@users.noreply.hosted.weblate.org>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2022-11-28 20:48+0000\n"
-"Last-Translator: Gideon van Melle <translations@gvmelle.com>\n"
+"PO-Revision-Date: 2026-10-31 19:45+0000\n"
+"Last-Translator: Shasheen Ediriweera "
+"<shasheene@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Dutch <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/nl/>\n"
 "Language: nl\n"
@@ -18,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.15-dev\n"
+"X-Generator: Weblate 2026.11.dev0\n"
 
 msgid "Welcome"
 msgstr "Welkom"
@@ -265,36 +267,40 @@ msgstr "Versie"
 
 msgid "default (Negotiate highest SMB2+ supported by client and server)"
 msgstr ""
+"Standaard (onderhandelt over de hoogste SMB2+-versie die door zowel de "
+"client als de server wordt ondersteund)"
 
 msgid "1.0 (The classic CIFS/SMBv1 protocol)"
-msgstr ""
+msgstr "1.0 (Het klassieke CIFS/SMBv1 protocol)"
 
 msgid "2.0 (Introduced in Vista SP1, Windows Server 2008)"
-msgstr ""
+msgstr "2.0 (Geïntroduceerd in Vista SP1, Windows Server 2008)"
 
 msgid "2.1 (Introduced in Windows 7, Windows Server 2008R2)"
-msgstr ""
+msgstr "2.1 (Geïntroduceerd in Windows 7, Windows Server 2008R2)"
 
 msgid "3 (The SMBv3.0 protocol version and above)"
-msgstr ""
+msgstr "3 (De SMBv3.0 protocol versie en hoger)"
 
 msgid "3.0 (Introduced in Windows 8, Windows Server 2012)"
-msgstr ""
+msgstr "3.0 (Geïntroduceerd in Windows 8, Windows Server 2012)"
 
 msgid "3.0.2 (Introduced in Windows 8.1, Windows Server 2012R2)"
-msgstr ""
+msgstr "3.0.2 (Geïntroduceerd in Windows 8.1, Windows Server 2012R2)"
 
 msgid "3.1.1 (Introduced in Windows 10, Windows Server 2016)"
-msgstr ""
+msgstr "3.1.1 (Geïntroduceerd in Window 10, Windows Server 2016)"
 
 msgid "Unspecified (Tries NFS v4.2 first, then negotiates with server down until finds a supported version)"
 msgstr ""
+"Niet gespecificeerd (probeert eerst NFS v4.2 en onderhandelt daarna met de "
+"server totdat een ondersteunde versie is gevonden)"
 
 msgid "NFSv3"
-msgstr ""
+msgstr "NFSv3"
 
 msgid "NFSv4"
-msgstr ""
+msgstr "NFSv4"
 
 msgid "Remote path"
 msgstr "Remote pad"
@@ -306,7 +312,7 @@ msgid "Identity File"
 msgstr "Identificatiebestand"
 
 msgid "Port"
-msgstr ""
+msgstr "Poort"
 
 msgid "Select network-shared storage location:"
 msgstr "Selecteer netwerk-gedeeld opslag locatie:"
