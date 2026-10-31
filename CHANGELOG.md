@@ -1,3 +1,6 @@
+# Rescuezilla v2.7 (unreleased)
+
+
 # Rescuezilla v2.6.2 (2026-05-15)
 
 * Adds release based on Ubuntu 26.04 LTS (Resolute) for best support of new hardware (circa April 2026 hardware)
