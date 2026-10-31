@@ -1,12 +1,12 @@
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022, 2024.
-# BennyBeat <bennybeat@gmail.com>, 2022, 2023.
+# BennyBeat <bennybeat@gmail.com>, 2022, 2023, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2024-05-12 23:31+0000\n"
-"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
+"PO-Revision-Date: 2026-08-24 11:51+0000\n"
+"Last-Translator: BennyBeat <bennybeat@gmail.com>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/ca/>\n"
 "Language: ca\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5.4\n"
+"X-Generator: Weblate 2026.9.dev0\n"
 
 msgid "Welcome"
 msgstr "Us donem la benvinguda"
@@ -271,36 +271,41 @@ msgstr "Versió"
 
 msgid "default (Negotiate highest SMB2+ supported by client and server)"
 msgstr ""
+"Per defecte (negocia el SMB2+ més alt compatible amb el client i el servidor)"
 
 msgid "1.0 (The classic CIFS/SMBv1 protocol)"
-msgstr ""
+msgstr "1.0 (Protocol CIFS/SMBv1 clàssic)"
 
 msgid "2.0 (Introduced in Vista SP1, Windows Server 2008)"
-msgstr ""
+msgstr "2.0 (afegit a Windows Vista SP1 i Windows Server 2008)"
 
 msgid "2.1 (Introduced in Windows 7, Windows Server 2008R2)"
-msgstr ""
+msgstr "2.1 (afegit a Windows 7 i Windows Server 2008R2)"
 
 msgid "3 (The SMBv3.0 protocol version and above)"
-msgstr ""
+msgstr "3 (el protocol SMB v3.0 i superior)"
 
 msgid "3.0 (Introduced in Windows 8, Windows Server 2012)"
-msgstr ""
+msgstr "3.0 (afegit a Windows 8 i Windows Server 2012)"
 
 msgid "3.0.2 (Introduced in Windows 8.1, Windows Server 2012R2)"
-msgstr ""
+msgstr "3.0.2 (afegit a Windows 8.1 i Windows Server 2012R2)"
 
 msgid "3.1.1 (Introduced in Windows 10, Windows Server 2016)"
-msgstr ""
+msgstr "3.1.1 (afegit a Windows 10 i Windows Server 2016)"
 
 msgid "Unspecified (Tries NFS v4.2 first, then negotiates with server down until finds a supported version)"
 msgstr ""
+"No Especificat (es provarà amb NFS v4.2, i es negociarà amb el servidor fins "
+"a trobar una versió compatible)"
 
+#, fuzzy
 msgid "NFSv3"
-msgstr ""
+msgstr "NFSv3"
 
+#, fuzzy
 msgid "NFSv4"
-msgstr ""
+msgstr "NFSv4"
 
 msgid "Remote path"
 msgstr "Ruta d'accés a la xarxa"
@@ -311,8 +316,9 @@ msgstr "Ruta d'exportació"
 msgid "Identity File"
 msgstr "Fitxer d'identitat"
 
+#, fuzzy
 msgid "Port"
-msgstr ""
+msgstr "Port"
 
 msgid "Select network-shared storage location:"
 msgstr "Seleccioneu la ruta d'emmagatzematge compartit a la xarxa:"

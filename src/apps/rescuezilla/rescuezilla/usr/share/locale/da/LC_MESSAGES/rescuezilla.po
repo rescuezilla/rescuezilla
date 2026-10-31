@@ -2,13 +2,14 @@
 # Bolle Barnewitz <detlef@sol.dk>, 2021, 2022.
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022.
 # Carl Andersen <carl@bluemarlin.dk>, 2022.
+# Henrik Simonsen <cybermaze@gmail.com>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2022-08-13 21:33+0000\n"
-"Last-Translator: Shasheen Ediriweera <shasheene@gmail.com>\n"
+"PO-Revision-Date: 2026-05-20 09:11+0000\n"
+"Last-Translator: Henrik Simonsen <cybermaze@gmail.com>\n"
 "Language-Team: Danish <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/da/>\n"
 "Language: da\n"
@@ -16,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: Weblate 2026.6.dev0\n"
 
 msgid "Welcome"
 msgstr "Velkommen"
@@ -26,8 +27,8 @@ msgstr "Vælg en opgave"
 
 msgid "Easily create a backup image of your computer, or completely restore from one.  Click an option to begin:"
 msgstr ""
-"Lav en sikkerhedskopi af din computer eller lav en fuldstændig gendannelse "
-"af computeren. Vælg en handling:"
+"Lav let en sikkerhedskopi af din computer, eller lav en fuldstændig "
+"gendannelse fra en sikkerhedskopi. Vælg en handling for at begynde:"
 
 msgid "Backup"
 msgstr "Sikkerhedskopiér"
@@ -36,12 +37,12 @@ msgid "Restore"
 msgstr "Gendan"
 
 msgid "Verify Image"
-msgstr "Verificere sikkerhedskopien"
+msgstr "Verificér sikkerhedskopien"
 
 msgid "Need help? Start by checking the Rescuezilla frequently asked questions, then proceed to the Rescuezilla forum."
 msgstr ""
-"Brug for hjælp? Læs først Rescuezillas FAQ . Du kan også få hjælp i "
-"Rescuezillas forum."
+"Har du brug for hjælp? Start med at tjekke Rescuezilla ofte stillede "
+"spørgsmål, prøv derefter Rescuezilla forummet."
 
 msgid "Consider contributing $1/month on the crowdfunding website Patreon so Rescuezilla can continue to be developed."
 msgstr ""
@@ -52,7 +53,7 @@ msgid "Back"
 msgstr "Tilbage"
 
 msgid "Next >"
-msgstr "Næste>"
+msgstr "Næste >"
 
 msgid "Please wait…"
 msgstr "Vent venligst…"
@@ -260,37 +261,39 @@ msgid "Version"
 msgstr "Version"
 
 msgid "default (Negotiate highest SMB2+ supported by client and server)"
-msgstr ""
+msgstr "standard (find højeste SMB2+ protokol understøttet af klient og server)"
 
 msgid "1.0 (The classic CIFS/SMBv1 protocol)"
-msgstr ""
+msgstr "1.0 (klassisk CIFS/SMBv1 protokol)"
 
 msgid "2.0 (Introduced in Vista SP1, Windows Server 2008)"
-msgstr ""
+msgstr "2.0 (Introduceret i Vista SP1, Windows Server 2008)"
 
 msgid "2.1 (Introduced in Windows 7, Windows Server 2008R2)"
-msgstr ""
+msgstr "2.1 (Introduceret i Windows 7, Windows Server 2008R2)"
 
 msgid "3 (The SMBv3.0 protocol version and above)"
-msgstr ""
+msgstr "3 (SMBv3.0 og højere)"
 
 msgid "3.0 (Introduced in Windows 8, Windows Server 2012)"
-msgstr ""
+msgstr "3.0 (Introduceret i Windows 8, Windows Server 2012)"
 
 msgid "3.0.2 (Introduced in Windows 8.1, Windows Server 2012R2)"
-msgstr ""
+msgstr "3.0.2 (Introduceret i Windows 8.1, Windows Server 2012R2)"
 
 msgid "3.1.1 (Introduced in Windows 10, Windows Server 2016)"
-msgstr ""
+msgstr "3.1.1 (Introduceret i Windows 10, Windows Server 2016)"
 
 msgid "Unspecified (Tries NFS v4.2 first, then negotiates with server down until finds a supported version)"
 msgstr ""
+"Uspecificeret (prøver NFS v4.2 først, derefter lavere og lavere version "
+"indtil en understøttet version er fundet)"
 
 msgid "NFSv3"
-msgstr ""
+msgstr "NFSv3"
 
 msgid "NFSv4"
-msgstr ""
+msgstr "NFSv4"
 
 msgid "Remote path"
 msgstr "Fjernsti"
@@ -302,13 +305,13 @@ msgid "Identity File"
 msgstr "Identitetsfil"
 
 msgid "Port"
-msgstr ""
+msgstr "Port"
 
 msgid "Select network-shared storage location:"
 msgstr "Vælg det netværksdelte lagers placering:"
 
 msgid "Select the partition where the image files will be saved to"
-msgstr "Vælg partitionen for, hvor sikkerhedskopien skal gemmes"
+msgstr "Vælg partitionen for hvor sikkerhedskopien skal gemmes"
 
 msgid "Partition"
 msgstr "Partition"
@@ -325,7 +328,7 @@ msgstr ""
 "korrekt. Prøv derefter igen."
 
 msgid "Must provide either password or SSH identity file."
-msgstr "Adgangskode eller SHH-identitetsfil er nødvendig."
+msgstr "Adgangskode eller SSH-identitetsfil er nødvendig."
 
 msgid "Scanning folder for backup images…"
 msgstr "Mappen til sikkerhedskopier skannes…"
@@ -336,7 +339,7 @@ msgstr "({timeout_seconds} sekund timeout)"
 
 msgid "Close this popup to cancel scanning the selected folder and subfolders."
 msgstr ""
-"Luk vinduet for at afbryde skanningen af den valgte mappen og undermapper."
+"Luk vinduet for at afbryde skanningen af den valgte mappe og undermapper."
 
 #, python-brace-format
 msgid "Scanning: {filename}"
@@ -403,7 +406,7 @@ msgstr ""
 "din nye sikkerhedskopi skal gemmes.\n"
 "\n"
 "Mappen, som en sikkerhedskopi gemmes i, er normalt en beskrivelse af "
-"computeren, f.eks. <b> office1 </b> eller <b> zack-laptop </b>."
+"computeren, f.eks. <b>office1</b> eller <b>zack-laptop</b>."
 
 #, python-brace-format
 msgid "You must select a folder inside {location}"
@@ -453,7 +456,7 @@ msgstr "Trin 6: Indstil komprimering"
 
 msgid "Customize image compression settings. <b>Don't make any changes if you are unsure.</b>"
 msgstr ""
-"Indstil sikkerhedskopiens komprimering. <b> Foretag ingen ændringer, hvis du "
+"Indstil sikkerhedskopiens komprimering. <b>Foretag ingen ændringer, hvis du "
 "er i tvivl. </b>"
 
 msgid "Compression format: "
@@ -507,7 +510,7 @@ msgid "Do nothing"
 msgstr "Gør ingenting"
 
 msgid "Shutdown"
-msgstr "Sluk PC"
+msgstr "Luk computeren"
 
 msgid "Reboot"
 msgstr "Genstart"
@@ -650,8 +653,8 @@ msgstr ""
 "Kolonnen \"destinationspartition\" er blevet opdateret på baggrund af de "
 "oplysninger, der er gemt i sikkerhedskopien.\n"
 "\n"
-"<b> Hvis størrelsen på partitioner er blevet ændret, nye partitioner "
-"tilføjet eller der er installeret yderligere operativsystemer <i> siden "
+"<b>Hvis størrelsen på partitioner er blevet ændret, nye partitioner tilføjet "
+"eller der er installeret yderligere operativsystemer <i>siden "
 "sikkerhedskopien blev taget</i>, vil destinationsdrevets partitionstabel "
 "ikke passe med sikkerhedskopiens og overskrivning af destinationsdrevets "
 "partitionstabel gør disse forstørrede/formindskede partitioner permanent "
@@ -670,7 +673,7 @@ msgstr ""
 "Kolonnen \"destinationspartition\" er blevet opdateret med "
 "destinationsdrevets eksisterende partitionstabeloplysninger.\n"
 "\n"
-"<b> Destinationspartitionskolonnen kan ændres som en rullemenu. Forkert "
+"<b>Destinationspartitionskolonnen kan ændres som en rullemenu. Forkert "
 "tildeling af destinationspartitionerne kan medføre, at operativsystemer ikke "
 "længere kan starte. </b> Hvis du er i tvivl om tildelingen, bør du overveje "
 "i stedet at overskrive partitionstabellen."
@@ -904,7 +907,7 @@ msgstr "Afmonterer"
 
 msgid "Once the partition has been mounted, click <b>Open in file manager</b> to access your files."
 msgstr ""
-"Når partitionen er monteret, skal du klikke på <b> Åbn i filhåndtering </b> "
+"Når partitionen er monteret, skal du klikke på <b>Åbn i filhåndtering</b> "
 "for at få adgang til dine filer."
 
 msgid "Open in file manager"
@@ -917,7 +920,7 @@ msgid "Select one or more images to verify."
 msgstr "Vælg et eller flere diskafbildninger for at verificere."
 
 msgid "To begin verification, click <b>Next</b>."
-msgstr "Klik på <b>Næste,</b> for at begynde verifikationen."
+msgstr "Klik på <b>Næste</b> for at begynde verifikationen."
 
 msgid "Verifying Image"
 msgstr "Verificerer diskafbildningen"
@@ -939,7 +942,7 @@ msgid "Verification Summary"
 msgstr "Verifikationsoversigt"
 
 msgid "To verify another image, click <b>Back</b>."
-msgstr "Klik <b>Tilbage</b>for at verificere en anden diskafbildning."
+msgstr "Klik <b>Tilbage</b> for at verificere en anden diskafbildning."
 
 msgid "✔"
 msgstr "✔"
