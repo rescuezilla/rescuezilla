@@ -22,8 +22,8 @@
 # ----------------------------------------------------------------------
 import gettext
 import os
-import sys
 import argparse
+from pathlib import Path
 
 from backup_manager import BackupManager
 from cli.args import parse_arguments
@@ -44,6 +44,11 @@ import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import GLib, Gtk  # noqa: E402
 
+PREFIX = Path(__file__).resolve().parents[2]
+SHARE_DIR = PREFIX / "share"
+DATA_DIR = SHARE_DIR / "rescuezilla"
+LOCALE_DIR = SHARE_DIR / "locale"
+
 
 def is_root():
     return os.geteuid() == 0
@@ -61,16 +66,9 @@ def main():
         print("Rescuezilla must run as root.")
         exit(0)
 
-    gettext_translation_search_path = (
-        sys.base_prefix
-        + "/share/locale/{LANGUAGE,LC_ALL,LC_MESSAGES,LANG}/LC_MESSAGES/rescuezilla.mo"
-    )
-    print(
-        "Setting GTK translation domain by searching: "
-        + gettext_translation_search_path
-    )
+    print("Setting GTK translation domain by searching: " + str(LOCALE_DIR))
     # Set the translation domain folder:
-    gettext.bindtextdomain("rescuezilla")
+    gettext.bindtextdomain("rescuezilla", str(LOCALE_DIR))
     # Query the translation
     gettext.textdomain("rescuezilla")
 
@@ -84,10 +82,8 @@ def main():
     args = parse_arguments(parser=parser)
 
     memory_bus_width = Utility.get_memory_bus_width().strip()
-    version = Utility.read_file_into_string("/usr/share/rescuezilla/VERSION").strip()
-    commit_date = Utility.read_file_into_string(
-        "/usr/share/rescuezilla/GIT_COMMIT_DATE"
-    ).strip()
+    version = Utility.read_file_into_string(DATA_DIR / "VERSION").strip()
+    commit_date = Utility.read_file_into_string(DATA_DIR / "GIT_COMMIT_DATE").strip()
     human_readable_version = version + " (" + memory_bus_width + ") " + commit_date
 
     if args.command is None:
@@ -229,7 +225,7 @@ def launch_gui(human_readable_version: str):
     # Use the GTKBuilder to dynamically construct all the UI widget objects as defined in the GTKBuilder .glade XML
     # file. This file may be edited using the Glade UI widget editor. It is sometimes required to edit the XML
     # directly a text editor, because Glade occasionally has some user-interface limitations.
-    builder.add_from_file("/usr/share/rescuezilla/rescuezilla.glade")
+    builder.add_from_file(str(DATA_DIR / "rescuezilla.glade"))
 
     handler = Handler(builder, human_readable_version=human_readable_version)
     # Connect the handler object for the GUI callbacks. This handler manages the entire application state.

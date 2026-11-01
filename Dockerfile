@@ -64,7 +64,7 @@ RUN apt-get install --yes \
                           quilt sgml-base uuid-dev vmfs-tools xfslibs-dev xfsprogs xml-core \
                           xsltproc libssl-dev libxxhash-dev \
                           # Select runtime dependencies required for running the unit tests
-                          python3-gi libgtk-3-dev python3-whichcraft python3-babel \
+                          python3-gi libgtk-3-dev \
                           # Needed to install Astral's Python tooling
                           curl \
                           # Install optional dependencies for quality-of-life when debugging

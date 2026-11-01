@@ -24,8 +24,6 @@ from datetime import datetime
 from os.path import isfile, basename
 from pathlib import Path
 
-from babel.dates import format_datetime
-
 import utility
 from parser.blkid import Blkid
 from parser.ecryptfs import Ecryptfs
@@ -35,7 +33,7 @@ from parser.parted import Parted
 from parser.proc_mdstat import ProcMdstat
 from parser.sfdisk import Sfdisk
 from parser.swappt import Swappt
-from utility import Utility, _
+from utility import Utility, _, format_datetime
 
 
 # Clonezilla images can be created by Clonezilla using its 'savedisk' and 'saveparts' functions. See the official

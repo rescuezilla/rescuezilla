@@ -27,6 +27,7 @@ import subprocess
 import threading
 import time
 from contextlib import contextmanager
+from datetime import datetime
 from queue import Queue
 from threading import Thread
 from time import sleep
@@ -45,6 +46,12 @@ Utility functions to eg, display busy dialog boxes or error messages
 
 def _(string):
     return gettext.gettext(string)
+
+
+def format_datetime(value):
+    if isinstance(value, (int, float)):
+        value = datetime.fromtimestamp(value)
+    return value.strftime("%c")
 
 
 class PleaseWaitModalPopup:
@@ -265,6 +272,15 @@ class Utility:
                 yield locale.setlocale(locale.LC_ALL, name)
             finally:
                 locale.setlocale(locale.LC_ALL, saved)
+
+    @staticmethod
+    def get_original_user():
+        pkexec_uid = os.environ.get("PKEXEC_UID", "")
+        uid = int(pkexec_uid) if pkexec_uid.isdigit() else os.getuid()
+        try:
+            return pwd.getpwuid(uid).pw_name
+        except KeyError:
+            return pwd.getpwuid(os.getuid()).pw_name
 
     @staticmethod
     def is_user_valid(target_user):
