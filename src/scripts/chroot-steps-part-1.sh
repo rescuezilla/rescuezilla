@@ -576,8 +576,10 @@ if  [ "$IS_INTEGRATION_TEST" == "true" ]; then
 fi
 
 # grub-pc-bin is x86-only (BIOS boot support), not applicable on ARM64
+common_pkgs=("${common_pkgs[@]}" "openssh-server" "zenity" "sshpass")
 if  [ "$ARCH" == "amd64" ] || [ "$ARCH" == "i386" ]; then
     common_pkgs=("${common_pkgs[@]}" "grub-pc-bin")
+common_pkgs=("${common_pkgs[@]}" "openssh-server" "zenity" "sshpass")
 fi
 
 if    [ "$CODENAME" == "noble" ] && [ "$ARCH" == "arm64" ]; then
