@@ -22,6 +22,7 @@
 # ----------------------------------------------------------------------
 import gettext
 import os
+import re
 import sys
 import argparse
 
@@ -223,7 +224,78 @@ def get_metadata_only_img(source_drive_key: str):
     return source_drive_metadata_only_image
 
 
+# Language subtags of languages written right-to-left. This list is
+# intentionally based on the language subtag only, so regional variants such
+# as ar_EG and fa_IR are handled automatically.
+RTL_LANGUAGE_CODES = {
+    "ar",  # Arabic
+    "arc",  # Aramaic
+    "ckb",  # Central Kurdish
+    "dv",  # Dhivehi
+    "fa",  # Persian
+    "he",  # Hebrew
+    "iw",  # Legacy Hebrew code
+    "ks",  # Kashmiri
+    "ps",  # Pashto
+    "sd",  # Sindhi
+    "ug",  # Uyghur
+    "ur",  # Urdu
+    "yi",  # Yiddish
+}
+
+
+def get_active_language():
+    """Return the locale gettext uses, as a language tag (eg, "ar_EG").
+
+    GTK derives its default text direction from the system locale, which does
+    not include the gettext LANGUAGE priority list. Rescuezilla's live ISO
+    selects the user-interface language through LANGUAGE, so inspect the same
+    environment variables as gettext, in the same order.
+    """
+    for variable in ("LANGUAGE", "LC_ALL", "LC_MESSAGES", "LANG"):
+        value = os.environ.get(variable)
+        if value:
+            # LANGUAGE can be a colon-separated priority list. gettext uses the
+            # first entry, and that is also the entry that determines the
+            # direction of the user interface.
+            return value.split(":", 1)[0]
+    return ""
+
+
+def is_rtl_language(language):
+    """Return True when the given locale or language tag is right-to-left."""
+    if not language:
+        return False
+    # Strip the encoding and modifier (eg, "ar_EG.UTF-8" -> "ar_EG"), then keep
+    # only the language subtag (eg, "ar_EG" or "ar-EG" -> "ar").
+    language_code = re.split(r"[._@-]", language, 1)[0].lower()
+    return language_code in RTL_LANGUAGE_CODES
+
+
+def set_text_direction_for_active_language():
+    """Match GTK's text direction to the language gettext will translate into.
+
+    This must run before any widgets are created, because GTK only applies the
+    default direction to widgets created afterwards.
+    """
+    active_language = get_active_language()
+    if not active_language:
+        return
+    direction = (
+        Gtk.TextDirection.RTL
+        if is_rtl_language(active_language)
+        else Gtk.TextDirection.LTR
+    )
+    Gtk.Widget.set_default_direction(direction)
+
+
 def launch_gui(human_readable_version: str):
+    # Set the text direction before creating any widgets. GTK's automatic
+    # direction detection only looks at the C locale, so an Arabic language
+    # selected through gettext's LANGUAGE variable would otherwise leave the
+    # interface laid out left-to-right.
+    set_text_direction_for_active_language()
+
     builder = Gtk.Builder()
     builder.set_translation_domain("rescuezilla")
     # Use the GTKBuilder to dynamically construct all the UI widget objects as defined in the GTKBuilder .glade XML

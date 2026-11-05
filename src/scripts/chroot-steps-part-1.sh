@@ -452,12 +452,12 @@ firefox_locale_pkgs=()
 for lang in "${lang_codes[@]}"
 do
      firefox_locale_pkgs+=("firefox-l10n-$lang")
-     language_pack_gnome_base_pkg+=("language-pack-gnome-$lang-base")
+     language_pack_gnome_base_pkgs+=("language-pack-gnome-$lang-base")
 done
 
 for lang in "${lang_codes_g[@]}"
 do
-     language_pack_gnome_base_pkg+=("language-pack-gnome-$lang-base")
+     language_pack_gnome_base_pkgs+=("language-pack-gnome-$lang-base")
 done
 
 for lang in "${lang_codes_f[@]}"
@@ -500,6 +500,8 @@ common_pkgs=("discover"
              "fonts-taml"
              # Font for symbols like "❌"
              "fonts-symbola"
+             # Arabic, Persian and Urdu font
+             "fonts-noto-core"
              "arc-theme"
              "gnome-icon-theme"
              "gnome-brave-icon-theme"
@@ -559,7 +561,7 @@ common_pkgs=("discover"
              "xfsprogs"
              "udftools"
              "grub2-common"
-             "${language_pack_gnome_base_pkg[@]}"
+             "${language_pack_gnome_base_pkgs[@]}"
              "qemu-utils"
              "xfce4-screenshooter"
              "wpasupplicant"
