@@ -3,28 +3,32 @@
 # malis2007 <m96ali@gmail.com>, 2022.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2022-07-18 21:34+0000\n"
+"Project-Id-Version: Rescuezilla\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-03-02 00:00+0000\n"
+"PO-Revision-Date: 2026-11-05 00:00+0000\n"
 "Last-Translator: malis2007 <m96ali@gmail.com>\n"
 "Language-Team: Arabic <https://hosted.weblate.org/projects/rescuezilla/"
 "graphical-shutdown/ar/>\n"
 "Language: ar\n"
+"MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 4.14-dev\n"
+"X-Generator: manual\n"
 
 msgid "End Session"
-msgstr "انهاء الجلسة"
+msgstr "إنهاء الجلسة"
 
 msgid "Cancel"
-msgstr "الغاء"
+msgstr "إلغاء"
 
 msgid "Shutdown"
-msgstr "إغلاق النظام"
+msgstr "إيقاف التشغيل"
 
 msgid "Reboot"
-msgstr "اعادة تشغيل النظام"
+msgstr "إعادة تشغيل النظام"
 
 msgid "Choose action."
 msgstr "اختر الإجراء."
