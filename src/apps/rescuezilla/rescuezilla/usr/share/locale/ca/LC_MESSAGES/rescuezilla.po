@@ -1,14 +1,14 @@
 # Shasheen Ediriweera <shasheene@gmail.com>, 2021, 2022, 2024.
 # BennyBeat <bennybeat@gmail.com>, 2022, 2023, 2026.
 # Shasheen Ediriweera <shasheene@users.noreply.hosted.weblate.org>, 2026.
+# BennyBeat <bennybeat@users.noreply.hosted.weblate.org>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2026-10-31 19:45+0000\n"
-"Last-Translator: Shasheen Ediriweera "
-"<shasheene@users.noreply.hosted.weblate.org>\n"
+"PO-Revision-Date: 2026-11-25 16:51+0000\n"
+"Last-Translator: BennyBeat <bennybeat@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Catalan <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/ca/>\n"
 "Language: ca\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2026.11.dev0\n"
+"X-Generator: Weblate 2026.12.dev0\n"
 
 msgid "Welcome"
 msgstr "Us donem la benvinguda"
@@ -301,11 +301,9 @@ msgstr ""
 "No Especificat (es provarà amb NFS v4.2, i es negociarà amb el servidor fins "
 "a trobar una versió compatible)"
 
-#, fuzzy
 msgid "NFSv3"
 msgstr "NFSv3"
 
-#, fuzzy
 msgid "NFSv4"
 msgstr "NFSv4"
 
@@ -318,7 +316,6 @@ msgstr "Ruta d'exportació"
 msgid "Identity File"
 msgstr "Fitxer d'identitat"
 
-#, fuzzy
 msgid "Port"
 msgstr "Port"
 
