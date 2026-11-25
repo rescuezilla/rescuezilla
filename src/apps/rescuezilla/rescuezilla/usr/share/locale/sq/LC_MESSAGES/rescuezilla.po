@@ -5,13 +5,14 @@
 # МАН69К <weblate@mah69k.net>, 2022.
 # Besnik Bleta <besnik@programeshqip.org>, 2022, 2025.
 # ac49724 <ac49724@gmail.com>, 2025.
+# isuer <iuser@users.noreply.hosted.weblate.org>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2025-11-29 21:00+0000\n"
-"Last-Translator: Besnik Bleta <besnik@programeshqip.org>\n"
+"PO-Revision-Date: 2026-11-02 08:51+0000\n"
+"Last-Translator: isuer <iuser@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/sq/>\n"
 "Language: sq\n"
@@ -19,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.15-dev\n"
+"X-Generator: Weblate 2026.11.dev0\n"
 
 msgid "Welcome"
 msgstr "Mirë se vini"
@@ -305,7 +306,7 @@ msgid "Remote path"
 msgstr "Shteg i largët"
 
 msgid "Exported path"
-msgstr ""
+msgstr "Shteg i eksportuar"
 
 msgid "Identity File"
 msgstr "Kartelë Identiteti"
