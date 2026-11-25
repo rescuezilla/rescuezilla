@@ -6,13 +6,14 @@
 # Besnik Bleta <besnik@programeshqip.org>, 2022, 2025.
 # ac49724 <ac49724@gmail.com>, 2025.
 # isuer <iuser@users.noreply.hosted.weblate.org>, 2026.
+# Besnik Bleta <besnik_b@users.noreply.hosted.weblate.org>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
 "PO-Revision-Date: 2026-11-02 08:51+0000\n"
-"Last-Translator: isuer <iuser@users.noreply.hosted.weblate.org>\n"
+"Last-Translator: Besnik Bleta <besnik_b@users.noreply.hosted.weblate.org>\n"
 "Language-Team: Albanian <https://hosted.weblate.org/projects/rescuezilla/"
 "rescuezilla/sq/>\n"
 "Language: sq\n"
@@ -306,7 +307,7 @@ msgid "Remote path"
 msgstr "Shteg i largët"
 
 msgid "Exported path"
-msgstr "Shteg i eksportuar"
+msgstr ""
 
 msgid "Identity File"
 msgstr "Kartelë Identiteti"
@@ -364,7 +365,7 @@ msgid "Unable to fully process the following image:"
 msgstr "S’arrihet të përpunohet plotësisht pamja vijuese:"
 
 msgid "Cannot find partition's associated partclone image"
-msgstr ""
+msgstr "S’gjendet dot pamja Partclone përkatëse e pjesës"
 
 msgid "This can happen when loading images which Clonezilla was unable to completely backup."
 msgstr ""
