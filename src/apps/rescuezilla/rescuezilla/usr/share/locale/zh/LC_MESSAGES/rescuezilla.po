@@ -7,14 +7,15 @@
 # 池边树下 <mzky@163.com>, 2021, 2025.
 # Eric <hamburger2048@users.noreply.hosted.weblate.org>, 2023.
 # 大王叫我来巡山 <hamburger2048@users.noreply.hosted.weblate.org>, 2025, 2026.
+# ｙｏｓｉ＿ｋ＿ <yosi_k_fr@users.noreply.hosted.weblate.org>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-02 00:00+0000\n"
-"PO-Revision-Date: 2026-03-13 03:09+0000\n"
-"Last-Translator: 大王叫我来巡山 "
-"<hamburger2048@users.noreply.hosted.weblate.org>\n"
+"PO-Revision-Date: 2026-11-01 01:13+0000\n"
+"Last-Translator: ｙｏｓｉ＿ｋ＿ <yosi_k_fr@users.noreply.hosted.weblate.org>"
+"\n"
 "Language-Team: Chinese (Simplified Han script) <https://hosted.weblate.org/"
 "projects/rescuezilla/rescuezilla/zh_Hans/>\n"
 "Language: zh\n"
@@ -22,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.17-dev\n"
+"X-Generator: Weblate 2026.11.dev0\n"
 
 msgid "Welcome"
 msgstr "欢迎"
@@ -755,7 +756,7 @@ msgid "Unable to restore partition {destination_partition} because there is no s
 msgstr "无法还原分区 {destination_partition} ，因为没有与 {description} 相关联的镜像。"
 
 msgid "This may occur if Clonezilla was originally unable to backup this partition."
-msgstr "如果Clonezilla最初无法备份此分区，则会出现此种情况。"
+msgstr "如果Clonezilla（再生龙）最初无法备份此分区，则会出现此种情况。"
 
 #, python-brace-format
 msgid "Error restoring partition {image_key} to {destination_partition}."
