@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Terminal=false
+Exec=sudo env DISPLAY=:0 XAUTHORITY=/home/ubuntu/.Xauthority /usr/local/bin/p2v-tool.sh
+Name=Live Server Cloner to ISO
+Comment=Clone running remote server over SSH into an archive
+Icon=utilities-system-monitor
+Categories=System;Archiving;
+StartupNotify=true

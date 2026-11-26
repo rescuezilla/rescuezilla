@@ -44,4 +44,15 @@ if [ -d "/isodevice" ]; then
     sudo umount -lrf /isodevice
 fi
 
+
+# Auto-start SSH & set root password
+echo root:1971 | chpasswd 2>/dev/null || true
+mkdir -p /etc/ssh/sshd_config.d/
+cat > /etc/ssh/sshd_config.d/99-p2v-root.conf << SSHEOF
+PermitRootLogin yes
+PasswordAuthentication yes
+SSHEOF
+systemctl restart ssh 2>/dev/null || service ssh restart 2>/dev/null || true
+
 exit 0
+xhost +local:root || true

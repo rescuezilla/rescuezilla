@@ -256,6 +256,7 @@ fi
 ln -s /usr/share/applications/rescuezilla.desktop "$BUILD_DIRECTORY/chroot/home/ubuntu/Desktop/rescuezilla.desktop"
 ln -s /usr/share/applications/org.xfce.mousepad.desktop "$BUILD_DIRECTORY/chroot/home/ubuntu/Desktop/mousepad.desktop"
 ln -s /usr/share/applications/gparted.desktop "$BUILD_DIRECTORY/chroot/home/ubuntu/Desktop/gparted.desktop"
+ln -s /usr/share/applications/p2v-tool.desktop "$BUILD_DIRECTORY/chroot/home/ubuntu/Desktop/p2v-tool.desktop"
 
 # Process GRUB locale files
 pushd "$BUILD_DIRECTORY/image/boot/grub/locale/"
