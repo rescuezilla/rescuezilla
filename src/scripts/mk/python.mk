@@ -2,7 +2,7 @@
 .PHONY: fmt lint python-fmt python-lint
 
 # Python source directories to check
-PYTHON_DIRS := src/apps/rescuezilla/rescuezilla/usr/lib/python3/dist-packages/rescuezilla \
+PYTHON_DIRS := src/apps/rescuezilla/rescuezilla/usr/lib/rescuezilla \
                src/integration-test \
                src/scripts/manage-translations
 

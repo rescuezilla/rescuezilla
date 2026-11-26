@@ -1,0 +1,44 @@
+#!/bin/sh
+set -eu
+
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+export PATH
+
+if command -v pgrep >/dev/null 2>&1 && pgrep -x gpartedbin >/dev/null; then
+    echo "Cannot launch Rescuezilla while GParted is running." >&2
+    exit 1
+fi
+
+launcher=$(readlink -f "$0")
+if [ "$(id -u)" -ne 0 ]; then
+    command -v pkexec >/dev/null 2>&1 || {
+        echo "Rescuezilla requires polkit (pkexec)." >&2
+        exit 1
+    }
+    exec pkexec "$launcher" "$@"
+fi
+
+prefix=$(CDPATH= cd -- "$(dirname -- "$launcher")/.." && pwd)
+app="$prefix/lib/rescuezilla/rescuezilla.py"
+test -x "$app" || {
+    echo "Rescuezilla application not found: $app" >&2
+    exit 1
+}
+
+exec 9>/run/lock/rescuezilla.lock
+flock -n 9 || {
+    echo "Rescuezilla is already running." >&2
+    exit 1
+}
+
+for inhibit in \
+    "$prefix/libexec/udisks2/udisks2-inhibit" \
+    "$prefix/lib/udisks2/udisks2-inhibit" \
+    /usr/libexec/udisks2/udisks2-inhibit \
+    /usr/lib/udisks2/udisks2-inhibit; do
+    if [ -x "$inhibit" ]; then
+        exec "$inhibit" python3 "$app" "$@"
+    fi
+done
+
+exec python3 "$app" "$@"

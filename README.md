@@ -83,6 +83,8 @@ Please consider posting a review of Rescuezilla on the very useful website [Alte
 
 See [Building ISO image](docs/build_instructions/BUILD.ISO.IMAGE.md)
 
+For an installed application on major Linux distributions, see [Installing Rescuezilla from source](docs/build_instructions/INSTALL.APPLICATION.md).
+
 ## Future development
 
 Rescuezilla features are prioritized according to the [roadmap](https://github.com/rescuezilla/rescuezilla/wiki/Rescuezilla-Project-Roadmap). Please consider becoming a [Patreon to help fund Rescuezilla's continued development](https://www.patreon.com/join/rescuezilla)!

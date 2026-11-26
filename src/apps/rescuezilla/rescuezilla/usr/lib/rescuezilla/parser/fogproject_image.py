@@ -21,13 +21,11 @@ from datetime import datetime
 from os.path import isfile
 from pathlib import Path
 
-from babel.dates import format_datetime
-
 # The handling of FOG Project images is not derived from the FOG Project source code, but has been implemented purely
 # based on examining the images generated from using that program. Any errors in parsing here are Rescuezilla's own.
 from parser.partclone import Partclone
 from parser.sfdisk import Sfdisk
-from utility import Utility, _
+from utility import Utility, _, format_datetime
 
 
 # A single FOG Project image folder can contain multiple disks (d1.partitions, d2.partitions etc). For the purposes of

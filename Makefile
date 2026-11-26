@@ -41,7 +41,7 @@ SHELL=/bin/bash
 
 all: focal
 
-buildscripts = src/scripts/build.sh src/scripts/chroot-steps-part-1.sh src/scripts/chroot-steps-part-2.sh
+buildscripts = src/scripts/build.sh src/scripts/chroot-steps-part-1.sh src/scripts/chroot-steps-part-2.sh src/scripts/live-rescuezilla
 
 # ISO image based on Ubuntu 20.04 Focal LTS (Long Term Support) 64bit
 focal: CODENAME=focal
@@ -224,7 +224,7 @@ install: partclone-nbd deb
 	DEBIAN_FRONTEND=noninteractive gdebi --non-interactive $(AMD64_BUILD_DIR)/chroot/partclone-nbd_0.0.3-1_$(ARCH).deb
 	DEBIAN_FRONTEND=noninteractive gdebi --non-interactive $(DEB_BUILD_DIR)/../rescuezilla_*.deb
 
-test: RESCUEZILLA_TEST_DIR=$(shell pwd)/src/apps/rescuezilla/rescuezilla/usr/lib/python3/dist-packages/rescuezilla
+test: RESCUEZILLA_TEST_DIR=$(shell pwd)/src/apps/rescuezilla/rescuezilla/usr/lib/rescuezilla
 test:
 	python3 -m unittest discover -s $(RESCUEZILLA_TEST_DIR) -p 'test_*.py'
 
@@ -335,4 +335,3 @@ docker-focal:
 
 docker-bionic-i386:
 	docker exec --interactive --workdir=/home/rescuezilla/ builder.container make bionic-i386
-

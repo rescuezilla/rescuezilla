@@ -22,14 +22,13 @@ import pprint
 import re
 import tempfile
 from datetime import datetime
-from babel.dates import format_datetime
 
 from parser.blkid import Blkid
 from parser.clonezilla_image import ClonezillaImage
 from parser.combined_drive_state import CombinedDriveState
 from parser.parted import Parted
 from parser.sfdisk import Sfdisk
-from utility import Utility
+from utility import Utility, format_datetime
 
 
 # MetadataOnlyImage contains the data like sfdisk partition table, post-MBR gap, EBR backup, but (unlike ClonezillaImage

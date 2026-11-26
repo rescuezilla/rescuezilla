@@ -21,11 +21,9 @@ import glob
 import os
 import re
 
-from babel.dates import format_datetime
-
 from parser.partclone import Partclone
 from parser.sfdisk import Sfdisk
-from utility import Utility, _
+from utility import Utility, _, format_datetime
 
 
 # Background: Redo Backup and Recovery has a complicated version history: it was originally actively developed
