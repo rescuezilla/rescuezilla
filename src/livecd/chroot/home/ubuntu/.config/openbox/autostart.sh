@@ -20,3 +20,6 @@ xsetroot -solid "#333333"
 
 # eyes candy (composite)
 # myxcompmgr --startstop &
+
+# start picom compositor
+picom &
